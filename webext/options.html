@@ -36,7 +36,35 @@
 <div id="IconContent" class="tabcontent">
   <form>
     <h3>Icon</h3>
-    <p>Icon options here.</p> 
+    <p>Icon options here.</p>
+    
+    <ul id="myUL">
+      <li><span class="caret">Beverages</span>
+        <ul class="nested">
+          <li><span class="box">Water</li>
+          <li><span class="box">Coffee</li>
+          <li><span class="caret">Tea</span>
+            <ul class="nested">
+              <li>
+                <input type="checkbox" name="blacktea" value="BlackTea">Black Tea<br>
+              </li>
+              <li>
+                <input type="checkbox" name="blacktea" value="BlackTea">White Tea<br>
+              </li>
+              <li><span class="caret">Green Tea</span>
+                <ul class="nested">
+                  <li>Sencha</li>
+                  <li>Gyokuro</li>
+                  <li>Matcha</li>
+                  <li>Pi Lo Chun</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
   </form>
 </div>
 
@@ -177,6 +205,7 @@
 
 <script src='js/options_tabbutton.js'></script>
 <script src='js/options_treetable.js'></script>
+<script src='js/options_treeview.js'></script>
 
 <script src="options.js"></script>
 
