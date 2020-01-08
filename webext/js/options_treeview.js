@@ -10,7 +10,7 @@ for (i = 0; i < toggler.length; i++) {
 
 var togglerBox = document.getElementsByClassName("box");
 
-for (i = 0; i < toggler.length; i++) {
+for (i = 0; i < togglerBox.length; i++) {
   togglerBox[i].addEventListener("click", function() {
     this.classList.toggle("check-box");
   });
