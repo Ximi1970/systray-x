@@ -8,6 +8,8 @@
     <script src="js/styles.js" stylesheet="css/options.css"></script>
     <script src="js/i18n.js"></script>
 
+    <script src="js/options_accounts.js"></script>
+
     <div class="tab">
       <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
       <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
@@ -35,195 +37,14 @@
       <form>
         <h3>Icon</h3>
         <p>Icon options here.</p>
-
-        <ul id="myUL">
-          <li>
-            <span class="caret">Beverages</span>
-            <ul class="nested">
-              <li><span class="box">Water</span></li>
-              <li><span class="box">Coffee</span></li>
-              <li>
-                <span class="caret">Tea</span>
-                <ul class="nested">
-                  <li>
-                    <input
-                      type="checkbox"
-                      name="blacktea"
-                      value="BlackTea"
-                    />Black Tea<br />
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      name="blacktea"
-                      value="BlackTea"
-                    />White Tea<br />
-                  </li>
-                  <li>
-                    <span class="caret">Green Tea</span>
-                    <ul class="nested">
-                      <li>Sencha</li>
-                      <li>Gyokuro</li>
-                      <li>Matcha</li>
-                      <li>Pi Lo Chun</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
       </form>
     </div>
 
     <div id="MailContent" class="tabcontent">
       <form>
-        <h3>Mail</h3>
-        <p>Mail options here.</p>
+        <h3>Included accounts</h3>
 
-        <p class="account">Account</p>
-
-        <ul class="accountstree"></ul>
-
-        <ul class="tree">
-          <li>
-            <a href="#">Part 1</a>
-            <ul>
-              <li>
-                <a href="#">Item A</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item B</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item C</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item D</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item E</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="#">Part 2</a>
-            <ul>
-              <li>
-                <a href="#">Item A</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item B</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item C</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item D</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item E</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="#">Part 3</a>
-            <ul>
-              <li>
-                <a href="#">Item A</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item B</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item C</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item D</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Item E</a>
-                <ul>
-                  <li><a href="#">Sub-item 1</a></li>
-                  <li><a href="#">Sub-item 2</a></li>
-                  <li><a href="#">Sub-item 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <ul id="accountsTree"></ul>
       </form>
     </div>
 
@@ -233,10 +54,7 @@
     </form>
 
     <script src="js/options_tabbutton.js"></script>
-    <script src="js/options_treetable.js"></script>
     <script src="js/options_treeview.js"></script>
-
-    <script src="js/options_accounts.js"></script>
 
     <script src="options.js"></script>
   </body>
