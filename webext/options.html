@@ -1,221 +1,243 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script src="js/styles.js" stylesheet="css/options.css"></script>
+    <script src="js/i18n.js"></script>
 
-<script src="js/styles.js" stylesheet="css/options.css"></script>
-<script src='js/i18n.js'></script>
+    <div class="tab">
+      <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
+      <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
+      <button class="tablinks" id="Mail">__MSG_tabMail__</button>
+    </div>
 
-<div class="tab">
-  <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
-  <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
-  <button class="tablinks" id="Mail">__MSG_tabMail__</button>
-</div>
+    <div id="WindowsContent" class="tabcontent" style="display:block">
+      <form>
+        <h3>Windows</h3>
+        <p>Windows options here</p>
 
-<div id="WindowsContent" class="tabcontent" style="display:block">
-  <form>
-    <h3>Windows</h3>
-    <p>Windows options here</p>
+        <p>Please select your opton:</p>
+        <input type="radio" name="options_test" value="Option1" /> Option 1<br />
+        <input type="radio" name="options_test" value="Option2" /> Option 2<br />
+        <input type="radio" name="options_test" value="Option3" /> Option 3<br />
 
-    <p>Please select your opton:</p>
-      <input type="radio" name="options_test" value="Option1"> Option 1<br>
-      <input type="radio" name="options_test" value="Option2"> Option 2<br>
-      <input type="radio" name="options_test" value="Option3"> Option 3<br>  
+        <p>Please check the boxes:</p>
+        <input type="checkbox" name="check1" value="Check1" /> Check 1<br />
+        <input type="checkbox" name="check2" value="Check2" /> Check 2<br />
+        <input type="checkbox" name="check3" value="Check3" /> Check 3<br />
+      </form>
+    </div>
 
-    <p>Please check the boxes:</p>
-      <input type="checkbox" name="check1" value="Check1"> Check 1<br>
-      <input type="checkbox" name="check2" value="Check2"> Check 2<br>
-      <input type="checkbox" name="check3" value="Check3"> Check 3<br>  
+    <div id="IconContent" class="tabcontent">
+      <form>
+        <h3>Icon</h3>
+        <p>Icon options here.</p>
 
-  </form>
-</div>
-
-<div id="IconContent" class="tabcontent">
-  <form>
-    <h3>Icon</h3>
-    <p>Icon options here.</p>
-    
-    <ul id="myUL">
-      <li><span class="caret">Beverages</span>
-        <ul class="nested">
-          <li><span class="box">Water</span></li>
-          <li><span class="box">Coffee</span></li>
-          <li><span class="caret">Tea</span>
+        <ul id="myUL">
+          <li>
+            <span class="caret">Beverages</span>
             <ul class="nested">
+              <li><span class="box">Water</span></li>
+              <li><span class="box">Coffee</span></li>
               <li>
-                <input type="checkbox" name="blacktea" value="BlackTea">Black Tea<br>
-              </li>
-              <li>
-                <input type="checkbox" name="blacktea" value="BlackTea">White Tea<br>
-              </li>
-              <li><span class="caret">Green Tea</span>
+                <span class="caret">Tea</span>
                 <ul class="nested">
-                  <li>Sencha</li>
-                  <li>Gyokuro</li>
-                  <li>Matcha</li>
-                  <li>Pi Lo Chun</li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="blacktea"
+                      value="BlackTea"
+                    />Black Tea<br />
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="blacktea"
+                      value="BlackTea"
+                    />White Tea<br />
+                  </li>
+                  <li>
+                    <span class="caret">Green Tea</span>
+                    <ul class="nested">
+                      <li>Sencha</li>
+                      <li>Gyokuro</li>
+                      <li>Matcha</li>
+                      <li>Pi Lo Chun</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
             </ul>
           </li>
         </ul>
-      </li>
-    </ul>
+      </form>
+    </div>
 
-  </form>
-</div>
+    <div id="MailContent" class="tabcontent">
+      <form>
+        <h3>Mail</h3>
+        <p>Mail options here.</p>
 
-<div id="MailContent" class="tabcontent">
-  <form>
-    <h3>Mail</h3>
-    <p>Mail options here.</p>
-    
-    <p class="account">Account</p>
-    
-    <ul class="accountstree">
-    </ul>
+        <p class="account">Account</p>
 
-    <ul class="tree">
-      <li><a href="#">Part 1</a>
-        <ul>
-          <li><a href="#">Item A</a>
+        <ul class="accountstree"></ul>
+
+        <ul class="tree">
+          <li>
+            <a href="#">Part 1</a>
             <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
+              <li>
+                <a href="#">Item A</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item B</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item C</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item D</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item E</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
-          <li><a href="#">Item B</a>
+
+          <li>
+            <a href="#">Part 2</a>
             <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
+              <li>
+                <a href="#">Item A</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item B</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item C</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item D</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item E</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
-          <li><a href="#">Item C</a>
+
+          <li>
+            <a href="#">Part 3</a>
             <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item D</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item E</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
+              <li>
+                <a href="#">Item A</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item B</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item C</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item D</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Item E</a>
+                <ul>
+                  <li><a href="#">Sub-item 1</a></li>
+                  <li><a href="#">Sub-item 2</a></li>
+                  <li><a href="#">Sub-item 3</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
-      </li>
+      </form>
+    </div>
 
-      <li><a href="#">Part 2</a>
-        <ul>
-          <li><a href="#">Item A</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item B</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item C</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item D</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item E</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
+    <form name="saveform">
+      <label>Save preferences</label>
+      <button type="submit">Save</button>
+    </form>
 
-      <li><a href="#">Part 3</a>
-        <ul>
-          <li><a href="#">Item A</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item B</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item C</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item D</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Item E</a>
-            <ul>
-              <li><a href="#">Sub-item 1</a></li>
-              <li><a href="#">Sub-item 2</a></li>
-              <li><a href="#">Sub-item 3</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>  
-    
-  </form>
-</div>
+    <script src="js/options_tabbutton.js"></script>
+    <script src="js/options_treetable.js"></script>
+    <script src="js/options_treeview.js"></script>
 
-<form name="saveform">
-  <label>Save preferences</label>
-  <button type="submit">Save</button>
-</form>
+    <script src="js/options_accounts.js"></script>
 
-<script src='js/options_tabbutton.js'></script>
-<script src='js/options_treetable.js'></script>
-<script src='js/options_treeview.js'></script>
-
-<script src="js/options_accounts.js"></script>
-
-<script src="options.js"></script>
-
-</body>
-</html> 
- 
+    <script src="options.js"></script>
+  </body>
+</html>

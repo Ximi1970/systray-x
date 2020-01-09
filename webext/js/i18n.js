@@ -5,7 +5,7 @@
 */
 var i18n = {
   updateString(aString) {
-    return aString.replace(/__MSG_(.+?)__/g, (aMatched) => {
+    return aString.replace(/__MSG_(.+?)__/g, aMatched => {
       const key = aMatched.slice(6, -2);
       return browser.i18n.getMessage(key) || aMatched;
     });
@@ -38,6 +38,10 @@ var i18n = {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  i18n.updateDocument();
-}, { once: true });
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    i18n.updateDocument();
+  },
+  { once: true }
+);

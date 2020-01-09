@@ -1,42 +1,43 @@
-body {font-family: Arial;}
+body {
+  font-family: Arial;
+}
 
 /* Style the tab */
 .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
 }
 
 /* Style the buttons inside the tab */
 .tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 /* Style the tab content */
 .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
 }
-
 
 /* check box tree view */
 .box {
@@ -55,12 +56,13 @@ body {font-family: Arial;}
 }
 
 .check-box::before {
-  content: "\2611"; 
+  content: "\2611";
   color: dodgerblue;
 }
 
- /* Remove default bullets */
-ul, #myUL {
+/* Remove default bullets */
+ul,
+#myUL {
   list-style-type: none;
 }
 
@@ -97,42 +99,41 @@ ul, #myUL {
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
 .active {
   display: block;
-} 
-
+}
 
 /* Style the tree */
 ul.tree li {
-    list-style-type: none;
-    position: relative;
+  list-style-type: none;
+  position: relative;
 }
 
 ul.tree li ul {
-    display: none;
+  display: none;
 }
 
 ul.tree li.open > ul {
-    display: block;
+  display: block;
 }
 
 ul.tree li a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 ul.tree li a:before {
-    height: 1em;
-    padding:0 .1em;
-    font-size: .8em;
-    display: block;
-    position: absolute;
-    left: -1.3em;
-    top: .2em;
+  height: 1em;
+  padding: 0 0.1em;
+  font-size: 0.8em;
+  display: block;
+  position: absolute;
+  left: -1.3em;
+  top: 0.2em;
 }
 
 ul.tree li > a:not(:last-child):before {
-    content: '+';
+  content: "+";
 }
 
 ul.tree li.open > a:not(:last-child):before {
-    content: '-';
-} 
+  content: "-";
+}

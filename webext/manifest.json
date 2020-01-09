@@ -19,15 +19,12 @@
 
   "default_locale": "en-US",
 
-  "permissions": [
-    "accountsRead",
-    "storage"
-  ],
-  
+  "permissions": ["accountsRead", "storage"],
+
   "background": {
     "scripts": ["background.js"]
   },
-  
+
   "options_ui": {
     "page": "options.html"
   }
