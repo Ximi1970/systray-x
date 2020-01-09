@@ -44,12 +44,6 @@ SysTrayX.Accounts = {
       });
     }
 
-    console.debug("SysTrayX Storage: " + accounts.imap[0].name);
-
-    for (let prop in accounts) {
-      console.debug(prop + ": " + accounts[prop][0].name);
-    }
-
     /*
      *  Build tree
      */
