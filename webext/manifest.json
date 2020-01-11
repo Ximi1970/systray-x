@@ -22,7 +22,7 @@
   "permissions": ["accountsRead", "messagesRead", "storage"],
 
   "background": {
-    "scripts": ["background.js"]
+    "page": "background.html"
   },
 
   "options_ui": {
