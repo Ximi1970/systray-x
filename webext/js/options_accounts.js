@@ -40,7 +40,8 @@ SysTrayX.Accounts = {
       }
       accounts[mailAccount[i].type].push({
         id: mailAccount[i].id,
-        name: mailAccount[i].name
+        name: mailAccount[i].name,
+        folders: mailAccount[i].folders
       });
     }
 
@@ -70,8 +71,8 @@ SysTrayX.Accounts = {
           let typeLi = document.createElement("li");
           let typeInput = document.createElement("input");
           typeInput.setAttribute("type", "checkbox");
-          typeInput.setAttribute("name", accounts[prop][i].name);
-          typeInput.setAttribute("value", accounts[prop][i].id);
+          typeInput.setAttribute("name", accounts[prop][i].id);
+          typeInput.setAttribute("value", JSON.stringify(accounts[prop][i]));
           typeInput.setAttribute("checked", "true");
           typeLi.appendChild(typeInput);
           let typeText = document.createTextNode(" " + accounts[prop][i].name);
@@ -91,7 +92,7 @@ SysTrayX.Accounts = {
         let accounts = result.accounts || [];
         for (let i = 0; i < accounts.length; ++i) {
           let checkbox = treeBase.querySelector(
-            `input[value=${accounts[i].id}]`
+            `input[name=${accounts[i].id}]`
           );
           if (checkbox) {
             checkbox.checked = accounts[i].checked;
