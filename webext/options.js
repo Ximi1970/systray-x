@@ -11,6 +11,30 @@ function saveOptions(e) {
     optionsCheck2: document.querySelector('input[name="check2"]').checked,
     optionsCheck3: document.querySelector('input[name="check3"]').checked
   });
+
+  /*
+   * Get accounts
+   */
+
+  console.debug("Store accounts");
+
+  let treeBase = document.getElementById("accountsTree");
+  let inputs = treeBase.querySelectorAll("input");
+  let accounts = [];
+  for (let i = 0; i < inputs.length; ++i) {
+    accounts.push({
+      id: inputs[i].value,
+      name: inputs[i].name,
+      checked: inputs[i].checked
+    });
+  }
+
+  //  Store accounts
+  browser.storage.sync.set({
+    accounts: accounts
+  });
+
+  console.debug("Store accounts done");
 }
 
 function restoreOptions() {

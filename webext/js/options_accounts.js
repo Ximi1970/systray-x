@@ -72,6 +72,7 @@ SysTrayX.Accounts = {
           typeInput.setAttribute("type", "checkbox");
           typeInput.setAttribute("name", accounts[prop][i].name);
           typeInput.setAttribute("value", accounts[prop][i].id);
+          typeInput.setAttribute("checked", "true");
           typeLi.appendChild(typeInput);
           let typeText = document.createTextNode(" " + accounts[prop][i].name);
           typeLi.appendChild(typeText);
@@ -81,6 +82,31 @@ SysTrayX.Accounts = {
       }
 
       treeBase.appendChild(typeLi);
+
+      // Restore saved selection
+      function setAccounts(result) {
+        console.debug("Restore account selection");
+
+        let treeBase = document.getElementById("accountsTree");
+        let accounts = result.accounts || [];
+        for (let i = 0; i < accounts.length; ++i) {
+          let checkbox = treeBase.querySelector(
+            `input[value=${accounts[i].id}]`
+          );
+          if (checkbox) {
+            checkbox.checked = accounts[i].checked;
+          }
+        }
+
+        console.debug("Restore account selection done");
+      }
+
+      function onError(error) {
+        console.log(`GetAccounts Error: ${error}`);
+      }
+
+      let getAccounts = browser.storage.sync.get("accounts");
+      getAccounts.then(setAccounts, onError);
     }
 
     /*
