@@ -1,0 +1,26 @@
+{
+  "extensionName": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extensionDescription": {
+    "message": "System tray control add-on",
+    "description": "Webextension descriptions"
+  },
+
+  "tabWindows": {
+    "message": "Windows",
+    "description": "Tab for Window options"
+  },
+
+  "tabIcon": {
+    "message": "Icon",
+    "description": "Tab for Icon options"
+  },
+
+  "tabMail": {
+    "message": "Mail",
+    "description": "Tab for Mail options"
+  }
+}
