@@ -22,11 +22,8 @@ function saveOptions(e) {
   let inputs = treeBase.querySelectorAll("input");
   let accounts = [];
   for (let i = 0; i < inputs.length; ++i) {
-    accounts.push({
-      id: inputs[i].value,
-      name: inputs[i].name,
-      checked: inputs[i].checked
-    });
+    let account = JSON.parse(inputs[i].value);
+    accounts.push({ ...account, checked: inputs[i].checked });
   }
 
   //  Store accounts
