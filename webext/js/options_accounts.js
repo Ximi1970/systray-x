@@ -65,7 +65,7 @@ SysTrayX.Accounts = {
 
       if (accounts[prop]) {
         let typeUl = document.createElement("ul");
-        typeUl.setAttribute("class", "nested");
+        typeUl.setAttribute("class", "nested active");
 
         for (let i = 0; i < accounts[prop].length; ++i) {
           let typeLi = document.createElement("li");

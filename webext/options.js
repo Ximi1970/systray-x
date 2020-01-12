@@ -13,17 +13,33 @@ function saveOptions(e) {
   });
 
   /*
-   * Get accounts
+   * Save accounts and filters
    */
 
-  console.debug("Store accounts");
+  console.debug("Store accounts and filters");
 
   let treeBase = document.getElementById("accountsTree");
   let inputs = treeBase.querySelectorAll("input");
   let accounts = [];
+  let filters = [];
   for (let i = 0; i < inputs.length; ++i) {
     let account = JSON.parse(inputs[i].value);
-    accounts.push({ ...account, checked: inputs[i].checked });
+    let checked = inputs[i].checked;
+    accounts.push({ ...account, checked: checked });
+
+    if (checked) {
+      let inboxMailFolder = account.folders.find(obj => obj.type === "inbox");
+
+      if (inboxMailFolder) {
+        console.debug("Filter Id: " + inboxMailFolder.accountId);
+        console.debug("Filter Path: " + inboxMailFolder.path);
+
+        filters.push({
+          unread: true,
+          folder: inboxMailFolder
+        });
+      }
+    }
   }
 
   //  Store accounts
@@ -31,7 +47,12 @@ function saveOptions(e) {
     accounts: accounts
   });
 
-  console.debug("Store accounts done");
+  //  Store query filters
+  browser.storage.sync.set({
+    filters: filters
+  });
+
+  console.debug("Store accounts and filters done");
 }
 
 function restoreOptions() {
