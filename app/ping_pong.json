@@ -1,0 +1,7 @@
+ {
+  "name": "ping_pong",
+  "description": "Example host for native messaging",
+  "path": "/home/maxime/Diskstation/github/Ximi1970/systray-x/app/ping_pong.py",
+  "type": "stdio",
+  "allowed_extensions": [ "systray-x@Ximi1970" ]
+}

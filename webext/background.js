@@ -99,6 +99,29 @@ console.log("Starting SysTray-X");
 
 SysTrayX.Messaging.init();
 
+
+/*
+ *  Start native messaging
+ */
+var port = browser.runtime.connectNative("ping_pong");
+
+//  Listen for messages from the app.
+port.onMessage.addListener((response) => {
+  console.log("Received: " + response);
+});
+
+//  Every second, send the app a message.
+function ping() {
+  console.log("Sending:  ping");
+  port.postMessage("ping");
+}
+
+window.setInterval(ping, 1000);
+
+
+/*
+ *  Poll the accounts
+ */
 function pollAccounts() {
   console.debug("Polling");
 
