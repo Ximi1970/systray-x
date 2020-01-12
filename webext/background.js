@@ -1,11 +1,16 @@
 console.log("Starting background.js");
 
-var SysTrayX = {};
+var SysTrayX = {
+  debugAccounts: false
+};
 
 SysTrayX.Messaging = {
   initialized: false,
 
-  unreadFilter: { unread: true },
+  unreadFiltersTest: [
+    { unread: true },
+    { unread: true, folder: { accountId: "account1", path: "/INBOX" } }
+  ],
 
   init: function() {
     if (this.initialized) {
@@ -14,7 +19,7 @@ SysTrayX.Messaging = {
     }
     console.log("Enabling Messaging");
 
-    this.unReadMessages(this.unreadFilter).then(this.unreadCb);
+    //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
 
     this.initialized = true;
   },
@@ -23,18 +28,22 @@ SysTrayX.Messaging = {
    * Use the messages API to get the unread messages (Promise)
    * Be aware that the data is only avaiable inside the callback
    */
-  unReadMessages: async function(filter) {
-    let page = await browser.messages.query(filter);
+  unReadMessages: async function(filters) {
+    let unreadMessages = 0;
+    for (let i = 0; i < filters.length; ++i) {
+      let page = await browser.messages.query(filters[i]);
+      let unread = page.messages.length;
 
-    let unread = page.messages.length;
+      while (page.id) {
+        page = await browser.messages.continueList(page.id);
 
-    while (page.id) {
-      page = await browser.messages.continueList(page.id);
+        unread = unread + page.messages.length;
+      }
 
-      unread = unread + page.messages.length;
+      unreadMessages = unreadMessages + unread;
     }
 
-    return unread;
+    return unreadMessages;
   },
 
   /*
@@ -56,6 +65,12 @@ SysTrayX.Messaging = {
     // Store them in the background HTML
     let accountsDiv = document.getElementById("accounts");
     accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
+
+    let filters = result.filters || [];
+
+    // Store them in the background HTML
+    let filtersDiv = document.getElementById("filters");
+    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
   onGetAccountsStoageError: function(error) {
@@ -65,29 +80,40 @@ SysTrayX.Messaging = {
   getAccounts: function() {
     console.debug("Get accounts");
 
-    let getter = browser.storage.sync.get("accounts");
+    let getter = browser.storage.sync.get(["accounts", "filters"]);
     getter.then(this.getAccountsStorage, this.onGetAccountsStoageError);
-  }
+
+    if (SysTrayX.debugAccounts) {
+      let accountsDiv = document.getElementById("accounts");
+
+      let accountsAttr = accountsDiv.getAttribute("data-accounts");
+      console.debug("Accounts attr: " + accountsAttr);
+
+      let accounts = JSON.parse(accountsAttr);
+      console.debug("Accounts poll: " + accounts.length);
+    }
+  },  
 };
 
 console.log("Starting SysTray-X");
 
 SysTrayX.Messaging.init();
-SysTrayX.Messaging.getAccounts();
-
-
-
 
 function pollAccounts() {
-  let accountsDiv = document.getElementById("accounts");
+  console.debug("Polling");
 
-  accountsAttr = accountsDiv.getAttribute("data-accounts");
-  console.debug("Accounts attr: " + accountsAttr);
+  SysTrayX.Messaging.getAccounts();
 
-  accounts = JSON.parse(accountsAttr);
-  console.debug("Accounts poll: " + accounts.length);
+  /*
+   *  Get the unread nessages of the selected accounts
+   */
+  let filtersDiv = document.getElementById("filters");
+  let filtersAttr = filtersDiv.getAttribute("data-filters");
+  let filters = JSON.parse(filtersAttr);
+
+  SysTrayX.Messaging.unReadMessages(filters).then(SysTrayX.Messaging.unreadCb);
 }
 
-window.setTimeout(pollAccounts, 1000);
+window.setInterval(pollAccounts, 1000);
 
 console.log("Done");
