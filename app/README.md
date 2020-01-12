@@ -2,9 +2,9 @@
 
 Please be aware that the JSON file needs to be installed in the:  
 
-.mozilla (Firefox) config directory  
+.mozilla/native-messaging-hosts (Firefox) config directory  
 
-and NOT in the .thunderbird (Thunderbird) config dir.
+and NOT in the .thunderbird/native-messaging-hosts (Thunderbird) config dir.
 
 
 
