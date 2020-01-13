@@ -1,10 +1,11 @@
 # SysTray-X App
 
-Please be aware that the JSON file needs to be installed in the:  
+Please be aware that the JSON file needs to be installed in the  
 
 .mozilla/native-messaging-hosts (Firefox) config directory  
 
-and NOT in the .thunderbird/native-messaging-hosts (Thunderbird) config dir.
+and NOT in the .thunderbird/native-messaging-hosts (Thunderbird) config dir.  
+
 
 
 

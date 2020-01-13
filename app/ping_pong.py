@@ -57,6 +57,7 @@ except AttributeError:
         sys.stdout.flush()
 
     while True:
+        sendMessage(encodeMessage("pong2"))
         receivedMessage = getMessage()
         if receivedMessage == "ping":
             sendMessage(encodeMessage("pong2"))

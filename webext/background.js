@@ -73,7 +73,7 @@ SysTrayX.Messaging = {
     filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
-  onGetAccountsStoageError: function(error) {
+  onGetAccountsStorageError: function(error) {
     console.log(`GetAccounts Error: ${error}`);
   },
 
@@ -81,7 +81,7 @@ SysTrayX.Messaging = {
     console.debug("Get accounts");
 
     let getter = browser.storage.sync.get(["accounts", "filters"]);
-    getter.then(this.getAccountsStorage, this.onGetAccountsStoageError);
+    getter.then(this.getAccountsStorage, this.onGetAccountsStorageError);
 
     if (SysTrayX.debugAccounts) {
       let accountsDiv = document.getElementById("accounts");
@@ -92,21 +92,20 @@ SysTrayX.Messaging = {
       let accounts = JSON.parse(accountsAttr);
       console.debug("Accounts poll: " + accounts.length);
     }
-  },  
+  }
 };
 
 console.log("Starting SysTray-X");
 
 SysTrayX.Messaging.init();
 
-
 /*
- *  Start native messaging
+ *  Start native messaging ping pong
  */
 var port = browser.runtime.connectNative("ping_pong");
 
 //  Listen for messages from the app.
-port.onMessage.addListener((response) => {
+port.onMessage.addListener(response => {
   console.log("Received: " + response);
 });
 
@@ -118,6 +117,24 @@ function ping() {
 
 window.setInterval(ping, 1000);
 
+/*
+ *  Start native messaging SysTray-X
+ */
+var portSysTrayX = browser.runtime.connectNative("SysTray_X");
+
+//  Listen for messages from the app.
+portSysTrayX.onMessage.addListener(response => {
+  console.log("Received: " + response);
+});
+
+//  Every second, send the app a message.
+function postSysTrayXMessage() {
+  console.log("Sending:  Hallo World!");
+  portSysTrayX.postMessage("Hallo World!");
+//  portSysTrayX.postMessage({ key: "Hallo", value: "World!" });
+}
+
+window.setInterval(postSysTrayXMessage, 1000);
 
 /*
  *  Poll the accounts
