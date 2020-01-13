@@ -20,14 +20,35 @@ SysTrayX.Messaging = {
     console.log("Enabling Messaging");
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
+    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
 
     this.initialized = true;
   },
 
-  /*
-   * Use the messages API to get the unread messages (Promise)
-   * Be aware that the data is only avaiable inside the callback
-   */
+  //
+  //  Poll the accounts
+  //
+  pollAccounts: function() {
+    console.debug("Polling");
+
+    SysTrayX.Messaging.getAccounts();
+
+    //
+    //  Get the unread nessages of the selected accounts
+    //
+    let filtersDiv = document.getElementById("filters");
+    let filtersAttr = filtersDiv.getAttribute("data-filters");
+    let filters = JSON.parse(filtersAttr);
+
+    SysTrayX.Messaging.unReadMessages(filters).then(
+      SysTrayX.Messaging.unreadCb
+    );
+  },
+
+  //
+  // Use the messages API to get the unread messages (Promise)
+  // Be aware that the data is only avaiable inside the callback
+  //
   unReadMessages: async function(filters) {
     let unreadMessages = 0;
     for (let i = 0; i < filters.length; ++i) {
@@ -46,17 +67,17 @@ SysTrayX.Messaging = {
     return unreadMessages;
   },
 
-  /*
-   * Callback for unReadMessages
-   */
+  //
+  // Callback for unReadMessages
+  //
   unreadCb: function(count) {
     console.log("SysTrayX unread " + count);
   },
 
-  /*
-   *  Get the accounts from the storage and
-   *  make them available in the background HTML
-   */
+  //
+  //  Get the accounts from the storage and
+  //  make them available in the background HTML
+  //
   getAccountsStorage: function(result) {
     console.debug("Get accounts from storage");
 
@@ -95,65 +116,39 @@ SysTrayX.Messaging = {
   }
 };
 
+//
+//  Link object, handles the native messaging to the system tray app
+//
+SysTrayX.Link = {
+  portSysTrayX: undefined,
+
+  init: function() {
+    // Connect to the app
+    this.portSysTrayX = browser.runtime.connectNative("SysTray_X");
+
+    //  Listen for messages from the app.
+    this.portSysTrayX.onMessage.addListener(
+      SysTrayX.Link.receiveSysTrayXMessage
+    );
+
+    // Setup test loop
+    window.setInterval(SysTrayX.Link.postSysTrayXMessage, 1000);
+  },
+
+  postSysTrayXMessage: function() {
+    console.log("Sending:  Hallo World!");
+    SysTrayX.Link.portSysTrayX.postMessage("Hallo World!");
+    //  SysTrayX.Link.portSysTrayX.postMessage({ key: "Hallo", value: "World!" });
+  },
+
+  receiveSysTrayXMessage: function(response) {
+    console.log("Received: " + response);
+  }
+};
+
 console.log("Starting SysTray-X");
 
 SysTrayX.Messaging.init();
-
-/*
- *  Start native messaging ping pong
- */
-var port = browser.runtime.connectNative("ping_pong");
-
-//  Listen for messages from the app.
-port.onMessage.addListener(response => {
-  console.log("Received: " + response);
-});
-
-//  Every second, send the app a message.
-function ping() {
-  console.log("Sending:  ping");
-  port.postMessage("ping");
-}
-
-window.setInterval(ping, 1000);
-
-/*
- *  Start native messaging SysTray-X
- */
-var portSysTrayX = browser.runtime.connectNative("SysTray_X");
-
-//  Listen for messages from the app.
-portSysTrayX.onMessage.addListener(response => {
-  console.log("Received: " + response);
-});
-
-//  Every second, send the app a message.
-function postSysTrayXMessage() {
-  console.log("Sending:  Hallo World!");
-  portSysTrayX.postMessage("Hallo World!");
-//  portSysTrayX.postMessage({ key: "Hallo", value: "World!" });
-}
-
-window.setInterval(postSysTrayXMessage, 1000);
-
-/*
- *  Poll the accounts
- */
-function pollAccounts() {
-  console.debug("Polling");
-
-  SysTrayX.Messaging.getAccounts();
-
-  /*
-   *  Get the unread nessages of the selected accounts
-   */
-  let filtersDiv = document.getElementById("filters");
-  let filtersAttr = filtersDiv.getAttribute("data-filters");
-  let filters = JSON.parse(filtersAttr);
-
-  SysTrayX.Messaging.unReadMessages(filters).then(SysTrayX.Messaging.unreadCb);
-}
-
-window.setInterval(pollAccounts, 1000);
+SysTrayX.Link.init();
 
 console.log("Done");
