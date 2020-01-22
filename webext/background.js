@@ -13,16 +13,54 @@ SysTrayX.Messaging = {
   ],
 
   init: function() {
-    if (this.initialized) {
-      console.log("Messaging already initialized");
-      return;
-    }
     console.log("Enabling Messaging");
 
+    //  Get the accounts from the storage
+    SysTrayX.Messaging.getAccounts();
+    browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
+
+    //  Send preferences to app
+    SysTrayX.Messaging.sendPreferences();
+
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
 
     this.initialized = true;
+  },
+
+  //
+  //  Handle a storage change
+  //
+  storageChanged: function(changes, area) {
+    console.debug("Changes in store");
+
+    //  Get the new preferences
+    SysTrayX.Messaging.getAccounts();
+
+    if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {
+      console.debug("Sending preference");
+
+      //
+      //  Send new preferences to the app
+      //
+      SysTrayX.Messaging.sendPreferences();
+
+      //  Reset flag
+      browser.storage.sync.set({
+        addonprefchanged: false
+      });
+    }
+
+    /*
+    var changedItems = Object.keys(changes);
+    for (var item of changedItems) {
+      console.log(item + " has changed:");
+      console.log("Old value: ");
+      console.log(changes[item].oldValue);
+      console.log("New value: ");
+      console.log(changes[item].newValue);
+    }
+*/
   },
 
   //
@@ -31,8 +69,6 @@ SysTrayX.Messaging = {
   pollAccounts: function() {
     console.debug("Polling");
 
-    SysTrayX.Messaging.getAccounts();
-
     //
     //  Get the unread nessages of the selected accounts
     //
@@ -40,14 +76,16 @@ SysTrayX.Messaging = {
     let filtersAttr = filtersDiv.getAttribute("data-filters");
     let filters = JSON.parse(filtersAttr);
 
-    SysTrayX.Messaging.unReadMessages(filters).then(
-      SysTrayX.Messaging.unreadCb
-    );
+    if (filters.length > 0) {
+      SysTrayX.Messaging.unReadMessages(filters).then(
+        SysTrayX.Messaging.unreadCb
+      );
+    }
   },
 
   //
-  // Use the messages API to get the unread messages (Promise)
-  // Be aware that the data is only avaiable inside the callback
+  //  Use the messages API to get the unread messages (Promise)
+  //  Be aware that the data is only avaiable inside the callback
   //
   unReadMessages: async function(filters) {
     let unreadMessages = 0;
@@ -68,36 +106,55 @@ SysTrayX.Messaging = {
   },
 
   //
-  // Callback for unReadMessages
+  //  Callback for unReadMessages
   //
   unreadCb: function(count) {
-    console.log("SysTrayX unread " + count);
+    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  },
+
+  sendPreferences: function() {
+    console.debug("Send preferences");
+
+    let getter = browser.storage.sync.get([
+      "debug",
+      "iconType",
+      "iconMime",
+      "icon"
+    ]);
+    getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
+  },
+
+  sendPreferencesStorage: function(result) {
+    console.debug("Get preferences from storage");
+
+    let debug = result.debug || "false";
+    let iconType = result.iconType || "0";
+    let iconMime = result.iconMime || "image/png";
+    let icon = result.icon || [];
+
+    console.log("Debug" + debug);
+    console.log("Type" + iconType);
+    console.log("Mime" + iconMime);
+    console.log(icon);
+
+    //  Send it to the app
+    SysTrayX.Link.postSysTrayXMessage({
+      preferences: {
+        debug: debug,
+        iconType: iconType,
+        iconMime: iconMime,
+        icon: icon
+      }
+    });
+  },
+
+  onSendIconStorageError: function(error) {
+    console.log(`GetIcon Error: ${error}`);
   },
 
   //
-  //  Get the accounts from the storage and
-  //  make them available in the background HTML
+  //  Get the accounts from the storage
   //
-  getAccountsStorage: function(result) {
-    console.debug("Get accounts from storage");
-
-    let accounts = result.accounts || [];
-
-    // Store them in the background HTML
-    let accountsDiv = document.getElementById("accounts");
-    accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
-
-    let filters = result.filters || [];
-
-    // Store them in the background HTML
-    let filtersDiv = document.getElementById("filters");
-    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
-  },
-
-  onGetAccountsStorageError: function(error) {
-    console.log(`GetAccounts Error: ${error}`);
-  },
-
   getAccounts: function() {
     console.debug("Get accounts");
 
@@ -113,42 +170,98 @@ SysTrayX.Messaging = {
       let accounts = JSON.parse(accountsAttr);
       console.debug("Accounts poll: " + accounts.length);
     }
+  },
+
+  //
+  //  Get the accounts from the storage and
+  //  make them available in the background HTML
+  //
+  getAccountsStorage: function(result) {
+    console.debug("Get accounts from storage");
+
+    let accounts = result.accounts || [];
+
+    //  Store them in the background HTML
+    let accountsDiv = document.getElementById("accounts");
+    accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
+
+    let filters = result.filters || [];
+
+    //  Store them in the background HTML
+    let filtersDiv = document.getElementById("filters");
+    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
+  },
+
+  onGetAccountsStorageError: function(error) {
+    console.log(`GetAccounts Error: ${error}`);
   }
 };
 
 //
-//  Link object, handles the native messaging to the system tray app
+//  Link object. Handles the native messaging to the system tray app
 //
 SysTrayX.Link = {
   portSysTrayX: undefined,
 
   init: function() {
-    // Connect to the app
+    //  Connect to the app
     this.portSysTrayX = browser.runtime.connectNative("SysTray_X");
 
     //  Listen for messages from the app.
     this.portSysTrayX.onMessage.addListener(
       SysTrayX.Link.receiveSysTrayXMessage
     );
-
-    // Setup test loop
-    window.setInterval(SysTrayX.Link.postSysTrayXMessage, 1000);
   },
 
-  postSysTrayXMessage: function() {
-    console.log("Sending:  Hallo World!");
-    SysTrayX.Link.portSysTrayX.postMessage("Hallo World!");
-    //  SysTrayX.Link.portSysTrayX.postMessage({ key: "Hallo", value: "World!" });
+  postSysTrayXMessage: function(object) {
+    //  Send object (will be stringified by postMessage)
+    SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
   receiveSysTrayXMessage: function(response) {
     console.log("Received: " + response);
+
+    if (response["preferences"]) {
+      //  Store the preferences from the app
+      console.log("Preferences received");
+
+      let iconMime = response["preferences"].iconMime;
+      if (iconMime) {
+        browser.storage.sync.set({
+          iconMime: iconMime
+        });
+      }
+
+      let icon = response["preferences"].icon;
+      if (icon) {
+        browser.storage.sync.set({
+          icon: icon
+        });
+      }
+
+      let iconType = response["preferences"].iconType;
+      if (iconType) {
+        browser.storage.sync.set({
+          iconType: iconType
+        });
+      }
+
+      let debug = response["preferences"].debug;
+      if (debug) {
+        browser.storage.sync.set({
+          debug: debug
+        });
+      }
+    }
   }
 };
 
 console.log("Starting SysTray-X");
 
-SysTrayX.Messaging.init();
+//  Setup the link first
 SysTrayX.Link.init();
+
+//  Main start
+SysTrayX.Messaging.init();
 
 console.log("Done");

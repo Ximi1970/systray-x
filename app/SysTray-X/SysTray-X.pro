@@ -125,15 +125,24 @@ message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-        systrayxlink.cpp
+        systrayxlink.cpp \
+        systrayxicon.cpp \
+        systrayx.cpp \
+        debugwidget.cpp \
+        preferencesdialog.cpp \
+        preferences.cpp
 
 HEADERS += \
-        mainwindow.h \
-        systrayxlink.h
+        systrayxlink.h \
+        systrayxicon.h \
+        systrayx.h \
+        debugwidget.h \
+        preferencesdialog.h \
+        preferences.h
 
 FORMS += \
-        mainwindow.ui
+        debugwidget.ui \
+        preferences.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -4,15 +4,7 @@ SysTrayX.Accounts = {
   initialized: false,
 
   init: function() {
-    if (this.initialized) {
-      console.log("Accounts already initialized");
-      return;
-    }
-    console.log("Enabling Accounts");
-
     this.getAccounts().then(this.getAccountsCb);
-
-    this.initialized = true;
   },
 
   /*

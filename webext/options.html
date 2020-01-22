@@ -9,7 +9,13 @@
     <script src="js/i18n.js"></script>
 
     <script src="js/options_accounts.js"></script>
-
+    
+    <br />
+    <div id="debugselect">
+      <input type="checkbox" name="debug" value="Debug" /> Display debug window<br/>
+    </div>
+    <br />
+    
     <div class="tab">
       <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
       <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
@@ -21,7 +27,7 @@
         <h3>Windows</h3>
         <p>Windows options here</p>
 
-        <p>Please select your opton:</p>
+        <p>Please select your option:</p>
         <input type="radio" name="options_test" value="Option1" /> Option 1<br />
         <input type="radio" name="options_test" value="Option2" /> Option 2<br />
         <input type="radio" name="options_test" value="Option3" /> Option 3<br />
@@ -30,22 +36,46 @@
         <input type="checkbox" name="check1" value="Check1" /> Check 1<br />
         <input type="checkbox" name="check2" value="Check2" /> Check 2<br />
         <input type="checkbox" name="check3" value="Check3" /> Check 3<br />
+
       </form>
     </div>
 
     <div id="IconContent" class="tabcontent">
-      <form>
+      <form name="iconform">
         <h3>Icon</h3>
-        <p>Icon options here.</p>
+
+        <p>Please select your option:</p>
+  
+        <table id="iconselect">
+          <tr>
+            <td><input type="radio" name="iconType" value="0" /> Blank icon</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="iconType" value="1" /> New mail icon</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="iconType" value="2" /> Custom icon</td>
+            <td><img id="customIconImage" height="25" width="25" align="middle" src=""></td>
+            <td>
+              <label for="selectedFileIconType" style="-moz-appearance: button;"}>Browse...</label>
+              <input type="file" id="selectedFileIconType" accept="image/*" style="display:none;">  
+            </td>
+          </tr>
+        </table>    
       </form>
+
+      <div id="icon" data-icon-mime="" data-icon=""></div>
+
+      <script src="js/options_iconform.js"></script>
+
     </div>
 
     <div id="MailContent" class="tabcontent">
-      <form>
+      <form name="mailform">
         <h3>Included accounts</h3>
 
         <ul id="accountsTree"></ul>
-      </form>
+      </form name="mailform">
     </div>
     <br />
     <form name="saveform">
