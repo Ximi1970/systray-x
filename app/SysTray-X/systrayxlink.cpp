@@ -114,12 +114,12 @@ void SysTrayXLink::sendPreferences()
     EncodePreferences( *m_pref );
 
 
-
+/*
     QFile   dump("/home/maxime/dumpJSON_app2addon.txt");
     dump.open(QIODevice::WriteOnly );
     dump.write( m_pref_json_doc.toJson( QJsonDocument::Compact ).data(), m_pref_json_doc.toJson( QJsonDocument::Compact ).length() );
     dump.close();
-
+*/
 
 
     /*
@@ -150,12 +150,12 @@ void SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
 
-
+/*
             QFile   dump("/home/maxime/dumpJSON_addon2app.txt");
             dump.open(QIODevice::WriteOnly );
             dump.write( message.data(), message.length() );
             dump.close();
-
+*/
 
 
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
@@ -199,13 +199,6 @@ void SysTrayXLink::DecodePreferences( const QJsonObject& pref )
     if( pref.contains( "icon" ) && pref[ "icon" ].isString() )
     {
         QString icon_base64 = pref[ "icon" ].toString();
-
-/*
-        QFile   dump("xxxxx");
-        dump.open(QIODevice::WriteOnly );
-        dump.write( icon_base64.toUtf8().data(), icon_base64.toUtf8().length() );
-        dump.close();
-*/
 
         /*
          *  Store the new icon data
