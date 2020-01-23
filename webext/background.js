@@ -72,12 +72,16 @@ SysTrayX.Messaging = {
     //
     //  Get the unread nessages of the selected accounts
     //
-    let filtersDiv = document.getElementById("filters");
-    let filtersAttr = filtersDiv.getAttribute("data-filters");
-    let filters = JSON.parse(filtersAttr);
+    const filtersDiv = document.getElementById("filters");
+    const filtersAttr = filtersDiv.getAttribute("data-filters");
+    const filters = JSON.parse(filtersAttr);
 
     if (filters.length > 0) {
       SysTrayX.Messaging.unReadMessages(filters).then(
+        SysTrayX.Messaging.unreadCb
+      );
+    } else {
+      SysTrayX.Messaging.unReadMessages([{ unread: true }]).then(
         SysTrayX.Messaging.unreadCb
       );
     }
@@ -115,7 +119,7 @@ SysTrayX.Messaging = {
   sendPreferences: function() {
     console.debug("Send preferences");
 
-    let getter = browser.storage.sync.get([
+    const getter = browser.storage.sync.get([
       "debug",
       "iconType",
       "iconMime",
@@ -127,10 +131,10 @@ SysTrayX.Messaging = {
   sendPreferencesStorage: function(result) {
     console.debug("Get preferences from storage");
 
-    let debug = result.debug || "false";
-    let iconType = result.iconType || "0";
-    let iconMime = result.iconMime || "image/png";
-    let icon = result.icon || [];
+    const debug = result.debug || "false";
+    const iconType = result.iconType || "0";
+    const iconMime = result.iconMime || "image/png";
+    const icon = result.icon || [];
 
     console.log("Debug" + debug);
     console.log("Type" + iconType);
@@ -158,16 +162,16 @@ SysTrayX.Messaging = {
   getAccounts: function() {
     console.debug("Get accounts");
 
-    let getter = browser.storage.sync.get(["accounts", "filters"]);
+    const getter = browser.storage.sync.get(["accounts", "filters"]);
     getter.then(this.getAccountsStorage, this.onGetAccountsStorageError);
 
     if (SysTrayX.debugAccounts) {
-      let accountsDiv = document.getElementById("accounts");
+      const accountsDiv = document.getElementById("accounts");
 
-      let accountsAttr = accountsDiv.getAttribute("data-accounts");
+      const accountsAttr = accountsDiv.getAttribute("data-accounts");
       console.debug("Accounts attr: " + accountsAttr);
 
-      let accounts = JSON.parse(accountsAttr);
+      const accounts = JSON.parse(accountsAttr);
       console.debug("Accounts poll: " + accounts.length);
     }
   },
@@ -179,16 +183,16 @@ SysTrayX.Messaging = {
   getAccountsStorage: function(result) {
     console.debug("Get accounts from storage");
 
-    let accounts = result.accounts || [];
+    const accounts = result.accounts || [];
 
     //  Store them in the background HTML
-    let accountsDiv = document.getElementById("accounts");
+    const accountsDiv = document.getElementById("accounts");
     accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
 
-    let filters = result.filters || [];
+    const filters = result.filters || [];
 
     //  Store them in the background HTML
-    let filtersDiv = document.getElementById("filters");
+    const filtersDiv = document.getElementById("filters");
     filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
@@ -225,28 +229,28 @@ SysTrayX.Link = {
       //  Store the preferences from the app
       console.log("Preferences received");
 
-      let iconMime = response["preferences"].iconMime;
+      const iconMime = response["preferences"].iconMime;
       if (iconMime) {
         browser.storage.sync.set({
           iconMime: iconMime
         });
       }
 
-      let icon = response["preferences"].icon;
+      const icon = response["preferences"].icon;
       if (icon) {
         browser.storage.sync.set({
           icon: icon
         });
       }
 
-      let iconType = response["preferences"].iconType;
+      const iconType = response["preferences"].iconType;
       if (iconType) {
         browser.storage.sync.set({
           iconType: iconType
         });
       }
 
-      let debug = response["preferences"].debug;
+      const debug = response["preferences"].debug;
       if (debug) {
         browser.storage.sync.set({
           debug: debug

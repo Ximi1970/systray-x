@@ -21,13 +21,13 @@ SysTrayX.SaveOptions = {
 
     console.debug("Store accounts and filters");
 
-    let treeBase = document.getElementById("accountsTree");
-    let inputs = treeBase.querySelectorAll("input");
+    const treeBase = document.getElementById("accountsTree");
+    const inputs = treeBase.querySelectorAll("input");
     let accounts = [];
     let filters = [];
     for (let i = 0; i < inputs.length; ++i) {
-      let account = JSON.parse(inputs[i].value);
-      let checked = inputs[i].checked;
+      const account = JSON.parse(inputs[i].value);
+      const checked = inputs[i].checked;
       accounts.push({ ...account, checked: checked });
 
       if (checked) {
@@ -72,7 +72,7 @@ SysTrayX.SaveOptions = {
 
     console.debug("Store icon preferences");
 
-    let iconType = document.querySelector('input[name="iconType"]:checked')
+    const iconType = document.querySelector('input[name="iconType"]:checked')
       .value;
 
     //  Store icon type
@@ -106,8 +106,8 @@ SysTrayX.RestoreOptions = {
     //
     //  Test 1
     //
-    let getting = browser.storage.sync.get("optionsRadioTest");
-    getting.then(
+    const getRadioTest = browser.storage.sync.get("optionsRadioTest");
+    getRadioTest.then(
       SysTrayX.RestoreOptions.setCurrentRadioChoice,
       SysTrayX.RestoreOptions.onError
     );
@@ -115,12 +115,12 @@ SysTrayX.RestoreOptions = {
     //
     //  Test 2
     //
-    getting = browser.storage.sync.get([
+    const getCheckTest = browser.storage.sync.get([
       "optionsCheck1",
       "optionsCheck2",
       "optionsCheck3"
     ]);
-    getting.then(
+    getCheckTest.then(
       SysTrayX.RestoreOptions.setCurrentCheckChoice,
       SysTrayX.RestoreOptions.onError
     );
@@ -130,7 +130,7 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore debug state
     //
-    let getDebug = browser.storage.sync.get("debug");
+    const getDebug = browser.storage.sync.get("debug");
     getDebug.then(
       SysTrayX.RestoreOptions.setDebug,
       SysTrayX.RestoreOptions.onDebugError
@@ -139,7 +139,7 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore icon type
     //
-    let getIconType = browser.storage.sync.get("iconType");
+    const getIconType = browser.storage.sync.get("iconType");
     getIconType.then(
       SysTrayX.RestoreOptions.setIconType,
       SysTrayX.RestoreOptions.onIconTypeError
@@ -148,7 +148,7 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore icon
     //
-    let getIcon = browser.storage.sync.get(["iconMime", "icon"]);
+    const getIcon = browser.storage.sync.get(["iconMime", "icon"]);
     getIcon.then(
       SysTrayX.RestoreOptions.setIcon,
       SysTrayX.RestoreOptions.onIconError
@@ -161,8 +161,8 @@ SysTrayX.RestoreOptions = {
   //  Test 1 Callback
   //
   setCurrentRadioChoice: function(result) {
-    let selector = result.optionsRadioTest || "Option1";
-    let radioButton = document.querySelector(`[value=${selector}]`);
+    const selector = result.optionsRadioTest || "Option1";
+    const radioButton = document.querySelector(`[value=${selector}]`);
     radioButton.checked = true;
   },
 
@@ -170,11 +170,11 @@ SysTrayX.RestoreOptions = {
   //  Test 2 Callback
   //
   setCurrentCheckChoice: function(result) {
-    let checkbox1 = document.querySelector('[name="check1"]');
+    const checkbox1 = document.querySelector('[name="check1"]');
     checkbox1.checked = result.optionsCheck1 || false;
-    let checkbox2 = document.querySelector('[name="check2"]');
+    const checkbox2 = document.querySelector('[name="check2"]');
     checkbox2.checked = result.optionsCheck2 || false;
-    let checkbox3 = document.querySelector('[name="check3"]');
+    const checkbox3 = document.querySelector('[name="check3"]');
     checkbox3.checked = result.optionsCheck3 || false;
   },
 
@@ -189,12 +189,12 @@ SysTrayX.RestoreOptions = {
   //  Restore debug state callbacks
   //
   setDebug: function(result) {
-    let debug = result.debug || "false";
+    const debug = result.debug || "false";
 
     console.debug("Debug: " + debug);
 
-    let checkbox = document.querySelector(`input[name="debug"]`);
-    checkbox.checked = (debug === "true");
+    const checkbox = document.querySelector(`input[name="debug"]`);
+    checkbox.checked = debug === "true";
   },
 
   onDebugError: function(error) {
@@ -205,8 +205,8 @@ SysTrayX.RestoreOptions = {
   //  Restore icon type callbacks
   //
   setIconType: function(result) {
-    let iconType = result.iconType || "0";
-    let radioButton = document.querySelector(`[value="${iconType}"]`);
+    const iconType = result.iconType || "0";
+    const radioButton = document.querySelector(`[value="${iconType}"]`);
     radioButton.checked = true;
   },
 
@@ -218,33 +218,45 @@ SysTrayX.RestoreOptions = {
   //  Restore icon
   //
   setIconMime: function(result) {
-    let iconMime = result.iconMime || "image/png";
+    const iconMime = result.iconMime || "";
 
-    let iconDiv = document.getElementById("icon");
-    iconDiv.setAttribute("data-icon-mime", iconMime);
+    const valid = iconMime !== "";
+    if (valid) {
+      const iconDiv = document.getElementById("icon");
+      iconDiv.setAttribute("data-icon-mime", iconMime);
+    }
+
+    return valid;
   },
 
   setIconData: function(result) {
-    let iconBase64 = result.icon || "";
+    const iconBase64 = result.icon || "";
 
-    let iconDiv = document.getElementById("icon");
-    iconDiv.setAttribute("data-icon", iconBase64);
+    const valid = iconBase64 !== "";
+    if (valid) {
+      const iconDiv = document.getElementById("icon");
+      iconDiv.setAttribute("data-icon", iconBase64);
+    }
+
+    return valid;
   },
 
   updateIconImage: function() {
-    let iconDiv = document.getElementById("icon");
+    const iconDiv = document.getElementById("icon");
     icon_mime = iconDiv.getAttribute("data-icon-mime");
     icon_data = iconDiv.getAttribute("data-icon");
 
-    let image = document.getElementById("customIconImage");
+    const image = document.getElementById("customIconImage");
     image.setAttribute("src", `data:${icon_mime};base64,${icon_data}`);
   },
 
   setIcon: function(result) {
-    SysTrayX.RestoreOptions.setIconMime(result);
-    SysTrayX.RestoreOptions.setIconData(result);
+    const validMime = SysTrayX.RestoreOptions.setIconMime(result);
+    const validData = SysTrayX.RestoreOptions.setIconData(result);
 
-    SysTrayX.RestoreOptions.updateIconImage();
+    if (validMime && validData) {
+      SysTrayX.RestoreOptions.updateIconImage();
+    }
   },
 
   onIconError: function(error) {
@@ -255,7 +267,7 @@ SysTrayX.RestoreOptions = {
 SysTrayX.StorageChanged = {
   changed: function(changes, area) {
     //  Try to keep the preferences of the add-on and the app in sync
-    let changedItems = Object.keys(changes);
+    const changedItems = Object.keys(changes);
 
     let changed_icon = false;
     let changed_icon_mime = false;
@@ -294,6 +306,49 @@ SysTrayX.StorageChanged = {
   }
 };
 
+//
+//  Set default icon
+//
+const toDataURL = url =>
+  fetch(url)
+    .then(response => response.blob())
+    .then(
+      blob =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        })
+    );
+
+toDataURL("icons/blank-icon.png").then(dataUrl => {
+  const data = dataUrl
+    .split(":")
+    .pop()
+    .split(",");
+  const mime = data[0].split(";")[0];
+  const base64 = data[1];
+
+  const iconDiv = document.getElementById("icon");
+
+  if (
+    iconDiv.getAttribute("data-icon") === "" &&
+    iconDiv.getAttribute("data-icon-mime") === ""
+  ) {
+    iconDiv.setAttribute("data-icon", base64);
+    iconDiv.setAttribute("data-icon-mime", mime);
+
+    console.debug("Default set");
+  }
+
+  console.debug("Default: " + mime);
+  console.debug("Default: " + base64);
+});
+
+//
+//  Main
+//
 document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
 document
   .querySelector('[name="saveform"]')
