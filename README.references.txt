@@ -25,3 +25,7 @@ Tree table
 https://stackoverflow.com/questions/5636375/how-to-create-a-collapsing-tree-table-in-html-css-js
 http://maxdesign.com.au/articles/tree-table/
 
+
+Image to Base64 conversion
+
+https://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
