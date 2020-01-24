@@ -307,46 +307,6 @@ SysTrayX.StorageChanged = {
 };
 
 //
-//  Set default icon
-//
-const toDataURL = url =>
-  fetch(url)
-    .then(response => response.blob())
-    .then(
-      blob =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        })
-    );
-
-toDataURL("icons/blank-icon.png").then(dataUrl => {
-  const data = dataUrl
-    .split(":")
-    .pop()
-    .split(",");
-  const mime = data[0].split(";")[0];
-  const base64 = data[1];
-
-  const iconDiv = document.getElementById("icon");
-
-  if (
-    iconDiv.getAttribute("data-icon") === "" &&
-    iconDiv.getAttribute("data-icon-mime") === ""
-  ) {
-    iconDiv.setAttribute("data-icon", base64);
-    iconDiv.setAttribute("data-icon-mime", mime);
-
-    console.debug("Default set");
-  }
-
-  console.debug("Default: " + mime);
-  console.debug("Default: " + base64);
-});
-
-//
 //  Main
 //
 document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);

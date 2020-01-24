@@ -5,8 +5,6 @@ var SysTrayX = {
 };
 
 SysTrayX.Messaging = {
-  initialized: false,
-
   unreadFiltersTest: [
     { unread: true },
     { unread: true, folder: { accountId: "account1", path: "/INBOX" } }
@@ -24,8 +22,6 @@ SysTrayX.Messaging = {
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
     window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
-
-    this.initialized = true;
   },
 
   //
@@ -136,9 +132,9 @@ SysTrayX.Messaging = {
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
 
-    console.log("Debug" + debug);
-    console.log("Type" + iconType);
-    console.log("Mime" + iconMime);
+    console.log(`Debug ${debug}`);
+    console.log(`Type ${iconType}`);
+    console.log(`Mime ${iconMime}`);
     console.log(icon);
 
     //  Send it to the app
@@ -169,10 +165,10 @@ SysTrayX.Messaging = {
       const accountsDiv = document.getElementById("accounts");
 
       const accountsAttr = accountsDiv.getAttribute("data-accounts");
-      console.debug("Accounts attr: " + accountsAttr);
+      console.debug(`Accounts attr: ${accountsAttr}`);
 
       const accounts = JSON.parse(accountsAttr);
-      console.debug("Accounts poll: " + accounts.length);
+      console.debug(`Accounts poll: ${accounts.length}`);
     }
   },
 
@@ -223,7 +219,7 @@ SysTrayX.Link = {
   },
 
   receiveSysTrayXMessage: function(response) {
-    console.log("Received: " + response);
+    console.log(`Received: ${response}`);
 
     if (response["preferences"]) {
       //  Store the preferences from the app
@@ -260,12 +256,20 @@ SysTrayX.Link = {
   }
 };
 
+async function start() {
+  // Init defaults before everything
+  await getDefaultIcon();
+
+  //  Setup the link first
+  SysTrayX.Link.init();
+
+  //  Main start
+  SysTrayX.Messaging.init();
+}
+
 console.log("Starting SysTray-X");
 
-//  Setup the link first
-SysTrayX.Link.init();
+//  Start the add-on
+start();
 
-//  Main start
-SysTrayX.Messaging.init();
-
-console.log("Done");
+console.log("End SysTray-X");
