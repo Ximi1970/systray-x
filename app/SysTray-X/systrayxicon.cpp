@@ -124,7 +124,7 @@ void SysTrayXIcon::renderIcon()
         case Preferences::PREF_NEWMAIL_ICON:
         {
             QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/blank-icon.png"));
-            pixmap = QPixmap( new_mail.pixmap( 256, 256 ) );
+            pixmap = new_mail.pixmap( 256, 256 );
             break;
         }
 
