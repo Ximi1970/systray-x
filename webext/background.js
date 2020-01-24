@@ -22,6 +22,18 @@ SysTrayX.Messaging = {
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
     window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
+
+    //  Semd the app a close command
+    browser.windows.onRemoved.addListener(SysTrayX.Messaging.closeApp);
+  },
+
+  closeApp: function() {
+    console.debug("Shutting down");
+
+    //  Send it to the app
+    SysTrayX.Link.postSysTrayXMessage({
+      shutdown: ""
+    });
   },
 
   //

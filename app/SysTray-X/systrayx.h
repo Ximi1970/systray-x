@@ -77,6 +77,11 @@ class SysTrayX : public QObject
 
     private slots:
 
+        /**
+          * @brief slotShutdown Shutdown the app.
+          */
+         void slotShutdown();
+
     private:
 
         /**

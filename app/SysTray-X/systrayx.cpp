@@ -94,6 +94,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      * Connect link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+    connect( m_link, &SysTrayXLink::signalShutdown, this, &SysTrayX::slotShutdown );
 
     /*
      *  Request preferences from add-on
@@ -190,4 +191,16 @@ void SysTrayX::createTrayIcon()
     m_tray_icon->setIconMime( m_preferences->getIconMime() );
     m_tray_icon->setIconData( m_preferences->getIconData() );
     m_tray_icon->setIconType( m_preferences->getIconType() );
+}
+
+
+/*
+ *  Quit the app
+ */
+void SysTrayX::slotShutdown()
+{
+    /*
+     *  Let's quit
+     */
+    QCoreApplication::quit();
 }

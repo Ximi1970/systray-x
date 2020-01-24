@@ -68,41 +68,12 @@ class SysTrayXLink : public QObject
          */
         void EncodePreferences( const Preferences& pref );
 
-    public slots:
-
-        /**
-         * @brief slotDebugChange. Handle a change in debug state.
-         */
-        void slotDebugChange();
-
-        /**
-         * @brief slotLinkWrite. Write the link.
-         */
-        void slotLinkWrite( QByteArray message );
-
-        /**
-         * @brief slotIconTypeChange. Slot for handling icon type change signals.
-         */
-        void slotIconTypeChange();
-
-        /**
-         * @brief slotIconDataChange. Slot for handling icon data change signals.
-         */
-        void slotIconDataChange();
-
-     private slots:
-
-        /**
-         * @brief slotLinkRead. Read the link.
-         */
-        void slotLinkRead();
-
-        /**
-         * @brief slotLinkReadException. Handle a read link exception.
-         */
-        void slotLinkReadException();
-
     signals:
+
+        /**
+         * @brief signalShutdown. Signal to shutdown the app.
+         */
+        void signalShutdown();
 
         /**
          * @brief signalReceivedMessageLength
@@ -138,6 +109,40 @@ class SysTrayXLink : public QObject
          * @param unreadMail    The number of unread mails.
          */
         void signalUnreadMail( int unread_mail );
+
+    public slots:
+
+        /**
+         * @brief slotDebugChange. Handle a change in debug state.
+         */
+        void slotDebugChange();
+
+        /**
+         * @brief slotLinkWrite. Write the link.
+         */
+        void slotLinkWrite( QByteArray message );
+
+        /**
+         * @brief slotIconTypeChange. Slot for handling icon type change signals.
+         */
+        void slotIconTypeChange();
+
+        /**
+         * @brief slotIconDataChange. Slot for handling icon data change signals.
+         */
+        void slotIconDataChange();
+
+     private slots:
+
+        /**
+         * @brief slotLinkRead. Read the link.
+         */
+        void slotLinkRead();
+
+        /**
+         * @brief slotLinkReadException. Handle a read link exception.
+         */
+        void slotLinkReadException();
 
     private:
 

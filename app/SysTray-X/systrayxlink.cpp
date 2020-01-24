@@ -141,6 +141,11 @@ void SysTrayXLink::DecodeMessage( const QByteArray& message )
     {
         QJsonObject jsonObject = jsonResponse.object();
 
+        if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
+        {
+            emit signalShutdown();
+        }
+
         if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
         {
             int unreadMail = jsonObject[ "unreadMail" ].toInt();
