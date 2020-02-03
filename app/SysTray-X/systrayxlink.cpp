@@ -130,6 +130,52 @@ void SysTrayXLink::sendPreferences()
 
 
 /*
+ *  Send the window normal command
+ */
+void SysTrayXLink::sendWindowNormal()
+{
+    /*
+     *  Create command
+     */
+    QJsonObject windowObject;
+    windowObject.insert("window", "normal" );
+
+    /*
+     *  Create doc
+     */
+    QJsonDocument doc( windowObject );
+
+    /*
+     *  Send the command
+     */
+    linkWrite( doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
+ *  Send the window minimize command
+ */
+void SysTrayXLink::sendWindowMinimize()
+{
+    /*
+     *  Create command
+     */
+    QJsonObject windowObject;
+    windowObject.insert("window", "minimized" );
+
+    /*
+     *  Create doc
+     */
+    QJsonDocument doc( windowObject );
+
+    /*
+     *  Send the command
+     */
+    linkWrite( doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -141,15 +187,21 @@ void SysTrayXLink::DecodeMessage( const QByteArray& message )
     {
         QJsonObject jsonObject = jsonResponse.object();
 
+        if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
+        {
+            int unreadMail = jsonObject[ "unreadMail" ].toInt();
+            emit signalUnreadMail( unreadMail );
+        }
+
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
             emit signalShutdown();
         }
 
-        if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
+        if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
-            int unreadMail = jsonObject[ "unreadMail" ].toInt();
-            emit signalUnreadMail( unreadMail );
+            QString window_state = jsonObject[ "window" ].toString();
+            emit signalWindowState( window_state );
         }
 
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
@@ -330,4 +382,22 @@ void SysTrayXLink::slotIconDataChange()
     {
         sendPreferences();
     }
+}
+
+
+/*
+ *  Handle the window normal signal
+ */
+void SysTrayXLink::slotWindowNormal()
+{
+    sendWindowNormal();
+}
+
+
+/*
+ *  Handle the window minimize signal
+ */
+void SysTrayXLink::slotWindowMinimize()
+{
+    sendWindowMinimize();
 }

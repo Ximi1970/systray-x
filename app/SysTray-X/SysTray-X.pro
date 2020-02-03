@@ -131,6 +131,14 @@ SOURCES += \
         debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp
+unix: {
+SOURCES += \
+        windowctrl-unix.cpp
+}
+win32: {
+SOURCES += \
+        windowctrl-win.cpp
+}
 
 HEADERS += \
         systrayxlink.h \
@@ -138,7 +146,16 @@ HEADERS += \
         systrayx.h \
         debugwidget.h \
         preferencesdialog.h \
-        preferences.h
+        preferences.h \
+        windowctrl.h
+unix: {
+HEADERS += \
+        windowctrl-unix.h
+}
+win32: {
+HEADERS += \
+        windowctrl-win.h
+}
 
 FORMS += \
         debugwidget.ui \

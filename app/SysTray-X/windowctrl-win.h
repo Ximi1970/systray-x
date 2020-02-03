@@ -1,0 +1,55 @@
+#include <QtGlobal>
+#ifdef Q_OS_WIN
+
+#ifndef WINDOWCTRLWIN_H
+#define WINDOWCTRLWIN_H
+
+#include <QObject>
+
+class WindowCtrl : public QObject
+{
+    Q_OBJECT
+
+    public:
+
+        /**
+         * @brief WindowCtrl. Constructor.
+         *
+         * @param parent    My parent.
+         */
+        explicit WindowCtrl( QObject *parent = nullptr );
+
+    signals:
+
+        /**
+         * @brief signalDebugMessage. Signal a debug message.
+         *
+         * @param message   The message.
+         */
+        void signalDebugMessage( QString message );
+
+    public slots:
+
+        /**
+         * @brief slotWindowState. Handle the window state change signal.
+         *
+         * @param state     The new state.
+         */
+        void slotWindowState( QString state );
+
+        /**
+         * @brief slotShowHide. Slot for handling of the show / hide window signal.
+         */
+        void slotShowHide();
+
+private:
+
+    /**
+     * @brief m_state. State of the TB window.
+     */
+    QString m_state;
+};
+
+#endif // WINDOWCTRLWIN_H
+
+#endif // Q_OS_WIN
