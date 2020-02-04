@@ -28,6 +28,16 @@ class WindowCtrl : public QObject
          */
         void signalDebugMessage( QString message );
 
+        /**
+         * @brief signalWindowNormal. Signal normal window.
+         */
+        void signalWindowNormal();
+
+        /**
+         * @brief signalWindowMinimuze. Signal minimize window.
+         */
+        void signalWindowMinimize();
+
     public slots:
 
         /**
@@ -42,12 +52,12 @@ class WindowCtrl : public QObject
          */
         void slotShowHide();
 
-private:
+    private:
 
-    /**
-     * @brief m_state. State of the TB window.
-     */
-    QString m_state;
+        /**
+         * @brief m_state. State of the TB window.
+         */
+        QString m_state;
 };
 
 #endif // WINDOWCTRLWIN_H

@@ -2,12 +2,18 @@
 
 #ifdef Q_OS_UNIX
 
+/*
+ *  Constructor
+ */
 WindowCtrl::WindowCtrl(QObject *parent) : QObject(parent)
 {
 
 }
 
 
+/*
+ *  Handle change in window state
+ */
 void WindowCtrl::slotWindowState( QString state )
 {
     m_state = state;
@@ -16,6 +22,9 @@ void WindowCtrl::slotWindowState( QString state )
 }
 
 
+/*
+ *  Handle show / hide signal
+ */
 void WindowCtrl::slotShowHide()
 {
     if( m_state == "minimized" )
