@@ -8,7 +8,6 @@
 /*
  *  System includes
  */
-#include <unistd.h>
 
 /*
  *	Qt includes
@@ -52,10 +51,10 @@ SysTrayXLink::SysTrayXLink( Preferences *pref )
     /*
      *  Setup the notifiers
      */
-    m_notifier_link_read = new QSocketNotifier( STDIN_FILENO, QSocketNotifier::Read, this );
+    m_notifier_link_read = new QSocketNotifier( 0, QSocketNotifier::Read, this );
     connect( m_notifier_link_read, &QSocketNotifier::activated, this, &SysTrayXLink::slotLinkRead );
 
-    m_notifier_link_read_exception = new QSocketNotifier( STDIN_FILENO, QSocketNotifier::Exception, this );
+    m_notifier_link_read_exception = new QSocketNotifier( 0, QSocketNotifier::Exception, this );
     connect( m_notifier_link_read_exception, &QSocketNotifier::activated, this, &SysTrayXLink::slotLinkReadException );
 }
 
