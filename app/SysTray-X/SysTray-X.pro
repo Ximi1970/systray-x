@@ -116,6 +116,17 @@ message("Git branch: "$$GIT_BRANCH)
 message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
 #message($$QMAKESPEC)
 
+win32: {
+    CONFIG(debug, debug|release) {
+        QAKE_POST_LINK = xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Cored.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
+        QAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgetsd.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
+        QAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Guid.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\"
+    } else {
+        QAKE_POST_LINK = xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Core.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
+        QAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgets.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
+        QAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Gui.dll)\" \"$$shell_path($${OUT_PWD}/release/)\"
+    }
+}
 
 #
 #	DO NOT COMPRESS THE RESOURCES. QFile.map() cannot handle it...
