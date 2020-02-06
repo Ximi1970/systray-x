@@ -118,13 +118,13 @@ message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
 
 win32: {
     CONFIG(debug, debug|release) {
-        QMAKE_POST_LINK = xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Cored.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
-        QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgetsd.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
-        QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Guid.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\"
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)"
+
+#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgetsd.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
     } else {
-        QMAKE_POST_LINK = xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Core.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
-        QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgets.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
-        QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5Gui.dll)\" \"$$shell_path($${OUT_PWD}/release/)\"
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+
+#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgets.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
     }
 }
 
