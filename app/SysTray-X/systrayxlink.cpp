@@ -44,7 +44,7 @@ SysTrayXLinkReader::SysTrayXLinkReader()
     /*
      *  Set stdin to binary
      */
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
     _setmode( _fileno( stdin ), _O_BINARY);
 #endif
 
