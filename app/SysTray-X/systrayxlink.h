@@ -58,6 +58,13 @@ class SysTrayXLinkReader : public QObject
     signals:
 
         /**
+         * @brief signalDebugMessage
+         *
+         *  @param message     The message.
+         */
+        void    signalDebugMessage( QString message );
+
+        /**
          * @brief signalReceivedDataLength
          *
          * @param data_len      The length of the received data.
@@ -69,14 +76,14 @@ class SysTrayXLinkReader : public QObject
          *
          *  @param data     The received data.
          */
-        void    signalReceivedData( const QByteArray& data );
+        void    signalReceivedData( QByteArray data );
 
         /**
          * @brief signalReceivedMessage. Signal the received message.
          *
          *  @param message  The received message.
          */
-        void    signalReceivedMessage( const QByteArray& message );
+        void    signalReceivedMessage( QByteArray message );
 
     private:
 
@@ -167,7 +174,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief signalWindowState. Signal a change in the window state.
          */
-        void    signalWindowState( const QString& state );
+        void    signalWindowState( QString state );
 
         /**
          * @brief signalReceivedDataLength
@@ -181,21 +188,21 @@ class SysTrayXLink : public QObject
          *
          *  @param data     The data received.
          */
-        void    signalReceivedData( const QByteArray& data );
+        void    signalReceivedData( QByteArray data );
 
         /**
          * @brief signalLinkReceiveError. Cannot parse received JSON message.
          *
          * @param error     JSON error message
          */
-        void    signalLinkReceiveError( const QString& error );
+        void    signalLinkReceiveError( QString error );
 
         /**
          * @brief signalDebugMessage. Signal a debug message.
          *
          * @param message   The message.
          */
-        void    signalDebugMessage( const QString& message );
+        void    signalDebugMessage( QString message );
 
         /**
          * @brief signalUnreadMail. Signal numder of unread mails.
@@ -214,7 +221,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief slotLinkWrite. Write the link.
          */
-        void    slotLinkWrite( const QByteArray& message );
+        void    slotLinkWrite( QByteArray message );
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
@@ -239,6 +246,13 @@ class SysTrayXLink : public QObject
      private slots:
 
         /**
+         * @brief slotDebugMessage. Handle the signal for a debuf message from the reader thread.
+         *
+         *   @param message     The message.
+         */
+        void    slotDebugMessage( QString message );
+
+        /**
          * @brief slotReceivedDataLength. Handle data length signal from the reader thread.
          *
          * @param data_len    The data length.
@@ -250,12 +264,12 @@ class SysTrayXLink : public QObject
          *
          *  @param data  The data.
          */
-        void    slotReceivedData( const QByteArray& data );
+        void    slotReceivedData( QByteArray data );
 
         /**
          * @brief slotLinkRead. Read the link.
          */
-        void    slotLinkRead( const QByteArray& message );
+        void    slotLinkRead( QByteArray message );
 
     private:
 

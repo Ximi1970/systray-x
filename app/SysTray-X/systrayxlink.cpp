@@ -107,24 +107,33 @@ void    SysTrayXLinkReader::slotWorker()
     while( m_doWork )
     {
         qint32  msglen;
-        int status1 = in.readRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
+        int status_len = in.readRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
 
         emit signalReceivedDataLength( msglen );
 
-        QByteArray message(msglen, 0 );
-        int status2 = in.readRawData( message.data(), msglen );
-
-        emit signalReceivedData( message );
-
-        if( ( status1 == 4 ) && ( status2 == msglen ) )
+        if( status_len != sizeof( qint32 ) )
         {
-            //error handling?
+            emit signalDebugMessage( "Cannot get message length" );
         }
 
-        /*
-         *  Send the data to my parent
-         */
-        emit signalReceivedMessage( message );
+
+        if( msglen > 0)
+        {
+            QByteArray message( msglen, 0 );
+            int status2 = in.readRawData( message.data(), msglen );
+
+            emit signalReceivedData( message );
+
+            if( status2 != msglen )
+            {
+                emit signalDebugMessage( "Cannot get complete message" );
+            }
+
+            /*
+             *  Send the data to my parent
+             */
+            emit signalReceivedMessage( message );
+        }
     }
 
     /*
@@ -160,8 +169,8 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
     /*
      *  Open dump.txt
      */
-    m_dump = new QFile( "dump.txt", this );
-    m_dump->open( QIODevice::WriteOnly );
+//    m_dump = new QFile( "dump.txt", this );
+//    m_dump->open( QIODevice::WriteOnly );
 
     /*
      *  Setup the reader thread
@@ -173,6 +182,8 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
+
+    connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
 
     connect( reader, &SysTrayXLinkReader::signalReceivedDataLength, this, &SysTrayXLink::slotReceivedDataLength );
     connect( reader, &SysTrayXLinkReader::signalReceivedData, this, &SysTrayXLink::slotReceivedData );
@@ -193,8 +204,8 @@ SysTrayXLink::~SysTrayXLink()
     m_stdout->close();
     delete m_stdout;
 
-    m_dump->close();
-    delete m_dump;
+//    m_dump->close();
+//    delete m_dump;
 }
 
 
@@ -416,6 +427,15 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 
 
 /*
+ *  Handle the debug message from the reader thread
+ */
+void    SysTrayXLink::slotDebugMessage( QString message )
+{
+    emit signalDebugMessage( message );
+}
+
+
+/*
  *  Handle data length signal from reader thread
  */
 void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
@@ -427,7 +447,7 @@ void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
 /*
  *  Handle data signal from read thread
  */
-void    SysTrayXLink::slotReceivedData( const QByteArray& data )
+void    SysTrayXLink::slotReceivedData( QByteArray data )
 {
     emit signalReceivedData( data );
 }
@@ -436,12 +456,12 @@ void    SysTrayXLink::slotReceivedData( const QByteArray& data )
 /*
  *  Read the input
  */
-void    SysTrayXLink::slotLinkRead( const QByteArray& message )
+void    SysTrayXLink::slotLinkRead( QByteArray message )
 {
     /*
      *  Debug
      */
-    m_dump->write( message );
+//    m_dump->write( message );
 
     /*
      *  Decode the message
@@ -453,7 +473,7 @@ void    SysTrayXLink::slotLinkRead( const QByteArray& message )
 /*
  *  write the output
  */
-void    SysTrayXLink::slotLinkWrite( const QByteArray& message )
+void    SysTrayXLink::slotLinkWrite( QByteArray message )
 {
     linkWrite( message );
 }
