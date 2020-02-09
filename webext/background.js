@@ -23,17 +23,11 @@ SysTrayX.Messaging = {
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
     window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
 
-    //  Semd the app a close command
-    browser.windows.onRemoved.addListener(SysTrayX.Messaging.closeApp);
-  },
+    //  Send the app a close command if the window closes
+    browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
 
-  closeApp: function() {
-    console.debug("Shutting down");
-
-    //  Send it to the app
-    SysTrayX.Link.postSysTrayXMessage({
-      shutdown: ""
-    });
+    //  Try to catch the window state
+    browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
   //
@@ -233,6 +227,23 @@ SysTrayX.Link = {
   receiveSysTrayXMessage: function(response) {
     console.log(`Received: ${response}`);
 
+    if (response["window"]) {
+      console.log("Window received: " + response["window"]);
+
+      if (response["window"] === "minimized") {
+        browser.windows.update(SysTrayX.Window.startWindow.id, {
+          state: "minimized"
+        });
+      }
+
+      if (response["window"] === "normal") {
+        browser.windows.update(SysTrayX.Window.startWindow.id, {
+          state: "normal",
+          focused: true
+        });
+      }
+    }
+
     if (response["preferences"]) {
       //  Store the preferences from the app
       console.log("Preferences received");
@@ -268,9 +279,59 @@ SysTrayX.Link = {
   }
 };
 
+SysTrayX.Window = {
+  startWindow: undefined,
+
+  closed: function() {
+    // Window closed
+    console.debug("Shutting down");
+
+    //  Send it to the app
+    SysTrayX.Link.postSysTrayXMessage({
+      shutdown: ""
+    });
+  },
+
+  focusChanged: function(windowId) {
+    console.debug("Win focus changed");
+
+    browser.windows.getCurrent().then(win => {
+      SysTrayX.Link.postSysTrayXMessage({ window: win.state });
+    });
+
+    /*
+    if (windowId === -1) {
+      // Assume minimized
+      SysTrayX.Link.postSysTrayXMessage({
+        window: "minimized"
+      });
+    } else {
+      browser.windows.get(windowId, function(win) {
+        SysTrayX.Link.postSysTrayXMessage({
+          window: win.state
+        });
+      });
+    }
+*/
+  }
+};
+
 async function start() {
   // Init defaults before everything
   await getDefaultIcon();
+
+  SysTrayX.Window.startWindow = await browser.windows
+    .getCurrent()
+    .then(currentWindow => currentWindow);
+
+  console.debug("Window focus: " + SysTrayX.Window.startWindow.focused);
+  console.debug("Window name: " + SysTrayX.Window.startWindow.title);
+  console.debug("Window name: " + SysTrayX.Window.startWindow.state);
+
+  //  browser.windows.update(currentWindow.id, { state: "minimized" });
+  //  browser.windows.update(currentWindow.id, { state: "normal", focused: true });
+
+  // ??  browser.windows.update(currentWindow.id, { state: "docked" });
 
   //  Setup the link first
   SysTrayX.Link.init();

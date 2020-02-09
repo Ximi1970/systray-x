@@ -7,6 +7,7 @@
 #include "preferencesdialog.h"
 #include "systrayxlink.h"
 #include "systrayxicon.h"
+#include "windowctrl.h"
 
 /*
  *	Qt includes
@@ -29,6 +30,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Setup preferences storage
      */
     m_preferences = new Preferences();
+
+    /*
+     *  Setup window control
+     */
+    m_win_ctrl = new WindowCtrl();
 
     /*
      *  Setup the link
@@ -54,9 +60,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
         m_debug->show();
     }
 
-//    connect( m_trayIcon, &QSystemTrayIcon::messageClicked, this, &SysTrayX::messageClicked);
-    connect( m_tray_icon, &QSystemTrayIcon::activated, this, &SysTrayX::iconActivated);
-
     /*
      *  Connect debug link signals
      */
@@ -72,10 +75,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_pref_dialog, &PreferencesDialog::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
     connect( m_tray_icon, &SysTrayXIcon::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
     connect( m_link, &SysTrayXLink::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
+    connect( m_win_ctrl, &WindowCtrl::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
 
 
     /*
-     * Connect preferences signals
+     *  Connect preferences signals
      */
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
@@ -91,10 +95,22 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
 
     /*
-     * Connect link signals
+     *  Connect link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
     connect( m_link, &SysTrayXLink::signalShutdown, this, &SysTrayX::slotShutdown );
+    connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
+
+    /*
+     *  Connect window signals
+     */
+    connect( m_win_ctrl, &WindowCtrl::signalWindowNormal, m_link, &SysTrayXLink::slotWindowNormal );
+    connect( m_win_ctrl, &WindowCtrl::signalWindowMinimize, m_link, &SysTrayXLink::slotWindowMinimize );
+
+    /*
+     *  Connect system tray signals
+     */
+    connect( m_tray_icon, &SysTrayXIcon::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
 
     /*
      *  Request preferences from add-on
@@ -117,22 +133,6 @@ void SysTrayX::getPreferences()
 
 
 /*
- *  Handle a click on the system tray icon
- */
-void SysTrayX::iconActivated( QSystemTrayIcon::ActivationReason reason )
-{
-    switch (reason) {
-    case QSystemTrayIcon::Trigger:
-    case QSystemTrayIcon::DoubleClick:
-    case QSystemTrayIcon::MiddleClick:
-        break;
-    default:
-        ;
-    }
-}
-
-
-/*
  *  Create the actions for the system tray icon menu
  */
 void SysTrayX::createActions()
@@ -147,6 +147,9 @@ void SysTrayX::createActions()
     m_restoreAction = new QAction(tr("&Restore"), this);
     connect( m_restoreAction, &QAction::triggered, this, &QWidget::showNormal );
 */
+
+    m_showhide_action = new QAction(tr("&Show/Hide"), this);
+    connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
 
     m_pref_action = new QAction(tr("&Preferences"), this);
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
@@ -175,6 +178,8 @@ void SysTrayX::createTrayIcon()
 //    m_trayIconMenu->addAction( m_maximizeAction );
 //    m_trayIconMenu->addAction( m_restoreAction );
 
+    m_tray_icon_menu->addAction( m_showhide_action );
+    m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_pref_action );
     m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_quit_action );

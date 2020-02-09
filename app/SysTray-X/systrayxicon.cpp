@@ -28,6 +28,8 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink *link, Preferences *pref, QObject *pare
     m_pref = pref;
 
     m_unread_mail = 0;
+
+    connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
 
 
@@ -187,4 +189,27 @@ void SysTrayXIcon::slotIconDataChange()
 {
     setIconMime( m_pref->getIconMime() );
     setIconData( m_pref->getIconData() );
+}
+
+
+/*
+ *  Handle activation of the tray icon
+ */
+void SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reason )
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+    {
+        //  Clicked
+        emit signalShowHide();
+        break;
+    }
+
+    case QSystemTrayIcon::DoubleClick:
+    case QSystemTrayIcon::MiddleClick:
+        break;
+
+    default:
+        ;
+    }
 }

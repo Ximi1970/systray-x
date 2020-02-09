@@ -22,6 +22,7 @@ class DebugWidget;
 class PreferencesDialog;
 class SysTrayXIcon;
 class SysTrayXLink;
+class WindowCtrl;
 
 /**
  * @brief The SysTrayX class
@@ -49,12 +50,6 @@ class SysTrayX : public QObject
          * @brief SysTrayX::getPreferences
          */
         void getPreferences();
-
-        /**
-         * @brief iconActivated
-         * @param reason
-         */
-        void iconActivated( QSystemTrayIcon::ActivationReason reason );
 
         /**
          * @brief createTrayIcon. Create the system tray icon.
@@ -95,6 +90,11 @@ class SysTrayX : public QObject
         DebugWidget *m_debug;
 
         /**
+         * @brief m_win_ctrl. Pointer to the window control.
+         */
+        WindowCtrl *m_win_ctrl;
+
+        /**
          * @brief m_link. Pointer to the link object.
          */
         SysTrayXLink *m_link;
@@ -119,6 +119,7 @@ class SysTrayX : public QObject
          */
         QAction *m_pref_action;
         QAction *m_quit_action;
+        QAction *m_showhide_action;
 };
 
 #endif // SYSTRAYX_H

@@ -61,6 +61,13 @@ class SysTrayXIcon : public QSystemTrayIcon
          */
         void setUnreadMail( int unread_mail );
 
+    private:
+
+        /**
+         * @brief setIcon. Set a new rendered icon.
+         */
+        void renderIcon();
+
     signals:
 
         /**
@@ -69,6 +76,11 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @param message   The message.
          */
         void signalDebugMessage( QString message );
+
+        /**
+         * @brief signalShowHide. Signal show / hide window.
+         */
+        void signalShowHide();
 
    public slots:
 
@@ -89,12 +101,14 @@ class SysTrayXIcon : public QSystemTrayIcon
          */
         void slotIconDataChange();
 
-    private:
+    private slots:
 
         /**
-         * @brief setIcon. Set a new rendered icon.
+         * @brief slotIconActivated. Hnadle activation signal of the tray icon.
+         *
+         *  @param reason   Activation reason.
          */
-        void renderIcon();
+        void slotIconActivated( QSystemTrayIcon::ActivationReason reason );
 
     private:
 

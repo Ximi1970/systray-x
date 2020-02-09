@@ -116,6 +116,17 @@ message("Git branch: "$$GIT_BRANCH)
 message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
 #message($$QMAKESPEC)
 
+win32: {
+    CONFIG(debug, debug|release) {
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)"
+
+#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgetsd.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
+    } else {
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+
+#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgets.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
+    }
+}
 
 #
 #	DO NOT COMPRESS THE RESOURCES. QFile.map() cannot handle it...
@@ -131,6 +142,14 @@ SOURCES += \
         debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp
+unix: {
+SOURCES += \
+        windowctrl-unix.cpp
+}
+win32: {
+SOURCES += \
+        windowctrl-win.cpp
+}
 
 HEADERS += \
         systrayxlink.h \
@@ -138,7 +157,16 @@ HEADERS += \
         systrayx.h \
         debugwidget.h \
         preferencesdialog.h \
-        preferences.h
+        preferences.h \
+        windowctrl.h
+unix: {
+HEADERS += \
+        windowctrl-unix.h
+}
+win32: {
+HEADERS += \
+        windowctrl-win.h
+}
 
 FORMS += \
         debugwidget.ui \
