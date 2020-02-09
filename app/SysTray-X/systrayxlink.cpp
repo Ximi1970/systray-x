@@ -10,6 +10,11 @@
 /*
  *  System includes
  */
+#include <iostream>
+#ifdef Q_OS_WIN
+#include <fcntl.h>
+#include <io.h>
+#endif
 
 
 /*
@@ -21,7 +26,6 @@
 #include <QThread>
 #include <QVariant>
 #include <QJsonValue>
-#include <QDataStream>
 #include <QJsonObject>
 
 
@@ -38,10 +42,11 @@
 SysTrayXLinkReader::SysTrayXLinkReader()
 {
     /*
-     *  Open stdin
+     *  Set stdin to binary
      */
-    m_stdin = new QFile( this );
-    m_stdin->open( stdin, QIODevice::ReadOnly );
+#ifdef Q_OS_WIN32
+    _setmode( _fileno( stdin ), _O_BINARY);
+#endif
 
     /*
      *	Setup the timer
@@ -60,9 +65,6 @@ SysTrayXLinkReader::~SysTrayXLinkReader()
     /*
      *  Cleanup
      */
-    m_stdin->close();
-    delete m_stdin;
-
     m_timer->stop();
     delete m_timer;
 }
@@ -102,37 +104,24 @@ void    SysTrayXLinkReader::stopThread()
  */
 void    SysTrayXLinkReader::slotWorker()
 {
-    QDataStream in( m_stdin );
-
     while( m_doWork )
     {
-        qint32  msglen;
-        int status_len = in.readRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
+        qint32 data_len;
+        std::cin.read( reinterpret_cast< char* >( &data_len ), sizeof( qint32 ) );
 
-        emit signalReceivedDataLength( msglen );
+        emit signalReceivedDataLength( data_len );
 
-        if( status_len != sizeof( qint32 ) )
+        if( data_len > 0)
         {
-            emit signalDebugMessage( "Cannot get message length" );
-        }
+            QByteArray data( data_len, 0 );
+            std::cin.read( data.data(), data_len );
 
-
-        if( msglen > 0)
-        {
-            QByteArray message( msglen, 0 );
-            int status2 = in.readRawData( message.data(), msglen );
-
-            emit signalReceivedData( message );
-
-            if( status2 != msglen )
-            {
-                emit signalDebugMessage( "Cannot get complete message" );
-            }
+            emit signalReceivedData( data );
 
             /*
              *  Send the data to my parent
              */
-            emit signalReceivedMessage( message );
+            emit signalReceivedMessage( data );
         }
     }
 
@@ -159,12 +148,6 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
      *  Store preferences
      */
     m_pref = pref;
-
-    /*
-     *  Open stdout
-     */
-    m_stdout = new QFile( this );
-    m_stdout->open( stdout, QIODevice::WriteOnly );
 
     /*
      *  Open dump.txt
@@ -201,9 +184,6 @@ SysTrayXLink::~SysTrayXLink()
     /*
      *  Cleanup
      */
-    m_stdout->close();
-    delete m_stdout;
-
 //    m_dump->close();
 //    delete m_dump;
 }
@@ -214,19 +194,9 @@ SysTrayXLink::~SysTrayXLink()
  */
 void    SysTrayXLink::linkWrite( const QByteArray& message )
 {
-    QDataStream out( m_stdout );
-
     qint32  msglen = message.length();
-    int status1 = out.writeRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
-    int status2 = out.writeRawData( message.data(), msglen );
-
-    m_stdout->flush();
-
-
-    if( status1 && status2 )
-    {
-        //error handling?
-    }
+    std::cout.write( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
+    std::cout.write( message.data(), msglen ) << std::flush;
 }
 
 

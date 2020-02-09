@@ -88,11 +88,6 @@ class SysTrayXLinkReader : public QObject
     private:
 
         /**
-         * @brief m_stdin. Pointer to stdin file.
-         */
-        QFile*  m_stdin;
-
-        /**
          * @brief m_timer. Worker timer.
          */
         QTimer* m_timer;
@@ -282,11 +277,6 @@ class SysTrayXLink : public QObject
          * @brief m_pref. Pointer to the preferences storage.
          */
         Preferences*    m_pref;
-
-        /**
-         * @brief m_stdin. Pointer to stdout file.
-         */
-        QFile*  m_stdout;
 
         /**
          * @brief m_dump. Pointer to dump file.
