@@ -1,10 +1,12 @@
 #ifndef SYSTRAYXLINK_H
 #define SYSTRAYXLINK_H
 
+
 /*
  *	Local includes
  */
 #include "preferences.h"
+
 
 /*
  *	Qt includes
@@ -12,11 +14,88 @@
 #include <QObject>
 #include <QJsonDocument>
 
+
 /*
  *	Predefines
  */
 class QFile;
-class QSocketNotifier;
+class QTimer;
+class QThread;
+
+
+/**
+ * @brief The SysTrayXLinkReader class. Reader thread.
+ */
+class SysTrayXLinkReader : public QObject
+{
+    Q_OBJECT
+
+    public:
+
+        /**
+         * @brief Reader. Constructor, destructor.
+         */
+        SysTrayXLinkReader();
+        ~SysTrayXLinkReader();
+
+        /**
+         * @brief stopThread. Stop the thread.
+         */
+        void    stopThread();
+
+    public slots:
+
+        /**
+         * @brief startThread. Start the thread.
+         */
+        void	startThread();
+
+        /**
+         * @brief slotWorker. The worker thread started by a "timer".
+         */
+        void	slotWorker();
+
+    signals:
+
+        /**
+         * @brief signalReceivedDataLength
+         *
+         * @param data_len      The length of the received data.
+         */
+        void    signalReceivedDataLength( qint32 data_len );
+
+        /**
+         * @brief signalReceivedData
+         *
+         *  @param data     The received data.
+         */
+        void    signalReceivedData( const QByteArray& data );
+
+        /**
+         * @brief signalReceivedMessage. Signal the received message.
+         *
+         *  @param message  The received message.
+         */
+        void    signalReceivedMessage( const QByteArray& message );
+
+    private:
+
+        /**
+         * @brief m_stdin. Pointer to stdin file.
+         */
+        QFile*  m_stdin;
+
+        /**
+         * @brief m_timer. Worker timer.
+         */
+        QTimer* m_timer;
+
+        /**
+         * @brief m_doWork. Status of the worker thread.
+         */
+        bool	m_doWork;
+};
+
 
 /**
  * @brief The SysTrayXLink class. Handles the communications link.
@@ -30,7 +109,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief SysTrayXLink. Constructor, destructor.
          */
-        SysTrayXLink( Preferences *pref );
+        SysTrayXLink( Preferences* pref );
         ~SysTrayXLink();
 
         /**
@@ -38,12 +117,12 @@ class SysTrayXLink : public QObject
          *
          *  @param message  Message to be written.
          */
-        void linkWrite( const QByteArray& message );
+        void    linkWrite( const QByteArray& message );
 
         /**
          * @brief sendPreferences. Send the preferences to the add-on.
          */
-        void sendPreferences();
+        void    sendPreferences();
 
         /**
          * @brief sendWindowNormal. Send the window normal command.
@@ -53,7 +132,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief sendWindowMinimize. Send the window minimize command.
          */
-        void sendWindowMinimize();
+        void    sendWindowMinimize();
 
     private:
 
@@ -62,149 +141,148 @@ class SysTrayXLink : public QObject
          *
          * @param message   The message.
          */
-        void DecodeMessage( const QByteArray& message );
+        void    DecodeMessage( const QByteArray& message );
 
         /**
          * @brief DecodePreferences. Decode a JSON preference object.
          *
          * @param pref  The JSON preferences.
          */
-        void DecodePreferences( const QJsonObject& pref );
+        void    DecodePreferences( const QJsonObject& pref );
 
         /**
          * @brief EncodePreferences. Encode the preferences into a JSON document.
          *
          *  @param pref     The preferences.
          */
-        void EncodePreferences( const Preferences& pref );
+        void    EncodePreferences( const Preferences& pref );
 
     signals:
 
         /**
          * @brief signalShutdown. Signal to shutdown the app.
          */
-        void signalShutdown();
+        void    signalShutdown();
 
         /**
          * @brief signalWindowState. Signal a change in the window state.
          */
-        void signalWindowState( QString state );
+        void    signalWindowState( const QString& state );
 
         /**
-         * @brief signalReceivedMessageLength
+         * @brief signalReceivedDataLength
          *
-         * @param msglen
+         * @param data_len      The received data length.
          */
-        void signalReceivedMessageLength( qint32 msglen );
+        void    signalReceivedDataLength( qint32 data_len );
 
         /**
-         * @brief signalReceivedMessage
+         * @brief signalReceivedData
          *
-         *  @param message
+         *  @param data     The data received.
          */
-        void signalReceivedMessage( QByteArray message );
+        void    signalReceivedData( const QByteArray& data );
 
         /**
          * @brief signalLinkReceiveError. Cannot parse received JSON message.
          *
          * @param error     JSON error message
          */
-        void signalLinkReceiveError( QString error );
+        void    signalLinkReceiveError( const QString& error );
 
         /**
          * @brief signalDebugMessage. Signal a debug message.
          *
          * @param message   The message.
          */
-        void signalDebugMessage( QString message );
+        void    signalDebugMessage( const QString& message );
 
         /**
          * @brief signalUnreadMail. Signal numder of unread mails.
          *
          * @param unreadMail    The number of unread mails.
          */
-        void signalUnreadMail( int unread_mail );
+        void    signalUnreadMail( int unread_mail );
 
     public slots:
 
         /**
          * @brief slotDebugChange. Handle a change in debug state.
          */
-        void slotDebugChange();
+        void    slotDebugChange();
 
         /**
          * @brief slotLinkWrite. Write the link.
          */
-        void slotLinkWrite( QByteArray message );
+        void    slotLinkWrite( const QByteArray& message );
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
-        void slotIconTypeChange();
+        void    slotIconTypeChange();
 
         /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
-        void slotIconDataChange();
+        void    slotIconDataChange();
 
         /**
          * @brief slotWindowNormal. Slot for handling window normal signals.
          */
-        void slotWindowNormal();
+        void    slotWindowNormal();
 
         /**
          * @brief slotWindowMinimize. Slot for handling window minimize signals.
          */
-        void slotWindowMinimize();
+        void    slotWindowMinimize();
 
      private slots:
 
         /**
-         * @brief slotLinkRead. Read the link.
+         * @brief slotReceivedDataLength. Handle data length signal from the reader thread.
+         *
+         * @param data_len    The data length.
          */
-        void slotLinkRead();
+        void    slotReceivedDataLength( qint32 data_len );
 
         /**
-         * @brief slotLinkReadException. Handle a read link exception.
+         * @brief signalReceivedData. Handle data signal from the reader thread.
+         *
+         *  @param data  The data.
          */
-        void slotLinkReadException();
+        void    slotReceivedData( const QByteArray& data );
+
+        /**
+         * @brief slotLinkRead. Read the link.
+         */
+        void    slotLinkRead( const QByteArray& message );
 
     private:
 
         /**
-         * @brief m_pref. Pointer to the preferences storage.
+         * @brief m_reader_thread. Pointer to the reader thread.
          */
-        Preferences *m_pref;
+        QThread*    m_reader_thread;
 
         /**
-         * @brief m_stdin. Pointer to stdin file.
+         * @brief m_pref. Pointer to the preferences storage.
          */
-        QFile *m_stdin;
+        Preferences*    m_pref;
 
         /**
          * @brief m_stdin. Pointer to stdout file.
          */
-        QFile *m_stdout;
+        QFile*  m_stdout;
 
         /**
          * @brief m_dump. Pointer to dump file.
          */
-        QFile *m_dump;
-
-        /**
-         * @brief m_notifier_link_read. Pointers to the link read data notifier.
-         */
-        QSocketNotifier *m_notifier_link_read;
-
-        /**
-         * @brief m_notifier_link_read_exception. Pointers to the link read exception notifier.
-         */
-        QSocketNotifier *m_notifier_link_read_exception;
+        QFile*  m_dump;
 
         /**
          * @brief m_pref_json_doc. Temporary storage for the preferences to be send.
          */
-        QJsonDocument m_pref_json_doc;
+        QJsonDocument   m_pref_json_doc;
 };
 
 #endif // SYSTRAYXLINK_H

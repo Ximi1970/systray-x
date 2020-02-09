@@ -63,8 +63,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect debug link signals
      */
-    connect( m_link, &SysTrayXLink::signalReceivedMessageLength, m_debug, &DebugWidget::slotReceivedMessageLength );
-    connect( m_link, &SysTrayXLink::signalReceivedMessage, m_debug, &DebugWidget::slotReceivedMessage );
+    connect( m_link, &SysTrayXLink::signalReceivedDataLength, m_debug, &DebugWidget::slotReceivedDataLength );
+    connect( m_link, &SysTrayXLink::signalReceivedData, m_debug, &DebugWidget::slotReceivedData );
 
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
 

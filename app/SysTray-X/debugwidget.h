@@ -34,42 +34,42 @@ class DebugWidget : public QWidget
         /**
          * @brief DebugWidget. Constructor.
          *
-         * @param parent    My parent.
+         *  @param parent    My parent.
          */
-        explicit DebugWidget( Preferences *pref, QWidget *parent = nullptr );
+        explicit DebugWidget( Preferences* pref, QWidget* parent = nullptr );
 
         /**
          * @brief setDebugMessage. Display a debug message.
          *
-         * @param message   The message to display.
+         *  @param message   The message to display.
          */
-        void setDebugMessage( QString message );
+        void setDebugMessage( const QString& message );
 
         /**
          * @brief setRawDataLength. Display the error data length.
          *
-         * @param length    The raw data length.
+         *  @param length    The raw data length.
          */
         void setRawDataLength( int length );
 
         /**
          * @brief setRswDataMessage. Display the raw data.
          *
-         * @param message   The raw data messsage.
+         *  @param message   The raw data messsage.
          */
         void setErrorDataMessage( const QString &message );
 
         /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
-         * @param unread    The number of unread mails.
+         *  @param unread    The number of unread mails.
          */
         void setUnreadMail( int unread );
 
         /**
          * @brief setError. Set the error message.
          *
-         * @param error     The error message.
+         *  @param error     The error message.
          */
         void setError( const QString &error );
 
@@ -78,9 +78,9 @@ class DebugWidget : public QWidget
         /**
          * @brief signalWriteMessage
          *
-         * @param message
+         *  @param message
          */
-        void signalWriteMessage( QByteArray message );
+        void signalWriteMessage( const QByteArray& message );
 
     public slots:
 
@@ -90,25 +90,25 @@ class DebugWidget : public QWidget
         void slotDebugChange();
 
         /**
-         * @brief slotReceivedMessageLength
+         * @brief slotDebugMessage
          *
-         * @param msglen
+         *  @param message
          */
-        void slotDebugMessage( QString message );
+        void slotDebugMessage( const QString& message );
 
         /**
-         * @brief slotReceivedMessageLength
+         * @brief slotReceivedDataLength. The received data length.
          *
-         * @param msglen
+         *  @param data_len      The received data length.
          */
-        void slotReceivedMessageLength( qint32 msglen );
+        void slotReceivedDataLength( qint32 msglen );
 
         /**
-         * @brief slotReceivedMessage
+         * @brief slotReceivedData. The received data.
          *
-         * @param message
+         *  @param data      The received data.
          */
-        void slotReceivedMessage( QByteArray message );
+        void slotReceivedData( const QByteArray& data );
 
         /**
          * @brief slotSetUnreadMail. Slot for handling unread mail signals.
@@ -120,21 +120,21 @@ class DebugWidget : public QWidget
         /**
          * @brief slotReceiveError. Handle receive error signal.
          *
-         * @param error     Error message.
+         *  @param error     Error message.
          */
-        void slotReceiveError( QString error );
+        void slotReceiveError( const QString& error );
 
     private:
 
         /**
          * @brief m_ui. Pointer to the widget.
          */
-        Ui::DebugWidget *m_ui;
+        Ui::DebugWidget*    m_ui;
 
         /**
          * @brief m_pref. Pointer to ther preferences.
          */
-        Preferences *m_pref;
+        Preferences*    m_pref;
 };
 
 #endif // DEBUGWIDGET_H

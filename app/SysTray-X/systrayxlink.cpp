@@ -1,40 +1,155 @@
 #include "systrayxlink.h"
 
+
 /*
  *	Local includes
  */
 #include "preferences.h"
 
+
 /*
  *  System includes
  */
+
 
 /*
  *	Qt includes
  */
 #include <QFile>
+#include <QTimer>
 #include <QString>
+#include <QThread>
 #include <QVariant>
+#include <QJsonValue>
 #include <QDataStream>
 #include <QJsonObject>
-#include <QJsonValue>
-#include <QSocketNotifier>
+
+
+/*****************************************************************************
+ *
+ *  SysTrayXLinkReader Class
+ *
+ *****************************************************************************/
+
 
 /*
  *	Constructor
  */
-SysTrayXLink::SysTrayXLink( Preferences *pref )
+SysTrayXLinkReader::SysTrayXLinkReader()
 {
-    /*
-     *  Store preferences
-     */
-    m_pref = pref;
-
     /*
      *  Open stdin
      */
     m_stdin = new QFile( this );
     m_stdin->open( stdin, QIODevice::ReadOnly );
+
+    /*
+     *	Setup the timer
+     */
+    m_timer = new QTimer( this );
+    m_timer->setSingleShot( true );
+    connect( m_timer, &QTimer::timeout, this, &SysTrayXLinkReader::slotWorker );
+}
+
+
+/*
+ *	Destructor
+ */
+SysTrayXLinkReader::~SysTrayXLinkReader()
+{
+    /*
+     *  Cleanup
+     */
+    m_stdin->close();
+    delete m_stdin;
+
+    m_timer->stop();
+    delete m_timer;
+}
+
+
+/*
+ *	Start reading
+ */
+void    SysTrayXLinkReader::startThread()
+{
+    /*
+     *	Start the work
+     */
+    m_doWork = true;
+
+    /*
+     *	Start the worker
+     */
+    m_timer->start();
+}
+
+
+/*
+ *	Stop viewing
+ */
+void    SysTrayXLinkReader::stopThread()
+{
+    /*
+     *	Stop working
+     */
+    m_doWork = false;
+}
+
+
+/*
+ *	Read the data
+ */
+void    SysTrayXLinkReader::slotWorker()
+{
+    QDataStream in( m_stdin );
+
+    while( m_doWork )
+    {
+        qint32  msglen;
+        int status1 = in.readRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
+
+        emit signalReceivedDataLength( msglen );
+
+        QByteArray message(msglen, 0 );
+        int status2 = in.readRawData( message.data(), msglen );
+
+        emit signalReceivedData( message );
+
+        if( ( status1 == 4 ) && ( status2 == msglen ) )
+        {
+            //error handling?
+        }
+
+        /*
+         *  Send the data to my parent
+         */
+        emit signalReceivedMessage( message );
+    }
+
+    /*
+     *	Quit this thread
+     */
+    QThread::currentThread()->quit();
+}
+
+
+/*****************************************************************************
+ *
+ *  SysTrayXLink Class
+ *
+ *****************************************************************************/
+
+
+/*
+ *	Constructor
+ */
+SysTrayXLink::SysTrayXLink( Preferences* pref )
+{
+    /*
+     *  Store preferences
+     */
+    m_pref = pref;
 
     /*
      *  Open stdout
@@ -49,13 +164,21 @@ SysTrayXLink::SysTrayXLink( Preferences *pref )
     m_dump->open( QIODevice::WriteOnly );
 
     /*
-     *  Setup the notifiers
+     *  Setup the reader thread
      */
-    m_notifier_link_read = new QSocketNotifier( 0, QSocketNotifier::Read, this );
-    connect( m_notifier_link_read, &QSocketNotifier::activated, this, &SysTrayXLink::slotLinkRead );
+    m_reader_thread = new QThread( this );
 
-    m_notifier_link_read_exception = new QSocketNotifier( 0, QSocketNotifier::Exception, this );
-    connect( m_notifier_link_read_exception, &QSocketNotifier::activated, this, &SysTrayXLink::slotLinkReadException );
+    SysTrayXLinkReader* reader = new SysTrayXLinkReader;
+    reader->moveToThread( m_reader_thread );
+
+    connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
+    connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
+
+    connect( reader, &SysTrayXLinkReader::signalReceivedDataLength, this, &SysTrayXLink::slotReceivedDataLength );
+    connect( reader, &SysTrayXLinkReader::signalReceivedData, this, &SysTrayXLink::slotReceivedData );
+
+    connect( m_reader_thread, &QThread::started, reader, &SysTrayXLinkReader::startThread, Qt::QueuedConnection );
+    m_reader_thread->start();
 }
 
 
@@ -67,24 +190,18 @@ SysTrayXLink::~SysTrayXLink()
     /*
      *  Cleanup
      */
-    m_stdin->close();
-    delete m_stdin;
-
     m_stdout->close();
     delete m_stdout;
 
     m_dump->close();
     delete m_dump;
-
-    delete m_notifier_link_read;
-    delete m_notifier_link_read_exception;
 }
 
 
 /*
  *  Write a message to the link
  */
-void SysTrayXLink::linkWrite( const QByteArray& message )
+void    SysTrayXLink::linkWrite( const QByteArray& message )
 {
     QDataStream out( m_stdout );
 
@@ -105,7 +222,7 @@ void SysTrayXLink::linkWrite( const QByteArray& message )
 /*
  *  Send the preferences to the add-on
  */
-void SysTrayXLink::sendPreferences()
+void    SysTrayXLink::sendPreferences()
 {
     /*
      *  Enacode the preferences into a JSON doc
@@ -131,13 +248,13 @@ void SysTrayXLink::sendPreferences()
 /*
  *  Send the window normal command
  */
-void SysTrayXLink::sendWindowNormal()
+void    SysTrayXLink::sendWindowNormal()
 {
     /*
      *  Create command
      */
     QJsonObject windowObject;
-    windowObject.insert("window", "normal" );
+    windowObject.insert( "window", "normal" );
 
     /*
      *  Create doc
@@ -154,7 +271,7 @@ void SysTrayXLink::sendWindowNormal()
 /*
  *  Send the window minimize command
  */
-void SysTrayXLink::sendWindowMinimize()
+void    SysTrayXLink::sendWindowMinimize()
 {
     /*
      *  Create command
@@ -177,7 +294,7 @@ void SysTrayXLink::sendWindowMinimize()
 /*
  *  Decode JSON message
  */
-void SysTrayXLink::DecodeMessage( const QByteArray& message )
+void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 {
     QJsonParseError jsonError;
     QJsonDocument jsonResponse = QJsonDocument::fromJson( message, &jsonError );
@@ -227,7 +344,7 @@ void SysTrayXLink::DecodeMessage( const QByteArray& message )
 /*
  *  Decode preferences from JSON message
  */
-void SysTrayXLink::DecodePreferences( const QJsonObject& pref )
+void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 { 
     /*
      *  Check the received object
@@ -277,7 +394,7 @@ void SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 /*
  *  Encode preferences to JSON message
  */
-void SysTrayXLink::EncodePreferences( const Preferences& pref )
+void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 {
     /*
      *  Setup the preferences JSON
@@ -299,60 +416,53 @@ void SysTrayXLink::EncodePreferences( const Preferences& pref )
 
 
 /*
+ *  Handle data length signal from reader thread
+ */
+void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
+{
+    emit signalReceivedDataLength( data_len );
+}
+
+
+/*
+ *  Handle data signal from read thread
+ */
+void    SysTrayXLink::slotReceivedData( const QByteArray& data )
+{
+    emit signalReceivedData( data );
+}
+
+
+/*
  *  Read the input
  */
-void SysTrayXLink::slotLinkRead()
+void    SysTrayXLink::slotLinkRead( const QByteArray& message )
 {
-    QDataStream in( m_stdin );
-
-    qint32  msglen;
-    int status1 = in.readRawData( reinterpret_cast< char* >( &msglen ), sizeof( qint32 ) );
-
-    emit signalReceivedMessageLength( msglen );
-
-    QByteArray message(msglen, 0 );
-    int status2 = in.readRawData( message.data(), msglen );
-
-    emit signalReceivedMessage( message );
-
+    /*
+     *  Debug
+     */
     m_dump->write( message );
 
     /*
      *  Decode the message
      */
     DecodeMessage( message );
-
-
-    if( ( status1 == 4 ) && ( status2 == msglen ) )
-    {
-        //error handling?
-    }
-}
-
-
-/*
- *  Handle read notifier exception
- */
-void SysTrayXLink::slotLinkReadException()
-{
-    //  Something went wrong
 }
 
 
 /*
  *  write the output
  */
-void SysTrayXLink::slotLinkWrite( QByteArray message )
+void    SysTrayXLink::slotLinkWrite( const QByteArray& message )
 {
     linkWrite( message );
 }
 
 
-
 /*
  *  Handle a debug state change signal
  */
-void SysTrayXLink::slotDebugChange()
+void    SysTrayXLink::slotDebugChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -360,10 +470,11 @@ void SysTrayXLink::slotDebugChange()
     }
 }
 
+
 /*
  *  Handle the icon type change signal
  */
-void SysTrayXLink::slotIconTypeChange()
+void    SysTrayXLink::slotIconTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -375,7 +486,7 @@ void SysTrayXLink::slotIconTypeChange()
 /*
  *  Handle the icon data change signal
  */
-void SysTrayXLink::slotIconDataChange()
+void    SysTrayXLink::slotIconDataChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -387,7 +498,7 @@ void SysTrayXLink::slotIconDataChange()
 /*
  *  Handle the window normal signal
  */
-void SysTrayXLink::slotWindowNormal()
+void    SysTrayXLink::slotWindowNormal()
 {
     sendWindowNormal();
 }
@@ -396,7 +507,7 @@ void SysTrayXLink::slotWindowNormal()
 /*
  *  Handle the window minimize signal
  */
-void SysTrayXLink::slotWindowMinimize()
+void    SysTrayXLink::slotWindowMinimize()
 {
     sendWindowMinimize();
 }

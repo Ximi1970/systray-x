@@ -14,7 +14,7 @@
 /*
  *  Constructor
  */
-DebugWidget::DebugWidget( Preferences *pref, QWidget *parent ) : QWidget( parent ), m_ui( new Ui::DebugWidget )
+DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent ), m_ui( new Ui::DebugWidget )
 {
     m_ui->setupUi( this );
 
@@ -28,7 +28,7 @@ DebugWidget::DebugWidget( Preferences *pref, QWidget *parent ) : QWidget( parent
 /*
  *  Set the debug message
  */
-void DebugWidget::setDebugMessage( QString message )
+void    DebugWidget::setDebugMessage( const QString& message )
 {
     m_ui->messageLabel->setText( message );
 }
@@ -37,7 +37,7 @@ void DebugWidget::setDebugMessage( QString message )
 /*
  *  Set the raw data length
  */
-void DebugWidget::setRawDataLength( int length )
+void    DebugWidget::setRawDataLength( int length )
 {
     m_ui->rawDataLengthLabel->setText( QString::number( length ) );
 }
@@ -46,7 +46,7 @@ void DebugWidget::setRawDataLength( int length )
 /*
  *  Set the raw received message
  */
-void DebugWidget::setErrorDataMessage( const QString &message )
+void    DebugWidget::setErrorDataMessage( const QString &message )
 {
     m_ui->rawDataLabel->setText( message );
 }
@@ -55,7 +55,7 @@ void DebugWidget::setErrorDataMessage( const QString &message )
 /*
  *  Set the number of unread mail
  */
-void DebugWidget::setUnreadMail( int unread )
+void    DebugWidget::setUnreadMail( int unread )
 {
     m_ui->unreadMailLabel->setText( QString::number( unread ) );
 }
@@ -64,7 +64,7 @@ void DebugWidget::setUnreadMail( int unread )
 /*
  *  Set the link error message
  */
-void DebugWidget::setError( const QString &error )
+void    DebugWidget::setError( const QString &error )
 {
     m_ui->errorLabel->setText( error );
 }
@@ -73,7 +73,7 @@ void DebugWidget::setError( const QString &error )
 /*
  *  Handle a debug state change signal
  */
-void DebugWidget::slotDebugChange()
+void    DebugWidget::slotDebugChange()
 {
     this->setVisible( m_pref->getDebug() );
 }
@@ -82,7 +82,7 @@ void DebugWidget::slotDebugChange()
 /*
  *  Handle a debug message signal
  */
-void DebugWidget::slotDebugMessage( QString message )
+void    DebugWidget::slotDebugMessage( const QString& message )
 {
     setDebugMessage( message );
 }
@@ -91,18 +91,18 @@ void DebugWidget::slotDebugMessage( QString message )
 /*
  *  Handle received message length
  */
-void DebugWidget::slotReceivedMessageLength( qint32 msglen )
+void    DebugWidget::slotReceivedDataLength( qint32 data_len )
 {
-    setRawDataLength( msglen );
+    setRawDataLength( data_len );
 }
 
 
 /*
  *  Display received message
  */
-void DebugWidget::slotReceivedMessage( QByteArray message )
+void    DebugWidget::slotReceivedData( const QByteArray& data )
 {
-    setErrorDataMessage( QString( message ) );
+    setErrorDataMessage( QString( data ) );
 
     /*
      * Reply
@@ -115,7 +115,7 @@ void DebugWidget::slotReceivedMessage( QByteArray message )
 /*
  *  Handle unread mail signal
  */
-void DebugWidget::slotUnreadMail( int unread_mail )
+void    DebugWidget::slotUnreadMail( int unread_mail )
 {
     setUnreadMail( unread_mail );
 }
@@ -124,7 +124,7 @@ void DebugWidget::slotUnreadMail( int unread_mail )
 /*
  *  Handle a receive error
  */
-void DebugWidget::slotReceiveError( QString error )
+void    DebugWidget::slotReceiveError( const QString& error )
 {
     setError( error );
 }
