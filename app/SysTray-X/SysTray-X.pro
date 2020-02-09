@@ -117,13 +117,12 @@ message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
 #message($$QMAKESPEC)
 
 unix: {
-
     #
     #   Generate JSON
     #
     QMAKE_POST_LINK = cp -f "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json.template" "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ;
     QMAKE_POST_LINK += sed -i -e "s?SYSTRAY_X_PATH?$${OUT_PWD}/$${TARGET}?" "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ;
-    QMAKE_POST_LINK += cp -f "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ~/.mozilla/native-messaging-hosts/SysTray_X.json ;
+#    QMAKE_POST_LINK += cp -f "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ~/.mozilla/native-messaging-hosts/SysTray_X.json ;
 }
 
 win32: {
