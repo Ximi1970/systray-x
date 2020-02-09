@@ -11,6 +11,42 @@ The add-on and system tray application can do:
 - to be implemented: start a new mail
 - to be implemented: open the last used account
 
+## Building
+
+### Linux
+
+Clone the repository:
+```bash
+git clone https://github.com/Ximi1970/systray-x.git
+```
+
+Build:
+```bash
+cd systray-x
+make
+```
+
+...
+
+
+### Windows
+
+Install:
+- [Visual Studio Express 2017](https://aka.ms/vs/15/release/vs_WDExpress.exe)
+- [Visual Code Studio](https://code.visualstudio.com/)
+- [Git for Windows](https://gitforwindows.org/)
+- [TortoiseGit](https://tortoisegit.org/)
+- [PuTTY](https://www.putty.org/)
+- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en)
+
+Clone the repository using TortoiseGit:
+
+...
+
+
+
+
+
 
 ## Donations
 To support this project, you can make a donation to its current maintainer:  
