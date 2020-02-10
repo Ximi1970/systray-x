@@ -1,0 +1,7 @@
+ {
+  "name": "SysTray_X",
+  "description": "SysTray-X System Tray App",
+  "path": "C:\\Projects\\Github\\Ximi1970\\systray-x\\app\\build-SysTray-X-Desktop_Qt_5_14_1_MSVC2017_64bit-Debug\\debug\\SysTray-X.exe",
+  "type": "stdio",
+  "allowed_extensions": [ "systray-x@Ximi1970" ]
+}
