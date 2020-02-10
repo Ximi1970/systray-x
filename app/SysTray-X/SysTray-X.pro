@@ -127,14 +127,20 @@ unix: {
 
 win32: {
     CONFIG(debug, debug|release) {
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)"
+        JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)').replace('\\','\\\\')")
 
-#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgetsd.dll)\" \"$$shell_path($${OUT_PWD}/debug/)\" &
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)" &
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
     } else {
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+        JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)').replace('\\','\\\\')")
 
-#       QMAKE_POST_LINK += xcopy /Y \"$$shell_path($$[QT_INSTALL_BINS]/Qt5widgets.dll)\" \"$$shell_path($${OUT_PWD}/release/)\" &
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
     }
+
+    JSON_JSON_PATH = $$system(powershell -Command "('$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)').replace('\\','\\\\')")
+
+    QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg.template) ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg)\" &
 }
 
 #
