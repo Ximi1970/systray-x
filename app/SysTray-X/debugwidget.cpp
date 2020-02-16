@@ -7,6 +7,10 @@
 #include "preferences.h"
 
 /*
+ *	System includes
+ */
+
+/*
  *	Qt includes
  */
 
@@ -22,6 +26,11 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
      *  Store the preferences
      */
     m_pref = pref;
+
+    /*
+     *  Connect the button
+     */
+    connect( m_ui->testPushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTestButton);
 }
 
 
@@ -127,4 +136,22 @@ void    DebugWidget::slotUnreadMail( int unread_mail )
 void    DebugWidget::slotReceiveError( const QString& error )
 {
     setError( error );
+}
+
+
+/*
+ *  Handle test button click
+ */
+void    DebugWidget::slotHandleTestButton()
+{
+    emit signalTestButtonClicked();
+}
+
+
+/*
+ *  Handle console signal
+ */
+void    DebugWidget::slotConsole( QString message )
+{
+    m_ui->textEdit->append( message );
 }

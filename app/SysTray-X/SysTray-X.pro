@@ -6,6 +6,10 @@
 
 QT       += core gui
 
+unix: {
+    QT  += x11extras
+}
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SysTray-X
@@ -30,6 +34,7 @@ CONFIG += c++11
 #
 unix:!macx: {
 #    QMAKE_LFLAGS += -lX11 -static-libgcc -static-libstdc++
+    QMAKE_LFLAGS += -lX11
 }
 win32: {
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)

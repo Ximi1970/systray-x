@@ -23,37 +23,24 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="5" column="0">
+    <item row="6" column="0">
      <widget class="QLabel" name="rawDataLengthLabel">
       <property name="text">
        <string>0</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QLabel" name="errorLabel">
+    <item row="7" column="0">
+     <widget class="QPushButton" name="testPushButton">
       <property name="text">
-       <string/>
+       <string>Test</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="unreadMailLabel">
+    <item row="4" column="0" colspan="2">
+     <widget class="QLabel" name="errorLabel">
       <property name="text">
-       <string>0</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -70,12 +57,39 @@
       </property>
      </spacer>
     </item>
-    <item row="5" column="1">
+    <item row="6" column="1">
      <widget class="QLabel" name="rawDataLabel">
       <property name="text">
        <string/>
       </property>
      </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QLabel" name="messageLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="unreadMailLabel">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="unreadMailTextLabel">
@@ -85,11 +99,7 @@
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QLabel" name="messageLabel">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
+     <widget class="QTextEdit" name="textEdit"/>
     </item>
    </layout>
   </widget>

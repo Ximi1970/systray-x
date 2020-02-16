@@ -77,6 +77,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
     connect( m_win_ctrl, &WindowCtrl::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
 
+    connect( m_win_ctrl, &WindowCtrl::signalConsole, m_debug, &DebugWidget::slotConsole);
+    connect( m_debug, &DebugWidget::signalTestButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest);
 
     /*
      *  Connect preferences signals

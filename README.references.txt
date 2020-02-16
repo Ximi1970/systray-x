@@ -1,3 +1,62 @@
+#<script>
+
+X11
+==========================================
+
+
+Bash 
+
+xwininfo -tree -root
+
+
+
+How to get the list of open windows from xserver
+
+https://stackoverflow.com/questions/252906/how-to-get-the-list-of-open-windows-from-xserver
+  -> XQueryTree Xlib
+  
+https://tronche.com/gui/x/xlib/window-information/XQueryTree.html
+  
+
+https://stackoverflow.com/questions/11594184/getting-a-list-of-window-wids-in-qt
+
+
+How to detect window state in linux?
+
+https://stackoverflow.com/questions/37003959/how-to-detect-window-state-in-linux
+
+
+
+Taskbar hide
+
+https://stackoverflow.com/questions/41622735/hide-window-from-linux-taskbar
+
+
+
+Intercept close event X11
+
+https://stackoverflow.com/questions/1157364/intercept-wm-delete-window-on-x11
+
+
+
+Qt X11
+
+https://doc.qt.io/qt-5/qx11info.html
+
+
+Obesolete X11 container qt4
+
+https://stackoverflow.com/questions/39515384/qx11embedcontainer-alternative-in-qt5
+
+
+Example container
+
+https://stackoverflow.com/questions/1102658/qx11embedwidget-and-qx11embedcontainer
+
+
+==========================================
+
+
 Arguments for <script>
 https://stackoverflow.com/questions/5292372/how-to-pass-parameters-to-a-script-tag
 

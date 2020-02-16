@@ -43,35 +43,35 @@ class DebugWidget : public QWidget
          *
          *  @param message   The message to display.
          */
-        void setDebugMessage( const QString& message );
+        void    setDebugMessage( const QString& message );
 
         /**
          * @brief setRawDataLength. Display the error data length.
          *
          *  @param length    The raw data length.
          */
-        void setRawDataLength( int length );
+        void    setRawDataLength( int length );
 
         /**
          * @brief setRswDataMessage. Display the raw data.
          *
          *  @param message   The raw data messsage.
          */
-        void setErrorDataMessage( const QString &message );
+        void    setErrorDataMessage( const QString &message );
 
         /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread    The number of unread mails.
          */
-        void setUnreadMail( int unread );
+        void    setUnreadMail( int unread );
 
         /**
          * @brief setError. Set the error message.
          *
          *  @param error     The error message.
          */
-        void setError( const QString &error );
+        void    setError( const QString &error );
 
     signals:
 
@@ -80,49 +80,66 @@ class DebugWidget : public QWidget
          *
          *  @param message
          */
-        void signalWriteMessage( const QByteArray& message );
+        void    signalWriteMessage( const QByteArray& message );
+
+        /**
+         * @brief signalTestButtonClicked. Signal the test button was clicked.
+         */
+        void    signalTestButtonClicked();
 
     public slots:
 
         /**
          * @brief slotDebugChange. The debug state changed.
          */
-        void slotDebugChange();
+        void    slotDebugChange();
 
         /**
          * @brief slotDebugMessage
          *
          *  @param message
          */
-        void slotDebugMessage( const QString& message );
+        void    slotDebugMessage( const QString& message );
 
         /**
          * @brief slotReceivedDataLength. The received data length.
          *
          *  @param data_len      The received data length.
          */
-        void slotReceivedDataLength( qint32 msglen );
+        void    slotReceivedDataLength( qint32 msglen );
 
         /**
          * @brief slotReceivedData. The received data.
          *
          *  @param data      The received data.
          */
-        void slotReceivedData( const QByteArray& data );
+        void    slotReceivedData( const QByteArray& data );
 
         /**
          * @brief slotSetUnreadMail. Slot for handling unread mail signals.
          *
          *  @param unread_mail  The number of unread mails.
          */
-        void slotUnreadMail( int unread_mail );
+        void    slotUnreadMail( int unread_mail );
 
         /**
          * @brief slotReceiveError. Handle receive error signal.
          *
          *  @param error     Error message.
          */
-        void slotReceiveError( const QString& error );
+        void    slotReceiveError( const QString& error );
+
+        /**
+         * @brief slotHandleTestButton. Handle a click on the test button.
+         */
+        void    slotHandleTestButton();
+
+        /**
+         * @brief slotConsole. Handle console signal.
+         *
+         *  @param message      The message for the console.
+         */
+        void    slotConsole( QString message );
 
     private:
 
