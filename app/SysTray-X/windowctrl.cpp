@@ -33,14 +33,14 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-//    unsigned long win_id;
-//    findWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird", win_id );
+    unsigned long win_id;
+    findWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird", win_id );
 //    findWindow( "Mozilla Thunderbird", win_id );
 
 //    findWindow( 4313 );
 
 
-    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
+//    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
 
 
     emit signalConsole("Test 1 done");
@@ -53,7 +53,33 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
+    unsigned long win_id = getWId();
+    minimizeWindow( win_id );
+//    normalizeWindow( win_id );
+
+    /*
+     *  Disconnect container?
+     */
+/*
+    m_tb_window->setParent( nullptr );
+
+    delete m_tb_container;
+    m_tb_container = nullptr;
+*/
     emit signalConsole("Test 2 done");
+}
+
+
+void    WindowCtrl::slotWindowTest3()
+{
+    emit signalConsole("Test 3 started");
+
+    // Do something.
+
+    unsigned long win_id = getWId();
+    normalizeWindow( win_id );
+
+    emit signalConsole("Test 3 done");
 }
 
 
@@ -71,9 +97,9 @@ bool    WindowCtrl::captureWindow( const QString& title )
      *  Wrap Thunderbird window
      */
     m_tb_window = QWindow::fromWinId( WinId );
-    m_tb_container = QWidget::createWindowContainer( m_tb_window );
+    m_tb_window->parent();
 
-//    container->hide();
+    m_tb_container = QWidget::createWindowContainer( m_tb_window );
 
     return true;
 }
@@ -103,11 +129,6 @@ void    WindowCtrl::slotShowHide()
         if( m_tb_container )
         {
             m_tb_container->show();
-
-//            m_tb_window->setParent( nullptr );
-
-//            delete m_tb_container;
-//            m_tb_container = nullptr;
         }
     } else {
         m_state = "minimized";

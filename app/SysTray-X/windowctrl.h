@@ -61,6 +61,11 @@ class WindowCtrl : public QObject
         void    slotWindowTest2();
 
         /**
+         * @brief slotWindowTest3. Start a test.
+         */
+        void    slotWindowTest3();
+
+        /**
          * @brief slotWindowState. Handle the window state change signal.
          *
          * @param state     The new state.

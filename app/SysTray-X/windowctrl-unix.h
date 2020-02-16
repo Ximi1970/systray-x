@@ -111,6 +111,13 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
+         * @brief getWId. Get the Thunderbird windows ID.
+         *
+         *  @return     The ID.
+         */
+        unsigned long   getWId();
+
+        /**
          * @brief findWindow. Find window with title.
          *
          *  @param title    The title to find.
@@ -126,6 +133,23 @@ class WindowCtrlUnix : public QObject
          *  @param pid      The process id.
          */
         void    findWindow( int pid );
+
+
+        void    setAtomState();
+
+        /**
+         * @brief minimizeWindow. Minimize window.
+         *
+         *  @param window   The window.
+         */
+        void    minimizeWindow( Window window );
+
+        /**
+         * @brief normalizeWindow. Normalize window.
+         *
+         *  @param window   The window.
+         */
+        void    normalizeWindow( Window window );
 
     private:
 
@@ -195,6 +219,28 @@ class WindowCtrlUnix : public QObject
          *  @param message      The message.
          */
         void    signalConsole( QString message );
+
+   private:
+
+        /**
+         * @brief m_display. Pointer to the main display.
+         */
+        Display*    m_display;
+
+        /**
+         * @brief m_screen. The screen number.
+         */
+        int m_screen;
+
+        /**
+         * @brief m_root_window. The root window.
+         */
+        Window  m_root_window;
+
+        /**
+         * @brief m_tb_window. The Thunderbird window.
+         */
+        Window  m_tb_window;
 };
 
 #endif // WINDOWCTRLUNIX_H

@@ -92,6 +92,11 @@ class DebugWidget : public QWidget
          */
         void    signalTest2ButtonClicked();
 
+        /**
+         * @brief signalTestButton3Clicked. Signal the test button was clicked.
+         */
+        void    signalTest3ButtonClicked();
+
     public slots:
 
         /**
@@ -143,6 +148,11 @@ class DebugWidget : public QWidget
          * @brief slotHandleTest2Button. Handle a click on the test button.
          */
         void    slotHandleTest2Button();
+
+        /**
+         * @brief slotHandleTest2Button. Handle a click on the test button.
+         */
+        void    slotHandleTest3Button();
 
         /**
          * @brief slotConsole. Handle console signal.

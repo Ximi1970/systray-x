@@ -33,6 +33,13 @@ https://stackoverflow.com/questions/41622735/hide-window-from-linux-taskbar
 
 
 
+minimize fullscreen Xlib OpenGL Window
+
+https://stackoverflow.com/questions/6381098/minimize-fullscreen-xlib-opengl-window
+
+
+
+
 Intercept close event X11
 
 https://stackoverflow.com/questions/1157364/intercept-wm-delete-window-on-x11
