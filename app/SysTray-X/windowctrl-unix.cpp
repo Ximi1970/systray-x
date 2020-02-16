@@ -208,6 +208,82 @@ void    WindowCtrlUnix::minimizeWindow( Window window )
 
 
 /*
+ *  Remove window from taskbar
+ */
+void    WindowCtrlUnix::skipTaskbarWindow( Window window, bool set )
+{
+    char prop_name[] = "_NET_WM_STATE";
+    Atom prop = XInternAtom( m_display, prop_name, True );
+    Atom prop_skip_taskbar = XInternAtom( m_display, WindowStates[ STATE_SKIP_TASKBAR ].toUtf8(), True );
+
+    Atom type;
+    int format;
+    unsigned long remain;
+    unsigned long len;
+    unsigned char* list = nullptr;
+
+    if( XGetWindowProperty( m_display, window, prop, 0, sizeof( Atom ), False, XA_ATOM,
+                &type, &format, &len, &remain, &list ) == Success )
+    {
+        Atom* atom_list = reinterpret_cast<Atom *>( list );
+        Atom* new_atom_list = nullptr;
+        bool present = false;
+
+        if( len > 1 )
+        {
+            /*
+             *  Check and remove atom from list
+             */
+            new_atom_list = new Atom[ len - 1 ];
+
+            for( unsigned long i = 0, o = 0; i < len; ++i )
+            {
+                if( atom_list[ i ] == prop_skip_taskbar )
+                {
+                    present = true;
+                    continue;
+                }
+
+                new_atom_list[ o++ ] = atom_list[ i ];
+            }
+        }
+
+        if( set && !present  )
+        {
+            /*
+             *  Set the atom
+             */
+            XChangeProperty( m_display, window, prop, XA_ATOM, 32, PropModeAppend, reinterpret_cast<unsigned char*>( &prop_skip_taskbar ), 1 );
+        }
+        else
+        if( !set && present )
+        {
+            /*
+             *  Remove the atom
+             */
+            XChangeProperty( m_display, window, prop, XA_ATOM, format, PropModeReplace, reinterpret_cast<unsigned char*>( new_atom_list ), static_cast<int>( len - 1 ) );
+        }
+
+        /*
+         *  Cleanup
+         */
+        if( new_atom_list )
+        {
+            delete [] new_atom_list;
+        }
+    }
+
+    /*
+     *  Cleanup
+     */
+    if( list )
+    {
+        XFree( list );
+    }
+}
+
+
+/*
  *  Normalize a window
  */
 void    WindowCtrlUnix::normalizeWindow( Window window )
@@ -244,6 +320,8 @@ bool        WindowCtrlUnix::generateEvent()
 #endif
 
 #ifdef  CHANGE_PROP
+
+//        XDeleteProperty( m_display, window, prop_skip_taskbar);
 
 void    WindowCtrlUnix::setAtomState()
 {

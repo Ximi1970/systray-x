@@ -151,6 +151,8 @@ class WindowCtrlUnix : public QObject
          */
         void    normalizeWindow( Window window );
 
+        void    skipTaskbarWindow( Window window, bool set );
+
     private:
 
         /**

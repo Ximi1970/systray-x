@@ -45,6 +45,10 @@ Intercept close event X11
 https://stackoverflow.com/questions/1157364/intercept-wm-delete-window-on-x11
 
 
+Allowed actions
+
+https://stackoverflow.com/questions/28495586/x11-how-to-set-net-wm-allowed-actions
+
 
 Qt X11
 

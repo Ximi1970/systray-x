@@ -54,7 +54,9 @@ void    WindowCtrl::slotWindowTest2()
     // Do something.
 
     unsigned long win_id = getWId();
+    skipTaskbarWindow( win_id, true );
     minimizeWindow( win_id );
+
 //    normalizeWindow( win_id );
 
     /*
@@ -77,6 +79,7 @@ void    WindowCtrl::slotWindowTest3()
     // Do something.
 
     unsigned long win_id = getWId();
+    skipTaskbarWindow( win_id, false );
     normalizeWindow( win_id );
 
     emit signalConsole("Test 3 done");
