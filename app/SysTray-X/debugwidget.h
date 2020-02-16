@@ -83,9 +83,14 @@ class DebugWidget : public QWidget
         void    signalWriteMessage( const QByteArray& message );
 
         /**
-         * @brief signalTestButtonClicked. Signal the test button was clicked.
+         * @brief signalTestButton1Clicked. Signal the test button was clicked.
          */
-        void    signalTestButtonClicked();
+        void    signalTest1ButtonClicked();
+
+        /**
+         * @brief signalTestButton2Clicked. Signal the test button was clicked.
+         */
+        void    signalTest2ButtonClicked();
 
     public slots:
 
@@ -130,9 +135,14 @@ class DebugWidget : public QWidget
         void    slotReceiveError( const QString& error );
 
         /**
-         * @brief slotHandleTestButton. Handle a click on the test button.
+         * @brief slotHandleTest1Button. Handle a click on the test button.
          */
-        void    slotHandleTestButton();
+        void    slotHandleTest1Button();
+
+        /**
+         * @brief slotHandleTest2Button. Handle a click on the test button.
+         */
+        void    slotHandleTest2Button();
 
         /**
          * @brief slotConsole. Handle console signal.

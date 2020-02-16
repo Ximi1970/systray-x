@@ -1,3 +1,2 @@
-*.xpi
-SysTray-X
- 
+/*.xpi
+/SysTray-X

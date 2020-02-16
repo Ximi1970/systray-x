@@ -161,7 +161,8 @@ SOURCES += \
         systrayx.cpp \
         debugwidget.cpp \
         preferencesdialog.cpp \
-        preferences.cpp
+        preferences.cpp \
+        windowctrl.cpp
 unix: {
 SOURCES += \
         windowctrl-unix.cpp

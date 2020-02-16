@@ -1,32 +1,28 @@
 #include <QtGlobal>
 #ifdef Q_OS_UNIX
 
-#ifndef WINDOWCTRLLINUX_H
-#define WINDOWCTRLLINUX_H
+#ifndef WINDOWCTRLUNIX_H
+#define WINDOWCTRLUNIX_H
 
 /*
  *	Local includes
  */
 #include "preferences.h"
 
-
 /*
  *  System includes
  */
 #include <X11/Xlib.h>
-
 
 /*
  *	Qt includes
  */
 #include <QObject>
 
-
-
 /**
- * @brief The WindowCtrl class.
+ * @brief The WindowCtrlUnix class.
  */
-class WindowCtrl : public QObject
+class WindowCtrlUnix : public QObject
 {
     Q_OBJECT
 
@@ -108,18 +104,21 @@ class WindowCtrl : public QObject
     public:
 
         /**
-         * @brief WindowCtrl. Constructor.
+         * @brief WindowCtrlUnix. Constructor.
          *
          * @param parent    My parent.
          */
-        explicit WindowCtrl( QObject *parent = nullptr );
+        explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
          * @brief findWindow. Find window with title.
          *
-         *  @param title    The title to find
+         *  @param title    The title to find.
+         *  @param window   The found XID.
+         *
+         *  @return     State of the find.
          */
-        void    findWindow( const QString& title );
+        bool    findWindow( const QString& title, unsigned long& window );
 
         /**
          * @brief findWindow. Find window of a process.
@@ -149,7 +148,7 @@ class WindowCtrl : public QObject
          *
          *  @return     Name of the window.
          */
-        QString atomwName( Display *display, Window window );
+        QString atomName( Display *display, Window window );
 
         /**
          * @brief atomState. Get the state of the window.
@@ -196,34 +195,8 @@ class WindowCtrl : public QObject
          *  @param message      The message.
          */
         void    signalConsole( QString message );
-
-    public slots:
-
-        /**
-         * @brief slotWindowState. Handle the window state change signal.
-         *
-         * @param state     The new state.
-         */
-        void slotWindowState( QString state );
-
-        /**
-         * @brief slotShowHide. Slot for handling of the show / hide window signal.
-         */
-        void slotShowHide();
-
-        /**
-         * @brief slotWindowTest. Start a test.
-         */
-        void    slotWindowTest();
-
-    private:
-
-        /**
-         * @brief m_state. State of the TB window.
-         */
-        QString m_state;
 };
 
-#endif // WINDOWCTRLLINUX_H
+#endif // WINDOWCTRLUNIX_H
 
 #endif // Q_OS_UNIX

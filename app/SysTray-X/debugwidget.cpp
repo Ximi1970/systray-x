@@ -30,7 +30,8 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
     /*
      *  Connect the button
      */
-    connect( m_ui->testPushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTestButton);
+    connect( m_ui->test1PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest1Button);
+    connect( m_ui->test2PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest2Button);
 }
 
 
@@ -140,11 +141,20 @@ void    DebugWidget::slotReceiveError( const QString& error )
 
 
 /*
- *  Handle test button click
+ *  Handle test button 1 click
  */
-void    DebugWidget::slotHandleTestButton()
+void    DebugWidget::slotHandleTest1Button()
 {
-    emit signalTestButtonClicked();
+    emit signalTest1ButtonClicked();
+}
+
+
+/*
+ *  Handle test button 2 click
+ */
+void    DebugWidget::slotHandleTest2Button()
+{
+    emit signalTest2ButtonClicked();
 }
 
 

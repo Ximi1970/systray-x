@@ -31,20 +31,20 @@
      </widget>
     </item>
     <item row="7" column="0">
-     <widget class="QPushButton" name="testPushButton">
+     <widget class="QPushButton" name="test1PushButton">
       <property name="text">
-       <string>Test</string>
+       <string>Test 1</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
+    <item row="4" column="0" colspan="3">
      <widget class="QLabel" name="errorLabel">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="1" column="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -57,24 +57,10 @@
       </property>
      </spacer>
     </item>
-    <item row="6" column="1">
-     <widget class="QLabel" name="rawDataLabel">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
+    <item row="3" column="0" colspan="3">
      <widget class="QLabel" name="messageLabel">
       <property name="text">
        <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="unreadMailLabel">
-      <property name="text">
-       <string>0</string>
       </property>
      </widget>
     </item>
@@ -98,8 +84,29 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="2" column="0" colspan="3">
      <widget class="QTextEdit" name="textEdit"/>
+    </item>
+    <item row="7" column="1">
+     <widget class="QPushButton" name="test2PushButton">
+      <property name="text">
+       <string>Test 2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="unreadMailLabel">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1" colspan="2">
+     <widget class="QLabel" name="rawDataLabel">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
