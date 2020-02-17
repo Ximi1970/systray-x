@@ -12,17 +12,24 @@
 /*
  *  Constructor
  */
+WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
 #ifdef Q_OS_UNIX
-WindowCtrl::WindowCtrl( QObject *parent ) : WindowCtrlUnix( parent )
+    WindowCtrlUnix( parent )
 #elif Q_OS_WIN
-WindowCtrl::WindowCtrl( QObject *parent ) : WindowCtrlWin( parent )
+    WindowCtrlWin( parent )
 #else
-class WindowCtrl : public QObject
+    public QObject
 #endif
 {
     /*
+     *  Store preferences
+     */
+    m_pref = pref;
+
+    /*
      *  Initialize
      */
+    m_minimize_hide = m_pref->getMinimizeHide();
     m_tb_container = nullptr;
 }
 
@@ -116,6 +123,15 @@ void    WindowCtrl::slotWindowTitle( QString title )
 
 
 /*
+ *  Handle change in minimizeHide state
+ */
+void    WindowCtrl::slotMinimizeHideChange()
+{
+    m_minimize_hide = m_pref->getMinimizeHide();
+}
+
+
+/*
  *  Handle change in window state
  */
 void    WindowCtrl::slotWindowState( QString state )
@@ -146,7 +162,10 @@ void    WindowCtrl::slotShowHide()
 
         foreach( unsigned long win_id, getWIds() )
         {
-            skipTaskbarWindow( win_id, true );
+            if( m_minimize_hide )
+            {
+                skipTaskbarWindow( win_id, true );
+            }
             minimizeWindow( win_id );
         }
 

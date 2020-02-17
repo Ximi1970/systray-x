@@ -220,6 +220,11 @@ class SysTrayXLink : public QObject
         void    slotDebugChange();
 
         /**
+         * @brief slotMinimizeHideChange. Handle a change in minimizeHide state.
+         */
+        void    slotMinimizeHideChange();
+
+        /**
          * @brief slotLinkWrite. Write the link.
          */
         void    slotLinkWrite( QByteArray message );

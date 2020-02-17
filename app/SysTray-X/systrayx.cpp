@@ -34,7 +34,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Setup window control
      */
-    m_win_ctrl = new WindowCtrl();
+    m_win_ctrl = new WindowCtrl( m_preferences );
 
     /*
      *  Setup the link
@@ -88,12 +88,17 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
 
+    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_win_ctrl, &WindowCtrl::slotMinimizeHideChange );
+
+
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
+    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_pref_dialog, &PreferencesDialog::slotMinimizeHideChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
+    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_link, &SysTrayXLink::slotMinimizeHideChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );

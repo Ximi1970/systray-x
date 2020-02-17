@@ -52,16 +52,25 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 /*
  *  Set the debug state
  */
-void PreferencesDialog::setDebug( bool state )
+void    PreferencesDialog::setDebug( bool state )
 {
    m_ui->debugWindowCheckBox->setChecked( state );
 }
 
 
 /*
+ *  Set the minimizeHide state
+ */
+void    PreferencesDialog::setMinimizeHide( bool state )
+{
+   m_ui->minimizeHideCheckBox->setChecked( state );
+}
+
+
+/*
  *  Set the icon type
  */
-void PreferencesDialog::setIconType( Preferences::IconType icon_type )
+void    PreferencesDialog::setIconType( Preferences::IconType icon_type )
 {
    ( m_ui->iconTypeGroup->button( icon_type ) )->setChecked( true );
 }
@@ -69,7 +78,7 @@ void PreferencesDialog::setIconType( Preferences::IconType icon_type )
 /*
  *  Set the icon
  */
-void PreferencesDialog::setIcon( const QString& icon_mime, const QByteArray& icon )
+void    PreferencesDialog::setIcon( const QString& icon_mime, const QByteArray& icon )
 {
     /*
      *  Store the new icon
@@ -87,7 +96,7 @@ void PreferencesDialog::setIcon( const QString& icon_mime, const QByteArray& ico
 /*
  *  Set the icon
  */
-void PreferencesDialog::setIcon()
+void    PreferencesDialog::setIcon()
 {
     /*
      *  Convert data to pixmap
@@ -105,7 +114,7 @@ void PreferencesDialog::setIcon()
 /*
  *  Handle the accept signal
  */
-void PreferencesDialog::slotAccept()
+void    PreferencesDialog::slotAccept()
 {
     /*
      *  Settings changed by app
@@ -118,6 +127,8 @@ void PreferencesDialog::slotAccept()
     m_pref->setIconType( static_cast< Preferences::IconType >( m_ui->iconTypeGroup->checkedId() ) );
     m_pref->setIconMime( m_tmp_icon_mime );
     m_pref->setIconData( m_tmp_icon_data );
+
+    m_pref->setMinimizeHide( m_ui->minimizeHideCheckBox->isChecked() );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
@@ -136,7 +147,7 @@ void PreferencesDialog::slotAccept()
 /*
  *  Handle the choose button
  */
-void PreferencesDialog::slotFileSelect()
+void    PreferencesDialog::slotFileSelect()
 {
     QFileDialog file_dialog( this, tr( "Open Image" ), "", tr( "Image Files (*.png *.jpg *.bmp)" ) );
 
@@ -161,16 +172,25 @@ void PreferencesDialog::slotFileSelect()
 /*
  *  Handle the debug change signal
  */
-void PreferencesDialog::slotDebugChange()
+void    PreferencesDialog::slotDebugChange()
 {
     setDebug( m_pref->getDebug() );
 }
 
 
 /*
+ *  Handle the minimizeHide change signal
+ */
+void    PreferencesDialog::slotMinimizeHideChange()
+{
+    setMinimizeHide( m_pref->getMinimizeHide() );
+}
+
+
+/*
  *  Handle the icon type change signal
  */
-void PreferencesDialog::slotIconTypeChange()
+void    PreferencesDialog::slotIconTypeChange()
 {
     setIconType( m_pref->getIconType() );
 }
@@ -179,7 +199,7 @@ void PreferencesDialog::slotIconTypeChange()
 /*
  *  Handle the icon data change signal
  */
-void PreferencesDialog::slotIconDataChange()
+void    PreferencesDialog::slotIconDataChange()
 {
     m_tmp_icon_mime = m_pref->getIconMime();
     m_tmp_icon_data = m_pref->getIconData();

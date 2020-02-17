@@ -94,6 +94,20 @@ class Preferences : public QObject
         void setIconData( const QByteArray& icon_data );
 
         /**
+         * @brief getMinimizeHide. Get the minimizeHide state.
+         *
+         * @return      The state.
+         */
+        bool getMinimizeHide() const;
+
+        /**
+         * @brief setMinimizeHide. Set the minimizeHide state.
+         *
+         * @param      The state.
+         */
+        void setMinimizeHide( bool state );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -118,6 +132,11 @@ class Preferences : public QObject
          * @brief signalIconDataChange. Signal a icon data change.
          */
         void signalIconDataChange();
+
+        /**
+         * @brief signalMinimizeHideChange. Signal a minimizeHide state change.
+         */
+        void signalMinimizeHideChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
@@ -145,6 +164,11 @@ class Preferences : public QObject
          * @brief m_icon_data. Binary data icon image.
          */
         QByteArray m_icon_data;
+
+        /**
+         * @brief m_minimize_hide. Hide the minimized window.
+         */
+        bool m_minimize_hide;
 
         /**
          * @brief m_debug. Display debug window.

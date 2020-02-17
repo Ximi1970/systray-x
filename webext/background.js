@@ -131,6 +131,7 @@ SysTrayX.Messaging = {
 
     const getter = browser.storage.sync.get([
       "debug",
+      "minimizeHide",
       "iconType",
       "iconMime",
       "icon"
@@ -142,11 +143,13 @@ SysTrayX.Messaging = {
     console.debug("Get preferences from storage");
 
     const debug = result.debug || "false";
+    const minimizeHide = result.minimizeHide || "true";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
 
     console.log(`Debug ${debug}`);
+    console.log(`Debug ${minimizeHide}`);
     console.log(`Type ${iconType}`);
     console.log(`Mime ${iconMime}`);
     console.log(icon);
@@ -155,6 +158,7 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
+        minimizeHide: minimizeHide,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon
@@ -274,6 +278,13 @@ SysTrayX.Link = {
       if (iconType) {
         browser.storage.sync.set({
           iconType: iconType
+        });
+      }
+
+      const minimizeHide = response["preferences"].minimizeHide;
+      if (minimizeHide) {
+        browser.storage.sync.set({
+          minimizeHide: minimizeHide
         });
       }
 

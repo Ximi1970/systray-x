@@ -37,7 +37,7 @@ class WindowCtrl : public QObject
          *
          * @param parent    My parent.
          */
-        explicit WindowCtrl( QObject *parent = nullptr );
+        explicit WindowCtrl( Preferences* pref, QObject *parent = nullptr );
 
         /**
          * @brief captureWindow. Capture the TB window.
@@ -70,21 +70,33 @@ class WindowCtrl : public QObject
          *
          * @param state     The windows title.
          */
-        void slotWindowTitle( QString title );
+        void    slotWindowTitle( QString title );
+
+        /**
+         * @brief slotMinimizeHideChange. Handle the minimizeHide signal.
+         *
+         *  @param state    The state
+         */
+        void    slotMinimizeHideChange();
 
         /**
          * @brief slotWindowState. Handle the window state change signal.
          *
          * @param state     The new state.
          */
-        void slotWindowState( QString state );
+        void    slotWindowState( QString state );
 
         /**
          * @brief slotShowHide. Slot for handling of the show / hide window signal.
          */
-        void slotShowHide();
+        void    slotShowHide();
 
     private:
+
+        /**
+         * @brief m_pref. Pointer to the preferences storage.
+         */
+        Preferences*    m_pref;
 
         /**
          * @brief m_tb_window. Pointer to the TB window.
@@ -100,6 +112,11 @@ class WindowCtrl : public QObject
          * @brief m_window_title. Title of the TB window.
          */
         QString m_window_title;
+
+        /**
+         * @brief m_minimize_hide. State of minimizeHide
+         */
+        bool m_minimize_hide;
 
         /**
          * @brief m_state. State of the TB window.

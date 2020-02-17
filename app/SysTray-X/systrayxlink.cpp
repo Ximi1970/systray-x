@@ -366,6 +366,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "minimizeHide" ) && pref[ "minimizeHide" ].isString() )
+    {
+        bool minimize_hide = pref[ "minimizeHide" ].toString() == "true";
+
+        /*
+         *  Store the new MinimizeHide state
+         */
+        m_pref->setMinimizeHide( minimize_hide );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -388,6 +398,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
+    prefObject.insert("minimizeHide", QJsonValue::fromVariant( QString( pref.getMinimizeHide() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -459,6 +470,18 @@ void    SysTrayXLink::slotLinkWrite( QByteArray message )
  *  Handle a debug state change signal
  */
 void    SysTrayXLink::slotDebugChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a minimizeHide state change signal
+ */
+void    SysTrayXLink::slotMinimizeHideChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

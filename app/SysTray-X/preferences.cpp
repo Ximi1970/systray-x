@@ -15,6 +15,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
 
+    m_minimize_hide = true;
+
     m_debug = false;
 }
 
@@ -31,7 +33,7 @@ Preferences::IconType Preferences::getIconType() const
 /*
  *  Get the icon mime.
  */
-bool Preferences::getAppPrefChanged() const
+bool    Preferences::getAppPrefChanged() const
 {
     return m_app_pref_changed;
 }
@@ -40,7 +42,7 @@ bool Preferences::getAppPrefChanged() const
 /*
  *  Control the sending of preferences changes to the add-on
  */
-void Preferences::setAppPrefChanged( bool state )
+void    Preferences::setAppPrefChanged( bool state )
 {
     if( m_app_pref_changed != state )
     {
@@ -52,7 +54,7 @@ void Preferences::setAppPrefChanged( bool state )
 /*
  *  Set the icon type.
  */
-void Preferences::setIconType( IconType icon_type )
+void    Preferences::setIconType( IconType icon_type )
 {
     if( m_icon_type != icon_type)
     {
@@ -69,7 +71,7 @@ void Preferences::setIconType( IconType icon_type )
 /*
  *  Get the icon mime.
  */
-const QString& Preferences::getIconMime() const
+const QString&  Preferences::getIconMime() const
 {
     return m_icon_mime;
 }
@@ -78,7 +80,7 @@ const QString& Preferences::getIconMime() const
 /*
  *  Set the icon mime.
  */
-void Preferences::setIconMime( const QString& icon_mime )
+void    Preferences::setIconMime( const QString& icon_mime )
 {
     m_icon_mime = icon_mime;
 }
@@ -87,7 +89,7 @@ void Preferences::setIconMime( const QString& icon_mime )
 /*
  *  Get the icon data.
  */
-const QByteArray& Preferences::getIconData() const
+const QByteArray&   Preferences::getIconData() const
 {
     return m_icon_data;
 }
@@ -96,7 +98,7 @@ const QByteArray& Preferences::getIconData() const
 /*
  *  Set the icon data.
  */
-void Preferences::setIconData( const QByteArray& icon_data )
+void    Preferences::setIconData( const QByteArray& icon_data )
 {
 
     if( m_icon_data != icon_data )
@@ -114,16 +116,42 @@ void Preferences::setIconData( const QByteArray& icon_data )
 /*
  *  Get the icon data.
  */
-bool Preferences::getDebug() const
+bool    Preferences::getMinimizeHide() const
+{
+    return m_minimize_hide;
+}
+
+
+/*
+ *  Set the minimizeHide data.
+ */
+void    Preferences::setMinimizeHide( bool state )
+{
+    if( m_minimize_hide != state )
+    {
+        m_minimize_hide = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeHideChange();
+    }
+}
+
+
+/*
+ *  Get the debug state.
+ */
+bool    Preferences::getDebug() const
 {
     return m_debug;
 }
 
 
 /*
- *  Set the icon data.
+ *  Set the debug state.
  */
-void Preferences::setDebug( bool state )
+void    Preferences::setDebug( bool state )
 {
     if( m_debug != state )
     {

@@ -6,15 +6,6 @@ SysTrayX.SaveOptions = {
 
     console.debug("Save preferences");
 
-    browser.storage.sync.set({
-      optionsRadioTest: document.querySelector(
-        'input[name="options_test"]:checked'
-      ).value,
-      optionsCheck1: document.querySelector('input[name="check1"]').checked,
-      optionsCheck2: document.querySelector('input[name="check2"]').checked,
-      optionsCheck3: document.querySelector('input[name="check3"]').checked
-    });
-
     //
     // Save accounts and filters
     //
@@ -67,6 +58,15 @@ SysTrayX.SaveOptions = {
     console.debug("Store debug state: " + `${debug}`);
 
     //
+    //  Save minimize hide state
+    //
+    let minimizeHide = document.querySelector('input[name="minimizeHide"]').checked;
+    browser.storage.sync.set({
+      minimizeHide: `${minimizeHide}`
+    });
+    console.debug("Store minimizeHide state: " + `${minimizeHide}`);
+
+    //
     // Save icon preferences
     //
 
@@ -103,28 +103,6 @@ SysTrayX.RestoreOptions = {
   start: function() {
     console.debug("Restore preferences");
 
-    //
-    //  Test 1
-    //
-    const getRadioTest = browser.storage.sync.get("optionsRadioTest");
-    getRadioTest.then(
-      SysTrayX.RestoreOptions.setCurrentRadioChoice,
-      SysTrayX.RestoreOptions.onError
-    );
-
-    //
-    //  Test 2
-    //
-    const getCheckTest = browser.storage.sync.get([
-      "optionsCheck1",
-      "optionsCheck2",
-      "optionsCheck3"
-    ]);
-    getCheckTest.then(
-      SysTrayX.RestoreOptions.setCurrentCheckChoice,
-      SysTrayX.RestoreOptions.onError
-    );
-
     console.debug("Restore icon preferences");
 
     //
@@ -134,6 +112,15 @@ SysTrayX.RestoreOptions = {
     getDebug.then(
       SysTrayX.RestoreOptions.setDebug,
       SysTrayX.RestoreOptions.onDebugError
+    );
+
+    //
+    //  Restore minimize hide
+    //
+    const getMinimizeHide = browser.storage.sync.get("minimizeHide");
+    getMinimizeHide.then(
+      SysTrayX.RestoreOptions.setMinimizeHide,
+      SysTrayX.RestoreOptions.onMinimizeHideError
     );
 
     //
@@ -158,34 +145,6 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Test 1 Callback
-  //
-  setCurrentRadioChoice: function(result) {
-    const selector = result.optionsRadioTest || "Option1";
-    const radioButton = document.querySelector(`[value=${selector}]`);
-    radioButton.checked = true;
-  },
-
-  //
-  //  Test 2 Callback
-  //
-  setCurrentCheckChoice: function(result) {
-    const checkbox1 = document.querySelector('[name="check1"]');
-    checkbox1.checked = result.optionsCheck1 || false;
-    const checkbox2 = document.querySelector('[name="check2"]');
-    checkbox2.checked = result.optionsCheck2 || false;
-    const checkbox3 = document.querySelector('[name="check3"]');
-    checkbox3.checked = result.optionsCheck3 || false;
-  },
-
-  //
-  //  Test 1+2 error callback
-  //
-  onError: function(error) {
-    console.log(`Error: ${error}`);
-  },
-
-  //
   //  Restore debug state callbacks
   //
   setDebug: function(result) {
@@ -199,6 +158,22 @@ SysTrayX.RestoreOptions = {
 
   onDebugError: function(error) {
     console.log(`Debug Error: ${error}`);
+  },
+
+  //
+  //  Restore minimize hide callbacks
+  //
+  setMinimizeHide: function(result) {
+    const minimizeHide = result.minimizeHide || "true";
+
+    console.debug("MinimizeHide: " + minimizeHide);
+
+    const checkbox = document.querySelector(`input[name="minimizeHide"]`);
+    checkbox.checked = minimizeHide === "true";
+  },
+
+  onMinimizeHideError: function(error) {
+    console.log(`MinimizeHide Error: ${error}`);
   },
 
   //
@@ -286,6 +261,11 @@ SysTrayX.StorageChanged = {
           iconType: changes[item].newValue
         });
         changed_icon_mime = true;
+      }
+      if (item === "minimizeHide") {
+        SysTrayX.RestoreOptions.setMinimizeHide({
+          minimizeHide: changes[item].newValue
+        });
       }
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
