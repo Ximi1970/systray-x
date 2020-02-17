@@ -33,15 +33,11 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    unsigned long win_id;
-    findWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird", win_id );
-//    findWindow( "Mozilla Thunderbird", win_id );
-
+    displayWindowAtoms( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 
 
 //    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
-
 
     emit signalConsole("Test 1 done");
 }
@@ -52,12 +48,6 @@ void    WindowCtrl::slotWindowTest2()
     emit signalConsole("Test 2 started");
 
     // Do something.
-
-    unsigned long win_id = getWId();
-    skipTaskbarWindow( win_id, true );
-    minimizeWindow( win_id );
-
-//    normalizeWindow( win_id );
 
     /*
      *  Disconnect container?
@@ -78,20 +68,18 @@ void    WindowCtrl::slotWindowTest3()
 
     // Do something.
 
-    unsigned long win_id = getWId();
-    skipTaskbarWindow( win_id, false );
-    normalizeWindow( win_id );
-
     emit signalConsole("Test 3 done");
 }
 
 
-// "Debugging with Firefox Developer Tools - Mozilla Thunderbird"
-
 bool    WindowCtrl::captureWindow( const QString& title )
 {
+    Q_UNUSED( title )
+
+#ifdef  FF_NEET
+
     unsigned long WinId;
-    if( !findWindow( title, WinId ) )
+    if( !findWindow( title ) )
     {
         return false;
     }
@@ -104,7 +92,26 @@ bool    WindowCtrl::captureWindow( const QString& title )
 
     m_tb_container = QWidget::createWindowContainer( m_tb_window );
 
+#endif
+
     return true;
+}
+
+
+/*
+ *  Handle window title signal
+ */
+void    WindowCtrl::slotWindowTitle( QString title )
+{
+    /*
+     *  Store the window title
+     */
+    m_window_title = title;
+
+    /*
+     *  Get the window IDs
+     */
+    findWindow( title );
 }
 
 
@@ -114,8 +121,6 @@ bool    WindowCtrl::captureWindow( const QString& title )
 void    WindowCtrl::slotWindowState( QString state )
 {
     m_state = state;
-
-    emit signalDebugMessage( "Win state: " + state );
 }
 
 
@@ -127,20 +132,25 @@ void    WindowCtrl::slotShowHide()
     if( m_state == "minimized" )
     {
         m_state = "normal";
-//        emit signalWindowNormal();
 
-        if( m_tb_container )
+        foreach( unsigned long win_id, getWIds() )
         {
-            m_tb_container->show();
+            skipTaskbarWindow( win_id, false );
+            normalizeWindow( win_id );
         }
+
+//        emit signalWindowNormal();    // TB window control
+
     } else {
         m_state = "minimized";
-//        emit signalWindowMinimize();
 
-        if( m_tb_container )
+        foreach( unsigned long win_id, getWIds() )
         {
-            m_tb_container->hide();
+            skipTaskbarWindow( win_id, true );
+            minimizeWindow( win_id );
         }
+
+//        emit signalWindowMinimize();  // TB window control
+
     }
 }
-

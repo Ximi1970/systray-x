@@ -111,21 +111,27 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
-         * @brief getWId. Get the Thunderbird windows ID.
+         * @brief getWIds. Get the Thunderbird window IDs.
          *
-         *  @return     The ID.
+         *  @return     The list of window IDs.
          */
-        unsigned long   getWId();
+        QList< unsigned long >   getWIds();
+
+        /**
+         * @brief displayWindowAtoms. Display window atoms.
+         *
+         *  @param title    The window title to find.
+         */
+        void    displayWindowAtoms( const QString& title );
 
         /**
          * @brief findWindow. Find window with title.
          *
          *  @param title    The title to find.
-         *  @param window   The found XID.
          *
          *  @return     State of the find.
          */
-        bool    findWindow( const QString& title, unsigned long& window );
+        bool    findWindow( const QString& title );
 
         /**
          * @brief findWindow. Find window of a process.
@@ -240,9 +246,9 @@ class WindowCtrlUnix : public QObject
         Window  m_root_window;
 
         /**
-         * @brief m_tb_window. The Thunderbird window.
+         * @brief m_tb_window. The Thunderbird windows.
          */
-        Window  m_tb_window;
+        QList< Window >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLUNIX_H

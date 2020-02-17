@@ -26,16 +26,16 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 /*
  *  Get the Thunderbird window ID
  */
-unsigned long   WindowCtrlUnix::getWId()
+QList< unsigned long >   WindowCtrlUnix::getWIds()
 {
-    return m_tb_window;
+    return m_tb_windows;
 }
 
 
 /*
- *  Find a window by title
+ *  Display window atoms
  */
-bool    WindowCtrlUnix::findWindow( const QString& title, unsigned long& window )
+void    WindowCtrlUnix::displayWindowAtoms( const QString& title )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -50,10 +50,8 @@ bool    WindowCtrlUnix::findWindow( const QString& title, unsigned long& window 
             if( win_name.contains( title, Qt::CaseInsensitive ) ) {
                 emit signalConsole( QString( "Found: Level %1, XID %2, Name %3" ).arg( win.level ).arg( win.window ).arg( win_name ) );
 
-
                 QString name = atomName( m_display, win.window );
                 emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
-
 
                 QStringList types = atomWindowType( m_display, win.window );
                 foreach( QString type, types )
@@ -113,18 +111,42 @@ bool    WindowCtrlUnix::findWindow( const QString& title, unsigned long& window 
                 }
                 else
                 {
-                    emit signalConsole( "Window State: Unknown" );
+                    emit signalConsole( "Window State: Normal" );
                 }
-
-                /*
-                 *  Store and return the XID
-                 */
-                m_tb_window = win.window;
-                window = win.window;
-
-                return true;
             }
         }
+    }
+}
+
+
+/*
+ *  Find window(s) by title
+ */
+bool    WindowCtrlUnix::findWindow( const QString& title )
+{
+    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
+
+    m_tb_windows = QList< Window >();
+    foreach( WindowItem win, windows )
+    {
+        char *name = nullptr;
+        if( XFetchName( m_display, win.window, &name ) > 0 ) {
+            QString win_name( name );
+
+            XFree( name );
+
+            if( win_name.contains( title, Qt::CaseInsensitive ) ) {
+                /*
+                 *  Store the XID
+                 */
+                m_tb_windows.append( win.window );
+            }
+        }
+    }
+
+    if( m_tb_windows.length() > 0 )
+    {
+        return true;
     }
 
     return false;
@@ -288,7 +310,7 @@ void    WindowCtrlUnix::skipTaskbarWindow( Window window, bool set )
  */
 void    WindowCtrlUnix::normalizeWindow( Window window )
 {
-//    XMapRaised( m_display, m_tb_window );
+//    XMapRaised( m_display, window );
     XMapWindow( m_display, window );
     XFlush( m_display );
 }
@@ -317,46 +339,6 @@ bool        WindowCtrlUnix::generateEvent()
                        reinterpret_cast<XEvent *>( &event ) );
 }
 
-#endif
-
-#ifdef  CHANGE_PROP
-
-//        XDeleteProperty( m_display, window, prop_skip_taskbar);
-
-void    WindowCtrlUnix::setAtomState()
-{
-    char prop_name[] = "_NET_WM_STATE";
-    Atom prop = XInternAtom( m_display, prop_name, True );
-    Atom prop_hidden = XInternAtom( m_display, WindowStates[ STATE_HIDDEN ].toUtf8(), True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    QStringList states;
-
-    if( XGetWindowProperty( m_display, m_tb_window, prop, 0, sizeof( Atom ), False, XA_ATOM,
-                &type, &format, &len, &remain, &list ) == Success )
-    {
-        emit signalConsole( QString( "Atom state" ) );
-
-        if( XChangeProperty( m_display, m_tb_window, prop, XA_ATOM, format, PropModeAppend, reinterpret_cast<unsigned char*>( &prop_hidden ), 1 ) == Success )
-        {
-            emit signalConsole( QString( "Atom state appended: %1" ).arg( WindowStates[ STATE_HIDDEN ] ) );
-        }
-
-        emit signalConsole( QString( "Atom state done" ) );
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    XFlush( m_display );
-}
 #endif
 
 

@@ -290,6 +290,12 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalUnreadMail( unreadMail );
         }
 
+        if( jsonObject.contains( "title" ) && jsonObject[ "title" ].isString() )
+        {
+            QString title = jsonObject[ "title" ].toString();
+            emit signalTitle( title );
+        }
+
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
             emit signalShutdown();

@@ -66,6 +66,13 @@ class WindowCtrl : public QObject
         void    slotWindowTest3();
 
         /**
+         * @brief slotWindowTitle. Handle the window title signal.
+         *
+         * @param state     The windows title.
+         */
+        void slotWindowTitle( QString title );
+
+        /**
          * @brief slotWindowState. Handle the window state change signal.
          *
          * @param state     The new state.
@@ -90,10 +97,14 @@ class WindowCtrl : public QObject
         QWidget*    m_tb_container;
 
         /**
+         * @brief m_window_title. Title of the TB window.
+         */
+        QString m_window_title;
+
+        /**
          * @brief m_state. State of the TB window.
          */
         QString m_state;
-
 };
 
 

@@ -17,17 +17,20 @@ SysTrayX.Messaging = {
     SysTrayX.Messaging.getAccounts();
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
+    //  Send the window title to app
+    SysTrayX.Messaging.sendTitle();
+
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
+    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
 
     //  Send the app a close command if the window closes
     browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
 
     //  Try to catch the window state
-    browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
+    //    browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
   //
@@ -116,6 +119,11 @@ SysTrayX.Messaging = {
   //
   unreadCb: function(count) {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  },
+
+  sendTitle: function() {
+    const title = "-" + SysTrayX.Window.startWindow.title.split("-").pop();
+    SysTrayX.Link.postSysTrayXMessage({ title: title });
   },
 
   sendPreferences: function() {
@@ -282,14 +290,12 @@ SysTrayX.Link = {
 SysTrayX.Window = {
   startWindow: undefined,
 
-  closed: function() {
+  closed: function(windowId) {
     // Window closed
     console.debug("Shutting down");
 
     //  Send it to the app
-    SysTrayX.Link.postSysTrayXMessage({
-      shutdown: ""
-    });
+    SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
   },
 
   focusChanged: function(windowId) {
@@ -323,15 +329,6 @@ async function start() {
   SysTrayX.Window.startWindow = await browser.windows
     .getCurrent()
     .then(currentWindow => currentWindow);
-
-  console.debug("Window focus: " + SysTrayX.Window.startWindow.focused);
-  console.debug("Window name: " + SysTrayX.Window.startWindow.title);
-  console.debug("Window name: " + SysTrayX.Window.startWindow.state);
-
-  //  browser.windows.update(currentWindow.id, { state: "minimized" });
-  //  browser.windows.update(currentWindow.id, { state: "normal", focused: true });
-
-  // ??  browser.windows.update(currentWindow.id, { state: "docked" });
 
   //  Setup the link first
   SysTrayX.Link.init();

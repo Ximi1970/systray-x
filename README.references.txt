@@ -1,5 +1,15 @@
 #<script>
 
+Windows
+=========================================
+
+c# remove 3rd party application from taskbar
+(first answer)
+
+https://stackoverflow.com/questions/10514882/c-sharp-remove-3rd-party-application-from-taskbar
+
+
+
 X11
 ==========================================
 
