@@ -29,6 +29,8 @@ CONFIG += c++11
 #   System dependency
 #
 unix:!macx: {
+    QMAKE_CFLAGS += $(RPM_OPT_FLAGS)
+    QMAKE_CXXFLAGS += $(RPM_OPT_FLAGS)
 #    QMAKE_LFLAGS += -lX11 -static-libgcc -static-libstdc++
 }
 win32: {

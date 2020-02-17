@@ -44,7 +44,9 @@ Clone the repository using TortoiseGit:
 ...
 
 
+## Contributers
 
+Luigi Baldoni <aloisio@gmx.com>		: Initial setup of the OpenSuSE Build Service rpm package.
 
 
 
