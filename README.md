@@ -20,6 +20,14 @@ Clone the repository:
 git clone https://github.com/Ximi1970/systray-x.git
 ```
 
+Requirements:
+  - Fedora/Centos/RHEL:
+
+    ```dnf install qt5-qtbase-devel```
+  - Debian/Ubuntu:
+
+    ```apt install qtbase5-dev```
+
 Build:
 ```bash
 cd systray-x
