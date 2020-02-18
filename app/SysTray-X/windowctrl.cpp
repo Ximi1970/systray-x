@@ -10,12 +10,17 @@
 #include "windowctrl.h"
 
 /*
+ *  System includes
+ */
+#include "preferences.h"
+
+/*
  *  Constructor
  */
 WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
 #ifdef Q_OS_UNIX
     WindowCtrlUnix( parent )
-#elif Q_OS_WIN
+#elif defined Q_OS_WIN
     WindowCtrlWin( parent )
 #else
     public QObject
@@ -40,7 +45,7 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    displayWindowAtoms( "- Mozilla Thunderbird" );
+    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 
 
@@ -149,9 +154,9 @@ void    WindowCtrl::slotShowHide()
     {
         m_state = "normal";
 
-        foreach( unsigned long win_id, getWIds() )
+        foreach( unsigned long win_id, getWinIds() )
         {
-            skipTaskbarWindow( win_id, false );
+            hideWindow( win_id, false );
             normalizeWindow( win_id );
         }
 
@@ -160,11 +165,11 @@ void    WindowCtrl::slotShowHide()
     } else {
         m_state = "minimized";
 
-        foreach( unsigned long win_id, getWIds() )
+        foreach( unsigned long win_id, getWinIds() )
         {
             if( m_minimize_hide )
             {
-                skipTaskbarWindow( win_id, true );
+                hideWindow( win_id, true );
             }
             minimizeWindow( win_id );
         }

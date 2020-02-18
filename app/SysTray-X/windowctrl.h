@@ -16,14 +16,15 @@
  *  Predefines
  */
 class QWindow;
+class Preferences;
 
 /**
  * @brief The WindowCtrl class.
  */
 #ifdef Q_OS_UNIX
 class WindowCtrl : public WindowCtrlUnix
-#elif Q_OS_WIN
-class WindowCtrl : public WindowCtrl
+#elif defined Q_OS_WIN
+class WindowCtrl : public WindowCtrlWin
 #else
 class WindowCtrl : public QObject
 #endif
