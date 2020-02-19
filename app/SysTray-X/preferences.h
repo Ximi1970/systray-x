@@ -33,7 +33,7 @@ class Preferences : public QObject
     public:
 
         /**
-         * @brief Preferences.  Constructor.
+         * @brief Preferences.  Constructor. Destructor.
          */
         Preferences( QObject *parent = nullptr );
 

@@ -1,6 +1,5 @@
 #include "preferences.h"
 
-
 /**
  * @brief Preferences.  Constructor.
  */

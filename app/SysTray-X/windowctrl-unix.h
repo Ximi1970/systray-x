@@ -19,6 +19,11 @@
  */
 #include <QObject>
 
+/*
+ *  Define the windows Id
+ */
+typedef Window   WinId;
+
 /**
  * @brief The WindowCtrlUnix class.
  */
@@ -111,20 +116,6 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
-         * @brief getWIds. Get the Thunderbird window IDs.
-         *
-         *  @return     The list of window IDs.
-         */
-        QList< unsigned long >   getWIds();
-
-        /**
-         * @brief displayWindowAtoms. Display window atoms.
-         *
-         *  @param title    The window title to find.
-         */
-        void    displayWindowAtoms( const QString& title );
-
-        /**
          * @brief findWindow. Find window with title.
          *
          *  @param title    The title to find.
@@ -134,14 +125,18 @@ class WindowCtrlUnix : public QObject
         bool    findWindow( const QString& title );
 
         /**
-         * @brief findWindow. Find window of a process.
+         * @brief displayWindowElements. Display window elements (atoms).
          *
-         *  @param pid      The process id.
+         *  @param title    The window title to find.
          */
-        void    findWindow( int pid );
+        void    displayWindowElements( const QString& title );
 
-
-        void    setAtomState();
+        /**
+         * @brief getWinIds. Get the Thunderbird window IDs.
+         *
+         *  @return     The list of window IDs.
+         */
+        QList< WinId >   getWinIds();
 
         /**
          * @brief minimizeWindow. Minimize window.
@@ -157,7 +152,26 @@ class WindowCtrlUnix : public QObject
          */
         void    normalizeWindow( Window window );
 
-        void    skipTaskbarWindow( Window window, bool set );
+        /**
+         * @brief hideWindow. Hide a window from the taskbar.
+         *
+         *  @param window   The window.
+         *  @param set      The state of the window.
+         */
+        void    hideWindow( Window window, bool set );
+
+
+
+
+
+        /**
+         * @brief findWindow. Find window of a process.
+         *
+         *  @param pid      The process id.
+         */
+        void    findWindow( int pid );
+
+        void    setAtomState();
 
     private:
 
@@ -248,7 +262,7 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief m_tb_window. The Thunderbird windows.
          */
-        QList< Window >  m_tb_windows;
+        QList< WinId >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLUNIX_H

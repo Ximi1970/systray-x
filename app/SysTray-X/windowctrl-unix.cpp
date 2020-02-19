@@ -24,18 +24,43 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 
 
 /*
- *  Get the Thunderbird window ID
+ *  Find window(s) by title
  */
-QList< unsigned long >   WindowCtrlUnix::getWIds()
+bool    WindowCtrlUnix::findWindow( const QString& title )
 {
-    return m_tb_windows;
+    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
+
+    m_tb_windows = QList< WinId >();
+    foreach( WindowItem win, windows )
+    {
+        char *name = nullptr;
+        if( XFetchName( m_display, win.window, &name ) > 0 ) {
+            QString win_name( name );
+
+            XFree( name );
+
+            if( win_name.contains( title, Qt::CaseInsensitive ) ) {
+                /*
+                 *  Store the XID
+                 */
+                m_tb_windows.append( win.window );
+            }
+        }
+    }
+
+    if( m_tb_windows.length() > 0 )
+    {
+        return true;
+    }
+
+    return false;
 }
 
 
 /*
  *  Display window atoms
  */
-void    WindowCtrlUnix::displayWindowAtoms( const QString& title )
+void    WindowCtrlUnix::displayWindowElements( const QString& title )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -120,102 +145,11 @@ void    WindowCtrlUnix::displayWindowAtoms( const QString& title )
 
 
 /*
- *  Find window(s) by title
+ *  Get the Thunderbird window ID
  */
-bool    WindowCtrlUnix::findWindow( const QString& title )
+QList< WinId >   WindowCtrlUnix::getWinIds()
 {
-    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
-
-    m_tb_windows = QList< Window >();
-    foreach( WindowItem win, windows )
-    {
-        char *name = nullptr;
-        if( XFetchName( m_display, win.window, &name ) > 0 ) {
-            QString win_name( name );
-
-            XFree( name );
-
-            if( win_name.contains( title, Qt::CaseInsensitive ) ) {
-                /*
-                 *  Store the XID
-                 */
-                m_tb_windows.append( win.window );
-            }
-        }
-    }
-
-    if( m_tb_windows.length() > 0 )
-    {
-        return true;
-    }
-
-    return false;
-}
-
-
-/*
- *  Find a window by PID
- */
-void    WindowCtrlUnix::findWindow( pid_t pid )
-{
-    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
-
-    // Get the PID property atom.
-    Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
-    if( atom_PID == None )
-    {
-        emit signalConsole( QString( "No such atom _NET_WM_PID" ) );
-    }
-
-    foreach( WindowItem win, windows )
-    {
-        Atom           type;
-        int            format;
-        unsigned long  nItems;
-        unsigned long  bytesAfter;
-
-        unsigned char* propPID = nullptr;
-        if( Success == XGetWindowProperty( m_display, win.window, atom_PID, 0, 1, False, XA_CARDINAL,
-                                             &type, &format, &nItems, &bytesAfter, &propPID ) )
-        {
-            if( propPID != nullptr )
-            {
-                if( pid == *((reinterpret_cast<pid_t *>( propPID ) ) ) )
-                {
-                    char* name = nullptr;
-                    XFetchName( m_display, win.window, &name );
-
-                    emit signalConsole( QString( "Found: Level %1, XID %2, Name %3" ).arg( win.level ).arg( win.window ).arg( name ) );
-
-
-                    QString atom_name = atomName( m_display, win.window );
-                    emit signalConsole( QString( "Atom Name %1" ).arg( atom_name ) );
-
-                    QStringList states = atomState( m_display, win.window );
-                    foreach( QString state, states )
-                    {
-                        emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
-                    }
-
-                    QStringList types = atomWindowType( m_display, win.window );
-                    foreach( QString type, types )
-                    {
-                        emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
-                    }
-
-                    /*
-                     *  Cleanup
-                     */
-                    if( name != nullptr )
-                    {
-                        XFree( name );
-                    }
-                }
-
-                XFree( propPID );
-            }
-        }
-    }
+    return m_tb_windows;
 }
 
 
@@ -230,9 +164,20 @@ void    WindowCtrlUnix::minimizeWindow( Window window )
 
 
 /*
+ *  Normalize a window
+ */
+void    WindowCtrlUnix::normalizeWindow( Window window )
+{
+//    XMapRaised( m_display, window );
+    XMapWindow( m_display, window );
+    XFlush( m_display );
+}
+
+
+/*
  *  Remove window from taskbar
  */
-void    WindowCtrlUnix::skipTaskbarWindow( Window window, bool set )
+void    WindowCtrlUnix::hideWindow( Window window, bool set )
 {
     char prop_name[] = "_NET_WM_STATE";
     Atom prop = XInternAtom( m_display, prop_name, True );
@@ -305,14 +250,74 @@ void    WindowCtrlUnix::skipTaskbarWindow( Window window, bool set )
 }
 
 
+
+
+
+
+
 /*
- *  Normalize a window
+ *  Find a window by PID
  */
-void    WindowCtrlUnix::normalizeWindow( Window window )
+void    WindowCtrlUnix::findWindow( pid_t pid )
 {
-//    XMapRaised( m_display, window );
-    XMapWindow( m_display, window );
-    XFlush( m_display );
+    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
+
+    // Get the PID property atom.
+    Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
+    if( atom_PID == None )
+    {
+        emit signalConsole( QString( "No such atom _NET_WM_PID" ) );
+    }
+
+    foreach( WindowItem win, windows )
+    {
+        Atom           type;
+        int            format;
+        unsigned long  nItems;
+        unsigned long  bytesAfter;
+
+        unsigned char* propPID = nullptr;
+        if( Success == XGetWindowProperty( m_display, win.window, atom_PID, 0, 1, False, XA_CARDINAL,
+                                             &type, &format, &nItems, &bytesAfter, &propPID ) )
+        {
+            if( propPID != nullptr )
+            {
+                if( pid == *((reinterpret_cast<pid_t *>( propPID ) ) ) )
+                {
+                    char* name = nullptr;
+                    XFetchName( m_display, win.window, &name );
+
+                    emit signalConsole( QString( "Found: Level %1, XID %2, Name %3" ).arg( win.level ).arg( win.window ).arg( name ) );
+
+
+                    QString atom_name = atomName( m_display, win.window );
+                    emit signalConsole( QString( "Atom Name %1" ).arg( atom_name ) );
+
+                    QStringList states = atomState( m_display, win.window );
+                    foreach( QString state, states )
+                    {
+                        emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
+                    }
+
+                    QStringList types = atomWindowType( m_display, win.window );
+                    foreach( QString type, types )
+                    {
+                        emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
+                    }
+
+                    /*
+                     *  Cleanup
+                     */
+                    if( name != nullptr )
+                    {
+                        XFree( name );
+                    }
+                }
+
+                XFree( propPID );
+            }
+        }
+    }
 }
 
 
