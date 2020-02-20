@@ -14,11 +14,6 @@
  */
 #include <QObject>
 
-/*
- *  Define the windows Id
- */
-typedef quint64   WinId;
-
 /**
  * @brief The WindowCtrlWin class
  */
@@ -56,21 +51,21 @@ class WindowCtrlWin : public QObject
          *
          *  @return     The list of window IDs.
          */
-        QList< WinId >   getWinIds();
+        QList< quint64 >   getWinIds();
 
         /**
          * @brief minimizeWindow. Minimize window.
          *
          *  @param window   The window.
          */
-        void    minimizeWindow( WinId window );
+        void    minimizeWindow( quint64 window );
 
         /**
          * @brief normalizeWindow. Normalize window.
          *
          *  @param window   The window.
          */
-        void    normalizeWindow( WinId window );
+        void    normalizeWindow( quint64 window );
 
         /**
          * @brief hideWindow. Hide window.
@@ -78,7 +73,7 @@ class WindowCtrlWin : public QObject
          *  @param window   The window.
          *  @param state    The state of the window.
          */
-        void    hideWindow( WinId window, bool state );
+        void    hideWindow( quint64 window, bool state );
 
     private:
 
@@ -123,7 +118,7 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_tb_window. The Thunderbird windows.
          */
-        static QList< WinId >  m_tb_windows;
+        static QList< quint64 >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLWIN_H

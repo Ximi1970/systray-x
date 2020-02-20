@@ -10,7 +10,7 @@
 /*
  *  Statics
  */
-QList< WinId >  WindowCtrlWin::m_tb_windows;
+QList< quint64 >  WindowCtrlWin::m_tb_windows;
 
 
 /*
@@ -18,7 +18,7 @@ QList< WinId >  WindowCtrlWin::m_tb_windows;
  */
 WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
 {
-    m_tb_windows = QList< WinId >();
+    m_tb_windows = QList< quint64 >();
 }
 
 
@@ -27,7 +27,7 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
  */
 bool    WindowCtrlWin::findWindow( const QString& title )
 {
-    m_tb_windows = QList< WinId >();
+    m_tb_windows = QList< quint64 >();
 
     EnumWindows( &EnumWindowsProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
 
@@ -68,7 +68,7 @@ BOOL CALLBACK   WindowCtrlWin::EnumWindowsProc( HWND hwnd, LPARAM lParam )
 /*
  *  Get the Thunderbird window ID
  */
-QList< WinId >   WindowCtrlWin::getWinIds()
+QList< quint64 >   WindowCtrlWin::getWinIds()
 {
     return m_tb_windows;
 }
@@ -77,7 +77,7 @@ QList< WinId >   WindowCtrlWin::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlWin::minimizeWindow( WinId window )
+void    WindowCtrlWin::minimizeWindow( quint64 window )
 {
 }
 
@@ -85,7 +85,7 @@ void    WindowCtrlWin::minimizeWindow( WinId window )
 /*
  *  Normalize a window
  */
-void    WindowCtrlWin::normalizeWindow( WinId window )
+void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
 }
 
@@ -93,7 +93,7 @@ void    WindowCtrlWin::normalizeWindow( WinId window )
 /*
  *  Hide a window
  */
-void    WindowCtrlWin::hideWindow( WinId window, bool state )
+void    WindowCtrlWin::hideWindow( quint64 window, bool state )
 {
 }
 
