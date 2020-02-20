@@ -4,12 +4,20 @@
 #ifndef WINDOWCTRLWIN_H
 #define WINDOWCTRLWIN_H
 
+/*
+ *  System includes
+ */
+#include <Windows.h>
+
+/*
+ *  Qt includes
+ */
 #include <QObject>
 
 /*
  *  Define the windows Id
  */
-typedef unsigned long   WinId;
+typedef quint64   WinId;
 
 /**
  * @brief The WindowCtrlWin class
@@ -72,6 +80,18 @@ class WindowCtrlWin : public QObject
          */
         void    hideWindow( WinId window, bool state );
 
+    private:
+
+        /**
+         * @brief EnumWindowsProc. Callback for window enumaration.
+         *
+         *  @param hwnd         Handle of window.
+         *  @param lParam       Argument passed by EnumWindows.
+         *
+         *  @return     State of callback. (TRUE = continue / FALSE = stop)
+         */
+        static BOOL CALLBACK  EnumWindowsProc( HWND hwnd, LPARAM lParam );
+
     signals:
 
         /**
@@ -103,7 +123,7 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_tb_window. The Thunderbird windows.
          */
-        QList< WinId >  m_tb_windows;
+        static QList< WinId >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLWIN_H

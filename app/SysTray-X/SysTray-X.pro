@@ -39,6 +39,7 @@ unix:!macx: {
     QMAKE_LFLAGS += -lX11
 }
 win32: {
+    LIBS += User32.lib
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
 
     #

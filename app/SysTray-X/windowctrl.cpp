@@ -154,7 +154,7 @@ void    WindowCtrl::slotShowHide()
     {
         m_state = "normal";
 
-        foreach( unsigned long win_id, getWinIds() )
+        foreach( quint64 win_id, getWinIds() )
         {
             hideWindow( win_id, false );
             normalizeWindow( win_id );
@@ -165,7 +165,7 @@ void    WindowCtrl::slotShowHide()
     } else {
         m_state = "minimized";
 
-        foreach( unsigned long win_id, getWinIds() )
+        foreach( quint64 win_id, getWinIds() )
         {
             if( m_minimize_hide )
             {

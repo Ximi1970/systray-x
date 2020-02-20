@@ -3,11 +3,22 @@
 #ifdef Q_OS_WIN
 
 /*
+ *  System includes
+ */
+
+
+/*
+ *  Statics
+ */
+QList< WinId >  WindowCtrlWin::m_tb_windows;
+
+
+/*
  *  Constructor
  */
 WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
 {
-
+    m_tb_windows = QList< WinId >();
 }
 
 
@@ -16,6 +27,10 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
  */
 bool    WindowCtrlWin::findWindow( const QString& title )
 {
+    m_tb_windows = QList< WinId >();
+
+    EnumWindows( &EnumWindowsProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
+
     return false;
 }
 
@@ -25,6 +40,28 @@ bool    WindowCtrlWin::findWindow( const QString& title )
  */
 void    WindowCtrlWin::displayWindowElements( const QString& title )
 {
+    findWindow( title );
+
+    foreach( quint64 win_id, getWinIds() )
+    {
+        emit signalConsole( QString( "Found: XID %1" ).arg( win_id ) );
+    }
+}
+
+
+/*
+ *  Callback for the window enumaration
+ */
+BOOL CALLBACK   WindowCtrlWin::EnumWindowsProc( HWND hwnd, LPARAM lParam )
+{
+    char buffer[ 128 ];
+    int written = GetWindowTextA( hwnd, buffer, 128 );
+    if( written && strstr( buffer, (char*)lParam ) != NULL )
+    {
+        m_tb_windows.append( (quint64)hwnd );
+    }
+
+    return TRUE;
 }
 
 
