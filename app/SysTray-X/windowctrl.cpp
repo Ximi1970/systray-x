@@ -158,6 +158,8 @@ void    WindowCtrl::slotShowHide()
         {
             hideWindow( win_id, false );
             normalizeWindow( win_id );
+
+            emit signalConsole("Normalize");
         }
 
 //        emit signalWindowNormal();    // TB window control
@@ -172,6 +174,8 @@ void    WindowCtrl::slotShowHide()
                 hideWindow( win_id, true );
             }
             minimizeWindow( win_id );
+
+            emit signalConsole("Minimize");
         }
 
 //        emit signalWindowMinimize();  // TB window control

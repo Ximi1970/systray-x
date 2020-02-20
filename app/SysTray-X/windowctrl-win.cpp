@@ -79,6 +79,7 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
  */
 void    WindowCtrlWin::minimizeWindow( quint64 window )
 {
+    ShowWindow( (HWND)window, SW_MINIMIZE );
 }
 
 
@@ -87,6 +88,7 @@ void    WindowCtrlWin::minimizeWindow( quint64 window )
  */
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
+    ShowWindow( (HWND)window, SW_RESTORE );
 }
 
 
