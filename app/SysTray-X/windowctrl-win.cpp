@@ -77,9 +77,14 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlWin::minimizeWindow( quint64 window )
+void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
 {
     ShowWindow( (HWND)window, SW_MINIMIZE );
+
+    if( hide )
+    {
+        hideWindow( (HWND)window );
+    }
 }
 
 
@@ -89,14 +94,24 @@ void    WindowCtrlWin::minimizeWindow( quint64 window )
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
     ShowWindow( (HWND)window, SW_RESTORE );
+    SetForegroundWindow( (HWND)window );
 }
 
 
 /*
  *  Hide a window
  */
-void    WindowCtrlWin::hideWindow( quint64 window, bool state )
+void    WindowCtrlWin::hideWindow( HWND hwnd )
 {
+    emit signalConsole( "Hide" );
+
+    long style = GetWindowLong( hwnd, GWL_STYLE );
+
+    style &= ~(WS_VISIBLE);
+    style |= WS_EX_TOOLWINDOW;
+    style &= ~(WS_EX_APPWINDOW);
+
+    SetWindowLong( hwnd, GWL_STYLE, style );
 }
 
 #endif // Q_OS_WIN

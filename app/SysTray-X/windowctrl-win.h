@@ -57,8 +57,9 @@ class WindowCtrlWin : public QObject
          * @brief minimizeWindow. Minimize window.
          *
          *  @param window   The window.
+         *  @param hide     Hide from taskbar
          */
-        void    minimizeWindow( quint64 window );
+        void    minimizeWindow( quint64 window, bool hide );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -67,15 +68,14 @@ class WindowCtrlWin : public QObject
          */
         void    normalizeWindow( quint64 window );
 
+    private:
+
         /**
          * @brief hideWindow. Hide window.
          *
-         *  @param window   The window.
-         *  @param state    The state of the window.
+         *  @param hwnd     The window.
          */
-        void    hideWindow( quint64 window, bool state );
-
-    private:
+        void    hideWindow( HWND hwnd );
 
         /**
          * @brief EnumWindowsProc. Callback for window enumaration.

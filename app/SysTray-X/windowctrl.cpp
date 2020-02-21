@@ -156,7 +156,6 @@ void    WindowCtrl::slotShowHide()
 
         foreach( quint64 win_id, getWinIds() )
         {
-            hideWindow( win_id, false );
             normalizeWindow( win_id );
 
             emit signalConsole("Normalize");
@@ -169,11 +168,7 @@ void    WindowCtrl::slotShowHide()
 
         foreach( quint64 win_id, getWinIds() )
         {
-            if( m_minimize_hide )
-            {
-                hideWindow( win_id, true );
-            }
-            minimizeWindow( win_id );
+            minimizeWindow( win_id, m_minimize_hide );
 
             emit signalConsole("Minimize");
         }

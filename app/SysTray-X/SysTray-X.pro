@@ -142,7 +142,7 @@ win32: {
     } else {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)').replace('\\','\\\\')")
 
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)" &
         QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
     }
 
