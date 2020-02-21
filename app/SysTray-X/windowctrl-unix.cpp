@@ -156,8 +156,13 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window )
+void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+    if( hide )
+    {
+        hideWindow( static_cast<Window>( window ), hide );
+    }
+
     XIconifyWindow( m_display, static_cast<Window>( window ), m_screen );
     XFlush( m_display );
 }
@@ -168,6 +173,8 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
+    hideWindow( static_cast<Window>( window ), false );
+
 //    XMapRaised( m_display, static_cast<Window>( window ) );
     XMapWindow( m_display, static_cast<Window>( window ) );
     XFlush( m_display );
