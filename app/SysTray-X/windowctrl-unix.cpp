@@ -175,8 +175,17 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
     hideWindow( static_cast<Window>( window ), false );
 
-//    XMapRaised( m_display, static_cast<Window>( window ) );
-    XMapWindow( m_display, static_cast<Window>( window ) );
+    XEvent event = { 0 };
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
+    event.xclient.window = static_cast<Window>( window );
+    event.xclient.format = 32;
+
+    XSendEvent( m_display, m_root_window, False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
+    XMapRaised( m_display, static_cast<Window>( window ) );
+//    XMapWindow( m_display, static_cast<Window>( window ) );
     XFlush( m_display );
 }
 
