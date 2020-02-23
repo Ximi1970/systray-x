@@ -48,8 +48,7 @@ void    WindowCtrl::slotWindowTest1()
     displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 
-
-//    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
+//    captureWindow( "- Mozilla Thunderbird" );
 
     emit signalConsole("Test 1 done");
 }
@@ -60,6 +59,13 @@ void    WindowCtrl::slotWindowTest2()
     emit signalConsole("Test 2 started");
 
     // Do something.
+
+
+//    foreach( quint64 win_id, getWinIds() )
+//    {
+//        closeWindow( (HWND)win_id );
+//    }
+
 
     /*
      *  Disconnect container?
@@ -86,25 +92,25 @@ void    WindowCtrl::slotWindowTest3()
 
 bool    WindowCtrl::captureWindow( const QString& title )
 {
-    Q_UNUSED( title )
+    emit signalConsole("Capture");
 
-#ifdef  FF_NEET
-
-    unsigned long WinId;
     if( !findWindow( title ) )
     {
+        emit signalConsole("Capture error");
         return false;
     }
 
     /*
      *  Wrap Thunderbird window
      */
-    m_tb_window = QWindow::fromWinId( WinId );
+    m_tb_window = QWindow::fromWinId( getWinIds()[ 0 ] );
     m_tb_window->parent();
 
     m_tb_container = QWidget::createWindowContainer( m_tb_window );
 
-#endif
+    m_tb_container->show();
+
+    emit signalConsole("Capture done");
 
     return true;
 }

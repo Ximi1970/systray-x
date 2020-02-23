@@ -5,7 +5,7 @@
 /*
  *  System includes
  */
-
+#include <CommCtrl.h>
 
 /*
  *  Statics
@@ -31,7 +31,12 @@ bool    WindowCtrlWin::findWindow( const QString& title )
 
     EnumWindows( &EnumWindowsProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
 
-    return false;
+    if( m_tb_windows.length() == 0 )
+    {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -103,8 +108,6 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
  */
 void    WindowCtrlWin::hideWindow( HWND hwnd )
 {
-    emit signalConsole( "Hide" );
-
     long style = GetWindowLong( hwnd, GWL_STYLE );
 
     style &= ~(WS_VISIBLE);
@@ -112,6 +115,64 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
     style &= ~(WS_EX_APPWINDOW);
 
     SetWindowLong( hwnd, GWL_STYLE, style );
+}
+
+
+
+
+
+/*
+LRESULT CALLBACK    WindowCtrlWin::mySubClassProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData )
+{
+    MessageBoxA( NULL, "Test", "Test", MB_OK );
+
+    switch(uMsg)
+    {
+        case WM_LBUTTONDOWN:
+            MessageBoxA( NULL, "Button down!", "Debug", MB_OK );
+            break;
+
+        case WM_NCDESTROY:
+            RemoveWindowSubclass( hWnd, &mySubClassProc, 1 );
+            break;
+    }
+
+    return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+*/
+
+/*
+ *  Callback for the window enumaration
+ */
+LRESULT CALLBACK   WindowCtrlWin::WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+{
+    MessageBoxA( NULL, "Test", "Test", MB_OK );
+
+    return TRUE;
+
+    if( uMsg == WM_CLOSE )
+    {
+        return TRUE;
+    }
+
+//    return CallWindowProc( prev, hwnd, uMsg,wParam, lParam);
+
+    return DefWindowProc( hwnd, uMsg, wParam, lParam );
+}
+
+
+/*
+ *  Close experiment
+ */
+void    WindowCtrlWin::closeWindow( HWND hwnd )
+{
+    emit signalConsole("Close Window intercept");
+
+//    SetWindowSubclass( hwnd, &mySubClassProc, 1, 0);
+
+    MessageBoxA( NULL, "Start test", "Test", MB_OK );
+
+    WNDPROC prev = (WNDPROC)SetWindowLongPtr( hwnd, GWLP_WNDPROC, (LONG_PTR)&WindowCtrlWin::WindowProc );
 }
 
 #endif // Q_OS_WIN

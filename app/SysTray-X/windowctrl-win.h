@@ -30,6 +30,11 @@ class WindowCtrlWin : public QObject
          */
         explicit WindowCtrlWin( QObject *parent = nullptr );
 
+
+        void    closeWindow( HWND hwnd );
+
+
+
         /**
          * @brief findWindow. Find window with title.
          *
@@ -86,6 +91,20 @@ class WindowCtrlWin : public QObject
          *  @return     State of callback. (TRUE = continue / FALSE = stop)
          */
         static BOOL CALLBACK  EnumWindowsProc( HWND hwnd, LPARAM lParam );
+
+        /**
+         * @brief WindowProc
+         *
+         *  @param hwnd
+         *  @param uMsg
+         *  @param wParam
+         *  @param lParam
+         *
+         *  @return
+         */
+        static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
+        static LRESULT CALLBACK mySubClassProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData );
 
     signals:
 
