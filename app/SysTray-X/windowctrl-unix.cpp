@@ -8,12 +8,17 @@
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 
-
 /*
  *  Constructor
  */
 WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 {
+    /*
+     *  Initialize
+     */
+    m_tb_windows = QList< quint64 >();
+    m_tb_geometries = QList< QRect >();
+
     /*
      *  Get the base display and window
      */
@@ -44,6 +49,17 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
                  *  Store the XID
                  */
                 m_tb_windows.append( static_cast<quint64>( win.window ) );
+
+                /*
+                 * Store geometry
+                 */
+                XWindowAttributes attr;
+                XGetWindowAttributes( m_display, win.window, &attr );
+
+                Window child;
+                XTranslateCoordinates( m_display, win.window, m_root_window, 0, 0, &attr.x, &attr.y, &child);
+
+                m_tb_geometries.append( QRect( attr.x, attr.y, attr.width, attr.height ) );
             }
         }
     }
@@ -150,6 +166,15 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
 QList< quint64 >   WindowCtrlUnix::getWinIds()
 {
     return m_tb_windows;
+}
+
+
+/*
+ *  Get the Thunderbird window geometries
+ */
+QList< QRect >   WindowCtrlUnix::getWinGeos()
+{
+    return m_tb_geometries;
 }
 
 

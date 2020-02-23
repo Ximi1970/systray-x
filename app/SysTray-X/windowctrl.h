@@ -1,7 +1,15 @@
 #ifndef WINDOWCTRL_H
 #define WINDOWCTRL_H
 
+/*
+ *  Qt includes
+ */
 #include <QtGlobal>
+
+/*
+ *  Local includes
+ */
+#include "options.h"
 
 #ifdef Q_OS_UNIX
 #include "windowctrl-unix.h"
@@ -11,11 +19,11 @@
 #include "windowctrl-win.h"
 #endif // Q_OS_WIN
 
-
 /*
  *  Predefines
  */
 class QWindow;
+class Container;
 class Preferences;
 
 /**
@@ -38,7 +46,7 @@ class WindowCtrl : public QObject
          *
          * @param parent    My parent.
          */
-        explicit WindowCtrl( Preferences* pref, QObject *parent = nullptr );
+        explicit WindowCtrl( Container* container, Preferences* pref, QObject *parent = nullptr );
 
         /**
          * @brief captureWindow. Capture the TB window.
@@ -93,6 +101,11 @@ class WindowCtrl : public QObject
         void    slotShowHide();
 
     private:
+
+        /**
+         * @brief m_container. Pointer to the container.
+         */
+        Container*  m_container;
 
         /**
          * @brief m_pref. Pointer to the preferences storage.

@@ -6,10 +6,6 @@
 
 QT       += core gui
 
-unix: {
-    QT  += x11extras
-}
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SysTray-X
@@ -165,7 +161,8 @@ SOURCES += \
         debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp \
-        windowctrl.cpp
+        windowctrl.cpp \
+        container.cpp
 unix: {
 SOURCES += \
         windowctrl-unix.cpp
@@ -182,7 +179,9 @@ HEADERS += \
         debugwidget.h \
         preferencesdialog.h \
         preferences.h \
-        windowctrl.h
+        windowctrl.h \
+        container.h \
+        options.h
 unix: {
 HEADERS += \
         windowctrl-unix.h

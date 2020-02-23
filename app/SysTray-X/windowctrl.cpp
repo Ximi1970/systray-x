@@ -12,12 +12,13 @@
 /*
  *  System includes
  */
+#include "container.h"
 #include "preferences.h"
 
 /*
  *  Constructor
  */
-WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
+WindowCtrl::WindowCtrl( Container* container, Preferences* pref, QObject *parent ) :
 #ifdef Q_OS_UNIX
     WindowCtrlUnix( parent )
 #elif defined Q_OS_WIN
@@ -26,6 +27,11 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
     public QObject
 #endif
 {
+   /*
+    *  Store the containwe
+    */
+   m_container = container;
+
     /*
      *  Store preferences
      */
@@ -45,11 +51,10 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    displayWindowElements( "- Mozilla Thunderbird" );
+//    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 
-
-//    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
+    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
 
     emit signalConsole("Test 1 done");
 }
@@ -60,6 +65,11 @@ void    WindowCtrl::slotWindowTest2()
     emit signalConsole("Test 2 started");
 
     // Do something.
+
+
+    m_tb_window->setParent( nullptr );
+    m_tb_window->setFlags( Qt::Window );
+
 
     /*
      *  Disconnect container?
@@ -86,23 +96,25 @@ void    WindowCtrl::slotWindowTest3()
 
 bool    WindowCtrl::captureWindow( const QString& title )
 {
-    Q_UNUSED( title )
-
-#ifdef  FF_NEET
-
-    unsigned long WinId;
     if( !findWindow( title ) )
     {
         return false;
     }
 
+#ifdef ENABLE_CONTAINER
+
     /*
      *  Wrap Thunderbird window
      */
-    m_tb_window = QWindow::fromWinId( WinId );
-    m_tb_window->parent();
-
+    m_tb_window = QWindow::fromWinId( getWinIds()[ 0 ] );
     m_tb_container = QWidget::createWindowContainer( m_tb_window );
+
+    /*
+     *  Integrate the window container
+     */
+    m_container->setWidget( m_tb_container );
+    m_container->setGeometry( getWinGeos()[ 0 ] );
+    m_container->show();
 
 #endif
 
@@ -123,7 +135,29 @@ void    WindowCtrl::slotWindowTitle( QString title )
     /*
      *  Get the window IDs
      */
-    findWindow( title );
+    if( !findWindow( title ) )
+    {
+        return;
+    }
+
+#ifdef ENABLE_CONTAINER
+
+    /*
+     *  Wrap Thunderbird window
+     */
+    m_tb_window = QWindow::fromWinId( getWinIds()[ 0 ] );
+    m_tb_window->parent();
+
+    m_tb_container = QWidget::createWindowContainer( m_tb_window );
+
+    /*
+     *  Integrate the container
+     */
+    m_container->setWidget( m_tb_container );
+    m_container->setGeometry( getWinGeos()[ 0 ] );
+    m_container->show();
+
+#endif
 }
 
 

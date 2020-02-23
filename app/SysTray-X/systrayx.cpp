@@ -8,6 +8,7 @@
 #include "systrayxlink.h"
 #include "systrayxicon.h"
 #include "windowctrl.h"
+#include "container.h"
 
 /*
  *	Qt includes
@@ -18,7 +19,7 @@
 /*
  *  Constants
  */
-const QString SysTrayX::JSON_PREF_REQUEST = "{\"preferences\":{}}";
+const QString   SysTrayX::JSON_PREF_REQUEST = "{\"preferences\":{}}";
 
 
 /*
@@ -34,7 +35,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Setup window control
      */
-    m_win_ctrl = new WindowCtrl( m_preferences );
+    m_tb_container = new Container();
+
+    /*
+     *  Setup window control
+     */
+    m_win_ctrl = new WindowCtrl( m_tb_container, m_preferences );
 
     /*
      *  Setup the link
@@ -132,7 +138,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
  *  Send a preferences request
  */
-void SysTrayX::getPreferences()
+void    SysTrayX::getPreferences()
 {
     /*
      *  Request preferences from add-on
@@ -145,7 +151,7 @@ void SysTrayX::getPreferences()
 /*
  *  Create the actions for the system tray icon menu
  */
-void SysTrayX::createActions()
+void    SysTrayX::createActions()
 {
 /*
     m_minimizeAction = new QAction(tr("Mi&nimize"), this);
@@ -173,7 +179,7 @@ void SysTrayX::createActions()
 /*
  *  Create the system tray icon
  */
-void SysTrayX::createTrayIcon()
+void    SysTrayX::createTrayIcon()
 {
     /*
      *  Setup menu actions
@@ -212,7 +218,7 @@ void SysTrayX::createTrayIcon()
 /*
  *  Quit the app
  */
-void SysTrayX::slotShutdown()
+void    SysTrayX::slotShutdown()
 {
     /*
      *  Let's quit

@@ -18,6 +18,7 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QRect>
 
 /**
  * @brief The WindowCtrlUnix class.
@@ -132,6 +133,13 @@ class WindowCtrlUnix : public QObject
          *  @return     The list of window IDs.
          */
         QList< quint64 >   getWinIds();
+
+        /**
+         * @brief getWinGeos. Get the Thunderbird window geometries.
+         *
+         *  @return     The list of window geometries.
+         */
+        QList< QRect >   getWinGeos();
 
         /**
          * @brief minimizeWindow. Minimize window.
@@ -259,6 +267,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_window. The Thunderbird windows.
          */
         QList< quint64 >  m_tb_windows;
+
+        /**
+         * @brief m_tb_geometries. The Thunderbird window geometries.
+         */
+        QList< QRect >  m_tb_geometries;
 };
 
 #endif // WINDOWCTRLUNIX_H
