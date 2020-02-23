@@ -10,6 +10,7 @@
  *  Predefines
  */
 class QVBoxLayout;
+class Preferences;
 
 /**
  * @brief The Container class. Class to hold the Thunderbird window.
@@ -25,7 +26,7 @@ class Container : public QWidget
          *
          *   @param parent      My parent.
          */
-        Container( QWidget *parent = nullptr );
+        Container( Preferences* pref, QWidget *parent = nullptr );
 
         /**
          * @brief setWidget. Set the container widget.
@@ -34,7 +35,47 @@ class Container : public QWidget
          */
         void    setWidget( QWidget* widget );
 
+        /**
+         * @brief removeWidget. Remove the container widget.
+         *
+         *  @param widget
+         */
+        void    removeWidget( QWidget* widget );
+
     private:
+
+        /**
+         * @brief closeEvent. Override the close event handler.
+         *
+         *  @param event    The event.
+         */
+        void    closeEvent( QCloseEvent *event );
+
+    signals:
+
+        /**
+         * @brief signalShowHide. Signal show / hide window.
+         */
+        void signalShowHide();
+
+    public slots:
+
+        /**
+         * @brief slotMinimizeOnClose. Hnadle preference minimize on close signal.
+         */
+        void    slotMinimizeOnClose();
+
+    private:
+
+        /**
+         * @brief m_pref. Pointer to the preferences storage.
+         */
+        Preferences*    m_pref;
+
+        /**
+         * @brief m_minimize_close. Minimize on close state.
+         */
+        bool   m_minimize_close;
 };
 
 #endif // CONTAINER_H

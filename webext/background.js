@@ -131,7 +131,8 @@ SysTrayX.Messaging = {
 
     const getter = browser.storage.sync.get([
       "debug",
-      "minimizeHide",
+      "hideOnMinimize",
+      "minimizeOnClose",
       "iconType",
       "iconMime",
       "icon"
@@ -143,13 +144,15 @@ SysTrayX.Messaging = {
     console.debug("Get preferences from storage");
 
     const debug = result.debug || "false";
-    const minimizeHide = result.minimizeHide || "true";
+    const hideOnMinimize = result.hideOnMinimize || "true";
+    const minimizeOnClose = result.minimizeOnClose || "true";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
 
     console.log(`Debug ${debug}`);
-    console.log(`Debug ${minimizeHide}`);
+    console.log(`Debug ${hideOnMinimize}`);
+    console.log(`Debug ${minimizeOnClose}`);
     console.log(`Type ${iconType}`);
     console.log(`Mime ${iconMime}`);
     console.log(icon);
@@ -158,7 +161,8 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
-        minimizeHide: minimizeHide,
+        hideOnMinimize: hideOnMinimize,
+        minimizeOnClose: minimizeOnClose,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon
@@ -281,10 +285,17 @@ SysTrayX.Link = {
         });
       }
 
-      const minimizeHide = response["preferences"].minimizeHide;
-      if (minimizeHide) {
+      const hideOnMinimize = response["preferences"].hideOnMinimize;
+      if (hideOnMinimize) {
         browser.storage.sync.set({
-          minimizeHide: minimizeHide
+          hideOnMinimize: hideOnMinimize
+        });
+      }
+
+      const minimizeOnClose = response["preferences"].minimizeOnClose;
+      if (minimizeOnClose) {
+        browser.storage.sync.set({
+          minimizeOnClose: minimizeOnClose
         });
       }
 

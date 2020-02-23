@@ -49,6 +49,11 @@ class WindowCtrl : public QObject
         explicit WindowCtrl( Container* container, Preferences* pref, QObject *parent = nullptr );
 
         /**
+         * @brief ~WindowCtrlUnix. Destructor.
+         */
+        ~WindowCtrl();
+
+        /**
          * @brief captureWindow. Capture the TB window.
          *
          *  @param title    (Part of) the window title.
@@ -56,6 +61,11 @@ class WindowCtrl : public QObject
          *  @return     State of the capture.
          */
         bool    captureWindow( const QString& title );
+
+        /**
+         * @brief shutdown. Handle app shutdown.
+         */
+        void    shutdown();
 
     public slots:
 
@@ -82,11 +92,18 @@ class WindowCtrl : public QObject
         void    slotWindowTitle( QString title );
 
         /**
-         * @brief slotMinimizeHideChange. Handle the minimizeHide signal.
+         * @brief slotHideOnMinimizeChange. Handle the hide on minimize signal.
          *
          *  @param state    The state
          */
-        void    slotMinimizeHideChange();
+        void    slotHideOnMinimizeChange();
+
+        /**
+         * @brief slotMinimizeOnCloseChange. Handle the minimize on close signal.
+         *
+         *  @param state    The state
+         */
+        void    slotMinimizeOnCloseChange();
 
         /**
          * @brief slotWindowState. Handle the window state change signal.
@@ -128,9 +145,14 @@ class WindowCtrl : public QObject
         QString m_window_title;
 
         /**
-         * @brief m_minimize_hide. State of minimizeHide
+         * @brief m_hide_minimize. State of hide on minimize.
          */
-        bool m_minimize_hide;
+        bool    m_hide_minimize;
+
+        /**
+         * @brief m_minimize_close. State of minimize on close.
+         */
+        bool    m_minimize_close;
 
         /**
          * @brief m_state. State of the TB window.

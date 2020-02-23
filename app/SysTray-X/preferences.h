@@ -42,138 +42,162 @@ class Preferences : public QObject
          *
          * @return      The state
          */
-        bool getAppPrefChanged() const;
+        bool    getAppPrefChanged() const;
 
         /**
          * @brief setAppPrefChanged. Control for sending changes to the add-on.
          *
          *  @param state    The state
          */
-        void setAppPrefChanged( bool state );
+        void    setAppPrefChanged( bool state );
 
         /**
          * @brief getIconType. Get the icon type.
          *
          * @return      The icon type.
          */
-        IconType getIconType() const;
+        IconType    getIconType() const;
 
         /**
          * @brief setIconType. Set the icon type.
          *
          * @param      The icon type.
          */
-        void setIconType( IconType icon_type );
+        void    setIconType( IconType icon_type );
 
         /**
          * @brief getIconMime. Get the icon mime.
          *
          * @return      The icon mime.
          */
-        const QString& getIconMime() const;
+        const QString&  getIconMime() const;
 
         /**
          * @brief setIconMime. Set the icon mime.
          *
          * @param      The icon mime.
          */
-        void setIconMime( const QString& icon_mime );
+        void    setIconMime( const QString& icon_mime );
 
         /**
          * @brief getIconData. Get the icon data.
          *
          * @return      The icon data.
          */
-        const QByteArray& getIconData() const;
+        const QByteArray&   getIconData() const;
 
         /**
          * @brief setIconData. Set the icon data.
          *
          * @param      The icon data.
          */
-        void setIconData( const QByteArray& icon_data );
+        void    setIconData( const QByteArray& icon_data );
 
         /**
-         * @brief getMinimizeHide. Get the minimizeHide state.
+         * @brief getHideOnMinimize. Get the hide on minimize state.
          *
          * @return      The state.
          */
-        bool getMinimizeHide() const;
+        bool    getHideOnMinimize() const;
 
         /**
-         * @brief setMinimizeHide. Set the minimizeHide state.
+         * @brief setHideOnMinimize. Set the hide on minimize state.
          *
          * @param      The state.
          */
-        void setMinimizeHide( bool state );
+        void    setHideOnMinimize( bool state );
+
+        /**
+         * @brief getMinimizeOnClose. Get the minimize on close state.
+         *
+         * @return      The state.
+         */
+        bool    getMinimizeOnClose() const;
+
+        /**
+         * @brief setMinimizeOnClose. Set the minimize on close state.
+         *
+         * @param      The state.
+         */
+        void    setMinimizeOnClose( bool state );
 
         /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
          */
-        bool getDebug() const;
+        bool    getDebug() const;
 
         /**
          * @brief setDebug. Set the debug windows state.
          *
          * @param      The state.
          */
-        void setDebug( bool state );
+        void    setDebug( bool state );
 
     signals:
 
         /**
          * @brief signalIconTypeChange. Signal a icon type change.
          */
-        void signalIconTypeChange();
+        void    signalIconTypeChange();
 
         /**
          * @brief signalIconDataChange. Signal a icon data change.
          */
-        void signalIconDataChange();
+        void    signalIconDataChange();
 
         /**
-         * @brief signalMinimizeHideChange. Signal a minimizeHide state change.
+         * @brief signalHideOnMinimizeChange. Signal a hide on minimize state change.
          */
-        void signalMinimizeHideChange();
+        void    signalHideOnMinimizeChange();
+
+        /**
+         * @brief signalMinimizeOnCloseChange. Signal a minimize on close state change.
+         */
+        void    signalMinimizeOnCloseChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
          */
-        void signalDebugChange();
+        void    signalDebugChange();
 
     private:
 
         /**
          * @brief m_app_pref_changed. Control for sending changes to the add-on.
          */
-        bool m_app_pref_changed;
+        bool    m_app_pref_changed;
 
         /**
          * @brief m_icon_type. Selected icon type.
          */
-        IconType m_icon_type;
+        IconType    m_icon_type;
 
         /**
          * @brief m_icon_mime. Selected icon mime.
          */
-        QString m_icon_mime;
+        QString     m_icon_mime;
 
         /**
          * @brief m_icon_data. Binary data icon image.
          */
-        QByteArray m_icon_data;
+        QByteArray  m_icon_data;
 
         /**
-         * @brief m_minimize_hide. Hide the minimized window.
+         * @brief m_hide_minimize. Hide the minimized window.
          */
-        bool m_minimize_hide;
+        bool    m_hide_minimize;
+
+        /**
+         * @brief m_minimize_close. Hide the closing window.
+         */
+        bool    m_minimize_close;
 
         /**
          * @brief m_debug. Display debug window.
          */
-        bool m_debug;
+        bool    m_debug;
 };
 
 #endif // PREFERENCES_H

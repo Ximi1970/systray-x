@@ -14,7 +14,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
 
-    m_minimize_hide = true;
+    m_hide_minimize = true;
+    m_minimize_close = true;
 
     m_debug = false;
 }
@@ -113,27 +114,53 @@ void    Preferences::setIconData( const QByteArray& icon_data )
 
 
 /*
- *  Get the icon data.
+ *  Get the hide on minimize state.
  */
-bool    Preferences::getMinimizeHide() const
+bool    Preferences::getHideOnMinimize() const
 {
-    return m_minimize_hide;
+    return m_hide_minimize;
 }
 
 
 /*
- *  Set the minimizeHide data.
+ *  Set the minimize on close state.
  */
-void    Preferences::setMinimizeHide( bool state )
+void    Preferences::setHideOnMinimize( bool state )
 {
-    if( m_minimize_hide != state )
+    if( m_hide_minimize != state )
     {
-        m_minimize_hide = state;
+        m_hide_minimize = state;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalMinimizeHideChange();
+        emit signalHideOnMinimizeChange();
+    }
+}
+
+
+/*
+ *  Get the minimuze on close state.
+ */
+bool    Preferences::getMinimizeOnClose() const
+{
+    return m_minimize_close;
+}
+
+
+/*
+ *  Set the minimize on close data.
+ */
+void    Preferences::setMinimizeOnClose( bool state )
+{
+    if( m_minimize_close != state )
+    {
+        m_minimize_close = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeOnCloseChange();
     }
 }
 

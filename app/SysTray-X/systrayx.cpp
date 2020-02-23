@@ -35,7 +35,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Setup window control
      */
-    m_tb_container = new Container();
+    m_tb_container = new Container( m_preferences );
 
     /*
      *  Setup window control
@@ -74,6 +74,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
 
+    connect( m_link, &SysTrayXLink::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_link, &SysTrayXLink::signalLinkReceiveError, m_debug, &DebugWidget::slotReceiveError );
 
     connect( m_debug, &DebugWidget::signalWriteMessage, m_link, &SysTrayXLink::slotLinkWrite );
@@ -94,17 +95,20 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
 
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_win_ctrl, &WindowCtrl::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_win_ctrl, &WindowCtrl::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_win_ctrl, &WindowCtrl::slotMinimizeOnCloseChange );
 
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_pref_dialog, &PreferencesDialog::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_pref_dialog, &PreferencesDialog::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_pref_dialog, &PreferencesDialog::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_link, &SysTrayXLink::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_link, &SysTrayXLink::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
@@ -127,6 +131,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect system tray signals
      */
     connect( m_tray_icon, &SysTrayXIcon::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
+
+    /*
+     *  Connect conainer signals
+     */
+    connect( m_tb_container, &Container::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
 
     /*
      *  Request preferences from add-on
@@ -220,6 +229,12 @@ void    SysTrayX::createTrayIcon()
  */
 void    SysTrayX::slotShutdown()
 {
+#ifdef ENABLE_CONTAINER
+
+    m_win_ctrl->shutdown();
+
+#endif
+
     /*
      *  Let's quit
      */

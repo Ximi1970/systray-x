@@ -57,9 +57,19 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="minimizeHideCheckBox">
+       <widget class="QCheckBox" name="hideOnMinimizeCheckBox">
         <property name="text">
          <string>Minimizing window hides to tray</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
+        <property name="text">
+         <string>Closing window hides to tray</string>
         </property>
         <property name="checked">
          <bool>true</bool>

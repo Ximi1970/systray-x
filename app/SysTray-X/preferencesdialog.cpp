@@ -59,11 +59,20 @@ void    PreferencesDialog::setDebug( bool state )
 
 
 /*
- *  Set the minimizeHide state
+ *  Set the hide on minimize state
  */
-void    PreferencesDialog::setMinimizeHide( bool state )
+void    PreferencesDialog::setHideOnMinimize( bool state )
 {
-   m_ui->minimizeHideCheckBox->setChecked( state );
+   m_ui->hideOnMinimizeCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the minimize on close state
+ */
+void    PreferencesDialog::setMinimizeOnClose( bool state )
+{
+   m_ui->minimizeOnCloseCheckBox->setChecked( state );
 }
 
 
@@ -128,7 +137,8 @@ void    PreferencesDialog::slotAccept()
     m_pref->setIconMime( m_tmp_icon_mime );
     m_pref->setIconData( m_tmp_icon_data );
 
-    m_pref->setMinimizeHide( m_ui->minimizeHideCheckBox->isChecked() );
+    m_pref->setHideOnMinimize( m_ui->hideOnMinimizeCheckBox->isChecked() );
+    m_pref->setMinimizeOnClose( m_ui->minimizeOnCloseCheckBox->isChecked() );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
@@ -179,11 +189,20 @@ void    PreferencesDialog::slotDebugChange()
 
 
 /*
- *  Handle the minimizeHide change signal
+ *  Handle the hide on minimize change signal
  */
-void    PreferencesDialog::slotMinimizeHideChange()
+void    PreferencesDialog::slotHideOnMinimizeChange()
 {
-    setMinimizeHide( m_pref->getMinimizeHide() );
+    setHideOnMinimize( m_pref->getHideOnMinimize() );
+}
+
+
+/*
+ *  Handle the minimize on close change signal
+ */
+void    PreferencesDialog::slotMinimizeOnCloseChange()
+{
+    setMinimizeOnClose( m_pref->getMinimizeOnClose() );
 }
 
 

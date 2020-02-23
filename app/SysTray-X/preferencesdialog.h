@@ -49,11 +49,18 @@ class PreferencesDialog : public QDialog
         void    setDebug( bool state );
 
         /**
-         * @brief setMinimizeHide. Set the miniizeHide state.
+         * @brief setHideOnMinimize. Set the hide on minimize state.
          *
          *  @param state    The state.
          */
-        void    setMinimizeHide( bool state );
+        void    setHideOnMinimize( bool state );
+
+        /**
+         * @brief setMinimizeOnClose. Set the minimize on close state.
+         *
+         *  @param state    The state.
+         */
+        void    setMinimizeOnClose( bool state );
 
         /**
          * @brief setIconType. Set the icon type.
@@ -87,68 +94,73 @@ class PreferencesDialog : public QDialog
         /**
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
          */
-        void signalUpdateSysTrayIcon();
+        void    signalUpdateSysTrayIcon();
 
     public slots:
 
         /**
          * @brief slotDebugChange. Slot for handling debug change signals.
          */
-        void slotDebugChange();
+        void    slotDebugChange();
 
         /**
-         * @brief slotMinimizeHideChange. Slot for handling minimizeHide change signals.
+         * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.
          */
-        void slotMinimizeHideChange();
+        void    slotHideOnMinimizeChange();
+
+        /**
+         * @brief slotMinimizeOnCloseChange. Slot for handling minimize on close change signals.
+         */
+        void    slotMinimizeOnCloseChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
-        void slotIconTypeChange();
+        void    slotIconTypeChange();
 
         /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
-        void slotIconDataChange();
+        void    slotIconDataChange();
 
     private slots:
 
         /**
          * @brief slotAccept. Store the preferences on the accept signal.
          */
-        void slotAccept();
+        void    slotAccept();
 
         /**
          * @brief slotFileSelect. Handle the choose custom button click.
          */
-        void slotFileSelect();
+        void    slotFileSelect();
 
     private:
 
         /**
          * @brief m_ui. Pointer to the dialog.
          */
-        Ui::PreferencesDialog *m_ui;
+        Ui::PreferencesDialog*  m_ui;
 
         /**
          * @brief m_link. Pointer to the link.
          */
-        SysTrayXLink *m_link;
+        SysTrayXLink*   m_link;
 
         /**
          * @brief m_pref. Pointer to the preferences storage.
          */
-        Preferences *m_pref;
+        Preferences*    m_pref;
 
         /**
          * @brief m_tmp_icon_mime. Temporary storage for icon mime.
          */
-        QString m_tmp_icon_mime;
+        QString     m_tmp_icon_mime;
 
         /**
          * @brief m_tmp_icon_data. Temporary storage for icon data.
          */
-        QByteArray m_tmp_icon_data;
+        QByteArray  m_tmp_icon_data;
 
 };
 

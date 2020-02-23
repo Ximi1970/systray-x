@@ -58,6 +58,13 @@ class SysTrayXLinkReader : public QObject
     signals:
 
         /**
+         * @brief signalConsole
+         *
+         *  @param message     The message.
+         */
+        void    signalConsole( QString message );
+
+        /**
          * @brief signalDebugMessage
          *
          *  @param message     The message.
@@ -84,6 +91,11 @@ class SysTrayXLinkReader : public QObject
          *  @param message  The received message.
          */
         void    signalReceivedMessage( QByteArray message );
+
+        /**
+         * @brief signalShutdown. Signal to shutdown the app.
+         */
+        void    signalShutdown();
 
     private:
 
@@ -166,7 +178,6 @@ class SysTrayXLink : public QObject
          */
         void    signalTitle( QString title );
 
-
         /**
          * @brief signalShutdown. Signal to shutdown the app.
          */
@@ -206,6 +217,13 @@ class SysTrayXLink : public QObject
         void    signalDebugMessage( QString message );
 
         /**
+         * @brief signalConsole. Send message to debug console.
+         *
+         * @param message     The message
+         */
+        void    signalConsole( QString message );
+
+        /**
          * @brief signalUnreadMail. Signal numder of unread mails.
          *
          * @param unreadMail    The number of unread mails.
@@ -220,9 +238,14 @@ class SysTrayXLink : public QObject
         void    slotDebugChange();
 
         /**
-         * @brief slotMinimizeHideChange. Handle a change in minimizeHide state.
+         * @brief slotHideOnMinimizeChange. Handle a change in hide on minimize state.
          */
-        void    slotMinimizeHideChange();
+        void    slotHideOnMinimizeChange();
+
+        /**
+         * @brief slotMinimizeOnCloseChange. Handle a change in minimize on close state.
+         */
+        void    slotMinimizeOnCloseChange();
 
         /**
          * @brief slotLinkWrite. Write the link.
@@ -252,7 +275,14 @@ class SysTrayXLink : public QObject
      private slots:
 
         /**
-         * @brief slotDebugMessage. Handle the signal for a debuf message from the reader thread.
+         * @brief slotConsole. Handle the signal for  console message from the reader thread.
+         *
+         *   @param message     The message.
+         */
+        void    slotConsole( QString message );
+
+        /**
+         * @brief slotDebugMessage. Handle the signal for a debug message from the reader thread.
          *
          *   @param message     The message.
          */
@@ -276,6 +306,11 @@ class SysTrayXLink : public QObject
          * @brief slotLinkRead. Read the link.
          */
         void    slotLinkRead( QByteArray message );
+
+        /**
+         * @brief slotShutdown. Handle sahutdown signal from reader thread.
+         */
+        void    slotShutdown();
 
     private:
 

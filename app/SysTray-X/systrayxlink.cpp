@@ -28,6 +28,7 @@
 #include <QJsonValue>
 #include <QJsonObject>
 
+#include <QTextStream>
 
 /*****************************************************************************
  *
@@ -104,6 +105,8 @@ void    SysTrayXLinkReader::stopThread()
  */
 void    SysTrayXLinkReader::slotWorker()
 {
+    int error_count = 0;
+
     while( m_doWork )
     {
         qint32 data_len;
@@ -121,7 +124,21 @@ void    SysTrayXLinkReader::slotWorker()
             /*
              *  Send the data to my parent
              */
-            emit signalReceivedMessage( data );
+            if( data.at( 0 ) == '{' )
+            {
+                emit signalReceivedMessage( data );
+
+                error_count = 0;
+            }
+            else
+            {
+                error_count++;
+
+                if( error_count > 20 )
+                {
+                    emit signalShutdown();
+                }
+            }
         }
     }
 
@@ -165,7 +182,9 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
+    connect( reader, &SysTrayXLinkReader::signalShutdown, this, &SysTrayXLink::slotShutdown );
 
+    connect( reader, &SysTrayXLinkReader::signalConsole, this, &SysTrayXLink::slotConsole );
     connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
 
     connect( reader, &SysTrayXLinkReader::signalReceivedDataLength, this, &SysTrayXLink::slotReceivedDataLength );
@@ -323,6 +342,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
     }
     else
     {
+        emit signalConsole( "Link error: " + jsonError.errorString() );
         emit signalLinkReceiveError( jsonError.errorString() );
     }
 }
@@ -366,14 +386,24 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
-    if( pref.contains( "minimizeHide" ) && pref[ "minimizeHide" ].isString() )
+    if( pref.contains( "hideOnMinimize" ) && pref[ "hideOnMinimize" ].isString() )
     {
-        bool minimize_hide = pref[ "minimizeHide" ].toString() == "true";
+        bool hide_minimize = pref[ "hideOnMinimize" ].toString() == "true";
 
         /*
-         *  Store the new MinimizeHide state
+         *  Store the new hide on minimize state
          */
-        m_pref->setMinimizeHide( minimize_hide );
+        m_pref->setHideOnMinimize( hide_minimize );
+    }
+
+    if( pref.contains( "minimizeOnClose" ) && pref[ "minimizeOnClose" ].isString() )
+    {
+        bool minimize_close = pref[ "minimizeOnClose" ].toString() == "true";
+
+        /*
+         *  Store the new minimize on close state
+         */
+        m_pref->setMinimizeOnClose( minimize_close );
     }
 
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
@@ -398,7 +428,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
-    prefObject.insert("minimizeHide", QJsonValue::fromVariant( QString( pref.getMinimizeHide() ? "true" : "false" ) ) );
+    prefObject.insert("hideOnMinimize", QJsonValue::fromVariant( QString( pref.getHideOnMinimize() ? "true" : "false" ) ) );
+    prefObject.insert("minimizeOnClose", QJsonValue::fromVariant( QString( pref.getMinimizeOnClose() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -410,6 +441,15 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      *  Store the new document
      */
     m_pref_json_doc = QJsonDocument( preferencesObject );
+}
+
+
+/*
+ *  Handle the console message from the reader thread
+ */
+void    SysTrayXLink::slotConsole( QString message )
+{
+    emit signalConsole( message );
 }
 
 
@@ -437,6 +477,15 @@ void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
 void    SysTrayXLink::slotReceivedData( QByteArray data )
 {
     emit signalReceivedData( data );
+}
+
+
+/*
+ *  Relay shutdown signal
+ */
+void    SysTrayXLink::slotShutdown()
+{
+    emit signalShutdown();
 }
 
 
@@ -479,9 +528,21 @@ void    SysTrayXLink::slotDebugChange()
 
 
 /*
- *  Handle a minimizeHide state change signal
+ *  Handle a hide on minimize state change signal
  */
-void    SysTrayXLink::slotMinimizeHideChange()
+void    SysTrayXLink::slotHideOnMinimizeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a minimize on close state change signal
+ */
+void    SysTrayXLink::slotMinimizeOnCloseChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
