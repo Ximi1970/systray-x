@@ -37,35 +37,6 @@ unix:!macx: {
 win32: {
     LIBS += User32.lib
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
-
-    #
-    #	Windows host (not used in cross compiling with mingw on Linux)
-    #
-    contains(QMAKE_HOST.os, Windows): {
-        contains(QMAKE_HOST.version, 192): {
-            #
-            #   Windows 10 Universal CRT
-            #
-            UCRT_INCLUDE = "C:/Program Files (x86)/Windows Kits/10/include/10.0.10240.0/ucrt"
-            UCRT_LIBS = "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt"
-
-            INCLUDEPATH += $$UCRT_INCLUDE
-
-            contains(QMAKE_TARGET.arch, x86_64) {
-                CONFIG(debug, debug|release) {
-                    LIBS += $$UCRT_LIBS"/x64/ucrtd.lib"
-                } else {
-                    LIBS += $$UCRT_LIBS"/x64/ucrt.lib"
-                }
-            } else {
-                CONFIG(debug, debug|release) {
-                    LIBS += $$UCRT_LIBS"/x86/ucrtd.lib"
-                } else {
-                    LIBS += $$UCRT_LIBS"/x86/ucrt.lib"
-                }
-            }
-        }
-    }
 }
 unix:macx: {
     QMAKE_LFLAGS += -framework IOKit -framework Foundation

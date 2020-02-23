@@ -13,6 +13,7 @@
  *  Qt includes
  */
 #include <QObject>
+#include <QRect>
 
 /**
  * @brief The WindowCtrlWin class
@@ -52,6 +53,13 @@ class WindowCtrlWin : public QObject
          *  @return     The list of window IDs.
          */
         QList< quint64 >   getWinIds();
+
+        /**
+         * @brief getWinGeos. Get the window geometries.
+         *
+         *  @return
+         */
+        QList< QRect >   getWinGeos();
 
         /**
          * @brief minimizeWindow. Minimize window.
@@ -119,6 +127,11 @@ class WindowCtrlWin : public QObject
          * @brief m_tb_window. The Thunderbird windows.
          */
         static QList< quint64 >  m_tb_windows;
+
+        /**
+         * @brief m_tb_geometries. The Thunderbird window geometries.
+         */
+        static QList< QRect >  m_tb_geometries;
 };
 
 #endif // WINDOWCTRLWIN_H

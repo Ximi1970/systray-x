@@ -11,6 +11,7 @@
  *  Statics
  */
 QList< quint64 >  WindowCtrlWin::m_tb_windows;
+QList< QRect >  WindowCtrlWin::m_tb_geometries;
 
 
 /*
@@ -31,7 +32,12 @@ bool    WindowCtrlWin::findWindow( const QString& title )
 
     EnumWindows( &EnumWindowsProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
 
-    return false;
+    if( m_tb_windows.length() == 0 )
+    {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -59,6 +65,12 @@ BOOL CALLBACK   WindowCtrlWin::EnumWindowsProc( HWND hwnd, LPARAM lParam )
     if( written && strstr( buffer, (char*)lParam ) != NULL )
     {
         m_tb_windows.append( (quint64)hwnd );
+
+        RECT rect;
+        if( GetWindowRect(hwnd, &rect) )
+        {
+            m_tb_geometries.append( QRect( QPoint( rect.left, rect.top ), QPoint( rect.right, rect.bottom ) ) );
+        }
     }
 
     return TRUE;
@@ -71,6 +83,15 @@ BOOL CALLBACK   WindowCtrlWin::EnumWindowsProc( HWND hwnd, LPARAM lParam )
 QList< quint64 >   WindowCtrlWin::getWinIds()
 {
     return m_tb_windows;
+}
+
+
+/*
+ *  Get the Thunderbird window geometries
+ */
+QList< QRect >   WindowCtrlWin::getWinGeos()
+{
+    return m_tb_geometries;
 }
 
 
