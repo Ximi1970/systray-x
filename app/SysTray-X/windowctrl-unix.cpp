@@ -156,8 +156,13 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window )
+void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+    if( hide )
+    {
+        hideWindow( static_cast<Window>( window ), hide );
+    }
+
     XIconifyWindow( m_display, static_cast<Window>( window ), m_screen );
     XFlush( m_display );
 }
@@ -168,8 +173,19 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
-//    XMapRaised( m_display, static_cast<Window>( window ) );
-    XMapWindow( m_display, static_cast<Window>( window ) );
+    hideWindow( static_cast<Window>( window ), false );
+
+    XEvent event = { 0 };
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
+    event.xclient.window = static_cast<Window>( window );
+    event.xclient.format = 32;
+
+    XSendEvent( m_display, m_root_window, False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
+    XMapRaised( m_display, static_cast<Window>( window ) );
+//    XMapWindow( m_display, static_cast<Window>( window ) );
     XFlush( m_display );
 }
 

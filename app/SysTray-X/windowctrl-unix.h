@@ -137,8 +137,9 @@ class WindowCtrlUnix : public QObject
          * @brief minimizeWindow. Minimize window.
          *
          *  @param window   The window.
+         *  @param hide     Hide from taskbar.
          */
-        void    minimizeWindow( quint64 window );
+        void    minimizeWindow( quint64 window, bool hide );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -146,14 +147,6 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          */
         void    normalizeWindow( quint64 window );
-
-        /**
-         * @brief hideWindow. Hide a window from the taskbar.
-         *
-         *  @param window   The window.
-         *  @param set      The state of the window.
-         */
-        void    hideWindow( quint64 window, bool set );
 
 
 
@@ -169,6 +162,14 @@ class WindowCtrlUnix : public QObject
         void    setAtomState();
 
     private:
+
+        /**
+         * @brief hideWindow. Hide a window from the taskbar.
+         *
+         *  @param window   The window.
+         *  @param set      The state of the window.
+         */
+        void    hideWindow( quint64 window, bool set );
 
         /**
          * @brief listXWindows. Get all the windows.

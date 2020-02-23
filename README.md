@@ -7,8 +7,7 @@ The add-on and system tray application can do:
 - custom new mail icon
 - display number of unread mails
 - show / hide Thunderbird (minimize)
-- minimizing hides to tray (Linux)
-- to be implemented: minimizing hides to tray (Windows)
+- minimizing hides to tray
 - to be implemented: start a new mail
 - to be implemented: open the last used account
 
