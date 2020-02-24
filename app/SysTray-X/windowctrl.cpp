@@ -147,7 +147,27 @@ void    WindowCtrl::slotMinimizeHideChange()
  */
 void    WindowCtrl::slotWindowState( QString state )
 {
-    m_state = state;
+    if( m_state != state )
+    {
+        m_state = state;
+
+        if( state == "normal" )
+        {
+            foreach( quint64 win_id, getWinIds() )
+            {
+                hideWindow( win_id, false );
+            }
+        }
+        else
+        {
+            foreach( quint64 win_id, getWinIds() )
+            {
+                hideWindow( win_id, m_minimize_hide );
+            }
+        }
+
+        emit signalConsole( "New state: " + state );
+    }
 }
 
 

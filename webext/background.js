@@ -30,7 +30,7 @@ SysTrayX.Messaging = {
     browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
 
     //  Try to catch the window state
-    //    browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
+    browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
   //

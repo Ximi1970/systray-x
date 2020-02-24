@@ -158,12 +158,14 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+    Window win = static_cast<Window>( window );
+
     if( hide )
     {
-        hideWindow( static_cast<Window>( window ), hide );
+        hideWindow( win, hide );
     }
 
-    XIconifyWindow( m_display, static_cast<Window>( window ), m_screen );
+    XIconifyWindow( m_display, win, m_screen );
     XFlush( m_display );
 }
 
@@ -173,7 +175,9 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
-    hideWindow( static_cast<Window>( window ), false );
+    Window win = static_cast<Window>( window );
+
+    hideWindow( win, false );
 
     XEvent event = { 0 };
     event.xclient.type = ClientMessage;
@@ -184,8 +188,8 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     event.xclient.format = 32;
 
     XSendEvent( m_display, m_root_window, False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
-    XMapRaised( m_display, static_cast<Window>( window ) );
-//    XMapWindow( m_display, static_cast<Window>( window ) );
+    XMapRaised( m_display, win );
+//    XMapWindow( m_display, win );
     XFlush( m_display );
 }
 
@@ -195,6 +199,8 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 {
+    Window win = static_cast<Window>( window );
+
     char prop_name[] = "_NET_WM_STATE";
     Atom prop = XInternAtom( m_display, prop_name, True );
     Atom prop_skip_taskbar = XInternAtom( m_display, WindowStates[ STATE_SKIP_TASKBAR ].toUtf8(), True );
@@ -205,7 +211,7 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
     unsigned long len;
     unsigned char* list = nullptr;
 
-    if( XGetWindowProperty( m_display, static_cast<Window>( window ), prop, 0, sizeof( Atom ), False, XA_ATOM,
+    if( XGetWindowProperty( m_display, win, prop, 0, sizeof( Atom ), False, XA_ATOM,
                 &type, &format, &len, &remain, &list ) == Success )
     {
         Atom* atom_list = reinterpret_cast<Atom *>( list );
@@ -236,7 +242,8 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
             /*
              *  Set the atom
              */
-            XChangeProperty( m_display, static_cast<Window>( window ), prop, XA_ATOM, 32, PropModeAppend, reinterpret_cast<unsigned char*>( &prop_skip_taskbar ), 1 );
+            XChangeProperty( m_display, win, prop, XA_ATOM, 32, PropModeAppend,
+                             reinterpret_cast<unsigned char*>( &prop_skip_taskbar ), 1 );
         }
         else
         if( !set && present )
@@ -244,7 +251,8 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
             /*
              *  Remove the atom
              */
-            XChangeProperty( m_display, static_cast<Window>( window ), prop, XA_ATOM, format, PropModeReplace, reinterpret_cast<unsigned char*>( new_atom_list ), static_cast<int>( len - 1 ) );
+            XChangeProperty( m_display, win, prop, XA_ATOM, format, PropModeReplace,
+                             reinterpret_cast<unsigned char*>( new_atom_list ), static_cast<int>( len - 1 ) );
         }
 
         /*
