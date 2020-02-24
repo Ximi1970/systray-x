@@ -8,7 +8,8 @@ The add-on and system tray application can do:
 - display number of unread mails
 - show / hide Thunderbird (minimize)
 - minimizing hides to tray
-- minimize on close
+- minimize on close (Linux)
+- to be implemented: minimize on close (Windows)
 - to be implemented: start a new mail
 - to be implemented: open the last used account
 
