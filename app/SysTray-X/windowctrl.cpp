@@ -76,8 +76,8 @@ void    WindowCtrl::shutdown()
         /*
          *  Remove the TB container
          */
-        m_container->removeWidget( m_tb_container );
-        m_container->hide();
+//        m_container->removeWidget( m_tb_container );
+//        m_container->hide();
 
         /*
          *  Cleanup
@@ -121,7 +121,14 @@ void    WindowCtrl::slotWindowTest1()
 //    findWindow( 4313 );
 
 //    captureWindow( "Debugging with Firefox Developer Tools - Mozilla Thunderbird" );
+
+
+//    findWindow( "- Mozilla Thunderbird" );
+//    changeStyleWindow( (HWND)getWinIds()[ 0 ] );
+
+
     captureWindow( "- Mozilla Thunderbird" );
+
 
     emit signalConsole("Test 1 done");
 }
@@ -154,6 +161,12 @@ void    WindowCtrl::slotWindowTest3()
 
     // Do something.
 
+    EnableMenuItem(GetSystemMenu( (HWND)getWinIds()[ 0 ], FALSE), SC_CLOSE,
+                    MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+
+    SetWindowLong( (HWND)getWinIds()[ 0 ], GWL_STYLE,
+                   GetWindowLong((HWND)getWinIds()[ 0 ], GWL_STYLE) & ~WS_MINIMIZEBOX);
+
     emit signalConsole("Test 3 done");
 }
 
@@ -171,14 +184,17 @@ bool    WindowCtrl::captureWindow( const QString& title )
      *  Wrap Thunderbird window
      */
     m_tb_window = QWindow::fromWinId( getWinIds()[ 0 ] );
+    //    m_tb_window->setFlags( Qt::Widget | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint );
+    //    m_tb_container = QWidget::createWindowContainer( m_tb_window, nullptr, Qt::Widget | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint );
     m_tb_container = QWidget::createWindowContainer( m_tb_window );
+    m_tb_container->show();
 
     /*
      *  Integrate the window container
      */
-    m_container->setWidget( m_tb_container );
-    m_container->setGeometry( getWinGeos()[ 0 ] );
-    m_container->show();
+//    m_container->setWidget( m_tb_container );
+//    m_container->setGeometry( getWinGeos()[ 0 ] );
+//    m_container->show();
 
 #endif
 

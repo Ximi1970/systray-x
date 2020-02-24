@@ -135,4 +135,34 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
     SetWindowLong( hwnd, GWL_STYLE, style );
 }
 
+
+/*
+ *  Remove minimize, maximize, close, moving a window
+ */
+void    WindowCtrlWin::changeStyleWindow( HWND hwnd )
+{
+    emit signalConsole( QString("Set style for %1").arg((quint64)hwnd) );
+
+    long style = GetWindowLong( hwnd, GWL_STYLE );
+
+    emit signalConsole( QString("Has style %1").arg((quint64)style) );
+
+//    WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_BORDER | WS_DLGFRAME |
+//    WS_SYSMENU | WS_SIZEBOX | WS_GROUP | WS_TABSTOP
+
+
+//    style &= ~(WS_VISIBLE);
+//    style |= WS_EX_TOOLWINDOW;
+//    style &= ~(WS_EX_APPWINDOW);
+
+//    long style = (WS_BORDER | WS_CAPTION) & (~WS_ICONIC);
+//    SetWindowLong( hwnd, GWL_STYLE, GetWindowLong( hwnd, GWL_STYLE)&~WS_SIZEBOX);
+
+    style &= ~(WS_BORDER);
+    style &= ~(WS_DLGFRAME);
+    style &= ~(WS_SIZEBOX);
+
+    SetWindowLongPtr( hwnd, GWL_STYLE, style );
+}
+
 #endif // Q_OS_WIN

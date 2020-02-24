@@ -76,6 +76,10 @@ class WindowCtrlWin : public QObject
          */
         void    normalizeWindow( quint64 window );
 
+
+
+        void    changeStyleWindow( HWND hwnd );
+
     private:
 
         /**
