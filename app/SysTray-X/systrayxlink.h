@@ -85,6 +85,11 @@ class SysTrayXLinkReader : public QObject
          */
         void    signalReceivedMessage( QByteArray message );
 
+        /**
+         * @brief signalShutdown. Signal to shutdown the app.
+         */
+        void    signalShutdown();
+
     private:
 
         /**
@@ -276,6 +281,11 @@ class SysTrayXLink : public QObject
          * @brief slotLinkRead. Read the link.
          */
         void    slotLinkRead( QByteArray message );
+
+        /**
+         * @brief slotShutdown. Handle sahutdown signal from reader thread.
+         */
+        void    slotShutdown();
 
     private:
 

@@ -104,6 +104,8 @@ void    SysTrayXLinkReader::stopThread()
  */
 void    SysTrayXLinkReader::slotWorker()
 {
+    int error_count = 0;
+
     while( m_doWork )
     {
         qint32 data_len;
@@ -122,6 +124,25 @@ void    SysTrayXLinkReader::slotWorker()
              *  Send the data to my parent
              */
             emit signalReceivedMessage( data );
+
+            /*
+             *  Send the data to my parent
+             */
+            if( data.at( 0 ) == '{' )
+            {
+                emit signalReceivedMessage( data );
+
+                error_count = 0;
+            }
+            else
+            {
+                error_count++;
+
+                if( error_count > 20 )
+                {
+                    emit signalShutdown();
+                }
+            }
         }
     }
 
@@ -165,6 +186,7 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
+    connect( reader, &SysTrayXLinkReader::signalShutdown, this, &SysTrayXLink::slotShutdown );
 
     connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
 
@@ -437,6 +459,15 @@ void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
 void    SysTrayXLink::slotReceivedData( QByteArray data )
 {
     emit signalReceivedData( data );
+}
+
+
+/*
+ *  Relay shutdown signal
+ */
+void    SysTrayXLink::slotShutdown()
+{
+    emit signalShutdown();
 }
 
 
