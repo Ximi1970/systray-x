@@ -73,6 +73,14 @@ class WindowCtrlWin : public QObject
          */
         void    normalizeWindow( quint64 window );
 
+        /**
+         * @brief WindowCtrlWin::hideWindow
+         *
+         *  @param window   The window.
+         *  @param state    Hide from taskbar.
+         */
+        void    hideWindow( quint64 window , bool state );
+
     private:
 
         /**

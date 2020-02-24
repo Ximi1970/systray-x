@@ -106,6 +106,17 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
 /*
  *  Hide a window
  */
+void    WindowCtrlWin::hideWindow( quint64 window , bool state )
+{
+    if( state )
+    {
+        hideWindow( (HWND)window );
+    }
+}
+
+/*
+ *  Hide a window
+ */
 void    WindowCtrlWin::hideWindow( HWND hwnd )
 {
     long style = GetWindowLong( hwnd, GWL_STYLE );
