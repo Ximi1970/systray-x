@@ -42,6 +42,10 @@ class Container : public QWidget
          */
         void    removeWidget( QWidget* widget );
 
+    protected:
+
+        bool eventFilter( QObject* obj, QEvent* ev );
+
     private:
 
         /**
@@ -49,7 +53,18 @@ class Container : public QWidget
          *
          *  @param event    The event.
          */
-        void    closeEvent( QCloseEvent *event );
+        void    closeEvent( QCloseEvent* event );
+
+#ifdef  FF_NEET
+
+        /**
+         * @brief changeEvent. Override minimize event handler.
+         *
+         *  @param event    The event
+         */
+        void    changeEvent( QEvent* event );
+
+#endif
 
     signals:
 

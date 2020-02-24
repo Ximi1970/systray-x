@@ -35,8 +35,14 @@ unix:!macx: {
     QMAKE_LFLAGS += -lX11
 }
 win32: {
-    LIBS += User32.lib
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
+
+    #
+    #	Windows host (not used in cross compiling with mingw on Linux)
+    #
+    contains(QMAKE_HOST.os, Windows): {
+        LIBS += User32.lib
+    }
 }
 unix:macx: {
     QMAKE_LFLAGS += -framework IOKit -framework Foundation

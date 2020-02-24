@@ -16,6 +16,8 @@
 #include <QCloseEvent>
 #include <QVBoxLayout>
 
+#include <QWindow>
+
 /*
  *  Constructor
  */
@@ -81,12 +83,34 @@ void    Container::closeEvent( QCloseEvent *event )
     }
 }
 
-#ifdef FF_NEET
+
+bool    Container::eventFilter( QObject* watched, QEvent* event )
+{
+    if( event->type() == QEvent::WindowStateChange)
+    {
+        QWindowStateChangeEvent* e = static_cast<QWindowStateChangeEvent *>(event);
+        QWindow* window = reinterpret_cast<QWindow *>(watched);
+
+        if( ( window->windowState() == Qt::WindowMinimized )
+                && ( e->oldState() != Qt::WindowMinimized ) )
+        {
+            // Restore old state
+            window->setWindowState( reinterpret_cast<QWindowStateChangeEvent *>(event)->oldState() );
+            return true;
+        }
+    }
+
+    // Do not filter event
+    return false;
+}
+
+
+#ifdef  FF_NEET
 
 /*
  *  Override the minimize event
  */
-void    Container::changeEvent( QEvent * event )
+void    Container::changeEvent( QEvent* event )
 {
     switch( event->type() )
     {
@@ -94,8 +118,7 @@ void    Container::changeEvent( QEvent * event )
         {
             if( isMinimized() )
             {
-                setWindowState(reinterpret_cast<QWindowStateChangeEvent *>(event)->oldState());
-                event->accept();
+                hide();
             }
 
             break;
@@ -109,7 +132,6 @@ void    Container::changeEvent( QEvent * event )
 }
 
 #endif
-
 
 /**
  * @brief slotMinimizeOnClose. Hnadle preference minimize on close signal.
