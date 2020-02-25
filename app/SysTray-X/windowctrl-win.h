@@ -81,6 +81,13 @@ class WindowCtrlWin : public QObject
          */
         void    hideWindow( quint64 window , bool state );
 
+        /**
+         * @brief deleteWindow. Delete window.
+         *
+         *  @param window   The window.
+         */
+        void    deleteWindow( quint64 window );
+
     private:
 
         /**
