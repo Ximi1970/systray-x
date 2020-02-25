@@ -18,7 +18,7 @@
 /*
  *  Constants
  */
-const QString SysTrayX::JSON_PREF_REQUEST = "{\"preferences\":{}}";
+const QString   SysTrayX::JSON_PREF_REQUEST = "{\"preferences\":{}}";
 
 
 /*
@@ -107,7 +107,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
-    connect( m_link, &SysTrayXLink::signalShutdown, this, &SysTrayX::slotShutdown );
+    connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
 
@@ -123,6 +123,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_tray_icon, &SysTrayXIcon::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
 
     /*
+     *  SysTrayX
+     */
+    connect( this, &SysTrayX::signalClose, m_win_ctrl, &WindowCtrl::slotClose );
+
+    /*
      *  Request preferences from add-on
      */
     getPreferences();
@@ -132,7 +137,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
  *  Send a preferences request
  */
-void SysTrayX::getPreferences()
+void    SysTrayX::getPreferences()
 {
     /*
      *  Request preferences from add-on
@@ -145,7 +150,7 @@ void SysTrayX::getPreferences()
 /*
  *  Create the actions for the system tray icon menu
  */
-void SysTrayX::createActions()
+void    SysTrayX::createActions()
 {
 /*
     m_minimizeAction = new QAction(tr("Mi&nimize"), this);
@@ -165,7 +170,7 @@ void SysTrayX::createActions()
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
 
     m_quit_action = new QAction(tr("&Quit"), this);
-    connect( m_quit_action, &QAction::triggered, qApp, &QCoreApplication::quit );
+    connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
 
 }
 
@@ -173,7 +178,7 @@ void SysTrayX::createActions()
 /*
  *  Create the system tray icon
  */
-void SysTrayX::createTrayIcon()
+void    SysTrayX::createTrayIcon()
 {
     /*
      *  Setup menu actions
@@ -210,10 +215,27 @@ void SysTrayX::createTrayIcon()
 
 
 /*
- *  Quit the app
+ *  Quit the app by add-on request
  */
-void SysTrayX::slotShutdown()
+void    SysTrayX::slotAddOnShutdown()
 {
+    /*
+     *  Let's quit
+     */
+    QCoreApplication::quit();
+}
+
+
+/*
+ *  Quit the app by quit menu
+ */
+void    SysTrayX::slotShutdown()
+{
+    /*
+     *  Close the TB window
+     */
+    emit signalClose();
+
     /*
      *  Let's quit
      */

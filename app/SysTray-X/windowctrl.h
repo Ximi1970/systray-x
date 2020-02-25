@@ -92,6 +92,11 @@ class WindowCtrl : public QObject
          */
         void    slotShowHide();
 
+        /**
+         * @brief slotClose.
+         */
+        void    slotClose();
+
     private:
 
         /**

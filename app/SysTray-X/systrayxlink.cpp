@@ -140,7 +140,7 @@ void    SysTrayXLinkReader::slotWorker()
 
                 if( error_count > 20 )
                 {
-                    emit signalShutdown();
+                    emit signalAddOnShutdown();
                 }
             }
         }
@@ -186,7 +186,7 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
-    connect( reader, &SysTrayXLinkReader::signalShutdown, this, &SysTrayXLink::slotShutdown );
+    connect( reader, &SysTrayXLinkReader::signalAddOnShutdown, this, &SysTrayXLink::slotAddOnShutdown );
 
     connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
 
@@ -320,7 +320,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
-            emit signalShutdown();
+            emit signalAddOnShutdown();
         }
 
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
@@ -465,9 +465,9 @@ void    SysTrayXLink::slotReceivedData( QByteArray data )
 /*
  *  Relay shutdown signal
  */
-void    SysTrayXLink::slotShutdown()
+void    SysTrayXLink::slotAddOnShutdown()
 {
-    emit signalShutdown();
+    emit signalAddOnShutdown();
 }
 
 
