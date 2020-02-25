@@ -9,6 +9,10 @@ c# remove 3rd party application from taskbar
 https://stackoverflow.com/questions/10514882/c-sharp-remove-3rd-party-application-from-taskbar
 
 
+Close window
+
+https://docs.microsoft.com/en-us/windows/win32/learnwin32/closing-the-window
+
 
 X11
 ==========================================
@@ -42,11 +46,14 @@ Taskbar hide
 https://stackoverflow.com/questions/41622735/hide-window-from-linux-taskbar
 
 
-
 minimize fullscreen Xlib OpenGL Window
 
 https://stackoverflow.com/questions/6381098/minimize-fullscreen-xlib-opengl-window
 
+
+Close windows
+
+https://stackoverflow.com/questions/41202622/xlib-soft-closing-a-window
 
 
 

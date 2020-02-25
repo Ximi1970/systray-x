@@ -274,9 +274,35 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 }
 
 
+/*
+ *  Delete the window
+ */
+void    WindowCtrlUnix::deleteWindow( quint64 window )
+{
+    Window win = static_cast<Window>( window );
 
+    Atom prop = XInternAtom( m_display, "WM_PROTOCOLS", True );
+    if( prop == None )
+    {
+        return;
+    }
 
+    Atom delete_prop = XInternAtom( m_display, "WM_DELETE_WINDOW", False );
+    if( prop == None )
+    {
+        return;
+    }
 
+    XEvent event;
+    event.xclient.type = ClientMessage;
+    event.xclient.window = win;
+    event.xclient.message_type = prop;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = static_cast<long>( delete_prop );
+    event.xclient.data.l[1] = CurrentTime;
+    XSendEvent( m_display, win, False, NoEventMask, &event );
+    XFlush( m_display );
+}
 
 
 /*

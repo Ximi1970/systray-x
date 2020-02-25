@@ -156,7 +156,12 @@ class WindowCtrlUnix : public QObject
          */
         void    hideWindow( quint64 window, bool set );
 
-
+        /**
+         * @brief deleteWindow. Delete the window.
+         *
+         *  @param window   The window.
+         */
+        void    deleteWindow( quint64 window );
 
 
 
