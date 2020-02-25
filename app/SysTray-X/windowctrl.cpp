@@ -45,7 +45,7 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-//    findWindow( "- Mozilla Thunderbird" );
+    findWindow( "- Mozilla Thunderbird" );
     displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 
@@ -63,7 +63,7 @@ void    WindowCtrl::slotWindowTest2()
 
 //    foreach( quint64 win_id, getWinIds() )
 //    {
-//        closeWindow( (HWND)win_id );
+//        deleteWindow( win_id );
 //    }
 
 
