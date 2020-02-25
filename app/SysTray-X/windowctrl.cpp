@@ -35,7 +35,6 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
      *  Initialize
      */
     m_minimize_hide = m_pref->getMinimizeHide();
-    m_tb_container = nullptr;
 }
 
 
@@ -61,15 +60,6 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
-    /*
-     *  Disconnect container?
-     */
-/*
-    m_tb_window->setParent( nullptr );
-
-    delete m_tb_container;
-    m_tb_container = nullptr;
-*/
     emit signalConsole("Test 2 done");
 }
 
@@ -81,32 +71,6 @@ void    WindowCtrl::slotWindowTest3()
     // Do something.
 
     emit signalConsole("Test 3 done");
-}
-
-
-bool    WindowCtrl::captureWindow( const QString& title )
-{
-    emit signalConsole("Capture");
-
-    if( !findWindow( title ) )
-    {
-        emit signalConsole("Capture error");
-        return false;
-    }
-
-    /*
-     *  Wrap Thunderbird window
-     */
-    m_tb_window = QWindow::fromWinId( getWinIds()[ 0 ] );
-    m_tb_window->parent();
-
-    m_tb_container = QWidget::createWindowContainer( m_tb_window );
-
-    m_tb_container->show();
-
-    emit signalConsole("Capture done");
-
-    return true;
 }
 
 

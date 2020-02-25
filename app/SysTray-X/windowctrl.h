@@ -40,15 +40,6 @@ class WindowCtrl : public QObject
          */
         explicit WindowCtrl( Preferences* pref, QObject *parent = nullptr );
 
-        /**
-         * @brief captureWindow. Capture the TB window.
-         *
-         *  @param title    (Part of) the window title.
-         *
-         *  @return     State of the capture.
-         */
-        bool    captureWindow( const QString& title );
-
     public slots:
 
         /**
@@ -108,11 +99,6 @@ class WindowCtrl : public QObject
          * @brief m_tb_window. Pointer to the TB window.
          */
         QWindow*    m_tb_window;
-
-        /**
-         * @brief m_tb_container. Pointer to the TB widget container.
-         */
-        QWidget*    m_tb_container;
 
         /**
          * @brief m_window_title. Title of the TB window.
