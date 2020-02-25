@@ -96,6 +96,16 @@ class WindowCtrl : public QObject
         Preferences*    m_pref;
 
         /**
+         * @brief m_pid. SysTray-X process pid.
+         */
+        qint64  m_pid;
+
+        /**
+         * @brief m_ppid. SysTray-X parent process pid.
+         */
+        qint64  m_ppid;
+
+        /**
          * @brief m_tb_window. Pointer to the TB window.
          */
         QWindow*    m_tb_window;

@@ -3,6 +3,7 @@
  */
 #include <QWidget>
 #include <QWindow>
+#include <QCoreApplication>
 
 /*
  *  Main include
@@ -35,6 +36,12 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
      *  Initialize
      */
     m_minimize_hide = m_pref->getMinimizeHide();
+
+    /*
+     *  Get pids
+     */
+    m_pid = QCoreApplication::applicationPid();
+    m_ppid = getPpid();
 }
 
 
@@ -69,6 +76,9 @@ void    WindowCtrl::slotWindowTest3()
     emit signalConsole("Test 3 started");
 
     // Do something.
+
+    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
+    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
     emit signalConsole("Test 3 done");
 }

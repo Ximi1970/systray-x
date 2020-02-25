@@ -1,5 +1,18 @@
 #include "preferences.h"
 
+/*
+ *	Local includes
+ */
+
+
+/*
+ *  System includes
+ */
+
+/*
+ *	Qt includes
+ */
+
 /**
  * @brief Preferences.  Constructor.
  */

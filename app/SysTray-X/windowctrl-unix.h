@@ -111,6 +111,13 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
+         * @brief getPpid. Get the parent process id.
+         *
+         *  @return     The ppid
+         */
+        qint64  getPpid();
+
+        /**
          * @brief findWindow. Find window with title.
          *
          *  @param title    The title to find.

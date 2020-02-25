@@ -14,8 +14,26 @@ Close window
 https://docs.microsoft.com/en-us/windows/win32/learnwin32/closing-the-window
 
 
+Get processes
+
+(EnumProcesses function)
+https://www.qtcentre.org/threads/46145-Get-All-Running-Process-Win32
+
+
+
 X11
 ==========================================
+
+
+Get processes (parent pid, pid and arguments)
+
+ps -eo ppid,pid,args
+
+
+qint64 QCoreApplication::applicationPid() to get systrayx pid -> parent pid -> tb window.
+
+
+ps -p [PID] -o ppid
 
 
 Bash 

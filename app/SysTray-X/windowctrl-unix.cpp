@@ -5,6 +5,7 @@
 /*
  *  System includes
  */
+#include <unistd.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 
@@ -20,6 +21,15 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     m_display = XOpenDisplay( ":0" );
     m_screen = 0;
     m_root_window = XDefaultRootWindow( m_display );
+}
+
+
+/*
+ *  Get the parent pid of SysTray-X, TB hopefully
+ */
+qint64  WindowCtrlUnix::getPpid()
+{
+    return getppid();
 }
 
 
