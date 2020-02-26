@@ -21,6 +21,14 @@ class WindowCtrlWin : public QObject
 {
     Q_OBJECT
 
+    private:
+
+        struct HandleData
+        {
+            unsigned long   pid;
+            HWND            hwnd;
+        };
+
     public:
 
         /**
@@ -30,19 +38,30 @@ class WindowCtrlWin : public QObject
          */
         explicit WindowCtrlWin( QObject *parent = nullptr );
 
-
-        void    closeWindow( HWND hwnd );
-
-
+        /**
+         * @brief getPpid. Get the parent process id.
+         *
+         *  @return     The ppid
+         */
+        qint64  getPpid();
 
         /**
-         * @brief findWindow. Find window with title.
+         * @brief findWindow. Find window by title.
          *
-         *  @param title    The title to find.
+         *  @param title    The (part)title to find.
          *
          *  @return     State of the find.
          */
         bool    findWindow( const QString& title );
+
+        /**
+         * @brief findWindow. Find window by pid.
+         *
+         *  @param pid  The pid to find.
+         *
+         *  @return     State of the find.
+         */
+        bool    findWindow( qint64 pid );
 
         /**
          * @brief displayWindowElements. Display window elements.
@@ -98,28 +117,33 @@ class WindowCtrlWin : public QObject
         void    hideWindow( HWND hwnd );
 
         /**
-         * @brief EnumWindowsProc. Callback for window enumaration.
+         * @brief EnumWindowsTitleProc. Callback for window enumaration by title.
          *
          *  @param hwnd         Handle of window.
          *  @param lParam       Argument passed by EnumWindows.
          *
          *  @return     State of callback. (TRUE = continue / FALSE = stop)
          */
-        static BOOL CALLBACK  EnumWindowsProc( HWND hwnd, LPARAM lParam );
+        static BOOL CALLBACK  enumWindowsTitleProc( HWND hwnd, LPARAM lParam );
 
         /**
-         * @brief WindowProc
+         * @brief EnumWindowsPidProc. Callback for window enumaration by pid.
          *
-         *  @param hwnd
-         *  @param uMsg
-         *  @param wParam
-         *  @param lParam
+         *  @param hwnd         Handle of window.
+         *  @param lParam       Argument passed by EnumWindows.
          *
-         *  @return
+         *  @return     State of callback. (TRUE = continue / FALSE = stop)
          */
-        static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+        static BOOL CALLBACK  enumWindowsPidProc( HWND hwnd, LPARAM lParam );
 
-        static LRESULT CALLBACK mySubClassProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData );
+        /**
+         * @brief isMainWindow. Check for main window.
+         *
+         *  @param hwnd     The window handle.
+         *
+         *  @return     Result of the check.
+         */
+        static BOOL isMainWindow( HWND hwnd );
 
     signals:
 

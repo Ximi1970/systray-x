@@ -5,7 +5,13 @@
 /*
  *  System includes
  */
+#include <tlhelp32.h>
 #include <CommCtrl.h>
+
+/*
+ * Qt includes
+ */
+#include <QCoreApplication>
 
 /*
  *  Statics
@@ -23,13 +29,44 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
 
 
 /*
- *  Find the window with title
+ *  Get the parent pid of SysTray-X, TB hopefully
+ */
+qint64  WindowCtrlWin::getPpid()
+{
+    HANDLE h = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
+    PROCESSENTRY32 pe;
+    pe.dwSize = sizeof( PROCESSENTRY32 );
+
+    qint64 ppid = -1;
+    qint64 pid = QCoreApplication::applicationPid();
+
+    if( Process32First( h, &pe ) )
+    {
+        do
+        {
+            if( pe.th32ProcessID == pid )
+            {
+               ppid = pe.th32ParentProcessID;
+               break;
+            }
+        }
+        while( Process32Next( h, &pe ) );
+    }
+
+    CloseHandle( h );
+
+    return ppid;
+}
+
+
+/*
+ *  Find the window by title
  */
 bool    WindowCtrlWin::findWindow( const QString& title )
 {
     m_tb_windows = QList< quint64 >();
 
-    EnumWindows( &EnumWindowsProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
+    EnumWindows( &enumWindowsTitleProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
 
     if( m_tb_windows.length() == 0 )
     {
@@ -37,6 +74,76 @@ bool    WindowCtrlWin::findWindow( const QString& title )
     }
 
     return true;
+}
+
+
+/*
+ *  Callback for the window enumaration title find.
+ */
+BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
+{
+    char buffer[ 128 ];
+    int written = GetWindowTextA( hwnd, buffer, 128 );
+    if( written && strstr( buffer, (char*)lParam ) != NULL )
+    {
+        m_tb_windows.append( (quint64)hwnd );
+    }
+
+    return TRUE;
+}
+
+
+/*
+ *  Find the window by pid
+ */
+bool    WindowCtrlWin::findWindow( qint64 pid )
+{
+    HandleData data;
+    data.pid = pid;
+    data.hwnd = 0;
+    EnumWindows( &enumWindowsPidProc, (LPARAM)&data );
+
+    if( data.hwnd == 0 )
+    {
+        return false;
+    }
+
+    /*
+     *  Store it
+     */
+    m_tb_windows.append( (quint64)data.hwnd );
+
+    return true;
+}
+
+
+/*
+ *  Callback for the window enumaration pid find.
+ */
+BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
+{
+    HandleData& data = *(HandleData*)lParam;
+    unsigned long pid = 0;
+
+    GetWindowThreadProcessId( hwnd, &pid );
+
+    if( data.pid != pid || !isMainWindow( hwnd ) )
+    {
+        return TRUE;
+    }
+
+    data.hwnd = hwnd;
+
+    return FALSE;
+}
+
+
+/*
+ *  Check for main window
+ */
+BOOL    WindowCtrlWin::isMainWindow( HWND hwnd )
+{
+    return GetWindow( hwnd, GW_OWNER ) == (HWND)0 && IsWindowVisible( hwnd );
 }
 
 
@@ -51,22 +158,6 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
     {
         emit signalConsole( QString( "Found: XID %1" ).arg( win_id ) );
     }
-}
-
-
-/*
- *  Callback for the window enumaration
- */
-BOOL CALLBACK   WindowCtrlWin::EnumWindowsProc( HWND hwnd, LPARAM lParam )
-{
-    char buffer[ 128 ];
-    int written = GetWindowTextA( hwnd, buffer, 128 );
-    if( written && strstr( buffer, (char*)lParam ) != NULL )
-    {
-        m_tb_windows.append( (quint64)hwnd );
-    }
-
-    return TRUE;
 }
 
 
@@ -136,62 +227,6 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
     SendMessageA(  (HWND)window, WM_CLOSE, 0, 0 );
-}
-
-
-
-/*
-LRESULT CALLBACK    WindowCtrlWin::mySubClassProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData )
-{
-    MessageBoxA( NULL, "Test", "Test", MB_OK );
-
-    switch(uMsg)
-    {
-        case WM_LBUTTONDOWN:
-            MessageBoxA( NULL, "Button down!", "Debug", MB_OK );
-            break;
-
-        case WM_NCDESTROY:
-            RemoveWindowSubclass( hWnd, &mySubClassProc, 1 );
-            break;
-    }
-
-    return DefSubclassProc(hWnd, uMsg, wParam, lParam);
-}
-*/
-
-/*
- *  Callback for the window enumaration
- */
-LRESULT CALLBACK   WindowCtrlWin::WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
-{
-    MessageBoxA( NULL, "Test", "Test", MB_OK );
-
-    return TRUE;
-
-    if( uMsg == WM_CLOSE )
-    {
-        return TRUE;
-    }
-
-//    return CallWindowProc( prev, hwnd, uMsg,wParam, lParam);
-
-    return DefWindowProc( hwnd, uMsg, wParam, lParam );
-}
-
-
-/*
- *  Close experiment
- */
-void    WindowCtrlWin::closeWindow( HWND hwnd )
-{
-    emit signalConsole("Close Window intercept");
-
-//    SetWindowSubclass( hwnd, &mySubClassProc, 1, 0);
-
-    MessageBoxA( NULL, "Start test", "Test", MB_OK );
-
-    WNDPROC prev = (WNDPROC)SetWindowLongPtr( hwnd, GWLP_WNDPROC, (LONG_PTR)&WindowCtrlWin::WindowProc );
 }
 
 #endif // Q_OS_WIN
