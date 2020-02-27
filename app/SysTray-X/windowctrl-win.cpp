@@ -16,6 +16,7 @@
 /*
  *  Statics
  */
+quint64 WindowCtrlWin::m_tb_window;
 QList< quint64 >  WindowCtrlWin::m_tb_windows;
 
 
@@ -24,6 +25,10 @@ QList< quint64 >  WindowCtrlWin::m_tb_windows;
  */
 WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
 {
+    /*
+     *  Initialize
+     */
+    m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
 }
 
@@ -111,7 +116,7 @@ bool    WindowCtrlWin::findWindow( qint64 pid )
     /*
      *  Store it
      */
-    m_tb_windows.append( (quint64)data.hwnd );
+    m_tb_window = (quint64)data.hwnd;
 
     return true;
 }
@@ -162,7 +167,25 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 
 
 /*
+ *  Display the window elements
+ */
+void    WindowCtrlWin::displayWindowElements( quint64 window )
+{
+    emit signalConsole( QString( "Found: XID %1" ).arg( window ) );
+}
+
+
+/*
  *  Get the Thunderbird window ID
+ */
+quint64 WindowCtrlWin::getWinId()
+{
+    return m_tb_window;
+}
+
+
+/*
+ *  Get the Thunderbird window IDs
  */
 QList< quint64 >   WindowCtrlWin::getWinIds()
 {

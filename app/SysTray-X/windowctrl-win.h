@@ -71,6 +71,20 @@ class WindowCtrlWin : public QObject
         void    displayWindowElements( const QString& title );
 
         /**
+         * @brief displayWindowElements. Display window elements.
+         *
+         *  @param title    The window id.
+         */
+        void    displayWindowElements( quint64 window );
+
+        /**
+         * @brief getWinId. Get the Thunderbird window ID.
+         *
+         *  @return     The TB window ID.
+         */
+        quint64 getWinId();
+
+        /**
          * @brief getWinIds. Get the Thunderbird window IDs.
          *
          *  @return     The list of window IDs.
@@ -172,6 +186,11 @@ class WindowCtrlWin : public QObject
         void    signalConsole( QString message );
 
     private:
+
+        /**
+         * @brief m_tb_window. The Thunderbird window.
+         */
+        static quint64  m_tb_window;
 
         /**
          * @brief m_tb_window. The Thunderbird windows.
