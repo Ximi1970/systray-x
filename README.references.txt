@@ -8,16 +8,24 @@ c# remove 3rd party application from taskbar
 
 https://stackoverflow.com/questions/10514882/c-sharp-remove-3rd-party-application-from-taskbar
 
-
 Close window
-
 https://docs.microsoft.com/en-us/windows/win32/learnwin32/closing-the-window
+
+Block close button
+https://devblogs.microsoft.com/oldnewthing/20100604-00/?p=13803
+
 
 
 Get processes
-
 (EnumProcesses function)
 https://www.qtcentre.org/threads/46145-Get-All-Running-Process-Win32
+
+
+Get (Pid) and PPid
+https://stackoverflow.com/questions/185254/how-can-a-win32-process-get-the-pid-of-its-parent
+https://stackoverflow.com/questions/18401572/c-how-to-fetch-parent-process-id
+
+https://www.codeproject.com/Articles/9893/Get-Parent-Process-PID
 
 
 

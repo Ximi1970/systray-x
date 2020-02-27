@@ -118,13 +118,20 @@ class WindowCtrlUnix : public QObject
         qint64  getPpid();
 
         /**
-         * @brief findWindow. Find window with title.
+         * @brief findWindow. Find window by (sub)title.
          *
          *  @param title    The title to find.
          *
          *  @return     State of the find.
          */
         bool    findWindow( const QString& title );
+
+        /**
+         * @brief findWindow. Find window of a process.
+         *
+         *  @param pid      The process id.
+         */
+        void    findWindow( qint64 pid );
 
         /**
          * @brief displayWindowElements. Display window elements (atoms).
@@ -134,11 +141,25 @@ class WindowCtrlUnix : public QObject
         void    displayWindowElements( const QString& title );
 
         /**
+         * @brief displayWindowElements. Display window elements (atoms).
+         *
+         *  @param window    The window.
+         */
+        void    displayWindowElements( Window window );
+
+        /**
+         * @brief getWinId. Get the Thunderbird window ID.
+         *
+         *  @return     The window ID.
+         */
+        quint64 getWinId();
+
+        /**
          * @brief getWinIds. Get the Thunderbird window IDs.
          *
-         *  @return     The list of window IDs.
+         *  @return     The list of window ID.
          */
-        QList< quint64 >   getWinIds();
+        QList< quint64 >    getWinIds();
 
         /**
          * @brief minimizeWindow. Minimize window.
@@ -169,17 +190,6 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          */
         void    deleteWindow( quint64 window );
-
-
-
-        /**
-         * @brief findWindow. Find window of a process.
-         *
-         *  @param pid      The process id.
-         */
-        void    findWindow( int pid );
-
-        void    setAtomState();
 
     private:
 
@@ -268,9 +278,14 @@ class WindowCtrlUnix : public QObject
         Window  m_root_window;
 
         /**
-         * @brief m_tb_window. The Thunderbird windows.
+         * @brief m_tb_window. The Thunderbird window.
          */
-        QList< quint64 >  m_tb_windows;
+        quint64 m_tb_window;
+
+        /**
+         * @brief m_tb_windows. The Thunderbird windows (used by title search).
+         */
+        QList< quint64 >    m_tb_windows;
 };
 
 #endif // WINDOWCTRLUNIX_H

@@ -42,6 +42,11 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
      */
     m_pid = QCoreApplication::applicationPid();
     m_ppid = getPpid();
+
+    /*
+     *  Get the TB window
+     */
+    findWindow( m_ppid );
 }
 
 
@@ -51,11 +56,10 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    findWindow( "- Mozilla Thunderbird" );
-    displayWindowElements( "- Mozilla Thunderbird" );
+//    findWindow( "- Mozilla Thunderbird" );
+//    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
-
-//    captureWindow( "- Mozilla Thunderbird" );
+    displayWindowElements( getWinId() );
 
     emit signalConsole("Test 1 done");
 }
@@ -121,17 +125,11 @@ void    WindowCtrl::slotWindowState( QString state )
 
         if( state == "normal" )
         {
-            foreach( quint64 win_id, getWinIds() )
-            {
-                hideWindow( win_id, false );
-            }
+            hideWindow( getWinId(), false );
         }
         else
         {
-            foreach( quint64 win_id, getWinIds() )
-            {
-                hideWindow( win_id, m_minimize_hide );
-            }
+            hideWindow( getWinId(), m_minimize_hide );
         }
 
         emit signalConsole( "New state: " + state );
@@ -148,24 +146,18 @@ void    WindowCtrl::slotShowHide()
     {
         m_state = "normal";
 
-        foreach( quint64 win_id, getWinIds() )
-        {
-            normalizeWindow( win_id );
+        normalizeWindow( getWinId() );
 
-            emit signalConsole("Normalize");
-        }
+        emit signalConsole("Normalize");
 
 //        emit signalWindowNormal();    // TB window control
 
     } else {
         m_state = "minimized";
 
-        foreach( quint64 win_id, getWinIds() )
-        {
-            minimizeWindow( win_id, m_minimize_hide );
+        minimizeWindow( getWinId(), m_minimize_hide );
 
-            emit signalConsole("Minimize");
-        }
+        emit signalConsole("Minimize");
 
 //        emit signalWindowMinimize();  // TB window control
 
@@ -178,8 +170,5 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
-    foreach( quint64 win_id, getWinIds() )
-    {
-        deleteWindow( win_id );
-    }
+    deleteWindow( getWinId() );
 }

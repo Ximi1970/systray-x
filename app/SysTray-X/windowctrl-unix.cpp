@@ -16,6 +16,12 @@
 WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 {
     /*
+     *  Initialize
+     */
+    m_tb_window = 0;
+    m_tb_windows = QList< quint64 >();
+
+    /*
      *  Get the base display and window
      */
     m_display = XOpenDisplay( ":0" );
@@ -68,6 +74,49 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
 
 
 /*
+ *  Find a window by PID
+ */
+void    WindowCtrlUnix::findWindow( qint64 pid )
+{
+    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
+
+    // Get the PID property atom.
+    Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
+    if( atom_PID == None )
+    {
+        emit signalConsole( QString( "No such atom _NET_WM_PID" ) );
+    }
+
+    m_tb_window = 0;
+    foreach( WindowItem win, windows )
+    {
+        Atom           type;
+        int            format;
+        unsigned long  nItems;
+        unsigned long  bytesAfter;
+
+        unsigned char* propPID = nullptr;
+        if( Success == XGetWindowProperty( m_display, win.window, atom_PID, 0, 1, False, XA_CARDINAL,
+                                             &type, &format, &nItems, &bytesAfter, &propPID ) )
+        {
+            if( propPID != nullptr )
+            {
+                if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
+                {
+                    m_tb_window = win.window;
+
+                    XFree( propPID );
+                    return;
+                }
+
+                XFree( propPID );
+            }
+        }
+    }
+}
+
+
+/*
  *  Display window atoms
  */
 void    WindowCtrlUnix::displayWindowElements( const QString& title )
@@ -83,71 +132,10 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
             XFree( name );
 
             if( win_name.contains( title, Qt::CaseInsensitive ) ) {
+
                 emit signalConsole( QString( "Found: Level %1, XID %2, Name %3" ).arg( win.level ).arg( win.window ).arg( win_name ) );
 
-                QString name = atomName( m_display, win.window );
-                emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
-
-                QStringList types = atomWindowType( m_display, win.window );
-                foreach( QString type, types )
-                {
-                    emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
-                }
-
-                QStringList states = atomState( m_display, win.window );
-
-                bool max_vert = false;
-                bool max_horz = false;
-                bool hidden = false;
-
-                foreach( QString state, states )
-                {
-                    emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
-
-                    int state_code = WindowStates.indexOf( state ) ;
-
-                    switch( state_code )
-                    {
-                        case STATE_MAXIMIZED_VERT:
-                        {
-                            max_vert = true;
-                            break;
-                        }
-
-                        case STATE_MAXIMIZED_HORZ:
-                        {
-                            max_horz = true;
-                            break;
-                        }
-
-                        case STATE_HIDDEN:
-                        {
-                            hidden = true;
-                            break;
-                        }
-                    }
-                }
-
-                if( states.length() > 0 )
-                {
-                    if( hidden )
-                    {
-                        emit signalConsole( "Window State: Hidden" );
-                    }
-                    else
-                    if( max_vert && max_horz )
-                    {
-                        emit signalConsole( "Window State: Maximize" );
-                    }
-                    else
-                    {
-                        emit signalConsole( "Window State: Normal" );
-                    }
-                }
-                else
-                {
-                    emit signalConsole( "Window State: Normal" );
-                }
+                displayWindowElements( win.window );
             }
         }
     }
@@ -155,7 +143,87 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
 
 
 /*
+ *  Display window atoms
+ */
+void    WindowCtrlUnix::displayWindowElements( Window window )
+{
+    QString name = atomName( m_display, window );
+    emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
+
+    QStringList types = atomWindowType( m_display, window );
+    foreach( QString type, types )
+    {
+        emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
+    }
+
+    QStringList states = atomState( m_display, window );
+
+    bool max_vert = false;
+    bool max_horz = false;
+    bool hidden = false;
+
+    foreach( QString state, states )
+    {
+        emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
+
+        int state_code = WindowStates.indexOf( state ) ;
+
+        switch( state_code )
+        {
+            case STATE_MAXIMIZED_VERT:
+            {
+                max_vert = true;
+                break;
+            }
+
+            case STATE_MAXIMIZED_HORZ:
+            {
+                max_horz = true;
+                break;
+            }
+
+            case STATE_HIDDEN:
+            {
+                hidden = true;
+                break;
+            }
+        }
+    }
+
+    if( states.length() > 0 )
+    {
+        if( hidden )
+        {
+            emit signalConsole( "Window State: Hidden" );
+        }
+        else
+        if( max_vert && max_horz )
+        {
+            emit signalConsole( "Window State: Maximize" );
+        }
+        else
+        {
+            emit signalConsole( "Window State: Normal" );
+        }
+    }
+    else
+    {
+        emit signalConsole( "Window State: Normal" );
+    }
+}
+
+
+/*
  *  Get the Thunderbird window ID
+ */
+quint64 WindowCtrlUnix::getWinId()
+{
+    return m_tb_window;
+}
+
+
+/*
+ *  Get the Thunderbird window IDs
  */
 QList< quint64 >   WindowCtrlUnix::getWinIds()
 {
@@ -313,98 +381,6 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
     XSendEvent( m_display, win, False, NoEventMask, &event );
     XFlush( m_display );
 }
-
-
-/*
- *  Find a window by PID
- */
-void    WindowCtrlUnix::findWindow( pid_t pid )
-{
-    QList< WindowItem > windows = listXWindows( m_display, m_root_window );
-
-    // Get the PID property atom.
-    Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
-    if( atom_PID == None )
-    {
-        emit signalConsole( QString( "No such atom _NET_WM_PID" ) );
-    }
-
-    foreach( WindowItem win, windows )
-    {
-        Atom           type;
-        int            format;
-        unsigned long  nItems;
-        unsigned long  bytesAfter;
-
-        unsigned char* propPID = nullptr;
-        if( Success == XGetWindowProperty( m_display, win.window, atom_PID, 0, 1, False, XA_CARDINAL,
-                                             &type, &format, &nItems, &bytesAfter, &propPID ) )
-        {
-            if( propPID != nullptr )
-            {
-                if( pid == *((reinterpret_cast<pid_t *>( propPID ) ) ) )
-                {
-                    char* name = nullptr;
-                    XFetchName( m_display, win.window, &name );
-
-                    emit signalConsole( QString( "Found: Level %1, XID %2, Name %3" ).arg( win.level ).arg( win.window ).arg( name ) );
-
-
-                    QString atom_name = atomName( m_display, win.window );
-                    emit signalConsole( QString( "Atom Name %1" ).arg( atom_name ) );
-
-                    QStringList states = atomState( m_display, win.window );
-                    foreach( QString state, states )
-                    {
-                        emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
-                    }
-
-                    QStringList types = atomWindowType( m_display, win.window );
-                    foreach( QString type, types )
-                    {
-                        emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
-                    }
-
-                    /*
-                     *  Cleanup
-                     */
-                    if( name != nullptr )
-                    {
-                        XFree( name );
-                    }
-                }
-
-                XFree( propPID );
-            }
-        }
-    }
-}
-
-
-#ifdef  RAW_EVENT_SEND
-
-bool        WindowCtrlUnix::generateEvent()
-{
-    XClientMessageEvent event;
-    Atom prop;
-
-    prop = XInternAtom( m_display, "WM_CHANGE_STATE", False );
-    if( prop == None )
-    {
-        return false;
-    }
-
-    event.type = ClientMessage;
-    event.window = m_tb_window;
-    event.message_type = prop;
-    event.format = 32;
-    event.data.l[0] = IconicState;
-    return XSendEvent( m_display, m_root_window, False,
-            SubstructureRedirectMask|SubstructureNotifyMask,
-                       reinterpret_cast<XEvent *>( &event ) );
-}
-
-#endif
 
 
 /*
