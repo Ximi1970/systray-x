@@ -31,42 +31,42 @@ class SysTrayXIcon : public QSystemTrayIcon
          *
          *  @param parent   My parent.
          */
-        SysTrayXIcon( SysTrayXLink *link, Preferences *pref, QObject *parent = nullptr );
+        SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent = nullptr );
 
         /**
          * @brief setIconType. Set the sytem tray icon type.
          *
          *  @param icon_type    The icon type
          */
-        void setIconType( Preferences::IconType icon_type );
+        void    setIconType( Preferences::IconType icon_type );
 
         /**
          * @brief setIconMime. Set the sytem tray icon mime.
          *
          *  @param icon_mime    The icon mime
          */
-        void setIconMime( const QString& icon_mime );
+        void    setIconMime( const QString& icon_mime );
 
         /**
          * @brief setIconData. Set the custom icon data.
          *
          *  @param icon_data    The icon data.
          */
-        void setIconData( const QByteArray& icon_data );
+        void    setIconData( const QByteArray& icon_data );
 
         /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread_mail  The number of unread mails.
          */
-        void setUnreadMail( int unread_mail );
+        void    setUnreadMail( int unread_mail );
 
     private:
 
         /**
          * @brief setIcon. Set a new rendered icon.
          */
-        void renderIcon();
+        void    renderIcon();
 
     signals:
 
@@ -75,12 +75,12 @@ class SysTrayXIcon : public QSystemTrayIcon
          *
          * @param message   The message.
          */
-        void signalDebugMessage( QString message );
+        void    signalDebugMessage( QString message );
 
         /**
          * @brief signalShowHide. Signal show / hide window.
          */
-        void signalShowHide();
+        void    signalShowHide();
 
    public slots:
 
@@ -89,17 +89,17 @@ class SysTrayXIcon : public QSystemTrayIcon
          *
          *  @param unread_mail  The number of unread mails.
          */
-        void slotSetUnreadMail( int unread_mail );
+        void    slotSetUnreadMail( int unread_mail );
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
-        void slotIconTypeChange();
+        void    slotIconTypeChange();
 
         /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
-        void slotIconDataChange();
+        void    slotIconDataChange();
 
     private slots:
 
@@ -108,24 +108,24 @@ class SysTrayXIcon : public QSystemTrayIcon
          *
          *  @param reason   Activation reason.
          */
-        void slotIconActivated( QSystemTrayIcon::ActivationReason reason );
+        void    slotIconActivated( QSystemTrayIcon::ActivationReason reason );
 
     private:
 
         /**
          * @brief m_link.   Pointer to the link.
          */
-        SysTrayXLink *m_link;
+        SysTrayXLink*   m_link;
 
         /**
          * @brief m_pref    Pointer to the preferences storage.
          */
-        Preferences *m_pref;
+        Preferences*    m_pref;
 
         /**
          * @brief m_icon_type. Storage for the icon type.
          */
-        Preferences::IconType m_icon_type;
+        Preferences::IconType   m_icon_type;
 
         /**
          * @brief m_icon_mime. Storage for the icon mime.
@@ -135,7 +135,7 @@ class SysTrayXIcon : public QSystemTrayIcon
         /**
          * @brief m_icon_data. Storage for the icon.
          */
-        QByteArray m_icon_data;
+        QByteArray  m_icon_data;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

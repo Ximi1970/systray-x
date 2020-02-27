@@ -18,13 +18,13 @@
 /*
  *  Constructor
  */
-WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent ) :
+WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
 #ifdef Q_OS_UNIX
-    WindowCtrlUnix( parent )
+    : WindowCtrlUnix( parent )
 #elif defined Q_OS_WIN
-    WindowCtrlWin( parent )
+    : WindowCtrlWin( parent )
 #else
-    public QObject
+    : public QObject
 #endif
 {
     /*
