@@ -71,6 +71,9 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
+    findWindow( m_ppid );
+    emit signalConsole( QString( "Hwnd ppid: %1" ).arg( getWinIds()[0] ) );
+
     emit signalConsole("Test 2 done");
 }
 
