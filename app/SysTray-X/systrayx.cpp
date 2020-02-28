@@ -14,6 +14,8 @@
  */
 #include <QCoreApplication>
 #include <QMenu>
+#include <QStyle>
+#include <QIcon>
 
 /*
  *  Constants
@@ -164,12 +166,15 @@ void    SysTrayX::createActions()
 */
 
     m_showhide_action = new QAction(tr("&Show/Hide"), this);
+    m_showhide_action->setIcon( QIcon( ":/files/icons/window-restore.png" ) );
     connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
 
     m_pref_action = new QAction(tr("&Preferences"), this);
+    m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
 
-    m_quit_action = new QAction(tr("&Quit"), this);
+    m_quit_action = new QAction( tr("&Quit"), this );
+    m_quit_action->setIcon( QIcon( ":/files/icons/window-close.png" ) );
     connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
 
 }
