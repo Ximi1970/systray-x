@@ -54,3 +54,19 @@ async function getDefaultIcon() {
     console.debug("Default: " + iconBase64);
   }
 }
+
+//
+//  Get window startup state
+//
+async function getStartupState() {
+  function getStartupState(result) {
+    return result.startMinimized == "true" ? "minimized" : "normal";
+  }
+
+  function onStartupStateError() {
+    return "normal";
+  }
+
+  const getState = browser.storage.sync.get("startMinimized");
+  return await getState.then(getStartupState, onStartupStateError);
+}

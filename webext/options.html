@@ -9,17 +9,11 @@
     <script src="js/i18n.js"></script>
     <script src="js/options_accounts.js"></script>
 
-    <br />
-    <div id="debugselect">
-      <input type="checkbox" name="debug" value="Debug" /> Display debug
-      window<br />
-    </div>
-    <br />
-
     <div class="tab">
       <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
       <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
       <button class="tablinks" id="Mail">__MSG_tabMail__</button>
+      <button class="tablinks" id="Debug">__MSG_tabDebug__</button>
     </div>
 
     <div id="WindowsContent" class="tabcontent" style="display:block">
@@ -86,6 +80,18 @@
         <h3>Included accounts</h3>
 
         <ul id="accountsTree"></ul>
+      </form>
+    </div>
+
+    <div id="DebugContent" class="tabcontent">
+      <form name="debugform">
+        <h3>Debug options</h3>
+        <br />
+        <div id="debugselect">
+          <input type="checkbox" name="debug" value="Debug" /> Display debug
+          window<br />
+        </div>
+        <br />
       </form>
     </div>
 

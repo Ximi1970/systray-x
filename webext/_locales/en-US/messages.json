@@ -22,5 +22,10 @@
   "tabMail": {
     "message": "Mail",
     "description": "Tab for Mail options"
+  },
+
+  "tabDebug": {
+    "message": "Debug",
+    "description": "Tab for Debug options"
   }
 }

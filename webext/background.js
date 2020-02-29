@@ -349,10 +349,14 @@ SysTrayX.Window = {
 };
 
 async function start() {
-  //  Always start minimized
-  //  browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-  //    state: "minimized"
-  //  });
+  //  Get the prefered start state
+  const state = await getStartupState();
+
+  if (state == "minimized") {
+    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+      state: "minimized"
+    });
+  }
 
   //  Init defaults before everything
   await getDefaultIcon();
@@ -363,6 +367,9 @@ async function start() {
 
   //  Setup the link first
   SysTrayX.Link.init();
+
+  //  Send current state
+  SysTrayX.Link.postSysTrayXMessage({ window: state });
 
   //  Main start
   SysTrayX.Messaging.init();
