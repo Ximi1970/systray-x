@@ -349,6 +349,8 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
     {
         XFree( list );
     }
+
+    XFlush( m_display );
 }
 
 

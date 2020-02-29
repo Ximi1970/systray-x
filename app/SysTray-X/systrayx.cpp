@@ -90,17 +90,20 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
 
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_win_ctrl, &WindowCtrl::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_win_ctrl, &WindowCtrl::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_pref_dialog, &PreferencesDialog::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_pref_dialog, &PreferencesDialog::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalMinimizeHideChange, m_link, &SysTrayXLink::slotMinimizeHideChange );
+    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_link, &SysTrayXLink::slotHideOnMinimizeChange );
+    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );

@@ -49,11 +49,18 @@ class PreferencesDialog : public QDialog
         void    setDebug( bool state );
 
         /**
-         * @brief setMinimizeHide. Set the miniizeHide state.
+         * @brief setHideOnMinimize. Set the hide on minimize state.
          *
          *  @param state    The state.
          */
-        void    setMinimizeHide( bool state );
+        void    setHideOnMinimize( bool state );
+
+        /**
+         * @brief setStartMinimized. Set the start minimized state.
+         *
+         *  @param state    The state.
+         */
+        void    setStartMinimized( bool state );
 
         /**
          * @brief setIconType. Set the icon type.
@@ -97,9 +104,14 @@ class PreferencesDialog : public QDialog
         void slotDebugChange();
 
         /**
-         * @brief slotMinimizeHideChange. Slot for handling minimizeHide change signals.
+         * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.
          */
-        void slotMinimizeHideChange();
+        void slotHideOnMinimizeChange();
+
+        /**
+         * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
+         */
+        void slotStartMinimizedChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.

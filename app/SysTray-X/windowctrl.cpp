@@ -35,7 +35,7 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
     /*
      *  Initialize
      */
-    m_minimize_hide = m_pref->getMinimizeHide();
+    m_hide_minimize = m_pref->getHideOnMinimize();
 
     /*
      *  Get pids
@@ -109,11 +109,20 @@ void    WindowCtrl::slotWindowTitle( QString title )
 
 
 /*
- *  Handle change in minimizeHide state
+ *  Handle change in hide on minimize state
  */
-void    WindowCtrl::slotMinimizeHideChange()
+void    WindowCtrl::slotHideOnMinimizeChange()
 {
-    m_minimize_hide = m_pref->getMinimizeHide();
+    m_hide_minimize = m_pref->getHideOnMinimize();
+}
+
+
+/*
+ *  Handle change in start minimized state
+ */
+void    WindowCtrl::slotStartMinimizedChange()
+{
+    m_start_minimized = m_pref->getStartMinimized();
 }
 
 
@@ -132,7 +141,7 @@ void    WindowCtrl::slotWindowState( QString state )
         }
         else
         {
-            hideWindow( getWinId(), m_minimize_hide );
+            hideWindow( getWinId(), m_hide_minimize );
         }
 
         emit signalConsole( "New state: " + state );
@@ -158,7 +167,7 @@ void    WindowCtrl::slotShowHide()
     } else {
         m_state = "minimized";
 
-        minimizeWindow( getWinId(), m_minimize_hide );
+        minimizeWindow( getWinId(), m_hide_minimize );
 
         emit signalConsole("Minimize");
 

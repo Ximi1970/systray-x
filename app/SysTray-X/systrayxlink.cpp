@@ -388,14 +388,24 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
-    if( pref.contains( "minimizeHide" ) && pref[ "minimizeHide" ].isString() )
+    if( pref.contains( "hideOnMinimize" ) && pref[ "hideOnMinimize" ].isString() )
     {
-        bool minimize_hide = pref[ "minimizeHide" ].toString() == "true";
+        bool hide_minimize = pref[ "hideOnMinimize" ].toString() == "true";
 
         /*
-         *  Store the new MinimizeHide state
+         *  Store the new hide on minimize state
          */
-        m_pref->setMinimizeHide( minimize_hide );
+        m_pref->setHideOnMinimize( hide_minimize );
+    }
+
+    if( pref.contains( "startMinimized" ) && pref[ "startMinimized" ].isString() )
+    {
+        bool start_minimized = pref[ "startMinimized" ].toString() == "true";
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setStartMinimized( start_minimized );
     }
 
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
@@ -420,7 +430,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
-    prefObject.insert("minimizeHide", QJsonValue::fromVariant( QString( pref.getMinimizeHide() ? "true" : "false" ) ) );
+    prefObject.insert("hideOnMinimize", QJsonValue::fromVariant( QString( pref.getHideOnMinimize() ? "true" : "false" ) ) );
+    prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -510,9 +521,21 @@ void    SysTrayXLink::slotDebugChange()
 
 
 /*
- *  Handle a minimizeHide state change signal
+ *  Handle a hide on minimize state change signal
  */
-void    SysTrayXLink::slotMinimizeHideChange()
+void    SysTrayXLink::slotHideOnMinimizeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a start minimized state change signal
+ */
+void    SysTrayXLink::slotStartMinimizedChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

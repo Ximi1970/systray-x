@@ -58,13 +58,24 @@ SysTrayX.SaveOptions = {
     console.debug("Store debug state: " + `${debug}`);
 
     //
-    //  Save minimize hide state
+    //  Save hide on minimize state
     //
-    let minimizeHide = document.querySelector('input[name="minimizeHide"]').checked;
+    let hideOnMinimize = document.querySelector('input[name="hideOnMinimize"]')
+      .checked;
     browser.storage.sync.set({
-      minimizeHide: `${minimizeHide}`
+      hideOnMinimize: `${hideOnMinimize}`
     });
-    console.debug("Store minimizeHide state: " + `${minimizeHide}`);
+    console.debug("Store hideOnMinimize state: " + `${hideOnMinimize}`);
+
+    //
+    //  Save start minimized state
+    //
+    let startMinimized = document.querySelector('input[name="startMinimized"]')
+      .checked;
+    browser.storage.sync.set({
+      startMinimized: `${startMinimized}`
+    });
+    console.debug("Store startMinimized state: " + `${startMinimized}`);
 
     //
     // Save icon preferences
@@ -115,12 +126,21 @@ SysTrayX.RestoreOptions = {
     );
 
     //
-    //  Restore minimize hide
+    //  Restore hide on minimize
     //
-    const getMinimizeHide = browser.storage.sync.get("minimizeHide");
-    getMinimizeHide.then(
-      SysTrayX.RestoreOptions.setMinimizeHide,
-      SysTrayX.RestoreOptions.onMinimizeHideError
+    const getHideOnMinimize = browser.storage.sync.get("hideOnMinimize");
+    getHideOnMinimize.then(
+      SysTrayX.RestoreOptions.setHideOnMinimize,
+      SysTrayX.RestoreOptions.onHideOnMinimizeError
+    );
+
+    //
+    //  Restore start minimized
+    //
+    const getStartMinimized = browser.storage.sync.get("startMinimized");
+    getStartMinimized.then(
+      SysTrayX.RestoreOptions.setStartMinimized,
+      SysTrayX.RestoreOptions.onStartMinimizedError
     );
 
     //
@@ -161,19 +181,35 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore minimize hide callbacks
+  //  Restore hide on minimize callbacks
   //
-  setMinimizeHide: function(result) {
-    const minimizeHide = result.minimizeHide || "true";
+  setHideOnMinimize: function(result) {
+    const hideOnMinimize = result.hideOnMinimize || "true";
 
-    console.debug("MinimizeHide: " + minimizeHide);
+    console.debug("hideOnMinimize: " + hideOnMinimize);
 
-    const checkbox = document.querySelector(`input[name="minimizeHide"]`);
-    checkbox.checked = minimizeHide === "true";
+    const checkbox = document.querySelector(`input[name="hideOnMinimize"]`);
+    checkbox.checked = hideOnMinimize === "true";
   },
 
-  onMinimizeHideError: function(error) {
-    console.log(`MinimizeHide Error: ${error}`);
+  onHideOnMinimizeError: function(error) {
+    console.log(`hideOnMinimize Error: ${error}`);
+  },
+
+  //
+  //  Restore hide on minimize callbacks
+  //
+  setStartMinimized: function(result) {
+    const startMinimized = result.startMinimized || "true";
+
+    console.debug("startMinimized: " + startMinimized);
+
+    const checkbox = document.querySelector(`input[name="startMinimized"]`);
+    checkbox.checked = startMinimized === "true";
+  },
+
+  onStartMinimizedError: function(error) {
+    console.log(`startMinimized Error: ${error}`);
   },
 
   //
@@ -262,9 +298,14 @@ SysTrayX.StorageChanged = {
         });
         changed_icon_mime = true;
       }
-      if (item === "minimizeHide") {
-        SysTrayX.RestoreOptions.setMinimizeHide({
-          minimizeHide: changes[item].newValue
+      if (item === "hideOnMinimize") {
+        SysTrayX.RestoreOptions.setHideOnMinimize({
+          hideOnMinimize: changes[item].newValue
+        });
+      }
+      if (item === "startMinimized") {
+        SysTrayX.RestoreOptions.setStartMinimized({
+          startMinimized: changes[item].newValue
         });
       }
       if (item === "debug") {

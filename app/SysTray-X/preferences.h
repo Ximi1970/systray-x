@@ -94,18 +94,32 @@ class Preferences : public QObject
         void setIconData( const QByteArray& icon_data );
 
         /**
-         * @brief getMinimizeHide. Get the minimizeHide state.
+         * @brief getHideOnMinimize. Get the hide on minimize state.
          *
          * @return      The state.
          */
-        bool getMinimizeHide() const;
+        bool getHideOnMinimize() const;
 
         /**
-         * @brief setMinimizeHide. Set the minimizeHide state.
+         * @brief setHideOnMinimize. Set the hide on minimize state.
          *
          * @param      The state.
          */
-        void setMinimizeHide( bool state );
+        void setHideOnMinimize( bool state );
+
+        /**
+         * @brief getStartMinimized. Get the start minimized state.
+         *
+         * @return      The state.
+         */
+        bool getStartMinimized() const;
+
+        /**
+         * @brief setStartMinimized. Set the start minimized state.
+         *
+         * @param      The state.
+         */
+        void setStartMinimized( bool state );
 
         /**
          * @brief getDebug. Get the debug windows state.
@@ -134,9 +148,14 @@ class Preferences : public QObject
         void signalIconDataChange();
 
         /**
-         * @brief signalMinimizeHideChange. Signal a minimizeHide state change.
+         * @brief signalHideOnMinimizeChange. Signal a hide on mnimize state change.
          */
-        void signalMinimizeHideChange();
+        void signalHideOnMinimizeChange();
+
+        /**
+         * @brief signalStartMinimizedChange. Signal a start minimized state change.
+         */
+        void signalStartMinimizedChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
@@ -166,9 +185,14 @@ class Preferences : public QObject
         QByteArray m_icon_data;
 
         /**
-         * @brief m_minimize_hide. Hide the minimized window.
+         * @brief m_hide_minimize. Hide the minimized window.
          */
-        bool m_minimize_hide;
+        bool m_hide_minimize;
+
+        /**
+         * @brief m_start_minimized. Start TB minimized.
+         */
+        bool m_start_minimized;
 
         /**
          * @brief m_debug. Display debug window.

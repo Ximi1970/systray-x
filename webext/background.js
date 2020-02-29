@@ -131,7 +131,8 @@ SysTrayX.Messaging = {
 
     const getter = browser.storage.sync.get([
       "debug",
-      "minimizeHide",
+      "hideOnMinimize",
+      "startMinimized",
       "iconType",
       "iconMime",
       "icon"
@@ -143,13 +144,15 @@ SysTrayX.Messaging = {
     console.debug("Get preferences from storage");
 
     const debug = result.debug || "false";
-    const minimizeHide = result.minimizeHide || "true";
+    const hideOnMinimize = result.hideOnMinimize || "true";
+    const startMinimized = result.startMinimized || "true";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
 
     console.log(`Debug ${debug}`);
-    console.log(`Debug ${minimizeHide}`);
+    console.log(`Debug ${hideOnMinimize}`);
+    console.log(`Debug ${startMinimized}`);
     console.log(`Type ${iconType}`);
     console.log(`Mime ${iconMime}`);
     console.log(icon);
@@ -158,7 +161,8 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
-        minimizeHide: minimizeHide,
+        hideOnMinimize: hideOnMinimize,
+        startMinimized: startMinimized,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon
@@ -256,6 +260,10 @@ SysTrayX.Link = {
       }
     }
 
+    if (response["shutdown"]) {
+      console.log("Shutdown received: " + response["shutdown"]);
+    }
+
     if (response["preferences"]) {
       //  Store the preferences from the app
       console.log("Preferences received");
@@ -281,10 +289,17 @@ SysTrayX.Link = {
         });
       }
 
-      const minimizeHide = response["preferences"].minimizeHide;
-      if (minimizeHide) {
+      const hideOnMinimize = response["preferences"].hideOnMinimize;
+      if (hideOnMinimize) {
         browser.storage.sync.set({
-          minimizeHide: minimizeHide
+          hideOnMinimize: hideOnMinimize
+        });
+      }
+
+      const startMinimized = response["preferences"].startMinimized;
+      if (startMinimized) {
+        browser.storage.sync.set({
+          startMinimized: startMinimized
         });
       }
 
@@ -334,7 +349,12 @@ SysTrayX.Window = {
 };
 
 async function start() {
-  // Init defaults before everything
+  //  Always start minimized
+  //  browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+  //    state: "minimized"
+  //  });
+
+  //  Init defaults before everything
   await getDefaultIcon();
 
   SysTrayX.Window.startWindow = await browser.windows
