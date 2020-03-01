@@ -200,7 +200,7 @@ SysTrayX.RestoreOptions = {
   //  Restore hide on minimize callbacks
   //
   setStartMinimized: function(result) {
-    const startMinimized = result.startMinimized || "true";
+    const startMinimized = result.startMinimized || "false";
 
     console.debug("startMinimized: " + startMinimized);
 
