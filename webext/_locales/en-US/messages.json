@@ -1,30 +1,30 @@
 {
-  "extensionName": {
+  "extension_name": {
     "message": "SysTray-X",
     "description": "Name of the webextension"
   },
 
-  "extensionDescription": {
+  "extension_description": {
     "message": "System tray control add-on",
     "description": "Webextension descriptions"
   },
 
-  "tabWindows": {
+  "tab_windows": {
     "message": "Windows",
     "description": "Tab for Window options"
   },
 
-  "tabIcon": {
+  "tab_icon": {
     "message": "Icon",
     "description": "Tab for Icon options"
   },
 
-  "tabMail": {
+  "tab_mail": {
     "message": "Mail",
     "description": "Tab for Mail options"
   },
 
-  "tabDebug": {
+  "tab_debug": {
     "message": "Debug",
     "description": "Tab for Debug options"
   }
