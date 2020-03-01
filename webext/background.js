@@ -145,7 +145,7 @@ SysTrayX.Messaging = {
 
     const debug = result.debug || "false";
     const hideOnMinimize = result.hideOnMinimize || "true";
-    const startMinimized = result.startMinimized || "true";
+    const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
