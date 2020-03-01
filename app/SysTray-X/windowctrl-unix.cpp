@@ -6,6 +6,7 @@
  *  System includes
  */
 #include <unistd.h>
+#include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 
@@ -145,7 +146,7 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
 /*
  *  Display window atoms
  */
-void    WindowCtrlUnix::displayWindowElements( Window window )
+void    WindowCtrlUnix::displayWindowElements( quint64 window )
 {
     QString name = atomName( m_display, window );
     emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
@@ -388,7 +389,7 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
 /*
  *  Get the X11 window list
  */
-QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *display, Window window, int level )
+QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *display, quint64 window, int level )
 {
     Window root;
     Window parent;
@@ -414,7 +415,7 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *dis
 /*
  *  Get the title of the window
  */
-QString   WindowCtrlUnix::atomName( Display *display, Window window )
+QString   WindowCtrlUnix::atomName( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_NAME";
     Atom prop = XInternAtom( display, prop_name, True );
@@ -446,7 +447,7 @@ QString   WindowCtrlUnix::atomName( Display *display, Window window )
 /*
  *  Get the state of the window
  */
-QStringList    WindowCtrlUnix::atomState( Display *display, Window window )
+QStringList    WindowCtrlUnix::atomState( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_STATE";
     Atom prop = XInternAtom( display, prop_name, True );
@@ -489,7 +490,7 @@ QStringList    WindowCtrlUnix::atomState( Display *display, Window window )
 /*
  *  Get the type of the window
  */
-QStringList    WindowCtrlUnix::atomWindowType( Display *display, Window window )
+QStringList    WindowCtrlUnix::atomWindowType( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_WINDOW_TYPE";
     Atom prop = XInternAtom( display, prop_name, True );

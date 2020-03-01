@@ -12,12 +12,16 @@
 /*
  *  System includes
  */
-#include <X11/Xlib.h>
 
 /*
  *	Qt includes
  */
 #include <QObject>
+
+/*
+ *  Predefines
+ */
+typedef struct _XDisplay Display;
 
 /**
  * @brief The WindowCtrlUnix class.
@@ -91,13 +95,13 @@ class WindowCtrlUnix : public QObject
         {
             public:
 
-                WindowItem( Window win, int lev )
+                WindowItem( quint64 win, int lev )
                 {
                     window = win;
                     level = lev;
                 }
 
-                Window  window;
+                quint64 window;
                 int     level;
         };
 
@@ -145,7 +149,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @param window    The window.
          */
-        void    displayWindowElements( Window window );
+        void    displayWindowElements( quint64 window );
 
         /**
          * @brief getWinId. Get the Thunderbird window ID.
@@ -202,7 +206,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     The windows list.
          */
-        QList< WindowItem >   listXWindows( Display* display, Window window, int level = 0 );
+        QList< WindowItem >   listXWindows( Display* display, quint64 window, int level = 0 );
 
         /**
          * @brief atomwName. Get the title of the window.
@@ -212,7 +216,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     Name of the window.
          */
-        QString atomName( Display *display, Window window );
+        QString atomName( Display* display, quint64 window );
 
         /**
          * @brief atomState. Get the state of the window.
@@ -222,7 +226,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     State of the window.
          */
-        QStringList    atomState( Display *display, Window window );
+        QStringList    atomState( Display* display, quint64 window );
 
         /**
          * @brief atomType. Get the type of the window.
@@ -232,7 +236,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     Type of the window.
          */
-        QStringList    atomWindowType( Display *display, Window window );
+        QStringList    atomWindowType( Display* display, quint64 window );
 
     signals:
 
@@ -275,7 +279,7 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief m_root_window. The root window.
          */
-        Window  m_root_window;
+        quint64 m_root_window;
 
         /**
          * @brief m_tb_window. The Thunderbird window.
