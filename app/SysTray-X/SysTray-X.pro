@@ -31,8 +31,10 @@ CONFIG += c++11
 unix:!macx: {
     QMAKE_CFLAGS += $(RPM_OPT_FLAGS)
     QMAKE_CXXFLAGS += $(RPM_OPT_FLAGS)
-#    QMAKE_LFLAGS += -lX11 -static-libgcc -static-libstdc++
-    QMAKE_LFLAGS += -lX11
+    QMAKE_LFLAGS += $(RPM_OPT_FLAGS)
+#    QMAKE_LFLAGS += -static-libgcc -static-libstdc++
+
+    LIBS += -lX11
 }
 win32: {
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
