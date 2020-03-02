@@ -85,13 +85,6 @@ class PreferencesDialog : public QDialog
     signals:
 
         /**
-         * @brief signalDebugMessage. Signal a debug message.
-         *
-         * @param message   The message.
-         */
-        void    signalDebugMessage( QString message );
-
-        /**
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
          */
         void signalUpdateSysTrayIcon();

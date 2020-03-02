@@ -58,27 +58,6 @@ class SysTrayXLinkReader : public QObject
     signals:
 
         /**
-         * @brief signalDebugMessage
-         *
-         *  @param message     The message.
-         */
-        void    signalDebugMessage( QString message );
-
-        /**
-         * @brief signalReceivedDataLength
-         *
-         * @param data_len      The length of the received data.
-         */
-        void    signalReceivedDataLength( qint32 data_len );
-
-        /**
-         * @brief signalReceivedData
-         *
-         *  @param data     The received data.
-         */
-        void    signalReceivedData( QByteArray data );
-
-        /**
          * @brief signalReceivedMessage. Signal the received message.
          *
          *  @param message  The received message.
@@ -171,7 +150,6 @@ class SysTrayXLink : public QObject
          */
         void    signalTitle( QString title );
 
-
         /**
          * @brief signalAddOnShutdown. Signal to shutdown the app.
          */
@@ -181,34 +159,6 @@ class SysTrayXLink : public QObject
          * @brief signalWindowState. Signal a change in the window state.
          */
         void    signalWindowState( QString state );
-
-        /**
-         * @brief signalReceivedDataLength
-         *
-         * @param data_len      The received data length.
-         */
-        void    signalReceivedDataLength( qint32 data_len );
-
-        /**
-         * @brief signalReceivedData
-         *
-         *  @param data     The data received.
-         */
-        void    signalReceivedData( QByteArray data );
-
-        /**
-         * @brief signalLinkReceiveError. Cannot parse received JSON message.
-         *
-         * @param error     JSON error message
-         */
-        void    signalLinkReceiveError( QString error );
-
-        /**
-         * @brief signalDebugMessage. Signal a debug message.
-         *
-         * @param message   The message.
-         */
-        void    signalDebugMessage( QString message );
 
         /**
          * @brief signalUnreadMail. Signal numder of unread mails.
@@ -235,11 +185,6 @@ class SysTrayXLink : public QObject
         void    slotStartMinimizedChange();
 
         /**
-         * @brief slotLinkWrite. Write the link.
-         */
-        void    slotLinkWrite( QByteArray message );
-
-        /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
         void    slotIconTypeChange();
@@ -262,27 +207,6 @@ class SysTrayXLink : public QObject
      private slots:
 
         /**
-         * @brief slotDebugMessage. Handle the signal for a debuf message from the reader thread.
-         *
-         *   @param message     The message.
-         */
-        void    slotDebugMessage( QString message );
-
-        /**
-         * @brief slotReceivedDataLength. Handle data length signal from the reader thread.
-         *
-         * @param data_len    The data length.
-         */
-        void    slotReceivedDataLength( qint32 data_len );
-
-        /**
-         * @brief signalReceivedData. Handle data signal from the reader thread.
-         *
-         *  @param data  The data.
-         */
-        void    slotReceivedData( QByteArray data );
-
-        /**
          * @brief slotLinkRead. Read the link.
          */
         void    slotLinkRead( QByteArray message );
@@ -303,11 +227,6 @@ class SysTrayXLink : public QObject
          * @brief m_pref. Pointer to the preferences storage.
          */
         Preferences*    m_pref;
-
-        /**
-         * @brief m_dump. Pointer to dump file.
-         */
-        QFile*  m_dump;
 
         /**
          * @brief m_pref_json_doc. Temporary storage for the preferences to be send.

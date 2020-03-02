@@ -49,9 +49,6 @@ async function getDefaultIcon() {
     const iconDiv = document.getElementById("icon");
     iconDiv.setAttribute("data-icon-mime", iconMime);
     iconDiv.setAttribute("data-icon", iconBase64);
-
-    console.debug("Default: " + iconMime);
-    console.debug("Default: " + iconBase64);
   }
 }
 

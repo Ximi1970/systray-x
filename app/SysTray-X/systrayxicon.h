@@ -71,13 +71,6 @@ class SysTrayXIcon : public QSystemTrayIcon
     signals:
 
         /**
-         * @brief signalDebugMessage. Signal a debug message.
-         *
-         * @param message   The message.
-         */
-        void    signalDebugMessage( QString message );
-
-        /**
          * @brief signalShowHide. Signal show / hide window.
          */
         void    signalShowHide();

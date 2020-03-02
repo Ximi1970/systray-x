@@ -22,9 +22,9 @@ SysTrayX.Accounts = {
     let accounts = new Object();
 
     for (let i = 0; i < mailAccount.length; i++) {
-      console.debug("SysTrayX accounts id: " + mailAccount[i].id);
-      console.debug("SysTrayX accounts name: " + mailAccount[i].name);
-      console.debug("SysTrayX accounts type: " + mailAccount[i].type);
+      //      console.debug("SysTrayX accounts id: " + mailAccount[i].id);
+      //      console.debug("SysTrayX accounts name: " + mailAccount[i].name);
+      //      console.debug("SysTrayX accounts type: " + mailAccount[i].type);
 
       if (!accounts[mailAccount[i].type]) {
         accounts[mailAccount[i].type] = [];
@@ -66,7 +66,9 @@ SysTrayX.Accounts = {
           typeInput.setAttribute("value", JSON.stringify(accounts[prop][i]));
           typeInput.setAttribute("checked", "true");
           typeLi.appendChild(typeInput);
-          const typeText = document.createTextNode(" " + accounts[prop][i].name);
+          const typeText = document.createTextNode(
+            " " + accounts[prop][i].name
+          );
           typeLi.appendChild(typeText);
           typeUl.appendChild(typeLi);
         }
@@ -77,8 +79,6 @@ SysTrayX.Accounts = {
 
       // Restore saved selection
       function setAccounts(result) {
-        console.debug("Restore account selection");
-
         const treeBase = document.getElementById("accountsTree");
         const accounts = result.accounts || [];
         for (let i = 0; i < accounts.length; ++i) {
@@ -89,8 +89,6 @@ SysTrayX.Accounts = {
             checkbox.checked = accounts[i].checked;
           }
         }
-
-        console.debug("Restore account selection done");
       }
 
       function onError(error) {

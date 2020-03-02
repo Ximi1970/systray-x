@@ -85,7 +85,7 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
     Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
     if( atom_PID == None )
     {
-        emit signalConsole( QString( "No such atom _NET_WM_PID" ) );
+        return;
     }
 
     m_tb_window = 0;

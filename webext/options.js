@@ -4,14 +4,9 @@ SysTrayX.SaveOptions = {
   start: function(e) {
     e.preventDefault();
 
-    console.debug("Save preferences");
-
     //
     // Save accounts and filters
     //
-
-    console.debug("Store accounts and filters");
-
     const treeBase = document.getElementById("accountsTree");
     const inputs = treeBase.querySelectorAll("input");
     let accounts = [];
@@ -25,9 +20,6 @@ SysTrayX.SaveOptions = {
         let inboxMailFolder = account.folders.find(obj => obj.type === "inbox");
 
         if (inboxMailFolder) {
-          console.debug("Filter Id: " + inboxMailFolder.accountId);
-          console.debug("Filter Path: " + inboxMailFolder.path);
-
           filters.push({
             unread: true,
             folder: inboxMailFolder
@@ -46,8 +38,6 @@ SysTrayX.SaveOptions = {
       filters: filters
     });
 
-    console.debug("Store accounts and filters done");
-
     //
     //  Save debug state
     //
@@ -55,7 +45,6 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       debug: `${debug}`
     });
-    console.debug("Store debug state: " + `${debug}`);
 
     //
     //  Save hide on minimize state
@@ -65,7 +54,6 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       hideOnMinimize: `${hideOnMinimize}`
     });
-    console.debug("Store hideOnMinimize state: " + `${hideOnMinimize}`);
 
     //
     //  Save start minimized state
@@ -75,14 +63,10 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       startMinimized: `${startMinimized}`
     });
-    console.debug("Store startMinimized state: " + `${startMinimized}`);
 
     //
     // Save icon preferences
     //
-
-    console.debug("Store icon preferences");
-
     const iconType = document.querySelector('input[name="iconType"]:checked')
       .value;
 
@@ -101,8 +85,6 @@ SysTrayX.SaveOptions = {
       icon: iconBase64
     });
 
-    console.debug("Store icon preferences done");
-
     //  Mark add-on preferences changed
     browser.storage.sync.set({
       addonprefchanged: true
@@ -112,10 +94,6 @@ SysTrayX.SaveOptions = {
 
 SysTrayX.RestoreOptions = {
   start: function() {
-    console.debug("Restore preferences");
-
-    console.debug("Restore icon preferences");
-
     //
     //  Restore debug state
     //
@@ -160,8 +138,6 @@ SysTrayX.RestoreOptions = {
       SysTrayX.RestoreOptions.setIcon,
       SysTrayX.RestoreOptions.onIconError
     );
-
-    console.debug("Restore icon preferences done");
   },
 
   //
@@ -169,8 +145,6 @@ SysTrayX.RestoreOptions = {
   //
   setDebug: function(result) {
     const debug = result.debug || "false";
-
-    console.debug("Debug: " + debug);
 
     const checkbox = document.querySelector(`input[name="debug"]`);
     checkbox.checked = debug === "true";
@@ -186,8 +160,6 @@ SysTrayX.RestoreOptions = {
   setHideOnMinimize: function(result) {
     const hideOnMinimize = result.hideOnMinimize || "true";
 
-    console.debug("hideOnMinimize: " + hideOnMinimize);
-
     const checkbox = document.querySelector(`input[name="hideOnMinimize"]`);
     checkbox.checked = hideOnMinimize === "true";
   },
@@ -201,8 +173,6 @@ SysTrayX.RestoreOptions = {
   //
   setStartMinimized: function(result) {
     const startMinimized = result.startMinimized || "false";
-
-    console.debug("startMinimized: " + startMinimized);
 
     const checkbox = document.querySelector(`input[name="startMinimized"]`);
     checkbox.checked = startMinimized === "true";

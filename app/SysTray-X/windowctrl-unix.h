@@ -241,13 +241,6 @@ class WindowCtrlUnix : public QObject
     signals:
 
         /**
-         * @brief signalDebugMessage. Signal a debug message.
-         *
-         * @param message   The message.
-         */
-        void    signalDebugMessage( QString message );
-
-        /**
          * @brief signalWindowNormal. Signal normal window.
          */
         void    signalWindowNormal();

@@ -111,14 +111,10 @@ void    SysTrayXLinkReader::slotWorker()
         qint32 data_len;
         std::cin.read( reinterpret_cast< char* >( &data_len ), sizeof( qint32 ) );
 
-        emit signalReceivedDataLength( data_len );
-
         if( data_len > 0)
         {
             QByteArray data( data_len, 0 );
             std::cin.read( data.data(), data_len );
-
-            emit signalReceivedData( data );
 
             /*
              *  Send the data to my parent
@@ -188,11 +184,6 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
     connect( reader, &SysTrayXLinkReader::signalAddOnShutdown, this, &SysTrayXLink::slotAddOnShutdown );
 
-    connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
-
-    connect( reader, &SysTrayXLinkReader::signalReceivedDataLength, this, &SysTrayXLink::slotReceivedDataLength );
-    connect( reader, &SysTrayXLinkReader::signalReceivedData, this, &SysTrayXLink::slotReceivedData );
-
     connect( m_reader_thread, &QThread::started, reader, &SysTrayXLinkReader::startThread, Qt::QueuedConnection );
     m_reader_thread->start();
 }
@@ -231,15 +222,6 @@ void    SysTrayXLink::sendPreferences()
      *  Enacode the preferences into a JSON doc
      */
     EncodePreferences( *m_pref );
-
-
-/*
-    QFile   dump("/home/maxime/dumpJSON_app2addon.txt");
-    dump.open(QIODevice::WriteOnly );
-    dump.write( m_pref_json_doc.toJson( QJsonDocument::Compact ).data(), m_pref_json_doc.toJson( QJsonDocument::Compact ).length() );
-    dump.close();
-*/
-
 
     /*
      *  Send them to the add-on
@@ -331,21 +313,8 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
-
-/*
-            QFile   dump("/home/maxime/dumpJSON_addon2app.txt");
-            dump.open(QIODevice::WriteOnly );
-            dump.write( message.data(), message.length() );
-            dump.close();
-*/
-
-
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
         }
-    }
-    else
-    {
-        emit signalLinkReceiveError( jsonError.errorString() );
     }
 }
 
@@ -447,33 +416,6 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 
 
 /*
- *  Handle the debug message from the reader thread
- */
-void    SysTrayXLink::slotDebugMessage( QString message )
-{
-    emit signalDebugMessage( message );
-}
-
-
-/*
- *  Handle data length signal from reader thread
- */
-void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
-{
-    emit signalReceivedDataLength( data_len );
-}
-
-
-/*
- *  Handle data signal from read thread
- */
-void    SysTrayXLink::slotReceivedData( QByteArray data )
-{
-    emit signalReceivedData( data );
-}
-
-
-/*
  *  Relay shutdown signal
  */
 void    SysTrayXLink::slotAddOnShutdown()
@@ -488,23 +430,9 @@ void    SysTrayXLink::slotAddOnShutdown()
 void    SysTrayXLink::slotLinkRead( QByteArray message )
 {
     /*
-     *  Debug
-     */
-//    m_dump->write( message );
-
-    /*
      *  Decode the message
      */
     DecodeMessage( message );
-}
-
-
-/*
- *  write the output
- */
-void    SysTrayXLink::slotLinkWrite( QByteArray message )
-{
-    linkWrite( message );
 }
 
 

@@ -65,19 +65,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect debug link signals
      */
-    connect( m_link, &SysTrayXLink::signalReceivedDataLength, m_debug, &DebugWidget::slotReceivedDataLength );
-    connect( m_link, &SysTrayXLink::signalReceivedData, m_debug, &DebugWidget::slotReceivedData );
-
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
-
-    connect( m_link, &SysTrayXLink::signalLinkReceiveError, m_debug, &DebugWidget::slotReceiveError );
-
-    connect( m_debug, &DebugWidget::signalWriteMessage, m_link, &SysTrayXLink::slotLinkWrite );
-
-    connect( m_pref_dialog, &PreferencesDialog::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
-    connect( m_tray_icon, &SysTrayXIcon::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
-    connect( m_link, &SysTrayXLink::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
-    connect( m_win_ctrl, &WindowCtrl::signalDebugMessage, m_debug, &DebugWidget::slotDebugMessage );
 
     connect( m_win_ctrl, &WindowCtrl::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_debug, &DebugWidget::signalTest1ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest1 );
@@ -157,17 +145,6 @@ void    SysTrayX::getPreferences()
  */
 void    SysTrayX::createActions()
 {
-/*
-    m_minimizeAction = new QAction(tr("Mi&nimize"), this);
-    connect( m_minimizeAction, &QAction::triggered, this, &QWidget::hide );
-
-    m_maximizeAction = new QAction(tr("Ma&ximize"), this);
-    connect( m_maximizeAction, &QAction::triggered, this, &QWidget::showMaximized );
-
-    m_restoreAction = new QAction(tr("&Restore"), this);
-    connect( m_restoreAction, &QAction::triggered, this, &QWidget::showNormal );
-*/
-
     m_showhide_action = new QAction(tr("&Show/Hide"), this);
     m_showhide_action->setIcon( QIcon( ":/files/icons/window-restore.png" ) );
     connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
@@ -179,7 +156,6 @@ void    SysTrayX::createActions()
     m_quit_action = new QAction( tr("&Quit"), this );
     m_quit_action->setIcon( QIcon( ":/files/icons/window-close.png" ) );
     connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
-
 }
 
 
@@ -197,9 +173,6 @@ void    SysTrayX::createTrayIcon()
      *  Setup menu
      */
     m_tray_icon_menu = new QMenu();
-//    m_trayIconMenu->addAction( m_minimizeAction );
-//    m_trayIconMenu->addAction( m_maximizeAction );
-//    m_trayIconMenu->addAction( m_restoreAction );
 
     m_tray_icon_menu->addAction( m_showhide_action );
     m_tray_icon_menu->addSeparator();

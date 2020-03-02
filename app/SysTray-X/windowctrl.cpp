@@ -59,7 +59,7 @@ void    WindowCtrl::slotWindowTest1()
 //    findWindow( "- Mozilla Thunderbird" );
 //    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
-    displayWindowElements( getWinId() );
+//    displayWindowElements( getWinId() );
 
     emit signalConsole("Test 1 done");
 }
@@ -71,8 +71,8 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
-    findWindow( m_ppid );
-    emit signalConsole( QString( "Hwnd ppid: %1" ).arg( getWinIds()[0] ) );
+//    findWindow( m_ppid );
+//    emit signalConsole( QString( "Hwnd ppid: %1" ).arg( getWinIds()[0] ) );
 
     emit signalConsole("Test 2 done");
 }
@@ -84,8 +84,8 @@ void    WindowCtrl::slotWindowTest3()
 
     // Do something.
 
-    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
-    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
+//    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
+//    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
     emit signalConsole("Test 3 done");
 }
@@ -143,8 +143,6 @@ void    WindowCtrl::slotWindowState( QString state )
         {
             hideWindow( getWinId(), m_hide_minimize );
         }
-
-        emit signalConsole( "New state: " + state );
     }
 }
 
@@ -157,22 +155,12 @@ void    WindowCtrl::slotShowHide()
     if( m_state == "minimized" )
     {
         m_state = "normal";
-
         normalizeWindow( getWinId() );
-
-        emit signalConsole("Normalize");
-
-//        emit signalWindowNormal();    // TB window control
-
-    } else {
+    }
+    else
+    {
         m_state = "minimized";
-
         minimizeWindow( getWinId(), m_hide_minimize );
-
-        emit signalConsole("Minimize");
-
-//        emit signalWindowMinimize();  // TB window control
-
     }
 }
 
