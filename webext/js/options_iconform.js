@@ -1,10 +1,10 @@
 function fileSelected() {
   const input = document.getElementById("selectedFileIconType");
 
-  if (input.files.length > 0) {
-    console.debug("Selected file: " + input.files[0].name);
-    console.debug("Selected file type: " + input.files[0].type);
-  }
+  //  if (input.files.length > 0) {
+  //    console.debug("Selected file: " + input.files[0].name);
+  //    console.debug("Selected file type: " + input.files[0].type);
+  //  }
 
   function storeFile() {
     const buffer = new Uint8Array(fr.result);
@@ -21,9 +21,7 @@ function fileSelected() {
     iconDiv.setAttribute("data-icon-mime", input.files[0].type);
 
     const image = document.getElementById("customIconImage");
-    image.setAttribute("src", `data:${input.files[0].type};base64,${base64}` );
-
-    console.log(base64);
+    image.setAttribute("src", `data:${input.files[0].type};base64,${base64}`);
   }
 
   fr = new FileReader();

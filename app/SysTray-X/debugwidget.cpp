@@ -7,6 +7,10 @@
 #include "preferences.h"
 
 /*
+ *	System includes
+ */
+
+/*
  *	Qt includes
  */
 
@@ -22,33 +26,13 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
      *  Store the preferences
      */
     m_pref = pref;
-}
 
-
-/*
- *  Set the debug message
- */
-void    DebugWidget::setDebugMessage( const QString& message )
-{
-    m_ui->messageLabel->setText( message );
-}
-
-
-/*
- *  Set the raw data length
- */
-void    DebugWidget::setRawDataLength( int length )
-{
-    m_ui->rawDataLengthLabel->setText( QString::number( length ) );
-}
-
-
-/*
- *  Set the raw received message
- */
-void    DebugWidget::setErrorDataMessage( const QString &message )
-{
-    m_ui->rawDataLabel->setText( message );
+    /*
+     *  Connect the button
+     */
+    connect( m_ui->test1PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest1Button);
+    connect( m_ui->test2PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest2Button);
+    connect( m_ui->test3PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest3Button);
 }
 
 
@@ -62,53 +46,11 @@ void    DebugWidget::setUnreadMail( int unread )
 
 
 /*
- *  Set the link error message
- */
-void    DebugWidget::setError( const QString &error )
-{
-    m_ui->errorLabel->setText( error );
-}
-
-
-/*
  *  Handle a debug state change signal
  */
 void    DebugWidget::slotDebugChange()
 {
     this->setVisible( m_pref->getDebug() );
-}
-
-
-/*
- *  Handle a debug message signal
- */
-void    DebugWidget::slotDebugMessage( const QString& message )
-{
-    setDebugMessage( message );
-}
-
-
-/*
- *  Handle received message length
- */
-void    DebugWidget::slotReceivedDataLength( qint32 data_len )
-{
-    setRawDataLength( data_len );
-}
-
-
-/*
- *  Display received message
- */
-void    DebugWidget::slotReceivedData( const QByteArray& data )
-{
-    setErrorDataMessage( QString( data ) );
-
-    /*
-     * Reply
-     */
-//    QByteArray reply = QString( "\"Hallo other world!\"" ).toUtf8();
-//    emit signalWriteMessage( reply );
 }
 
 
@@ -122,9 +64,36 @@ void    DebugWidget::slotUnreadMail( int unread_mail )
 
 
 /*
- *  Handle a receive error
+ *  Handle test button 1 click
  */
-void    DebugWidget::slotReceiveError( const QString& error )
+void    DebugWidget::slotHandleTest1Button()
 {
-    setError( error );
+    emit signalTest1ButtonClicked();
+}
+
+
+/*
+ *  Handle test button 2 click
+ */
+void    DebugWidget::slotHandleTest2Button()
+{
+    emit signalTest2ButtonClicked();
+}
+
+
+/*
+ *  Handle test button 3 click
+ */
+void    DebugWidget::slotHandleTest3Button()
+{
+    emit signalTest3ButtonClicked();
+}
+
+
+/*
+ *  Handle console signal
+ */
+void    DebugWidget::slotConsole( QString message )
+{
+    m_ui->textEdit->append( message );
 }

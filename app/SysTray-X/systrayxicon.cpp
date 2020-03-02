@@ -19,7 +19,8 @@
 /*
  *	Constructor
  */
-SysTrayXIcon::SysTrayXIcon( SysTrayXLink *link, Preferences *pref, QObject *parent ) : QSystemTrayIcon( QIcon(), parent )
+SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent )
+    : QSystemTrayIcon( QIcon( ":/files/icons/Thunderbird.png" ), parent )
 {
     /*
      *  Initialize
@@ -36,7 +37,7 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink *link, Preferences *pref, QObject *pare
 /*
  *  Set the icon type
  */
-void SysTrayXIcon::setIconType( Preferences::IconType icon_type )
+void    SysTrayXIcon::setIconType( Preferences::IconType icon_type )
 {
     if( icon_type != m_icon_type )
     {
@@ -56,7 +57,7 @@ void SysTrayXIcon::setIconType( Preferences::IconType icon_type )
 /*
  *  Set the icon mime
  */
-void SysTrayXIcon::setIconMime( const QString& icon_mime )
+void    SysTrayXIcon::setIconMime( const QString& icon_mime )
 {
     if( m_icon_mime != icon_mime )
     {
@@ -71,7 +72,7 @@ void SysTrayXIcon::setIconMime( const QString& icon_mime )
 /*
  *  Set the icon type
  */
-void SysTrayXIcon::setIconData( const QByteArray& icon_data )
+void    SysTrayXIcon::setIconData( const QByteArray& icon_data )
 {
     if( m_icon_data != icon_data )
     {
@@ -91,7 +92,7 @@ void SysTrayXIcon::setIconData( const QByteArray& icon_data )
 /*
  *  Set the number of unread mails
  */
-void SysTrayXIcon::setUnreadMail( int unread_mail )
+void    SysTrayXIcon::setUnreadMail( int unread_mail )
 {
     if( unread_mail != m_unread_mail ) {
 
@@ -111,33 +112,38 @@ void SysTrayXIcon::setUnreadMail( int unread_mail )
 /*
  *  Set and render the icon in the system tray
  */
-void SysTrayXIcon::renderIcon()
+void    SysTrayXIcon::renderIcon()
 {
     QPixmap pixmap;
 
-    switch( m_icon_type )
+    if( m_unread_mail > 0 )
     {
-        case Preferences::PREF_BLANK_ICON:
+        switch( m_icon_type )
         {
-            pixmap = QPixmap( ":/files/icons/blank-icon.png" );
-            break;
-        }
+            case Preferences::PREF_BLANK_ICON:
+            {
+                pixmap = QPixmap( ":/files/icons/blank-icon.png" );
+                break;
+            }
 
-        case Preferences::PREF_NEWMAIL_ICON:
-        {
-            QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/blank-icon.png"));
-            pixmap = new_mail.pixmap( 256, 256 );
-            break;
-        }
+            case Preferences::PREF_NEWMAIL_ICON:
+            {
+                QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/blank-icon.png"));
+                pixmap = new_mail.pixmap( 256, 256 );
+                break;
+            }
 
-        case Preferences::PREF_CUSTOM_ICON:
-        {
-            pixmap.loadFromData( m_icon_data );
-            break;
+            case Preferences::PREF_CUSTOM_ICON:
+            {
+                pixmap.loadFromData( m_icon_data );
+                break;
+            }
         }
     }
-
-    QString number = QString::number( m_unread_mail );
+    else
+    {
+        pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+    }
 
     if( m_unread_mail > 0 )
     {
@@ -148,7 +154,12 @@ void SysTrayXIcon::renderIcon()
 
         painter.setFont( QFont("Sans") );
 
+        QString number = QString::number( m_unread_mail );
+#if QT_VERSION < QT_VERSION_CHECK(5, 13, 0)
         double factor = pixmap.width() / ( 3 * painter.fontMetrics().width( number ) );
+#else
+        double factor = pixmap.width() / ( 3 * painter.fontMetrics().horizontalAdvance( number ) );
+#endif
         QFont font = painter.font();
         font.setPointSizeF( font.pointSizeF() * factor );
         font.setBold( true );
@@ -167,7 +178,7 @@ void SysTrayXIcon::renderIcon()
 /*
  *  Handle unread mail signal
  */
-void SysTrayXIcon::slotSetUnreadMail( int unread_mail )
+void    SysTrayXIcon::slotSetUnreadMail( int unread_mail )
 {
     setUnreadMail( unread_mail );
 }
@@ -176,7 +187,7 @@ void SysTrayXIcon::slotSetUnreadMail( int unread_mail )
 /*
  *  Handle the icon type change signal
  */
-void SysTrayXIcon::slotIconTypeChange()
+void    SysTrayXIcon::slotIconTypeChange()
 {
     setIconType( m_pref->getIconType() );
 }
@@ -185,7 +196,7 @@ void SysTrayXIcon::slotIconTypeChange()
 /*
  *  Handle the icon data change signal
  */
-void SysTrayXIcon::slotIconDataChange()
+void    SysTrayXIcon::slotIconDataChange()
 {
     setIconMime( m_pref->getIconMime() );
     setIconData( m_pref->getIconData() );
@@ -195,7 +206,7 @@ void SysTrayXIcon::slotIconDataChange()
 /*
  *  Handle activation of the tray icon
  */
-void SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reason )
+void    SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reason )
 {
     switch (reason) {
     case QSystemTrayIcon::Trigger:

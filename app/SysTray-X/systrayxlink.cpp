@@ -104,24 +104,41 @@ void    SysTrayXLinkReader::stopThread()
  */
 void    SysTrayXLinkReader::slotWorker()
 {
+    int error_count = 0;
+
     while( m_doWork )
     {
         qint32 data_len;
         std::cin.read( reinterpret_cast< char* >( &data_len ), sizeof( qint32 ) );
-
-        emit signalReceivedDataLength( data_len );
 
         if( data_len > 0)
         {
             QByteArray data( data_len, 0 );
             std::cin.read( data.data(), data_len );
 
-            emit signalReceivedData( data );
-
             /*
              *  Send the data to my parent
              */
             emit signalReceivedMessage( data );
+
+            /*
+             *  Send the data to my parent
+             */
+            if( data.at( 0 ) == '{' )
+            {
+                emit signalReceivedMessage( data );
+
+                error_count = 0;
+            }
+            else
+            {
+                error_count++;
+
+                if( error_count > 20 )
+                {
+                    emit signalAddOnShutdown();
+                }
+            }
         }
     }
 
@@ -165,11 +182,7 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
-
-    connect( reader, &SysTrayXLinkReader::signalDebugMessage, this, &SysTrayXLink::slotDebugMessage );
-
-    connect( reader, &SysTrayXLinkReader::signalReceivedDataLength, this, &SysTrayXLink::slotReceivedDataLength );
-    connect( reader, &SysTrayXLinkReader::signalReceivedData, this, &SysTrayXLink::slotReceivedData );
+    connect( reader, &SysTrayXLinkReader::signalAddOnShutdown, this, &SysTrayXLink::slotAddOnShutdown );
 
     connect( m_reader_thread, &QThread::started, reader, &SysTrayXLinkReader::startThread, Qt::QueuedConnection );
     m_reader_thread->start();
@@ -209,15 +222,6 @@ void    SysTrayXLink::sendPreferences()
      *  Enacode the preferences into a JSON doc
      */
     EncodePreferences( *m_pref );
-
-
-/*
-    QFile   dump("/home/maxime/dumpJSON_app2addon.txt");
-    dump.open(QIODevice::WriteOnly );
-    dump.write( m_pref_json_doc.toJson( QJsonDocument::Compact ).data(), m_pref_json_doc.toJson( QJsonDocument::Compact ).length() );
-    dump.close();
-*/
-
 
     /*
      *  Send them to the add-on
@@ -290,9 +294,15 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalUnreadMail( unreadMail );
         }
 
+        if( jsonObject.contains( "title" ) && jsonObject[ "title" ].isString() )
+        {
+            QString title = jsonObject[ "title" ].toString();
+            emit signalTitle( title );
+        }
+
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
-            emit signalShutdown();
+            emit signalAddOnShutdown();
         }
 
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
@@ -303,21 +313,8 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
-
-/*
-            QFile   dump("/home/maxime/dumpJSON_addon2app.txt");
-            dump.open(QIODevice::WriteOnly );
-            dump.write( message.data(), message.length() );
-            dump.close();
-*/
-
-
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
         }
-    }
-    else
-    {
-        emit signalLinkReceiveError( jsonError.errorString() );
     }
 }
 
@@ -360,6 +357,26 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "hideOnMinimize" ) && pref[ "hideOnMinimize" ].isString() )
+    {
+        bool hide_minimize = pref[ "hideOnMinimize" ].toString() == "true";
+
+        /*
+         *  Store the new hide on minimize state
+         */
+        m_pref->setHideOnMinimize( hide_minimize );
+    }
+
+    if( pref.contains( "startMinimized" ) && pref[ "startMinimized" ].isString() )
+    {
+        bool start_minimized = pref[ "startMinimized" ].toString() == "true";
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setStartMinimized( start_minimized );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -382,6 +399,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
+    prefObject.insert("hideOnMinimize", QJsonValue::fromVariant( QString( pref.getHideOnMinimize() ? "true" : "false" ) ) );
+    prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -397,29 +416,11 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 
 
 /*
- *  Handle the debug message from the reader thread
+ *  Relay shutdown signal
  */
-void    SysTrayXLink::slotDebugMessage( QString message )
+void    SysTrayXLink::slotAddOnShutdown()
 {
-    emit signalDebugMessage( message );
-}
-
-
-/*
- *  Handle data length signal from reader thread
- */
-void    SysTrayXLink::slotReceivedDataLength( qint32 data_len )
-{
-    emit signalReceivedDataLength( data_len );
-}
-
-
-/*
- *  Handle data signal from read thread
- */
-void    SysTrayXLink::slotReceivedData( QByteArray data )
-{
-    emit signalReceivedData( data );
+    emit signalAddOnShutdown();
 }
 
 
@@ -429,11 +430,6 @@ void    SysTrayXLink::slotReceivedData( QByteArray data )
 void    SysTrayXLink::slotLinkRead( QByteArray message )
 {
     /*
-     *  Debug
-     */
-//    m_dump->write( message );
-
-    /*
      *  Decode the message
      */
     DecodeMessage( message );
@@ -441,18 +437,33 @@ void    SysTrayXLink::slotLinkRead( QByteArray message )
 
 
 /*
- *  write the output
+ *  Handle a debug state change signal
  */
-void    SysTrayXLink::slotLinkWrite( QByteArray message )
+void    SysTrayXLink::slotDebugChange()
 {
-    linkWrite( message );
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
 }
 
 
 /*
- *  Handle a debug state change signal
+ *  Handle a hide on minimize state change signal
  */
-void    SysTrayXLink::slotDebugChange()
+void    SysTrayXLink::slotHideOnMinimizeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a start minimized state change signal
+ */
+void    SysTrayXLink::slotStartMinimizedChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

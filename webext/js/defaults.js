@@ -49,8 +49,21 @@ async function getDefaultIcon() {
     const iconDiv = document.getElementById("icon");
     iconDiv.setAttribute("data-icon-mime", iconMime);
     iconDiv.setAttribute("data-icon", iconBase64);
-
-    console.debug("Default: " + iconMime);
-    console.debug("Default: " + iconBase64);
   }
+}
+
+//
+//  Get window startup state
+//
+async function getStartupState() {
+  function getStartupState(result) {
+    return result.startMinimized == "true" ? "minimized" : "normal";
+  }
+
+  function onStartupStateError() {
+    return "normal";
+  }
+
+  const getState = browser.storage.sync.get("startMinimized");
+  return await getState.then(getStartupState, onStartupStateError);
 }

@@ -9,33 +9,20 @@
     <script src="js/i18n.js"></script>
     <script src="js/options_accounts.js"></script>
 
-    <br />
-    <div id="debugselect">
-      <input type="checkbox" name="debug" value="Debug" /> Display debug
-      window<br />
-    </div>
-    <br />
-
     <div class="tab">
-      <button class="tablinks active" id="Windows">__MSG_tabWindows__</button>
-      <button class="tablinks" id="Icon">__MSG_tabIcon__</button>
-      <button class="tablinks" id="Mail">__MSG_tabMail__</button>
+      <button class="tablinks active" id="Windows">__MSG_tab_windows__</button>
+      <button class="tablinks" id="Icon">__MSG_tab_icon__</button>
+      <button class="tablinks" id="Mail">__MSG_tab_mail__</button>
+      <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
     </div>
 
     <div id="WindowsContent" class="tabcontent" style="display:block">
       <form>
         <h3>Windows</h3>
-        <p>Windows options here</p>
-
-        <p>Please select your option:</p>
-        <input type="radio" name="options_test" value="Option1" /> Option 1<br />
-        <input type="radio" name="options_test" value="Option2" /> Option 2<br />
-        <input type="radio" name="options_test" value="Option3" /> Option 3<br />
-
-        <p>Please check the boxes:</p>
-        <input type="checkbox" name="check1" value="Check1" /> Check 1<br />
-        <input type="checkbox" name="check2" value="Check2" /> Check 2<br />
-        <input type="checkbox" name="check3" value="Check3" /> Check 3<br />
+        <input type="checkbox" name="hideOnMinimize" value="" /> Minimizing
+        window hides to tray<br />
+        <input type="checkbox" name="startMinimized" value="" /> Start
+        application minimized<br />
       </form>
     </div>
 
@@ -93,6 +80,18 @@
         <h3>Included accounts</h3>
 
         <ul id="accountsTree"></ul>
+      </form>
+    </div>
+
+    <div id="DebugContent" class="tabcontent">
+      <form name="debugform">
+        <h3>Debug options</h3>
+        <br />
+        <div id="debugselect">
+          <input type="checkbox" name="debug" value="Debug" /> Display debug
+          window<br />
+        </div>
+        <br />
       </form>
     </div>
 

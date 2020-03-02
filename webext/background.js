@@ -1,5 +1,3 @@
-console.log("Starting background.js");
-
 var SysTrayX = {
   debugAccounts: false
 };
@@ -11,17 +9,18 @@ SysTrayX.Messaging = {
   ],
 
   init: function() {
-    console.log("Enabling Messaging");
-
     //  Get the accounts from the storage
     SysTrayX.Messaging.getAccounts();
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
+
+    //  Send the window title to app
+    SysTrayX.Messaging.sendTitle();
 
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    window.setInterval(SysTrayX.Messaging.pollAccounts, 10000);
+    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
 
     //  Send the app a close command if the window closes
     browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
@@ -34,14 +33,10 @@ SysTrayX.Messaging = {
   //  Handle a storage change
   //
   storageChanged: function(changes, area) {
-    console.debug("Changes in store");
-
     //  Get the new preferences
     SysTrayX.Messaging.getAccounts();
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {
-      console.debug("Sending preference");
-
       //
       //  Send new preferences to the app
       //
@@ -52,36 +47,28 @@ SysTrayX.Messaging = {
         addonprefchanged: false
       });
     }
-
-    /*
-    var changedItems = Object.keys(changes);
-    for (var item of changedItems) {
-      console.log(item + " has changed:");
-      console.log("Old value: ");
-      console.log(changes[item].oldValue);
-      console.log("New value: ");
-      console.log(changes[item].newValue);
-    }
-*/
   },
 
   //
   //  Poll the accounts
   //
   pollAccounts: function() {
-    console.debug("Polling");
-
     //
     //  Get the unread nessages of the selected accounts
     //
     const filtersDiv = document.getElementById("filters");
     const filtersAttr = filtersDiv.getAttribute("data-filters");
-    const filters = JSON.parse(filtersAttr);
 
-    if (filters.length > 0) {
-      SysTrayX.Messaging.unReadMessages(filters).then(
-        SysTrayX.Messaging.unreadCb
-      );
+    if (filtersAttr !== "undefined") {
+      const filters = JSON.parse(filtersAttr);
+
+      if (filters.length > 0) {
+        SysTrayX.Messaging.unReadMessages(filters).then(
+          SysTrayX.Messaging.unreadCb
+        );
+      } else {
+        SysTrayX.Link.postSysTrayXMessage({ unreadMail: 0 });
+      }
     } else {
       SysTrayX.Messaging.unReadMessages([{ unread: true }]).then(
         SysTrayX.Messaging.unreadCb
@@ -118,11 +105,16 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
-  sendPreferences: function() {
-    console.debug("Send preferences");
+  sendTitle: function() {
+    const title = "-" + SysTrayX.Window.startWindow.title.split("-").pop();
+    SysTrayX.Link.postSysTrayXMessage({ title: title });
+  },
 
+  sendPreferences: function() {
     const getter = browser.storage.sync.get([
       "debug",
+      "hideOnMinimize",
+      "startMinimized",
       "iconType",
       "iconMime",
       "icon"
@@ -131,22 +123,19 @@ SysTrayX.Messaging = {
   },
 
   sendPreferencesStorage: function(result) {
-    console.debug("Get preferences from storage");
-
     const debug = result.debug || "false";
+    const hideOnMinimize = result.hideOnMinimize || "true";
+    const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
-
-    console.log(`Debug ${debug}`);
-    console.log(`Type ${iconType}`);
-    console.log(`Mime ${iconMime}`);
-    console.log(icon);
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
+        hideOnMinimize: hideOnMinimize,
+        startMinimized: startMinimized,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon
@@ -162,8 +151,6 @@ SysTrayX.Messaging = {
   //  Get the accounts from the storage
   //
   getAccounts: function() {
-    console.debug("Get accounts");
-
     const getter = browser.storage.sync.get(["accounts", "filters"]);
     getter.then(this.getAccountsStorage, this.onGetAccountsStorageError);
 
@@ -183,15 +170,13 @@ SysTrayX.Messaging = {
   //  make them available in the background HTML
   //
   getAccountsStorage: function(result) {
-    console.debug("Get accounts from storage");
-
-    const accounts = result.accounts || [];
+    const accounts = result.accounts || undefined;
 
     //  Store them in the background HTML
     const accountsDiv = document.getElementById("accounts");
     accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
 
-    const filters = result.filters || [];
+    const filters = result.filters || undefined;
 
     //  Store them in the background HTML
     const filtersDiv = document.getElementById("filters");
@@ -225,11 +210,7 @@ SysTrayX.Link = {
   },
 
   receiveSysTrayXMessage: function(response) {
-    console.log(`Received: ${response}`);
-
     if (response["window"]) {
-      console.log("Window received: " + response["window"]);
-
       if (response["window"] === "minimized") {
         browser.windows.update(SysTrayX.Window.startWindow.id, {
           state: "minimized"
@@ -244,10 +225,12 @@ SysTrayX.Link = {
       }
     }
 
+    if (response["shutdown"]) {
+      console.log("Shutdown received: " + response["shutdown"]);
+    }
+
     if (response["preferences"]) {
       //  Store the preferences from the app
-      console.log("Preferences received");
-
       const iconMime = response["preferences"].iconMime;
       if (iconMime) {
         browser.storage.sync.set({
@@ -269,6 +252,20 @@ SysTrayX.Link = {
         });
       }
 
+      const hideOnMinimize = response["preferences"].hideOnMinimize;
+      if (hideOnMinimize) {
+        browser.storage.sync.set({
+          hideOnMinimize: hideOnMinimize
+        });
+      }
+
+      const startMinimized = response["preferences"].startMinimized;
+      if (startMinimized) {
+        browser.storage.sync.set({
+          startMinimized: startMinimized
+        });
+      }
+
       const debug = response["preferences"].debug;
       if (debug) {
         browser.storage.sync.set({
@@ -282,59 +279,41 @@ SysTrayX.Link = {
 SysTrayX.Window = {
   startWindow: undefined,
 
-  closed: function() {
-    // Window closed
-    console.debug("Shutting down");
-
+  closed: function(windowId) {
+    //  Window closed
     //  Send it to the app
-    SysTrayX.Link.postSysTrayXMessage({
-      shutdown: ""
-    });
+    SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
   },
 
   focusChanged: function(windowId) {
-    console.debug("Win focus changed");
-
     browser.windows.getCurrent().then(win => {
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
     });
-
-    /*
-    if (windowId === -1) {
-      // Assume minimized
-      SysTrayX.Link.postSysTrayXMessage({
-        window: "minimized"
-      });
-    } else {
-      browser.windows.get(windowId, function(win) {
-        SysTrayX.Link.postSysTrayXMessage({
-          window: win.state
-        });
-      });
-    }
-*/
   }
 };
 
 async function start() {
-  // Init defaults before everything
+  //  Get the prefered start state
+  const state = await getStartupState();
+
+  if (state == "minimized") {
+    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+      state: "minimized"
+    });
+  }
+
+  //  Init defaults before everything
   await getDefaultIcon();
 
   SysTrayX.Window.startWindow = await browser.windows
     .getCurrent()
     .then(currentWindow => currentWindow);
 
-  console.debug("Window focus: " + SysTrayX.Window.startWindow.focused);
-  console.debug("Window name: " + SysTrayX.Window.startWindow.title);
-  console.debug("Window name: " + SysTrayX.Window.startWindow.state);
-
-  //  browser.windows.update(currentWindow.id, { state: "minimized" });
-  //  browser.windows.update(currentWindow.id, { state: "normal", focused: true });
-
-  // ??  browser.windows.update(currentWindow.id, { state: "docked" });
-
   //  Setup the link first
   SysTrayX.Link.init();
+
+  //  Send current state
+  SysTrayX.Link.postSysTrayXMessage({ window: state });
 
   //  Main start
   SysTrayX.Messaging.init();
@@ -344,5 +323,3 @@ console.log("Starting SysTray-X");
 
 //  Start the add-on
 start();
-
-console.log("End SysTray-X");

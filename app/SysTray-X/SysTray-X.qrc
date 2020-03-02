@@ -2,5 +2,12 @@
     <qresource prefix="/">
         <file>files/icons/SysTray-X.png</file>
         <file>files/icons/blank-icon.png</file>
+        <file>files/icons/Thunderbird.png</file>
+        <file>files/icons/document-new.png</file>
+        <file>files/icons/gtk-apply.png</file>
+        <file>files/icons/gtk-edit.png</file>
+        <file>files/icons/gtk-preferences.png</file>
+        <file>files/icons/window-close.png</file>
+        <file>files/icons/window-restore.png</file>
     </qresource>
 </RCC>

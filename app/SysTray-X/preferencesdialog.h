@@ -46,14 +46,28 @@ class PreferencesDialog : public QDialog
          *
          *  @param state    The state.
          */
-        void setDebug( bool state );
+        void    setDebug( bool state );
+
+        /**
+         * @brief setHideOnMinimize. Set the hide on minimize state.
+         *
+         *  @param state    The state.
+         */
+        void    setHideOnMinimize( bool state );
+
+        /**
+         * @brief setStartMinimized. Set the start minimized state.
+         *
+         *  @param state    The state.
+         */
+        void    setStartMinimized( bool state );
 
         /**
          * @brief setIconType. Set the icon type.
          *
          *  @param icon_type    The icon type.
          */
-        void setIconType( Preferences::IconType icon_type );
+        void    setIconType( Preferences::IconType icon_type );
 
         /**
          * @brief setIcon. Set the icon.
@@ -61,21 +75,14 @@ class PreferencesDialog : public QDialog
          *  @param icon     The icon mime.
          *  @param icon     The icon data.
          */
-        void setIcon( const QString& icon_mime, const QByteArray& icon );
+        void    setIcon( const QString& icon_mime, const QByteArray& icon );
 
         /**
          * @brief setIcon. Set the icon.
          */
-        void setIcon();
+        void    setIcon();
 
     signals:
-
-        /**
-         * @brief signalDebugMessage. Signal a debug message.
-         *
-         * @param message   The message.
-         */
-        void signalDebugMessage( QString message );
 
         /**
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
@@ -88,6 +95,16 @@ class PreferencesDialog : public QDialog
          * @brief slotDebugChange. Slot for handling debug change signals.
          */
         void slotDebugChange();
+
+        /**
+         * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.
+         */
+        void slotHideOnMinimizeChange();
+
+        /**
+         * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
+         */
+        void slotStartMinimizedChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.

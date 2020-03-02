@@ -31,7 +31,10 @@ CONFIG += c++11
 unix:!macx: {
     QMAKE_CFLAGS += $(RPM_OPT_FLAGS)
     QMAKE_CXXFLAGS += $(RPM_OPT_FLAGS)
-#    QMAKE_LFLAGS += -lX11 -static-libgcc -static-libstdc++
+    QMAKE_LFLAGS += $(RPM_OPT_FLAGS)
+#    QMAKE_LFLAGS += -static-libgcc -static-libstdc++
+
+    LIBS += -lX11
 }
 win32: {
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
@@ -40,29 +43,8 @@ win32: {
     #	Windows host (not used in cross compiling with mingw on Linux)
     #
     contains(QMAKE_HOST.os, Windows): {
-        contains(QMAKE_HOST.version, 192): {
-            #
-            #   Windows 10 Universal CRT
-            #
-            UCRT_INCLUDE = "C:/Program Files (x86)/Windows Kits/10/include/10.0.10240.0/ucrt"
-            UCRT_LIBS = "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt"
-
-            INCLUDEPATH += $$UCRT_INCLUDE
-
-            contains(QMAKE_TARGET.arch, x86_64) {
-                CONFIG(debug, debug|release) {
-                    LIBS += $$UCRT_LIBS"/x64/ucrtd.lib"
-                } else {
-                    LIBS += $$UCRT_LIBS"/x64/ucrt.lib"
-                }
-            } else {
-                CONFIG(debug, debug|release) {
-                    LIBS += $$UCRT_LIBS"/x86/ucrtd.lib"
-                } else {
-                    LIBS += $$UCRT_LIBS"/x86/ucrt.lib"
-                }
-            }
-        }
+        LIBS += User32.lib
+        LIBS += Comctl32.lib
     }
 }
 unix:macx: {
@@ -136,7 +118,7 @@ win32: {
     } else {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)').replace('\\','\\\\')")
 
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)"
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)" &
         QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
     }
 
@@ -158,7 +140,8 @@ SOURCES += \
         systrayx.cpp \
         debugwidget.cpp \
         preferencesdialog.cpp \
-        preferences.cpp
+        preferences.cpp \
+        windowctrl.cpp
 unix: {
 SOURCES += \
         windowctrl-unix.cpp
