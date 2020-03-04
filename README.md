@@ -27,7 +27,7 @@ Requirements:
     ```dnf install qt5-qtbase-devel```
   - Debian/Ubuntu:
 
-    ```apt install qtbase5-dev```
+    ```apt install zip git g++ make qt5-default qtbase5-dev```
 
 Build:
 ```bash
