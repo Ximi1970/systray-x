@@ -1,7 +1,24 @@
-QMAKE=qmake-qt5
+QMAKE = qmake-qt5
+ifeq (, $(shell which qmake-qt5 2>/dev/null))
+ ifeq (, $(shell which qmake 2>/dev/null))
+     $(error "No qmake in $(PATH)")
+ endif
+ QMAKE = qmake
+endif
 
 .PHONY:	clean \
-	systray-x-xpi
+	systray-x-xpi \
+	systray-x-app
+
+DATE := `date --utc +'%a %b %_d %H:%M:%S UTC %Y'`
+
+BUILD_NUMBER := $(shell git rev-list --count HEAD)
+GIT_HASH := $(shell git rev-parse HEAD)
+GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+
+GIT_VERSION_LONG := $(shell git describe --long)
+GIT_VERSION := $(shell git describe --long | sed "s/-.*//")
+
 
 all: systray-x-xpi systray-x-app
 
