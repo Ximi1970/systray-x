@@ -21,12 +21,14 @@ Version:        0
 Release:        0
 Summary:        A system tray extension for Thunderbird 68+
 License:        MPL-2.0
+Group:          Productivity/Networking/Email/Clients
 URL:            https://github.com/Ximi1970/systray-x
 Source0:        %{name}-%{version}.tar.xz
 BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(x11)
 Requires:       MozillaThunderbird >= 68
 
 %description
