@@ -121,6 +121,14 @@ Clone the repository using TortoiseGit:
 ...
 
 
+### Remarks
+
+Branches:  
+
+master      : Should be stable and working for all systems  
+develop     : Working but maybe not for all systems  
+feature-xxx : Experimental  
+
 ## Contributers
 
 Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
