@@ -15,14 +15,6 @@ The add-on and system tray application can do:
 ## Binaries
 
 ### openSuSE
-
-Add the repository with YaST:
-
-```
-Name: SysTray-X
-URL: https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_<version>
-```
-
 #### Leap 15.1
 
 ```bash
