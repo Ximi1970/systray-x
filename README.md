@@ -18,10 +18,10 @@ The add-on and system tray application can do:
 
 Add the repository with YaST:
 
-'''
+```
 Name: SysTray-X
 URL: https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_XXX
-'''
+```
 
 #### Leap 15.1
 
