@@ -12,6 +12,82 @@ The add-on and system tray application can do:
 - to be implemented: start a new mail
 - to be implemented: open the last used account
 
+## Binaries
+
+### openSuSE
+
+Add the repository with YaST:
+
+'''
+Name: SysTray-X
+URL: https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_XXX
+'''
+
+#### Leap 15.1
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
+```
+
+#### Leap 15.2
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
+```
+
+#### Tumbleweed
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
+```
+
+#### SLE 15
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
+```
+
+
+### xUbuntu
+
+#### 19.10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
+sudo apt-key add Release.key
+```
+Add with Muon -> Settings -> Configures Software Sources
+In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
+
+```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./```
+
+Or manually:
+
+```bash
+sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo apt update
+```
+
+#### 18.04 LTS
+
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
+sudo apt-key add Release.key
+```
+Add with Muon -> Settings -> Configures Software Sources
+In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
+
+```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./```
+
+Or manually:
+
+```bash
+sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo apt update
+```
+
+
 ## Building
 
 ### Linux
