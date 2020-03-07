@@ -56,7 +56,7 @@ In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
 Or manually:
 
 ```bash
-sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo bash -c "echo 'deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
 ```
 
@@ -75,7 +75,7 @@ In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
 Or manually:
 
 ```bash
-sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
 ```
 
