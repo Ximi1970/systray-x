@@ -50,15 +50,6 @@ sudo zypper in systray-x
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
 sudo apt-key add Release.key
-```
-Add with Muon -> Settings -> Configures Software Sources
-In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
-
-```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./```
-
-Or manually:
-
-```bash
 sudo bash -c "echo 'deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
 sudo apt install systray-x
@@ -66,19 +57,9 @@ sudo apt install systray-x
 
 #### 18.04 LTS
 
-
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
-```
-Add with Muon -> Settings -> Configures Software Sources
-In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
-
-```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./```
-
-Or manually:
-
-```bash
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
 sudo apt install systray-x
