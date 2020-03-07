@@ -19,26 +19,29 @@ The add-on and system tray application can do:
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### Leap 15.2
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### Tumbleweed
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### SLE 15
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
+sudo zypper in systray-x
 ```
-
 
 ### xUbuntu
 
