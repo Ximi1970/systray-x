@@ -58,6 +58,7 @@ Or manually:
 ```bash
 sudo bash -c "echo 'deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
+sudo apt install systray-x
 ```
 
 #### 18.04 LTS
@@ -77,6 +78,7 @@ Or manually:
 ```bash
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
+sudo apt install systray-x
 ```
 
 
