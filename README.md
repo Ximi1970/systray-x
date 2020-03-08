@@ -19,26 +19,29 @@ The add-on and system tray application can do:
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### Leap 15.2
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### Tumbleweed
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
+sudo zypper in systray-x
 ```
 
 #### SLE 15
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
+sudo zypper in systray-x
 ```
-
 
 ### xUbuntu
 
@@ -47,36 +50,19 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
 sudo apt-key add Release.key
-```
-Add with Muon -> Settings -> Configures Software Sources
-In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
-
-```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./```
-
-Or manually:
-
-```bash
-sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo bash -c "echo 'deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
+sudo apt install systray-x
 ```
 
 #### 18.04 LTS
 
-
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
-```
-Add with Muon -> Settings -> Configures Software Sources
-In the Software Source dialog -> Tab "Other Software" -> "Add..." and fill in:
-
-```deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./```
-
-Or manually:
-
-```bash
-sudo echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list```
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list'```
 sudo apt update
+sudo apt install systray-x
 ```
 
 
@@ -120,6 +106,14 @@ Clone the repository using TortoiseGit:
 
 ...
 
+
+### Remarks
+
+Branches:  
+
+master      : Should be stable and working for all systems  
+develop     : Working but maybe not for all systems  
+feature-xxx : Experimental  
 
 ## Contributers
 
