@@ -3,6 +3,7 @@
     <param name="url">https://github.com/Ximi1970/systray-x.git</param>
     <param name="scm">git</param>
     <param name="revision">0.2.0</param>
+    <param name="versionformat">0.2.0</param>    
     <param name="extract">dist/rpm/systray-x.changes</param>
     <param name="extract">dist/rpm/systray-x.spec</param>
     <param name="extract">dist/deb/debian.changelog</param>
