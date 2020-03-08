@@ -1,5 +1,7 @@
 var SysTrayX = {
-  debugAccounts: false
+  debugAccounts: false,
+
+  platformInfo: undefined
 };
 
 SysTrayX.Messaging = {
@@ -301,6 +303,14 @@ async function start() {
       state: "minimized"
     });
   }
+
+  //  Set platform
+  SysTrayX.platformInfo = await browser.runtime
+    .getPlatformInfo()
+    .then(info => info);
+  console.log("OS: " + SysTrayX.platformInfo.os);
+  console.log("Arch: " + SysTrayX.platformInfo.arch);
+  console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
 
   //  Init defaults before everything
   await getDefaultIcon();
