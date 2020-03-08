@@ -29,10 +29,10 @@ clean:
 	rm -rf app/build ;\
 
 systray-x-xpi:
-	@echo "Creating systray-x.xpi" ;\
-	rm -f systray-x.xpi ;\
+	@echo "Creating systray-x@Ximi1970.xpi" ;\
+	rm -f systray-x@Ximi1970.xpi ;\
 	cd webext ;\
-	zip ../systray-x.xpi -qr * ;\
+	zip ../systray-x@Ximi1970.xpi -qr * ;\
 	cd ..
 
 systray-x-app:
