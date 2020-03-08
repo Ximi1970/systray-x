@@ -10,7 +10,10 @@ The add-on and system tray application can do:
 - minimizing hides to tray
 - minimize on startup
 
-## Binaries
+## Binaries (System)
+
+These packages will install the Thunderbird Add-on and companion app system wide.  
+Root credentials are required.
 
 ### openSuSE
 #### Leap 15.1
@@ -63,6 +66,16 @@ sudo apt update
 sudo apt install systray-x
 ```
 
+## Binaries (User)
+
+User installable package.  
+No root credentials required.  
+
+Download the installer here:
+
+[Companion installer](https://github.com/Ximi1970/systray-x/releases)
+
+And install the add-on using the Thunderbird Add-on / Extensions store.
 
 ## Building
 
