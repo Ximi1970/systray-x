@@ -198,6 +198,11 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
  */
 void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
 {
+    if( !window )
+    {
+        return;
+    }
+
     ShowWindow( (HWND)window, SW_MINIMIZE );
 
     if( hide )
@@ -212,6 +217,11 @@ void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
+    if( !window )
+    {
+        return;
+    }
+
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
 }
@@ -222,6 +232,11 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
  */
 void    WindowCtrlWin::hideWindow( quint64 window, bool state )
 {
+    if( !window )
+    {
+        return;
+    }
+
     if( state )
     {
         hideWindow( (HWND)window );
@@ -249,6 +264,11 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
  */
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
+    if( !window )
+    {
+        return;
+    }
+
     SendMessageA(  (HWND)window, WM_CLOSE, 0, 0 );
 }
 

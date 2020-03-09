@@ -237,6 +237,11 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+    if( !window )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     if( hide )
@@ -254,6 +259,11 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
+    if( !window )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     hideWindow( win, false );
@@ -278,6 +288,11 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 {
+    if( !window )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     char prop_name[] = "_NET_WM_STATE";
@@ -360,6 +375,11 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
  */
 void    WindowCtrlUnix::deleteWindow( quint64 window )
 {
+    if( !window )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     Atom prop = XInternAtom( m_display, "WM_PROTOCOLS", True );
