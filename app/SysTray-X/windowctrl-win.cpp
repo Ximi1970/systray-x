@@ -13,6 +13,7 @@
  * Qt includes
  */
 #include <QCoreApplication>
+#include <QString>
 
 /*
  *  Statics
@@ -66,11 +67,20 @@ qint64  WindowCtrlWin::getPpid()
 
 
 /*
+ *  Is the pid from thunderbird
+ */
+bool    WindowCtrlWin::isThunderbird( qint64 pid )
+{
+    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
+}
+
+
+/*
  *  Get the process name
  */
-QString WindowCtrl::getProcessName( qint64 pid )
+QString WindowCtrlWin::getProcessName( qint64 pid )
 {
-    HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, getPpid() );
+    HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid );
     char name[ 256 ];
     GetModuleBaseNameA( proc, NULL, name, 256);
 
@@ -212,7 +222,7 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
  */
 void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
 {
-    if( !window )
+    if( !isThunderbird( getPpid() ) )
     {
         return;
     }
@@ -231,7 +241,7 @@ void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
-    if( !window )
+    if( !isThunderbird( getPpid() ) )
     {
         return;
     }
@@ -246,7 +256,7 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
  */
 void    WindowCtrlWin::hideWindow( quint64 window, bool state )
 {
-    if( !window )
+    if( !isThunderbird( getPpid() ) )
     {
         return;
     }
@@ -278,7 +288,7 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
  */
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
-    if( !window )
+    if( !isThunderbird( getPpid() ) )
     {
         return;
     }
