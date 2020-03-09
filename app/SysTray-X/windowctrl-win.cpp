@@ -5,7 +5,8 @@
 /*
  *  System includes
  */
-#include <tlhelp32.h>
+#include <TlHelp32.h>
+#include <Psapi.h>
 #include <CommCtrl.h>
 
 /*
@@ -61,6 +62,19 @@ qint64  WindowCtrlWin::getPpid()
     CloseHandle( h );
 
     return ppid;
+}
+
+
+/*
+ *  Get the process name
+ */
+QString WindowCtrl::getProcessName( qint64 pid )
+{
+    HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, getPpid() );
+    char name[ 256 ];
+    GetModuleBaseNameA( proc, NULL, name, 256);
+
+    return QString( name );
 }
 
 
