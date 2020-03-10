@@ -9,5 +9,6 @@
         <file>files/icons/gtk-preferences.png</file>
         <file>files/icons/window-close.png</file>
         <file>files/icons/window-restore.png</file>
+        <file>files/icons/mail-unread.png</file>
     </qresource>
 </RCC>
