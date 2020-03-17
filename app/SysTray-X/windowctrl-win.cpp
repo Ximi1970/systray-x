@@ -9,6 +9,11 @@
 #include <CommCtrl.h>
 
 /*
+ * Standard library includes
+ */
+#include <array>
+
+/*
  * Qt includes
  */
 #include <QCoreApplication>
@@ -87,9 +92,9 @@ bool    WindowCtrlWin::findWindow( const QString& title )
  */
 BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 {
-    char buffer[ 128 ];
-    int written = GetWindowTextA( hwnd, buffer, 128 );
-    if( written && strstr( buffer, (char*)lParam ) != nullptr )
+    std::array<char, 128> buffer;
+    int written = GetWindowTextA( hwnd, buffer.data(), int(buffer.size()) );
+    if( written && strstr( buffer.data(), (char*)lParam ) != nullptr )
     {
         m_tb_windows.append( (quint64)hwnd );
     }
