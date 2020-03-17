@@ -108,10 +108,10 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
  */
 bool    WindowCtrlWin::findWindow( qint64 pid )
 {
-    HandleData data;
+    EnumWindowsPidProcData data;
     data.pid = pid;
     data.hwnd = nullptr;
-    EnumWindows( &enumWindowsPidProc, (LPARAM)&data );
+    EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
 
     if( data.hwnd == nullptr )
     {
@@ -132,7 +132,7 @@ bool    WindowCtrlWin::findWindow( qint64 pid )
  */
 BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
 {
-    HandleData& data = *(HandleData*)lParam;
+    auto& data = *reinterpret_cast<EnumWindowsPidProcData*>(lParam);
     unsigned long pid = 0;
 
     GetWindowThreadProcessId( hwnd, &pid );

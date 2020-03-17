@@ -23,7 +23,7 @@ class WindowCtrlWin : public QObject
 
     private:
 
-        struct HandleData
+        struct EnumWindowsPidProcData
         {
             unsigned long   pid;
             HWND            hwnd;
