@@ -10,9 +10,19 @@
 #include <Windows.h>
 
 /*
+ *  Standard library includes
+ */
+#include <string>
+
+/*
  *  Qt includes
  */
 #include <QObject>
+
+/*
+ *  Forward declarations
+ */
+class WindowCtrlWin;
 
 /**
  * @brief The WindowCtrlWin class
@@ -27,6 +37,12 @@ class WindowCtrlWin : public QObject
         {
             unsigned long   pid;
             HWND            hwnd;
+        };
+
+        struct EnumWindowsTitleProcData
+        {
+            WindowCtrlWin&      window_ctrl;
+            const std::string   title;
         };
 
     public:

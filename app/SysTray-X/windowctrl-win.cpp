@@ -76,7 +76,9 @@ bool    WindowCtrlWin::findWindow( const QString& title )
 {
     m_tb_windows = QList< quint64 >();
 
-    EnumWindows( &enumWindowsTitleProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
+    EnumWindowsTitleProcData data{ *this, title.toStdString() };
+
+    EnumWindows( &enumWindowsTitleProc, reinterpret_cast<LPARAM>(&data) );
 
     if( m_tb_windows.length() == 0 )
     {
@@ -92,11 +94,12 @@ bool    WindowCtrlWin::findWindow( const QString& title )
  */
 BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 {
+    auto& data = *reinterpret_cast<EnumWindowsTitleProcData*>(lParam);
     std::array<char, 128> buffer;
     int written = GetWindowTextA( hwnd, buffer.data(), int(buffer.size()) );
-    if( written && strstr( buffer.data(), (char*)lParam ) != nullptr )
+    if( written && strstr( buffer.data(), data.title.c_str() ) != nullptr )
     {
-        m_tb_windows.append( (quint64)hwnd );
+        data.window_ctrl.m_tb_windows.append( (quint64)hwnd );
     }
 
     return TRUE;
