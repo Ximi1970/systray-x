@@ -89,7 +89,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 {
     char buffer[ 128 ];
     int written = GetWindowTextA( hwnd, buffer, 128 );
-    if( written && strstr( buffer, (char*)lParam ) != NULL )
+    if( written && strstr( buffer, (char*)lParam ) != nullptr )
     {
         m_tb_windows.append( (quint64)hwnd );
     }
@@ -105,10 +105,10 @@ bool    WindowCtrlWin::findWindow( qint64 pid )
 {
     HandleData data;
     data.pid = pid;
-    data.hwnd = 0;
+    data.hwnd = nullptr;
     EnumWindows( &enumWindowsPidProc, (LPARAM)&data );
 
-    if( data.hwnd == 0 )
+    if( data.hwnd == nullptr )
     {
         return false;
     }
@@ -148,7 +148,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
  */
 BOOL    WindowCtrlWin::isMainWindow( HWND hwnd )
 {
-    return GetWindow( hwnd, GW_OWNER ) == (HWND)0 && IsWindowVisible( hwnd );
+    return GetWindow( hwnd, GW_OWNER ) == nullptr && IsWindowVisible( hwnd );
 }
 
 
