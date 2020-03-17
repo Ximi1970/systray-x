@@ -18,12 +18,6 @@
  */
 #include <QCoreApplication>
 
-/*
- *  Statics
- */
-quint64 WindowCtrlWin::m_tb_window;
-QList< quint64 >  WindowCtrlWin::m_tb_windows;
-
 
 /*
  *  Constructor

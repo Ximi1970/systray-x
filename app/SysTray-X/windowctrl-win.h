@@ -206,12 +206,12 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_tb_window. The Thunderbird window.
          */
-        static quint64  m_tb_window;
+        quint64  m_tb_window;
 
         /**
          * @brief m_tb_window. The Thunderbird windows.
          */
-        static QList< quint64 >  m_tb_windows;
+        QList< quint64 >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLWIN_H
