@@ -159,7 +159,7 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 {
     findWindow( title );
 
-    foreach( quint64 win_id, getWinIds() )
+    for( quint64 win_id: getWinIds() )
     {
         emit signalConsole( QString( "Found: XID %1" ).arg( win_id ) );
     }
