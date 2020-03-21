@@ -42,7 +42,7 @@ win32: {
     #
     #	Windows host (not used in cross compiling with mingw on Linux)
     #
-    contains(QMAKE_HOST.os, Windows): {
+    !mingw:contains(QMAKE_HOST.os, Windows): {
         LIBS += User32.lib
         LIBS += Comctl32.lib
     }
@@ -113,18 +113,18 @@ win32: {
     CONFIG(debug, debug|release) {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)').replace('\\','\\\\')")
 
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)" &
-        QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe \"$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)\" &
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\'\" &
     } else {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)').replace('\\','\\\\')")
 
-        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe "$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)" &
-        QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template) ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\" &
+        QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe \"$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)\" &
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\'\" &
     }
 
     JSON_JSON_PATH = $$system(powershell -Command "('$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)').replace('\\','\\\\')")
 
-    QMAKE_POST_LINK += powershell -Command \"(Get-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg.template) ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content $$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg)\" &
+    QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg.template)\' ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg)\'\" &
 }
 
 #
