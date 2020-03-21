@@ -42,7 +42,7 @@ win32: {
     #
     #	Windows host (not used in cross compiling with mingw on Linux)
     #
-    contains(QMAKE_HOST.os, Windows): {
+    !mingw:contains(QMAKE_HOST.os, Windows): {
         LIBS += User32.lib
         LIBS += Comctl32.lib
     }
