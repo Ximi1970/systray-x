@@ -38,6 +38,10 @@ clean:
 	rm -f *.xpi ;\
 	rm -f SysTray-X ;\
 	rm -rf app/build ;\
+	rm -rf app/build32 ;\
+	rm -rf app/build64 ;\
+	rm -rf app/build-* ;\
+	rm -rf app/dist* ;\
 
 systray-x-xpi:
 	@echo "Creating systray-x@Ximi1970.xpi" ;\
