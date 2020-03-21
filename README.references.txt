@@ -1,5 +1,20 @@
 #<script>
 
+
+Installers
+
+Bash:
+
+https://www.matteomattei.com/create-self-contained-installer-in-bash-that-extracts-archives-and-perform-actitions/
+
+Windows:
+
+The good old Nullsoft:
+https://sourceforge.net/projects/nsis/
+
+
+
+
 Windows
 =========================================
 
