@@ -55,6 +55,8 @@ _systx_dir=%{buildroot}%{_libdir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-4
 install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
 mkdir -pv $_systx_dir
 unzip -d $_systx_dir systray-x@Ximi1970.xpi
+install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
+
 
 %files
 %license LICENSE 
