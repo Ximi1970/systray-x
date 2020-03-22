@@ -1,5 +1,7 @@
 var SysTrayX = {
-  debugAccounts: false
+  debugAccounts: false,
+
+  platformInfo: undefined
 };
 
 SysTrayX.Messaging = {
@@ -21,9 +23,6 @@ SysTrayX.Messaging = {
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
     window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
-
-    //  Send the app a close command if the window closes
-    browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
@@ -279,12 +278,6 @@ SysTrayX.Link = {
 SysTrayX.Window = {
   startWindow: undefined,
 
-  closed: function(windowId) {
-    //  Window closed
-    //  Send it to the app
-    SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
-  },
-
   focusChanged: function(windowId) {
     browser.windows.getCurrent().then(win => {
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
@@ -301,6 +294,14 @@ async function start() {
       state: "minimized"
     });
   }
+
+  //  Set platform
+  SysTrayX.platformInfo = await browser.runtime
+    .getPlatformInfo()
+    .then(info => info);
+  console.log("OS: " + SysTrayX.platformInfo.os);
+  console.log("Arch: " + SysTrayX.platformInfo.arch);
+  console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
 
   //  Init defaults before everything
   await getDefaultIcon();
