@@ -24,9 +24,6 @@ SysTrayX.Messaging = {
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
     window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
 
-    //  Send the app a close command if the window closes
-    browser.windows.onRemoved.addListener(SysTrayX.Window.closed);
-
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
@@ -280,12 +277,6 @@ SysTrayX.Link = {
 
 SysTrayX.Window = {
   startWindow: undefined,
-
-  closed: function(windowId) {
-    //  Window closed
-    //  Send it to the app
-    SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
-  },
 
   focusChanged: function(windowId) {
     browser.windows.getCurrent().then(win => {
