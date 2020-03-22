@@ -53,7 +53,7 @@ install: build
 	cp -f SysTray_X.json /usr/src/packages/BUILD/debian/systray-x/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json
 
 	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions
-	cp -f systray-x.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 	# --- end custom part for installing
 
 # Build architecture-independent files here.
