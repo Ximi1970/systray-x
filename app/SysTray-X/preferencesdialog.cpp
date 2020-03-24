@@ -46,6 +46,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      */
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
     connect( m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::slotAccept );
+    connect( m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::slotReject );
 }
 
 
@@ -148,9 +149,23 @@ void    PreferencesDialog::slotAccept()
     m_pref->setAppPrefChanged( false );
 
     /*
-     *  Tell the base
+     *  Close it
      */
-    QDialog::accept();
+//    QDialog::accept();
+    hide();
+}
+
+
+/*
+ *  Handle the accept signal
+ */
+void    PreferencesDialog::slotReject()
+{
+    /*
+     *  Close it
+     */
+//    QDialog::reject();
+    hide();
 }
 
 

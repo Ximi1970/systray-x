@@ -62,6 +62,24 @@ class WindowCtrlWin : public QObject
         qint64  getPpid();
 
         /**
+         * @brief isThunderbird. Is this a thunderbird pid.
+         *
+         *  @param pid  The process Id to check.
+         *
+         *  @return     True if this is thunderbird.
+         */
+        bool    isThunderbird( qint64 pid );
+
+        /**
+         * @brief getProcessName. Get the name of the proces by pid.
+         *
+         *  @param pid  The process Id.
+         *
+         *  @return     The process name.
+         */
+        QString getProcessName( qint64 pid );
+
+        /**
          * @brief findWindow. Find window by title.
          *
          *  @param title    The (part)title to find.

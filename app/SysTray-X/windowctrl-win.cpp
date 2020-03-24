@@ -5,7 +5,8 @@
 /*
  *  System includes
  */
-#include <tlhelp32.h>
+#include <TlHelp32.h>
+#include <Psapi.h>
 #include <CommCtrl.h>
 
 /*
@@ -17,6 +18,7 @@
  * Qt includes
  */
 #include <QCoreApplication>
+#include <QString>
 
 
 /*
@@ -60,6 +62,28 @@ qint64  WindowCtrlWin::getPpid()
     CloseHandle( h );
 
     return ppid;
+}
+
+
+/*
+ *  Is the pid from thunderbird
+ */
+bool    WindowCtrlWin::isThunderbird( qint64 pid )
+{
+    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
+}
+
+
+/*
+ *  Get the process name
+ */
+QString WindowCtrlWin::getProcessName( qint64 pid )
+{
+    HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid );
+    char name[ 256 ];
+    GetModuleBaseNameA( proc, NULL, name, 256);
+
+    return QString( name );
 }
 
 
@@ -200,6 +224,11 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
  */
 void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     ShowWindow( (HWND)window, SW_MINIMIZE );
 
     if( hide )
@@ -214,6 +243,11 @@ void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
 }
@@ -224,6 +258,11 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
  */
 void    WindowCtrlWin::hideWindow( quint64 window, bool state )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     if( state )
     {
         hideWindow( (HWND)window );
@@ -251,6 +290,11 @@ void    WindowCtrlWin::hideWindow( HWND hwnd )
  */
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     SendMessageA(  (HWND)window, WM_CLOSE, 0, 0 );
 }
 

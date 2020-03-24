@@ -41,25 +41,26 @@ The add-on and system tray application can do:
   * custom new mail icon
   * display number of unread mails
   * show / hide Thunderbird (minimize)
-  * to be implemented: remove from task bar when minimized
-  * to be implemented: start a new mail
-  * to be implemented: open the last used account
+  * minimizing hides to tray
+  * minimize on startup
 
 %prep
 %autosetup -p1
 
 %build
 make %{?_smp_mflags}
+sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
 %install
 _systx_dir=%{buildroot}%{_libdir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
 install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
 mkdir -pv $_systx_dir
-unzip -d $_systx_dir systray-x.xpi
+unzip -d $_systx_dir systray-x@Ximi1970.xpi
+install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
 
 %files
-%license LICENSE
-%doc README.md
+%license LICENSE 
+%doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
 %{_libdir}/mozilla
 

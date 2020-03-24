@@ -9,8 +9,73 @@ The add-on and system tray application can do:
 - show / hide Thunderbird (minimize)
 - minimizing hides to tray
 - minimize on startup
-- to be implemented: start a new mail
-- to be implemented: open the last used account
+
+## Binaries (System)
+
+These packages will install the Thunderbird Add-on and companion app system wide.  
+Root credentials are required.
+
+### openSuSE
+#### Leap 15.1
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
+sudo zypper in systray-x
+```
+
+#### Leap 15.2
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
+sudo zypper in systray-x
+```
+
+#### Tumbleweed
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
+sudo zypper in systray-x
+```
+
+#### SLE 15
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
+sudo zypper in systray-x
+```
+
+### xUbuntu
+
+#### 19.10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
+sudo apt-key add Release.key
+sudo bash -c "echo 'deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/source.list.d/systray-x.list'```
+sudo apt update
+sudo apt install systray-x
+```
+
+#### 18.04 LTS
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/source.list.d/systray-x.list'```
+sudo apt update
+sudo apt install systray-x
+```
+
+## Binaries (User)
+
+User installable package.  
+No root credentials required.  
+
+Download the installer here:
+
+[Companion installer](https://github.com/Ximi1970/systray-x/releases)
+
+And install the add-on using the Thunderbird Add-on / Extensions store.
 
 ## Building
 
@@ -52,6 +117,14 @@ Clone the repository using TortoiseGit:
 
 ...
 
+
+### Remarks
+
+Branches:  
+
+master      : Should be stable and working for all systems  
+develop     : Working but maybe not for all systems  
+feature-xxx : Experimental  
 
 ## Contributers
 

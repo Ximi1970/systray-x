@@ -41,6 +41,27 @@ qint64  WindowCtrlUnix::getPpid()
 
 
 /*
+ *  Is the pid from thunderbird
+ */
+bool    WindowCtrlUnix::isThunderbird( qint64 pid )
+{
+    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
+}
+
+
+/*
+ *  Get the process name
+ */
+QString WindowCtrlUnix::getProcessName( qint64 pid )
+{
+    QString process_name = QString( "/proc/%1/exe" ).arg( pid );
+    QFileInfo process( process_name );
+
+    return process.canonicalFilePath();
+}
+
+
+/*
  *  Find window(s) by title
  */
 bool    WindowCtrlUnix::findWindow( const QString& title )
@@ -237,6 +258,11 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     if( hide )
@@ -254,6 +280,11 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     hideWindow( win, false );
@@ -278,6 +309,11 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     char prop_name[] = "_NET_WM_STATE";
@@ -360,6 +396,11 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
  */
 void    WindowCtrlUnix::deleteWindow( quint64 window )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     Window win = static_cast<Window>( window );
 
     Atom prop = XInternAtom( m_display, "WM_PROTOCOLS", True );

@@ -87,46 +87,51 @@ class PreferencesDialog : public QDialog
         /**
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
          */
-        void signalUpdateSysTrayIcon();
+        void    signalUpdateSysTrayIcon();
 
     public slots:
 
         /**
          * @brief slotDebugChange. Slot for handling debug change signals.
          */
-        void slotDebugChange();
+        void    slotDebugChange();
 
         /**
          * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.
          */
-        void slotHideOnMinimizeChange();
+        void    slotHideOnMinimizeChange();
 
         /**
          * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
          */
-        void slotStartMinimizedChange();
+        void    slotStartMinimizedChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
-        void slotIconTypeChange();
+        void    slotIconTypeChange();
 
         /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
-        void slotIconDataChange();
+        void    slotIconDataChange();
 
     private slots:
 
         /**
          * @brief slotAccept. Store the preferences on the accept signal.
          */
-        void slotAccept();
+        void    slotAccept();
+
+        /**
+         * @brief slotReject. Store the preferences on the accept signal.
+         */
+        void    slotReject();
 
         /**
          * @brief slotFileSelect. Handle the choose custom button click.
          */
-        void slotFileSelect();
+        void    slotFileSelect();
 
     private:
 
