@@ -81,7 +81,7 @@ QString WindowCtrlWin::getProcessName( qint64 pid )
 {
     HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid );
     char name[ 256 ];
-    GetModuleBaseNameA( proc, NULL, name, 256);
+    GetModuleBaseNameA( proc, nullptr, name, 256);
 
     return QString( name );
 }
