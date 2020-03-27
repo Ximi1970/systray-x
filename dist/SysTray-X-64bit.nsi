@@ -83,10 +83,11 @@ Section "Install"
   ${MyStrRep} $0 $0 "\" "\\" 
   ${ReplaceInFile} "$INSTDIR\SysTray_X.json" "SYSTRAY_X_PATH" "$0"
 
+  StrCpy $0 "$INSTDIR\SysTray_X.json"
+  ${MyStrRep} $0 $0 "\" "\\" 
+  WriteRegStr SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
+
   ${If} $MultiUser.InstallMode == "CurrentUser"
-    StrCpy $0 "$INSTDIR\SysTray_X.json"
-    ${MyStrRep} $0 $0 "\" "\\" 
-    WriteRegStr SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
     ;
     ;	Find all profiles
     ;
@@ -109,7 +110,17 @@ Section "Install"
       FileClose $0
     end:
   ${Else}
-    MessageBox MB_OK "Multi user install$\r$\n"	  
+  
+    ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\*.*`
+      SetOutPath "$PROGRAMFILES32\Mozilla Thunderbird\distribution\extensions"
+      File "..\systray-x@Ximi1970.xpi"
+    ${EndIf}
+
+    ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
+      SetOutPath "$PROGRAMFILES64\Mozilla Thunderbird\distribution\extensions"
+      File "..\systray-x@Ximi1970.xpi"
+    ${EndIf}
+
   ${EndIf}
   ;
   ; Menu item
@@ -145,7 +156,15 @@ Section "Uninstall"
       FileClose $0
     end:
   ${Else}
-    MessageBox MB_OK "Multi user install$\r$\n"
+  
+    ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\*.*`
+      Delete "$PROGRAMFILES32\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
+    ${EndIf}
+    
+    ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
+      Delete "$PROGRAMFILES64\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
+    ${EndIf}
+
   ${EndIf}
   ;
   ;	Clean default
