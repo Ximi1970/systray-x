@@ -1,6 +1,6 @@
 !define Name "SysTray-X"
 Name "${Name}"
-Outfile "${Name}-setup64.exe"
+Outfile "${Name}-setup32.exe"
 
 ; MUI Settings
 !define MUI_ICON "..\app\SysTray-X\files\icons\SysTray-X.ico"
@@ -8,14 +8,13 @@ Outfile "${Name}-setup64.exe"
 
 ;https://nsis.sourceforge.io/Docs/MultiUser/Readme.html
 
-!define MULTIUSER_USE_PROGRAMFILES64
+!define MULTIUSER_USE_PROGRAMFILES
 !define MULTIUSER_INSTALLMODE_INSTDIR "$(^Name)"
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 !include MultiUser.nsh
 !include MUI2.nsh
-!include x64.nsh
 
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_DIRECTORY
@@ -70,7 +69,7 @@ Section "Install"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
 
   File "..\app\SysTray-X\files\icons\SysTray-X.ico"
-  File /r "..\app\dist\win64\*"
+  File /r "..\app\dist\win32\*"
 
   StrCpy $0 "$INSTDIR\SysTray-X.exe"
   ${MyStrRep} $0 $0 "\" "\\" 
@@ -104,15 +103,10 @@ Section "Install"
     end:
   ${Else}
   
-    ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\*.*`
-      SetOutPath "$PROGRAMFILES32\Mozilla Thunderbird\distribution\extensions"
-      File "..\systray-x@Ximi1970.xpi"
-    ${EndIf}
-    
-    ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
-      SetOutPath "$PROGRAMFILES64\Mozilla Thunderbird\distribution\extensions"
-      File "..\systray-x@Ximi1970.xpi"
-    ${EndIf}
+	${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
+	  SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions"
+	  File "..\systray-x@Ximi1970.xpi"
+	${EndIf}
 
   ${EndIf}
 
@@ -125,17 +119,12 @@ Section "Install"
   ;
   ;	Install Visual Studio Redist
   ;
-  ${If} ${RunningX64}
-    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64" "Installed"
-    StrCmp $1 1 installed
-  ${Else}
-    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X86" "Installed"
-    StrCmp $1 1 installed
-  ${EndIf}
+  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X86" "Installed"
+  StrCmp $1 1 installed
 
-  ;not installed, so run the installer
-;  ExecWait '$INSTDIR\vc_redist.x64.exe /passive /quiet /norestart'
-
+	;not installed, so run the installer
+;  ExecWait '$INSTDIR\vc_redist.x86.exe /passive /quiet /norestart'
+	
   installed:
 SectionEnd
 
@@ -166,14 +155,10 @@ Section "Uninstall"
       FileClose $0
     end:
   ${Else}
-    
-    ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\*.*`
-      Delete "$PROGRAMFILES32\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
-    ${EndIf}
-    
-    ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
-      Delete "$PROGRAMFILES64\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
-    ${EndIf}
+  
+	${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
+	  Delete "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
+	${EndIf}
 
   ${EndIf}
   ;
@@ -185,11 +170,6 @@ Section "Uninstall"
 SectionEnd
 
 Function .onInit
-  ${IfNot} ${RunningX64}
-    MessageBox MB_OK|MB_ICONSTOP 'This is the 64 bit installer$\r$\nPlease download the 32 bit version $\r$\nClick Ok to quit Setup.'
-    Quit
-  ${EndIf}
-
   !insertmacro MULTIUSER_INIT
 FunctionEnd
 
@@ -386,3 +366,4 @@ FunctionEnd
 !macroend
 !insertmacro Func_RIF ""
 !insertmacro Func_RIF "un."
+ 
