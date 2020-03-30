@@ -40,8 +40,29 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2017\WDExpress\VC\Auxiliary
 
 C:\Qt\%QT_VER%\%SPEC%\bin\qmake ..\SysTray-X\SysTray-X.pro -spec win32-msvc
 nmake
+
 xcopy /Q /Y release\SysTray-X.exe ..\dist\%WIN%\
+xcopy /Q /Y ..\config\win32\SysTray_X.json.template ..\dist\%WIN%\
+rename ..\dist\%WIN%\SysTray_X.json.template SysTray_X.json
+
 C:\Qt\%QT_VER%\%SPEC%\bin\windeployqt.exe ..\dist\%WIN%\SysTray-X.exe
+
+if "%WIN%" == "win64" (
+  xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
+)
+
+if "%WIN%" == "win32" (
+  if exist %SYSTEMROOT%\SysWOW64\ (
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
+  )
+
+  if not exist %SYSTEMROOT%\SysWOW64\ (
+    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
+  )
+)
 
 goto :end
 

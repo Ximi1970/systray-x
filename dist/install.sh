@@ -54,7 +54,7 @@ mv -f ${DESTINATION}/SysTray_X.json.template ${DESTINATION}/SysTray_X.json
 # Done
 #
 echo ""
-echo "Companian app installation complete."
+echo "Companion app installation complete."
 echo "App en JSON config have been installed in: $DESTINATION"
 echo ""
 echo "Do not forget to install the Thunderbird SysTray-X Add-on"
