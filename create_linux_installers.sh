@@ -6,7 +6,7 @@ OBS_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Ad
 OBS_PACKAGE="systray-x"
 
 OBS_RPM_ARCHS="openSUSE_Leap_15.1/x86_64 "
-OBS_RPM_ARCHS="openSUSE_Leap_15.2/x86_64 "
+OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/x86_64 "
 OBS_RPM_ARCHS+="SLE_15/x86_64 "

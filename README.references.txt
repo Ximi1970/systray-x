@@ -14,6 +14,11 @@ https://sourceforge.net/projects/nsis/
 
 
 
+Assets uploader:
+
+https://github.com/tcnksm/ghr
+
+
 
 Windows
 =========================================
