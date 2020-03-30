@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 VERSION=`git describe --long | sed "s/-.*//"`
@@ -56,6 +57,12 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   rpm2cpio $RPM_FILE | cpio -i --to-stdout ./usr/bin/SysTray-X > SysTray-X 2>/dev/null
   chmod 755 SysTray-X
 
+  rpm2cpio $RPM_FILE | cpio -i --to-stdout ./usr/share/doc/packages/systray-x/systray-x@Ximi1970.xpi > systray-x@Ximi1970.xpi 2>/dev/null
+
+  if [ ! -f ../systray-x@Ximi1970.xpi ] ; then
+    cp -f systray-x@Ximi1970.xpi ..
+  fi
+  
   #
   # Get JSON
   #
@@ -122,6 +129,8 @@ for debdir in $OBS_DEB_ARCHS ; do
   #
   dpkg --fsys-tarfile $DEB_FILE | tar xOf - ./usr/bin/SysTray-X > SysTray-X
   chmod 755 SysTray-X
+
+  dpkg --fsys-tarfile $DEB_FILE | tar xOf - ./usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi > systray-x@Ximi1970.xpi
 
   #
   # Get JSON
