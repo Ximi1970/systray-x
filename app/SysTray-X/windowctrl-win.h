@@ -10,9 +10,19 @@
 #include <Windows.h>
 
 /*
+ *  Standard library includes
+ */
+#include <string>
+
+/*
  *  Qt includes
  */
 #include <QObject>
+
+/*
+ *  Forward declarations
+ */
+class WindowCtrlWin;
 
 /**
  * @brief The WindowCtrlWin class
@@ -23,10 +33,16 @@ class WindowCtrlWin : public QObject
 
     private:
 
-        struct HandleData
+        struct EnumWindowsPidProcData
         {
             unsigned long   pid;
             HWND            hwnd;
+        };
+
+        struct EnumWindowsTitleProcData
+        {
+            WindowCtrlWin&      window_ctrl;
+            const std::string   title;
         };
 
     public:
@@ -208,12 +224,12 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_tb_window. The Thunderbird window.
          */
-        static quint64  m_tb_window;
+        quint64  m_tb_window;
 
         /**
          * @brief m_tb_window. The Thunderbird windows.
          */
-        static QList< quint64 >  m_tb_windows;
+        QList< quint64 >  m_tb_windows;
 };
 
 #endif // WINDOWCTRLWIN_H

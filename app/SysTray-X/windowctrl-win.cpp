@@ -10,16 +10,15 @@
 #include <CommCtrl.h>
 
 /*
+ * Standard library includes
+ */
+#include <array>
+
+/*
  * Qt includes
  */
 #include <QCoreApplication>
 #include <QString>
-
-/*
- *  Statics
- */
-quint64 WindowCtrlWin::m_tb_window;
-QList< quint64 >  WindowCtrlWin::m_tb_windows;
 
 
 /*
@@ -82,7 +81,7 @@ QString WindowCtrlWin::getProcessName( qint64 pid )
 {
     HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid );
     char name[ 256 ];
-    GetModuleBaseNameA( proc, NULL, name, 256);
+    GetModuleBaseNameA( proc, nullptr, name, 256);
 
     return QString( name );
 }
@@ -95,7 +94,9 @@ bool    WindowCtrlWin::findWindow( const QString& title )
 {
     m_tb_windows = QList< quint64 >();
 
-    EnumWindows( &enumWindowsTitleProc, (LPARAM)(LPSTR)( title.toStdString().c_str() ) );
+    EnumWindowsTitleProcData data{ *this, title.toStdString() };
+
+    EnumWindows( &enumWindowsTitleProc, reinterpret_cast<LPARAM>(&data) );
 
     if( m_tb_windows.length() == 0 )
     {
@@ -111,11 +112,12 @@ bool    WindowCtrlWin::findWindow( const QString& title )
  */
 BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 {
-    char buffer[ 128 ];
-    int written = GetWindowTextA( hwnd, buffer, 128 );
-    if( written && strstr( buffer, (char*)lParam ) != NULL )
+    auto& data = *reinterpret_cast<EnumWindowsTitleProcData*>(lParam);
+    std::array<char, 128> buffer;
+    int written = GetWindowTextA( hwnd, buffer.data(), int(buffer.size()) );
+    if( written && strstr( buffer.data(), data.title.c_str() ) != nullptr )
     {
-        m_tb_windows.append( (quint64)hwnd );
+        data.window_ctrl.m_tb_windows.append( (quint64)hwnd );
     }
 
     return TRUE;
@@ -127,12 +129,12 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
  */
 bool    WindowCtrlWin::findWindow( qint64 pid )
 {
-    HandleData data;
+    EnumWindowsPidProcData data;
     data.pid = pid;
-    data.hwnd = 0;
-    EnumWindows( &enumWindowsPidProc, (LPARAM)&data );
+    data.hwnd = nullptr;
+    EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
 
-    if( data.hwnd == 0 )
+    if( data.hwnd == nullptr )
     {
         return false;
     }
@@ -151,7 +153,7 @@ bool    WindowCtrlWin::findWindow( qint64 pid )
  */
 BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
 {
-    HandleData& data = *(HandleData*)lParam;
+    auto& data = *reinterpret_cast<EnumWindowsPidProcData*>(lParam);
     unsigned long pid = 0;
 
     GetWindowThreadProcessId( hwnd, &pid );
@@ -172,7 +174,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
  */
 BOOL    WindowCtrlWin::isMainWindow( HWND hwnd )
 {
-    return GetWindow( hwnd, GW_OWNER ) == (HWND)0 && IsWindowVisible( hwnd );
+    return GetWindow( hwnd, GW_OWNER ) == nullptr && IsWindowVisible( hwnd );
 }
 
 
@@ -183,7 +185,7 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 {
     findWindow( title );
 
-    foreach( quint64 win_id, getWinIds() )
+    for( quint64 win_id: getWinIds() )
     {
         emit signalConsole( QString( "Found: XID %1" ).arg( win_id ) );
     }
