@@ -12,7 +12,7 @@ The addon and system tray application can do:
 
 ## Binaries (System)
 
-These packages will install the Thunderbird Add-on and companion app system wide.  
+These packages will install the Thunderbird addon and companion app system wide.  
 Root credentials are required.
 
 ### openSuSE
