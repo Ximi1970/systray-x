@@ -71,7 +71,7 @@ sudo apt install systray-x
 User installable package.  
 No root credentials required.  
 
-Download the installer here:
+Download the installer here (click on the assets dropdown list):
 
 [Addon and companion app installer](https://github.com/Ximi1970/systray-x/releases)
 
