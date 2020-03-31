@@ -1,8 +1,8 @@
 # SysTray-X
 
-SysTray-X is a system tray extension for Thunderbird 68+. The add-on uses the WebExtension API's to control an external system dependent system tray application.  
+SysTray-X is a system tray extension for Thunderbird 68+. The addon uses the WebExtension API's to control an external system dependent system tray application.  
 
-The add-on and system tray application can do:
+The addon and system tray application can do:
 
 - custom new mail icon
 - display number of unread mails
@@ -12,7 +12,7 @@ The add-on and system tray application can do:
 
 ## Binaries (System)
 
-These packages will install the Thunderbird Add-on and companion app system wide.  
+These packages will install the Thunderbird addon and companion app system wide.  
 Root credentials are required.
 
 ### openSuSE
@@ -71,11 +71,10 @@ sudo apt install systray-x
 User installable package.  
 No root credentials required.  
 
-Download the installer here:
+Download the installer here (click on the assets dropdown list):
 
-[Companion installer](https://github.com/Ximi1970/systray-x/releases)
+[Addon and companion app installer](https://github.com/Ximi1970/systray-x/releases)
 
-And install the add-on using the Thunderbird Add-on / Extensions store.
 
 ## Building
 
