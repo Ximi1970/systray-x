@@ -75,7 +75,6 @@ Download the installer here:
 
 [Companion installer](https://github.com/Ximi1970/systray-x/releases)
 
-And install the add-on using the Thunderbird Add-on / Extensions store.
 
 ## Building
 
