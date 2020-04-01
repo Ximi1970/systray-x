@@ -39,6 +39,25 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save poll startup delay state
+    //
+    const pollStartupDelay = document.querySelector(
+      'input[name="pollStartupDelay"]'
+    ).value;
+    browser.storage.sync.set({
+      pollStartupDelay: `${pollStartupDelay}`
+    });
+
+    //
+    //  Save poll interval state
+    //
+    const pollInterval = document.querySelector('input[name="pollInterval"]')
+      .value;
+    browser.storage.sync.set({
+      pollInterval: `${pollInterval}`
+    });
+
+    //
     //  Save debug state
     //
     let debug = document.querySelector('input[name="debug"]').checked;
@@ -137,6 +156,24 @@ SysTrayX.RestoreOptions = {
     getIcon.then(
       SysTrayX.RestoreOptions.setIcon,
       SysTrayX.RestoreOptions.onIconError
+    );
+
+    //
+    //  Restore poll startup delay state
+    //
+    const getPollStartupDelay = browser.storage.sync.get("pollStartupDelay");
+    getPollStartupDelay.then(
+      SysTrayX.RestoreOptions.setPollStartupDelay,
+      SysTrayX.RestoreOptions.onPollStartupDelayError
+    );
+
+    //
+    //  Restore poll interval state
+    //
+    const getPollInterval = browser.storage.sync.get("pollInterval");
+    getPollInterval.then(
+      SysTrayX.RestoreOptions.setPollInterval,
+      SysTrayX.RestoreOptions.onPollIntervalError
     );
   },
 
@@ -242,6 +279,34 @@ SysTrayX.RestoreOptions = {
 
   onIconError: function(error) {
     console.log(`Icon Error: ${error}`);
+  },
+
+  //
+  //  Restore poll startup delay state callbacks
+  //
+  setPollStartupDelay: function(result) {
+    const pollStartupDelay = result.pollStartupDelay || 5;
+
+    const input = document.querySelector(`input[name="pollStartupDelay"]`);
+    input.value = pollStartupDelay;
+  },
+
+  onPollStartupDelayError: function(error) {
+    console.log(`Poll startup delay Error: ${error}`);
+  },
+
+  //
+  //  Restore poll interval state callbacks
+  //
+  setPollInterval: function(result) {
+    const pollInterval = result.pollInterval || 5;
+
+    const input = document.querySelector(`input[name="pollInterval"]`);
+    input.value = pollInterval;
+  },
+
+  onPollPollInterval: function(error) {
+    console.log(`Poll interval Error: ${error}`);
   }
 };
 
@@ -276,6 +341,16 @@ SysTrayX.StorageChanged = {
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue
+        });
+      }
+      if (item === "pollStartupDelay") {
+        SysTrayX.RestoreOptions.setPollStartupDelay({
+          pollStartupDelay: changes[item].newValue
+        });
+      }
+      if (item === "pollInterval") {
+        SysTrayX.RestoreOptions.setPollInterval({
+          pollInterval: changes[item].newValue
         });
       }
       if (item === "debug") {
