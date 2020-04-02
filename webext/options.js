@@ -45,7 +45,7 @@ SysTrayX.SaveOptions = {
       'input[name="pollStartupDelay"]'
     ).value;
     browser.storage.sync.set({
-      pollStartupDelay: `${pollStartupDelay}`
+      pollStartupDelay: pollStartupDelay
     });
 
     //
@@ -54,7 +54,7 @@ SysTrayX.SaveOptions = {
     const pollInterval = document.querySelector('input[name="pollInterval"]')
       .value;
     browser.storage.sync.set({
-      pollInterval: `${pollInterval}`
+      pollInterval: pollInterval
     });
 
     //

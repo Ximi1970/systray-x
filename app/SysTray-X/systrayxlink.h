@@ -175,6 +175,16 @@ class SysTrayXLink : public QObject
         void    slotDebugChange();
 
         /**
+         * @brief slotPollStartupDelayChange. Handle a change in poll startup delay.
+         */
+        void    slotPollStartupDelayChange();
+
+        /**
+         * @brief slotPollIntervalChange. Handle a change in poll interval.
+         */
+        void    slotPollIntervalChange();
+
+        /**
          * @brief slotHideOnMinimizeChange. Handle a change in hide on minimize state.
          */
         void    slotHideOnMinimizeChange();

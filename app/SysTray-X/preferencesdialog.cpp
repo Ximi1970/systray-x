@@ -60,6 +60,24 @@ void    PreferencesDialog::setDebug( bool state )
 
 
 /*
+ *  Set the poll startup delay
+ */
+void    PreferencesDialog::setPollStartupDelay( int val )
+{
+   m_ui->pollStartupDelaySpinBox->setValue( val );
+}
+
+
+/*
+ *  Set the poll interval
+ */
+void    PreferencesDialog::setPollInterval( int val )
+{
+   m_ui->pollIntervalSpinBox->setValue( val );
+}
+
+
+/*
  *  Set the hide on minimize state
  */
 void    PreferencesDialog::setHideOnMinimize( bool state )
@@ -141,6 +159,9 @@ void    PreferencesDialog::slotAccept()
     m_pref->setHideOnMinimize( m_ui->hideOnMinimizeCheckBox->isChecked() );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
 
+    m_pref->setPollStartupDelay(m_ui->pollStartupDelaySpinBox->value());
+    m_pref->setPollInterval(m_ui->pollIntervalSpinBox->value());
+
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
     /*
@@ -200,6 +221,24 @@ void    PreferencesDialog::slotFileSelect()
 void    PreferencesDialog::slotDebugChange()
 {
     setDebug( m_pref->getDebug() );
+}
+
+
+/*
+ *  Handle the poll startup delay change signal
+ */
+void    PreferencesDialog::slotPollStartupDelayChange()
+{
+    setPollStartupDelay( m_pref->getPollStartupDelay() );
+}
+
+
+/*
+ *  Handle the poll interval change signal
+ */
+void    PreferencesDialog::slotPollIntervalChange()
+{
+    setPollInterval( m_pref->getPollInterval() );
 }
 
 

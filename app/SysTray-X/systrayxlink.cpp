@@ -377,6 +377,26 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartMinimized( start_minimized );
     }
 
+    if( pref.contains( "pollStartupDelay" ) && pref[ "pollStartupDelay" ].isString() )
+    {
+        QString poll_startup_delay = pref[ "pollStartupDelay" ].toString();
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setPollStartupDelay( poll_startup_delay.toInt() );
+    }
+
+    if( pref.contains( "pollInterval" ) && pref[ "pollInterval" ].isString() )
+    {
+        QString poll_interval = pref[ "pollInterval" ].toString();
+
+        /*
+         *  Store the new poll interval
+         */
+        m_pref->setPollInterval( poll_interval.toInt() );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -399,6 +419,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
+    prefObject.insert("pollStartupDelay", QJsonValue::fromVariant( QString::number( pref.getPollStartupDelay() ) ) );
+    prefObject.insert("pollInterval", QJsonValue::fromVariant( QString::number( pref.getPollInterval() ) ) );
     prefObject.insert("hideOnMinimize", QJsonValue::fromVariant( QString( pref.getHideOnMinimize() ? "true" : "false" ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
@@ -440,6 +462,30 @@ void    SysTrayXLink::slotLinkRead( QByteArray message )
  *  Handle a debug state change signal
  */
 void    SysTrayXLink::slotDebugChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a poll startup delay change signal
+ */
+void    SysTrayXLink::slotPollStartupDelayChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a poll interval change signal
+ */
+void    SysTrayXLink::slotPollIntervalChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
