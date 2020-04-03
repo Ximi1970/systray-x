@@ -1,6 +1,11 @@
 var SysTrayX = {
   debugAccounts: false,
 
+  pollTiming: {
+    pollStartupDelay: "5",
+    pollInterval: "5"
+  },
+
   platformInfo: undefined
 };
 
@@ -13,6 +18,8 @@ SysTrayX.Messaging = {
   init: function() {
     //  Get the accounts from the storage
     SysTrayX.Messaging.getAccounts();
+
+    // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
     //  Send the window title to app
@@ -22,7 +29,11 @@ SysTrayX.Messaging = {
     SysTrayX.Messaging.sendPreferences();
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    //    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    window.setTimeout(
+      SysTrayX.Messaging.pollAccounts,
+      SysTrayX.pollTiming.pollStartupDelay * 1000
+    );
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
@@ -34,6 +45,20 @@ SysTrayX.Messaging = {
   storageChanged: function(changes, area) {
     //  Get the new preferences
     SysTrayX.Messaging.getAccounts();
+
+    if ("pollStartupDelay" in changes && changes["pollStartupDelay"].newValue) {
+      SysTrayX.pollTiming = {
+        ...SysTrayX.pollTiming,
+        pollStartupDelay: changes["pollStartupDelay"].newValue
+      };
+    }
+
+    if ("pollInterval" in changes && changes["pollInterval"].newValue) {
+      SysTrayX.pollTiming = {
+        ...SysTrayX.pollTiming,
+        pollInterval: changes["pollInterval"].newValue
+      };
+    }
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {
       //
@@ -73,6 +98,12 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.unreadCb
       );
     }
+
+    // Next round...
+    window.setTimeout(
+      SysTrayX.Messaging.pollAccounts,
+      SysTrayX.pollTiming.pollInterval * 1000
+    );
   },
 
   //
@@ -112,6 +143,8 @@ SysTrayX.Messaging = {
   sendPreferences: function() {
     const getter = browser.storage.sync.get([
       "debug",
+      "pollStartupDelay",
+      "pollInterval",
       "hideOnMinimize",
       "startMinimized",
       "iconType",
@@ -123,6 +156,8 @@ SysTrayX.Messaging = {
 
   sendPreferencesStorage: function(result) {
     const debug = result.debug || "false";
+    const pollStartupDelay = result.pollStartupDelay || "5";
+    const pollInterval = result.pollInterval || "5";
     const hideOnMinimize = result.hideOnMinimize || "true";
     const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
@@ -133,6 +168,8 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
+        pollStartupDelay: pollStartupDelay,
+        pollInterval: pollInterval,
         hideOnMinimize: hideOnMinimize,
         startMinimized: startMinimized,
         iconType: iconType,
@@ -265,6 +302,20 @@ SysTrayX.Link = {
         });
       }
 
+      const pollStartupDelay = response["preferences"].pollStartupDelay;
+      if (pollStartupDelay) {
+        browser.storage.sync.set({
+          pollStartupDelay: pollStartupDelay
+        });
+      }
+
+      const pollInterval = response["preferences"].pollInterval;
+      if (pollInterval) {
+        browser.storage.sync.set({
+          pollInterval: pollInterval
+        });
+      }
+
       const debug = response["preferences"].debug;
       if (debug) {
         browser.storage.sync.set({
@@ -294,6 +345,9 @@ async function start() {
       state: "minimized"
     });
   }
+
+  // Get the poll timing
+  SysTrayX.pollTiming = await getPollTiming();
 
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime

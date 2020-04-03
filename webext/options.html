@@ -80,7 +80,48 @@
         <h3>Included accounts</h3>
 
         <ul id="accountsTree"></ul>
+
+        <br />
+        <table id="iconselect">
+          <tr>
+            <td>
+              <label for="pollStartupDelay" }>Poll startup delay</label>
+            </td>
+            <td>
+              <input
+                type="number"
+                id="pollStartupDelay"
+                name="pollStartupDelay"
+                step="1"
+                min="1"
+                max="99"
+                value="5"
+                style="width: 3em;"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="pollInterval" }>Poll interval</label>
+            </td>
+            <td>
+              <input
+                type="number"
+                id="pollInterval"
+                name="pollInterval"
+                step="1"
+                min="1"
+                max="99"
+                value="5"
+                style="width: 3em;"
+              />
+            </td>
+          </tr>
+        </table>
       </form>
+
+      <script src="js/options_mailform.js"></script>
+
     </div>
 
     <div id="DebugContent" class="tabcontent">
