@@ -69,4 +69,6 @@ ENDSSH
 #
 # Shutdown worker
 #
-VBoxManage controlvm "${BUILD_WORKER_VMNAME}" acpipowerbutton
+ssh ${BUILD_FARM_USER}@${BUILD_FARM} <<-ENDSSH
+  VBoxManage controlvm "${BUILD_WORKER_VMNAME}" acpipowerbutton
+ENDSSH
