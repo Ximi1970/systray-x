@@ -2,7 +2,7 @@
 UPLOAD_SERVER="upload.server.com"
 UPLOAD_USER="user"
 UPLOAD_PASSWORD="password"
-UPLOAD_DIR="~/src/systray-x/bin"
+UPLOAD_DIR="src/systray-x/bin"
 
 BUILD_FARM="build.farm.com"
 BUILD_FARM_USER="farmuser"

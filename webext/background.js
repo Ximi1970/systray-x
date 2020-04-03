@@ -2,8 +2,8 @@ var SysTrayX = {
   debugAccounts: false,
 
   pollTiming: {
-    pollStartupDelay: "5",
-    pollInterval: "5"
+    pollStartupDelay: "30",
+    pollInterval: "30"
   },
 
   platformInfo: undefined
@@ -156,8 +156,8 @@ SysTrayX.Messaging = {
 
   sendPreferencesStorage: function(result) {
     const debug = result.debug || "false";
-    const pollStartupDelay = result.pollStartupDelay || "5";
-    const pollInterval = result.pollInterval || "5";
+    const pollStartupDelay = result.pollStartupDelay || "30";
+    const pollInterval = result.pollInterval || "30";
     const hideOnMinimize = result.hideOnMinimize || "true";
     const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
