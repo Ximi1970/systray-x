@@ -205,6 +205,11 @@ void    SysTrayX::createTrayIcon()
 void    SysTrayX::slotAddOnShutdown()
 {
     /*
+     *  Hide systray icon to prevent ghost systray icon in Windows
+     */
+    m_tray_icon->hide();
+
+    /*
      *  Let's quit
      */
     QCoreApplication::quit();
@@ -216,6 +221,11 @@ void    SysTrayX::slotAddOnShutdown()
  */
 void    SysTrayX::slotShutdown()
 {
+    /*
+     *  Hide systray icon to prevent ghost systray icon in Windows
+     */
+    m_tray_icon->hide();
+
     /*
      *  Close the TB window
      */
