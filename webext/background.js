@@ -1,6 +1,11 @@
 var SysTrayX = {
   debugAccounts: false,
 
+  pollTiming: {
+    pollStartupDelay: "5",
+    pollInterval: "5"
+  },
+
   platformInfo: undefined
 };
 
@@ -13,6 +18,8 @@ SysTrayX.Messaging = {
   init: function() {
     //  Get the accounts from the storage
     SysTrayX.Messaging.getAccounts();
+
+    // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
     //  Send the window title to app
@@ -22,7 +29,11 @@ SysTrayX.Messaging = {
     SysTrayX.Messaging.sendPreferences();
 
     //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    //    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    window.setTimeout(
+      SysTrayX.Messaging.pollAccounts,
+      SysTrayX.pollTiming.pollStartupDelay * 1000
+    );
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
@@ -34,6 +45,20 @@ SysTrayX.Messaging = {
   storageChanged: function(changes, area) {
     //  Get the new preferences
     SysTrayX.Messaging.getAccounts();
+
+    if ("pollStartupDelay" in changes && changes["pollStartupDelay"].newValue) {
+      SysTrayX.pollTiming = {
+        ...SysTrayX.pollTiming,
+        pollStartupDelay: changes["pollStartupDelay"].newValue
+      };
+    }
+
+    if ("pollInterval" in changes && changes["pollInterval"].newValue) {
+      SysTrayX.pollTiming = {
+        ...SysTrayX.pollTiming,
+        pollInterval: changes["pollInterval"].newValue
+      };
+    }
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {
       //
@@ -73,6 +98,12 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.unreadCb
       );
     }
+
+    // Next round...
+    window.setTimeout(
+      SysTrayX.Messaging.pollAccounts,
+      SysTrayX.pollTiming.pollInterval * 1000
+    );
   },
 
   //
@@ -314,6 +345,9 @@ async function start() {
       state: "minimized"
     });
   }
+
+  // Get the poll timing
+  SysTrayX.pollTiming = await getPollTiming();
 
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime

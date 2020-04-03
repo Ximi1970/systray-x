@@ -67,3 +67,21 @@ async function getStartupState() {
   const getState = browser.storage.sync.get("startMinimized");
   return await getState.then(getStartupState, onStartupStateError);
 }
+
+//
+//  Get poll timing
+//
+async function getPollTiming() {
+  function getDelayAndInterval(result) {
+    return { pollStartupDelay: result.pollStartupDelay || "5", pollInterval: result.pollInterval || "5" };
+  }
+
+  function onDelayAndIntervalError() {
+    return { pollStartupDelay: "5", pollInterval: "5" };
+  }
+
+  const getTiming = browser.storage.sync.get([
+    "pollStartupDelay",
+    "pollInterval"]);
+  return await getTiming.then(getDelayAndInterval, onDelayAndIntervalError);
+}
