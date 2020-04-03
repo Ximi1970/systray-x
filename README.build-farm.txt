@@ -18,6 +18,10 @@ Find your VM with:
 
   VBoxManage list vms
 
+Find your running VM with:
+  
+  VBoxmanage list runningvms
+
 Start the VM headless:
 
   VBoxHeadless -s "Windows 10"
