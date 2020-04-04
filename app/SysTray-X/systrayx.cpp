@@ -67,7 +67,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
 
+    connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_win_ctrl, &WindowCtrl::signalConsole, m_debug, &DebugWidget::slotConsole );
+
     connect( m_debug, &DebugWidget::signalTest1ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest1 );
     connect( m_debug, &DebugWidget::signalTest2ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest2 );
     connect( m_debug, &DebugWidget::signalTest3ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest3 );
@@ -107,6 +109,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
+    connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
 
     /*
      *  Connect window signals
@@ -259,4 +262,17 @@ void    SysTrayX::slotAbout()
     ui.branch->setText( m_preferences->getBranch() );
 
     dialog.exec();
+}
+
+
+/*
+ *  Handle the version info from the addon
+ */
+void    SysTrayX::slotVersion( QString version )
+{
+    if( version != m_preferences->getVersion() )
+    {
+        m_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app",
+            QApplication::style()->standardIcon( QStyle::SP_MessageBoxWarning ) );
+    }
 }

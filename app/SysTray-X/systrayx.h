@@ -76,22 +76,34 @@ class SysTrayX : public QObject
          */
         void    signalClose();
 
+        /**
+         * @brief signalConsole. Send a console message.
+         *
+         *  @param message      The message.
+         */
+        void    signalConsole( QString message );
+
     private slots:
 
         /**
-         * @brief slotAddOnShutdown. Hnadle shutdown request from the add-on.
+         * @brief slotAddOnShutdown. Handle shutdown request from the add-on.
          */
         void    slotAddOnShutdown();
 
         /**
-         * @brief slotShutdown. Hnadle shutdown request from the menu.
+         * @brief slotShutdown. Handle shutdown request from the menu.
          */
         void    slotShutdown();
 
         /**
-         * @brief slotAbout. Hnadle about request from the menu.
+         * @brief slotAbout. Handle about request from the menu.
          */
         void    slotAbout();
+
+        /**
+         * @brief slotVersion. Handle version info from addon.
+         */
+        void    slotVersion( QString version );
 
     private:
 

@@ -3,21 +3,21 @@ var SysTrayX = {
 
   pollTiming: {
     pollStartupDelay: "30",
-    pollInterval: "30"
+    pollInterval: "30",
   },
 
   platformInfo: undefined,
-  
-  version: 0
+
+  version: "0",
 };
 
 SysTrayX.Messaging = {
   unreadFiltersTest: [
     { unread: true },
-    { unread: true, folder: { accountId: "account1", path: "/INBOX" } }
+    { unread: true, folder: { accountId: "account1", path: "/INBOX" } },
   ],
 
-  init: function() {
+  init: function () {
     //  Get the accounts from the storage
     SysTrayX.Messaging.getAccounts();
 
@@ -26,6 +26,9 @@ SysTrayX.Messaging = {
 
     //  Send the window title to app
     SysTrayX.Messaging.sendTitle();
+
+    //  Send version to app
+    SysTrayX.Messaging.sendVersion();
 
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
@@ -44,21 +47,21 @@ SysTrayX.Messaging = {
   //
   //  Handle a storage change
   //
-  storageChanged: function(changes, area) {
+  storageChanged: function (changes, area) {
     //  Get the new preferences
     SysTrayX.Messaging.getAccounts();
 
     if ("pollStartupDelay" in changes && changes["pollStartupDelay"].newValue) {
       SysTrayX.pollTiming = {
         ...SysTrayX.pollTiming,
-        pollStartupDelay: changes["pollStartupDelay"].newValue
+        pollStartupDelay: changes["pollStartupDelay"].newValue,
       };
     }
 
     if ("pollInterval" in changes && changes["pollInterval"].newValue) {
       SysTrayX.pollTiming = {
         ...SysTrayX.pollTiming,
-        pollInterval: changes["pollInterval"].newValue
+        pollInterval: changes["pollInterval"].newValue,
       };
     }
 
@@ -70,7 +73,7 @@ SysTrayX.Messaging = {
 
       //  Reset flag
       browser.storage.sync.set({
-        addonprefchanged: false
+        addonprefchanged: false,
       });
     }
   },
@@ -78,7 +81,7 @@ SysTrayX.Messaging = {
   //
   //  Poll the accounts
   //
-  pollAccounts: function() {
+  pollAccounts: function () {
     //
     //  Get the unread nessages of the selected accounts
     //
@@ -112,7 +115,7 @@ SysTrayX.Messaging = {
   //  Use the messages API to get the unread messages (Promise)
   //  Be aware that the data is only avaiable inside the callback
   //
-  unReadMessages: async function(filters) {
+  unReadMessages: async function (filters) {
     let unreadMessages = 0;
     for (let i = 0; i < filters.length; ++i) {
       let page = await browser.messages.query(filters[i]);
@@ -133,16 +136,20 @@ SysTrayX.Messaging = {
   //
   //  Callback for unReadMessages
   //
-  unreadCb: function(count) {
+  unreadCb: function (count) {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
-  sendTitle: function() {
+  sendTitle: function () {
     const title = "-" + SysTrayX.Window.startWindow.title.split("-").pop();
     SysTrayX.Link.postSysTrayXMessage({ title: title });
   },
 
-  sendPreferences: function() {
+  sendVersion: function () {
+    SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.version });
+  },
+
+  sendPreferences: function () {
     const getter = browser.storage.sync.get([
       "debug",
       "pollStartupDelay",
@@ -151,12 +158,12 @@ SysTrayX.Messaging = {
       "startMinimized",
       "iconType",
       "iconMime",
-      "icon"
+      "icon",
     ]);
     getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
   },
 
-  sendPreferencesStorage: function(result) {
+  sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
     const pollStartupDelay = result.pollStartupDelay || "30";
     const pollInterval = result.pollInterval || "30";
@@ -176,19 +183,19 @@ SysTrayX.Messaging = {
         startMinimized: startMinimized,
         iconType: iconType,
         iconMime: iconMime,
-        icon: icon
-      }
+        icon: icon,
+      },
     });
   },
 
-  onSendIconStorageError: function(error) {
+  onSendIconStorageError: function (error) {
     console.log(`GetIcon Error: ${error}`);
   },
 
   //
   //  Get the accounts from the storage
   //
-  getAccounts: function() {
+  getAccounts: function () {
     const getter = browser.storage.sync.get(["accounts", "filters"]);
     getter.then(this.getAccountsStorage, this.onGetAccountsStorageError);
 
@@ -207,7 +214,7 @@ SysTrayX.Messaging = {
   //  Get the accounts from the storage and
   //  make them available in the background HTML
   //
-  getAccountsStorage: function(result) {
+  getAccountsStorage: function (result) {
     const accounts = result.accounts || undefined;
 
     //  Store them in the background HTML
@@ -221,9 +228,9 @@ SysTrayX.Messaging = {
     filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
-  onGetAccountsStorageError: function(error) {
+  onGetAccountsStorageError: function (error) {
     console.log(`GetAccounts Error: ${error}`);
-  }
+  },
 };
 
 //
@@ -232,7 +239,7 @@ SysTrayX.Messaging = {
 SysTrayX.Link = {
   portSysTrayX: undefined,
 
-  init: function() {
+  init: function () {
     //  Connect to the app
     this.portSysTrayX = browser.runtime.connectNative("SysTray_X");
 
@@ -242,23 +249,23 @@ SysTrayX.Link = {
     );
   },
 
-  postSysTrayXMessage: function(object) {
+  postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
-  receiveSysTrayXMessage: function(response) {
+  receiveSysTrayXMessage: function (response) {
     if (response["window"]) {
       if (response["window"] === "minimized") {
         browser.windows.update(SysTrayX.Window.startWindow.id, {
-          state: "minimized"
+          state: "minimized",
         });
       }
 
       if (response["window"] === "normal") {
         browser.windows.update(SysTrayX.Window.startWindow.id, {
           state: "normal",
-          focused: true
+          focused: true,
         });
       }
     }
@@ -272,70 +279,70 @@ SysTrayX.Link = {
       const iconMime = response["preferences"].iconMime;
       if (iconMime) {
         browser.storage.sync.set({
-          iconMime: iconMime
+          iconMime: iconMime,
         });
       }
 
       const icon = response["preferences"].icon;
       if (icon) {
         browser.storage.sync.set({
-          icon: icon
+          icon: icon,
         });
       }
 
       const iconType = response["preferences"].iconType;
       if (iconType) {
         browser.storage.sync.set({
-          iconType: iconType
+          iconType: iconType,
         });
       }
 
       const hideOnMinimize = response["preferences"].hideOnMinimize;
       if (hideOnMinimize) {
         browser.storage.sync.set({
-          hideOnMinimize: hideOnMinimize
+          hideOnMinimize: hideOnMinimize,
         });
       }
 
       const startMinimized = response["preferences"].startMinimized;
       if (startMinimized) {
         browser.storage.sync.set({
-          startMinimized: startMinimized
+          startMinimized: startMinimized,
         });
       }
 
       const pollStartupDelay = response["preferences"].pollStartupDelay;
       if (pollStartupDelay) {
         browser.storage.sync.set({
-          pollStartupDelay: pollStartupDelay
+          pollStartupDelay: pollStartupDelay,
         });
       }
 
       const pollInterval = response["preferences"].pollInterval;
       if (pollInterval) {
         browser.storage.sync.set({
-          pollInterval: pollInterval
+          pollInterval: pollInterval,
         });
       }
 
       const debug = response["preferences"].debug;
       if (debug) {
         browser.storage.sync.set({
-          debug: debug
+          debug: debug,
         });
       }
     }
-  }
+  },
 };
 
 SysTrayX.Window = {
   startWindow: undefined,
 
-  focusChanged: function(windowId) {
-    browser.windows.getCurrent().then(win => {
+  focusChanged: function (windowId) {
+    browser.windows.getCurrent().then((win) => {
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
     });
-  }
+  },
 };
 
 async function start() {
@@ -344,7 +351,7 @@ async function start() {
 
   if (state == "minimized") {
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-      state: "minimized"
+      state: "minimized",
     });
   }
 
@@ -354,21 +361,21 @@ async function start() {
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime
     .getPlatformInfo()
-    .then(info => info);
+    .then((info) => info);
   console.log("OS: " + SysTrayX.platformInfo.os);
   console.log("Arch: " + SysTrayX.platformInfo.arch);
   console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
 
   //  Get addon version
   SysTrayX.version = browser.runtime.getManifest().version;
-  console.log("Addon version: "+SysTrayX.version);
+  console.log("Addon version: " + SysTrayX.version);
 
   //  Init defaults before everything
   await getDefaultIcon();
 
   SysTrayX.Window.startWindow = await browser.windows
     .getCurrent()
-    .then(currentWindow => currentWindow);
+    .then((currentWindow) => currentWindow);
 
   //  Setup the link first
   SysTrayX.Link.init();

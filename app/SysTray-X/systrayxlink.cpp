@@ -300,6 +300,12 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalTitle( title );
         }
 
+        if( jsonObject.contains( "version" ) && jsonObject[ "version" ].isString() )
+        {
+            QString version = jsonObject[ "version" ].toString();
+            emit signalVersion( version );
+        }
+
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
             emit signalAddOnShutdown();

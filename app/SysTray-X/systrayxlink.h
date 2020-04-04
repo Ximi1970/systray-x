@@ -146,9 +146,14 @@ class SysTrayXLink : public QObject
     signals:
 
         /**
-         * @brief signalTitle. Signal to title the app.
+         * @brief signalTitle. Signal the title.
          */
         void    signalTitle( QString title );
+
+        /**
+         * @brief signalVersion. Signal the version.
+         */
+        void    signalVersion( QString version );
 
         /**
          * @brief signalAddOnShutdown. Signal to shutdown the app.
