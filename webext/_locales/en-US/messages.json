@@ -5,7 +5,7 @@
   },
 
   "extension_description": {
-    "message": "System tray control addon.\nPlease download the companion app using the link in the preferences.",
+    "message": "System tray control addon.\n\n - custom new mail icon\n - display number of unread mails\n - show/hide Thunderbird\n - minimize to tray\n - minimize on startup\n\nPlease download the companion app using the link in the preferences.",
     "description": "Webextension descriptions"
   },
 
