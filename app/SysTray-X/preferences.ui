@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>SysTray-X Preferences</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="SysTray-X.qrc">
+    <normaloff>:/files/icons/SysTray-X.png</normaloff>:/files/icons/SysTray-X.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox">
@@ -237,7 +241,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="SysTray-X.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

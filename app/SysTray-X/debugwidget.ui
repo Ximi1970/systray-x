@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>SysTray-X Debug</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="SysTray-X.qrc">
+    <normaloff>:/files/icons/SysTray-X.png</normaloff>:/files/icons/SysTray-X.png</iconset>
+  </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
@@ -90,6 +94,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="SysTray-X.qrc"/>
+ </resources>
  <connections/>
 </ui>
