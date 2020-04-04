@@ -5,7 +5,7 @@
   },
 
   "extension_description": {
-    "message": "System tray control add-on",
+    "message": "System tray control addon.\nPlease download the companion app using the link in the preferences.",
     "description": "Webextension descriptions"
   },
 

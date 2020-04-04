@@ -1,7 +1,9 @@
-var SysTrayX = {};
+var SysTrayX = {
+  version: 0,
+};
 
 SysTrayX.SaveOptions = {
-  start: function(e) {
+  start: function (e) {
     e.preventDefault();
 
     //
@@ -17,12 +19,14 @@ SysTrayX.SaveOptions = {
       accounts.push({ ...account, checked: checked });
 
       if (checked) {
-        let inboxMailFolder = account.folders.find(obj => obj.type === "inbox");
+        let inboxMailFolder = account.folders.find(
+          (obj) => obj.type === "inbox"
+        );
 
         if (inboxMailFolder) {
           filters.push({
             unread: true,
-            folder: inboxMailFolder
+            folder: inboxMailFolder,
           });
         }
       }
@@ -30,12 +34,12 @@ SysTrayX.SaveOptions = {
 
     //  Store accounts
     browser.storage.sync.set({
-      accounts: accounts
+      accounts: accounts,
     });
 
     //  Store query filters
     browser.storage.sync.set({
-      filters: filters
+      filters: filters,
     });
 
     //
@@ -45,7 +49,7 @@ SysTrayX.SaveOptions = {
       'input[name="pollStartupDelay"]'
     ).value;
     browser.storage.sync.set({
-      pollStartupDelay: pollStartupDelay
+      pollStartupDelay: pollStartupDelay,
     });
 
     //
@@ -54,7 +58,7 @@ SysTrayX.SaveOptions = {
     const pollInterval = document.querySelector('input[name="pollInterval"]')
       .value;
     browser.storage.sync.set({
-      pollInterval: pollInterval
+      pollInterval: pollInterval,
     });
 
     //
@@ -62,7 +66,7 @@ SysTrayX.SaveOptions = {
     //
     let debug = document.querySelector('input[name="debug"]').checked;
     browser.storage.sync.set({
-      debug: `${debug}`
+      debug: `${debug}`,
     });
 
     //
@@ -71,7 +75,7 @@ SysTrayX.SaveOptions = {
     let hideOnMinimize = document.querySelector('input[name="hideOnMinimize"]')
       .checked;
     browser.storage.sync.set({
-      hideOnMinimize: `${hideOnMinimize}`
+      hideOnMinimize: `${hideOnMinimize}`,
     });
 
     //
@@ -80,7 +84,7 @@ SysTrayX.SaveOptions = {
     let startMinimized = document.querySelector('input[name="startMinimized"]')
       .checked;
     browser.storage.sync.set({
-      startMinimized: `${startMinimized}`
+      startMinimized: `${startMinimized}`,
     });
 
     //
@@ -91,7 +95,7 @@ SysTrayX.SaveOptions = {
 
     //  Store icon type
     browser.storage.sync.set({
-      iconType: iconType
+      iconType: iconType,
     });
 
     let iconDiv = document.getElementById("icon");
@@ -101,18 +105,18 @@ SysTrayX.SaveOptions = {
     //  Store icon (base64)
     browser.storage.sync.set({
       iconMime: iconMime,
-      icon: iconBase64
+      icon: iconBase64,
     });
 
     //  Mark add-on preferences changed
     browser.storage.sync.set({
-      addonprefchanged: true
+      addonprefchanged: true,
     });
-  }
+  },
 };
 
 SysTrayX.RestoreOptions = {
-  start: function() {
+  start: function () {
     //
     //  Restore debug state
     //
@@ -180,62 +184,62 @@ SysTrayX.RestoreOptions = {
   //
   //  Restore debug state callbacks
   //
-  setDebug: function(result) {
+  setDebug: function (result) {
     const debug = result.debug || "false";
 
     const checkbox = document.querySelector(`input[name="debug"]`);
     checkbox.checked = debug === "true";
   },
 
-  onDebugError: function(error) {
+  onDebugError: function (error) {
     console.log(`Debug Error: ${error}`);
   },
 
   //
   //  Restore hide on minimize callbacks
   //
-  setHideOnMinimize: function(result) {
+  setHideOnMinimize: function (result) {
     const hideOnMinimize = result.hideOnMinimize || "true";
 
     const checkbox = document.querySelector(`input[name="hideOnMinimize"]`);
     checkbox.checked = hideOnMinimize === "true";
   },
 
-  onHideOnMinimizeError: function(error) {
+  onHideOnMinimizeError: function (error) {
     console.log(`hideOnMinimize Error: ${error}`);
   },
 
   //
   //  Restore hide on minimize callbacks
   //
-  setStartMinimized: function(result) {
+  setStartMinimized: function (result) {
     const startMinimized = result.startMinimized || "false";
 
     const checkbox = document.querySelector(`input[name="startMinimized"]`);
     checkbox.checked = startMinimized === "true";
   },
 
-  onStartMinimizedError: function(error) {
+  onStartMinimizedError: function (error) {
     console.log(`startMinimized Error: ${error}`);
   },
 
   //
   //  Restore icon type callbacks
   //
-  setIconType: function(result) {
+  setIconType: function (result) {
     const iconType = result.iconType || "0";
     const radioButton = document.querySelector(`[value="${iconType}"]`);
     radioButton.checked = true;
   },
 
-  onIconTypeError: function(error) {
+  onIconTypeError: function (error) {
     console.log(`Icon type Error: ${error}`);
   },
 
   //
   //  Restore icon
   //
-  setIconMime: function(result) {
+  setIconMime: function (result) {
     const iconMime = result.iconMime || "";
 
     const valid = iconMime !== "";
@@ -247,7 +251,7 @@ SysTrayX.RestoreOptions = {
     return valid;
   },
 
-  setIconData: function(result) {
+  setIconData: function (result) {
     const iconBase64 = result.icon || "";
 
     const valid = iconBase64 !== "";
@@ -259,7 +263,7 @@ SysTrayX.RestoreOptions = {
     return valid;
   },
 
-  updateIconImage: function() {
+  updateIconImage: function () {
     const iconDiv = document.getElementById("icon");
     icon_mime = iconDiv.getAttribute("data-icon-mime");
     icon_data = iconDiv.getAttribute("data-icon");
@@ -268,7 +272,7 @@ SysTrayX.RestoreOptions = {
     image.setAttribute("src", `data:${icon_mime};base64,${icon_data}`);
   },
 
-  setIcon: function(result) {
+  setIcon: function (result) {
     const validMime = SysTrayX.RestoreOptions.setIconMime(result);
     const validData = SysTrayX.RestoreOptions.setIconData(result);
 
@@ -277,41 +281,41 @@ SysTrayX.RestoreOptions = {
     }
   },
 
-  onIconError: function(error) {
+  onIconError: function (error) {
     console.log(`Icon Error: ${error}`);
   },
 
   //
   //  Restore poll startup delay state callbacks
   //
-  setPollStartupDelay: function(result) {
+  setPollStartupDelay: function (result) {
     const pollStartupDelay = result.pollStartupDelay || 5;
 
     const input = document.querySelector(`input[name="pollStartupDelay"]`);
     input.value = pollStartupDelay;
   },
 
-  onPollStartupDelayError: function(error) {
+  onPollStartupDelayError: function (error) {
     console.log(`Poll startup delay Error: ${error}`);
   },
 
   //
   //  Restore poll interval state callbacks
   //
-  setPollInterval: function(result) {
+  setPollInterval: function (result) {
     const pollInterval = result.pollInterval || 5;
 
     const input = document.querySelector(`input[name="pollInterval"]`);
     input.value = pollInterval;
   },
 
-  onPollPollInterval: function(error) {
+  onPollPollInterval: function (error) {
     console.log(`Poll interval Error: ${error}`);
-  }
+  },
 };
 
 SysTrayX.StorageChanged = {
-  changed: function(changes, area) {
+  changed: function (changes, area) {
     //  Try to keep the preferences of the add-on and the app in sync
     const changedItems = Object.keys(changes);
 
@@ -320,7 +324,7 @@ SysTrayX.StorageChanged = {
     for (let item of changedItems) {
       if (item === "iconMime") {
         SysTrayX.RestoreOptions.setIconMime({
-          iconMime: changes[item].newValue
+          iconMime: changes[item].newValue,
         });
       }
       if (item === "icon") {
@@ -329,33 +333,33 @@ SysTrayX.StorageChanged = {
       }
       if (item === "iconType") {
         SysTrayX.RestoreOptions.setIconType({
-          iconType: changes[item].newValue
+          iconType: changes[item].newValue,
         });
         changed_icon_mime = true;
       }
       if (item === "hideOnMinimize") {
         SysTrayX.RestoreOptions.setHideOnMinimize({
-          hideOnMinimize: changes[item].newValue
+          hideOnMinimize: changes[item].newValue,
         });
       }
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
-          startMinimized: changes[item].newValue
+          startMinimized: changes[item].newValue,
         });
       }
       if (item === "pollStartupDelay") {
         SysTrayX.RestoreOptions.setPollStartupDelay({
-          pollStartupDelay: changes[item].newValue
+          pollStartupDelay: changes[item].newValue,
         });
       }
       if (item === "pollInterval") {
         SysTrayX.RestoreOptions.setPollInterval({
-          pollInterval: changes[item].newValue
+          pollInterval: changes[item].newValue,
         });
       }
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
-          debug: changes[item].newValue
+          debug: changes[item].newValue,
         });
       }
     }
@@ -369,12 +373,18 @@ SysTrayX.StorageChanged = {
     //
     document.getElementById("debugselect").className = "active";
     document.getElementById("iconselect").className = "active";
-  }
+  },
 };
 
 //
 //  Main
 //
+
+//  Get addon version
+SysTrayX.version = browser.runtime.getManifest().version;
+document.getElementById("VersioHomeLink").href =
+  "https://github.com/Ximi1970/systray-x/releases/tag/" + SysTrayX.version;
+
 document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
 document
   .querySelector('[name="saveform"]')
