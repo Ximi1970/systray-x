@@ -158,7 +158,7 @@ void    SysTrayX::createActions()
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
 
     m_about_action = new QAction(tr("&About"), this);
-    m_about_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
+    m_about_action->setIcon( QIcon( ":/files/icons/help-about.png" ) );
     connect( m_about_action, &QAction::triggered, this, &SysTrayX::slotAbout );
 
     m_quit_action = new QAction( tr("&Quit"), this );
