@@ -34,6 +34,14 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_poll_interval = 30;
 
     m_debug = false;
+
+    m_version_major = QLatin1String( APP_VERSION_MAJOR );
+    m_version_minor = QLatin1String( APP_VERSION_MINOR );
+    m_version_patch = QLatin1String( APP_VERSION_PATCH );
+
+    m_version_build = QLatin1String( APP_BUILD );
+    m_version_hash = QLatin1String( APP_GITHASH );
+    m_version_branch = QLatin1String( APP_GITBRANCH );
 }
 
 
@@ -256,4 +264,40 @@ void    Preferences::setDebug( bool state )
          */
         emit signalDebugChange();
     }
+}
+
+
+/*
+ *  Get the software version.
+ */
+QString    Preferences::getVersion() const
+{
+    return m_version_major + "." + m_version_minor + "." + m_version_patch;
+}
+
+
+/*
+ *  Get the number of commits.
+ */
+QString    Preferences::getBuild() const
+{
+    return m_version_build;
+}
+
+
+/*
+ *  Get the git hash.
+ */
+QString    Preferences::getHash() const
+{
+    return m_version_hash;
+}
+
+
+/*
+ *  Get the software version.
+ */
+QString    Preferences::getBranch() const
+{
+    return m_version_branch;
 }

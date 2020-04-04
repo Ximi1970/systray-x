@@ -10,5 +10,6 @@
         <file>files/icons/window-close.png</file>
         <file>files/icons/window-restore.png</file>
         <file>files/icons/mail-unread.png</file>
+        <file>files/icons/help-about.png</file>
     </qresource>
 </RCC>

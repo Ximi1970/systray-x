@@ -163,6 +163,34 @@ class Preferences : public QObject
          */
         void setDebug( bool state );
 
+        /**
+         * @brief getVersion. Get the software version.
+         *
+         * @return      The version.
+         */
+        QString getVersion() const;
+
+        /**
+         * @brief getBuild. Get the git number of commits.
+         *
+         * @return      The number of commits.
+         */
+        QString getBuild() const;
+
+        /**
+         * @brief getHash. Get the git hash.
+         *
+         * @return      The hash.
+         */
+        QString getHash() const;
+
+        /**
+         * @brief getBuild. Get the git branch.
+         *
+         * @return      The branch.
+         */
+        QString getBranch() const;
+
     signals:
 
         /**
@@ -246,6 +274,37 @@ class Preferences : public QObject
          * @brief m_debug. Display debug window.
          */
         bool m_debug;
+
+        /**
+         * @brief m_version_major. Major version number.
+         */
+        QString m_version_major;
+
+        /**
+         * @brief m_version_minor. Minor version number.
+         */
+        QString m_version_minor;
+
+        /**
+         * @brief m_version_patch. patch version number.
+         */
+        QString m_version_patch;
+
+        /**
+         * @brief m_version_build. Git commits count.
+         */
+        QString m_version_build;
+
+        /**
+         * @brief m_version_build. Git hash.
+         */
+        QString m_version_hash;
+
+        /**
+         * @brief m_version_build. Git branch.
+         */
+        QString m_version_branch;
+
 };
 
 #endif // PREFERENCES_H

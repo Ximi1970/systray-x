@@ -157,6 +157,10 @@ void    SysTrayX::createActions()
     m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
 
+    m_about_action = new QAction(tr("&About"), this);
+    m_about_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
+    connect( m_about_action, &QAction::triggered, this, &SysTrayX::slotAbout );
+
     m_quit_action = new QAction( tr("&Quit"), this );
     m_quit_action->setIcon( QIcon( ":/files/icons/window-close.png" ) );
     connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
@@ -181,6 +185,7 @@ void    SysTrayX::createTrayIcon()
     m_tray_icon_menu->addAction( m_showhide_action );
     m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_pref_action );
+    m_tray_icon_menu->addAction( m_about_action );
     m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_quit_action );
 
@@ -235,4 +240,23 @@ void    SysTrayX::slotShutdown()
      *  Let's quit
      */
     QCoreApplication::quit();
+}
+
+
+/*
+ *  Show the about dialog
+ */
+void    SysTrayX::slotAbout()
+{
+    Ui::AboutDialog ui;
+    QDialog dialog;
+
+    ui.setupUi( &dialog );
+
+    ui.version->setText( m_preferences->getVersion() );
+    ui.build->setText( m_preferences->getBuild() );
+    ui.hash->setText( m_preferences->getHash() );
+    ui.branch->setText( m_preferences->getBranch() );
+
+    dialog.exec();
 }

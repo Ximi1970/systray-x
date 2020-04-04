@@ -5,6 +5,7 @@
  *	Local includes
  */
 #include "ui_debugwidget.h"
+#include "ui_aboutdialog.h"
 #include "preferences.h"
 
 /*
@@ -87,6 +88,11 @@ class SysTrayX : public QObject
          */
         void    slotShutdown();
 
+        /**
+         * @brief slotAbout. Hnadle about request from the menu.
+         */
+        void    slotAbout();
+
     private:
 
         /**
@@ -127,9 +133,10 @@ class SysTrayX : public QObject
         /**
          * @brief m_xxxx_action. Pointer to the menu actions.
          */
-        QAction*    m_pref_action;
-        QAction*    m_quit_action;
         QAction*    m_showhide_action;
+        QAction*    m_pref_action;
+        QAction*    m_about_action;
+        QAction*    m_quit_action;
 };
 
 #endif // SYSTRAYX_H

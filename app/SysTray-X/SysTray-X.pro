@@ -170,7 +170,8 @@ HEADERS += \
 
 FORMS += \
         debugwidget.ui \
-        preferences.ui
+        preferences.ui \
+    aboutdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

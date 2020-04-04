@@ -6,7 +6,9 @@ var SysTrayX = {
     pollInterval: "30"
   },
 
-  platformInfo: undefined
+  platformInfo: undefined,
+  
+  version: 0
 };
 
 SysTrayX.Messaging = {
@@ -356,6 +358,10 @@ async function start() {
   console.log("OS: " + SysTrayX.platformInfo.os);
   console.log("Arch: " + SysTrayX.platformInfo.arch);
   console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
+
+  //  Get addon version
+  SysTrayX.version = browser.runtime.getManifest().version;
+  console.log("Addon version: "+SysTrayX.version);
 
   //  Init defaults before everything
   await getDefaultIcon();
