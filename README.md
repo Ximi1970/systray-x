@@ -99,6 +99,12 @@ cd systray-x
 make
 ```
 
+Install:
+```bash
+mkdir -p ~/.mozilla/native-messaging-hosts
+cp app/config/linux/SysTray_X.json
+cp -f systray-x@Ximi1970 ~/.thunderbird/*.default-release/extensions/
+```
 ...
 
 
