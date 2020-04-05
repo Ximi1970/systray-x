@@ -102,7 +102,7 @@ make
 Install:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
-cp app/config/linux/SysTray_X.json
+cp -f app/config/linux/SysTray_X.json
 cp -f systray-x@Ximi1970.xpi ~/.thunderbird/*.default-release/extensions/
 ```
 ...
