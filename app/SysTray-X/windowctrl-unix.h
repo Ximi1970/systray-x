@@ -238,14 +238,24 @@ class WindowCtrlUnix : public QObject
         QString atomName( Display* display, quint64 window );
 
         /**
-         * @brief atomState. Get the state of the window.
+         * @brief atomNetWmState. Get the _NET_WM_STATE of the window.
          *
          *  @param display  The display
          *  @param window   The window
          *
          *  @return     State of the window.
          */
-        QStringList    atomState( Display* display, quint64 window );
+        QStringList    atomNetWmState( Display* display, quint64 window );
+
+        /**
+         * @brief atomWmState. Get the WM_STATE of the window.
+         *
+         *  @param display  The display
+         *  @param window   The window
+         *
+         *  @return     State of the window.
+         */
+        long    atomWmState( Display* display, quint64 window );
 
         /**
          * @brief atomType. Get the type of the window.
