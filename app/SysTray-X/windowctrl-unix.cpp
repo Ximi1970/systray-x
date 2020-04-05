@@ -125,10 +125,15 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
             {
                 if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
                 {
-                    m_tb_window = win.window;
+                    long state = atomWmState( m_display, win.window );
 
-                    XFree( propPID );
-                    return;
+                    if( state > 0 )
+                    {
+                        m_tb_window = win.window;
+
+                        XFree( propPID );
+                        return;
+                    }
                 }
 
                 XFree( propPID );
@@ -178,7 +183,7 @@ void    WindowCtrlUnix::displayWindowElements( quint64 window )
         emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
     }
 
-    QStringList states = atomState( m_display, window );
+    QStringList states = atomNetWmState( m_display, window );
 
     bool max_vert = false;
     bool max_horz = false;
@@ -486,9 +491,9 @@ QString   WindowCtrlUnix::atomName( Display *display, quint64 window )
 
 
 /*
- *  Get the state of the window
+ *  Get the _NET_WM_STATE of the window
  */
-QStringList    WindowCtrlUnix::atomState( Display *display, quint64 window )
+QStringList    WindowCtrlUnix::atomNetWmState( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_STATE";
     Atom prop = XInternAtom( display, prop_name, True );
@@ -525,6 +530,36 @@ QStringList    WindowCtrlUnix::atomState( Display *display, quint64 window )
     }
 
     return states;
+}
+
+
+/*
+ *  Get the WM_STATE of the window
+ */
+long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
+{
+    char prop_name[] = "WM_STATE";
+    Atom prop = XInternAtom( display, prop_name, False );
+
+    Atom type;
+    int format;
+    unsigned long remain;
+    unsigned long len = 0;
+    unsigned char* data = nullptr;
+
+    long state = -1;
+    if( XGetWindowProperty( display, window, prop, 0L, 2L, False, prop,
+                &type, &format, &len, &remain, &data ) == Success && len )
+    {
+        state = *reinterpret_cast<long *>( data );
+    }
+
+    if( data )
+    {
+        XFree( data );
+    }
+
+    return state;
 }
 
 

@@ -55,6 +55,8 @@ void    WindowCtrl::slotWindowTest1()
     emit signalConsole("Test 1 started");
 
     // Do something.
+//    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
+//    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
 
 //    findWindow( "- Mozilla Thunderbird" );
 //    displayWindowElements( "- Mozilla Thunderbird" );
