@@ -52,6 +52,21 @@ https://www.codeproject.com/Articles/9893/Get-Parent-Process-PID
 X11
 ==========================================
 
+Get window ID from pid
+
+https://unix.stackexchange.com/questions/321079/how-to-get-window-id-from-process-id
+
+xdotool search --pid [pid]
+
+
+https://stackoverflow.com/questions/20580897/get-x-window-id-from-process-in-bash
+
+wmctrl -lp
+
+xprop
+
+
+
 
 Get processes (parent pid, pid and arguments)
 
