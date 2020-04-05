@@ -60,6 +60,13 @@ body {
   color: dodgerblue;
 }
 
+#iconselect {
+  border-style: solid;
+  border-width: 1px;
+  margin:  10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
 ul,
 #accountsTree {
   list-style-type: none;
@@ -68,6 +75,7 @@ ul,
 /* Remove margins and padding from the parent ul */
 #accountsTree {
   border-style: solid;
+  border-width: 1px;
   margin: 0;
   padding: 10px;
 }

@@ -146,6 +146,13 @@ class SysTrayXLink : public QObject
     signals:
 
         /**
+         * @brief signalConsole. Send a console message.
+         *
+         *  @param message      The message.
+         */
+        void    signalConsole( QString message );
+
+        /**
          * @brief signalTitle. Signal the title.
          */
         void    signalTitle( QString title );
@@ -208,6 +215,16 @@ class SysTrayXLink : public QObject
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
         void    slotIconDataChange();
+
+        /**
+         * @brief slotShowNumberChange. Handle a change in show number state.
+         */
+        void    slotShowNumberChange();
+
+        /**
+         * @brief slotNumberColorChange. Handle a change in number color.
+         */
+        void    slotNumberColorChange();
 
         /**
          * @brief slotWindowNormal. Slot for handling window normal signals.

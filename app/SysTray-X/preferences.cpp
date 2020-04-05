@@ -27,6 +27,9 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
 
+    m_show_number = true;
+    m_number_color = "#000000";
+
     m_hide_minimize = true;
     m_start_minimized = false;
 
@@ -133,6 +136,58 @@ void    Preferences::setIconData( const QByteArray& icon_data )
          *  Tell the world the new preference
          */
         emit signalIconDataChange();
+    }
+}
+
+
+/*
+ *  Get the enable number state.
+ */
+bool    Preferences::getShowNumber() const
+{
+    return m_show_number;
+}
+
+
+/*
+ *  Set the enable number state.
+ */
+void    Preferences::setShowNumber( bool state )
+{
+    if( m_show_number != state )
+    {
+        m_show_number = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalShowNumberChange();
+    }
+}
+
+
+/*
+ *  Get the number color.
+ */
+QString    Preferences::getNumberColor() const
+{
+    return m_number_color;
+}
+
+
+/*
+ *  Set the enable number state.
+ */
+void    Preferences::setNumberColor( QString color )
+{
+    if( m_number_color != color )
+    {
+        m_number_color = color;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalNumberColorChange();
     }
 }
 

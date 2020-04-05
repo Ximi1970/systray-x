@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>292</width>
-    <height>487</height>
+    <width>684</width>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,161 +17,161 @@
    <iconset resource="SysTray-X.qrc">
     <normaloff>:/files/icons/SysTray-X.png</normaloff>:/files/icons/SysTray-X.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Windows</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QCheckBox" name="hideOnMinimizeCheckBox">
-        <property name="text">
-         <string>Minimizing window hides to tray</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="startMinimizedCheckBox">
-        <property name="text">
-         <string>Start application minimized</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="iconTypeGroupBox">
-     <property name="title">
-      <string>Mail notification icon</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Windows</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetFixedSize</enum>
+         <widget class="QCheckBox" name="hideOnMinimizeCheckBox">
+          <property name="text">
+           <string>Minimizing window hides to tray</string>
           </property>
-          <item>
-           <widget class="QRadioButton" name="blankRadioButton">
-            <property name="text">
-             <string>Blank icon</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">iconTypeGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetFixedSize</enum>
+         <widget class="QCheckBox" name="startMinimizedCheckBox">
+          <property name="text">
+           <string>Start application minimized</string>
           </property>
-          <item>
-           <widget class="QRadioButton" name="newMailButton">
-            <property name="text">
-             <string>New mail icon</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">iconTypeGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         </widget>
         </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QGroupBox" name="iconTypeGroupBox">
+       <property name="title">
+        <string>Mail notification icon</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMaximumSize</enum>
-          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QRadioButton" name="customRadioButton">
-            <property name="text">
-             <string>Custom icon</string>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
             </property>
-            <attribute name="buttonGroup">
-             <string notr="true">iconTypeGroup</string>
-            </attribute>
-           </widget>
+            <item>
+             <widget class="QRadioButton" name="blankRadioButton">
+              <property name="text">
+               <string>Blank icon</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">iconTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QLabel" name="imageLabel">
-            <property name="text">
-             <string/>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
             </property>
-           </widget>
+            <item>
+             <widget class="QRadioButton" name="newMailButton">
+              <property name="text">
+               <string>New mail icon</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">iconTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="chooseCustomButton">
-            <property name="text">
-             <string>Choose</string>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
             </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
+            <item>
+             <widget class="QRadioButton" name="customRadioButton">
+              <property name="text">
+               <string>Custom icon</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">iconTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="imageLabel">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="chooseCustomButton">
+              <property name="text">
+               <string>Choose</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Mail actions</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Mail actions</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="pollStartupDelayLabel">
             <property name="text">
              <string>Poll startup delay</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="0" column="2">
            <widget class="QSpinBox" name="pollStartupDelaySpinBox">
             <property name="minimum">
              <number>1</number>
@@ -181,18 +181,14 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
+          <item row="1" column="0">
            <widget class="QLabel" name="pollIntervalLabel">
             <property name="text">
              <string>Poll interval</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="1" column="2">
            <widget class="QSpinBox" name="pollIntervalSpinBox">
             <property name="minimum">
              <number>1</number>
@@ -205,31 +201,71 @@
          </layout>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="debugWindowCheckBox">
+       <property name="text">
+        <string>Display debug window</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Number properties</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="showNumberCheckBox">
+            <property name="text">
+             <string>Display unread message count</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Text color</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="numberColorPushButton">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="3" column="0">
-    <widget class="QCheckBox" name="debugWindowCheckBox">
-     <property name="text">
-      <string>Display debug window</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>239</width>
-       <height>36</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="0">
+   <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

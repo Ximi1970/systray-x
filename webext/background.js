@@ -159,6 +159,8 @@ SysTrayX.Messaging = {
       "iconType",
       "iconMime",
       "icon",
+      "showNumber",
+      "numberColor",
     ]);
     getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
   },
@@ -172,6 +174,8 @@ SysTrayX.Messaging = {
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
+    const showNumber = result.showNumber || "true";
+    const numberColor = result.numberColor || "#000000";
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
@@ -184,6 +188,8 @@ SysTrayX.Messaging = {
         iconType: iconType,
         iconMime: iconMime,
         icon: icon,
+        showNumber: showNumber,
+        numberColor: numberColor,
       },
     });
   },
@@ -294,6 +300,20 @@ SysTrayX.Link = {
       if (iconType) {
         browser.storage.sync.set({
           iconType: iconType,
+        });
+      }
+
+      const showNumber = response["preferences"].showNumber;
+      if (showNumber) {
+        browser.storage.sync.set({
+          showNumber: showNumber,
+        });
+      }
+
+      const numberColor = response["preferences"].numberColor;
+      if (numberColor) {
+        browser.storage.sync.set({
+          numberColor: numberColor,
         });
       }
 

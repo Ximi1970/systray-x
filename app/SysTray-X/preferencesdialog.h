@@ -96,7 +96,28 @@ class PreferencesDialog : public QDialog
          */
         void    setIcon();
 
+        /**
+         * @brief setShowNumber. Set the show number state.
+         *
+         *  @param state    The state.
+         */
+        void    setShowNumber( bool state );
+
+        /**
+         * @brief setNumberColor. Set the number color.
+         *
+         *  @param state    The state.
+         */
+        void    setNumberColor( QString color );
+
     signals:
+
+        /**
+         * @brief signalConsole. Send a console message.
+         *
+         *  @param message      The message.
+         */
+        void    signalConsole( QString message );
 
         /**
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
@@ -140,6 +161,16 @@ class PreferencesDialog : public QDialog
          */
         void    slotIconDataChange();
 
+        /**
+         * @brief slotShowNumberChange. Slot for handling show number state change.
+         */
+        void    slotShowNumberChange();
+
+        /**
+         * @brief slotNumberColorChange. Slot for handling number color change.
+         */
+        void    slotNumberColorChange();
+
     private slots:
 
         /**
@@ -156,6 +187,11 @@ class PreferencesDialog : public QDialog
          * @brief slotFileSelect. Handle the choose custom button click.
          */
         void    slotFileSelect();
+
+        /**
+         * @brief slotColorSelect. Handle the choose color button click.
+         */
+        void    slotColorSelect();
 
     private:
 
@@ -184,6 +220,10 @@ class PreferencesDialog : public QDialog
          */
         QByteArray m_tmp_icon_data;
 
+        /**
+         * @brief m_number_color. Temporary storage for the number color.
+         */
+        QString m_number_color;
 };
 
 #endif // PREFERENCESDIALOG_H

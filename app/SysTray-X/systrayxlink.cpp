@@ -363,6 +363,26 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "showNumber" ) && pref[ "showNumber" ].isString() )
+    {
+        bool show_number = pref[ "showNumber" ].toString() == "true";
+
+        /*
+         *  Store the new show number state
+         */
+        m_pref->setShowNumber( show_number );
+    }
+
+    if( pref.contains( "numberColor" ) && pref[ "numberColor" ].isString() )
+    {
+        QString number_color = pref[ "numberColor" ].toString();
+
+        /*
+         *  Store the new number color
+         */
+        m_pref->setNumberColor( number_color );
+    }
+
     if( pref.contains( "hideOnMinimize" ) && pref[ "hideOnMinimize" ].isString() )
     {
         bool hide_minimize = pref[ "hideOnMinimize" ].toString() == "true";
@@ -432,6 +452,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
+    prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
+    prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
 
     QJsonObject preferencesObject;
     preferencesObject.insert("preferences", prefObject );
@@ -540,6 +562,30 @@ void    SysTrayXLink::slotIconTypeChange()
  *  Handle the icon data change signal
  */
 void    SysTrayXLink::slotIconDataChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a show number state change signal
+ */
+void    SysTrayXLink::slotShowNumberChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a number color change signal
+ */
+void    SysTrayXLink::slotNumberColorChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

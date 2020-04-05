@@ -94,6 +94,34 @@ class Preferences : public QObject
         void setIconData( const QByteArray& icon_data );
 
         /**
+         * @brief getShowNumber. Get the show number state.
+         *
+         * @return      The state.
+         */
+        bool getShowNumber() const;
+
+        /**
+         * @brief setShowNumber. Set the show number state.
+         *
+         * @param      The state.
+         */
+        void setShowNumber( bool state );
+
+        /**
+         * @brief getNumberColor. Get the number color.
+         *
+         * @return      The color.
+         */
+        QString getNumberColor() const;
+
+        /**
+         * @brief setNumberColor. Set the number color.
+         *
+         * @param      The color.
+         */
+        void setNumberColor( QString color );
+
+        /**
          * @brief getHideOnMinimize. Get the hide on minimize state.
          *
          * @return      The state.
@@ -194,6 +222,13 @@ class Preferences : public QObject
     signals:
 
         /**
+         * @brief signalConsole. Send a console message.
+         *
+         *  @param message      The message.
+         */
+        void    signalConsole( QString message );
+
+        /**
          * @brief signalIconTypeChange. Signal a icon type change.
          */
         void signalIconTypeChange();
@@ -202,6 +237,16 @@ class Preferences : public QObject
          * @brief signalIconDataChange. Signal a icon data change.
          */
         void signalIconDataChange();
+
+        /**
+         * @brief signalShowNumberChange. Signal a show number state change.
+         */
+        void signalShowNumberChange();
+
+        /**
+         * @brief signalNumberColorChange. Signal a number color change.
+         */
+        void signalNumberColorChange();
 
         /**
          * @brief signalHideOnMinimizeChange. Signal a hide on mnimize state change.
@@ -249,6 +294,16 @@ class Preferences : public QObject
          * @brief m_icon_data. Binary data icon image.
          */
         QByteArray m_icon_data;
+
+        /**
+         * @brief m_show_number. Show number in systray icon.
+         */
+        bool m_show_number;
+
+        /**
+         * @brief m_number_color. The color of the number in systray icon.
+         */
+        QString m_number_color;
 
         /**
          * @brief m_hide_minimize. Hide the minimized window.

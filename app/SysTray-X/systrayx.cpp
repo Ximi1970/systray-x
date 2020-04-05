@@ -68,6 +68,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
 
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
+    connect( m_preferences, &Preferences::signalConsole, m_debug, &DebugWidget::slotConsole );
+    connect( m_pref_dialog, &PreferencesDialog::signalConsole, m_debug, &DebugWidget::slotConsole );
+    connect( m_link, &SysTrayXLink::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_win_ctrl, &WindowCtrl::signalConsole, m_debug, &DebugWidget::slotConsole );
 
     connect( m_debug, &DebugWidget::signalTest1ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest1 );
@@ -79,13 +82,16 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
+    connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
+    connect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
 
     connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_win_ctrl, &WindowCtrl::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
-
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
+    connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
+    connect( m_preferences, &Preferences::signalNumberColorChange, m_pref_dialog, &PreferencesDialog::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_pref_dialog, &PreferencesDialog::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotPollStartupDelayChange );
@@ -94,6 +100,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
+    connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
+    connect( m_preferences, &Preferences::signalNumberColorChange, m_link, &SysTrayXLink::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_link, &SysTrayXLink::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_link, &SysTrayXLink::slotPollStartupDelayChange );

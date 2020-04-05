@@ -55,6 +55,20 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    setIconData( const QByteArray& icon_data );
 
         /**
+         * @brief showNumber. Set the show number state.
+         *
+         *  @param state    Show / hide.
+         */
+        void    showNumber( bool state );
+
+        /**
+         * @brief setNumberColor. Set the number color.
+         *
+         *  @param color    The color.
+         */
+        void    setNumberColor( const QString& color );
+
+        /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread_mail  The number of unread mails.
@@ -94,6 +108,16 @@ class SysTrayXIcon : public QSystemTrayIcon
          */
         void    slotIconDataChange();
 
+        /**
+         * @brief slotShowNumberChange. Slot for handling show number change signals.
+         */
+        void    slotShowNumberChange();
+
+        /**
+         * @brief slotNumberColorChange. Slot for handling number color change signals.
+         */
+        void    slotNumberColorChange();
+
     private slots:
 
         /**
@@ -129,6 +153,16 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_icon_data. Storage for the icon.
          */
         QByteArray  m_icon_data;
+
+        /**
+         * @brief m_show_number. Show the unread mail count.
+         */
+        bool m_show_number;
+
+        /**
+         * @brief m_number_color. Color of the unread mail number.
+         */
+        QString m_number_color;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

@@ -30,6 +30,9 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
 
     m_unread_mail = 0;
 
+    m_show_number = m_pref->getShowNumber();
+    m_number_color = m_pref->getNumberColor();
+
     connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
 
@@ -80,6 +83,46 @@ void    SysTrayXIcon::setIconData( const QByteArray& icon_data )
          *  Store the new value
          */
         m_icon_data = icon_data;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Enable/disable number
+ */
+void    SysTrayXIcon::showNumber( bool state )
+{
+    if( m_show_number != state )
+    {
+        /*
+         *  Store the new value
+         */
+        m_show_number = state;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Enable/disable number
+ */
+void    SysTrayXIcon::setNumberColor( const QString& color )
+{
+    if( m_number_color != color )
+    {
+        /*
+         *  Store the new value
+         */
+        m_number_color = color;
 
         /*
          *  Render and set a new icon in the tray
@@ -145,7 +188,7 @@ void    SysTrayXIcon::renderIcon()
         pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
     }
 
-    if( m_unread_mail > 0 )
+    if( m_show_number && ( m_unread_mail > 0 ) )
     {
         /*
          *  Paint the number
@@ -164,6 +207,8 @@ void    SysTrayXIcon::renderIcon()
         font.setPointSizeF( font.pointSizeF() * factor );
         font.setBold( true );
         painter.setFont( font );
+
+        painter.setPen( QColor( m_number_color ) );
 
         painter.drawText( pixmap.rect(), Qt::AlignCenter, QString::number( m_unread_mail ) );
     }
@@ -200,6 +245,24 @@ void    SysTrayXIcon::slotIconDataChange()
 {
     setIconMime( m_pref->getIconMime() );
     setIconData( m_pref->getIconData() );
+}
+
+
+/*
+ *  Handle the enable number state change signal
+ */
+void    SysTrayXIcon::slotShowNumberChange()
+{
+    showNumber( m_pref->getShowNumber() );
+}
+
+
+/*
+ *  Handle the number color change signal
+ */
+void    SysTrayXIcon::slotNumberColorChange()
+{
+    setNumberColor( m_pref->getNumberColor() );
 }
 
 

@@ -112,6 +112,22 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       addonprefchanged: true,
     });
+
+    //
+    //  Save enable number state
+    //
+    let showNumber = document.querySelector('input[name="showNumber"]').checked;
+    browser.storage.sync.set({
+      showNumber: `${showNumber}`,
+    });
+
+    //
+    //  Save number color
+    //
+    let numberColor = document.querySelector('input[name="numberColor"]').value;
+    browser.storage.sync.set({
+      numberColor: `${numberColor}`,
+    });
   },
 };
 
@@ -178,6 +194,24 @@ SysTrayX.RestoreOptions = {
     getPollInterval.then(
       SysTrayX.RestoreOptions.setPollInterval,
       SysTrayX.RestoreOptions.onPollIntervalError
+    );
+
+    //
+    //  Restore enable number state
+    //
+    const getShowNumber = browser.storage.sync.get("showNumber");
+    getShowNumber.then(
+      SysTrayX.RestoreOptions.setShowNumber,
+      SysTrayX.RestoreOptions.onShowNumberError
+    );
+
+    //
+    //  Restore number color
+    //
+    const getNumberColor = browser.storage.sync.get("numberColor");
+    getNumberColor.then(
+      SysTrayX.RestoreOptions.setNumberColor,
+      SysTrayX.RestoreOptions.onNumberColorError
     );
   },
 
@@ -286,6 +320,34 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore enable number state
+  //
+  setShowNumber: function (result) {
+    const showNumber = result.showNumber || "true";
+
+    const checkbox = document.querySelector(`input[name="showNumber"]`);
+    checkbox.checked = showNumber === "true";
+  },
+
+  onShowNumberError: function (error) {
+    console.log(`showNumber Error: ${error}`);
+  },
+
+  //
+  //  Restore number color
+  //
+  setNumberColor: function (result) {
+    const numberColor = result.numberColor || "#000000";
+
+    const input = document.querySelector(`input[name="numberColor"]`);
+    input.value = numberColor;
+  },
+
+  onNumberColorError: function (error) {
+    console.log(`numberColor Error: ${error}`);
+  },
+
+  //
   //  Restore poll startup delay state callbacks
   //
   setPollStartupDelay: function (result) {
@@ -336,6 +398,16 @@ SysTrayX.StorageChanged = {
           iconType: changes[item].newValue,
         });
         changed_icon_mime = true;
+      }
+      if (item === "showNumber") {
+        SysTrayX.RestoreOptions.setShowNumber({
+          showNumber: changes[item].newValue,
+        });
+      }
+      if (item === "numberColor") {
+        SysTrayX.RestoreOptions.setNumberColor({
+          numberColor: changes[item].newValue,
+        });
       }
       if (item === "hideOnMinimize") {
         SysTrayX.RestoreOptions.setHideOnMinimize({

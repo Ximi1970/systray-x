@@ -9,8 +9,10 @@
 /*
  *	Qt includes
  */
+#include <QColor>
 #include <QPixmap>
 #include <QFileDialog>
+#include <QColorDialog>
 #include <QMimeDatabase>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -47,6 +49,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
     connect( m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::slotAccept );
     connect( m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::slotReject );
+    connect( m_ui->numberColorPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotColorSelect );
+
+    /*
+     *  Set number color
+     */
+    setNumberColor( m_pref->getNumberColor() );
 }
 
 
@@ -140,6 +148,29 @@ void    PreferencesDialog::setIcon()
 
 
 /*
+ *  Set the enable number state
+ */
+void    PreferencesDialog::setShowNumber( bool state )
+{
+   m_ui->showNumberCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the number color
+ */
+void    PreferencesDialog::setNumberColor( QString color )
+{
+    m_number_color = color;
+
+    QPixmap pixmap( 256, 256 );
+    pixmap.fill( QColor( color ) );
+
+    m_ui->numberColorPushButton->setIcon( QIcon( pixmap ) );
+}
+
+
+/*
  *  Handle the accept signal
  */
 void    PreferencesDialog::slotAccept()
@@ -161,6 +192,9 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setPollStartupDelay(m_ui->pollStartupDelaySpinBox->value());
     m_pref->setPollInterval(m_ui->pollIntervalSpinBox->value());
+
+    m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
+    m_pref->setNumberColor( m_number_color );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
@@ -211,6 +245,21 @@ void    PreferencesDialog::slotFileSelect()
          *  Display the icon
          */
         setIcon();
+    }
+}
+
+
+/*
+ *  Handle the choose button
+ */
+void    PreferencesDialog::slotColorSelect()
+{
+    QColor color( m_number_color );
+    QColorDialog color_dialog( color );
+
+    if( color_dialog.exec() )
+    {
+        setNumberColor( color_dialog.selectedColor().name() );
     }
 }
 
@@ -280,4 +329,22 @@ void    PreferencesDialog::slotIconDataChange()
      *  Display the icon
      */
     setIcon();
+}
+
+
+/*
+ *  Handle the enable number state change
+ */
+void    PreferencesDialog::slotShowNumberChange()
+{
+    setShowNumber( m_pref->getShowNumber() );
+}
+
+
+/*
+ *  Handle the number color change
+ */
+void    PreferencesDialog::slotNumberColorChange()
+{
+    setNumberColor( m_pref->getNumberColor() );
 }
