@@ -127,7 +127,7 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
                 {
                     long state = atomWmState( m_display, win.window );
 
-                    if( state >= 0 )
+                    if( state > 0 )
                     {
                         m_tb_window = win.window;
 
@@ -538,25 +538,6 @@ QStringList    WindowCtrlUnix::atomNetWmState( Display *display, quint64 window 
  */
 long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
 {
-    /*
-    Atom real_type;
-    int real_format;
-    long state = WithdrawnState;
-    ulong items_read, items_left;
-    unsigned char *data;
-    Atom wm_state=XInternAtom( display, "WM_STATE", False );
-
-    if( wm_state && XGetWindowProperty( display, window, wm_state, 0L, 2L, False,
-        wm_state, &real_type, &real_format, &items_read, &items_left, &data) == Success && items_read )
-    {
-         state = *(long *)data;
-         XFree(data);
-     }
-
-    return state;
-*/
-
-
     char prop_name[] = "WM_STATE";
     Atom prop = XInternAtom( display, prop_name, False );
 
@@ -570,8 +551,6 @@ long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
     if( XGetWindowProperty( display, window, prop, 0L, 2L, False, prop,
                 &type, &format, &len, &remain, &data ) == Success && len )
     {
-        emit signalConsole( QString( "WM_STATE: %1").arg( *data ) );
-
         state = *reinterpret_cast<long *>( data );
     }
 
