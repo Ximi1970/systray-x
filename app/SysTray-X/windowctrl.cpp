@@ -55,11 +55,11 @@ void    WindowCtrl::slotWindowTest1()
     emit signalConsole("Test 1 started");
 
     // Do something.
-    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
-    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
+//    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
+//    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
 
 //    findWindow( "- Mozilla Thunderbird" );
-    displayWindowElements( "- Mozilla Thunderbird" );
+//    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
 
@@ -72,9 +72,6 @@ void    WindowCtrl::slotWindowTest2()
     emit signalConsole("Test 2 started");
 
     // Do something.
-
-    findWindow( 5756 );
-
 
 //    findWindow( m_ppid );
 //    emit signalConsole( QString( "Hwnd ppid: %1" ).arg( getWinIds()[0] ) );
