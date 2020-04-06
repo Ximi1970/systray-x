@@ -270,24 +270,12 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 
     Window win = static_cast<Window>( window );
 
-    /*
-     *  Most systems
-     */
     if( hide )
     {
         hideWindow( win, hide );
     }
 
     XIconifyWindow( m_display, win, m_screen );
-
-    /*
-     *  Xubuntu 18.04 needs this one
-     */
-    if( hide )
-    {
-        hideWindow( win, hide );
-    }
-
     XFlush( m_display );
 }
 
