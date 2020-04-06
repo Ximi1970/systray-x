@@ -66,6 +66,15 @@ wmctrl -lp
 xprop
 
 
+https://askubuntu.com/questions/646346/xfce-hiding-an-application-from-the-taskbar
+
+xprop -id xxxxx | grep "CLASS"
+wmctrl -x -r name.name -b add,skip_taskbar
+
+wmctrl -x -r name.name -b remove,skip_taskbar
+
+
+
 
 
 Get processes (parent pid, pid and arguments)
