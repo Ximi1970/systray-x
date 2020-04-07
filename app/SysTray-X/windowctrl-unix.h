@@ -55,6 +55,13 @@ class WindowCtrlUnix : public QObject
             TYPE_NORMAL
         };
 
+        enum StateActions
+        {
+            _NET_WM_STATE_REMOVE = 0,
+            _NET_WM_STATE_ADD,
+            _NET_WM_STATE_TOGGLE
+        };
+
         /*
          *  Window states
          */
@@ -236,6 +243,20 @@ class WindowCtrlUnix : public QObject
          *  @return     Name of the window.
          */
         QString atomName( Display* display, quint64 window );
+
+        /**
+         * @brief sendEvent. Send an event.
+         *
+         *  @param window    Event target.
+         *  @param msg       The message
+         *  @param action    The action for the properties
+         *  @param prop1     Property 1
+         *  @param prop2     Property 2
+         *  @param prop3     Property 3
+         *  @param prop4     Property 4
+         */
+        void sendEvent( quint64 window, const char* msg, long action,
+                            long prop1, long prop2 = 0, long prop3 = 0, long prop4 = 0 );
 
         /**
          * @brief atomNetWmState. Get the _NET_WM_STATE of the window.

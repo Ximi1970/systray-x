@@ -315,6 +315,27 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 }
 
 
+void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
+{
+    if( set )
+    {
+        sendEvent( window,
+                    "_NET_WM_STATE",
+                    _NET_WM_STATE_ADD,
+                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
+    }
+    else
+    {
+        sendEvent( window,
+                    "_NET_WM_STATE",
+                    _NET_WM_STATE_REMOVE,
+                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
+    }
+
+}
+
+#ifdef FF_NEET
+
 /*
  *  Remove window from taskbar
  */
@@ -400,7 +421,7 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 
     XFlush( m_display );
 }
-
+#endif
 
 /*
  *  Delete the window
@@ -421,7 +442,7 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
     }
 
     Atom delete_prop = XInternAtom( m_display, "WM_DELETE_WINDOW", False );
-    if( prop == None )
+    if( delete_prop == None )
     {
         return;
     }
@@ -461,6 +482,40 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *dis
     }
 
     return windows;
+}
+
+
+/*
+ *  Send a X event
+ */
+void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
+                                    long prop1, long prop2, long prop3, long prop4 )
+{
+    Window win = static_cast<Window>( window );
+
+    XEvent event;
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom( m_display, msg, False );
+    event.xclient.window = win;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = action;
+    event.xclient.data.l[1] = prop1;
+    event.xclient.data.l[2] = prop2;
+    event.xclient.data.l[2] = prop3;
+    event.xclient.data.l[2] = prop4;
+
+    if( XSendEvent( m_display, win, False, SubstructureRedirectMask | SubstructureNotifyMask, &event ) )
+    {
+        emit signalConsole( "Event sent" );
+    }
+    else
+    {
+        emit signalConsole( "Event NOT sent" );
+    }
+
+    XFlush( m_display );
 }
 
 

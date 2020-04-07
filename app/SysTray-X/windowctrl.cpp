@@ -77,6 +77,8 @@ void    WindowCtrl::slotWindowTest2()
 //    findWindow( m_ppid );
 //    emit signalConsole( QString( "Hwnd ppid: %1" ).arg( getWinIds()[0] ) );
 
+    hideWindow( getWinId(), true );
+
     emit signalConsole("Test 2 done");
 }
 
@@ -86,6 +88,7 @@ void    WindowCtrl::slotWindowTest3()
     emit signalConsole("Test 3 started");
 
     // Do something.
+    hideWindow( getWinId(), false );
 
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
