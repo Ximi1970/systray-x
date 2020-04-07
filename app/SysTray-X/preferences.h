@@ -22,6 +22,15 @@ class Preferences : public QObject
     public:
 
         /*
+         *  Minimize types
+         */
+        enum MinimizeType {
+            PREF_DEFAULT_MINIMIZE = 0,
+            PREF_MINIMIZE_METHOD_1,
+            PREF_MINIMIZE_METHOD_2
+        };
+
+        /*
          *  Icon types
          */
         enum IconType {
@@ -120,6 +129,20 @@ class Preferences : public QObject
          * @param      The color.
          */
         void setNumberColor( QString color );
+
+        /**
+         * @brief getMinimizeType. Get the minimize type.
+         *
+         * @return      The minimize type.
+         */
+        MinimizeType getMinimizeType() const;
+
+        /**
+         * @brief setMinimizeType. Set the minimize type.
+         *
+         * @param      The minimize type.
+         */
+        void setMinimizeType( MinimizeType icon_type );
 
         /**
          * @brief getHideOnMinimize. Get the hide on minimize state.
@@ -249,6 +272,11 @@ class Preferences : public QObject
         void signalNumberColorChange();
 
         /**
+         * @brief signalMinimizeTypeChange. Signal a minimize type change.
+         */
+        void signalMinimizeTypeChange();
+
+        /**
          * @brief signalHideOnMinimizeChange. Signal a hide on mnimize state change.
          */
         void signalHideOnMinimizeChange();
@@ -304,6 +332,11 @@ class Preferences : public QObject
          * @brief m_number_color. The color of the number in systray icon.
          */
         QString m_number_color;
+
+        /**
+         * @brief m_minimize_type. Selected minimize type.
+         */
+        MinimizeType m_minimize_type;
 
         /**
          * @brief m_hide_minimize. Hide the minimized window.

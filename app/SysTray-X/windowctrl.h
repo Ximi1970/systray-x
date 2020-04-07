@@ -65,16 +65,17 @@ class WindowCtrl : public QObject
         void    slotWindowTitle( QString title );
 
         /**
+         * @brief slotMinimizeTypeChange. Handle the minimize type signal.
+         */
+        void    slotMinimizeTypeChange();
+
+        /**
          * @brief slotHideOnMinimizeChange. Handle the hide on minimize signal.
-         *
-         *  @param state    The state
          */
         void    slotHideOnMinimizeChange();
 
         /**
          * @brief slotStartMinimizedChange. Handle the start minimized signal.
-         *
-         *  @param state    The state
          */
         void    slotStartMinimizedChange();
 
@@ -121,6 +122,11 @@ class WindowCtrl : public QObject
          * @brief m_window_title. Title of the TB window.
          */
         QString m_window_title;
+
+        /**
+         * @brief m_minimize_type. Minimize type.
+         */
+        int m_minimize_type;
 
         /**
          * @brief m_hide_minimize. State of hide on minimize.

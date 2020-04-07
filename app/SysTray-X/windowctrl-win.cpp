@@ -222,7 +222,7 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlWin::minimizeWindow( quint64 window, bool hide )
+void    WindowCtrlWin::minimizeWindow( quint64 window, int hide )
 {
     if( !isThunderbird( getPpid() ) )
     {

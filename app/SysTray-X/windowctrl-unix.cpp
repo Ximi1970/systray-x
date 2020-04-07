@@ -261,7 +261,7 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
+void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -270,12 +270,18 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 
     Window win = static_cast<Window>( window );
 
-    if( hide )
+    if( hide == Preferences::PREF_MINIMIZE_METHOD_1 )
     {
         hideWindow( win, hide );
     }
 
     XIconifyWindow( m_display, win, m_screen );
+
+    if( hide == Preferences::PREF_MINIMIZE_METHOD_2 )
+    {
+        hideWindow( win, hide );
+    }
+
     XFlush( m_display );
 }
 

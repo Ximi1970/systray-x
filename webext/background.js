@@ -154,6 +154,7 @@ SysTrayX.Messaging = {
       "debug",
       "pollStartupDelay",
       "pollInterval",
+      "minimizeType",
       "hideOnMinimize",
       "startMinimized",
       "iconType",
@@ -169,6 +170,7 @@ SysTrayX.Messaging = {
     const debug = result.debug || "false";
     const pollStartupDelay = result.pollStartupDelay || "30";
     const pollInterval = result.pollInterval || "30";
+    const minimizeType = result.minimizeType || "0";
     const hideOnMinimize = result.hideOnMinimize || "true";
     const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
@@ -183,6 +185,7 @@ SysTrayX.Messaging = {
         debug: debug,
         pollStartupDelay: pollStartupDelay,
         pollInterval: pollInterval,
+        minimizeType: minimizeType,
         hideOnMinimize: hideOnMinimize,
         startMinimized: startMinimized,
         iconType: iconType,
@@ -314,6 +317,13 @@ SysTrayX.Link = {
       if (numberColor) {
         browser.storage.sync.set({
           numberColor: numberColor,
+        });
+      }
+
+      const minimizeType = response["preferences"].minimizeType;
+      if (minimizeType) {
+        browser.storage.sync.set({
+          minimizeType: minimizeType,
         });
       }
 

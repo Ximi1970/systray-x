@@ -31,7 +31,14 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_pref = pref;
 
     /*
-     *  Set button Ids
+     *  Set minimize type button Ids
+     */
+    m_ui->minimizeTypeGroup->setId( m_ui->defaultMinimizeRadioButton, Preferences::PREF_DEFAULT_MINIMIZE);
+    m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod1RadioButton, Preferences::PREF_MINIMIZE_METHOD_1 );
+    m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod2RadioButton, Preferences::PREF_MINIMIZE_METHOD_2 );
+
+    /*
+     *  Set icon type button Ids
      */
     m_ui->iconTypeGroup->setId( m_ui->blankRadioButton, Preferences::PREF_BLANK_ICON );
     m_ui->iconTypeGroup->setId( m_ui->newMailButton, Preferences::PREF_NEWMAIL_ICON );
@@ -82,6 +89,15 @@ void    PreferencesDialog::setPollStartupDelay( int val )
 void    PreferencesDialog::setPollInterval( int val )
 {
    m_ui->pollIntervalSpinBox->setValue( val );
+}
+
+
+/*
+ *  Set the minimize type
+ */
+void    PreferencesDialog::setMinimizeType( Preferences::MinimizeType minimize_type )
+{
+   ( m_ui->minimizeTypeGroup->button( minimize_type ) )->setChecked( true );
 }
 
 
@@ -187,6 +203,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setIconMime( m_tmp_icon_mime );
     m_pref->setIconData( m_tmp_icon_data );
 
+    m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setHideOnMinimize( m_ui->hideOnMinimizeCheckBox->isChecked() );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
 
@@ -292,6 +309,15 @@ void    PreferencesDialog::slotPollIntervalChange()
 
 
 /*
+ *  Handle the minimize type change signal
+ */
+void    PreferencesDialog::slotMinimizeTypeChange()
+{
+    setMinimizeType( m_pref->getMinimizeType() );
+}
+
+
+/*
  *  Handle the hide on minimize change signal
  */
 void    PreferencesDialog::slotHideOnMinimizeChange()
@@ -307,6 +333,7 @@ void    PreferencesDialog::slotStartMinimizedChange()
 {
     setStartMinimized( m_pref->getStartMinimized() );
 }
+
 
 /*
  *  Handle the icon type change signal

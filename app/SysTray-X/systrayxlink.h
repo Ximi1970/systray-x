@@ -197,6 +197,11 @@ class SysTrayXLink : public QObject
         void    slotPollIntervalChange();
 
         /**
+         * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
+         */
+        void    slotMinimizeTypeChange();
+
+        /**
          * @brief slotHideOnMinimizeChange. Handle a change in hide on minimize state.
          */
         void    slotHideOnMinimizeChange();

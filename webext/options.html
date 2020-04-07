@@ -32,6 +32,26 @@
     <div id="WindowsContent" class="tabcontent" style="display: block;">
       <form>
         <h3>Windows</h3>
+        <table id="minimizeselect">
+          <tr>
+            <td>
+              <input type="radio" name="minimizeType" value="0" /> Default minimize
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="radio" name="minimizeType" value="1" /> Minimize to
+              tray, method 1
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="radio" name="minimizeType" value="2" /> Minimize to
+              tray, method 2
+            </td>
+          </tr>
+        </table>
+
         <input type="checkbox" name="hideOnMinimize" value="" /> Minimizing
         window hides to tray<br />
         <input type="checkbox" name="startMinimized" value="" /> Start

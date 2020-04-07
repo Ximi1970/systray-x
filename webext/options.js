@@ -70,6 +70,17 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save minimize preferences
+    //
+    const minimizeType = document.querySelector('input[name="minimizeType"]:checked')
+      .value;
+
+    //  Store minimize preferences
+    browser.storage.sync.set({
+      minimizeType: minimizeType,
+    });
+
+    //
     //  Save hide on minimize state
     //
     let hideOnMinimize = document.querySelector('input[name="hideOnMinimize"]')
@@ -140,6 +151,15 @@ SysTrayX.RestoreOptions = {
     getDebug.then(
       SysTrayX.RestoreOptions.setDebug,
       SysTrayX.RestoreOptions.onDebugError
+    );
+
+    //
+    //  Restore minimize type
+    //
+    const getMinimizeType = browser.storage.sync.get("minimizeType");
+    getMinimizeType.then(
+      SysTrayX.RestoreOptions.setMinimizeType,
+      SysTrayX.RestoreOptions.onMinimizeTypeError
     );
 
     //
@@ -230,6 +250,19 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore minimize type callbacks
+  //
+  setMinimizeType: function (result) {
+    const minimizeType = result.minimizeType || "0";
+    const radioButton = document.querySelector(`input[name="minimizeType"][value="${minimizeType}"]`);
+    radioButton.checked = true;
+  },
+
+  onMinimizeTypeError: function (error) {
+    console.log(`Minimize type Error: ${error}`);
+  },
+
+  //
   //  Restore hide on minimize callbacks
   //
   setHideOnMinimize: function (result) {
@@ -262,7 +295,7 @@ SysTrayX.RestoreOptions = {
   //
   setIconType: function (result) {
     const iconType = result.iconType || "0";
-    const radioButton = document.querySelector(`[value="${iconType}"]`);
+    const radioButton = document.querySelector(`input[name="iconType"][value="${iconType}"]`);
     radioButton.checked = true;
   },
 
@@ -409,6 +442,11 @@ SysTrayX.StorageChanged = {
           numberColor: changes[item].newValue,
         });
       }
+      if (item === "minimizeType") {
+        SysTrayX.RestoreOptions.setMinimizeType({
+          minimizeType: changes[item].newValue,
+        });
+      }
       if (item === "hideOnMinimize") {
         SysTrayX.RestoreOptions.setHideOnMinimize({
           hideOnMinimize: changes[item].newValue,
@@ -445,6 +483,7 @@ SysTrayX.StorageChanged = {
     //
     document.getElementById("debugselect").className = "active";
     document.getElementById("iconselect").className = "active";
+    document.getElementById("minimizeselect").className = "active";
   },
 };
 

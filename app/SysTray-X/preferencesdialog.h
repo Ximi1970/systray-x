@@ -63,6 +63,13 @@ class PreferencesDialog : public QDialog
         void    setPollInterval( int val );
 
         /**
+         * @brief setMinimizeType. Set the minimize type.
+         *
+         *  @param minimize_type    The minimize type.
+         */
+        void    setMinimizeType( Preferences::MinimizeType minimize_type );
+
+        /**
          * @brief setHideOnMinimize. Set the hide on minimize state.
          *
          *  @param state    The state.
@@ -140,6 +147,11 @@ class PreferencesDialog : public QDialog
          * @brief slotPollIntervalChange. Slot for handling poll interval signals.
          */
         void    slotPollIntervalChange();
+
+        /**
+         * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
+         */
+        void    slotMinimizeTypeChange();
 
         /**
          * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.

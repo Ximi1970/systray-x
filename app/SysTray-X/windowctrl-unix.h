@@ -190,7 +190,7 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          *  @param hide     Hide from taskbar.
          */
-        void    minimizeWindow( quint64 window, bool hide );
+        void    minimizeWindow( quint64 window, int hide );
 
         /**
          * @brief normalizeWindow. Normalize window.

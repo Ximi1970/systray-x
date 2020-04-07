@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>278</height>
+    <height>310</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,12 +20,49 @@
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
+     <item row="0" column="0" rowspan="2">
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
         <string>Windows</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="defaultMinimizeRadioButton">
+            <property name="text">
+             <string>Default minimize</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">minimizeTypeGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="minimizeMethod1RadioButton">
+            <property name="text">
+             <string>Minimize to tray, method 1</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">minimizeTypeGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="minimizeMethod2RadioButton">
+            <property name="text">
+             <string>Minimize to tray, method 2</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">minimizeTypeGroup</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QCheckBox" name="hideOnMinimizeCheckBox">
           <property name="text">
@@ -203,14 +240,7 @@
        </layout>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="debugWindowCheckBox">
-       <property name="text">
-        <string>Display debug window</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="2">
+     <item row="1" column="1" rowspan="2" colspan="2">
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
         <string>Number properties</string>
@@ -263,6 +293,13 @@
        </layout>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="debugWindowCheckBox">
+       <property name="text">
+        <string>Display debug window</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="1" column="0">
@@ -300,5 +337,6 @@
  </connections>
  <buttongroups>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
  </buttongroups>
 </ui>

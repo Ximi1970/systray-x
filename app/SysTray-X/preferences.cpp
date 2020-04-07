@@ -30,6 +30,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_show_number = true;
     m_number_color = "#000000";
 
+    m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_hide_minimize = true;
     m_start_minimized = false;
 
@@ -45,15 +46,6 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_build = QLatin1String( APP_BUILD );
     m_version_hash = QLatin1String( APP_GITHASH );
     m_version_branch = QLatin1String( APP_GITBRANCH );
-}
-
-
-/*
- *  Get the icon type.
- */
-Preferences::IconType Preferences::getIconType() const
-{
-    return m_icon_type;
 }
 
 
@@ -75,6 +67,15 @@ void    Preferences::setAppPrefChanged( bool state )
     {
         m_app_pref_changed = state;
     }
+}
+
+
+/*
+ *  Get the icon type.
+ */
+Preferences::IconType Preferences::getIconType() const
+{
+    return m_icon_type;
 }
 
 
@@ -188,6 +189,32 @@ void    Preferences::setNumberColor( QString color )
          *  Tell the world the new preference
          */
         emit signalNumberColorChange();
+    }
+}
+
+
+/*
+ *  Get the icon type.
+ */
+Preferences::MinimizeType Preferences::getMinimizeType() const
+{
+    return m_minimize_type;
+}
+
+
+/*
+ *  Set the icon type.
+ */
+void    Preferences::setMinimizeType( MinimizeType minimize_type )
+{
+    if( m_minimize_type != minimize_type)
+    {
+        m_minimize_type = minimize_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeTypeChange();
     }
 }
 
