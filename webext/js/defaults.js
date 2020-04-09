@@ -73,11 +73,11 @@ async function getStartupState() {
 //
 async function getPollTiming() {
   function getDelayAndInterval(result) {
-    return { pollStartupDelay: result.pollStartupDelay || "30", pollInterval: result.pollInterval || "30" };
+    return { pollStartupDelay: result.pollStartupDelay || "60", pollInterval: result.pollInterval || "60" };
   }
 
   function onDelayAndIntervalError() {
-    return { pollStartupDelay: "30", pollInterval: "30" };
+    return { pollStartupDelay: "60", pollInterval: "60" };
   }
 
   const getTiming = browser.storage.sync.get([

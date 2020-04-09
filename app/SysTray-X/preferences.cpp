@@ -33,8 +33,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_hide_minimize = true;
     m_start_minimized = false;
 
-    m_poll_startup_delay = 30;
-    m_poll_interval = 30;
+    m_poll_startup_delay = 60;
+    m_poll_interval = 60;
 
     m_debug = false;
 
