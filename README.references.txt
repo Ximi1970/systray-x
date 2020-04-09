@@ -68,6 +68,11 @@ xprop
 
 https://askubuntu.com/questions/646346/xfce-hiding-an-application-from-the-taskbar
 
+wmctrl -i -r xxxx -b add,skip_taskbar
+
+wmctrl -i -r xxxx -b remove,skip_taskbar
+
+
 xprop -id xxxxx | grep "CLASS"
 wmctrl -x -r name.name -b add,skip_taskbar
 

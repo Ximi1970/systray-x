@@ -491,31 +491,47 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *dis
 void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
                                     long prop1, long prop2, long prop3, long prop4 )
 {
+    Display* display = XOpenDisplay( nullptr );
+
+
     Window win = static_cast<Window>( window );
+
+    Atom msg_atom = XInternAtom( display, msg, False );
+    if( msg_atom == None )
+    {
+        return;
+    }
+
+    Atom skip_atom = XInternAtom( display, "_NET_WM_STATE_SKIP_TASKBAR", False );
+    if( skip_atom == None )
+    {
+        return;
+    }
+
 
     XEvent event;
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
     event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom( m_display, msg, False );
+    event.xclient.message_type = msg_atom;
     event.xclient.window = win;
     event.xclient.format = 32;
     event.xclient.data.l[0] = action;
-    event.xclient.data.l[1] = prop1;
+    event.xclient.data.l[1] = static_cast<long>( skip_atom );
     event.xclient.data.l[2] = prop2;
-    event.xclient.data.l[2] = prop3;
-    event.xclient.data.l[2] = prop4;
+    event.xclient.data.l[3] = prop3;
+    event.xclient.data.l[4] = prop4;
 
-    if( XSendEvent( m_display, win, False, SubstructureRedirectMask | SubstructureNotifyMask, &event ) )
+    if( XSendEvent( display, DefaultRootWindow( display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event ) )
     {
-        emit signalConsole( "Event sent" );
+        emit signalConsole( QString( "Event sent to: %1, %2, %3" ).arg( window ).arg( action ).arg( prop1 ) );
     }
     else
     {
-        emit signalConsole( "Event NOT sent" );
+        emit signalConsole( QString( "Event NOT sent to: %1, %2, %3" ).arg( window ).arg( action ).arg( prop1 ) );
     }
 
-    XFlush( m_display );
+    XCloseDisplay( display );
 }
 
 
