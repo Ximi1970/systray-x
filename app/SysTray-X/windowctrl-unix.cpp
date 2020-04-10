@@ -296,27 +296,42 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
         return;
     }
 
+    hideWindow( window, false );
+
     Window win = static_cast<Window>( window );
 
-    hideWindow( win, false );
+    Atom msg_atom = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
+    if( msg_atom == None )
+    {
+        return;
+    }
 
     XEvent event = { 0 };
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
     event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
-    event.xclient.window = static_cast<Window>( window );
+    event.xclient.message_type = msg_atom;
+    event.xclient.window = win;
     event.xclient.format = 32;
 
     XSendEvent( m_display, m_root_window, False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
+
     XMapRaised( m_display, win );
 //    XMapWindow( m_display, win );
     XFlush( m_display );
 }
 
 
+/*
+ *  Hide window to system tray
+ */
 void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
 {
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
     if( set )
     {
         sendEvent( window,
@@ -331,97 +346,8 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
                     _NET_WM_STATE_REMOVE,
                     static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
     }
-
 }
 
-#ifdef FF_NEET
-
-/*
- *  Remove window from taskbar
- */
-void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
-{
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
-    Window win = static_cast<Window>( window );
-
-    char prop_name[] = "_NET_WM_STATE";
-    Atom prop = XInternAtom( m_display, prop_name, True );
-    Atom prop_skip_taskbar = XInternAtom( m_display, WindowStates[ STATE_SKIP_TASKBAR ].toUtf8(), True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    if( XGetWindowProperty( m_display, win, prop, 0, sizeof( Atom ), False, XA_ATOM,
-                &type, &format, &len, &remain, &list ) == Success )
-    {
-        Atom* atom_list = reinterpret_cast<Atom *>( list );
-        Atom* new_atom_list = nullptr;
-        bool present = false;
-
-        if( len > 1 )
-        {
-            /*
-             *  Check and remove atom from list
-             */
-            new_atom_list = new Atom[ len - 1 ];
-
-            for( unsigned long i = 0, o = 0; i < len; ++i )
-            {
-                if( atom_list[ i ] == prop_skip_taskbar )
-                {
-                    present = true;
-                    continue;
-                }
-
-                new_atom_list[ o++ ] = atom_list[ i ];
-            }
-        }
-
-        if( set && !present  )
-        {
-            /*
-             *  Set the atom
-             */
-            XChangeProperty( m_display, win, prop, XA_ATOM, 32, PropModeAppend,
-                             reinterpret_cast<unsigned char*>( &prop_skip_taskbar ), 1 );
-        }
-        else
-        if( !set && present )
-        {
-            /*
-             *  Remove the atom
-             */
-            XChangeProperty( m_display, win, prop, XA_ATOM, format, PropModeReplace,
-                             reinterpret_cast<unsigned char*>( new_atom_list ), static_cast<int>( len - 1 ) );
-        }
-
-        /*
-         *  Cleanup
-         */
-        if( new_atom_list )
-        {
-            delete [] new_atom_list;
-        }
-    }
-
-    /*
-     *  Cleanup
-     */
-    if( list )
-    {
-        XFree( list );
-    }
-
-    XFlush( m_display );
-}
-#endif
 
 /*
  *  Delete the window
@@ -435,8 +361,8 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
 
     Window win = static_cast<Window>( window );
 
-    Atom prop = XInternAtom( m_display, "WM_PROTOCOLS", True );
-    if( prop == None )
+    Atom msg_atom = XInternAtom( m_display, "WM_PROTOCOLS", True );
+    if( msg_atom == None )
     {
         return;
     }
@@ -450,7 +376,7 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
     XEvent event;
     event.xclient.type = ClientMessage;
     event.xclient.window = win;
-    event.xclient.message_type = prop;
+    event.xclient.message_type = msg_atom;
     event.xclient.format = 32;
     event.xclient.data.l[0] = static_cast<long>( delete_prop );
     event.xclient.data.l[1] = CurrentTime;
@@ -491,23 +417,13 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *dis
 void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
                                     long prop1, long prop2, long prop3, long prop4 )
 {
-    Display* display = XOpenDisplay( nullptr );
-
-
     Window win = static_cast<Window>( window );
 
-    Atom msg_atom = XInternAtom( display, msg, False );
+    Atom msg_atom = XInternAtom( m_display, msg, False );
     if( msg_atom == None )
     {
         return;
     }
-
-    Atom skip_atom = XInternAtom( display, "_NET_WM_STATE_SKIP_TASKBAR", False );
-    if( skip_atom == None )
-    {
-        return;
-    }
-
 
     XEvent event;
     event.xclient.type = ClientMessage;
@@ -517,21 +433,12 @@ void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
     event.xclient.window = win;
     event.xclient.format = 32;
     event.xclient.data.l[0] = action;
-    event.xclient.data.l[1] = static_cast<long>( skip_atom );
+    event.xclient.data.l[1] = prop1;
     event.xclient.data.l[2] = prop2;
     event.xclient.data.l[3] = prop3;
     event.xclient.data.l[4] = prop4;
 
-    if( XSendEvent( display, DefaultRootWindow( display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event ) )
-    {
-        emit signalConsole( QString( "Event sent to: %1, %2, %3" ).arg( window ).arg( action ).arg( prop1 ) );
-    }
-    else
-    {
-        emit signalConsole( QString( "Event NOT sent to: %1, %2, %3" ).arg( window ).arg( action ).arg( prop1 ) );
-    }
-
-    XCloseDisplay( display );
+    XSendEvent( m_display, DefaultRootWindow( m_display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
 }
 
 
