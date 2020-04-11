@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>684</width>
+    <width>692</width>
     <height>310</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
              <string>Default minimize</string>
             </property>
             <property name="checked">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">minimizeTypeGroup</string>
@@ -45,6 +45,9 @@
            <widget class="QRadioButton" name="minimizeMethod1RadioButton">
             <property name="text">
              <string>Minimize to tray, method 1</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">minimizeTypeGroup</string>
@@ -62,16 +65,6 @@
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="hideOnMinimizeCheckBox">
-          <property name="text">
-           <string>Minimizing window hides to tray</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="startMinimizedCheckBox">
@@ -213,8 +206,11 @@
             <property name="minimum">
              <number>1</number>
             </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
             <property name="value">
-             <number>30</number>
+             <number>60</number>
             </property>
            </widget>
           </item>
@@ -230,8 +226,11 @@
             <property name="minimum">
              <number>1</number>
             </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
             <property name="value">
-             <number>30</number>
+             <number>60</number>
             </property>
            </widget>
           </item>

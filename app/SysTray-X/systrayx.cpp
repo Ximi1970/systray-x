@@ -86,7 +86,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
 
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
-    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_win_ctrl, &WindowCtrl::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
@@ -94,7 +93,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
     connect( m_preferences, &Preferences::signalNumberColorChange, m_pref_dialog, &PreferencesDialog::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
-    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_pref_dialog, &PreferencesDialog::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotPollStartupDelayChange );
     connect( m_preferences, &Preferences::signalPollIntervalChange, m_pref_dialog, &PreferencesDialog::slotPollIntervalChange );
@@ -105,7 +103,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
     connect( m_preferences, &Preferences::signalNumberColorChange, m_link, &SysTrayXLink::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
-    connect( m_preferences, &Preferences::signalHideOnMinimizeChange, m_link, &SysTrayXLink::slotHideOnMinimizeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_link, &SysTrayXLink::slotPollStartupDelayChange );
     connect( m_preferences, &Preferences::signalPollIntervalChange, m_link, &SysTrayXLink::slotPollIntervalChange );

@@ -2,8 +2,8 @@ var SysTrayX = {
   debugAccounts: false,
 
   pollTiming: {
-    pollStartupDelay: "30",
-    pollInterval: "30",
+    pollStartupDelay: "60",
+    pollInterval: "60",
   },
 
   platformInfo: undefined,
@@ -155,7 +155,6 @@ SysTrayX.Messaging = {
       "pollStartupDelay",
       "pollInterval",
       "minimizeType",
-      "hideOnMinimize",
       "startMinimized",
       "iconType",
       "iconMime",
@@ -168,10 +167,9 @@ SysTrayX.Messaging = {
 
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
-    const pollStartupDelay = result.pollStartupDelay || "30";
-    const pollInterval = result.pollInterval || "30";
-    const minimizeType = result.minimizeType || "0";
-    const hideOnMinimize = result.hideOnMinimize || "true";
+    const pollStartupDelay = result.pollStartupDelay || "60";
+    const pollInterval = result.pollInterval || "60";
+    const minimizeType = result.minimizeType || "1";
     const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
@@ -186,7 +184,6 @@ SysTrayX.Messaging = {
         pollStartupDelay: pollStartupDelay,
         pollInterval: pollInterval,
         minimizeType: minimizeType,
-        hideOnMinimize: hideOnMinimize,
         startMinimized: startMinimized,
         iconType: iconType,
         iconMime: iconMime,
@@ -324,13 +321,6 @@ SysTrayX.Link = {
       if (minimizeType) {
         browser.storage.sync.set({
           minimizeType: minimizeType,
-        });
-      }
-
-      const hideOnMinimize = response["preferences"].hideOnMinimize;
-      if (hideOnMinimize) {
-        browser.storage.sync.set({
-          hideOnMinimize: hideOnMinimize,
         });
       }
 

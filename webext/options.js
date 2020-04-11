@@ -1,4 +1,6 @@
 var SysTrayX = {
+  platformInfo: undefined,
+
   version: 0,
 };
 
@@ -72,21 +74,13 @@ SysTrayX.SaveOptions = {
     //
     // Save minimize preferences
     //
-    const minimizeType = document.querySelector('input[name="minimizeType"]:checked')
-      .value;
+    const minimizeType = document.querySelector(
+      'input[name="minimizeType"]:checked'
+    ).value;
 
     //  Store minimize preferences
     browser.storage.sync.set({
       minimizeType: minimizeType,
-    });
-
-    //
-    //  Save hide on minimize state
-    //
-    let hideOnMinimize = document.querySelector('input[name="hideOnMinimize"]')
-      .checked;
-    browser.storage.sync.set({
-      hideOnMinimize: `${hideOnMinimize}`,
     });
 
     //
@@ -160,15 +154,6 @@ SysTrayX.RestoreOptions = {
     getMinimizeType.then(
       SysTrayX.RestoreOptions.setMinimizeType,
       SysTrayX.RestoreOptions.onMinimizeTypeError
-    );
-
-    //
-    //  Restore hide on minimize
-    //
-    const getHideOnMinimize = browser.storage.sync.get("hideOnMinimize");
-    getHideOnMinimize.then(
-      SysTrayX.RestoreOptions.setHideOnMinimize,
-      SysTrayX.RestoreOptions.onHideOnMinimizeError
     );
 
     //
@@ -253,27 +238,15 @@ SysTrayX.RestoreOptions = {
   //  Restore minimize type callbacks
   //
   setMinimizeType: function (result) {
-    const minimizeType = result.minimizeType || "0";
-    const radioButton = document.querySelector(`input[name="minimizeType"][value="${minimizeType}"]`);
+    const minimizeType = result.minimizeType || "1";
+    const radioButton = document.querySelector(
+      `input[name="minimizeType"][value="${minimizeType}"]`
+    );
     radioButton.checked = true;
   },
 
   onMinimizeTypeError: function (error) {
     console.log(`Minimize type Error: ${error}`);
-  },
-
-  //
-  //  Restore hide on minimize callbacks
-  //
-  setHideOnMinimize: function (result) {
-    const hideOnMinimize = result.hideOnMinimize || "true";
-
-    const checkbox = document.querySelector(`input[name="hideOnMinimize"]`);
-    checkbox.checked = hideOnMinimize === "true";
-  },
-
-  onHideOnMinimizeError: function (error) {
-    console.log(`hideOnMinimize Error: ${error}`);
   },
 
   //
@@ -295,7 +268,9 @@ SysTrayX.RestoreOptions = {
   //
   setIconType: function (result) {
     const iconType = result.iconType || "0";
-    const radioButton = document.querySelector(`input[name="iconType"][value="${iconType}"]`);
+    const radioButton = document.querySelector(
+      `input[name="iconType"][value="${iconType}"]`
+    );
     radioButton.checked = true;
   },
 
@@ -447,11 +422,6 @@ SysTrayX.StorageChanged = {
           minimizeType: changes[item].newValue,
         });
       }
-      if (item === "hideOnMinimize") {
-        SysTrayX.RestoreOptions.setHideOnMinimize({
-          hideOnMinimize: changes[item].newValue,
-        });
-      }
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue,
@@ -491,6 +461,27 @@ SysTrayX.StorageChanged = {
 //  Main
 //
 
+//  Set platform
+//SysTrayX.platformInfo = await browser.runtime
+//  .getPlatformInfo()
+//  .then((info) => info);
+/*
+// Tweak options for platform
+if (SysTrayX.platformInfo.os === "win") {
+  console.debug("Win");
+}
+
+if (SysTrayX.platformInfo.os === "linux") {
+  console.debug("Linux");
+}
+*/
+
+document.getElementById("minimizemethod1label").innerHTML =
+  "Minimize to tray";
+document
+  .getElementById("minimizemethod2")
+  .setAttribute("style", "display:none;");
+
 //  Get addon version
 SysTrayX.version = browser.runtime.getManifest().version;
 document.getElementById("VersioHomeLink").href =
@@ -502,3 +493,4 @@ document
   .addEventListener("submit", SysTrayX.SaveOptions.start);
 
 browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
+

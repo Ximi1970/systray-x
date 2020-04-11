@@ -10,6 +10,8 @@ The addon and system tray application can do:
 - minimizing hides to tray
 - minimize on startup
 
+The default poll time is 60 seconds. You change the timing in the preferences but be aware that a too short poll time can lead to a high CPU load.
+
 ## Binaries (System)
 
 These packages will install the Thunderbird addon and companion app system wide.  

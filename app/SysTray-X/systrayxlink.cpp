@@ -393,16 +393,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setMinimizeType( minimize_type );
     }
 
-    if( pref.contains( "hideOnMinimize" ) && pref[ "hideOnMinimize" ].isString() )
-    {
-        bool hide_minimize = pref[ "hideOnMinimize" ].toString() == "true";
-
-        /*
-         *  Store the new hide on minimize state
-         */
-        m_pref->setHideOnMinimize( hide_minimize );
-    }
-
     if( pref.contains( "startMinimized" ) && pref[ "startMinimized" ].isString() )
     {
         bool start_minimized = pref[ "startMinimized" ].toString() == "true";
@@ -458,7 +448,6 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("pollStartupDelay", QJsonValue::fromVariant( QString::number( pref.getPollStartupDelay() ) ) );
     prefObject.insert("pollInterval", QJsonValue::fromVariant( QString::number( pref.getPollInterval() ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
-    prefObject.insert("hideOnMinimize", QJsonValue::fromVariant( QString( pref.getHideOnMinimize() ? "true" : "false" ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
@@ -537,18 +526,6 @@ void    SysTrayXLink::slotPollIntervalChange()
  *  Handle the minimize type change signal
  */
 void    SysTrayXLink::slotMinimizeTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a hide on minimize state change signal
- */
-void    SysTrayXLink::slotHideOnMinimizeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

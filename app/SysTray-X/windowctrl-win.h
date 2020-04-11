@@ -230,6 +230,11 @@ class WindowCtrlWin : public QObject
          * @brief m_tb_window. The Thunderbird windows.
          */
         QList< quint64 >  m_tb_windows;
+
+        /**
+         * @brief m_minimize_type. Minimize type.
+         */
+        int m_minimize_type;
 };
 
 #endif // WINDOWCTRLWIN_H

@@ -70,11 +70,6 @@ class WindowCtrl : public QObject
         void    slotMinimizeTypeChange();
 
         /**
-         * @brief slotHideOnMinimizeChange. Handle the hide on minimize signal.
-         */
-        void    slotHideOnMinimizeChange();
-
-        /**
          * @brief slotStartMinimizedChange. Handle the start minimized signal.
          */
         void    slotStartMinimizedChange();
@@ -124,19 +119,9 @@ class WindowCtrl : public QObject
         QString m_window_title;
 
         /**
-         * @brief m_minimize_type. Minimize type.
-         */
-        int m_minimize_type;
-
-        /**
-         * @brief m_hide_minimize. State of hide on minimize.
-         */
-        bool m_hide_minimize;
-
-        /**
          * @brief m_start_minimized. State of start minimized.
          */
-        bool m_start_minimized;
+        bool    m_start_minimized;
 
         /**
          * @brief m_state. State of the TB window.

@@ -33,27 +33,31 @@
       <form>
         <h3>Windows</h3>
         <table id="minimizeselect">
-          <tr>
+          <tr id="minimizedefault">
             <td>
-              <input type="radio" name="minimizeType" value="0" /> Default minimize
+              <input type="radio" name="minimizeType" value="0" />
+              <label for="0" id="minimizedefaultlabel">Default minimize</label
+              ><br />
             </td>
           </tr>
-          <tr>
+          <tr id="minimizemethod1">
             <td>
-              <input type="radio" name="minimizeType" value="1" /> Minimize to
-              tray, method 1
+              <input type="radio" name="minimizeType" value="1" />
+              <label for="1" id="minimizemethod1label"
+                >Minimize to tray, method 1</label
+              ><br />
             </td>
           </tr>
-          <tr>
+          <tr id="minimizemethod2">
             <td>
-              <input type="radio" name="minimizeType" value="2" /> Minimize to
-              tray, method 2
+              <input type="radio" name="minimizeType" value="2" />
+              <label for="2" id="minimizemethod2label"
+                >Minimize to tray, method 2</label
+              ><br />
             </td>
           </tr>
         </table>
 
-        <input type="checkbox" name="hideOnMinimize" value="" /> Minimizing
-        window hides to tray<br />
         <input type="checkbox" name="startMinimized" value="" /> Start
         application minimized<br />
       </form>
@@ -146,9 +150,9 @@
                 name="pollStartupDelay"
                 step="1"
                 min="1"
-                max="99"
-                value="30"
-                style="width: 3em;"
+                max="999"
+                value="60"
+                style="width: 4em;"
               />
             </td>
           </tr>
@@ -163,9 +167,9 @@
                 name="pollInterval"
                 step="1"
                 min="1"
-                max="99"
-                value="30"
-                style="width: 3em;"
+                max="999"
+                value="60"
+                style="width: 4em;"
               />
             </td>
           </tr>

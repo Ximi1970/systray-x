@@ -37,6 +37,13 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod1RadioButton, Preferences::PREF_MINIMIZE_METHOD_1 );
     m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod2RadioButton, Preferences::PREF_MINIMIZE_METHOD_2 );
 
+#ifdef Q_OS_WIN
+
+    m_ui->minimizeMethod1RadioButton->setText( "Minimize to tray" );
+    m_ui->minimizeMethod2RadioButton->hide();
+
+#endif
+
     /*
      *  Set icon type button Ids
      */
@@ -98,15 +105,6 @@ void    PreferencesDialog::setPollInterval( int val )
 void    PreferencesDialog::setMinimizeType( Preferences::MinimizeType minimize_type )
 {
    ( m_ui->minimizeTypeGroup->button( minimize_type ) )->setChecked( true );
-}
-
-
-/*
- *  Set the hide on minimize state
- */
-void    PreferencesDialog::setHideOnMinimize( bool state )
-{
-   m_ui->hideOnMinimizeCheckBox->setChecked( state );
 }
 
 
@@ -204,7 +202,6 @@ void    PreferencesDialog::slotAccept()
     m_pref->setIconData( m_tmp_icon_data );
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
-    m_pref->setHideOnMinimize( m_ui->hideOnMinimizeCheckBox->isChecked() );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
 
     m_pref->setPollStartupDelay(m_ui->pollStartupDelaySpinBox->value());
@@ -314,15 +311,6 @@ void    PreferencesDialog::slotPollIntervalChange()
 void    PreferencesDialog::slotMinimizeTypeChange()
 {
     setMinimizeType( m_pref->getMinimizeType() );
-}
-
-
-/*
- *  Handle the hide on minimize change signal
- */
-void    PreferencesDialog::slotHideOnMinimizeChange()
-{
-    setHideOnMinimize( m_pref->getHideOnMinimize() );
 }
 
 

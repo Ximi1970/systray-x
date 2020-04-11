@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 VERSION=`git describe --long | sed "s/-.*//"`
@@ -36,6 +35,7 @@ pushd bin > /dev/null 2>&1
 #
 INDEX=1
 for rpmdir in $OBS_RPM_ARCHS ; do
+
   #
   # Get base name
   #
@@ -57,6 +57,8 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   #
   RPM_FILE=`grep ">systray.*<" index.html | sed -e "s/.*>\(systray-x.*rpm\)<.*/\1/"`
   
+  echo $rpmdir/$RPM_FILE
+
   #
   # Get rpm
   #
@@ -93,6 +95,9 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   # Rename package
   #
   PACKAGE_EXT=`echo $OBS_RPM_PKS | cut -d' ' -f$INDEX`
+  
+  echo "Ext: "$PACKAGE_EXT
+  
   if [ "$PACKAGE_EXT" != "_" ] ; then
     NEW_RPM_FILE=`echo $RPM_FILE | sed -s "s/\($OBS_PACKAGE-$VERSION-\)\(.*\)/\1$PACKAGE_EXT\.\2/"`
     mv -f $RPM_FILE $NEW_RPM_FILE
@@ -123,6 +128,7 @@ done
 #
 INDEX=1
 for debdir in $OBS_DEB_ARCHS ; do
+
   #
   # Get base name
   #
@@ -143,6 +149,8 @@ for debdir in $OBS_DEB_ARCHS ; do
   # Find deb
   #
   DEB_FILE=`grep ">systray.*\.deb<" index.html | sed -e "s/.*>\(systray-x.*deb\)<.*/\1/"`
+
+  echo $debdir/$DEB_FILE
 
   #
   # Get deb
@@ -176,6 +184,9 @@ for debdir in $OBS_DEB_ARCHS ; do
   # Rename package
   #
   PACKAGE_EXT=`echo $OBS_DEB_PKS | cut -d' ' -f$INDEX`
+  
+  echo "Ext: "$PACKAGE_EXT
+
   if [ "$PACKAGE_EXT" != "_" ] ; then
     NEW_DEB_FILE=`echo $DEB_FILE | sed -s "s/\($OBS_PACKAGE\_$VERSION\_\)\(.*\)/\1$PACKAGE_EXT\_\2/"`
     mv -f $DEB_FILE $NEW_DEB_FILE

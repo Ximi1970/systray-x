@@ -145,20 +145,6 @@ class Preferences : public QObject
         void setMinimizeType( MinimizeType icon_type );
 
         /**
-         * @brief getHideOnMinimize. Get the hide on minimize state.
-         *
-         * @return      The state.
-         */
-        bool getHideOnMinimize() const;
-
-        /**
-         * @brief setHideOnMinimize. Set the hide on minimize state.
-         *
-         * @param      The state.
-         */
-        void setHideOnMinimize( bool state );
-
-        /**
          * @brief getStartMinimized. Get the start minimized state.
          *
          * @return      The state.
@@ -277,11 +263,6 @@ class Preferences : public QObject
         void signalMinimizeTypeChange();
 
         /**
-         * @brief signalHideOnMinimizeChange. Signal a hide on mnimize state change.
-         */
-        void signalHideOnMinimizeChange();
-
-        /**
          * @brief signalStartMinimizedChange. Signal a start minimized state change.
          */
         void signalStartMinimizedChange();
@@ -337,11 +318,6 @@ class Preferences : public QObject
          * @brief m_minimize_type. Selected minimize type.
          */
         MinimizeType m_minimize_type;
-
-        /**
-         * @brief m_hide_minimize. Hide the minimized window.
-         */
-        bool m_hide_minimize;
 
         /**
          * @brief m_start_minimized. Start TB minimized.

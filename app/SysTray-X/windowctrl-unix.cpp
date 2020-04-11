@@ -32,9 +32,27 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 
 
 /*
+ *  Set the minimize type
+ */
+void    WindowCtrlUnix::setMinimizeType( Preferences::MinimizeType type )
+{
+    m_minimize_type = type;
+}
+
+
+/*
+ *  Get the minimize type
+ */
+Preferences::MinimizeType    WindowCtrlUnix::getMinimizeType() const
+{
+    return m_minimize_type;
+}
+
+
+/*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
-qint64  WindowCtrlUnix::getPpid()
+qint64  WindowCtrlUnix::getPpid() const
 {
     return getppid();
 }
@@ -43,7 +61,7 @@ qint64  WindowCtrlUnix::getPpid()
 /*
  *  Is the pid from thunderbird
  */
-bool    WindowCtrlUnix::isThunderbird( qint64 pid )
+bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
 {
     return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
 }
@@ -52,7 +70,7 @@ bool    WindowCtrlUnix::isThunderbird( qint64 pid )
 /*
  *  Get the process name
  */
-QString WindowCtrlUnix::getProcessName( qint64 pid )
+QString WindowCtrlUnix::getProcessName( qint64 pid ) const
 {
     QString process_name = QString( "/proc/%1/exe" ).arg( pid );
     QFileInfo process( process_name );
@@ -268,22 +286,58 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
         return;
     }
 
-    Window win = static_cast<Window>( window );
-
-    if( hide == Preferences::PREF_MINIMIZE_METHOD_1 )
+    switch( hide )
     {
-        hideWindow( win, hide );
+        case Preferences::PREF_MINIMIZE_METHOD_1:
+        {
+            hideWindowEvent( window, hide );
+            break;
+        }
+
+        case Preferences::PREF_MINIMIZE_METHOD_2:
+        {
+            hideWindowAtom( window, hide );
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
     }
 
-    XIconifyWindow( m_display, win, m_screen );
-
-    if( hide == Preferences::PREF_MINIMIZE_METHOD_2 )
-    {
-        hideWindow( win, hide );
-    }
+    XIconifyWindow( m_display, static_cast<Window>( window ), m_screen );
 
     XFlush( m_display );
 }
+
+
+/*
+ *  Hide window to system tray
+ */
+void    WindowCtrlUnix::hideWindow( quint64 window, int set )
+{
+    switch( set )
+    {
+        case Preferences::PREF_MINIMIZE_METHOD_1:
+        {
+            hideWindowEvent( window, set );
+            break;
+        }
+
+        case Preferences::PREF_MINIMIZE_METHOD_2:
+        {
+            hideWindowAtom( window, set );
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+}
+
 
 
 /*
@@ -323,33 +377,6 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 
 
 /*
- *  Hide window to system tray
- */
-void    WindowCtrlUnix::hideWindow( quint64 window, bool set )
-{
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
-    if( set )
-    {
-        sendEvent( window,
-                    "_NET_WM_STATE",
-                    _NET_WM_STATE_ADD,
-                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
-    }
-    else
-    {
-        sendEvent( window,
-                    "_NET_WM_STATE",
-                    _NET_WM_STATE_REMOVE,
-                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
-    }
-}
-
-
-/*
  *  Delete the window
  */
 void    WindowCtrlUnix::deleteWindow( quint64 window )
@@ -381,6 +408,120 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
     event.xclient.data.l[0] = static_cast<long>( delete_prop );
     event.xclient.data.l[1] = CurrentTime;
     XSendEvent( m_display, win, False, NoEventMask, &event );
+    XFlush( m_display );
+}
+
+
+/*
+ *  Hide window to system tray
+ */
+void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
+{
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
+    if( set )
+    {
+        sendEvent( window,
+                    "_NET_WM_STATE",
+                    _NET_WM_STATE_ADD,
+                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
+    }
+    else
+    {
+        sendEvent( window,
+                    "_NET_WM_STATE",
+                    _NET_WM_STATE_REMOVE,
+                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
+    }
+}
+
+
+/*
+ *  Remove window from taskbar
+ */
+void    WindowCtrlUnix::hideWindowAtom( quint64 window, bool set )
+{
+    if( !isThunderbird( getPpid() ) )
+    {
+        return;
+    }
+
+    Window win = static_cast<Window>( window );
+
+    char prop_name[] = "_NET_WM_STATE";
+    Atom prop = XInternAtom( m_display, prop_name, True );
+    Atom prop_skip_taskbar = XInternAtom( m_display, WindowStates[ STATE_SKIP_TASKBAR ].toUtf8(), True );
+
+    Atom type;
+    int format;
+    unsigned long remain;
+    unsigned long len;
+    unsigned char* list = nullptr;
+
+    if( XGetWindowProperty( m_display, win, prop, 0, sizeof( Atom ), False, XA_ATOM,
+                &type, &format, &len, &remain, &list ) == Success )
+    {
+        Atom* atom_list = reinterpret_cast<Atom *>( list );
+        Atom* new_atom_list = nullptr;
+        bool present = false;
+
+        if( len > 1 )
+        {
+            /*
+             *  Check and remove atom from list
+             */
+            new_atom_list = new Atom[ len - 1 ];
+
+            for( unsigned long i = 0, o = 0; i < len; ++i )
+            {
+                if( atom_list[ i ] == prop_skip_taskbar )
+                {
+                    present = true;
+                    continue;
+                }
+
+                new_atom_list[ o++ ] = atom_list[ i ];
+            }
+        }
+
+        if( set && !present  )
+        {
+            /*
+             *  Set the atom
+             */
+            XChangeProperty( m_display, win, prop, XA_ATOM, 32, PropModeAppend,
+                             reinterpret_cast<unsigned char*>( &prop_skip_taskbar ), 1 );
+        }
+        else
+        if( !set && present )
+        {
+            /*
+             *  Remove the atom
+             */
+            XChangeProperty( m_display, win, prop, XA_ATOM, format, PropModeReplace,
+                             reinterpret_cast<unsigned char*>( new_atom_list ), static_cast<int>( len - 1 ) );
+        }
+
+        /*
+         *  Cleanup
+         */
+        if( new_atom_list )
+        {
+            delete [] new_atom_list;
+        }
+    }
+
+    /*
+     *  Cleanup
+     */
+    if( list )
+    {
+        XFree( list );
+    }
+
     XFlush( m_display );
 }
 

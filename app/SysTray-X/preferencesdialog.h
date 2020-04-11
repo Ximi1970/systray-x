@@ -70,13 +70,6 @@ class PreferencesDialog : public QDialog
         void    setMinimizeType( Preferences::MinimizeType minimize_type );
 
         /**
-         * @brief setHideOnMinimize. Set the hide on minimize state.
-         *
-         *  @param state    The state.
-         */
-        void    setHideOnMinimize( bool state );
-
-        /**
          * @brief setStartMinimized. Set the start minimized state.
          *
          *  @param state    The state.
@@ -152,11 +145,6 @@ class PreferencesDialog : public QDialog
          * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
          */
         void    slotMinimizeTypeChange();
-
-        /**
-         * @brief slotHideOnMinimizeChange. Slot for handling hide on minimize change signals.
-         */
-        void    slotHideOnMinimizeChange();
 
         /**
          * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.

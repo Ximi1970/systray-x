@@ -55,6 +55,9 @@ class WindowCtrlUnix : public QObject
             TYPE_NORMAL
         };
 
+        /*
+         *  State actions
+         */
         enum StateActions
         {
             _NET_WM_STATE_REMOVE = 0,
@@ -123,11 +126,25 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
+         * @brief setMinimizeType
+         *
+         *  @param type     Set the minimize type.
+         */
+        void    setMinimizeType( Preferences::MinimizeType type );
+
+        /**
+         * @brief getMinimizeType
+         *
+         *  @return     The minimize type.
+         */
+        Preferences::MinimizeType    getMinimizeType() const;
+
+        /**
          * @brief getPpid. Get the parent process id.
          *
          *  @return     The ppid
          */
-        qint64  getPpid();
+        qint64  getPpid() const;
 
         /**
          * @brief isThunderbird. Is this a thunderbird pid.
@@ -136,7 +153,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     True if this is thunderbird.
          */
-        bool    isThunderbird( qint64 pid );
+        bool    isThunderbird( qint64 pid ) const;
 
         /**
          * @brief getProcessName. Get the name of the proces by pid.
@@ -145,7 +162,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     The process name.
          */
-        QString getProcessName( qint64 pid );
+        QString getProcessName( qint64 pid ) const;
 
         /**
          * @brief findWindow. Find window by (sub)title.
@@ -212,7 +229,7 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          *  @param set      The state of the window.
          */
-        void    hideWindow( quint64 window, bool set );
+        void    hideWindow( quint64 window, int set );
 
         /**
          * @brief deleteWindow. Delete the window.
@@ -224,6 +241,22 @@ class WindowCtrlUnix : public QObject
     private:
 
         /**
+         * @brief hideWindowEvent. Hide a window from the taskbar using an event message.
+         *
+         *  @param window   The window.
+         *  @param set      The state of the window.
+         */
+        void    hideWindowEvent( quint64 window, bool set );
+
+        /**
+         * @brief hideWindowAtom. Hide a window from the taskbar editing the atoms.
+         *
+         *  @param window   The window.
+         *  @param set      The state of the window.
+         */
+        void    hideWindowAtom( quint64 window, bool set );
+
+        /**
          * @brief listXWindows. Get all the windows.
          *
          *  @param display  The display.
@@ -232,17 +265,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     The windows list.
          */
-        QList< WindowItem >   listXWindows( Display* display, quint64 window, int level = 0 );
-
-        /**
-         * @brief atomwName. Get the title of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     Name of the window.
-         */
-        QString atomName( Display* display, quint64 window );
+        QList< WindowItem > listXWindows( Display* display, quint64 window, int level = 0 );
 
         /**
          * @brief sendEvent. Send an event.
@@ -255,8 +278,18 @@ class WindowCtrlUnix : public QObject
          *  @param prop3     Property 3
          *  @param prop4     Property 4
          */
-        void sendEvent( quint64 window, const char* msg, long action,
+        void    sendEvent( quint64 window, const char* msg, long action,
                             long prop1, long prop2 = 0, long prop3 = 0, long prop4 = 0 );
+
+        /**
+         * @brief atomwName. Get the title of the window.
+         *
+         *  @param display  The display
+         *  @param window   The window
+         *
+         *  @return     Name of the window.
+         */
+        QString atomName( Display* display, quint64 window );
 
         /**
          * @brief atomNetWmState. Get the _NET_WM_STATE of the window.
@@ -266,7 +299,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     State of the window.
          */
-        QStringList    atomNetWmState( Display* display, quint64 window );
+        QStringList atomNetWmState( Display* display, quint64 window );
 
         /**
          * @brief atomWmState. Get the WM_STATE of the window.
@@ -286,7 +319,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     Type of the window.
          */
-        QStringList    atomWindowType( Display* display, quint64 window );
+        QStringList atomWindowType( Display* display, quint64 window );
 
     signals:
 
@@ -333,6 +366,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_windows. The Thunderbird windows (used by title search).
          */
         QList< quint64 >    m_tb_windows;
+
+        /**
+         * @brief m_minimize_type. Minimize type.
+         */
+        Preferences::MinimizeType   m_minimize_type;
 };
 
 #endif // WINDOWCTRLUNIX_H

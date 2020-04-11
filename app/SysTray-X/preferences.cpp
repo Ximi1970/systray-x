@@ -31,11 +31,10 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_number_color = "#000000";
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
-    m_hide_minimize = true;
     m_start_minimized = false;
 
-    m_poll_startup_delay = 30;
-    m_poll_interval = 30;
+    m_poll_startup_delay = 60;
+    m_poll_interval = 60;
 
     m_debug = false;
 
@@ -215,32 +214,6 @@ void    Preferences::setMinimizeType( MinimizeType minimize_type )
          *  Tell the world the new preference
          */
         emit signalMinimizeTypeChange();
-    }
-}
-
-
-/*
- *  Get the hide on minimize pref.
- */
-bool    Preferences::getHideOnMinimize() const
-{
-    return m_hide_minimize;
-}
-
-
-/*
- *  Set the hide on minimize pref.
- */
-void    Preferences::setHideOnMinimize( bool state )
-{
-    if( m_hide_minimize != state )
-    {
-        m_hide_minimize = state;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalHideOnMinimizeChange();
     }
 }
 
