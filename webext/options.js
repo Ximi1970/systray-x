@@ -351,7 +351,7 @@ SysTrayX.RestoreOptions = {
   //  Restore poll startup delay state callbacks
   //
   setPollStartupDelay: function (result) {
-    const pollStartupDelay = result.pollStartupDelay || 5;
+    const pollStartupDelay = result.pollStartupDelay || 60;
 
     const input = document.querySelector(`input[name="pollStartupDelay"]`);
     input.value = pollStartupDelay;
@@ -365,7 +365,7 @@ SysTrayX.RestoreOptions = {
   //  Restore poll interval state callbacks
   //
   setPollInterval: function (result) {
-    const pollInterval = result.pollInterval || 5;
+    const pollInterval = result.pollInterval || 60;
 
     const input = document.querySelector(`input[name="pollInterval"]`);
     input.value = pollInterval;
