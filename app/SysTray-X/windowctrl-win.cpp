@@ -35,6 +35,24 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
 
 
 /*
+ *  Set the minimize type
+ */
+void    WindowCtrlWin::setMinimizeType( Preferences::MinimizeType type )
+{
+    m_minimize_type = type;
+}
+
+
+/*
+ *  Get the minimize type
+ */
+Preferences::MinimizeType    WindowCtrlWin::getMinimizeType() const
+{
+    return m_minimize_type;
+}
+
+
+/*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
 qint64  WindowCtrlWin::getPpid()

@@ -5,6 +5,11 @@
 #define WINDOWCTRLWIN_H
 
 /*
+ *	Local includes
+ */
+#include "preferences.h"
+
+/*
  *  System includes
  */
 #include <Windows.h>
@@ -53,6 +58,20 @@ class WindowCtrlWin : public QObject
          * @param parent    My parent.
          */
         explicit WindowCtrlWin( QObject *parent = nullptr );
+
+        /**
+         * @brief setMinimizeType
+         *
+         *  @param type     Set the minimize type.
+         */
+        void    setMinimizeType( Preferences::MinimizeType type );
+
+        /**
+         * @brief getMinimizeType
+         *
+         *  @return     The minimize type.
+         */
+        Preferences::MinimizeType    getMinimizeType() const;
 
         /**
          * @brief getPpid. Get the parent process id.
@@ -234,7 +253,7 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_minimize_type. Minimize type.
          */
-        int m_minimize_type;
+        Preferences::MinimizeType   m_minimize_type;
 };
 
 #endif // WINDOWCTRLWIN_H
