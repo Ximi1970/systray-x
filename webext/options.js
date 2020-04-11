@@ -150,7 +150,10 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore minimize type
     //
-    const getMinimizeType = browser.storage.sync.get("minimizeType");
+    const getMinimizeType = browser.storage.sync.get([
+      "platformInfo",
+      "minimizeType",
+    ]);
     getMinimizeType.then(
       SysTrayX.RestoreOptions.setMinimizeType,
       SysTrayX.RestoreOptions.onMinimizeTypeError
@@ -238,7 +241,22 @@ SysTrayX.RestoreOptions = {
   //  Restore minimize type callbacks
   //
   setMinimizeType: function (result) {
+    const platformInfo = result.platformInfo || { os: "linux" };
     const minimizeType = result.minimizeType || "1";
+
+    // Tweak option for platform
+    if (platformInfo.os === "win") {
+      document.getElementById("minimizemethod1label").innerHTML =
+        "Minimize to tray";
+      document
+        .getElementById("minimizemethod2")
+        .setAttribute("style", "display:none;");
+
+      if (minimizeType === "2") {
+        minimizeType = "1";
+      }
+    }
+
     const radioButton = document.querySelector(
       `input[name="minimizeType"][value="${minimizeType}"]`
     );
@@ -461,27 +479,6 @@ SysTrayX.StorageChanged = {
 //  Main
 //
 
-//  Set platform
-//SysTrayX.platformInfo = await browser.runtime
-//  .getPlatformInfo()
-//  .then((info) => info);
-/*
-// Tweak options for platform
-if (SysTrayX.platformInfo.os === "win") {
-  console.debug("Win");
-}
-
-if (SysTrayX.platformInfo.os === "linux") {
-  console.debug("Linux");
-}
-*/
-
-document.getElementById("minimizemethod1label").innerHTML =
-  "Minimize to tray";
-document
-  .getElementById("minimizemethod2")
-  .setAttribute("style", "display:none;");
-
 //  Get addon version
 SysTrayX.version = browser.runtime.getManifest().version;
 document.getElementById("VersioHomeLink").href =
@@ -493,4 +490,3 @@ document
   .addEventListener("submit", SysTrayX.SaveOptions.start);
 
 browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
-

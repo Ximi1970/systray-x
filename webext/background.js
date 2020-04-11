@@ -382,9 +382,15 @@ async function start() {
   SysTrayX.platformInfo = await browser.runtime
     .getPlatformInfo()
     .then((info) => info);
+    
   console.log("OS: " + SysTrayX.platformInfo.os);
   console.log("Arch: " + SysTrayX.platformInfo.arch);
   console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
+
+  //  Store platform info
+  browser.storage.sync.set({
+    platformInfo: SysTrayX.platformInfo,
+  });
 
   //  Get addon version
   SysTrayX.version = browser.runtime.getManifest().version;

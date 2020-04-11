@@ -286,28 +286,9 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
         return;
     }
 
-    switch( hide )
-    {
-        case Preferences::PREF_MINIMIZE_METHOD_1:
-        {
-            hideWindowEvent( window, hide );
-            break;
-        }
-
-        case Preferences::PREF_MINIMIZE_METHOD_2:
-        {
-            hideWindowAtom( window, hide );
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-    }
+    hideWindow( window, hide );
 
     XIconifyWindow( m_display, static_cast<Window>( window ), m_screen );
-
     XFlush( m_display );
 }
 
@@ -317,7 +298,7 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, int set )
 {
-    switch( set )
+    switch( m_minimize_type )
     {
         case Preferences::PREF_MINIMIZE_METHOD_1:
         {
@@ -337,7 +318,6 @@ void    WindowCtrlUnix::hideWindow( quint64 window, int set )
         }
     }
 }
-
 
 
 /*
