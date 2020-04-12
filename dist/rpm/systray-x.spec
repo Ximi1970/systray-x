@@ -24,6 +24,7 @@ License:        MPL-2.0
 Group:          Productivity/Networking/Email/Clients
 URL:            https://github.com/Ximi1970/systray-x
 Source0:        %{name}-%{version}.tar.xz
+Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
@@ -48,7 +49,18 @@ The add-on and system tray application can do:
 %autosetup -p1
 
 %build
-make %{?_smp_mflags}
+export VERSION=`cat %{S:1} | grep VERSION | sed -e "s/VERSION=\(.*\)/\1/"`
+
+export VERSION_MAJOR=`echo $VERSION | cut -d'.' -f1`
+export VERSION_MINOR=`echo $VERSION | cut -d'.' -f2`
+export VERSION_PATCH=`echo $VERSION | cut -d'.' -f3`
+
+export APP_BUILD=`cat %{S:1} | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)/\1/"`
+export APP_GITHASH=`cat %{S:1} | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/"`
+export APP_GITBRANCH=`cat %{S:1} | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/"`
+
+make %{?_smp_mflags} CFLAGS="-DAPP_VERSION_MAJOR=${VERSION_MAJOR} -DAPP_VERSION_MINOR=${VERSION_MINOR} -DAPP_VERSION_PATCH=${VERSION_PATCH} -DAPP_BUILD=${BUILD_NUMBER} -DAPP_GITHASH=${GIT_HASH} -DAPP_GITBRANCH=${GIT_BRANCH}"
+
 sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
 %install
