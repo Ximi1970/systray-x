@@ -55,11 +55,11 @@ export VERSION_MAJOR=`echo $VERSION | cut -d'.' -f1`
 export VERSION_MINOR=`echo $VERSION | cut -d'.' -f2`
 export VERSION_PATCH=`echo $VERSION | cut -d'.' -f3`
 
-export APP_BUILD=`cat %{S:1} | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)/\1/"`
-export APP_GITHASH=`cat %{S:1} | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/"`
-export APP_GITBRANCH=`cat %{S:1} | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/"`
+export BUILD_NUMBER=`cat %{S:1} | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)/\1/"`
+export GIT_HASH=`cat %{S:1} | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/"`
+export GIT_BRANCH`cat %{S:1} | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/"`
 
-make %{?_smp_mflags} EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\"\"$(VERSION_MAJOR)\\\\\\\"\" DEFINES+=APP_VERSION_MINOR=\\\\\\\"\"$(VERSION_MINOR)\\\\\\\"\" DEFINES+=APP_VERSION_PATCH=\\\\\\\"\"$(VERSION_PATCH)\\\\\\\"\" DEFINES+=APP_BUILD=\\\\\\\"\"$(BUILD_NUMBER2)\\\\\\\"\" DEFINES+=APP_GITHASH=\\\\\\\"\"$(GIT_HASH2)\\\\\\\"\" DEFINES+=APP_GITBRANCH=\\\\\\\"\"$(GIT_BRANCH2)\\\\\\\"\""
+make %{?_smp_mflags} EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\"\"$(VERSION_MAJOR)\\\\\\\"\" DEFINES+=APP_VERSION_MINOR=\\\\\\\"\"$(VERSION_MINOR)\\\\\\\"\" DEFINES+=APP_VERSION_PATCH=\\\\\\\"\"$(VERSION_PATCH)\\\\\\\"\" DEFINES+=APP_BUILD=\\\\\\\"\"$(BUILD_NUMBER)\\\\\\\"\" DEFINES+=APP_GITHASH=\\\\\\\"\"$(GIT_HASH)\\\\\\\"\" DEFINES+=APP_GITBRANCH=\\\\\\\"\"$(GIT_BRANCH)\\\\\\\"\""
 
 sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
