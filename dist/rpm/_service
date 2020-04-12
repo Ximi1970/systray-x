@@ -1,4 +1,4 @@
-q<services>
+<services>
   <service name="obs_scm">
     <param name="url">https://github.com/Ximi1970/systray-x.git</param>
     <param name="scm">git</param>
