@@ -91,18 +91,20 @@ VERSION_MAJOR = $$section(GIT_VERSION, ., 0, 0)
 VERSION_MINOR = $$section(GIT_VERSION, ., 1, 1)
 VERSION_PATCH = $$section(GIT_VERSION, ., 2, 2)
 
-DEFINES += APP_VERSION_MAJOR=\\\"$$VERSION_MAJOR\\\"
-DEFINES += APP_VERSION_MINOR=\\\"$$VERSION_MINOR\\\"
-DEFINES += APP_VERSION_PATCH=\\\"$$VERSION_PATCH\\\"
-DEFINES += APP_BUILD=\\\"$$BUILD_NUMBER\\\"
-DEFINES += APP_GITHASH=\\\"$$GIT_HASH\\\"
-DEFINES += APP_GITBRANCH=\\\"$$GIT_BRANCH\\\"
+!contains(DEFINES,EXT_VERSION) {
+    DEFINES += APP_VERSION_MAJOR=\\\"$$VERSION_MAJOR\\\"
+    DEFINES += APP_VERSION_MINOR=\\\"$$VERSION_MINOR\\\"
+    DEFINES += APP_VERSION_PATCH=\\\"$$VERSION_PATCH\\\"
+    DEFINES += APP_BUILD=\\\"$$BUILD_NUMBER\\\"
+    DEFINES += APP_GITHASH=\\\"$$GIT_HASH\\\"
+    DEFINES += APP_GITBRANCH=\\\"$$GIT_BRANCH\\\"
 
-message("Buildnumber: "$$BUILD_NUMBER)
-message("Git hash: "$$GIT_HASH)
-message("Git branch: "$$GIT_BRANCH)
-message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
-#message($$QMAKESPEC)
+    message("Buildnumber: "$$BUILD_NUMBER)
+    message("Git hash: "$$GIT_HASH)
+    message("Git branch: "$$GIT_BRANCH)
+    message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
+    #message($$QMAKESPEC)
+}
 
 unix: {
     #

@@ -56,7 +56,7 @@ systray-x-app:
 	rm -f SysTray-X ;\
 	mkdir -p app/build ;\
 	cd app/build ;\
-	$(QMAKE) ../SysTray-X/SysTray-X.pro ;\
+	$(QMAKE) $(EXT_VERSION) ../SysTray-X/SysTray-X.pro ;\
 	make ;\
 	cd ../.. ;\
 	cp app/build/SysTray-X .
@@ -74,3 +74,11 @@ systray-x-app:
 	../build.bat x86_64 5.14.1 ;\
 	cd ../..
 endif
+
+#DEFINES+=EXT_VERSION \
+		DEFINES+=APP_VERSION_MAJOR=\\\\\\\"\"$(VERSION_MAJOR)\\\\\\\"\" \
+		DEFINES+=APP_VERSION_MINOR=\\\\\\\"\"$(VERSION_MINOR)\\\\\\\"\" \
+		DEFINES+=APP_VERSION_PATCH=\\\\\\\"\"$(VERSION_PATCH)\\\\\\\"\" \
+		DEFINES+=APP_BUILD=\\\\\\\"\"$(BUILD_NUMBER2)\\\\\\\"\" \
+		DEFINES+=APP_GITHASH=\\\\\\\"\"$(GIT_HASH2)\\\\\\\"\" \
+		DEFINES+=APP_GITBRANCH=\\\\\\\"\"$(GIT_BRANCH2)\\\\\\\"\" \

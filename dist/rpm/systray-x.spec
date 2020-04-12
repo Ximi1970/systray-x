@@ -59,7 +59,7 @@ export APP_BUILD=`cat %{S:1} | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)
 export APP_GITHASH=`cat %{S:1} | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/"`
 export APP_GITBRANCH=`cat %{S:1} | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/"`
 
-make %{?_smp_mflags} CFLAGS="-DAPP_VERSION_MAJOR=${VERSION_MAJOR} -DAPP_VERSION_MINOR=${VERSION_MINOR} -DAPP_VERSION_PATCH=${VERSION_PATCH} -DAPP_BUILD=${BUILD_NUMBER} -DAPP_GITHASH=${GIT_HASH} -DAPP_GITBRANCH=${GIT_BRANCH}"
+make %{?_smp_mflags} EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\"\"$(VERSION_MAJOR)\\\\\\\"\" DEFINES+=APP_VERSION_MINOR=\\\\\\\"\"$(VERSION_MINOR)\\\\\\\"\" DEFINES+=APP_VERSION_PATCH=\\\\\\\"\"$(VERSION_PATCH)\\\\\\\"\" DEFINES+=APP_BUILD=\\\\\\\"\"$(BUILD_NUMBER2)\\\\\\\"\" DEFINES+=APP_GITHASH=\\\\\\\"\"$(GIT_HASH2)\\\\\\\"\" DEFINES+=APP_GITBRANCH=\\\\\\\"\"$(GIT_BRANCH2)\\\\\\\"\""
 
 sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
