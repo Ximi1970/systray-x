@@ -35,10 +35,21 @@ unix:!macx: {
 #    QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
     LIBS += -lX11
-    #
-    #   To solve _glapi_tls_Current undefined ref
-    #
-    LIBS += -lGLdispatch
+    
+    exists("/usr/lib/libGLdispatch.so.0.0.0")
+    {
+      #
+      #   To solve _glapi_tls_Current undefined ref
+      #
+      LIBS += -lGLdispatch
+    }  
+    exists("/usr/lib64/libGLdispatch.so.0.0.0")
+    {
+      #
+      #   To solve _glapi_tls_Current undefined ref
+      #
+      LIBS += -lGLdispatch
+    }
 }
 win32: {
 #    QMAKE_LFLAGS += -static -lwinpthread -static-libgcc -static-libstdc++ $$(QMAKE_LFLAGS_WINDOWS)
