@@ -1,14 +1,12 @@
 #!/bin/bash
 
-VERSION=`git describe --long | sed "s/-.*//"`
+VERSION="0~git.*"
 
-OBS_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons"
+OBS_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Staging:/Test"
 OBS_PACKAGE="systray-x"
 
-OBS_RPM_ARCHS=""
-OBS_RPM_PKS=""
-OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
-OBS_RPM_PKS+="_ "
+OBS_RPM_ARCHS="openSUSE_Leap_15.1/x86_64 "
+OBS_RPM_PKS="_ "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_PKS+="_ "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
@@ -20,8 +18,10 @@ OBS_RPM_PKS+="sle150 "
 OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
 OBS_RPM_PKS+="sle151 "
 
-OBS_DEB_ARCHS=""
-OBS_DEB_PKS=""
+OBS_DEB_ARCHS="Debian_10/i386 "
+OBS_DEB_PKS="deb10 "
+OBS_DEB_ARCHS+="Debian_10/amd64 "
+OBS_DEB_PKS+="deb10 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/i386 "
 OBS_DEB_PKS+="bionic1804 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/amd64 "
@@ -31,7 +31,7 @@ OBS_DEB_PKS+="disco1904 "
 OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
 OBS_DEB_PKS+="focal1910 "
 
-TARGET_DIR="bin"
+TARGET_DIR="bin-test"
 mkdir -p $TARGET_DIR
 pushd $TARGET_DIR > /dev/null 2>&1
 
@@ -58,10 +58,6 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   FOUND_VERSION=`echo $RPM_FILE | sed -e "s/systray-x-\(.*\)-.*/\1/"`
 
   echo $FOUND_VERSION
-
-  if [ "$VERSION" != "$FOUND_VERSION" ] ; then
-    echo "---------------Wrong version !!!!---------------"
-  fi
 
   #
   # Get base name
