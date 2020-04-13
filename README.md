@@ -93,7 +93,7 @@ Requirements:
     ```dnf install qt5-qtbase-devel```
   - Debian/Ubuntu:
 
-    ```apt install zip git g++ make qt5-default qtbase5-dev```
+    ```apt install zip git g++ make qt5-default```
 
 Build:
 ```bash
@@ -104,7 +104,7 @@ make
 Install:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
-cp -f app/config/linux/SysTray_X.json
+cp -f app/config/linux/SysTray_X.json ~/.mozilla/native-messaging-hosts/
 cp -f systray-x@Ximi1970.xpi ~/.thunderbird/*.default-release/extensions/
 ```
 ...
