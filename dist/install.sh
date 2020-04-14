@@ -4,7 +4,10 @@ INSTALL_HOME=`echo ~`
 
 if [ "$1" == "-h" ] ; then
   echo
-  echo "Usage: $0 [abs-install-path [profiles-path] ]"
+  echo "Usage: $0 [-h|-u] [abs-install-path [profiles-path] ]"
+  echo
+  echo "  -h: This help"
+  echo "  -u: Uninstall"
   echo
   echo "  Default install path: $INSTALL_HOME/.mozilla/native-messaging-hosts"
   echo "  Default profiles: $INSTALL_HOME/.thunderbird"
@@ -12,15 +15,57 @@ if [ "$1" == "-h" ] ; then
   exit 0
 fi
 
-if [ -n "$1" ] ; then
-  DESTINATION="$1"
-
+if [ "$1" == "-u" ] ; then
   if [ -n "$2" ] ; then
-    PROFILES="$2"
+    DESTINATION="$2"
+
+    if [ -n "$3" ] ; then
+      PROFILES="$3"
+    fi
+  else
+    DESTINATION="$INSTALL_HOME/.mozilla/native-messaging-hosts"
+    PROFILES="$INSTALL_HOME/.thunderbird"
   fi
 else
-  DESTINATION="$INSTALL_HOME/.mozilla/native-messaging-hosts"
-  PROFILES="$INSTALL_HOME/.thunderbird"
+  if [ -n "$1" ] ; then
+    DESTINATION="$1"
+
+    if [ -n "$2" ] ; then
+      PROFILES="$2"
+    fi
+  else
+    DESTINATION="$INSTALL_HOME/.mozilla/native-messaging-hosts"
+    PROFILES="$INSTALL_HOME/.thunderbird"
+  fi
+fi
+
+if [ "$1" == "-u" ] ; then
+  #
+  # Tell the user what we are going to do
+  #
+  echo
+  echo "Uninstalling SysTray-X files from:"
+  echo "$DESTINATION"
+  echo
+  echo "Uninstalling SysTray-X addon from all profiles in:"
+  echo "$PROFILES"
+  echo
+  read -n 1 -s -r -p "Press any key to continue, Ctrl-C to cancel"
+  echo
+
+  rm -f $DESTINATION/SysTray-X
+  rm -f $DESTINATION/SysTray_X.json
+  rm -f $DESTINATION/systray-x@Ximi1970.xpi
+
+  rm -f $PROFILES/*/extensions/systray-x@Ximi1970.xpi > /dev/null 2>&1
+
+  #
+  # Done
+  #
+  echo ""
+  echo "Addon and companion app removed."
+
+  exit 0
 fi
 
 #
