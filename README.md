@@ -102,10 +102,22 @@ git clone https://github.com/Ximi1970/systray-x.git
 Requirements:
   - Fedora/Centos/RHEL:
 
-    ```dnf install qt5-qtbase-devel```
-  - Debian/Ubuntu:
+    ```bash
+    dnf install qt5-qtbase-devel
+    ```
+    
+  - Ubuntu:
 
-    ```apt install zip git g++ make qt5-default```
+    ```bash
+    sudo apt install zip git g++ make qt5-default
+    ```
+
+  - Debian:
+
+    ```bash
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
+    gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
+    ```
 
 Build:
 ```bash
