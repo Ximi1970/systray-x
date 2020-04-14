@@ -70,9 +70,8 @@ ifeq (Debian,$(DEB_VENDOR))
 	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions
 	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird/extensions
-	pushd  /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird/extensions
+	cd  /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird/extensions ;\
 	ln -sf ../../thunderbird-addons/extensions/systray-x@Ximi1970.xpi systray-x@Ximi1970.xpi
-	popd
 else
 	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions
 	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
