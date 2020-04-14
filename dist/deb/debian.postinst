@@ -9,7 +9,7 @@
  
 DEB_VENDOR=$(cat /etc/dpkg/origins/default | grep Vendor: | sed -e "s/Vendor: //")
 
-if { "$DEB_VENDOR" == "Debian" ] ; then
+if [ "$DEB_VENDOR" == "Debian" ] ; then
   gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
   touch /maxime-was-here
 fi
