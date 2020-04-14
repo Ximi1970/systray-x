@@ -66,7 +66,7 @@ echo "Installing SysTray-X addon..."
 
 for i in `grep "Path=" $PROFILES/profiles.ini | sed -e "s/Path=//"` ; do
   mkdir -p $PROFILES/$i/extensions
-  cp -f systray-x@Ximi1970.xpi $PROFILES/$i/extensions
+  cp -f ${DESTINATION}/systray-x@Ximi1970.xpi $PROFILES/$i/extensions
 done
 
 #
