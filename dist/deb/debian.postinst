@@ -1,0 +1,15 @@
+#!/bin/sh
+ 
+# Source debconf library.
+. /usr/share/debconf/confmodule
+ 
+# Fetching configuration from debconf
+#db_get packagename/question1
+#ANSWER1=$RET
+ 
+DEB_VENDOR=$(cat /etc/dpkg/origins/default | grep Vendor: | sed -e "s/Vendor: //")
+
+if { "$DEB_VENDOR" == "Debian" ] ; then
+  gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
+  touch /maxime-was-here
+fi
