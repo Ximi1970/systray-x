@@ -68,6 +68,18 @@ sudo apt update
 sudo apt install systray-x
 ```
 
+### Debian
+
+#### 10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x
+```
+
 ## Binaries (User)
 
 User installable package.  
