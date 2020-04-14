@@ -11,6 +11,7 @@
     <param name="extract">dist/deb/debian.compat</param>
     <param name="extract">dist/deb/debian.control</param>
     <param name="extract">dist/deb/debian.rules</param>
+    <param name="extract">dist/deb/debian.postinst</param>
     <param name="extract">dist/deb/systray-x.dsc</param>
   </service>
   <service mode="buildtime" name="tar" />
