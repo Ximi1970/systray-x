@@ -31,6 +31,8 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version}
+Requires:       gnome-shell-extension-appindicator
+Requires:       qt5-qtwayland
 Requires:       thunderbird >= 68
 %else
 Requires:       MozillaThunderbird >= 68
@@ -73,6 +75,11 @@ install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
 mkdir -pv $_systx_dir
 unzip -d $_systx_dir systray-x@Ximi1970.xpi
 install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
+
+%post
+%if 0%{?fedora_version}
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+%endif
 
 %files
 %license LICENSE 
