@@ -9,7 +9,8 @@
   "applications": {
     "gecko": {
       "id": "systray-x@Ximi1970",
-      "strict_min_version": "68.0"
+      "strict_min_version": "68.0",
+      "strict_max_version": "71.*"
     }
   },
 
