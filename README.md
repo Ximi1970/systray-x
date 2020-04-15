@@ -68,6 +68,18 @@ sudo apt update
 sudo apt install systray-x
 ```
 
+### Debian
+
+#### 10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x
+```
+
 ## Binaries (User)
 
 User installable package.  
@@ -90,10 +102,22 @@ git clone https://github.com/Ximi1970/systray-x.git
 Requirements:
   - Fedora/Centos/RHEL:
 
-    ```dnf install qt5-qtbase-devel```
-  - Debian/Ubuntu:
+    ```bash
+    dnf install qt5-qtbase-devel
+    ```
+    
+  - Ubuntu:
 
-    ```apt install zip git g++ make qt5-default qtbase5-dev```
+    ```bash
+    sudo apt install zip git g++ make qt5-default
+    ```
+
+  - Debian:
+
+    ```bash
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
+    gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
+    ```
 
 Build:
 ```bash
@@ -104,7 +128,7 @@ make
 Install:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
-cp -f app/config/linux/SysTray_X.json
+cp -f app/config/linux/SysTray_X.json ~/.mozilla/native-messaging-hosts/
 cp -f systray-x@Ximi1970.xpi ~/.thunderbird/*.default-release/extensions/
 ```
 ...
