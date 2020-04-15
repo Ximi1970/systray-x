@@ -78,7 +78,31 @@ install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-h
 
 %post
 %if 0%{?fedora_version}
-gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+CONF_DIR=/etc/dconf/db/local.d
+CONF_FILE=00-extensions
+
+if [ -f $CONF_DIR/$CONF_FILE ] ; then
+  #
+  # Edit extensions file
+  #
+  grep -q $EXTENSION $CONF_DIR/$CONF_FILE
+  if [ "$?" == "1" ] ; then
+    echo "Add"
+    
+    sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
+  fi
+else
+  #
+  # Generate extensions file
+  #
+  mkdir -p $CONF_DIR
+  cat >$CONF_DIR/$CONF_FILE <<EOF
+[org/gnome/shell]
+# List all extensions that you want to have enabled for all users
+enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
+EOF
+fi
 %endif
 
 %files
