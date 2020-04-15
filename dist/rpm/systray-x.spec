@@ -30,7 +30,11 @@ BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(x11)
+%if 0%{?fedora_version}
+Requires:       thunderbird >= 68
+%else
 Requires:       MozillaThunderbird >= 68
+%endif
 
 %description
 SysTray-X is a system tray extension for Thunderbird 68+.
