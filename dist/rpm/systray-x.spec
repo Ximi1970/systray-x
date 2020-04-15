@@ -103,6 +103,7 @@ else
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
 EOF
 fi
+dconf update
 %endif
 
 %files
