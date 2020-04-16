@@ -64,4 +64,7 @@ EOF
 
 fi
 
-dconf update
+which dconf > /dev/null 2>&1
+if [ "$?" = "0" ] ; then
+    dconf update
+fi
