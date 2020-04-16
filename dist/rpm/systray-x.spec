@@ -30,7 +30,6 @@ BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  gnome-shell-extension-appindicator
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version}
 Requires:       qt5-qtwayland
@@ -78,7 +77,6 @@ unzip -d $_systx_dir systray-x@Ximi1970.xpi
 install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
 
 %post
-%if 0%{?fedora_version}
 EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
 CONF_DIR=/etc/dconf/db/local.d
 CONF_FILE=00-extensions
@@ -104,8 +102,10 @@ else
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
 EOF
 fi
-dconf update
-%endif
+which dconf > /dev/null 2>&1
+if [ "$?" == "0" ] ; then
+    dconf update
+fi
 
 %files
 %license LICENSE 
