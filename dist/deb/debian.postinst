@@ -8,30 +8,26 @@
 #ANSWER1=$RET
  
 #DEB_VENDOR=$(cat /etc/dpkg/origins/default | grep Vendor: | sed -e "s/Vendor: //")
+#if [ "$DEB_VENDOR" = "Debian" ] ; then
+#fi
 
-if [ "$DEB_VENDOR" = "Debian" ] ; then
+PROF_DIR=/etc/dconf/profile
+PROF_FILE=user
 
-  echo "To be implemented"
-
-else
-
-  PROF_DIR=/etc/dconf/profile
-  PROF_FILE=user
-
-  if [ -f $PROF_DIR/$PROF_FILE ] ; then
+if [ -f $PROF_DIR/$PROF_FILE ] ; then
     #
     # Edit user file
     #
     grep -q "user-db:user" $PROF_DIR/$PROF_FILE
     if [ "$?" = "1" ] ; then
-      echo "user-db:user" >> $PROF_DIR/$PROF_FILE
+        echo "user-db:user" >> $PROF_DIR/$PROF_FILE
     fi
-      
+        
     grep -q "system-db:local" $PROF_DIR/$PROF_FILE
     if [ "$?" = "1" ] ; then
-      echo "system-db:local" >> $PROF_DIR/$PROF_FILE
+        echo "system-db:local" >> $PROF_DIR/$PROF_FILE
     fi
-  else
+else
     #
     # Generate user file
     #
@@ -41,21 +37,21 @@ user-db:user
 system-db:local
 EOF
 
-  fi
+fi
 
-  EXTENSION="ubuntu-appindicator@ubuntu.com"
-  CONF_DIR=/etc/dconf/db/local.d
-  CONF_FILE=00-extensions
+EXTENSION="ubuntu-appindicator@ubuntu.com"
+CONF_DIR=/etc/dconf/db/local.d
+CONF_FILE=00-extensions
 
-  if [ -f $CONF_DIR/$CONF_FILE ] ; then
+if [ -f $CONF_DIR/$CONF_FILE ] ; then
     #
     # Edit extensions file
     #
     grep -q $EXTENSION $CONF_DIR/$CONF_FILE
     if [ "$?" = "1" ] ; then
-      sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
+        sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
     fi
-  else
+else
     #
     # Generate extensions file
     #
@@ -66,8 +62,6 @@ EOF
 enabled-extensions=['ubuntu-appindicator@ubuntu.com']
 EOF
 
-  fi
-
-  dconf update
-
 fi
+
+dconf update
