@@ -30,8 +30,8 @@ BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(x11)
-%if 0%{?fedora_version}
 Requires:       gnome-shell-extension-appindicator
+%if 0%{?fedora_version}
 Requires:       qt5-qtwayland
 Requires:       thunderbird >= 68
 %else
