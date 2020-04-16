@@ -81,6 +81,17 @@ sudo apt install systray-x
 gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
 ```
 
+### Fedora
+
+#### 31
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_31/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+sudo dnf install systray-x
+```
+
+
 ## Binaries (User)
 
 User installable package.  
