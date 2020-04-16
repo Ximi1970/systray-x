@@ -122,7 +122,7 @@ Requirements:
   - Ubuntu:
 
     ```bash
-    sudo apt install zip git g++ make qt5-default
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
     gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
     ```
 
