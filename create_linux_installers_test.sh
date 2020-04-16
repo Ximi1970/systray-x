@@ -5,8 +5,10 @@ VERSION="0~git.*"
 OBS_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Staging:/Test"
 OBS_PACKAGE="systray-x"
 
-OBS_RPM_ARCHS="openSUSE_Leap_15.1/x86_64 "
-OBS_RPM_PKS="_ "
+OBS_RPM_ARCHS=""
+OBS_RPM_PKS=""
+OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
+OBS_RPM_PKS+="_ "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_PKS+="_ "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
@@ -17,9 +19,14 @@ OBS_RPM_ARCHS+="SLE_15/x86_64 "
 OBS_RPM_PKS+="sle150 "
 OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
 OBS_RPM_PKS+="sle151 "
+OBS_RPM_ARCHS+="Fedora_31/x86_64 "
+OBS_RPM_PKS+="fed31 "
 
-OBS_DEB_ARCHS="Debian_10/i386 "
-OBS_DEB_PKS="deb10 "
+
+OBS_DEB_ARCHS=""
+OBS_DEB_PKS=""
+OBS_DEB_ARCHS+="Debian_10/i386 "
+OBS_DEB_PKS+="deb10 "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/i386 "
@@ -50,7 +57,7 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   #
   # Find rpm
   #
-  RPM_FILE=`grep ">systray.*<" index.html | sed -e "s/.*>\(systray-x.*rpm\)<.*/\1/"`
+  RPM_FILE=`grep ">systray-x-[^d].*<" index.html | sed -e "s/.*>\(systray-x-[^d].*rpm\)<.*/\1/"`
   rm -f index.html
 
   echo $rpmdir/$RPM_FILE
@@ -117,6 +124,17 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   # Create installer
   #
   cp -f ../dist/install.sh SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  
+  #
+  # Insert gnome setup
+  #
+  DISTRO=`echo $rpmdir | cut -d'/' -f1`
+  sed -i -e "/__GNOME_SETUP__/r../dist/install.$DISTRO.sh" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  sed -i -e "s/__GNOME_SETUP__//" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+
+  #
+  # Insert install tar
+  #
   cat $PACKAGE_NAME.tar.xz >> SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
   chmod 755 SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
 
@@ -131,7 +149,6 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   #
   INDEX=$((INDEX+1))
 done
-
 
 #
 # Create bash installers for DEB based distributions
@@ -211,6 +228,17 @@ for debdir in $OBS_DEB_ARCHS ; do
   # Create installer
   #
   cp -f ../dist/install.sh SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+    
+  #
+  # Insert gnome setup
+  #
+  DISTRO=`echo $rpmdir | cut -d'/' -f1`
+  sed -i -e "/__GNOME_SETUP__/r../dist/install.$DISTRO.sh" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  sed -i -e "s/__GNOME_SETUP__//" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  
+  #
+  # Insert install tar
+  #
   cat $PACKAGE_NAME.tar.xz >> SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
   chmod 755 SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
 
