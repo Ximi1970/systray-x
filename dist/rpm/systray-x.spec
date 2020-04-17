@@ -86,9 +86,7 @@ if [ -f $CONF_DIR/$CONF_FILE ] ; then
   # Edit extensions file
   #
   grep -q $EXTENSION $CONF_DIR/$CONF_FILE
-  if [ "$?" == "1" ] ; then
-    echo "Add"
-    
+  if [ "$?" == "1" ] ; then    
     sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
   fi
 else
