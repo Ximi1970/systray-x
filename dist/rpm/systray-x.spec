@@ -77,32 +77,59 @@ unzip -d $_systx_dir systray-x@Ximi1970.xpi
 install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
 
 %post
-EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
-CONF_DIR=/etc/dconf/db/local.d
-CONF_FILE=00-extensions
+PROF_DIR="/etc/dconf/profile"
+PROF_FILE="user"
 
-if [ -f $CONF_DIR/$CONF_FILE ] ; then
+if [ -f ${PROF_DIR}/${PROF_FILE} ] ; then
+    #
+    # Edit user file
+    #
+    grep -q "user-db:user" ${PROF_DIR}/${PROF_FILE}
+    if [ "$?" = "1" ] ; then
+        echo "user-db:user" >> ${PROF_DIR}/${PROF_FILE}
+    fi
+        
+    grep -q "system-db:local" ${PROF_DIR}/${PROF_FILE}
+    if [ "$?" = "1" ] ; then
+        echo "system-db:local" >> ${PROF_DIR}/${PROF_FILE}
+    fi
+else
+    #
+    # Generate user file
+    #
+    mkdir -p ${PROF_DIR}
+    cat >${PROF_DIR}/${PROF_FILE} <<EOF
+user-db:user
+system-db:local
+EOF
+fi
+
+EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+CONF_DIR="/etc/dconf/db/local.d"
+CONF_FILE="00-extensions"
+
+if [ -f ${CONF_DIR}/${CONF_FILE} ] ; then
   #
   # Edit extensions file
   #
-  grep -q $EXTENSION $CONF_DIR/$CONF_FILE
+  grep -q ${EXTENSION} ${CONF_DIR}/${CONF_FILE}
   if [ "$?" == "1" ] ; then    
-    sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
+    sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" ${CONF_DIR}/${CONF_FILE}
   fi
 else
   #
   # Generate extensions file
   #
-  mkdir -p $CONF_DIR
-  cat >$CONF_DIR/$CONF_FILE <<EOF
+  mkdir -p ${CONF_DIR}
+  cat >${CONF_DIR}/${CONF_FILE} <<EOF
 [org/gnome/shell]
 # List all extensions that you want to have enabled for all users
 enabled-extensions=['appindicatorsupport@rgcjonas.gmail.com']
 EOF
 fi
-which dconf > /dev/null 2>&1
-if [ "$?" == "0" ] ; then
-    dconf update
+#
+if [ -x /usr/bin/dconf ] ; then
+  dconf update
 fi
 
 %files
