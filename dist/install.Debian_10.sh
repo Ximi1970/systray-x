@@ -23,13 +23,16 @@ enableGnomeExtension() {
 #
 if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     enableGnomeExtension
-    
-    dpkg -l | grep -q qt5-default
-    if [ "$?" == "1" ] ; then
-      echo
-      echo "Please install the package qt5-default:"
-      echo
-      echo "sudo apt install qt5-default"
-      echo
-    fi
+fi
+
+#
+# Check for Qt
+#
+dpkg -l | grep -q qt5-default
+if [ "$?" == "1" ] ; then
+  echo
+  echo "Please install the package qt5-default:"
+  echo
+  echo "sudo apt install qt5-default"
+  echo
 fi

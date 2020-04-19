@@ -2,7 +2,7 @@
 
 VERSION=`git describe --long | sed "s/-.*//"`
 
-OBS_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons"
+OBS_REPO_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons"
 OBS_PACKAGE="systray-x"
 
 OBS_RPM_ARCHS=""
@@ -22,6 +22,7 @@ OBS_RPM_PKS+="sle151 "
 OBS_RPM_ARCHS+="Fedora_31/x86_64 "
 OBS_RPM_PKS+="fed31 "
 
+
 OBS_DEB_ARCHS=""
 OBS_DEB_PKS=""
 OBS_DEB_ARCHS+="Debian_10/i386 "
@@ -37,6 +38,310 @@ OBS_DEB_PKS+="disco1904 "
 OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
 OBS_DEB_PKS+="focal1910 "
 
+
+create_rpm_gnome_extension_tar() {
+
+  local REPO_BASE=$1
+  local REPO_DISTR=$2
+  
+  ##########################################
+  #
+  # Create user installable
+  # gnome-shell-extension-appindicator 
+  #
+  ##########################################
+  
+  if [ -f gnome-shell-extension.tar.xz ] ; then
+    return
+  fi
+
+  # Get index.html for 
+  #
+  rm -f index.html
+  wget -q "${REPO_BASE}/${REPO_DISTR}/noarch/"
+  if [ "$?" != "0" ] ; then
+    return
+  fi
+
+  #
+  # Find rpm
+  #
+  local RPM_FILE_GNOME=$(grep ">gnome-.*<" index.html | sed -e "s/.*>\(gnome-.*rpm\)<.*/\1/")
+  rm -f index.html
+
+  if [ -z "${RPM_FILE_GNOME}" ] ; then
+    echo "No GNOME extension found"
+    return
+  fi
+  
+  #
+  # Get package
+  #
+  wget -q "${REPO_BASE}/${REPO_DISTR}/noarch/${RPM_FILE_GNOME}"
+
+  #
+  # Extract 
+  #
+  rpm2cpio ${RPM_FILE_GNOME} | cpio -idv 2>/dev/null
+
+  #
+  # Create tar
+  #
+  tar -C ./usr/share/gnome-shell/extensions -cJf gnome-shell-extension.tar.xz .
+
+  #
+  # Cleanup
+  #
+  rm -rf ./usr
+  rm -f ${RPM_FILE_GNOME}
+}
+
+create_deb_gnome_extension_tar() {
+
+  local REPO_BASE=$1
+  local REPO_DISTR=$2
+  local REPO_ARCH=$3
+  
+  ##########################################
+  #
+  # Create user installable
+  # gnome-shell-extension-appindicator 
+  #
+  ##########################################
+  
+  if [ -f gnome-shell-extension.tar.xz ] ; then
+    return
+  fi
+
+  # Get index.html for 
+  #
+  rm -f index.html
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
+  if [ "$?" != "0" ] ; then
+    return
+  fi
+  
+  #
+  # Find rpm
+  #
+  local DEB_FILE_GNOME=$(grep ">gnome-.*<" index.html | sed -e "s/.*>\(gnome-.*deb\)<.*/\1/")
+  rm -f index.html
+
+  if [ -z "${DEB_FILE_GNOME}" ] ; then
+    echo "No GNOME extension found"
+    return
+  fi
+  
+  #
+  # Get package
+  #
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${DEB_FILE_GNOME}"
+
+  #
+  # Extract 
+  #
+  ar x ${DEB_FILE_GNOME} 2>/dev/null
+  tar -xJf data.tar.xz
+  
+  rm -f data.tar.xz
+  rm -f control.tar.xz
+  rm -f debian-binary
+  
+  #
+  # Create tar
+  #
+  tar -C ./usr/share/gnome-shell/extensions -cJf gnome-shell-extension.tar.xz .
+
+  #
+  # Cleanup
+  #
+  rm -rf ./usr
+  rm -f ${DEB_FILE_GNOME}
+}
+
+create_rpm_tar() {
+
+  local REPO_BASE=$1
+  local REPO_DISTR=$2
+  local REPO_ARCH=$3
+  local RPM_EXT=$4
+  
+  ##########################################
+  #
+  # Create the SysTray-X tar
+  #
+  ##########################################
+
+  #
+  # Get index.html
+  #
+  rm -f index.html
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
+  
+  #
+  # Find rpm
+  #
+  local RPM_FILE=$(grep ">systray-x-[^d].*<" index.html | sed -e "s/.*>\(systray-x-[^d].*rpm\)<.*/\1/")
+  rm -f index.html
+
+  echo "Found: "${RPM_FILE}
+  
+  FOUND_VERSION=$(echo ${RPM_FILE} | sed -e "s/systray-x-\(.*\)-.*/\1/")
+
+  echo "Version: "${FOUND_VERSION}
+
+  #
+  # Create tar dir
+  #
+  local TAR_DIR=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}
+
+  rm -rf ${TAR_DIR}
+  mkdir -p ${TAR_DIR}
+    
+  #
+  # Add the gnome extension to the tar
+  #
+  if [ -f gnome-shell-extension.tar.xz ] ; then
+    cp -f gnome-shell-extension.tar.xz ${TAR_DIR}/
+  fi
+  
+  #
+  # Get the SysTray-X rpm
+  #
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${RPM_FILE}"
+
+  #
+  # Extract 
+  #
+  rpm2cpio ${RPM_FILE} | cpio -i --to-stdout ./usr/bin/SysTray-X > ./${TAR_DIR}/SysTray-X 2>/dev/null
+  chmod 755 ./${TAR_DIR}/SysTray-X
+
+  rpm2cpio ${RPM_FILE} | cpio -i --to-stdout ./usr/share/doc/packages/systray-x/systray-x@Ximi1970.xpi > ./${TAR_DIR}/systray-x@Ximi1970.xpi 2>/dev/null
+
+  if [ ! -f systray-x@Ximi1970.xpi ] ; then
+    cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
+  fi
+
+  #
+  # Get JSON
+  #
+  cp -f ../app/config/linux/SysTray_X.json.template ./${TAR_DIR}/SysTray_X.json.template
+
+  #
+  # Create tar
+  #
+  tar -C ./${TAR_DIR} -cJf ${TAR_DIR}.tar.xz .
+
+  #
+  # Rename the RPM
+  #
+  if [ "${RPM_EXT}" != "_" ] ; then
+    NEW_RPM_FILE=`echo ${RPM_FILE} | sed -s "s/\(systray-x-${FOUND_VERSION}-\)\(.*\)/\1${RPM_EXT}\.\2/"`
+    mv -f ${RPM_FILE} $NEW_RPM_FILE
+  fi
+
+  #
+  # Cleanup
+  #
+  rm -rf ${TAR_DIR}
+}
+
+
+create_deb_tar() {
+
+  local REPO_BASE=$1
+  local REPO_DISTR=$2
+  local REPO_ARCH=$3
+  local DEB_EXT=$4
+  
+  ##########################################
+  #
+  # Create the SysTray-X tar
+  #
+  ##########################################
+
+  #
+  # Get index.html
+  #
+  rm -f index.html
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
+    
+  #
+  # Find deb
+  #
+  local DEB_FILE=$(grep ">systray-x_.*\.deb<" index.html | sed -e "s/.*>\(systray-x.*deb\)<.*/\1/")
+  rm -f index.html
+
+  echo "Found: "${DEB_FILE}
+  
+  FOUND_VERSION=$(echo ${DEB_FILE} | sed -e "s/systray-x_\(.*\)_.*/\1/")
+
+  echo "Version: "${FOUND_VERSION}
+
+  #
+  # Create tar dir
+  #
+  local TAR_DIR=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}
+
+  rm -rf ${TAR_DIR}
+  mkdir -p ${TAR_DIR}
+    
+  #
+  # Add the gnome extension to the tar
+  #
+  if [ -f gnome-shell-extension.tar.xz ] ; then
+    cp -f gnome-shell-extension.tar.xz ${TAR_DIR}/
+  fi
+  
+  #
+  # Get the SysTray-X deb
+  #
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${DEB_FILE}"
+
+  #
+  # Extract 
+  #
+  dpkg --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/bin/SysTray-X > ./${TAR_DIR}/SysTray-X
+  chmod 755 ./${TAR_DIR}/SysTray-X
+
+  dpkg --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi > ./${TAR_DIR}/systray-x@Ximi1970.xpi
+
+  if [ ! -f systray-x@Ximi1970.xpi ] ; then
+    cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
+  fi
+
+  #
+  # Get JSON
+  #
+  cp -f ../app/config/linux/SysTray_X.json.template ./${TAR_DIR}/SysTray_X.json.template
+
+  #
+  # Create tar
+  #
+  tar -C ./${TAR_DIR} -cJf ${TAR_DIR}.tar.xz .
+
+  #
+  # Rename the DEB
+  #
+  if [ "${DEB_EXT}" != "_" ] ; then
+    NEW_DEB_FILE=`echo ${DEB_FILE} | sed -s "s/\(systray-x\_${FOUND_VERSION}\_\)\(.*\)/\1${DEB_EXT}\_\2/"`
+    mv -f ${DEB_FILE} ${NEW_DEB_FILE}
+  fi
+
+  #
+  # Cleanup
+  #
+  rm -rf ${TAR_DIR}
+}
+
+#################################################################################
+#
+#
+#   Main
+#
+#
+#################################################################################
+
 TARGET_DIR="bin"
 mkdir -p $TARGET_DIR
 pushd $TARGET_DIR > /dev/null 2>&1
@@ -47,105 +352,51 @@ pushd $TARGET_DIR > /dev/null 2>&1
 INDEX=1
 for rpmdir in $OBS_RPM_ARCHS ; do
 
-  #
-  # Get index.html
-  #
-  rm -f index.html
-  wget -q "$OBS_BASE/$rpmdir/"
-
-  #
-  # Find rpm
-  #
-  RPM_FILE=`grep ">systray-x-[^d].*<" index.html | sed -e "s/.*>\(systray-x-[^d].*rpm\)<.*/\1/"`
-  rm -f index.html
-
-  echo $rpmdir/$RPM_FILE
-  
-  FOUND_VERSION=`echo $RPM_FILE | sed -e "s/systray-x-\(.*\)-.*/\1/"`
-
-  echo $FOUND_VERSION
-
-  if [ "$VERSION" != "$FOUND_VERSION" ] ; then
-    echo "---------------Wrong version !!!!---------------"
-  fi
-
-  #
-  # Get base name
-  #
-  BASE_NAME=${rpmdir//'/'/$'-'}
-
-  PACKAGE_NAME=SysTray-X-$FOUND_VERSION-$BASE_NAME
-
-  rm -rf $PACKAGE_NAME
-  mkdir -p $PACKAGE_NAME
-  pushd $PACKAGE_NAME > /dev/null 2>&1
+  echo
+  echo
+  echo "Generating installer: "${rpmdir}
+  echo
   
   #
-  # Get rpm
+  # Get base of the repo
   #
-  wget -q "$OBS_BASE/$rpmdir/$RPM_FILE"
-
-  #
-  # Extract 
-  #
-  rpm2cpio $RPM_FILE | cpio -i --to-stdout ./usr/bin/SysTray-X > SysTray-X 2>/dev/null
-  chmod 755 SysTray-X
-
-  rpm2cpio $RPM_FILE | cpio -i --to-stdout ./usr/share/doc/packages/systray-x/systray-x@Ximi1970.xpi > systray-x@Ximi1970.xpi 2>/dev/null
-
-  if [ ! -f ../systray-x@Ximi1970.xpi ] ; then
-    cp -f systray-x@Ximi1970.xpi ..
-  fi
-
-  #
-  # Get JSON
-  #
-  cp -f ../../app/config/linux/SysTray_X.json.template SysTray_X.json.template
-
-  #
-  # Cleanup
-  #
-  mv -f $RPM_FILE ..
-
-  tar cJf ../$PACKAGE_NAME.tar.xz .
-
-  popd > /dev/null 2>&1
-
-  #
-  # Rename package
-  #
-  PACKAGE_EXT=`echo $OBS_RPM_PKS | cut -d' ' -f$INDEX`
+  REPO_DISTR=$(echo ${rpmdir} | cut -d'/' -f1)
+  REPO_ARCH=$(echo ${rpmdir} | cut -d'/' -f2)
   
-  echo "Ext: "$PACKAGE_EXT
+  RPM_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
   
-  if [ "$PACKAGE_EXT" != "_" ] ; then
-    NEW_RPM_FILE=`echo $RPM_FILE | sed -s "s/\($OBS_PACKAGE-$FOUND_VERSION-\)\(.*\)/\1$PACKAGE_EXT\.\2/"`
-    mv -f $RPM_FILE $NEW_RPM_FILE
-  fi
+  #
+  # Generate the gnome tar file
+  #
+  create_rpm_gnome_extension_tar ${OBS_REPO_BASE} ${REPO_DISTR}
 
+  #
+  # Generate the SysTray-X tar file
+  #
+  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_EXT}
+  
   #
   # Create installer
   #
-  cp -f ../dist/install.sh SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  
+  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-install.sh
+  cp -f ../dist/install.sh ${INSTALLER}
+
   #
   # Insert gnome setup
   #
-  DISTRO=`echo $rpmdir | cut -d'/' -f1`
-  sed -i -e "/__GNOME_SETUP__/r../dist/install.$DISTRO.sh" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  sed -i -e "s/__GNOME_SETUP__//" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  sed -i -e "/__GNOME_SETUP__/r../dist/install.${REPO_DISTR}.sh" ${INSTALLER}
+  sed -i -e "s/__GNOME_SETUP__//" ${INSTALLER}
 
   #
   # Insert install tar
   #
-  cat $PACKAGE_NAME.tar.xz >> SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  chmod 755 SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
+  chmod 755 ${INSTALLER}
 
   #
   # Cleanup
   #
-  rm -rf $PACKAGE_NAME
-  rm -f $PACKAGE_NAME.tar.xz
+  rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
 
   #
   # Update index
@@ -153,109 +404,72 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   INDEX=$((INDEX+1))
 done
 
+#
+# Cleanup
+#
+rm -f gnome-shell-extension.tar.xz
 
 #
 # Create bash installers for DEB based distributions
 #
 INDEX=1
 for debdir in $OBS_DEB_ARCHS ; do
-
-  #
-  # Get index.html
-  #
-  rm -f index.html
-  wget -q "$OBS_BASE/$debdir/"
+ 
+  echo
+  echo
+  echo "Generating installer: "${debdir}
+  echo
   
   #
-  # Find deb
+  # Get base of the repo
   #
-  DEB_FILE=`grep ">systray-x_.*\.deb<" index.html | sed -e "s/.*>\(systray-x.*deb\)<.*/\1/"`
-  rm -f index.html
-
-  echo $debdir/$DEB_FILE
+  REPO_DISTR=$(echo ${debdir} | cut -d'/' -f1)
+  REPO_ARCH=$(echo ${debdir} | cut -d'/' -f2)
   
-  FOUND_VERSION=`echo $DEB_FILE | sed -e "s/systray-x_\(.*\)_.*/\1/"`
-
-  echo $FOUND_VERSION
-
-  #
-  # Get base name
-  #
-  BASE_NAME=${debdir//'/'/$'-'}
-
-  PACKAGE_NAME=SysTray-X-$FOUND_VERSION-$BASE_NAME
-
-  rm -rf $PACKAGE_NAME
-  mkdir -p $PACKAGE_NAME
-  pushd $PACKAGE_NAME > /dev/null 2>&1
-
-  #
-  # Get deb
-  #
-  wget -q "$OBS_BASE/$debdir/$DEB_FILE"
-
-  #
-  # Extract 
-  #
-  dpkg --fsys-tarfile $DEB_FILE | tar xOf - ./usr/bin/SysTray-X > SysTray-X
-  chmod 755 SysTray-X
-
-  dpkg --fsys-tarfile $DEB_FILE | tar xOf - ./usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi > systray-x@Ximi1970.xpi
-
-  #
-  # Get JSON
-  #
-  cp -f ../../app/config/linux/SysTray_X.json.template SysTray_X.json.template
-
-  #
-  # Cleanup
-  #
-  mv -f $DEB_FILE ..
-
-  tar cJf ../$PACKAGE_NAME.tar.xz .
-
-  popd > /dev/null 2>&1
-
-  #
-  # Rename package
-  #
-  PACKAGE_EXT=`echo $OBS_DEB_PKS | cut -d' ' -f$INDEX`
+  DEB_EXT=$(echo ${OBS_DEB_PKS} | cut -d' ' -f${INDEX})
   
-  echo "Ext: "$PACKAGE_EXT
+  #
+  # Generate the gnome tar file
+  #
+  create_deb_gnome_extension_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH}
 
-  if [ "$PACKAGE_EXT" != "_" ] ; then
-    NEW_DEB_FILE=`echo $DEB_FILE | sed -s "s/\($OBS_PACKAGE\_$FOUND_VERSION\_\)\(.*\)/\1$PACKAGE_EXT\_\2/"`
-    mv -f $DEB_FILE $NEW_DEB_FILE
-  fi
-
+  #
+  # Generate the SysTray-X tar file
+  #
+  create_deb_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${DEB_EXT}
+ 
   #
   # Create installer
   #
-  cp -f ../dist/install.sh SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  
+  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-install.sh
+  cp -f ../dist/install.sh ${INSTALLER}
+
   #
   # Insert gnome setup
   #
-  DISTRO=`echo $rpmdir | cut -d'/' -f1`
-  sed -i -e "/__GNOME_SETUP__/r../dist/install.$DISTRO.sh" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  sed -i -e "s/__GNOME_SETUP__//" SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  sed -i -e "/__GNOME_SETUP__/r../dist/install.${REPO_DISTR}.sh" ${INSTALLER}
+  sed -i -e "s/__GNOME_SETUP__//" ${INSTALLER}
 
   #
   # Insert install tar
   #
-  cat $PACKAGE_NAME.tar.xz >> SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
-  chmod 755 SysTray-X-$FOUND_VERSION-$BASE_NAME-install.sh
+  cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
+  chmod 755 ${INSTALLER}
 
   #
   # Cleanup
   #
-  rm -rf $PACKAGE_NAME
-  rm -f $PACKAGE_NAME.tar.xz
+  rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
 
   #
   # Update index
   #
   INDEX=$((INDEX+1))
 done 
+
+#
+# Cleanup
+#
+rm -f gnome-shell-extension.tar.xz
 
 popd > /dev/null 2>&1
