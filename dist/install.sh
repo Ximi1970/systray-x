@@ -53,9 +53,10 @@ if [ "$1" == "-u" ] ; then
   read -n 1 -s -r -p "Press any key to continue, Ctrl-C to cancel"
   echo
 
-  rm -f $DESTINATION/SysTray-X
-  rm -f $DESTINATION/SysTray_X.json
-  rm -f $DESTINATION/systray-x@Ximi1970.xpi
+  rm -f $DESTINATION/SysTray-X > /dev/null 2>&1
+  rm -f $DESTINATION/SysTray_X.json > /dev/null 2>&1
+  rm -f $DESTINATION/systray-x@Ximi1970.xpi > /dev/null 2>&1
+  rm -f $DESTINATION/gnome-shell-extension.tar.xz > /dev/null 2>&1
 
   rm -f $PROFILES/*/extensions/systray-x@Ximi1970.xpi > /dev/null 2>&1
 
@@ -121,9 +122,6 @@ __GNOME_SETUP__
 echo ""
 echo "Addon and companion app installation complete."
 echo "App en JSON config have been installed in: $DESTINATION"
-echo ""
-echo "Do not forget to install the Thunderbird SysTray-X Add-on"
-echo "using the standard Thunderbird Add-ons / Extensions store !"
 echo ""
 exit 0
 

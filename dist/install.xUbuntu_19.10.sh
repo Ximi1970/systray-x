@@ -1,16 +1,21 @@
 enableGnomeExtension() {
-    EXTENSION="ubuntu-appindicator@ubuntu.com"
+    EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
     PACKAGE="gnome-shell-extension-appindicator"
-    ENABLE_CMD="gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com"
+    ENABLE_CMD="gnome-shell-extension-tool -e ${EXTENSION}"
     #
     #   Is the extension installed?
     #
-    if [ -d /usr/share/gnome-shell/extensions/$EXTENSION ] || [ -d ~/.local/share/gnome-shell/extensions/$EXTENSION ] ; then
+    if [ -d /usr/share/gnome-shell/extensions/${EXTENSION} ] || [ -d ~/.local/share/gnome-shell/extensions/${EXTENSION} ] ; then
         $ENABLE_CMD
     else
-        echo "Please install: "$PACKAGE
-        echo "And run: "$ENABLE_CMD
+        mkdir -p ~/.local/share/gnome-shell/extensions
+        tar -C ~/.local/share/gnome-shell/extensions -xJf ${DESTINATION}/gnome-shell-extension.tar.xz
+        $ENABLE_CMD
     fi
+    
+    echo
+    echo "Please logout and login to activate the gnome shell extension"
+    echo
 }
 
 #
@@ -18,4 +23,13 @@ enableGnomeExtension() {
 #
 if [ "$XDG_CURRENT_DESKTOP" == "ubuntu:GNOME" ] ; then
     enableGnomeExtension
+    
+    dpkg -l | grep -q qt5-default
+    if [ "$?" == "1" ] ; then
+      echo
+      echo "Please install the package qt5-default:"
+      echo
+      echo "sudo apt install qt5-default"
+      echo
+    fi
 fi
