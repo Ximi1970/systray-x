@@ -111,6 +111,12 @@ git clone https://github.com/Ximi1970/systray-x.git
 ```
 
 Requirements:
+  - OpenSuSE:
+
+    ```bash
+    sudo zypper install zip git gcc-c++ make qt5-qtbase-devel
+    ```
+
   - Fedora/Centos/RHEL:
 
     ```bash
