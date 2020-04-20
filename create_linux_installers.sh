@@ -211,12 +211,44 @@ create_rpm_tar() {
   wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${RPM_FILE}"
 
   #
-  # Extract 
+  # Get compression type
   #
-  rpm2cpio ${RPM_FILE} | cpio -i --to-stdout ./usr/bin/SysTray-X > ./${TAR_DIR}/SysTray-X 2>/dev/null
-  chmod 755 ./${TAR_DIR}/SysTray-X
+  COMPRESSION=$(rpm -qp --qf '%{PAYLOADCOMPRESSOR}\n' ${RPM_FILE})
+#  echo ${COMPRESSION}
+  
+  case ${COMPRESSION} in
+    zstd)
+      #
+      # Extract 
+      #
+      rpm2cpio ${RPM_FILE} | zstd -d | cpio --quiet -idm
 
-  rpm2cpio ${RPM_FILE} | cpio -i --to-stdout ./usr/share/doc/packages/systray-x/systray-x@Ximi1970.xpi > ./${TAR_DIR}/systray-x@Ximi1970.xpi 2>/dev/null
+      #
+      # Get files
+      #
+      cp -f ./usr/bin/SysTray-X ./${TAR_DIR}/SysTray-X
+      chmod 755 ./${TAR_DIR}/SysTray-X
+      cp -f ./usr/share/doc/systray-x/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+      ;;
+    *)
+      #
+      # Extract 
+      #
+      rpm2cpio ${RPM_FILE} | cpio --quiet -idm
+
+      #
+      # Get files
+      #
+      cp -f ./usr/bin/SysTray-X ./${TAR_DIR}/SysTray-X
+      chmod 755 ./${TAR_DIR}/SysTray-X
+      cp -f ./usr/share/doc/packages/systray-x/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+      ;;
+  esac
+  
+  #
+  # Cleanup
+  #
+  rm -rf ./usr
 
   if [ ! -f systray-x@Ximi1970.xpi ] ; then
     cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
