@@ -28,11 +28,11 @@ fi
 #
 # Check for Qt
 #
-dpkg -l | grep -q qt5-default
+dpkg -l | grep -q libqt5widgets5
 if [ "$?" == "1" ] ; then
   echo
-  echo "Please install the package qt5-default:"
+  echo "Please install the package libqt5widgets5:"
   echo
-  echo "sudo apt install qt5-default"
+  echo "sudo apt install libqt5widgets5"
   echo
 fi
