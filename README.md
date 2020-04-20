@@ -120,6 +120,15 @@ Requirements:
     
   - Ubuntu:
 
+      19.10
+
+    ```bash
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
+    gnome-extensions enable ubuntu-appindicator@ubuntu.com
+    ```
+
+      18.04 LTS
+
     ```bash
     sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
     gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
