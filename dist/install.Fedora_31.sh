@@ -1,7 +1,7 @@
 enableGnomeExtension() {
     EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
     PACKAGE="gnome-shell-extension-appindicator"
-    ENABLE_CMD="gnome-shell-extension-tool -e ${EXTENSION}"
+    ENABLE_CMD="gnome-extensions enable ${EXTENSION}"
     #
     #   Is the extension installed?
     #
