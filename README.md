@@ -80,6 +80,17 @@ sudo apt update
 sudo apt install systray-x
 ```
 
+### Fedora
+
+#### 31
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_31/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+sudo dnf install systray-x
+```
+
+
 ## Binaries (User)
 
 User installable package.  
@@ -103,13 +114,15 @@ Requirements:
   - Fedora/Centos/RHEL:
 
     ```bash
-    dnf install qt5-qtbase-devel
+    sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator
+    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
     ```
     
   - Ubuntu:
 
     ```bash
-    sudo apt install zip git g++ make qt5-default
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
+    gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
     ```
 
   - Debian:
