@@ -416,6 +416,8 @@ void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
                     _NET_WM_STATE_REMOVE,
                     static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
     }
+
+    XFlush( m_display );
 }
 
 
