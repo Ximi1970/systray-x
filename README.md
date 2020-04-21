@@ -181,7 +181,7 @@ Clone the repository using TortoiseGit:
 
 Branches:  
 
-master      : Should be stable and working for all systems  
+master      : Should be stable and working for all supported systems  
 develop     : Working but maybe not for all systems  
 feature-xxx : Experimental  
 
