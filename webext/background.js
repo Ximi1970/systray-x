@@ -1,6 +1,8 @@
 var SysTrayX = {
   debugAccounts: false,
 
+  startupState: undefined,
+
   pollTiming: {
     pollStartupDelay: "60",
     pollInterval: "60",
@@ -192,6 +194,14 @@ SysTrayX.Messaging = {
         numberColor: numberColor,
       },
     });
+
+    if (SysTrayX.startupState) {
+      //  Send startup state after the prefs
+      //  so the hide is handled conform the prefs
+      SysTrayX.Link.postSysTrayXMessage({ window: SysTrayX.startupState });
+
+      SysTrayX.startupState = undefined;
+    }
   },
 
   onSendIconStorageError: function (error) {
@@ -375,6 +385,10 @@ async function start() {
     });
   }
 
+  SysTrayX.startupState = state;
+
+  console.debug("State: "+ SysTrayX.startupState);
+
   // Get the poll timing
   SysTrayX.pollTiming = await getPollTiming();
 
@@ -382,7 +396,7 @@ async function start() {
   SysTrayX.platformInfo = await browser.runtime
     .getPlatformInfo()
     .then((info) => info);
-    
+
   console.log("OS: " + SysTrayX.platformInfo.os);
   console.log("Arch: " + SysTrayX.platformInfo.arch);
   console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
@@ -405,9 +419,6 @@ async function start() {
 
   //  Setup the link first
   SysTrayX.Link.init();
-
-  //  Send current state
-  SysTrayX.Link.postSysTrayXMessage({ window: state });
 
   //  Main start
   SysTrayX.Messaging.init();

@@ -35,6 +35,7 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
     /*
      *  Initialize
      */
+    m_state = QString();
     setMinimizeType( m_pref->getMinimizeType() );
 
     /*
