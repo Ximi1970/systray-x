@@ -61,9 +61,10 @@ qint64  WindowCtrlUnix::getPpid() const
 /*
  *  Is the pid from thunderbird
  */
-bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
+bool    WindowCtrlUnix::isMozilla( qint64 pid ) const
 {
-    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
+    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive ) ||
+            getProcessName( pid ).contains( "firefox", Qt::CaseInsensitive );
 }
 
 
@@ -281,7 +282,7 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
 {
-    if( !isThunderbird( getPpid() ) )
+    if( !isMozilla( getPpid() ) )
     {
         return;
     }
@@ -325,7 +326,7 @@ void    WindowCtrlUnix::hideWindow( quint64 window, int set )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
+    if( !isMozilla( getPpid() ) )
     {
         return;
     }
@@ -361,7 +362,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::deleteWindow( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
+    if( !isMozilla( getPpid() ) )
     {
         return;
     }
@@ -397,7 +398,7 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
  */
 void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
 {
-    if( !isThunderbird( getPpid() ) )
+    if( !isMozilla( getPpid() ) )
     {
         return;
     }
@@ -426,7 +427,7 @@ void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
  */
 void    WindowCtrlUnix::hideWindowAtom( quint64 window, bool set )
 {
-    if( !isThunderbird( getPpid() ) )
+    if( !isMozilla( getPpid() ) )
     {
         return;
     }

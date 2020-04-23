@@ -81,13 +81,13 @@ class WindowCtrlWin : public QObject
         qint64  getPpid();
 
         /**
-         * @brief isThunderbird. Is this a thunderbird pid.
+         * @brief isMozilla. Is this a mozilla pid.
          *
          *  @param pid  The process Id to check.
          *
-         *  @return     True if this is thunderbird.
+         *  @return     True if this is thunderbird or firefox.
          */
-        bool    isThunderbird( qint64 pid );
+        bool    isMozilla( qint64 pid );
 
         /**
          * @brief getProcessName. Get the name of the proces by pid.
