@@ -281,6 +281,6 @@ void    SysTrayX::slotVersion( QString version )
     if( version != m_preferences->getVersion() )
     {
         m_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app",
-            QApplication::style()->standardIcon( QStyle::SP_MessageBoxWarning ) );
+            QSystemTrayIcon::Warning );
     }
 }
