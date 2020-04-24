@@ -58,12 +58,32 @@ sudo apt update
 sudo apt install systray-x
 ```
 
+#### 16.04 LTS
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x
+```
+
 #### 18.04 LTS
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x
+```
+
+#### 20.04 LTS
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 sudo apt install systray-x
 ```
@@ -133,7 +153,7 @@ Requirements:
     gnome-extensions enable ubuntu-appindicator@ubuntu.com
     ```
 
-      18.04 LTS
+      16.04 LTS / 18.04 LTS
 
     ```bash
     sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
