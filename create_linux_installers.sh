@@ -1,8 +1,10 @@
 #!/bin/bash
 
-VERSION=`git describe --long | sed "s/-.*//"`
+VERSION="0~git.*"
 
 OBS_REPO_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons"
+TARGET_DIR="bin"
+
 OBS_PACKAGE="systray-x"
 
 OBS_RPM_ARCHS=""
@@ -25,18 +27,34 @@ OBS_RPM_PKS+="fed31 "
 
 OBS_DEB_ARCHS=""
 OBS_DEB_PKS=""
+OBS_DEB_GNOME_EXT=""
 OBS_DEB_ARCHS+="Debian_10/i386 "
 OBS_DEB_PKS+="deb10 "
+OBS_DEB_GNOME_EXT+="y "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
+OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_ARCHS+="xUbuntu_16.04/i386 "
+OBS_DEB_PKS+="xenial1604 "
+OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_ARCHS+="xUbuntu_16.04/amd64 "
+OBS_DEB_PKS+="xenial1604 "
+OBS_DEB_GNOME_EXT+="y "
 OBS_DEB_ARCHS+="xUbuntu_18.04/i386 "
 OBS_DEB_PKS+="bionic1804 "
+OBS_DEB_GNOME_EXT+="y "
 OBS_DEB_ARCHS+="xUbuntu_18.04/amd64 "
 OBS_DEB_PKS+="bionic1804 "
+OBS_DEB_GNOME_EXT+="y "
 OBS_DEB_ARCHS+="xUbuntu_19.04/amd64 "
 OBS_DEB_PKS+="disco1904 "
+OBS_DEB_GNOME_EXT+="y "
 OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
-OBS_DEB_PKS+="focal1910 "
+OBS_DEB_PKS+="eoan1910 "
+OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
+OBS_DEB_PKS+="focal2004 "
+OBS_DEB_GNOME_EXT+="n "
 
 
 create_rpm_gnome_extension_tar() {
@@ -164,7 +182,7 @@ create_rpm_tar() {
   local REPO_BASE=$1
   local REPO_DISTR=$2
   local REPO_ARCH=$3
-  local RPM_EXT=$4
+  local RPM_NAME_EXT=$4
   
   ##########################################
   #
@@ -249,7 +267,7 @@ create_rpm_tar() {
   # Cleanup
   #
   rm -rf ./usr
-
+  
   if [ ! -f systray-x@Ximi1970.xpi ] ; then
     cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
   fi
@@ -267,8 +285,8 @@ create_rpm_tar() {
   #
   # Rename the RPM
   #
-  if [ "${RPM_EXT}" != "_" ] ; then
-    NEW_RPM_FILE=`echo ${RPM_FILE} | sed -s "s/\(systray-x-${FOUND_VERSION}-\)\(.*\)/\1${RPM_EXT}\.\2/"`
+  if [ "${RPM_NAME_EXT}" != "_" ] ; then
+    NEW_RPM_FILE=`echo ${RPM_FILE} | sed -s "s/\(systray-x-${FOUND_VERSION}-\)\(.*\)/\1${RPM_NAME_EXT}\.\2/"`
     mv -f ${RPM_FILE} $NEW_RPM_FILE
   fi
 
@@ -284,7 +302,8 @@ create_deb_tar() {
   local REPO_BASE=$1
   local REPO_DISTR=$2
   local REPO_ARCH=$3
-  local DEB_EXT=$4
+  local DEB_NAME_EXT=$4
+  local GNOME_EXT=$5
   
   ##########################################
   #
@@ -321,7 +340,7 @@ create_deb_tar() {
   #
   # Add the gnome extension to the tar
   #
-  if [ -f gnome-shell-extension.tar.xz ] ; then
+  if [ "${GNOME_EXT}" == "y" ] && [ -f gnome-shell-extension.tar.xz ] ; then
     cp -f gnome-shell-extension.tar.xz ${TAR_DIR}/
   fi
   
@@ -355,8 +374,8 @@ create_deb_tar() {
   #
   # Rename the DEB
   #
-  if [ "${DEB_EXT}" != "_" ] ; then
-    NEW_DEB_FILE=`echo ${DEB_FILE} | sed -s "s/\(systray-x\_${FOUND_VERSION}\_\)\(.*\)/\1${DEB_EXT}\_\2/"`
+  if [ "${DEB_NAME_EXT}" != "_" ] ; then
+    NEW_DEB_FILE=`echo ${DEB_FILE} | sed -s "s/\(systray-x\_${FOUND_VERSION}\_\)\(.*\)/\1${DEB_NAME_EXT}\_\2/"`
     mv -f ${DEB_FILE} ${NEW_DEB_FILE}
   fi
 
@@ -374,7 +393,6 @@ create_deb_tar() {
 #
 #################################################################################
 
-TARGET_DIR="bin"
 mkdir -p $TARGET_DIR
 pushd $TARGET_DIR > /dev/null 2>&1
 
@@ -395,7 +413,7 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   REPO_DISTR=$(echo ${rpmdir} | cut -d'/' -f1)
   REPO_ARCH=$(echo ${rpmdir} | cut -d'/' -f2)
   
-  RPM_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
+  RPM_NAME_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
   
   #
   # Generate the gnome tar file
@@ -405,7 +423,7 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   #
   # Generate the SysTray-X tar file
   #
-  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_EXT}
+  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT}
   
   #
   # Create installer
@@ -458,7 +476,8 @@ for debdir in $OBS_DEB_ARCHS ; do
   REPO_DISTR=$(echo ${debdir} | cut -d'/' -f1)
   REPO_ARCH=$(echo ${debdir} | cut -d'/' -f2)
   
-  DEB_EXT=$(echo ${OBS_DEB_PKS} | cut -d' ' -f${INDEX})
+  DEB_NAME_EXT=$(echo ${OBS_DEB_PKS} | cut -d' ' -f${INDEX})
+  GNOME_EXT=$(echo ${OBS_DEB_GNOME_EXT} | cut -d' ' -f${INDEX})
   
   #
   # Generate the gnome tar file
@@ -468,7 +487,7 @@ for debdir in $OBS_DEB_ARCHS ; do
   #
   # Generate the SysTray-X tar file
   #
-  create_deb_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${DEB_EXT}
+  create_deb_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${DEB_NAME_EXT} ${GNOME_EXT}
  
   #
   # Create installer

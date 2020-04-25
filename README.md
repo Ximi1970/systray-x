@@ -146,6 +146,13 @@ Requirements:
     
   - Ubuntu:
 
+      20.04 LTS
+
+    ```bash
+    sudo apt install zip git g++ make qt5-default
+    gnome-extensions enable ubuntu-appindicator@ubuntu.com
+    ```
+
       19.10
 
     ```bash
