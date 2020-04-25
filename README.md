@@ -21,6 +21,9 @@ To support this project, you can make a donation to its current maintainer:
 [![bitcoin-qrcode-black](https://github.com/Ximi1970/Donate/blob/master/bitcoin-donate-qrcode-black.png)](https://raw.githubusercontent.com/Ximi1970/Donate/master/bitcoin-address.txt)
 
 
+## Contributers
+
+Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
 
 ## Binaries (System)
 
@@ -228,7 +231,3 @@ Branches:
 master      : Should be stable and working for all supported systems  
 develop     : Working but maybe not for all systems  
 feature-xxx : Experimental  
-
-## Contributers
-
-Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
