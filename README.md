@@ -12,6 +12,16 @@ The addon and system tray application can do:
 
 The default poll time is 60 seconds. You change the timing in the preferences but be aware that a too short poll time can lead to a high CPU load.
 
+
+
+## Donations
+To support this project, you can make a donation to its current maintainer:  
+
+[![paypal](https://github.com/Ximi1970/Donate/blob/master/paypal_btn_donateCC_LG_2.gif)](https://paypal.me/Ximi1970)
+[![bitcoin-qrcode-black](https://github.com/Ximi1970/Donate/blob/master/bitcoin-donate-qrcode-black.png)](https://raw.githubusercontent.com/Ximi1970/Donate/master/bitcoin-address.txt)
+
+
+
 ## Binaries (System)
 
 These packages will install the Thunderbird addon and companion app system wide.  
@@ -222,11 +232,3 @@ feature-xxx : Experimental
 ## Contributers
 
 Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
-
-
-
-## Donations
-To support this project, you can make a donation to its current maintainer:  
-
-[![paypal](https://github.com/Ximi1970/Donate/blob/master/paypal_btn_donateCC_LG_2.gif)](https://paypal.me/Ximi1970)
-[![bitcoin-qrcode-black](https://github.com/Ximi1970/Donate/blob/master/bitcoin-donate-qrcode-black.png)](https://raw.githubusercontent.com/Ximi1970/Donate/master/bitcoin-address.txt)
