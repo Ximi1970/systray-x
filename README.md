@@ -180,12 +180,19 @@ cd systray-x
 make
 ```
 
-Install:
+Install and run SysTray-X from the build directory in the repository:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
 cp -f app/config/linux/SysTray_X.json ~/.mozilla/native-messaging-hosts/
 cp -f systray-x@Ximi1970.xpi ~/.thunderbird/*.default-release/extensions/
 ```
+
+User install:
+
+...
+
+System install:
+
 ...
 
 
