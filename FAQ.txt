@@ -1,0 +1,35 @@
+* Why is Firetray not continued?
+
+Firetray uses the old addon API of Thunderbird. This API is "gradually" been dismantled since version 60 and will be totally gone in version 78. It was already impossible to continue Firetray from TB 63 due to missing / not working API functions. The old API is dismantled because of security issues.
+For a lot of methods Firetray uses, there will be NO replacements made in the new WebExtensions API.
+
+https://developer.thunderbird.net/add-ons/updating/tb78
+
+
+* Why not patch Thunderbird
+
+The source code of Thunderbird / Firetray is (in my view) a total mess. It amazes me it (especially Firefox) works so nicely.
+It takes hours to setup and compile. Even Gentoo offers a precompiled escape here.
+The developeres deem a system tray as obsolete and not usable. So if I wanted to upload a patch to them, it would probably be shotdown before the first kilobyte was on the server.
+
+
+* Why does systray-x not handle the close button like Firetray?
+
+In the new Webextensions API there is no method to intercept the close event. It is deemed to be a major security problem if you could. I would not call that a security problem but it could be a major annoyance if some addon captured the close and refused to close the application.
+
+
+* Why can systray-x not handle a fully minimized start like FireTray? 
+
+There is no method to intercept the TB startup in Webextensions. So TB will startup first and show the UI. After that the addon is started and systray-x can minimize the TB windows by asking the window manager to minimize the window.
+
+
+* Why does systray-x poll to check the mail? 
+
+As far as I know, I cannot install a listener using Webextensions to monitor new mail arriving. Hopefully TB developers will add this to the API sometime.
+
+
+* Why does systray-x only display unread mail and not only new mail? 
+
+There is no filter setting in the Webextensions API to do that.
+
+
