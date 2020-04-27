@@ -70,6 +70,69 @@ void    Preferences::setAppPrefChanged( bool state )
 
 
 /*
+ *  Set the platform os
+ */
+void    Preferences::setPlatformOs( const QString os )
+{
+   m_platform_os = os;
+}
+
+
+/*
+ *  Set the platform arch
+ */
+void    Preferences::setPlatformArch( const QString arch )
+{
+    m_platform_arch = arch;
+}
+
+
+/*
+ *  Set the platform native arch
+ */
+void    Preferences::setPlatformNaclArch( const QString nacl_arch )
+{
+    m_platform_nacl_arch = nacl_arch;
+}
+
+
+/*
+ *  Set the browser name
+ */
+void    Preferences::setBrowserName( const QString name )
+{
+    m_browser_name = name;
+}
+
+
+/*
+ *  Set the browser
+ */
+void    Preferences::setBrowserVendor( const QString vendor )
+{
+    m_browser_vendor = vendor;
+}
+
+
+/*
+ *  Set the browser
+ */
+void    Preferences::setBrowserVersion( const QString version )
+{
+    m_browser_version = version;
+}
+
+
+/*
+ *  Set the browser
+ */
+void    Preferences::setBrowserBuildID( const QString buildID )
+{
+    m_browser_buildID = buildID;
+}
+
+
+/*
  *  Get the icon type.
  */
 Preferences::IconType Preferences::getIconType() const

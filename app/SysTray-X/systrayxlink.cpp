@@ -317,6 +317,16 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalWindowState( window_state );
         }
 
+        if( jsonObject.contains( "platformInfo" ) && jsonObject[ "platformInfo" ].isObject() )
+        {
+            DecodePlatform( jsonObject[ "platformInfo" ].toObject() );
+        }
+
+        if( jsonObject.contains( "browserInfo" ) && jsonObject[ "browserInfo" ].isObject() )
+        {
+            DecodeBrowser( jsonObject[ "browserInfo" ].toObject() );
+        }
+
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
@@ -326,10 +336,100 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
 
 /*
+ *  Decode platform from JSON message
+ */
+void    SysTrayXLink::DecodePlatform( const QJsonObject& platform )
+{
+    /*
+     *  Check the received object
+     */
+    if( platform.contains( "os" ) && platform[ "os" ].isString() )
+    {
+        QString os = platform[ "os" ].toString();
+
+        /*
+         *  Store the os
+         */
+        m_pref->setPlatformOs( os );
+    }
+
+    if( platform.contains( "arch" ) && platform[ "arch" ].isString() )
+    {
+        QString arch = platform[ "arch" ].toString();
+
+        /*
+         *  Store the arch
+         */
+        m_pref->setPlatformArch( arch );
+    }
+
+    if( platform.contains( "nacl_arch" ) && platform[ "nacl_arch" ].isString() )
+    {
+        QString nacl_arch = platform[ "nacl_arch" ].toString();
+
+        /*
+         *  Store the nacl_arch
+         */
+        m_pref->setPlatformNaclArch( nacl_arch );
+    }
+}
+
+
+/*
+ *  Decode platform from JSON message
+ */
+void    SysTrayXLink::DecodeBrowser( const QJsonObject& browser )
+{
+    /*
+     *  Check the received object
+     */
+    if( browser.contains( "name" ) && browser[ "name" ].isString() )
+    {
+        QString name = browser[ "name" ].toString();
+
+        /*
+         *  Store the name
+         */
+        m_pref->setBrowserName( name );
+    }
+
+    if( browser.contains( "vendor" ) && browser[ "vendor" ].isString() )
+    {
+        QString vendor = browser[ "vendor" ].toString();
+
+        /*
+         *  Store the vendor
+         */
+        m_pref->setBrowserVendor( vendor );
+    }
+
+    if( browser.contains( "version" ) && browser[ "version" ].isString() )
+    {
+        QString version = browser[ "version" ].toString();
+
+        /*
+         *  Store the version
+         */
+        m_pref->setBrowserVersion( version );
+    }
+
+    if( browser.contains( "buildID" ) && browser[ "buildID" ].isString() )
+    {
+        QString buildID = browser[ "buildID" ].toString();
+
+        /*
+         *  Store the buildID
+         */
+        m_pref->setBrowserBuildID( buildID );
+    }
+}
+
+
+/*
  *  Decode preferences from JSON message
  */
 void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
-{ 
+{
     /*
      *  Check the received object
      */

@@ -130,6 +130,20 @@ class SysTrayXLink : public QObject
         void    DecodeMessage( const QByteArray& message );
 
         /**
+         * @brief DecodePlatform. Decode a JSON platform object.
+         *
+         * @param platform  The JSON platform.
+         */
+        void    DecodePlatform( const QJsonObject& platform );
+
+        /**
+         * @brief DecodeBrowser. Decode a JSON browser object.
+         *
+         * @param browser  The JSON browser.
+         */
+        void    DecodeBrowser( const QJsonObject& browser );
+
+        /**
          * @brief DecodePreferences. Decode a JSON preference object.
          *
          * @param pref  The JSON preferences.

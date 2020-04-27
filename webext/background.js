@@ -10,6 +10,8 @@ var SysTrayX = {
 
   platformInfo: undefined,
 
+  browserInfo: undefined,
+
   version: "0",
 };
 
@@ -25,6 +27,12 @@ SysTrayX.Messaging = {
 
     // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
+
+    //  Send the platform info to app
+    SysTrayX.Messaging.sendPlatformInfo();
+
+    //  Send the browser info to app
+    SysTrayX.Messaging.sendBrowserInfo();
 
     //  Send the window title to app
     SysTrayX.Messaging.sendTitle();
@@ -140,6 +148,16 @@ SysTrayX.Messaging = {
   //
   unreadCb: function (count) {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  },
+
+  sendBrowserInfo: function () {
+    const info = SysTrayX.browserInfo;
+    SysTrayX.Link.postSysTrayXMessage({ browserInfo: browserInfo });
+  },
+
+  sendPlatformInfo: function () {
+    const info = SysTrayX.platformInfo;
+    SysTrayX.Link.postSysTrayXMessage({ platformInfo: platformInfo });
   },
 
   sendTitle: function () {
@@ -387,7 +405,7 @@ async function start() {
 
   SysTrayX.startupState = state;
 
-  console.debug("State: "+ SysTrayX.startupState);
+  console.debug("State: " + SysTrayX.startupState);
 
   // Get the poll timing
   SysTrayX.pollTiming = await getPollTiming();
@@ -404,6 +422,21 @@ async function start() {
   //  Store platform info
   browser.storage.sync.set({
     platformInfo: SysTrayX.platformInfo,
+  });
+
+  //  Set browser
+  SysTrayX.browserInfo = await browser.runtime
+    .getBrowserInfo()
+    .then((info) => info);
+
+  console.log("Browser: " + SysTrayX.browserInfo.name);
+  console.log("Vendor: " + SysTrayX.browserInfo.vendor);
+  console.log("Version: " + SysTrayX.browserInfo.version);
+  console.log("Build: " + SysTrayX.browserInfo.buildID);
+
+  //  Store browser info
+  browser.storage.sync.set({
+    browserInfo: SysTrayX.browserInfo,
   });
 
   //  Get addon version

@@ -61,6 +61,55 @@ class Preferences : public QObject
         void setAppPrefChanged( bool state );
 
         /**
+         * @brief setPlatformOs. Set the platform OS.
+         *
+         *  @param os   The platform os.
+         */
+        void setPlatformOs( const QString os );
+
+        /**
+         * @brief setPlatformArch. Set the platform architecture.
+         *
+         *  @param arch     The architecture.
+         */
+        void setPlatformArch( const QString arch );
+
+        /**
+         * @brief setPlatformNaclArch. Set the native platform architecture.
+         *
+         *  @param nacl_arch    The native architecture.
+         */
+        void setPlatformNaclArch( const QString nacl_arch );
+
+        /**
+         * @brief setBrowserName. Set the browser name.
+         *
+         *  @param name     The name.
+         */
+        void setBrowserName( const QString name );
+
+        /**
+         * @brief setBrowserVendor. Set the browser vendor.
+         *
+         *  @param vendor   The vendor.
+         */
+        void setBrowserVendor( const QString vendor );
+
+        /**
+         * @brief setBrowserVersion. Set the browser version.
+         *
+         *  @param version  The version.
+         */
+        void setBrowserVersion( const QString version );
+
+        /**
+         * @brief setBrowserBuildID. set the build id.
+         *
+         *  @param buildID  The id.
+         */
+        void setBrowserBuildID( const QString buildID );
+
+        /**
          * @brief getIconType. Get the icon type.
          *
          * @return      The icon type.
@@ -288,6 +337,21 @@ class Preferences : public QObject
          * @brief m_app_pref_changed. Control for sending changes to the add-on.
          */
         bool m_app_pref_changed;
+
+        /**
+         * @brief m_platform_xx. Platform description.
+         */
+        QString m_platform_os;
+        QString m_platform_arch;
+        QString m_platform_nacl_arch;
+
+        /**
+         * @brief m_browser_xx. Browser description.
+         */
+        QString m_browser_name;
+        QString m_browser_vendor;
+        QString m_browser_version;
+        QString m_browser_buildID;
 
         /**
          * @brief m_icon_type. Selected icon type.
