@@ -120,12 +120,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
 
     /*
-     *  Connect window signals
-     */
-    connect( m_win_ctrl, &WindowCtrl::signalWindowNormal, m_link, &SysTrayXLink::slotWindowNormal );
-    connect( m_win_ctrl, &WindowCtrl::signalWindowMinimize, m_link, &SysTrayXLink::slotWindowMinimize );
-
-    /*
      *  Connect system tray signals
      */
     connect( m_tray_icon, &SysTrayXIcon::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );

@@ -69,14 +69,14 @@ class WindowCtrlWin : public QObject
          *
          *  @param state    The state.
          */
-        void    setWindowState( const QString& state );
+        void    setWindowState( int state );
 
         /**
          * @brief getWindowState. Get the window state.
          *
          *  @return     The state.
          */
-        const QString&    getWindowState() const;
+        int getWindowState() const;
 
         /**
          * @brief setMinimizeType
@@ -314,7 +314,7 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_window_state. State of the TB window.
          */
-        QString m_window_state;
+        int m_window_state;
 
         /**
          * @brief m_hook

@@ -231,52 +231,6 @@ void    SysTrayXLink::sendPreferences()
 
 
 /*
- *  Send the window normal command
- */
-void    SysTrayXLink::sendWindowNormal()
-{
-    /*
-     *  Create command
-     */
-    QJsonObject windowObject;
-    windowObject.insert( "window", "normal" );
-
-    /*
-     *  Create doc
-     */
-    QJsonDocument doc( windowObject );
-
-    /*
-     *  Send the command
-     */
-    linkWrite( doc.toJson( QJsonDocument::Compact ) );
-}
-
-
-/*
- *  Send the window minimize command
- */
-void    SysTrayXLink::sendWindowMinimize()
-{
-    /*
-     *  Create command
-     */
-    QJsonObject windowObject;
-    windowObject.insert("window", "minimized" );
-
-    /*
-     *  Create doc
-     */
-    QJsonDocument doc( windowObject );
-
-    /*
-     *  Send the command
-     */
-    linkWrite( doc.toJson( QJsonDocument::Compact ) );
-}
-
-
-/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -313,7 +267,42 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
-            QString window_state = jsonObject[ "window" ].toString();
+            QString window_state_str = jsonObject[ "window" ].toString();
+
+            int window_state;
+            if( window_state_str == Preferences::STATE_NORMAL_STR )
+            {
+                window_state = Preferences::STATE_NORMAL;
+            }
+            else
+            if( window_state_str == Preferences::STATE_MINIMIZED_STR )
+            {
+                window_state = Preferences::STATE_MINIMIZED;
+            }
+            else
+            if( window_state_str == Preferences::STATE_MAXIMIZED_STR )
+            {
+                window_state = Preferences::STATE_MAXIMIZED;
+            }
+            else
+            if( window_state_str == Preferences::STATE_FULLSCREEN_STR )
+            {
+                window_state = Preferences::STATE_FULLSCREEN;
+            }
+            else
+            if( window_state_str == Preferences::STATE_DOCKED_STR )
+            {
+                window_state = Preferences::STATE_DOCKED;
+            }
+            else
+            {
+                /*
+                 *  Unknown state
+                 */
+                emit signalConsole( QString( "Error: unknow window state (%1)" ).arg( window_state_str ) );
+
+                window_state = Preferences::STATE_NORMAL;
+            }
 
             emit signalWindowState( window_state );
         }
@@ -592,22 +581,4 @@ void    SysTrayXLink::slotNumberColorChange()
     {
         sendPreferences();
     }
-}
-
-
-/*
- *  Handle the window normal signal
- */
-void    SysTrayXLink::slotWindowNormal()
-{
-    sendWindowNormal();
-}
-
-
-/*
- *  Handle the window minimize signal
- */
-void    SysTrayXLink::slotWindowMinimize()
-{
-    sendWindowMinimize();
 }

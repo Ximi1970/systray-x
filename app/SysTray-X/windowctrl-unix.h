@@ -130,14 +130,14 @@ class WindowCtrlUnix : public QObject
          *
          *  @param state    The state.
          */
-        void    setWindowState( const QString& state );
+        void    setWindowState( int state );
 
         /**
          * @brief getWindowState. Get the window state.
          *
          *  @return     The state.
          */
-        const QString&    getWindowState() const;
+        int getWindowState() const;
 
         /**
          * @brief setMinimizeType
@@ -338,16 +338,6 @@ class WindowCtrlUnix : public QObject
     signals:
 
         /**
-         * @brief signalWindowNormal. Signal normal window.
-         */
-        void    signalWindowNormal();
-
-        /**
-         * @brief signalWindowMinimuze. Signal minimize window.
-         */
-        void    signalWindowMinimize();
-
-        /**
          * @brief signalConsole. Send a console message.
          *
          *  @param message      The message.
@@ -387,9 +377,9 @@ class WindowCtrlUnix : public QObject
         Preferences::MinimizeType   m_minimize_type;
 
         /**
-         * @brief m_state. State of the TB window.
+         * @brief m_window_state. State of the TB window.
          */
-        QString m_window_state;
+        int m_window_state;
 };
 
 #endif // WINDOWCTRLUNIX_H

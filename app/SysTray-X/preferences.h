@@ -39,6 +39,24 @@ class Preferences : public QObject
             PREF_CUSTOM_ICON
         };
 
+        /*
+         *  Window states
+         */
+        enum WindowState {
+            STATE_UNKNOWN = 0,
+            STATE_NORMAL,
+            STATE_MINIMIZED,
+            STATE_MAXIMIZED,
+            STATE_FULLSCREEN,
+            STATE_DOCKED
+        };
+
+        static const QString   STATE_NORMAL_STR;
+        static const QString   STATE_MINIMIZED_STR;
+        static const QString   STATE_MAXIMIZED_STR;
+        static const QString   STATE_FULLSCREEN_STR;
+        static const QString   STATE_DOCKED_STR;
+
     public:
 
         /**

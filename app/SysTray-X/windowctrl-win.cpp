@@ -37,7 +37,7 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
      */
     m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
-    m_window_state = QString();
+    m_window_state = Preferences::STATE_UNKNOWN;
 
     /*
      * Setup the minimize intercept
@@ -62,7 +62,7 @@ WindowCtrlWin::~WindowCtrlWin()
 /*
  * Set the window state.
  */
-void    WindowCtrlWin::setWindowState( const QString& state )
+void    WindowCtrlWin::setWindowState( int state )
 {
     m_window_state = state;
 }
@@ -73,7 +73,7 @@ void    WindowCtrlWin::setWindowState( const QString& state )
  *
  *  @return     The state.
  */
-const QString&    WindowCtrlWin::getWindowState() const
+int WindowCtrlWin::getWindowState() const
 {
     return m_window_state;
 }
