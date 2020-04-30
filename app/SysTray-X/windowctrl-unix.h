@@ -137,7 +137,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     The state.
          */
-        QString&    getWindowState() const;
+        const QString&    getWindowState() const;
 
         /**
          * @brief setMinimizeType
@@ -389,7 +389,7 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief m_state. State of the TB window.
          */
-        QString m_state;
+        QString m_window_state;
 };
 
 #endif // WINDOWCTRLUNIX_H

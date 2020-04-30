@@ -21,7 +21,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      */
     m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
-    m_state = QString();
+    m_window_state = QString();
 
     /*
      *  Get the base display and window
@@ -38,6 +38,26 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 void    WindowCtrlUnix::setMinimizeType( Preferences::MinimizeType type )
 {
     m_minimize_type = type;
+}
+
+
+/*
+ * Set the window state.
+ */
+void    WindowCtrlUnix::setWindowState( const QString& state )
+{
+    m_window_state = state;
+}
+
+
+/**
+ * @brief getWindowState. Get the window state.
+ *
+ *  @return     The state.
+ */
+const QString&    WindowCtrlUnix::getWindowState() const
+{
+    return m_window_state;
 }
 
 

@@ -58,6 +58,7 @@ WindowCtrlWin::~WindowCtrlWin()
     stopInterceptMinimizeWindow();
 }
 
+
 /*
  * Set the window state.
  */
@@ -65,6 +66,7 @@ void    WindowCtrlWin::setWindowState( const QString& state )
 {
     m_window_state = state;
 }
+
 
 /**
  * @brief getWindowState. Get the window state.
