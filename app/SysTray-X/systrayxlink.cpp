@@ -314,6 +314,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
             QString window_state = jsonObject[ "window" ].toString();
+
             emit signalWindowState( window_state );
         }
 

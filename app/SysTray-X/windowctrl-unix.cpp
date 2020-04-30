@@ -21,6 +21,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      */
     m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
+    m_state = QString();
 
     /*
      *  Get the base display and window
