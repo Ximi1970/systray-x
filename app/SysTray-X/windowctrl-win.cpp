@@ -343,9 +343,9 @@ void    WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hWn
  */
 void    WindowCtrlWin::hookAction()
 {
-    if( getWindowState() == "normal" && getMinimizeType() > 0 )
+    if( ( getWindowState() != Preferences::STATE_MINIMIZED ) && ( getMinimizeType() > 0 ) )
     {
-        setWindowState( "minimized" );
+        setWindowState( Preferences::STATE_MINIMIZED );
 
         /*
          * Hide to tray
