@@ -23,12 +23,91 @@
 #include <QFile>
 #include <QTimer>
 #include <QString>
-#include <QThread>
 #include <QVariant>
 #include <QJsonValue>
 #include <QJsonObject>
 
 
+/*****************************************************************************
+ *
+ *  SysTrayXLinkReader Class
+ *
+ *****************************************************************************/
+
+SysTrayXLinkReaderThread::SysTrayXLinkReaderThread( QObject* parent ) : QThread( parent )
+{
+#ifdef Q_OS_WIN
+    /*
+     *  Set stdin to binary
+     */
+    _setmode( _fileno( stdin ), _O_BINARY);
+#endif
+
+    /*
+     *	Start the work
+     */
+    m_doWork = true;
+}
+
+
+/*
+ *	Stop viewing
+ */
+void    SysTrayXLinkReaderThread::stop()
+{
+    /*
+     *	Stop working
+     */
+    m_doWork = false;
+}
+
+
+/*
+ *  Worker
+ */
+void    SysTrayXLinkReaderThread::run()
+{
+    int error_count = 0;
+
+    while( m_doWork )
+    {
+        qint32 data_len;
+        std::cin.read( reinterpret_cast< char* >( &data_len ), sizeof( qint32 ) );
+
+        if( data_len > 0)
+        {
+            QByteArray data( data_len, 0 );
+            std::cin.read( data.data(), data_len );
+
+            /*
+             *  Send the data to my parent
+             */
+            emit signalReceivedMessage( data );
+
+            /*
+             *  Send the data to my parent
+             */
+            if( data.at( 0 ) == '{' )
+            {
+                emit signalReceivedMessage( data );
+
+                error_count = 0;
+            }
+            else
+            {
+                error_count++;
+
+                if( error_count > 20 )
+                {
+                    emit signalAddOnShutdown();
+                }
+            }
+        }
+    }
+}
+
+
+#ifdef  OLD_THREAD
 /*****************************************************************************
  *
  *  SysTrayXLinkReader Class
@@ -148,6 +227,7 @@ void    SysTrayXLinkReader::slotWorker()
     QThread::currentThread()->quit();
 }
 
+#endif
 
 /*****************************************************************************
  *
@@ -175,6 +255,12 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
     /*
      *  Setup the reader thread
      */
+    m_reader_thread = new SysTrayXLinkReaderThread( this );
+    connect( m_reader_thread, &SysTrayXLinkReaderThread::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
+    connect( m_reader_thread, &SysTrayXLinkReaderThread::finished, m_reader_thread, &QObject::deleteLater);
+    m_reader_thread->start();
+
+#ifdef  OLD_THREAD
     m_reader_thread = new QThread( this );
 
     SysTrayXLinkReader* reader = new SysTrayXLinkReader;
@@ -186,6 +272,8 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::started, reader, &SysTrayXLinkReader::startThread, Qt::QueuedConnection );
     m_reader_thread->start();
+#endif
+
 }
 
 
@@ -194,6 +282,14 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
  */
 SysTrayXLink::~SysTrayXLink()
 {
+    /*
+     *  Stop the reader
+     */
+    if( m_reader_thread )
+    {
+        m_reader_thread->stop();
+    }
+
     /*
      *  Cleanup
      */

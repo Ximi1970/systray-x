@@ -12,6 +12,7 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QThread>
 #include <QJsonDocument>
 
 
@@ -23,6 +24,56 @@ class QTimer;
 class QThread;
 
 
+/**
+ * @brief The SysTrayXLinkReaderThread class. Reader thread.
+ */
+class SysTrayXLinkReaderThread : public QThread
+{
+    Q_OBJECT
+
+    public:
+
+        /**
+         * @brief Reader. Constructor, destructor.
+         */
+        SysTrayXLinkReaderThread( QObject *parent = nullptr );
+
+        /**
+         * @brief stop. Stop the thread.
+         */
+        void    stop();
+
+    protected:
+
+        /**
+         * @brief run. Override the runner.
+         */
+        void run() override;
+
+    signals:
+
+        /**
+         * @brief signalReceivedMessage. Signal the received message.
+         *
+         *  @param message  The received message.
+         */
+        void    signalReceivedMessage( QByteArray message );
+
+        /**
+         * @brief signalAddOnShutdown. Signal to shutdown the app.
+         */
+        void    signalAddOnShutdown();
+
+    private:
+
+        /**
+         * @brief m_doWork. Status of the worker thread.
+         */
+        bool	m_doWork;
+};
+
+
+#ifdef  OLD_THREAD
 /**
  * @brief The SysTrayXLinkReader class. Reader thread.
  */
@@ -81,6 +132,7 @@ class SysTrayXLinkReader : public QObject
          */
         bool	m_doWork;
 };
+#endif
 
 
 /**
@@ -247,7 +299,14 @@ class SysTrayXLink : public QObject
         /**
          * @brief m_reader_thread. Pointer to the reader thread.
          */
+        SysTrayXLinkReaderThread*    m_reader_thread;
+
+#ifdef  OLD_THREAD
+        /**
+         * @brief m_reader_thread. Pointer to the reader thread.
+         */
         QThread*    m_reader_thread;
+#endif
 
         /**
          * @brief m_pref. Pointer to the preferences storage.
