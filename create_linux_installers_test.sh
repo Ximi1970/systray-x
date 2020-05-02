@@ -5,24 +5,37 @@ VERSION="0~git.*"
 OBS_REPO_BASE="https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Staging:/Test"
 TARGET_DIR="bin-test"
 
+GNOME_APPINDICATOR="https://github.com/ubuntu/gnome-shell-extension-appindicator.git"
+
 OBS_PACKAGE="systray-x"
 
 OBS_RPM_ARCHS=""
 OBS_RPM_PKS=""
+OBS_RPM_GNOME_EXT=""
 OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
 OBS_RPM_PKS+="_ "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_PKS+="_ "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
 OBS_RPM_PKS+="tmblwd "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/x86_64 "
 OBS_RPM_PKS+="tmblwd "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="SLE_15/x86_64 "
 OBS_RPM_PKS+="sle150 "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
 OBS_RPM_PKS+="sle151 "
+OBS_RPM_GNOME_EXT+="26 "
 OBS_RPM_ARCHS+="Fedora_31/x86_64 "
 OBS_RPM_PKS+="fed31 "
+OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_ARCHS+="Fedora_32/x86_64 "
+OBS_RPM_PKS+="fed32 "
+OBS_RPM_GNOME_EXT+="33 "
 
 
 OBS_DEB_ARCHS=""
@@ -30,38 +43,38 @@ OBS_DEB_PKS=""
 OBS_DEB_GNOME_EXT=""
 OBS_DEB_ARCHS+="Debian_10/i386 "
 OBS_DEB_PKS+="deb10 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_16.04/i386 "
 OBS_DEB_PKS+="xenial1604 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_16.04/amd64 "
 OBS_DEB_PKS+="xenial1604 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/i386 "
 OBS_DEB_PKS+="bionic1804 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/amd64 "
 OBS_DEB_PKS+="bionic1804 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_19.04/amd64 "
 OBS_DEB_PKS+="disco1904 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
 OBS_DEB_PKS+="eoan1910 "
-OBS_DEB_GNOME_EXT+="y "
+OBS_DEB_GNOME_EXT+="26 "
 OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
-OBS_DEB_GNOME_EXT+="n "
+OBS_DEB_GNOME_EXT+="0 "
 
 
-create_rpm_gnome_extension_tar() {
+create_gnome_extension_tar() {
 
-  local REPO_BASE=$1
-  local REPO_DISTR=$2
-  
+  local GIT_BASE=$1
+  local GNOME_EXT=$2
+
   ##########################################
   #
   # Create user installable
@@ -69,113 +82,31 @@ create_rpm_gnome_extension_tar() {
   #
   ##########################################
   
-  if [ -f gnome-shell-extension.tar.xz ] ; then
-    return
-  fi
-
-  # Get index.html for 
-  #
-  rm -f index.html
-  wget -q "${REPO_BASE}/${REPO_DISTR}/noarch/"
-  if [ "$?" != "0" ] ; then
-    return
-  fi
-
-  #
-  # Find rpm
-  #
-  local RPM_FILE_GNOME=$(grep ">gnome-.*<" index.html | sed -e "s/.*>\(gnome-.*rpm\)<.*/\1/")
-  rm -f index.html
-
-  if [ -z "${RPM_FILE_GNOME}" ] ; then
-    echo "No GNOME extension found"
+  if [ -f gnome-shell-extension-${GNOME_EXT}.tar.xz ] ; then
     return
   fi
   
-  #
-  # Get package
-  #
-  wget -q "${REPO_BASE}/${REPO_DISTR}/noarch/${RPM_FILE_GNOME}"
-
-  #
-  # Extract 
-  #
-  rpm2cpio ${RPM_FILE_GNOME} | cpio -idv 2>/dev/null
-
-  #
-  # Create tar
-  #
-  tar -C ./usr/share/gnome-shell/extensions -cJf gnome-shell-extension.tar.xz .
-
-  #
-  # Cleanup
-  #
-  rm -rf ./usr
-  rm -f ${RPM_FILE_GNOME}
-}
-
-create_deb_gnome_extension_tar() {
-
-  local REPO_BASE=$1
-  local REPO_DISTR=$2
-  local REPO_ARCH=$3
-  
-  ##########################################
-  #
-  # Create user installable
-  # gnome-shell-extension-appindicator 
-  #
-  ##########################################
-  
-  if [ -f gnome-shell-extension.tar.xz ] ; then
-    return
-  fi
-
-  # Get index.html for 
-  #
-  rm -f index.html
-  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
-  if [ "$?" != "0" ] ; then
+  if [ ${GNOME_EXT} != "26" ] && [ ${GNOME_EXT} != "33" ] ; then
     return
   fi
   
-  #
-  # Find rpm
-  #
-  local DEB_FILE_GNOME=$(grep ">gnome-.*<" index.html | sed -e "s/.*>\(gnome-.*deb\)<.*/\1/")
-  rm -f index.html
-
-  if [ -z "${DEB_FILE_GNOME}" ] ; then
-    echo "No GNOME extension found"
-    return
-  fi
-  
-  #
-  # Get package
-  #
-  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${DEB_FILE_GNOME}"
-
-  #
-  # Extract 
-  #
-  ar x ${DEB_FILE_GNOME} 2>/dev/null
-  tar -xJf data.tar.xz
-  
-  rm -f data.tar.xz
-  rm -f control.tar.xz
-  rm -f debian-binary
+  git clone -q ${GIT_BASE}
+  pushd gnome-shell-extension-appindicator > /dev/null 2>&1
+  git checkout -q v${GNOME_EXT}
+  popd > /dev/null 2>&1
   
   #
   # Create tar
   #
-  tar -C ./usr/share/gnome-shell/extensions -cJf gnome-shell-extension.tar.xz .
+  mv -f gnome-shell-extension-appindicator appindicatorsupport@rgcjonas.gmail.com
+  tar -cJf gnome-shell-extension-${GNOME_EXT}.tar.xz appindicatorsupport@rgcjonas.gmail.com
 
   #
   # Cleanup
   #
-  rm -rf ./usr
-  rm -f ${DEB_FILE_GNOME}
+  rm -rf appindicatorsupport@rgcjonas.gmail.com
 }
+
 
 create_rpm_tar() {
 
@@ -183,7 +114,8 @@ create_rpm_tar() {
   local REPO_DISTR=$2
   local REPO_ARCH=$3
   local RPM_NAME_EXT=$4
-  
+  local GNOME_EXT=$5
+
   ##########################################
   #
   # Create the SysTray-X tar
@@ -219,8 +151,11 @@ create_rpm_tar() {
   #
   # Add the gnome extension to the tar
   #
-  if [ -f gnome-shell-extension.tar.xz ] ; then
-    cp -f gnome-shell-extension.tar.xz ${TAR_DIR}/
+  if [ "${GNOME_EXT}" == "26" ] && [ -f gnome-shell-extension-26.tar.xz ] ; then
+    cp -f gnome-shell-extension-26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  fi
+  if [ "${GNOME_EXT}" == "33" ] && [ -f gnome-shell-extension-33.tar.xz ] ; then
+    cp -f gnome-shell-extension-33.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   
   #
@@ -340,8 +275,11 @@ create_deb_tar() {
   #
   # Add the gnome extension to the tar
   #
-  if [ "${GNOME_EXT}" == "y" ] && [ -f gnome-shell-extension.tar.xz ] ; then
-    cp -f gnome-shell-extension.tar.xz ${TAR_DIR}/
+  if [ "${GNOME_EXT}" == "26" ] && [ -f gnome-shell-extension-26.tar.xz ] ; then
+    cp -f gnome-shell-extension-26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  fi
+  if [ "${GNOME_EXT}" == "33" ] && [ -f gnome-shell-extension-33.tar.xz ] ; then
+    cp -f gnome-shell-extension-33.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   
   #
@@ -414,16 +352,17 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   REPO_ARCH=$(echo ${rpmdir} | cut -d'/' -f2)
   
   RPM_NAME_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
-  
+  GNOME_EXT=$(echo ${OBS_RPM_GNOME_EXT} | cut -d' ' -f${INDEX})
+
   #
   # Generate the gnome tar file
   #
-  create_rpm_gnome_extension_tar ${OBS_REPO_BASE} ${REPO_DISTR}
-
+  create_gnome_extension_tar ${GNOME_APPINDICATOR} ${GNOME_EXT}
+  
   #
   # Generate the SysTray-X tar file
   #
-  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT}
+  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT} ${GNOME_EXT}
   
   #
   # Create installer
@@ -482,7 +421,7 @@ for debdir in $OBS_DEB_ARCHS ; do
   #
   # Generate the gnome tar file
   #
-  create_deb_gnome_extension_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH}
+  create_gnome_extension_tar ${GNOME_APPINDICATOR} ${GNOME_EXT}
 
   #
   # Generate the SysTray-X tar file
@@ -521,6 +460,6 @@ done
 #
 # Cleanup
 #
-rm -f gnome-shell-extension.tar.xz
+rm -f gnome-shell-extension-*.tar.xz
 
 popd > /dev/null 2>&1

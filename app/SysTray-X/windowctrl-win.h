@@ -60,6 +60,25 @@ class WindowCtrlWin : public QObject
         explicit WindowCtrlWin( QObject *parent = nullptr );
 
         /**
+         * @brief ~WindowCtrlWin. Destructor.
+         */
+        ~WindowCtrlWin();
+
+        /**
+         * @brief setWindowState. Set the window state.
+         *
+         *  @param state    The state.
+         */
+        void    setWindowState( int state );
+
+        /**
+         * @brief getWindowState. Get the window state.
+         *
+         *  @return     The state.
+         */
+        int getWindowState() const;
+
+        /**
          * @brief setMinimizeType
          *
          *  @param type     Set the minimize type.
@@ -212,6 +231,36 @@ class WindowCtrlWin : public QObject
          */
         static BOOL isMainWindow( HWND hwnd );
 
+        /**
+         * @brief interceptMinimizeWindow. Intercept minimize event of the TB window.
+         */
+        void    interceptMinimizeWindow();
+
+        /**
+         * @brief stopInterceptMinimizeWindow. Remove the intercept hook.
+         */
+        void    stopInterceptMinimizeWindow();
+
+        /**
+         * @brief handleWinEvent. Callback for the hook.
+         *
+         *  @param hook
+         *  @param event
+         *  @param hwnd
+         *  @param idObject
+         *  @param idChild
+         *  @param dwEventThread
+         *  @param dwmsEventTime
+         */
+        static void     handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hwnd,
+                                LONG idObject, LONG idChild,
+                                DWORD dwEventThread, DWORD dwmsEventTime);
+
+        /**
+         * @brief hookAction. Non-static function to be used by the hook callback.
+         */
+        void    hookAction();
+
     signals:
 
         /**
@@ -238,6 +287,13 @@ class WindowCtrlWin : public QObject
          */
         void    signalConsole( QString message );
 
+    protected:
+
+        /**
+         * @brief m_intercept
+         */
+        static WindowCtrlWin*  m_ctrl_parent;
+
     private:
 
         /**
@@ -254,6 +310,16 @@ class WindowCtrlWin : public QObject
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
+
+        /**
+         * @brief m_window_state. State of the TB window.
+         */
+        int m_window_state;
+
+        /**
+         * @brief m_hook
+         */
+        HWINEVENTHOOK m_hook;
 };
 
 #endif // WINDOWCTRLWIN_H

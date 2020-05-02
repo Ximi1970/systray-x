@@ -13,6 +13,17 @@
  *	Qt includes
  */
 
+
+/*
+ *  Initialize statics
+ */
+const QString   Preferences::STATE_NORMAL_STR = "normal";
+const QString   Preferences::STATE_MINIMIZED_STR = "minimized";
+const QString   Preferences::STATE_MAXIMIZED_STR = "maximized";
+const QString   Preferences::STATE_FULLSCREEN_STR = "fullscreen";
+const QString   Preferences::STATE_DOCKED_STR = "docked";
+
+
 /**
  * @brief Preferences.  Constructor.
  */

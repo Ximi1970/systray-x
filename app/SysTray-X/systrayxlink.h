@@ -110,16 +110,6 @@ class SysTrayXLink : public QObject
          */
         void    sendPreferences();
 
-        /**
-         * @brief sendWindowNormal. Send the window normal command.
-         */
-        void sendWindowNormal();
-
-        /**
-         * @brief sendWindowMinimize. Send the window minimize command.
-         */
-        void    sendWindowMinimize();
-
     private:
 
         /**
@@ -184,7 +174,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief signalWindowState. Signal a change in the window state.
          */
-        void    signalWindowState( QString state );
+        void    signalWindowState( int state );
 
         /**
          * @brief signalUnreadMail. Signal numder of unread mails.
@@ -239,16 +229,6 @@ class SysTrayXLink : public QObject
          * @brief slotNumberColorChange. Handle a change in number color.
          */
         void    slotNumberColorChange();
-
-        /**
-         * @brief slotWindowNormal. Slot for handling window normal signals.
-         */
-        void    slotWindowNormal();
-
-        /**
-         * @brief slotWindowMinimize. Slot for handling window minimize signals.
-         */
-        void    slotWindowMinimize();
 
      private slots:
 

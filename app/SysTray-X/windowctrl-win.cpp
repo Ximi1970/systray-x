@@ -22,6 +22,12 @@
 
 
 /*
+ *  Initialize statics
+ */
+WindowCtrlWin*  WindowCtrlWin::m_ctrl_parent = nullptr;
+
+
+/*
  *  Constructor
  */
 WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
@@ -31,6 +37,45 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
      */
     m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
+    m_window_state = Preferences::STATE_UNKNOWN;
+
+    /*
+     * Setup the minimize intercept
+     */
+    m_ctrl_parent = this;
+    interceptMinimizeWindow();
+}
+
+
+/*
+ * Destructor
+ */
+WindowCtrlWin::~WindowCtrlWin()
+{
+    /*
+     * Remove the intercept hook
+     */
+    stopInterceptMinimizeWindow();
+}
+
+
+/*
+ * Set the window state.
+ */
+void    WindowCtrlWin::setWindowState( int state )
+{
+    m_window_state = state;
+}
+
+
+/**
+ * @brief getWindowState. Get the window state.
+ *
+ *  @return     The state.
+ */
+int WindowCtrlWin::getWindowState() const
+{
+    return m_window_state;
 }
 
 
@@ -234,6 +279,79 @@ quint64 WindowCtrlWin::getWinId()
 QList< quint64 >   WindowCtrlWin::getWinIds()
 {
     return m_tb_windows;
+}
+
+
+/*
+ * Intercept the minimize event
+ */
+void    WindowCtrlWin::interceptMinimizeWindow()
+{
+    m_hook = SetWinEventHook(
+                EVENT_OBJECT_LOCATIONCHANGE ,EVENT_OBJECT_LOCATIONCHANGE,
+                NULL,
+                handleWinEvent,
+                getPpid(), 0,
+                WINEVENT_OUTOFCONTEXT );
+}
+
+
+/*
+ * Remove the intercept hook
+ */
+void    WindowCtrlWin::stopInterceptMinimizeWindow()
+{
+    UnhookWinEvent( m_hook );
+}
+
+
+/*
+ * Hook callback
+ */
+void    WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hWnd,
+                         LONG idObject, LONG idChild,
+                         DWORD dwEventThread, DWORD dwmsEventTime )
+{
+    Q_UNUSED( hook );
+    Q_UNUSED( idObject );
+    Q_UNUSED( idChild );
+    Q_UNUSED( dwEventThread );
+    Q_UNUSED( dwmsEventTime );
+
+    if( EVENT_OBJECT_LOCATIONCHANGE == event )
+    {
+        WINDOWPLACEMENT wp;
+        wp.length = sizeof( WINDOWPLACEMENT );
+        GetWindowPlacement( hWnd, &wp );
+
+        if( SW_SHOWMINIMIZED == wp.showCmd )
+        {
+            /*
+             * Window is minimized
+             */
+            if( m_ctrl_parent )
+            {
+                m_ctrl_parent->hookAction();
+            }
+        }
+    }
+}
+
+
+/*
+ * Non-static method to use by the hook callback
+ */
+void    WindowCtrlWin::hookAction()
+{
+    if( ( getWindowState() != Preferences::STATE_MINIMIZED ) && ( getMinimizeType() > 0 ) )
+    {
+        setWindowState( Preferences::STATE_MINIMIZED );
+
+        /*
+         * Hide to tray
+         */
+        hideWindow( (HWND)getWinId() );
+    }
 }
 
 

@@ -79,7 +79,7 @@ class WindowCtrl : public QObject
          *
          * @param state     The new state.
          */
-        void    slotWindowState( QString state );
+        void    slotWindowState( int state );
 
         /**
          * @brief slotShowHide. Slot for handling of the show / hide window signal.
@@ -122,11 +122,6 @@ class WindowCtrl : public QObject
          * @brief m_start_minimized. State of start minimized.
          */
         bool    m_start_minimized;
-
-        /**
-         * @brief m_state. State of the TB window.
-         */
-        QString m_state;
 };
 
 

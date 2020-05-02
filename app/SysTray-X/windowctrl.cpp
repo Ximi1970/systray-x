@@ -35,7 +35,6 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
     /*
      *  Initialize
      */
-    m_state = QString();
     setMinimizeType( m_pref->getMinimizeType() );
 
     /*
@@ -134,21 +133,25 @@ void    WindowCtrl::slotStartMinimizedChange()
 /*
  *  Handle change in window state
  */
-void    WindowCtrl::slotWindowState( QString state )
+void    WindowCtrl::slotWindowState( int state )
 {
-    if( m_state != state )
-    {
-        m_state = state;
+#ifdef Q_OS_UNIX
 
-        if( state == "normal" )
-        {
-            hideWindow( getWinId(), false );
-        }
-        else
+    if( getWindowState() != state )
+    {
+        setWindowState( state );
+
+        if( state == Preferences::STATE_MINIMIZED )
         {
             hideWindow( getWinId(), getMinimizeType() );
         }
+        else
+        {
+            hideWindow( getWinId(), false );
+        }
     }
+
+#endif
 }
 
 
@@ -157,14 +160,14 @@ void    WindowCtrl::slotWindowState( QString state )
  */
 void    WindowCtrl::slotShowHide()
 {
-    if( m_state == "minimized" )
+    if( getWindowState() == Preferences::STATE_MINIMIZED )
     {
-        m_state = "normal";
+        setWindowState( Preferences::STATE_NORMAL );
         normalizeWindow( getWinId() );
     }
     else
     {
-        m_state = "minimized";
+        setWindowState( Preferences::STATE_MINIMIZED );
         minimizeWindow( getWinId(), getMinimizeType() );
     }
 }
