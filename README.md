@@ -115,6 +115,16 @@ sudo apt install systray-x
 
 ### Fedora
 
+Remark: Please use the Mozilla binary due to the imcompatible way TB is build in the Fedora repo.
+
+#### 32
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_32/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+sudo dnf install systray-x
+```
+
 #### 31
 
 ```bash
