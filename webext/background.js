@@ -405,8 +405,6 @@ async function start() {
 
   SysTrayX.startupState = state;
 
-  console.debug("State: " + SysTrayX.startupState);
-
   // Get the poll timing
   SysTrayX.pollTiming = await getPollTiming();
 
