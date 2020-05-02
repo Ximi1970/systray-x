@@ -197,11 +197,10 @@ void    SysTrayXIcon::renderIcon()
 
         painter.setFont( QFont("Sans") );
 
-        QString number = QString::number( m_unread_mail );
 #if QT_VERSION < QT_VERSION_CHECK(5, 13, 0)
-        double factor = pixmap.width() / ( 3 * painter.fontMetrics().width( number ) );
+        double factor = pixmap.width() / ( 3 * painter.fontMetrics().width( "0" ) );
 #else
-        double factor = pixmap.width() / ( 3 * painter.fontMetrics().horizontalAdvance( number ) );
+        double factor = pixmap.width() / ( 3 * painter.fontMetrics().horizontalAdvance( "0" ) );
 #endif
         QFont font = painter.font();
         font.setPointSizeF( font.pointSizeF() * factor );
