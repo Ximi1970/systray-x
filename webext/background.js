@@ -152,12 +152,12 @@ SysTrayX.Messaging = {
 
   sendBrowserInfo: function () {
     const info = SysTrayX.browserInfo;
-    SysTrayX.Link.postSysTrayXMessage({ browserInfo: browserInfo });
+    SysTrayX.Link.postSysTrayXMessage({ browserInfo: info });
   },
 
   sendPlatformInfo: function () {
     const info = SysTrayX.platformInfo;
-    SysTrayX.Link.postSysTrayXMessage({ platformInfo: platformInfo });
+    SysTrayX.Link.postSysTrayXMessage({ platformInfo: info });
   },
 
   sendTitle: function () {
