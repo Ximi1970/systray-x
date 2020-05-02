@@ -115,7 +115,7 @@ sudo apt install systray-x
 
 ### Fedora
 
-Remark: Please use the Mozilla binary due to the imcompatible way TB is build in the Fedora repo.
+Remark: Please use the Mozilla binary due to the incompatible way TB is build in the Fedora repo.
 
 #### 32
 
