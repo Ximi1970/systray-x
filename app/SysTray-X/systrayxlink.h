@@ -73,68 +73,6 @@ class SysTrayXLinkReaderThread : public QThread
 };
 
 
-#ifdef  OLD_THREAD
-/**
- * @brief The SysTrayXLinkReader class. Reader thread.
- */
-class SysTrayXLinkReader : public QObject
-{
-    Q_OBJECT
-
-    public:
-
-        /**
-         * @brief Reader. Constructor, destructor.
-         */
-        SysTrayXLinkReader();
-        ~SysTrayXLinkReader();
-
-        /**
-         * @brief stopThread. Stop the thread.
-         */
-        void    stopThread();
-
-    public slots:
-
-        /**
-         * @brief startThread. Start the thread.
-         */
-        void	startThread();
-
-        /**
-         * @brief slotWorker. The worker thread started by a "timer".
-         */
-        void	slotWorker();
-
-    signals:
-
-        /**
-         * @brief signalReceivedMessage. Signal the received message.
-         *
-         *  @param message  The received message.
-         */
-        void    signalReceivedMessage( QByteArray message );
-
-        /**
-         * @brief signalAddOnShutdown. Signal to shutdown the app.
-         */
-        void    signalAddOnShutdown();
-
-    private:
-
-        /**
-         * @brief m_timer. Worker timer.
-         */
-        QTimer* m_timer;
-
-        /**
-         * @brief m_doWork. Status of the worker thread.
-         */
-        bool	m_doWork;
-};
-#endif
-
-
 /**
  * @brief The SysTrayXLink class. Handles the communications link.
  */
@@ -300,13 +238,6 @@ class SysTrayXLink : public QObject
          * @brief m_reader_thread. Pointer to the reader thread.
          */
         SysTrayXLinkReaderThread*    m_reader_thread;
-
-#ifdef  OLD_THREAD
-        /**
-         * @brief m_reader_thread. Pointer to the reader thread.
-         */
-        QThread*    m_reader_thread;
-#endif
 
         /**
          * @brief m_pref. Pointer to the preferences storage.
