@@ -115,7 +115,13 @@ sudo apt install systray-x
 
 ### Fedora
 
-Remark: Please use the Mozilla binary due to the incompatible way TB is build in the Fedora repo.
+Remarks:  
+Please use the Mozilla binary:  
+https://www.thunderbird.net/en-US/ or https://archive.mozilla.org/pub/thunderbird/releases/
+
+The Fedora version repository will not work correctly. Known issues:  
+- no unread mail count, Webextension API: messages, query not working.
+
 
 #### 32
 
