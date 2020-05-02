@@ -119,8 +119,8 @@ Remarks:
 Please use the Mozilla binary:  
 https://www.thunderbird.net/en-US/ or https://archive.mozilla.org/pub/thunderbird/releases/
 
-The Fedora version repository will not work correctly. Known issues:  
-- no unread mail count, Webextension API: messages, query not working.
+The version from the Fedora repository will not work correctly. Known issues:  
+- no unread mail count, Webextension API: messages, query() not working.
 
 
 #### 32
