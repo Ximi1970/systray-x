@@ -87,6 +87,15 @@ ul,
   padding: 10px;
 }
 
+/* Style the caret/arrow filler */
+.noncaret::before {
+  user-select: none; /* Prevent text selection */
+  content: "\25B6";
+  visibility: hidden;
+  display: inline-block;
+  margin-right: 6px;
+}
+
 /* Style the caret/arrow */
 .caret {
   cursor: pointer;

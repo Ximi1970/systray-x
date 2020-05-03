@@ -191,3 +191,8 @@ http://maxdesign.com.au/articles/tree-table/
 Image to Base64 conversion
 
 https://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
+
+
+Generate tree list from array
+
+https://stackoverflow.com/questions/57344694/create-a-tree-from-a-list-of-strings-containing-paths-of-files-javascript

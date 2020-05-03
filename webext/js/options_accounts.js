@@ -3,7 +3,7 @@ var SysTrayX = {};
 SysTrayX.Accounts = {
   initialized: false,
 
-  init: function() {
+  init: function () {
     this.getAccounts().then(this.getAccountsCb);
   },
 
@@ -11,20 +11,51 @@ SysTrayX.Accounts = {
    * Use the messages API to get the unread messages (Promise)
    * Be aware that the data is only avaiable inside the callback
    */
-  getAccounts: async function() {
+  getAccounts: async function () {
     return await browser.accounts.list();
   },
 
   /*
    * Callback for getAccounts
    */
-  getAccountsCb: function(mailAccount) {
+  getAccountsCb: function (mailAccount) {
+    function createFolderTree(folders) {
+      let result = [];
+      let level = { result };
+
+      folders.forEach((folder) => {
+        folder.path
+          .slice(1)
+          .split("/")
+          .reduce((r, name, i, a) => {
+            if (!r[name]) {
+              r[name] = { result: [] };
+              r.result.push({ name: folder.name, children: r[name].result });
+            }
+
+            return r[name];
+          }, level);
+      });
+
+      return result;
+    }
+
     let accounts = new Object();
 
     for (let i = 0; i < mailAccount.length; i++) {
-      //      console.debug("SysTrayX accounts id: " + mailAccount[i].id);
-      //      console.debug("SysTrayX accounts name: " + mailAccount[i].name);
-      //      console.debug("SysTrayX accounts type: " + mailAccount[i].type);
+      if (true) {
+        console.debug("SysTrayX accounts id: " + mailAccount[i].id);
+        console.debug("SysTrayX accounts name: " + mailAccount[i].name);
+        console.debug("SysTrayX accounts type: " + mailAccount[i].type);
+        for (let j = 0; j < mailAccount[i].folders.length; j++) {
+          console.debug(
+            "SysTrayX accounts folder: " +
+              mailAccount[i].folders[j].name +
+              ", " +
+              mailAccount[i].folders[j].type
+          );
+        }
+      }
 
       if (!accounts[mailAccount[i].type]) {
         accounts[mailAccount[i].type] = [];
@@ -32,7 +63,7 @@ SysTrayX.Accounts = {
       accounts[mailAccount[i].type].push({
         id: mailAccount[i].id,
         name: mailAccount[i].name,
-        folders: mailAccount[i].folders
+        folders: mailAccount[i].folders,
       });
     }
 
@@ -60,6 +91,11 @@ SysTrayX.Accounts = {
 
         for (let i = 0; i < accounts[prop].length; ++i) {
           const typeLi = document.createElement("li");
+
+          const typeSubSpan = document.createElement("span");
+          typeSubSpan.setAttribute("class", "caret");
+          typeLi.appendChild(typeSubSpan);
+
           const typeInput = document.createElement("input");
           typeInput.setAttribute("type", "checkbox");
           typeInput.setAttribute("name", accounts[prop][i].id);
@@ -70,6 +106,50 @@ SysTrayX.Accounts = {
             " " + accounts[prop][i].name
           );
           typeLi.appendChild(typeText);
+
+          //  Create a usable folder tree
+          const folders = createFolderTree(accounts[prop][i].folders);
+
+          //  Recursive list creator
+          function createListLevel(level) {
+            const typeLevelUl = document.createElement("ul");
+            typeLevelUl.setAttribute("class", "nested");
+
+            level.forEach((element) => {
+              console.debug("Name: " + element.name);
+
+              const typeEleLi = document.createElement("li");
+
+              const typeEleSpan = document.createElement("span");
+              if (element.children.length > 0) {
+                typeEleSpan.setAttribute("class", "caret");
+              } else {
+                typeEleSpan.setAttribute("class", "noncaret");
+              }
+              typeEleLi.appendChild(typeEleSpan);
+
+              const typeEleInput = document.createElement("input");
+              typeEleInput.setAttribute("type", "checkbox");
+              typeEleInput.setAttribute("name", element.name);
+//              typeEleInput.setAttribute("value", JSON.stringify(element.name));
+              typeEleInput.setAttribute("checked", "true");
+              typeEleLi.appendChild(typeEleInput);
+              const typeEleText = document.createTextNode(" " + element.name);
+              typeEleLi.appendChild(typeEleText);
+
+              if (element.children.length > 0) {
+                typeEleLi.appendChild(createListLevel(element.children));
+              }
+
+              typeLevelUl.appendChild(typeEleLi);
+            });
+
+            return typeLevelUl;
+          }
+
+          //  Create a folder list recursively
+          typeLi.appendChild(createListLevel(folders));
+
           typeUl.appendChild(typeLi);
         }
         typeLi.appendChild(typeUl);
@@ -104,12 +184,12 @@ SysTrayX.Accounts = {
      */
     const toggler = document.getElementsByClassName("caret");
     for (let i = 0; i < toggler.length; i++) {
-      toggler[i].addEventListener("click", function() {
+      toggler[i].addEventListener("click", function () {
         this.parentElement.querySelector(".nested").classList.toggle("active");
         this.classList.toggle("caret-down");
       });
     }
-  }
+  },
 };
 
 SysTrayX.Accounts.init();
