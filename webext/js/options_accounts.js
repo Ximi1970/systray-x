@@ -30,7 +30,12 @@ SysTrayX.Accounts = {
           .reduce((r, name, i, a) => {
             if (!r[name]) {
               r[name] = { result: [] };
-              r.result.push({ name: folder.name, children: r[name].result });
+              r.result.push({
+                name: folder.name,
+                accountId: folder.accountId,
+                path: folder.path,
+                children: r[name].result,
+              });
             }
 
             return r[name];
@@ -43,7 +48,7 @@ SysTrayX.Accounts = {
     let accounts = new Object();
 
     for (let i = 0; i < mailAccount.length; i++) {
-      if (true) {
+      if (false) {
         console.debug("SysTrayX accounts id: " + mailAccount[i].id);
         console.debug("SysTrayX accounts name: " + mailAccount[i].name);
         console.debug("SysTrayX accounts type: " + mailAccount[i].type);
@@ -98,11 +103,8 @@ SysTrayX.Accounts = {
 
           const typeInput = document.createElement("input");
           typeInput.setAttribute("type", "checkbox");
-          typeInput.setAttribute("name", accounts[prop][i].id);
           typeInput.setAttribute("value", JSON.stringify(accounts[prop][i]));
-
-          //          typeInput.setAttribute("checked", "true");
-          //          typeInput.setAttribute("indeterminate", "true");
+          typeInput.setAttribute("name", accounts[prop][i].id);
 
           typeLi.appendChild(typeInput);
           const typeText = document.createTextNode(
@@ -119,23 +121,31 @@ SysTrayX.Accounts = {
             typeLevelUl.setAttribute("class", "nested");
 
             level.forEach((element) => {
-              console.debug("Name: " + element.name);
-
               const typeEleLi = document.createElement("li");
 
               const typeEleSpan = document.createElement("span");
               if (element.children.length > 0) {
                 typeEleSpan.setAttribute("class", "caret");
               } else {
-                typeEleSpan.setAttribute("class", "noncaret");
+                typeEleSpan.setAttribute("class", "caretfiller");
               }
               typeEleLi.appendChild(typeEleSpan);
 
               const typeEleInput = document.createElement("input");
               typeEleInput.setAttribute("type", "checkbox");
-              typeEleInput.setAttribute("name", element.name);
-              //              typeEleInput.setAttribute("value", JSON.stringify(element.name));
-              //              typeEleInput.setAttribute("checked", "true");
+              typeEleInput.setAttribute(
+                "value",
+                JSON.stringify({
+                  accountId: element.accountId,
+                  path: element.path,
+                })
+              );
+              if (element.children.length > 0) {
+                typeEleInput.setAttribute("name", "parent-" + element.name);
+              } else {
+                typeEleInput.setAttribute("name", "child-" + element.name);
+              }
+
               typeEleLi.appendChild(typeEleInput);
               const typeEleText = document.createTextNode(" " + element.name);
               typeEleLi.appendChild(typeEleText);
@@ -160,35 +170,11 @@ SysTrayX.Accounts = {
 
       treeBase.appendChild(typeLi);
 
-      // Restore saved selection
-
-      function setAccounts(result) {
-        const treeBase = document.getElementById("accountsTree");
-        const accounts = result.accounts || [];
-        for (let i = 0; i < accounts.length; ++i) {
-          const checkbox = treeBase.querySelector(
-            `input[name=${accounts[i].id}]`
-          );
-          if (checkbox) {
-            checkbox.checked = accounts[i].checked;
-          }
-        }
-      }
-
-      function onError(error) {
-        console.log(`GetAccounts Error: ${error}`);
-      }
-      /*
-      const getAccounts = browser.storage.sync.get("accounts");
-      getAccounts.then(setAccounts, onError);
-      */
-
-      let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      //  Setup checkbox control
+      let checkboxes = treeBase.querySelectorAll('input[type="checkbox"]');
 
       for (let x = 0; x < checkboxes.length; x++) {
         checkboxes[x].addEventListener("change", function (e) {
-          console.debug("Change detect");
-
           let parentNode = this.parentNode;
 
           const cbDescendants = parentNode.querySelectorAll(

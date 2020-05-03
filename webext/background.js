@@ -1,6 +1,4 @@
 var SysTrayX = {
-  debugAccounts: false,
-
   startupState: undefined,
 
   pollTiming: {
@@ -16,14 +14,11 @@ var SysTrayX = {
 };
 
 SysTrayX.Messaging = {
-  unreadFiltersTest: [
-    { unread: true },
-    { unread: true, folder: { accountId: "account1", path: "/INBOX" } },
-  ],
+  accounts: [],
 
   init: function () {
-    //  Get the accounts from the storage
-    SysTrayX.Messaging.getAccounts();
+    //  Get the filters from the storage
+    SysTrayX.Messaging.getFilters();
 
     // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
@@ -43,8 +38,7 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    //    this.unReadMessages(this.unreadFiltersTest).then(this.unreadCb);
-    //    window.setInterval(SysTrayX.Messaging.pollAccounts, 1000);
+    //  Start polling the accounts
     window.setTimeout(
       SysTrayX.Messaging.pollAccounts,
       SysTrayX.pollTiming.pollStartupDelay * 1000
@@ -59,7 +53,7 @@ SysTrayX.Messaging = {
   //
   storageChanged: function (changes, area) {
     //  Get the new preferences
-    SysTrayX.Messaging.getAccounts();
+    SysTrayX.Messaging.getFilters();
 
     if ("pollStartupDelay" in changes && changes["pollStartupDelay"].newValue) {
       SysTrayX.pollTiming = {
@@ -109,9 +103,34 @@ SysTrayX.Messaging = {
         SysTrayX.Link.postSysTrayXMessage({ unreadMail: 0 });
       }
     } else {
-      SysTrayX.Messaging.unReadMessages([{ unread: true }]).then(
-        SysTrayX.Messaging.unreadCb
-      );
+      //  Never saved anything, construct temporary filters
+      if (SysTrayX.Messaging.accounts.length > 0) {
+        //  Construct inbox filters for all accounts
+        let filters = [];
+        SysTrayX.Messaging.accounts.forEach((account) => {
+          const inbox = account.folders.filter(
+            (folder) => folder.type == "inbox"
+          );
+
+          if (inbox.length > 0) {
+            filters.push({
+              unread: true,
+              folder: inbox[0],
+            });
+          }
+        });
+
+        //  Store them in the background HTML
+        const filtersDiv = document.getElementById("filters");
+        filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
+
+        SysTrayX.Messaging.unReadMessages(filters).then(
+          SysTrayX.Messaging.unreadCb
+        );
+      } else {
+        //  No accounts, no mail
+        SysTrayX.Link.postSysTrayXMessage({ unreadMail: 0 });
+      }
     }
 
     // Next round...
@@ -227,34 +246,18 @@ SysTrayX.Messaging = {
   },
 
   //
-  //  Get the accounts from the storage
+  //  Get the filters from the storage
   //
-  getAccounts: function () {
-    const getter = browser.storage.sync.get(["accounts", "filters"]);
-    getter.then(this.getAccountsStorage, this.onGetAccountsStorageError);
-
-    if (SysTrayX.debugAccounts) {
-      const accountsDiv = document.getElementById("accounts");
-
-      const accountsAttr = accountsDiv.getAttribute("data-accounts");
-      console.debug(`Accounts attr: ${accountsAttr}`);
-
-      const accounts = JSON.parse(accountsAttr);
-      console.debug(`Accounts poll: ${accounts.length}`);
-    }
+  getFilters: function () {
+    const getter = browser.storage.sync.get("filters");
+    getter.then(this.getFiltersStorage, this.onGetFiltersStorageError);
   },
 
   //
-  //  Get the accounts from the storage and
+  //  Get the filters from the storage and
   //  make them available in the background HTML
   //
-  getAccountsStorage: function (result) {
-    const accounts = result.accounts || undefined;
-
-    //  Store them in the background HTML
-    const accountsDiv = document.getElementById("accounts");
-    accountsDiv.setAttribute("data-accounts", JSON.stringify(accounts));
-
+  getFiltersStorage: function (result) {
     const filters = result.filters || undefined;
 
     //  Store them in the background HTML
@@ -447,6 +450,9 @@ async function start() {
   SysTrayX.Window.startWindow = await browser.windows
     .getCurrent()
     .then((currentWindow) => currentWindow);
+
+  //  Get all accounts
+  SysTrayX.Messaging.accounts = await browser.accounts.list();
 
   //  Setup the link first
   SysTrayX.Link.init();

@@ -12,32 +12,37 @@ SysTrayX.SaveOptions = {
     // Save accounts and filters
     //
     const treeBase = document.getElementById("accountsTree");
-    const inputs = treeBase.querySelectorAll("input");
-    let accounts = [];
-    let filters = [];
-    for (let i = 0; i < inputs.length; ++i) {
-      const account = JSON.parse(inputs[i].value);
-      const checked = inputs[i].checked;
-      accounts.push({ ...account, checked: checked });
+    const accounts = treeBase.querySelectorAll(
+      'input[type="checkbox"][name*="account"]'
+    );
 
-      if (checked) {
-        let inboxMailFolder = account.folders.find(
-          (obj) => obj.type === "inbox"
-        );
+    let checkedFolders = [];
+    accounts.forEach((account) => {
+      if (account.checked || account.indeterminate) {
+        //  Find all selected folders
+        const folders = Array.from(
+          account.parentNode.querySelectorAll(
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+          )
+        ).filter((folder) => folder.checked);
 
-        if (inboxMailFolder) {
-          filters.push({
-            unread: true,
-            folder: inboxMailFolder,
-          });
-        }
+        checkedFolders = checkedFolders.concat(folders);
       }
-    }
-
-    //  Store accounts
-    browser.storage.sync.set({
-      accounts: accounts,
     });
+
+    let filters = [];
+    checkedFolders.forEach((folder) => {
+      const mailFolder = JSON.parse(folder.value);
+
+      filters.push({
+        unread: true,
+        folder: mailFolder,
+      });
+    });
+
+    //  Store them in the options HTML
+    const filtersDiv = document.getElementById("filters");
+    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
 
     //  Store query filters
     browser.storage.sync.set({
@@ -184,6 +189,15 @@ SysTrayX.RestoreOptions = {
     getIcon.then(
       SysTrayX.RestoreOptions.setIcon,
       SysTrayX.RestoreOptions.onIconError
+    );
+
+    //
+    //  Restore filters
+    //
+    const getFilters = browser.storage.sync.get("filters");
+    getFilters.then(
+      SysTrayX.RestoreOptions.setFilters,
+      SysTrayX.RestoreOptions.onFiltersError
     );
 
     //
@@ -371,6 +385,79 @@ SysTrayX.RestoreOptions = {
 
   onNumberColorError: function (error) {
     console.log(`numberColor Error: ${error}`);
+  },
+
+  //
+  //  Restore filters callbacks
+  //
+  setFilters: function (result) {
+    let filters = result.filters || undefined;
+
+    //  No filters stored?
+    if (filters == undefined) {
+      //  Create default filters
+
+      const treeBase = document.getElementById("accountsTree");
+      const accountsBoxes = treeBase.querySelectorAll(
+        'input[type="checkbox"][name*="account"]'
+      );
+
+      let accounts = [];
+      accountsBoxes.forEach((acoountbox) => {
+        const value = JSON.parse(acoountbox.value);
+        accounts.push({ folders: value.folders });
+      });
+
+      filters = [];
+      accounts.forEach((account) => {
+        const inbox = account.folders.filter(
+          (folder) => folder.type == "inbox"
+        );
+
+        if (inbox.length > 0) {
+          filters.push({
+            unread: true,
+            folder: inbox[0],
+          });
+        }
+      });
+    }
+
+    if (filters) {
+      const treeBase = document.getElementById("accountsTree");
+
+      filters.forEach((filter) => {
+        const folder = filter.folder;
+
+        const account = treeBase.querySelector(
+          `input[name=${folder.accountId}]`
+        );
+        const checkboxes = Array.from(
+          account.parentNode.querySelectorAll(
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+          )
+        );
+
+        checkboxes.forEach((checkbox) => {
+          const value = JSON.parse(checkbox.value);
+          if (value.path === folder.path) {
+            checkbox.checked = true;
+
+            const event = document.createEvent("HTMLEvents");
+            event.initEvent("change", false, true);
+            checkbox.dispatchEvent(event);
+          }
+        });
+      });
+    }
+
+    //  Store them in the options HTML
+    const filtersDiv = document.getElementById("filters");
+    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
+  },
+
+  onFiltersError: function (error) {
+    console.log(`Filters Error: ${error}`);
   },
 
   //

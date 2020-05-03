@@ -88,7 +88,7 @@ ul,
 }
 
 /* Style the caret/arrow filler */
-.noncaret::before {
+.caretfiller::before {
   user-select: none; /* Prevent text selection */
   content: "\25B6";
   visibility: hidden;
