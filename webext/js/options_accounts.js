@@ -100,7 +100,10 @@ SysTrayX.Accounts = {
           typeInput.setAttribute("type", "checkbox");
           typeInput.setAttribute("name", accounts[prop][i].id);
           typeInput.setAttribute("value", JSON.stringify(accounts[prop][i]));
-          typeInput.setAttribute("checked", "true");
+
+          //          typeInput.setAttribute("checked", "true");
+          //          typeInput.setAttribute("indeterminate", "true");
+
           typeLi.appendChild(typeInput);
           const typeText = document.createTextNode(
             " " + accounts[prop][i].name
@@ -131,8 +134,8 @@ SysTrayX.Accounts = {
               const typeEleInput = document.createElement("input");
               typeEleInput.setAttribute("type", "checkbox");
               typeEleInput.setAttribute("name", element.name);
-//              typeEleInput.setAttribute("value", JSON.stringify(element.name));
-              typeEleInput.setAttribute("checked", "true");
+              //              typeEleInput.setAttribute("value", JSON.stringify(element.name));
+              //              typeEleInput.setAttribute("checked", "true");
               typeEleLi.appendChild(typeEleInput);
               const typeEleText = document.createTextNode(" " + element.name);
               typeEleLi.appendChild(typeEleText);
@@ -158,6 +161,7 @@ SysTrayX.Accounts = {
       treeBase.appendChild(typeLi);
 
       // Restore saved selection
+
       function setAccounts(result) {
         const treeBase = document.getElementById("accountsTree");
         const accounts = result.accounts || [];
@@ -174,9 +178,63 @@ SysTrayX.Accounts = {
       function onError(error) {
         console.log(`GetAccounts Error: ${error}`);
       }
-
+      /*
       const getAccounts = browser.storage.sync.get("accounts");
       getAccounts.then(setAccounts, onError);
+      */
+
+      let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+      for (let x = 0; x < checkboxes.length; x++) {
+        checkboxes[x].addEventListener("change", function (e) {
+          console.debug("Change detect");
+
+          let parentNode = this.parentNode;
+
+          const cbDescendants = parentNode.querySelectorAll(
+            'input[type="checkbox"]'
+          );
+          for (let y = 0; y < cbDescendants.length; y++) {
+            cbDescendants[y].checked = this.checked;
+            cbDescendants[y].indeterminate = false;
+          }
+
+          while (["ul", "li"].indexOf(parentNode.nodeName.toLowerCase()) >= 0) {
+            const mainCb = parentNode.querySelector(
+              ':scope > input[type="checkbox"]'
+            );
+
+            if (mainCb && mainCb != this) {
+              mainCb.checked = this.checked;
+
+              const mainCbChildren = mainCb.parentNode.querySelectorAll(
+                'input[type="checkbox"]'
+              );
+              const numTotal = mainCbChildren.length;
+
+              let numChecked = 0;
+              for (let z = 0; z < mainCbChildren.length; z++) {
+                numChecked += mainCbChildren[z].checked;
+              }
+
+              if (numTotal === numChecked) {
+                mainCb.indeterminate = false;
+                mainCb.checked = true;
+              } else {
+                if (numChecked === 0) {
+                  mainCb.indeterminate = false;
+                  mainCb.checked = false;
+                } else {
+                  mainCb.indeterminate = true;
+                  mainCb.checked = false;
+                }
+              }
+            }
+
+            parentNode = parentNode.parentNode;
+          }
+        });
+      }
     }
 
     /*
