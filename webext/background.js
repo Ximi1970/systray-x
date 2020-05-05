@@ -38,6 +38,16 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
+    //  New mail listener (TB76+)
+    if (SysTrayX.browserInfo.majorVersion > 75) {
+      //
+      //  Mixed results, forgets accounts?, double events?
+      //
+      browser.messages.onNewMailReceived.addListener(
+        SysTrayX.Messaging.newMail
+      );
+    }
+
     //  Start polling the accounts
     window.setTimeout(
       SysTrayX.Messaging.pollAccounts,
@@ -46,6 +56,20 @@ SysTrayX.Messaging = {
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
+  },
+
+  newMail: async function (folder, messages) {
+    console.debug(
+      "New mail: " + folder.accountId + ", " + messages.messages.length
+    );
+
+    let unread = messages.messages.length;
+    while (messages.id) {
+      page = await browser.messages.continueList(messages.id);
+
+      unread = unread + page.messages.length;
+    }
+    console.debug("Unread: " + unread);
   },
 
   //
@@ -429,6 +453,10 @@ async function start() {
   SysTrayX.browserInfo = await browser.runtime
     .getBrowserInfo()
     .then((info) => info);
+
+  const version = SysTrayX.browserInfo.version.split(".");
+  SysTrayX.browserInfo.majorVersion = version[0];
+  SysTrayX.browserInfo.minorVersion = version[1];
 
   console.log("Browser: " + SysTrayX.browserInfo.name);
   console.log("Vendor: " + SysTrayX.browserInfo.vendor);
