@@ -10,7 +10,7 @@
     "gecko": {
       "id": "systray-x@Ximi1970",
       "strict_min_version": "68.0",
-      "strict_max_version": "71.*"
+      "strict_max_version": "76.*"
     }
   },
 
@@ -20,13 +20,20 @@
 
   "default_locale": "en-US",
 
-  "permissions": ["accountsRead", "messagesRead", "storage", "nativeMessaging", "tabs"],
+  "permissions": [
+    "accountsRead",
+    "messagesRead",
+    "storage",
+    "nativeMessaging",
+    "tabs"
+  ],
 
   "background": {
     "page": "background.html"
   },
 
   "options_ui": {
-    "page": "options.html"
+    "page": "options.html",
+    "open_in_tab": true
   }
 }
