@@ -54,10 +54,13 @@ SysTrayX.Accounts = {
         console.debug("SysTrayX accounts type: " + mailAccount[i].type);
         for (let j = 0; j < mailAccount[i].folders.length; j++) {
           console.debug(
-            "SysTrayX accounts folder: " +
-              mailAccount[i].folders[j].name +
-              ", " +
-              mailAccount[i].folders[j].type
+            "SysTrayX accounts folder path: " + mailAccount[i].folders[j].path
+          );
+          console.debug(
+            "SysTrayX accounts folder name: " + mailAccount[i].folders[j].name
+          );
+          console.debug(
+            "SysTrayX accounts folder type: " + mailAccount[i].folders[j].type
           );
         }
       }
@@ -116,9 +119,16 @@ SysTrayX.Accounts = {
           const folders = createFolderTree(accounts[prop][i].folders);
 
           //  Recursive list creator
-          function createListLevel(level) {
+          function createListLevel(level, parent) {
             const typeLevelUl = document.createElement("ul");
             typeLevelUl.setAttribute("class", "nested");
+
+            if (parent) {
+              parent.children = [];
+              parent.name = "^ Add base folder";
+
+              level.unshift(parent);
+            }
 
             level.forEach((element) => {
               const typeEleLi = document.createElement("li");
@@ -151,7 +161,9 @@ SysTrayX.Accounts = {
               typeEleLi.appendChild(typeEleText);
 
               if (element.children.length > 0) {
-                typeEleLi.appendChild(createListLevel(element.children));
+                typeEleLi.appendChild(
+                  createListLevel(element.children, element)
+                );
               }
 
               typeLevelUl.appendChild(typeEleLi);
