@@ -152,8 +152,6 @@ SysTrayX.Accounts = {
             );
           }
 
-          console.debug("Folders: " + JSON.stringify(folders));
-
           //  Recursive list creator
           function createListLevel(level, parent) {
             const typeLevelUl = document.createElement("ul");
