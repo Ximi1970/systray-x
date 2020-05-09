@@ -333,15 +333,19 @@ var SysTrayX = {
   },
 
   msgCountIterate(type, account, folder) {
-    const match = SysTrayX.filters?.filter(
-      (filter) =>
-        filter.folder.accountName === account &&
-        filter.folder.name === folder.prettyName
-    );
+    let count = false;
 
-    const count = match
-      ? match.length > 0
-      : folder.getFlag(Ci.nsMsgFolderFlags.Inbox);
+    if (SysTrayX.filters) {
+      const match = SysTrayX.filters.filter(
+        (filter) =>
+          filter.folder.accountName === account &&
+          filter.folder.name === folder.prettyName
+      );
+
+      count = match.length > 0
+    } else {
+      count =  folder.getFlag(Ci.nsMsgFolderFlags.Inbox);
+    }
 
     if (count) {
       SysTrayX["add" + type](folder);
