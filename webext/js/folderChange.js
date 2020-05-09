@@ -136,9 +136,6 @@ var SysTrayX = {
     //  Get the mail accounts using MailServices
     this.getAccounts();
 
-    //  Trigger first count
-    this.updateMsgCountWithCb();
-
     //  Start listener
     MailServices.mailSession.AddFolderListener(
       this.mailSessionListener,
@@ -162,11 +159,13 @@ var SysTrayX = {
   },
 
   setCountType: function (type) {
+    console.debug("setCountType: " + type);
+
     if (type === 0) {
       this.countType = this.MESSAGE_COUNT_TYPE_UNREAD;
     } else if (type === 1) {
       this.countType = this.MESSAGE_COUNT_TYPE_NEW;
-    } else console.log("Unknown count type");
+    } else console.log("Unknown count type: " + type);
 
     //  Update count
     this.updateMsgCountWithCb();
@@ -281,7 +280,7 @@ var SysTrayX = {
       this.countMessages("UnreadMessages");
     } else if (msgCountType === SysTrayX.MESSAGE_COUNT_TYPE_NEW) {
       this.countMessages("HasNewMessages");
-    } else console.error("Unknown message count type");
+    } else console.error("Unknown message count type: " + msgCountType);
 
     // currentMsgCount and newMsgCount may be integers or bool, which do
     // also support comparison operations

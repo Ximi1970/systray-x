@@ -45,17 +45,17 @@ SysTrayX.Messaging = {
     }
     */
 
+    browser.folderChange.onUnreadMailChange.addListener(function (unread) {
+      console.debug("folderChangeListener: " + unread);
+
+      SysTrayX.Messaging.unreadCb(unread);
+    });
+
     //  Set the count type in the folderChange listener
     browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
 
     //  Set the filters in the folderChange listener
     browser.folderChange.setFilters(SysTrayX.Messaging.filtersExt);
-
-    browser.folderChange.onUnreadMailChange.addListener(function (unread) {
-      console.debug("folderChangeListener: " + unread);
-
-      SysTrayX.Messaging.unreadCb(unread)
-    });
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
