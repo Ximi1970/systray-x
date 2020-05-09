@@ -1,9 +1,13 @@
 var SysTrayX = {};
 
+var BrowserInfo = {};
+
 SysTrayX.Accounts = {
   initialized: false,
 
-  init: function () {
+  init: async function () {
+    BrowserInfo = await browser.runtime.getBrowserInfo().then((info) => info);
+
     this.getAccounts().then(this.getAccountsCb);
   },
 
@@ -35,7 +39,7 @@ SysTrayX.Accounts = {
                 accountId: folder.accountId,
                 name: folder.name,
                 path: folder.path,
-                children: r[name].result,
+                subFolders: r[name].result,
               });
             }
 
@@ -116,11 +120,23 @@ SysTrayX.Accounts = {
           );
           typeLi.appendChild(typeText);
 
+<<<<<<< HEAD
           //  Create a usable folder tree
           const folders = createFolderTree(
             accounts[prop][i].name,
             accounts[prop][i].folders
           );
+=======
+          //  Create a usable folder tree <TB74
+          let folders = [];
+          if (BrowserInfo.version.split(".")[0] < 74) {
+            folders = createFolderTree(accounts[prop][i].folders);
+          } else {
+            folders = accounts[prop][i].folders;
+          }
+
+          console.debug("Folders: " + JSON.stringify(folders));
+>>>>>>> develop
 
           //  Recursive list creator
           function createListLevel(level, parent) {
@@ -128,7 +144,7 @@ SysTrayX.Accounts = {
             typeLevelUl.setAttribute("class", "nested");
 
             if (parent) {
-              parent.children = [];
+              parent.subFolders = [];
               parent.name = "^ Add base folder";
 
               level.unshift(parent);
@@ -138,7 +154,7 @@ SysTrayX.Accounts = {
               const typeEleLi = document.createElement("li");
 
               const typeEleSpan = document.createElement("span");
-              if (element.children.length > 0) {
+              if (element.subFolders.length > 0) {
                 typeEleSpan.setAttribute("class", "caret");
               } else {
                 typeEleSpan.setAttribute("class", "caretfiller");
@@ -156,7 +172,7 @@ SysTrayX.Accounts = {
                   name: element.name,
                 })
               );
-              if (element.children.length > 0) {
+              if (element.subFolders.length > 0) {
                 typeEleInput.setAttribute("name", "parent-" + element.name);
               } else {
                 typeEleInput.setAttribute("name", "child-" + element.name);
@@ -166,9 +182,9 @@ SysTrayX.Accounts = {
               const typeEleText = document.createTextNode(" " + element.name);
               typeEleLi.appendChild(typeEleText);
 
-              if (element.children.length > 0) {
+              if (element.subFolders.length > 0) {
                 typeEleLi.appendChild(
-                  createListLevel(element.children, element)
+                  createListLevel(element.subFolders, element)
                 );
               }
 
