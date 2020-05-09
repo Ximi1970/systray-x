@@ -45,9 +45,6 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
 
-    m_poll_startup_delay = 60;
-    m_poll_interval = 60;
-
     m_debug = false;
 
     m_version_major = QLatin1String( APP_VERSION_MAJOR );
@@ -340,58 +337,6 @@ void    Preferences::setStartMinimized( bool state )
          *  Tell the world the new preference
          */
         emit signalStartMinimizedChange();
-    }
-}
-
-
-/*
- *  Get the poll startup delay.
- */
-int    Preferences::getPollStartupDelay() const
-{
-    return m_poll_startup_delay;
-}
-
-
-/*
- *  Set the startup poll delay.
- */
-void    Preferences::setPollStartupDelay( int val )
-{
-    if( m_poll_startup_delay != val )
-    {
-        m_poll_startup_delay = val;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalPollStartupDelayChange();
-    }
-}
-
-
-/*
- *  Get the poll interval.
- */
-int    Preferences::getPollInterval() const
-{
-    return m_poll_interval;
-}
-
-
-/*
- *  Set the startup poll delay.
- */
-void    Preferences::setPollInterval( int val )
-{
-    if( m_poll_interval != val )
-    {
-        m_poll_interval = val;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalPollIntervalChange();
     }
 }
 

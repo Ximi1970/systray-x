@@ -60,9 +60,9 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Hide the count type for now
      */
-    m_ui->countTypeLabel->setVisible(false);
-    m_ui->unreadRadioButton->setVisible(false);
-    m_ui->newRadioButton->setVisible(false);
+    m_ui->countTypeGroupBox->setVisible(false);
+//    m_ui->unreadRadioButton->setVisible(false);
+  //  m_ui->newRadioButton->setVisible(false);
 
     /*
      *  Set defaults
@@ -91,24 +91,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 void    PreferencesDialog::setDebug( bool state )
 {
    m_ui->debugWindowCheckBox->setChecked( state );
-}
-
-
-/*
- *  Set the poll startup delay
- */
-void    PreferencesDialog::setPollStartupDelay( int val )
-{
-   m_ui->pollStartupDelaySpinBox->setValue( val );
-}
-
-
-/*
- *  Set the poll interval
- */
-void    PreferencesDialog::setPollInterval( int val )
-{
-   m_ui->pollIntervalSpinBox->setValue( val );
 }
 
 
@@ -226,9 +208,6 @@ void    PreferencesDialog::slotAccept()
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
 
-    m_pref->setPollStartupDelay(m_ui->pollStartupDelaySpinBox->value());
-    m_pref->setPollInterval(m_ui->pollIntervalSpinBox->value());
-
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberColor( m_number_color );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
@@ -307,24 +286,6 @@ void    PreferencesDialog::slotColorSelect()
 void    PreferencesDialog::slotDebugChange()
 {
     setDebug( m_pref->getDebug() );
-}
-
-
-/*
- *  Handle the poll startup delay change signal
- */
-void    PreferencesDialog::slotPollStartupDelayChange()
-{
-    setPollStartupDelay( m_pref->getPollStartupDelay() );
-}
-
-
-/*
- *  Handle the poll interval change signal
- */
-void    PreferencesDialog::slotPollIntervalChange()
-{
-    setPollInterval( m_pref->getPollInterval() );
 }
 
 

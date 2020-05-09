@@ -49,20 +49,6 @@ class PreferencesDialog : public QDialog
         void    setDebug( bool state );
 
         /**
-         * @brief setPollStartupDelay. Set the poll startup delay.
-         *
-         *  @param val    The new value.
-         */
-        void    setPollStartupDelay( int val );
-
-        /**
-         * @brief setPollInterval. Set the poll interval.
-         *
-         *  @param val    The new value.
-         */
-        void    setPollInterval( int val );
-
-        /**
          * @brief setMinimizeType. Set the minimize type.
          *
          *  @param minimize_type    The minimize type.
@@ -137,16 +123,6 @@ class PreferencesDialog : public QDialog
          * @brief slotDebugChange. Slot for handling debug change signals.
          */
         void    slotDebugChange();
-
-        /**
-         * @brief slotPollStartupDelayChange. Slot for handling poll startup delay signals.
-         */
-        void    slotPollStartupDelayChange();
-
-        /**
-         * @brief slotPollIntervalChange. Slot for handling poll interval signals.
-         */
-        void    slotPollIntervalChange();
 
         /**
          * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.

@@ -248,34 +248,6 @@ class Preferences : public QObject
         void setStartMinimized( bool state );
 
         /**
-         * @brief getPollStartupDelay. Get the poll startup delay.
-         *
-         * @return      The poll startup delay.
-         */
-        int getPollStartupDelay() const;
-
-        /**
-         * @brief setPollStartupDelay. Set the poll startup delay.
-         *
-         * @param       The poll startup delay.
-         */
-        void setPollStartupDelay( int val );
-
-        /**
-         * @brief getPollInterval. Get the poll interval.
-         *
-         * @return      The poll interval.
-         */
-        int getPollInterval() const;
-
-        /**
-         * @brief setPollInterval. Set the poll interval.
-         *
-         * @param       The poll interval.
-         */
-        void setPollInterval( int val );
-
-        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -362,16 +334,6 @@ class Preferences : public QObject
         void signalStartMinimizedChange();
 
         /**
-         * @brief signalPollStartupDelayChange. Signal a poll startup delay change.
-         */
-        void signalPollStartupDelayChange();
-
-        /**
-         * @brief signalPollIntervalChange. Signal a poll interval change.
-         */
-        void signalPollIntervalChange();
-
-        /**
          * @brief signalDebugChange. Signal a debug state change.
          */
         void signalDebugChange();
@@ -437,16 +399,6 @@ class Preferences : public QObject
          * @brief m_start_minimized. Start TB minimized.
          */
         bool m_start_minimized;
-
-        /**
-         * @brief m_poll_startup_delay. The startup poll delay.
-         */
-        int m_poll_startup_delay;
-
-        /**
-         * @brief m_poll_interval. The poll interval.
-         */
-        int m_poll_interval;
 
         /**
          * @brief m_debug. Display debug window.
