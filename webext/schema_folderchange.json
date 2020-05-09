@@ -65,30 +65,6 @@
             "type": "integer"
           }
         ]
-      },
-      {
-        "name": "onToolbarClick",
-        "type": "function",
-        "description": "Fires when the user clicks anywhere on the toolbar in the main window.",
-        "parameters": [
-          {
-            "name": "toolbarId",
-            "type": "string",
-            "description": "The ID of the toolbar the user clicked."
-          },
-          {
-            "type": "integer",
-            "name": "x",
-            "minimum": 0,
-            "description": "The X position of the mouse when the user clicked."
-          },
-          {
-            "type": "integer",
-            "name": "y",
-            "minimum": 0,
-            "description": "The Y position of the mouse when the user clicked."
-          }
-        ]
       }
     ]
   }
