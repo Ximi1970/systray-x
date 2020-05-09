@@ -473,6 +473,17 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setNumberColor( number_color );
     }
 
+    if( pref.contains( "countType" ) && pref[ "countType" ].isString() )
+    {
+        Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
+
+        /*
+         *  Store the new icon type
+         */
+        m_pref->setCountType( count_type );
+    }
+
+
     if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
     {
         Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
@@ -544,6 +555,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
+    prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
 
     QJsonObject preferencesObject;
     preferencesObject.insert("preferences", prefObject );
@@ -676,6 +688,18 @@ void    SysTrayXLink::slotShowNumberChange()
  *  Handle a number color change signal
  */
 void    SysTrayXLink::slotNumberColorChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the count type change signal
+ */
+void    SysTrayXLink::slotCountTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

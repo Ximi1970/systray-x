@@ -110,6 +110,13 @@ class PreferencesDialog : public QDialog
          */
         void    setNumberColor( QString color );
 
+        /**
+         * @brief setCountType. Set the count type.
+         *
+         *  @param count_type    The count type.
+         */
+        void    setCountType( Preferences::CountType count_type );
+
     signals:
 
         /**
@@ -170,6 +177,11 @@ class PreferencesDialog : public QDialog
          * @brief slotNumberColorChange. Slot for handling number color change.
          */
         void    slotNumberColorChange();
+
+        /**
+         * @brief slotCountTypeChange. Slot for handling count type change.
+         */
+        void    slotCountTypeChange();
 
     private slots:
 

@@ -40,6 +40,14 @@ class Preferences : public QObject
         };
 
         /*
+         *  Count types
+         */
+        enum CountType {
+            PREF_COUNT_UNREAD = 0,
+            PREF_COUNT_NEW
+        };
+
+        /*
          *  Window states
          */
         enum WindowState {
@@ -198,6 +206,20 @@ class Preferences : public QObject
         void setNumberColor( QString color );
 
         /**
+         * @brief getCountType. Get the count type.
+         *
+         * @return      The count type.
+         */
+        CountType getCountType() const;
+
+        /**
+         * @brief setCountType. Set the count type.
+         *
+         * @param      The count type.
+         */
+        void setCountType( CountType count_type );
+
+        /**
          * @brief getMinimizeType. Get the minimize type.
          *
          * @return      The minimize type.
@@ -325,6 +347,11 @@ class Preferences : public QObject
         void signalNumberColorChange();
 
         /**
+         * @brief signalCountTypeChange. Signal a count type change.
+         */
+        void signalCountTypeChange();
+
+        /**
          * @brief signalMinimizeTypeChange. Signal a minimize type change.
          */
         void signalMinimizeTypeChange();
@@ -395,6 +422,11 @@ class Preferences : public QObject
          * @brief m_number_color. The color of the number in systray icon.
          */
         QString m_number_color;
+
+        /**
+         * @brief m_count_type. Selected count type.
+         */
+        CountType m_count_type;
 
         /**
          * @brief m_minimize_type. Selected minimize type.

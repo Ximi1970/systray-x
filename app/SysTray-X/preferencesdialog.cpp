@@ -52,6 +52,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->iconTypeGroup->setId( m_ui->customRadioButton, Preferences::PREF_CUSTOM_ICON );
 
     /*
+     *  Set count type button Ids
+     */
+    m_ui->countTypeGroup->setId( m_ui->unreadRadioButton, Preferences::PREF_COUNT_UNREAD );
+    m_ui->countTypeGroup->setId( m_ui->newRadioButton, Preferences::PREF_COUNT_NEW );
+
+    /*
      *  Set defaults
      */
     m_tmp_icon_data = QByteArray();
@@ -185,6 +191,15 @@ void    PreferencesDialog::setNumberColor( QString color )
 
 
 /*
+ *  Set the count type
+ */
+void    PreferencesDialog::setCountType( Preferences::CountType count_type )
+{
+   ( m_ui->countTypeGroup->button( count_type ) )->setChecked( true );
+}
+
+
+/*
  *  Handle the accept signal
  */
 void    PreferencesDialog::slotAccept()
@@ -209,6 +224,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberColor( m_number_color );
+    m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
@@ -362,4 +378,13 @@ void    PreferencesDialog::slotShowNumberChange()
 void    PreferencesDialog::slotNumberColorChange()
 {
     setNumberColor( m_pref->getNumberColor() );
+}
+
+
+/*
+ *  Handle the count type change signal
+ */
+void    PreferencesDialog::slotCountTypeChange()
+{
+    setCountType( m_pref->getCountType() );
 }

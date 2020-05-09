@@ -40,6 +40,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_show_number = true;
     m_number_color = "#000000";
+    m_count_type = PREF_COUNT_UNREAD;
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
@@ -265,6 +266,31 @@ void    Preferences::setNumberColor( QString color )
     }
 }
 
+
+/*
+ *  Get the count type.
+ */
+Preferences::CountType Preferences::getCountType() const
+{
+    return m_count_type;
+}
+
+
+/*
+ *  Set the count type.
+ */
+void    Preferences::setCountType( CountType count_type )
+{
+    if( m_count_type != count_type)
+    {
+        m_count_type = count_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCountTypeChange();
+    }
+}
 
 /*
  *  Get the icon type.
