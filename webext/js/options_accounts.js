@@ -23,7 +23,7 @@ SysTrayX.Accounts = {
    * Callback for getAccounts
    */
   getAccountsCb: function (mailAccount) {
-    function createFolderTree(accountName, folders) {
+    function createFolderTreePre74(accountName, folders) {
       let result = [];
       let level = { result };
 
@@ -48,6 +48,22 @@ SysTrayX.Accounts = {
       });
 
       return result;
+    }
+
+    function createFolderTree(accountName, folders) {
+      function traverse(folders) {
+        if (!folders) {
+          return;
+        }
+        for (let f of folders) {
+          f.accountName = accountName;
+          traverse(f.subFolders);
+        }
+      }
+
+      traverse(folders);
+
+      return folders;
     }
 
     let accounts = new Object();
@@ -120,23 +136,23 @@ SysTrayX.Accounts = {
           );
           typeLi.appendChild(typeText);
 
-<<<<<<< HEAD
           //  Create a usable folder tree
-          const folders = createFolderTree(
-            accounts[prop][i].name,
-            accounts[prop][i].folders
-          );
-=======
-          //  Create a usable folder tree <TB74
           let folders = [];
           if (BrowserInfo.version.split(".")[0] < 74) {
-            folders = createFolderTree(accounts[prop][i].folders);
+            //  Pre TB74 accounts API
+            folders = createFolderTreePre74(
+              accounts[prop][i].name,
+              accounts[prop][i].folders
+            );
           } else {
-            folders = accounts[prop][i].folders;
+            //  TB74+ accounts API, (this shit never ends...)
+            folders = createFolderTree(
+              accounts[prop][i].name,
+              accounts[prop][i].folders
+            );
           }
 
           console.debug("Folders: " + JSON.stringify(folders));
->>>>>>> develop
 
           //  Recursive list creator
           function createListLevel(level, parent) {
