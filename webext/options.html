@@ -125,6 +125,16 @@
             </td>
           </tr>
         </table>
+
+        <table id="countprops" style="display:none">
+          <tr>
+            <td>
+              <label for="countType">Message count type: </label>
+              <input type="radio" name="countType" value="0" /> Unread
+              <input type="radio" name="countType" value="1" /> New
+            </td>
+          </tr>
+        </table>
       </form>
 
       <div id="icon" data-icon-mime="" data-icon=""></div>
@@ -139,42 +149,6 @@
         <ul id="accountsTree"></ul>
 
         <br />
-        <table id="pollselect">
-          <tr>
-            <td>
-              <label for="pollStartupDelay" }>Poll startup delay</label>
-            </td>
-            <td>
-              <input
-                type="number"
-                id="pollStartupDelay"
-                name="pollStartupDelay"
-                step="1"
-                min="1"
-                max="999"
-                value="60"
-                style="width: 4em;"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="pollInterval" }>Poll interval</label>
-            </td>
-            <td>
-              <input
-                type="number"
-                id="pollInterval"
-                name="pollInterval"
-                step="1"
-                min="1"
-                max="999"
-                value="60"
-                style="width: 4em;"
-              />
-            </td>
-          </tr>
-        </table>
       </form>
 
       <div id="filters" data-filters="undefined"></div>

@@ -19,7 +19,7 @@ SysTrayX.Accounts = {
    * Callback for getAccounts
    */
   getAccountsCb: function (mailAccount) {
-    function createFolderTree(folders) {
+    function createFolderTree(accountName, folders) {
       let result = [];
       let level = { result };
 
@@ -31,8 +31,9 @@ SysTrayX.Accounts = {
             if (!r[name]) {
               r[name] = { result: [] };
               r.result.push({
-                name: folder.name,
+                accountName: accountName,
                 accountId: folder.accountId,
+                name: folder.name,
                 path: folder.path,
                 children: r[name].result,
               });
@@ -113,7 +114,10 @@ SysTrayX.Accounts = {
           typeLi.appendChild(typeText);
 
           //  Create a usable folder tree
-          const folders = createFolderTree(accounts[prop][i].folders);
+          const folders = createFolderTree(
+            accounts[prop][i].name,
+            accounts[prop][i].folders
+          );
 
           //  Recursive list creator
           function createListLevel(level) {
@@ -136,8 +140,10 @@ SysTrayX.Accounts = {
               typeEleInput.setAttribute(
                 "value",
                 JSON.stringify({
+                  accountName: element.accountName,
                   accountId: element.accountId,
                   path: element.path,
+                  name: element.name,
                 })
               );
               if (element.children.length > 0) {

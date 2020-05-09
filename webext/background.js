@@ -1,11 +1,6 @@
 var SysTrayX = {
   startupState: undefined,
 
-  pollTiming: {
-    pollStartupDelay: "60",
-    pollInterval: "60",
-  },
-
   platformInfo: undefined,
 
   browserInfo: undefined,
@@ -15,11 +10,11 @@ var SysTrayX = {
 
 SysTrayX.Messaging = {
   accounts: [],
+  countType: 0,
+  filtersExt: undefined,
+  filters: undefined,
 
   init: function () {
-    //  Get the filters from the storage
-    SysTrayX.Messaging.getFilters();
-
     // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
@@ -38,6 +33,7 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
+    /*
     //  New mail listener (TB76+)
     if (SysTrayX.browserInfo.majorVersion > 75) {
       //
@@ -47,17 +43,25 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.newMail
       );
     }
+    */
 
-    //  Start polling the accounts
-    window.setTimeout(
-      SysTrayX.Messaging.pollAccounts,
-      SysTrayX.pollTiming.pollStartupDelay * 1000
-    );
+    //  Set the count type in the folderChange listener
+    browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
+
+    //  Set the filters in the folderChange listener
+    browser.folderChange.setFilters(SysTrayX.Messaging.filtersExt);
+
+    browser.folderChange.onUnreadMailChange.addListener(function (unread) {
+      console.debug("folderChangeListener: " + unread);
+
+      SysTrayX.Messaging.unreadCb(unread)
+    });
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
+  /*
   newMail: async function (folder, messages) {
     console.debug(
       "New mail: " + folder.accountId + ", " + messages.messages.length
@@ -71,26 +75,28 @@ SysTrayX.Messaging = {
     }
     console.debug("Unread: " + unread);
   },
+  */
 
   //
   //  Handle a storage change
   //
   storageChanged: function (changes, area) {
     //  Get the new preferences
-    SysTrayX.Messaging.getFilters();
 
-    if ("pollStartupDelay" in changes && changes["pollStartupDelay"].newValue) {
-      SysTrayX.pollTiming = {
-        ...SysTrayX.pollTiming,
-        pollStartupDelay: changes["pollStartupDelay"].newValue,
-      };
+    if ("filtersExt" in changes && changes["filtersExt"].newValue) {
+      SysTrayX.Messaging.filtersExt = changes["filtersExt"].newValue;
+
+      browser.folderChange.setFilters(SysTrayX.Messaging.filtersExt);
     }
 
-    if ("pollInterval" in changes && changes["pollInterval"].newValue) {
-      SysTrayX.pollTiming = {
-        ...SysTrayX.pollTiming,
-        pollInterval: changes["pollInterval"].newValue,
-      };
+    if ("filters" in changes && changes["filters"].newValue) {
+      SysTrayX.Messaging.filters = changes["filters"].newValue;
+    }
+
+    if ("countType" in changes && changes["countType"].newValue) {
+      SysTrayX.Messaging.countType = changes["countType"].newValue;
+
+      browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
     }
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {
@@ -104,86 +110,6 @@ SysTrayX.Messaging = {
         addonprefchanged: false,
       });
     }
-  },
-
-  //
-  //  Poll the accounts
-  //
-  pollAccounts: function () {
-    //
-    //  Get the unread nessages of the selected accounts
-    //
-    const filtersDiv = document.getElementById("filters");
-    const filtersAttr = filtersDiv.getAttribute("data-filters");
-
-    if (filtersAttr !== "undefined") {
-      const filters = JSON.parse(filtersAttr);
-
-      if (filters.length > 0) {
-        SysTrayX.Messaging.unReadMessages(filters).then(
-          SysTrayX.Messaging.unreadCb
-        );
-      } else {
-        SysTrayX.Link.postSysTrayXMessage({ unreadMail: 0 });
-      }
-    } else {
-      //  Never saved anything, construct temporary filters
-      if (SysTrayX.Messaging.accounts.length > 0) {
-        //  Construct inbox filters for all accounts
-        let filters = [];
-        SysTrayX.Messaging.accounts.forEach((account) => {
-          const inbox = account.folders.filter(
-            (folder) => folder.type == "inbox"
-          );
-
-          if (inbox.length > 0) {
-            filters.push({
-              unread: true,
-              folder: inbox[0],
-            });
-          }
-        });
-
-        //  Store them in the background HTML
-        const filtersDiv = document.getElementById("filters");
-        filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
-
-        SysTrayX.Messaging.unReadMessages(filters).then(
-          SysTrayX.Messaging.unreadCb
-        );
-      } else {
-        //  No accounts, no mail
-        SysTrayX.Link.postSysTrayXMessage({ unreadMail: 0 });
-      }
-    }
-
-    // Next round...
-    window.setTimeout(
-      SysTrayX.Messaging.pollAccounts,
-      SysTrayX.pollTiming.pollInterval * 1000
-    );
-  },
-
-  //
-  //  Use the messages API to get the unread messages (Promise)
-  //  Be aware that the data is only avaiable inside the callback
-  //
-  unReadMessages: async function (filters) {
-    let unreadMessages = 0;
-    for (let i = 0; i < filters.length; ++i) {
-      let page = await browser.messages.query(filters[i]);
-      let unread = page.messages.length;
-
-      while (page.id) {
-        page = await browser.messages.continueList(page.id);
-
-        unread = unread + page.messages.length;
-      }
-
-      unreadMessages = unreadMessages + unread;
-    }
-
-    return unreadMessages;
   },
 
   //
@@ -215,8 +141,6 @@ SysTrayX.Messaging = {
   sendPreferences: function () {
     const getter = browser.storage.sync.get([
       "debug",
-      "pollStartupDelay",
-      "pollInterval",
       "minimizeType",
       "startMinimized",
       "iconType",
@@ -224,14 +148,13 @@ SysTrayX.Messaging = {
       "icon",
       "showNumber",
       "numberColor",
+      "countType",
     ]);
     getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
   },
 
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
-    const pollStartupDelay = result.pollStartupDelay || "60";
-    const pollInterval = result.pollInterval || "60";
     const minimizeType = result.minimizeType || "1";
     const startMinimized = result.startMinimized || "false";
     const iconType = result.iconType || "0";
@@ -239,13 +162,12 @@ SysTrayX.Messaging = {
     const icon = result.icon || [];
     const showNumber = result.showNumber || "true";
     const numberColor = result.numberColor || "#000000";
+    const countType = result.countType || "0";
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug: debug,
-        pollStartupDelay: pollStartupDelay,
-        pollInterval: pollInterval,
         minimizeType: minimizeType,
         startMinimized: startMinimized,
         iconType: iconType,
@@ -253,6 +175,7 @@ SysTrayX.Messaging = {
         icon: icon,
         showNumber: showNumber,
         numberColor: numberColor,
+        countType: countType,
       },
     });
 
@@ -267,26 +190,6 @@ SysTrayX.Messaging = {
 
   onSendIconStorageError: function (error) {
     console.log(`GetIcon Error: ${error}`);
-  },
-
-  //
-  //  Get the filters from the storage
-  //
-  getFilters: function () {
-    const getter = browser.storage.sync.get("filters");
-    getter.then(this.getFiltersStorage, this.onGetFiltersStorageError);
-  },
-
-  //
-  //  Get the filters from the storage and
-  //  make them available in the background HTML
-  //
-  getFiltersStorage: function (result) {
-    const filters = result.filters || undefined;
-
-    //  Store them in the background HTML
-    const filtersDiv = document.getElementById("filters");
-    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
   onGetAccountsStorageError: function (error) {
@@ -372,6 +275,13 @@ SysTrayX.Link = {
         });
       }
 
+      const countType = response["preferences"].countType;
+      if (countType) {
+        browser.storage.sync.set({
+          countType: countType,
+        });
+      }
+
       const minimizeType = response["preferences"].minimizeType;
       if (minimizeType) {
         browser.storage.sync.set({
@@ -383,20 +293,6 @@ SysTrayX.Link = {
       if (startMinimized) {
         browser.storage.sync.set({
           startMinimized: startMinimized,
-        });
-      }
-
-      const pollStartupDelay = response["preferences"].pollStartupDelay;
-      if (pollStartupDelay) {
-        browser.storage.sync.set({
-          pollStartupDelay: pollStartupDelay,
-        });
-      }
-
-      const pollInterval = response["preferences"].pollInterval;
-      if (pollInterval) {
-        browser.storage.sync.set({
-          pollInterval: pollInterval,
         });
       }
 
@@ -431,9 +327,6 @@ async function start() {
   }
 
   SysTrayX.startupState = state;
-
-  // Get the poll timing
-  SysTrayX.pollTiming = await getPollTiming();
 
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime
@@ -481,6 +374,15 @@ async function start() {
 
   //  Get all accounts
   SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+  // Get the extended filters
+  SysTrayX.Messaging.filtersExt = await getFiltersExt();
+
+  // Get the filters
+  SysTrayX.Messaging.filters = await getFilters();
+
+  // Get the count type
+  SysTrayX.Messaging.countType = await getCountType();
 
   //  Setup the link first
   SysTrayX.Link.init();
