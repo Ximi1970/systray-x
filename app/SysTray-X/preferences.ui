@@ -327,7 +327,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="countTypeLabel">
             <property name="text">
              <string>Message count type:</string>
             </property>
@@ -421,8 +421,8 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
  </buttongroups>
 </ui>

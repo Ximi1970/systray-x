@@ -58,6 +58,13 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->countTypeGroup->setId( m_ui->newRadioButton, Preferences::PREF_COUNT_NEW );
 
     /*
+     *  Hide the count type for now
+     */
+    m_ui->countTypeLabel->setVisible(false);
+    m_ui->unreadRadioButton->setVisible(false);
+    m_ui->newRadioButton->setVisible(false);
+
+    /*
      *  Set defaults
      */
     m_tmp_icon_data = QByteArray();
