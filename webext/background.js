@@ -46,8 +46,6 @@ SysTrayX.Messaging = {
     */
 
     browser.folderChange.onUnreadMailChange.addListener(function (unread) {
-      console.debug("folderChangeListener: " + unread);
-
       SysTrayX.Messaging.unreadCb(unread);
     });
 

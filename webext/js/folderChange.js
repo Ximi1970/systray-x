@@ -42,7 +42,7 @@ var { folderChange } = ChromeUtils.import(
 // The variable must have the same name you've been using so far, "myapi" in this case.
 var folderChange = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
-    console.log("folderChange module started");
+    console.log("folderChange API started");
 
     // To be notified of the extension going away, call callOnClose with any object that has a
     // close function, such as this one.
@@ -93,7 +93,7 @@ var folderChange = class extends ExtensionCommon.ExtensionAPI {
 
     // This function is called if the extension is disabled or removed, or Thunderbird closes.
     // We registered it with callOnClose, above.
-    console.log("folderChange module closed");
+    console.log("folderChange API closed");
 
     // Unload the JSM we imported above. This will cause Thunderbird to forget about the JSM, and
     // load it afresh next time `import` is called. (If you don't call `unload`, Thunderbird will
@@ -131,8 +131,6 @@ var SysTrayX = {
       return;
     }
 
-    console.log("Initializing folder listener");
-
     //  Get the mail accounts using MailServices
     this.getAccounts();
 
@@ -150,8 +148,6 @@ var SysTrayX = {
       return;
     }
 
-    log.log("Shutting down folder listener");
-
     //  Stop listener
     MailServices.mailSession.RemoveFolderListener(this.mailSessionListener);
 
@@ -159,8 +155,6 @@ var SysTrayX = {
   },
 
   setCountType: function (type) {
-    console.debug("setCountType: " + type);
-
     if (type === 0) {
       this.countType = this.MESSAGE_COUNT_TYPE_UNREAD;
     } else if (type === 1) {
@@ -186,55 +180,15 @@ var SysTrayX = {
 
     OnItemIntPropertyChanged(item, property, oldValue, newValue) {
       // TotalUnreadMessages, BiffState (per server)
-      /*
-      console.debug(
-        "OnItemIntPropertyChanged " +
-          property +
-          " for folder " +
-          item.prettyName +
-          " was " +
-          oldValue +
-          " became " +
-          newValue +
-          " NEW MESSAGES=" +
-          item.getNumNewMessages(true)
-      );
-      */
       this.onMsgCountChange(item, property, oldValue, newValue);
     },
 
     OnItemBoolPropertyChanged: function (item, property, oldValue, newValue) {
       // NewMessages (per folder)
-      /*
-      console.debug(
-        "OnItemBoolPropertyChanged " +
-          property +
-          " for folder " +
-          item.prettyName +
-          " was " +
-          oldValue +
-          " became " +
-          newValue +
-          " NEW MESSAGES=" +
-          item.getNumNewMessages(true)
-      );
-      */
       this.onMsgCountChange(item, property, oldValue, newValue);
     },
 
     OnItemPropertyFlagChanged: function (item, property, oldFlag, newFlag) {
-      /*
-      console.debug(
-        "OnItemPropertyFlagChanged" +
-          property +
-          " for " +
-          item +
-          " was " +
-          oldFlag +
-          " became " +
-          newFlag
-      );
-      */
       this.onMsgCountChange(item, property, oldFlag, newFlag);
     },
 
@@ -265,10 +219,6 @@ var SysTrayX = {
   updateMsgCountWithCb(callback) {
     if (callback === undefined || !callback) {
       callback = function (currentMsgCount, newMsgCount) {
-        // default
-        //        .updateIcon(newMsgCount);
-        console.debug("Update icon: " + newMsgCount);
-
         if (SysTrayX.callback) {
           SysTrayX.callback("unread-changed", newMsgCount);
         }
@@ -289,8 +239,6 @@ var SysTrayX = {
   },
 
   countMessages(countType) {
-    console.debug("countMessages: " + countType);
-
     this.newMsgCount = 0;
     for (let accountServer of this.accounts) {
       //      if (accountServer.type === ACCOUNT_SERVER_TYPE_IM) {
@@ -311,8 +259,6 @@ var SysTrayX = {
         }
       );
     }
-
-    console.debug("Total " + countType + " = " + this.newMsgCount);
   },
 
   applyToSubfolders(account, folder, recursive, fun) {
@@ -342,9 +288,9 @@ var SysTrayX = {
           filter.folder.name === folder.prettyName
       );
 
-      count = match.length > 0
+      count = match.length > 0;
     } else {
-      count =  folder.getFlag(Ci.nsMsgFolderFlags.Inbox);
+      count = folder.getFlag(Ci.nsMsgFolderFlags.Inbox);
     }
 
     if (count) {
@@ -354,13 +300,6 @@ var SysTrayX = {
 
   addUnreadMessages(folder) {
     let folderUnreadMsgCount = folder["getNumUnread"](false);
-
-    console.debug(
-      "folder: " +
-        folder.prettyName +
-        " folderUnreadMsgCount= " +
-        folderUnreadMsgCount
-    );
 
     /* nsMsgDBFolder::GetNumUnread basically returns mNumUnreadMessages +
       mNumPendingUnreadMessages, while mNumPendingUnreadMessages may get -1
@@ -373,16 +312,10 @@ var SysTrayX = {
   addHasNewMessages(folder) {
     let folderNewMsgCount = folder.hasNewMessages;
 
-    console.debug(
-      "folder: " + folder.prettyName + " hasNewMessages= " + folderNewMsgCount
-    );
-
     this.newMsgCount = this.newMsgCount || folderNewMsgCount;
   },
 
   getAccounts() {
-    console.debug("getAccounts");
-
     let accountServers = [];
     for (let accountServer of fixIterator(
       MailServices.accounts.accounts,
@@ -391,6 +324,7 @@ var SysTrayX = {
       accountServers.push(accountServer.incomingServer);
     }
 
+    /*
     for (let i = 0, len = accountServers.length; i < len; ++i) {
       console.debug(
         "ACCOUNT: " +
@@ -401,6 +335,7 @@ var SysTrayX = {
           accountServers[i].key.toString()
       );
     }
+    */
 
     //  Store the accounts
     this.accounts = accountServers;

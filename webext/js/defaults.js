@@ -85,6 +85,22 @@ async function getMinimizeOnClose() {
 }
 
 //
+//  Get filters
+//
+async function getFilters() {
+  function getFiltersCb(result) {
+    return result.filters || undefined;
+  }
+
+  function onFiltersError() {
+    return undefined;
+  }
+
+  const getFilters = browser.storage.sync.get("filters");
+  return await getFilters.then(getFiltersCb, onFiltersError);
+}
+
+//
 //  Get extended filters
 //
 async function getFiltersExt() {

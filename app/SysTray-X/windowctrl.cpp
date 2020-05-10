@@ -151,6 +151,10 @@ void    WindowCtrl::slotWindowState( int state )
         }
     }
 
+#else
+
+    Q_UNUSED( state )
+
 #endif
 }
 
