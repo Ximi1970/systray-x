@@ -77,6 +77,13 @@ class PreferencesDialog : public QDialog
         void    setStartMinimized( bool state );
 
         /**
+         * @brief setMinimizeOnClose. Set the minimize on close state.
+         *
+         *  @param state    The state.
+         */
+        void    setMinimizeOnClose( bool state );
+
+        /**
          * @brief setIconType. Set the icon type.
          *
          *  @param icon_type    The icon type.
@@ -150,6 +157,11 @@ class PreferencesDialog : public QDialog
          * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
          */
         void    slotStartMinimizedChange();
+
+        /**
+         * @brief slotMinimizeOnCloseChange. Slot for handling minimize on close change signals.
+         */
+        void    slotMinimizeOnCloseChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.

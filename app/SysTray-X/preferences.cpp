@@ -43,6 +43,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
+    m_minimize_on_close = true;
 
     m_poll_startup_delay = 60;
     m_poll_interval = 60;
@@ -314,6 +315,32 @@ void    Preferences::setStartMinimized( bool state )
          *  Tell the world the new preference
          */
         emit signalStartMinimizedChange();
+    }
+}
+
+
+/*
+ *  Get the minmize on close pref.
+ */
+bool    Preferences::getMinimizeOnClose() const
+{
+    return m_minimize_on_close;
+}
+
+
+/*
+ *  Set the minmize on close pref.
+ */
+void    Preferences::setMinimizeOnClose( bool state )
+{
+    if( m_minimize_on_close != state )
+    {
+        m_minimize_on_close = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeOnCloseChange();
     }
 }
 

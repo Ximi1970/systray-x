@@ -136,7 +136,7 @@ void    SysTrayXLinkReader::slotWorker()
 
                 if( error_count > 20 )
                 {
-                    emit signalAddOnShutdown();
+ //                   emit signalAddOnShutdown();
                 }
             }
         }
@@ -231,6 +231,26 @@ void    SysTrayXLink::sendPreferences()
 
 
 /*
+ *  Send shutdown to the add-on
+ */
+void    SysTrayXLink::sendShutdown()
+{
+    QJsonObject shutdownObject;
+    shutdownObject.insert("shutdown", QJsonValue::fromVariant( "true" ) );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( shutdownObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -268,6 +288,10 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
             QString window_state_str = jsonObject[ "window" ].toString();
+
+
+            emit signalConsole( QString( "Window state (%1)" ).arg( window_state_str ) );
+
 
             int window_state;
             if( window_state_str == Preferences::STATE_NORMAL_STR )
@@ -493,6 +517,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartMinimized( start_minimized );
     }
 
+    if( pref.contains( "minimizeOnClose" ) && pref[ "minimizeOnClose" ].isString() )
+    {
+        bool minimize_on_close = pref[ "minimizeOnClose" ].toString() == "true";
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setMinimizeOnClose( minimize_on_close );
+    }
+
     if( pref.contains( "pollStartupDelay" ) && pref[ "pollStartupDelay" ].isString() )
     {
         QString poll_startup_delay = pref[ "pollStartupDelay" ].toString();
@@ -539,6 +573,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("pollInterval", QJsonValue::fromVariant( QString::number( pref.getPollInterval() ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
+    prefObject.insert("minimizeOnClose", QJsonValue::fromVariant( QString( pref.getMinimizeOnClose() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -635,6 +670,17 @@ void    SysTrayXLink::slotStartMinimizedChange()
     }
 }
 
+
+/*
+ *  Handle a minimize on close state change signal
+ */
+void    SysTrayXLink::slotMinimizeOnCloseChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
 
 /*
  *  Handle the icon type change signal

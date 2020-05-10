@@ -118,6 +118,15 @@ void    PreferencesDialog::setStartMinimized( bool state )
 
 
 /*
+ *  Set the minimize on close state
+ */
+void    PreferencesDialog::setMinimizeOnClose( bool state )
+{
+   m_ui->minimizeOnCloseCheckBox->setChecked( state );
+}
+
+
+/*
  *  Set the icon type
  */
 void    PreferencesDialog::setIconType( Preferences::IconType icon_type )
@@ -203,6 +212,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
+    m_pref->setMinimizeOnClose( m_ui->minimizeOnCloseCheckBox->isChecked() );
 
     m_pref->setPollStartupDelay(m_ui->pollStartupDelaySpinBox->value());
     m_pref->setPollInterval(m_ui->pollIntervalSpinBox->value());
@@ -320,6 +330,15 @@ void    PreferencesDialog::slotMinimizeTypeChange()
 void    PreferencesDialog::slotStartMinimizedChange()
 {
     setStartMinimized( m_pref->getStartMinimized() );
+}
+
+
+/*
+ *  Handle the minimize on close change signal
+ */
+void    PreferencesDialog::slotMinimizeOnCloseChange()
+{
+    setMinimizeOnClose( m_pref->getMinimizeOnClose() );
 }
 
 

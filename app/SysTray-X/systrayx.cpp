@@ -94,6 +94,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalNumberColorChange, m_pref_dialog, &PreferencesDialog::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_pref_dialog, &PreferencesDialog::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotPollStartupDelayChange );
     connect( m_preferences, &Preferences::signalPollIntervalChange, m_pref_dialog, &PreferencesDialog::slotPollIntervalChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
@@ -104,6 +105,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalNumberColorChange, m_link, &SysTrayXLink::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalPollStartupDelayChange, m_link, &SysTrayXLink::slotPollStartupDelayChange );
     connect( m_preferences, &Preferences::signalPollIntervalChange, m_link, &SysTrayXLink::slotPollIntervalChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
@@ -220,6 +222,11 @@ void    SysTrayX::slotAddOnShutdown()
     m_tray_icon->hide();
 
     /*
+     *  Close the TB window
+     */
+    emit signalClose();
+
+    /*
      *  Let's quit
      */
     QCoreApplication::quit();
@@ -231,20 +238,28 @@ void    SysTrayX::slotAddOnShutdown()
  */
 void    SysTrayX::slotShutdown()
 {
-    /*
-     *  Hide systray icon to prevent ghost systray icon in Windows
-     */
-    m_tray_icon->hide();
 
-    /*
-     *  Close the TB window
-     */
-    emit signalClose();
+    if( m_preferences->getMinimizeOnClose() )
+    {
+        m_link->sendShutdown();
+    }
+    else
+    {
+        /*
+         *  Hide systray icon to prevent ghost systray icon in Windows
+         */
+        m_tray_icon->hide();
 
-    /*
-     *  Let's quit
-     */
-    QCoreApplication::quit();
+        /*
+         *  Close the TB window
+         */
+        emit signalClose();
+
+        /*
+         *  Let's quit
+         */
+        QCoreApplication::quit();
+    }
 }
 
 

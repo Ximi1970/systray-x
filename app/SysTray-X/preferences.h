@@ -226,6 +226,20 @@ class Preferences : public QObject
         void setStartMinimized( bool state );
 
         /**
+         * @brief getMinimizeOnClose. Get the minimize on close state.
+         *
+         * @return      The state.
+         */
+        bool getMinimizeOnClose() const;
+
+        /**
+         * @brief setMinimizeOnClose. Set the minimize on close state.
+         *
+         * @param      The state.
+         */
+        void setMinimizeOnClose( bool state );
+
+        /**
          * @brief getPollStartupDelay. Get the poll startup delay.
          *
          * @return      The poll startup delay.
@@ -335,6 +349,11 @@ class Preferences : public QObject
         void signalStartMinimizedChange();
 
         /**
+         * @brief signalMinimizeOnCloseChange. Signal a minimize on close state change.
+         */
+        void signalMinimizeOnCloseChange();
+
+        /**
          * @brief signalPollStartupDelayChange. Signal a poll startup delay change.
          */
         void signalPollStartupDelayChange();
@@ -405,6 +424,11 @@ class Preferences : public QObject
          * @brief m_start_minimized. Start TB minimized.
          */
         bool m_start_minimized;
+
+        /**
+         * @brief m_minimize_on_close. Minimize TB instead of closing.
+         */
+        bool m_minimize_on_close;
 
         /**
          * @brief m_poll_startup_delay. The startup poll delay.
