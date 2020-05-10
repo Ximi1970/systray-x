@@ -1,0 +1,71 @@
+[
+  {
+    "namespace": "folderChange",
+    "functions": [
+      {
+        "name": "setCountType",
+        "type": "function",
+        "description": "Set the count type.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type",
+            "minimum": 0,
+            "maximum": 1
+          }
+        ]
+      },
+      {
+        "name": "setFilters",
+        "type": "function",
+        "description": "Set the account filters.",
+        "async": true,
+        "parameters": [
+          {
+            "name": "filters",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "unread": {
+                  "type": "boolean"
+                },
+                "folder": {
+                  "type": "object",
+                  "properties": {
+                    "accountName": {
+                      "type": "string"
+                    },
+                    "accountId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onUnreadMailChange",
+        "type": "function",
+        "description": "Fires when there is a change in the number of unread mails.",
+        "parameters": [
+          {
+            "name": "unread",
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  }
+]

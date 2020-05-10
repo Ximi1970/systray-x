@@ -15,11 +15,11 @@ async function getDefaultIcon() {
   const iconStored = await getIcon.then(getStoredIcon, onStoredIconError);
 
   if (!iconStored) {
-    const toDataURL = url =>
+    const toDataURL = (url) =>
       fetch(url)
-        .then(response => response.blob())
+        .then((response) => response.blob())
         .then(
-          blob =>
+          (blob) =>
             new Promise((resolve, reject) => {
               const reader = new FileReader();
               reader.onloadend = () => resolve(reader.result);
@@ -30,11 +30,8 @@ async function getDefaultIcon() {
 
     //  Convert image to storage param
     let { iconMime, iconBase64 } = await toDataURL("icons/blank-icon.png").then(
-      dataUrl => {
-        const data = dataUrl
-          .split(":")
-          .pop()
-          .split(",");
+      (dataUrl) => {
+        const data = dataUrl.split(":").pop().split(",");
         return { iconMime: data[0].split(";")[0], iconBase64: data[1] };
       }
     );
@@ -42,7 +39,7 @@ async function getDefaultIcon() {
     //  Store default icon (base64)
     browser.storage.sync.set({
       iconMime: iconMime,
-      icon: iconBase64
+      icon: iconBase64,
     });
 
     //  Store in HTML
@@ -69,19 +66,49 @@ async function getStartupState() {
 }
 
 //
-//  Get poll timing
+//  Get filters
 //
-async function getPollTiming() {
-  function getDelayAndInterval(result) {
-    return { pollStartupDelay: result.pollStartupDelay || "60", pollInterval: result.pollInterval || "60" };
+async function getFilters() {
+  function getFiltersCb(result) {
+    return result.filters || undefined;
   }
 
-  function onDelayAndIntervalError() {
-    return { pollStartupDelay: "60", pollInterval: "60" };
+  function onFiltersError() {
+    return undefined;
   }
 
-  const getTiming = browser.storage.sync.get([
-    "pollStartupDelay",
-    "pollInterval"]);
-  return await getTiming.then(getDelayAndInterval, onDelayAndIntervalError);
+  const getFilters = browser.storage.sync.get("filters");
+  return await getFilters.then(getFiltersCb, onFiltersError);
+}
+
+//
+//  Get extended filters
+//
+async function getFiltersExt() {
+  function getFiltersExtCb(result) {
+    return result.filtersExt || undefined;
+  }
+
+  function onFiltersExtError() {
+    return undefined;
+  }
+
+  const getFiltersExt = browser.storage.sync.get("filtersExt");
+  return await getFiltersExt.then(getFiltersExtCb, onFiltersExtError);
+}
+
+//
+//  Get count type
+//
+async function getCountType() {
+  function getCountTypeCb(result) {
+    return result.countType || "0";
+  }
+
+  function onCountTypeError() {
+    return undefined;
+  }
+
+  const getCountType = browser.storage.sync.get("countType");
+  return await getCountType.then(getCountTypeCb, onCountTypeError);
 }

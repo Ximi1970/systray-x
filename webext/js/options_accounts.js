@@ -23,7 +23,7 @@ SysTrayX.Accounts = {
    * Callback for getAccounts
    */
   getAccountsCb: function (mailAccount) {
-    function createFolderTree(folders) {
+    function createFolderTreePre74(accountName, folders) {
       let result = [];
       let level = { result };
 
@@ -35,8 +35,9 @@ SysTrayX.Accounts = {
             if (!r[name]) {
               r[name] = { result: [] };
               r.result.push({
-                name: folder.name,
+                accountName: accountName,
                 accountId: folder.accountId,
+                name: folder.name,
                 path: folder.path,
                 subFolders: r[name].result,
               });
@@ -47,6 +48,22 @@ SysTrayX.Accounts = {
       });
 
       return result;
+    }
+
+    function createFolderTree(accountName, folders) {
+      function traverse(folders) {
+        if (!folders) {
+          return;
+        }
+        for (let f of folders) {
+          f.accountName = accountName;
+          traverse(f.subFolders);
+        }
+      }
+
+      traverse(folders);
+
+      return folders;
     }
 
     let accounts = new Object();
@@ -119,12 +136,20 @@ SysTrayX.Accounts = {
           );
           typeLi.appendChild(typeText);
 
-          //  Create a usable folder tree <TB74
+          //  Create a usable folder tree
           let folders = [];
           if (BrowserInfo.version.split(".")[0] < 74) {
-            folders = createFolderTree(accounts[prop][i].folders);
+            //  Pre TB74 accounts API
+            folders = createFolderTreePre74(
+              accounts[prop][i].name,
+              accounts[prop][i].folders
+            );
           } else {
-            folders = accounts[prop][i].folders;
+            //  TB74+ accounts API, (this shit never ends...)
+            folders = createFolderTree(
+              accounts[prop][i].name,
+              accounts[prop][i].folders
+            );
           }
 
           //  Recursive list creator
@@ -155,8 +180,10 @@ SysTrayX.Accounts = {
               typeEleInput.setAttribute(
                 "value",
                 JSON.stringify({
+                  accountName: element.accountName,
                   accountId: element.accountId,
                   path: element.path,
+                  name: element.name,
                 })
               );
               if (element.subFolders.length > 0) {

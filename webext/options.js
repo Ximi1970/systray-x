@@ -31,12 +31,21 @@ SysTrayX.SaveOptions = {
     });
 
     let filters = [];
+    let filtersExt = [];
     checkedFolders.forEach((folder) => {
-      const mailFolder = JSON.parse(folder.value);
+      const mailFolderExt = JSON.parse(folder.value);
+
+      filtersExt.push({
+        unread: true,
+        folder: mailFolderExt,
+      });
 
       filters.push({
         unread: true,
-        folder: mailFolder,
+        folder: {
+          accountId: mailFolderExt.accountId,
+          path: mailFolderExt.path,
+        },
       });
     });
 
@@ -44,34 +53,20 @@ SysTrayX.SaveOptions = {
     const filtersDiv = document.getElementById("filters");
     filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
 
+    //  Store extended query filters
+    browser.storage.sync.set({
+      filtersExt: filtersExt,
+    });
+
     //  Store query filters
     browser.storage.sync.set({
       filters: filters,
     });
 
     //
-    //  Save poll startup delay state
-    //
-    const pollStartupDelay = document.querySelector(
-      'input[name="pollStartupDelay"]'
-    ).value;
-    browser.storage.sync.set({
-      pollStartupDelay: pollStartupDelay,
-    });
-
-    //
-    //  Save poll interval state
-    //
-    const pollInterval = document.querySelector('input[name="pollInterval"]')
-      .value;
-    browser.storage.sync.set({
-      pollInterval: pollInterval,
-    });
-
-    //
     //  Save debug state
     //
-    let debug = document.querySelector('input[name="debug"]').checked;
+    const debug = document.querySelector('input[name="debug"]').checked;
     browser.storage.sync.set({
       debug: `${debug}`,
     });
@@ -91,7 +86,7 @@ SysTrayX.SaveOptions = {
     //
     //  Save start minimized state
     //
-    let startMinimized = document.querySelector('input[name="startMinimized"]')
+    const startMinimized = document.querySelector('input[name="startMinimized"]')
       .checked;
     browser.storage.sync.set({
       startMinimized: `${startMinimized}`,
@@ -108,9 +103,9 @@ SysTrayX.SaveOptions = {
       iconType: iconType,
     });
 
-    let iconDiv = document.getElementById("icon");
-    let iconBase64 = iconDiv.getAttribute("data-icon");
-    let iconMime = iconDiv.getAttribute("data-icon-mime");
+    const iconDiv = document.getElementById("icon");
+    const iconBase64 = iconDiv.getAttribute("data-icon");
+    const iconMime = iconDiv.getAttribute("data-icon-mime");
 
     //  Store icon (base64)
     browser.storage.sync.set({
@@ -126,7 +121,7 @@ SysTrayX.SaveOptions = {
     //
     //  Save enable number state
     //
-    let showNumber = document.querySelector('input[name="showNumber"]').checked;
+    const showNumber = document.querySelector('input[name="showNumber"]').checked;
     browser.storage.sync.set({
       showNumber: `${showNumber}`,
     });
@@ -134,9 +129,18 @@ SysTrayX.SaveOptions = {
     //
     //  Save number color
     //
-    let numberColor = document.querySelector('input[name="numberColor"]').value;
+    const numberColor = document.querySelector('input[name="numberColor"]').value;
     browser.storage.sync.set({
       numberColor: `${numberColor}`,
+    });
+
+    //
+    // Save count type preferences
+    //
+    const countType = document.querySelector('input[name="countType"]:checked')
+      .value;
+    browser.storage.sync.set({
+      countType: countType,
     });
   },
 };
@@ -201,24 +205,6 @@ SysTrayX.RestoreOptions = {
     );
 
     //
-    //  Restore poll startup delay state
-    //
-    const getPollStartupDelay = browser.storage.sync.get("pollStartupDelay");
-    getPollStartupDelay.then(
-      SysTrayX.RestoreOptions.setPollStartupDelay,
-      SysTrayX.RestoreOptions.onPollStartupDelayError
-    );
-
-    //
-    //  Restore poll interval state
-    //
-    const getPollInterval = browser.storage.sync.get("pollInterval");
-    getPollInterval.then(
-      SysTrayX.RestoreOptions.setPollInterval,
-      SysTrayX.RestoreOptions.onPollIntervalError
-    );
-
-    //
     //  Restore enable number state
     //
     const getShowNumber = browser.storage.sync.get("showNumber");
@@ -234,6 +220,15 @@ SysTrayX.RestoreOptions = {
     getNumberColor.then(
       SysTrayX.RestoreOptions.setNumberColor,
       SysTrayX.RestoreOptions.onNumberColorError
+    );
+
+    //
+    //  Restore count type
+    //
+    const getCountType = browser.storage.sync.get("countType");
+    getCountType.then(
+      SysTrayX.RestoreOptions.setCountType,
+      SysTrayX.RestoreOptions.onCountTypeError
     );
   },
 
@@ -388,6 +383,22 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore count type
+  //
+  setCountType: function (result) {
+    const countType = result.countType || "0";
+
+    const radioButton = document.querySelector(
+      `input[name="countType"][value="${countType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onCountTypeError: function (error) {
+    console.log(`countType Error: ${error}`);
+  },
+
+  //
   //  Restore filters callbacks
   //
   setFilters: function (result) {
@@ -459,34 +470,6 @@ SysTrayX.RestoreOptions = {
   onFiltersError: function (error) {
     console.log(`Filters Error: ${error}`);
   },
-
-  //
-  //  Restore poll startup delay state callbacks
-  //
-  setPollStartupDelay: function (result) {
-    const pollStartupDelay = result.pollStartupDelay || 60;
-
-    const input = document.querySelector(`input[name="pollStartupDelay"]`);
-    input.value = pollStartupDelay;
-  },
-
-  onPollStartupDelayError: function (error) {
-    console.log(`Poll startup delay Error: ${error}`);
-  },
-
-  //
-  //  Restore poll interval state callbacks
-  //
-  setPollInterval: function (result) {
-    const pollInterval = result.pollInterval || 60;
-
-    const input = document.querySelector(`input[name="pollInterval"]`);
-    input.value = pollInterval;
-  },
-
-  onPollPollInterval: function (error) {
-    console.log(`Poll interval Error: ${error}`);
-  },
 };
 
 SysTrayX.StorageChanged = {
@@ -522,6 +505,11 @@ SysTrayX.StorageChanged = {
           numberColor: changes[item].newValue,
         });
       }
+      if (item === "countType") {
+        SysTrayX.RestoreOptions.setCountType({
+          countType: changes[item].newValue,
+        });
+      }
       if (item === "minimizeType") {
         SysTrayX.RestoreOptions.setMinimizeType({
           minimizeType: changes[item].newValue,
@@ -530,16 +518,6 @@ SysTrayX.StorageChanged = {
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue,
-        });
-      }
-      if (item === "pollStartupDelay") {
-        SysTrayX.RestoreOptions.setPollStartupDelay({
-          pollStartupDelay: changes[item].newValue,
-        });
-      }
-      if (item === "pollInterval") {
-        SysTrayX.RestoreOptions.setPollInterval({
-          pollInterval: changes[item].newValue,
         });
       }
       if (item === "debug") {

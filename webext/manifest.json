@@ -35,5 +35,22 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
+  },
+
+  "experiment_apis": {
+    "folderChange": {
+      "schema": "schema_folderchange.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "folderChange"
+          ]
+        ],
+        "script": "js/folderChange.js"
+      }
+    }
   }
 }

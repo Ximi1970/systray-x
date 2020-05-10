@@ -40,6 +40,14 @@ class Preferences : public QObject
         };
 
         /*
+         *  Count types
+         */
+        enum CountType {
+            PREF_COUNT_UNREAD = 0,
+            PREF_COUNT_NEW
+        };
+
+        /*
          *  Window states
          */
         enum WindowState {
@@ -198,6 +206,20 @@ class Preferences : public QObject
         void setNumberColor( QString color );
 
         /**
+         * @brief getCountType. Get the count type.
+         *
+         * @return      The count type.
+         */
+        CountType getCountType() const;
+
+        /**
+         * @brief setCountType. Set the count type.
+         *
+         * @param      The count type.
+         */
+        void setCountType( CountType count_type );
+
+        /**
          * @brief getMinimizeType. Get the minimize type.
          *
          * @return      The minimize type.
@@ -224,34 +246,6 @@ class Preferences : public QObject
          * @param      The state.
          */
         void setStartMinimized( bool state );
-
-        /**
-         * @brief getPollStartupDelay. Get the poll startup delay.
-         *
-         * @return      The poll startup delay.
-         */
-        int getPollStartupDelay() const;
-
-        /**
-         * @brief setPollStartupDelay. Set the poll startup delay.
-         *
-         * @param       The poll startup delay.
-         */
-        void setPollStartupDelay( int val );
-
-        /**
-         * @brief getPollInterval. Get the poll interval.
-         *
-         * @return      The poll interval.
-         */
-        int getPollInterval() const;
-
-        /**
-         * @brief setPollInterval. Set the poll interval.
-         *
-         * @param       The poll interval.
-         */
-        void setPollInterval( int val );
 
         /**
          * @brief getDebug. Get the debug windows state.
@@ -325,6 +319,11 @@ class Preferences : public QObject
         void signalNumberColorChange();
 
         /**
+         * @brief signalCountTypeChange. Signal a count type change.
+         */
+        void signalCountTypeChange();
+
+        /**
          * @brief signalMinimizeTypeChange. Signal a minimize type change.
          */
         void signalMinimizeTypeChange();
@@ -333,16 +332,6 @@ class Preferences : public QObject
          * @brief signalStartMinimizedChange. Signal a start minimized state change.
          */
         void signalStartMinimizedChange();
-
-        /**
-         * @brief signalPollStartupDelayChange. Signal a poll startup delay change.
-         */
-        void signalPollStartupDelayChange();
-
-        /**
-         * @brief signalPollIntervalChange. Signal a poll interval change.
-         */
-        void signalPollIntervalChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
@@ -397,6 +386,11 @@ class Preferences : public QObject
         QString m_number_color;
 
         /**
+         * @brief m_count_type. Selected count type.
+         */
+        CountType m_count_type;
+
+        /**
          * @brief m_minimize_type. Selected minimize type.
          */
         MinimizeType m_minimize_type;
@@ -405,16 +399,6 @@ class Preferences : public QObject
          * @brief m_start_minimized. Start TB minimized.
          */
         bool m_start_minimized;
-
-        /**
-         * @brief m_poll_startup_delay. The startup poll delay.
-         */
-        int m_poll_startup_delay;
-
-        /**
-         * @brief m_poll_interval. The poll interval.
-         */
-        int m_poll_interval;
 
         /**
          * @brief m_debug. Display debug window.

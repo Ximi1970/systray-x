@@ -473,6 +473,17 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setNumberColor( number_color );
     }
 
+    if( pref.contains( "countType" ) && pref[ "countType" ].isString() )
+    {
+        Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
+
+        /*
+         *  Store the new icon type
+         */
+        m_pref->setCountType( count_type );
+    }
+
+
     if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
     {
         Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
@@ -491,26 +502,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          *  Store the new start minimized state
          */
         m_pref->setStartMinimized( start_minimized );
-    }
-
-    if( pref.contains( "pollStartupDelay" ) && pref[ "pollStartupDelay" ].isString() )
-    {
-        QString poll_startup_delay = pref[ "pollStartupDelay" ].toString();
-
-        /*
-         *  Store the new start minimized state
-         */
-        m_pref->setPollStartupDelay( poll_startup_delay.toInt() );
-    }
-
-    if( pref.contains( "pollInterval" ) && pref[ "pollInterval" ].isString() )
-    {
-        QString poll_interval = pref[ "pollInterval" ].toString();
-
-        /*
-         *  Store the new poll interval
-         */
-        m_pref->setPollInterval( poll_interval.toInt() );
     }
 
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
@@ -535,8 +526,6 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      */
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
-    prefObject.insert("pollStartupDelay", QJsonValue::fromVariant( QString::number( pref.getPollStartupDelay() ) ) );
-    prefObject.insert("pollInterval", QJsonValue::fromVariant( QString::number( pref.getPollInterval() ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
@@ -544,6 +533,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
+    prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
 
     QJsonObject preferencesObject;
     preferencesObject.insert("preferences", prefObject );
@@ -580,30 +570,6 @@ void    SysTrayXLink::slotLinkRead( QByteArray message )
  *  Handle a debug state change signal
  */
 void    SysTrayXLink::slotDebugChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a poll startup delay change signal
- */
-void    SysTrayXLink::slotPollStartupDelayChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a poll interval change signal
- */
-void    SysTrayXLink::slotPollIntervalChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -676,6 +642,18 @@ void    SysTrayXLink::slotShowNumberChange()
  *  Handle a number color change signal
  */
 void    SysTrayXLink::slotNumberColorChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the count type change signal
+ */
+void    SysTrayXLink::slotCountTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

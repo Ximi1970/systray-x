@@ -40,12 +40,10 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_show_number = true;
     m_number_color = "#000000";
+    m_count_type = PREF_COUNT_UNREAD;
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
-
-    m_poll_startup_delay = 60;
-    m_poll_interval = 60;
 
     m_debug = false;
 
@@ -267,6 +265,31 @@ void    Preferences::setNumberColor( QString color )
 
 
 /*
+ *  Get the count type.
+ */
+Preferences::CountType Preferences::getCountType() const
+{
+    return m_count_type;
+}
+
+
+/*
+ *  Set the count type.
+ */
+void    Preferences::setCountType( CountType count_type )
+{
+    if( m_count_type != count_type)
+    {
+        m_count_type = count_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCountTypeChange();
+    }
+}
+
+/*
  *  Get the icon type.
  */
 Preferences::MinimizeType Preferences::getMinimizeType() const
@@ -314,58 +337,6 @@ void    Preferences::setStartMinimized( bool state )
          *  Tell the world the new preference
          */
         emit signalStartMinimizedChange();
-    }
-}
-
-
-/*
- *  Get the poll startup delay.
- */
-int    Preferences::getPollStartupDelay() const
-{
-    return m_poll_startup_delay;
-}
-
-
-/*
- *  Set the startup poll delay.
- */
-void    Preferences::setPollStartupDelay( int val )
-{
-    if( m_poll_startup_delay != val )
-    {
-        m_poll_startup_delay = val;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalPollStartupDelayChange();
-    }
-}
-
-
-/*
- *  Get the poll interval.
- */
-int    Preferences::getPollInterval() const
-{
-    return m_poll_interval;
-}
-
-
-/*
- *  Set the startup poll delay.
- */
-void    Preferences::setPollInterval( int val )
-{
-    if( m_poll_interval != val )
-    {
-        m_poll_interval = val;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalPollIntervalChange();
     }
 }
 
