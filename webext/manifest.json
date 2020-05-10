@@ -41,15 +41,17 @@
     "folderChange": {
       "schema": "schema_folderchange.json",
       "parent": {
-        "scopes": [
-          "addon_parent"
-        ],
-        "paths": [
-          [
-            "folderChange"
-          ]
-        ],
+        "scopes": ["addon_parent"],
+        "paths": [["folderChange"]],
         "script": "js/folderChange.js"
+      }
+    },
+    "windowEvent": {
+      "schema": "schema_windowEvent.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["windowEvent"]],
+        "script": "js/windowEvent.js"
       }
     }
   }

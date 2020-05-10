@@ -54,7 +54,7 @@ async function getDefaultIcon() {
 //
 async function getStartupState() {
   function getStartupState(result) {
-    return result.startMinimized == "true" ? "minimized" : "normal";
+    return result.startMinimized === "true" ? "minimized" : "normal";
   }
 
   function onStartupStateError() {
@@ -66,19 +66,22 @@ async function getStartupState() {
 }
 
 //
-//  Get filters
+//  Get minimize on close state
 //
-async function getFilters() {
-  function getFiltersCb(result) {
-    return result.filters || undefined;
+async function getMinimizeOnClose() {
+  function getMinimizeOnClosePref(result) {
+    return result.minimizeOnClose === "true";
   }
 
-  function onFiltersError() {
-    return undefined;
+  function onMinimizeOnClosePrefError() {
+    return true;
   }
 
-  const getFilters = browser.storage.sync.get("filters");
-  return await getFilters.then(getFiltersCb, onFiltersError);
+  const getState = browser.storage.sync.get("minimizeOnClose");
+  return await getState.then(
+    getMinimizeOnClosePref,
+    onMinimizeOnClosePrefError
+  );
 }
 
 //

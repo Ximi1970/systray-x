@@ -86,10 +86,21 @@ SysTrayX.SaveOptions = {
     //
     //  Save start minimized state
     //
-    const startMinimized = document.querySelector('input[name="startMinimized"]')
-      .checked;
+    const startMinimized = document.querySelector(
+      'input[name="startMinimized"]'
+    ).checked;
     browser.storage.sync.set({
       startMinimized: `${startMinimized}`,
+    });
+
+    //
+    //  Save minimize on close state
+    //
+    let minimizeOnClose = document.querySelector(
+      'input[name="minimizeOnClose"]'
+    ).checked;
+    browser.storage.sync.set({
+      minimizeOnClose: `${minimizeOnClose}`,
     });
 
     //
@@ -121,7 +132,8 @@ SysTrayX.SaveOptions = {
     //
     //  Save enable number state
     //
-    const showNumber = document.querySelector('input[name="showNumber"]').checked;
+    const showNumber = document.querySelector('input[name="showNumber"]')
+      .checked;
     browser.storage.sync.set({
       showNumber: `${showNumber}`,
     });
@@ -129,7 +141,8 @@ SysTrayX.SaveOptions = {
     //
     //  Save number color
     //
-    const numberColor = document.querySelector('input[name="numberColor"]').value;
+    const numberColor = document.querySelector('input[name="numberColor"]')
+      .value;
     browser.storage.sync.set({
       numberColor: `${numberColor}`,
     });
@@ -175,6 +188,15 @@ SysTrayX.RestoreOptions = {
     getStartMinimized.then(
       SysTrayX.RestoreOptions.setStartMinimized,
       SysTrayX.RestoreOptions.onStartMinimizedError
+    );
+
+    //
+    //  Restore minimize on close
+    //
+    const getMinimizeOnClose = browser.storage.sync.get("minimizeOnClose");
+    getMinimizeOnClose.then(
+      SysTrayX.RestoreOptions.setMinimizeOnClose,
+      SysTrayX.RestoreOptions.onMinimizeOnCloseError
     );
 
     //
@@ -288,6 +310,20 @@ SysTrayX.RestoreOptions = {
 
   onStartMinimizedError: function (error) {
     console.log(`startMinimized Error: ${error}`);
+  },
+
+  //
+  //  Restore minimize on close callbacks
+  //
+  setMinimizeOnClose: function (result) {
+    const minimizeOnClose = result.minimizeOnClose || "true";
+
+    const checkbox = document.querySelector(`input[name="minimizeOnClose"]`);
+    checkbox.checked = minimizeOnClose === "true";
+  },
+
+  onMinimizeOnCloseError: function (error) {
+    console.log(`minimizeOnClose Error: ${error}`);
   },
 
   //
@@ -518,6 +554,11 @@ SysTrayX.StorageChanged = {
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue,
+        });
+      }
+      if (item === "minimizeOnClose") {
+        SysTrayX.RestoreOptions.setMinimizeOnClose({
+          minimizeOnClose: changes[item].newValue,
         });
       }
       if (item === "debug") {

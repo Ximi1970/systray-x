@@ -248,6 +248,20 @@ class Preferences : public QObject
         void setStartMinimized( bool state );
 
         /**
+         * @brief getMinimizeOnClose. Get the minimize on close state.
+         *
+         * @return      The state.
+         */
+        bool getMinimizeOnClose() const;
+
+        /**
+         * @brief setMinimizeOnClose. Set the minimize on close state.
+         *
+         * @param      The state.
+         */
+        void setMinimizeOnClose( bool state );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -334,6 +348,11 @@ class Preferences : public QObject
         void signalStartMinimizedChange();
 
         /**
+         * @brief signalMinimizeOnCloseChange. Signal a minimize on close state change.
+         */
+        void signalMinimizeOnCloseChange();
+
+        /**
          * @brief signalDebugChange. Signal a debug state change.
          */
         void signalDebugChange();
@@ -399,6 +418,11 @@ class Preferences : public QObject
          * @brief m_start_minimized. Start TB minimized.
          */
         bool m_start_minimized;
+
+        /**
+         * @brief m_minimize_on_close. Minimize TB instead of closing.
+         */
+        bool m_minimize_on_close;
 
         /**
          * @brief m_debug. Display debug window.

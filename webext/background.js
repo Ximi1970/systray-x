@@ -61,21 +61,11 @@ SysTrayX.Messaging = {
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
-  /*
-  newMail: async function (folder, messages) {
-    console.debug(
-      "New mail: " + folder.accountId + ", " + messages.messages.length
-    );
-
-    let unread = messages.messages.length;
-    while (messages.id) {
-      page = await browser.messages.continueList(messages.id);
-
-      unread = unread + page.messages.length;
-    }
-    console.debug("Unread: " + unread);
+  onCloseButton: function () {
+    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+      state: "minimized",
+    });
   },
-  */
 
   //
   //  Handle a storage change
@@ -91,6 +81,20 @@ SysTrayX.Messaging = {
 
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
+    }
+
+    if ("minimizeOnClose" in changes && changes["minimizeOnClose"].newValue) {
+      const minimizeOnClose = changes["minimizeOnClose"].newValue;
+
+      if (minimizeOnClose) {
+        browser.windowEvent.onCloseButtonClick.addListener(
+          SysTrayX.Messaging.onCloseButton
+        );
+      } else {
+        browser.windowEvent.onCloseButtonClick.removeListener(
+          SysTrayX.Messaging.onCloseButton
+        );
+      }
     }
 
     if ("countType" in changes && changes["countType"].newValue) {
@@ -143,6 +147,7 @@ SysTrayX.Messaging = {
       "debug",
       "minimizeType",
       "startMinimized",
+      "minimizeOnClose",
       "iconType",
       "iconMime",
       "icon",
@@ -157,6 +162,7 @@ SysTrayX.Messaging = {
     const debug = result.debug || "false";
     const minimizeType = result.minimizeType || "1";
     const startMinimized = result.startMinimized || "false";
+    const minimizeOnClose = result.minimizeOnClose || "true";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
@@ -170,6 +176,7 @@ SysTrayX.Messaging = {
         debug: debug,
         minimizeType: minimizeType,
         startMinimized: startMinimized,
+        minimizeOnClose: minimizeOnClose,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon,
@@ -235,7 +242,11 @@ SysTrayX.Link = {
     }
 
     if (response["shutdown"]) {
-      console.log("Shutdown received: " + response["shutdown"]);
+      browser.windowEvent.onCloseButtonClick.removeListener(
+        SysTrayX.Messaging.onCloseButton
+      );
+
+      SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
     }
 
     if (response["preferences"]) {
@@ -296,6 +307,23 @@ SysTrayX.Link = {
         });
       }
 
+      const minimizeOnClose = response["preferences"].minimizeOnClose;
+      if (minimizeOnClose) {
+        browser.storage.sync.set({
+          minimizeOnClose: minimizeOnClose,
+        });
+
+        if (minimizeOnClose) {
+          browser.windowEvent.onCloseButtonClick.addListener(
+            SysTrayX.Messaging.onCloseButton
+          );
+        } else {
+          browser.windowEvent.onCloseButtonClick.removeListener(
+            SysTrayX.Messaging.onCloseButton
+          );
+        }
+      }
+
       const debug = response["preferences"].debug;
       if (debug) {
         browser.storage.sync.set({
@@ -327,6 +355,16 @@ async function start() {
   }
 
   SysTrayX.startupState = state;
+
+  //  Get the minimize on close preference
+  const minimizeOnClose = await getMinimizeOnClose();
+
+  //  Intercept close button?
+  if (minimizeOnClose) {
+    browser.windowEvent.onCloseButtonClick.addListener(
+      SysTrayX.Messaging.onCloseButton
+    );
+  }
 
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime

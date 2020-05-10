@@ -95,6 +95,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalCountTypeChange, m_pref_dialog, &PreferencesDialog::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_pref_dialog, &PreferencesDialog::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
@@ -104,6 +105,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalCountTypeChange, m_link, &SysTrayXLink::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
@@ -218,6 +220,11 @@ void    SysTrayX::slotAddOnShutdown()
     m_tray_icon->hide();
 
     /*
+     *  Close the TB window
+     */
+    emit signalClose();
+
+    /*
      *  Let's quit
      */
     QCoreApplication::quit();
@@ -229,20 +236,28 @@ void    SysTrayX::slotAddOnShutdown()
  */
 void    SysTrayX::slotShutdown()
 {
-    /*
-     *  Hide systray icon to prevent ghost systray icon in Windows
-     */
-    m_tray_icon->hide();
 
-    /*
-     *  Close the TB window
-     */
-    emit signalClose();
+    if( m_preferences->getMinimizeOnClose() )
+    {
+        m_link->sendShutdown();
+    }
+    else
+    {
+        /*
+         *  Hide systray icon to prevent ghost systray icon in Windows
+         */
+        m_tray_icon->hide();
 
-    /*
-     *  Let's quit
-     */
-    QCoreApplication::quit();
+        /*
+         *  Close the TB window
+         */
+        emit signalClose();
+
+        /*
+         *  Let's quit
+         */
+        QCoreApplication::quit();
+    }
 }
 
 

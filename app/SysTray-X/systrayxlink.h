@@ -110,6 +110,11 @@ class SysTrayXLink : public QObject
          */
         void    sendPreferences();
 
+        /**
+         * @brief sendShutdown. Send shutdown to the add-on.
+         */
+        void    sendShutdown();
+
     private:
 
         /**
@@ -196,9 +201,14 @@ class SysTrayXLink : public QObject
         void    slotMinimizeTypeChange();
 
         /**
-         * @brief slotStartMinimizeChange. Handle a change in start minimized state.
+         * @brief slotStartMinimizedChange. Handle a change in start minimized state.
          */
         void    slotStartMinimizedChange();
+
+        /**
+         * @brief slotMinimizeOnCloseChange. Handle a change in start minimized state.
+         */
+        void    slotMinimizeOnCloseChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
