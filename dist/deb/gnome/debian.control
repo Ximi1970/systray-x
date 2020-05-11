@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Build-Depends: debhelper (>= 4.1.16), zip, qt5-default, qtbase5-dev, thunderbird
 
-Package: systray-x
+Package: systray-x-gnome
 Architecture: any
 Depends: ${shlibs:Depends}, gnome-shell-extension-appindicator, thunderbird
 Description: SysTray-X is a system tray extension for Thunderbird 68+.
