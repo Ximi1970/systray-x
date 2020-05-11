@@ -9,8 +9,7 @@ The addon and system tray application can do:
 - show / hide Thunderbird (minimize)
 - minimizing hides to tray
 - minimize on startup
-
-The default poll time is 60 seconds. You change the timing in the preferences but be aware that a too short poll time can lead to a high CPU load.
+- minimize on close
 
 
 
@@ -31,10 +30,11 @@ These packages will install the Thunderbird addon and companion app system wide.
 Root credentials are required.
 
 ### openSuSE
-#### Leap 15.1
+
+#### Tumbleweed
 
 ```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 sudo zypper in systray-x
 ```
 
@@ -45,21 +45,38 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 sudo zypper in systray-x
 ```
 
-#### Tumbleweed
+#### Leap 15.1
 
 ```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
 sudo zypper in systray-x
 ```
 
-#### SLE 15
+#### SLE 15 SP1
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
 sudo zypper in systray-x
 ```
 
+#### SLE 15
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15/ SysTray-X
+sudo zypper in systray-x
+```
+
 ### xUbuntu
+
+#### 20.04 LTS
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x
+```
 
 #### 19.10
 
@@ -67,16 +84,6 @@ sudo zypper in systray-x
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-sudo apt install systray-x
-```
-
-#### 16.04 LTS
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
-sudo apt-key add Release.key
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 sudo apt install systray-x
 ```
@@ -91,12 +98,12 @@ sudo apt update
 sudo apt install systray-x
 ```
 
-#### 20.04 LTS
+#### 16.04 LTS
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
 sudo apt-key add Release.key
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 sudo apt install systray-x
 ```

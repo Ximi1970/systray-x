@@ -131,10 +131,12 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">systray-x-[^d].*<" index.html | sed -e "s/.*>\(systray-x-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">systray-x-[^dg].*<" index.html | sed -e "s/.*>\(systray-x-[^d].*rpm\)<.*/\1/")
+  local RPM_GNOME_FILE=$(grep ">systray-x-gnome-[^d].*<" index.html | sed -e "s/.*>\(systray-x-gnome-[^d].*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
+  echo "Found: "${RPM_GNOME_FILE}
   
   FOUND_VERSION=$(echo ${RPM_FILE} | sed -e "s/systray-x-\(.*\)-.*/\1/")
 
@@ -162,6 +164,7 @@ create_rpm_tar() {
   # Get the SysTray-X rpm
   #
   wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${RPM_FILE}"
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${RPM_GNOME_FILE}"
 
   #
   # Get compression type
@@ -223,6 +226,9 @@ create_rpm_tar() {
   if [ "${RPM_NAME_EXT}" != "_" ] ; then
     NEW_RPM_FILE=`echo ${RPM_FILE} | sed -s "s/\(systray-x-${FOUND_VERSION}-\)\(.*\)/\1${RPM_NAME_EXT}\.\2/"`
     mv -f ${RPM_FILE} $NEW_RPM_FILE
+
+    NEW_RPM_GNOME_FILE=`echo ${RPM_GNOME_FILE} | sed -s "s/\(systray-x-gnome-${FOUND_VERSION}-\)\(.*\)/\1${RPM_NAME_EXT}\.\2/"`
+    mv -f ${RPM_GNOME_FILE} $NEW_RPM_GNOME_FILE
   fi
 
   #
@@ -251,14 +257,16 @@ create_deb_tar() {
   #
   rm -f index.html
   wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
-    
+  
   #
   # Find deb
   #
   local DEB_FILE=$(grep ">systray-x_.*\.deb<" index.html | sed -e "s/.*>\(systray-x.*deb\)<.*/\1/")
+  local DEB_GNOME_FILE=$(grep ">systray-x-gnome_.*\.deb<" index.html | sed -e "s/.*>\(systray-x-gnome.*deb\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${DEB_FILE}
+  echo "Found: "${DEB_GNOME_FILE}
   
   FOUND_VERSION=$(echo ${DEB_FILE} | sed -e "s/systray-x_\(.*\)_.*/\1/")
 
@@ -286,6 +294,7 @@ create_deb_tar() {
   # Get the SysTray-X deb
   #
   wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${DEB_FILE}"
+  wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${DEB_GNOME_FILE}"
 
   #
   # Extract 
@@ -315,6 +324,9 @@ create_deb_tar() {
   if [ "${DEB_NAME_EXT}" != "_" ] ; then
     NEW_DEB_FILE=`echo ${DEB_FILE} | sed -s "s/\(systray-x\_${FOUND_VERSION}\_\)\(.*\)/\1${DEB_NAME_EXT}\_\2/"`
     mv -f ${DEB_FILE} ${NEW_DEB_FILE}
+
+    NEW_DEB_GNOME_FILE=`echo ${DEB_GNOME_FILE} | sed -s "s/\(systray-x-gnome\_${FOUND_VERSION}\_\)\(.*\)/\1${DEB_NAME_EXT}\_\2/"`
+    mv -f ${DEB_GNOME_FILE} ${NEW_DEB_GNOME_FILE}
   fi
 
   #
