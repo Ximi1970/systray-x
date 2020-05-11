@@ -288,11 +288,11 @@ QList< quint64 >   WindowCtrlWin::getWinIds()
 void    WindowCtrlWin::interceptMinimizeWindow()
 {
     m_hook = SetWinEventHook(
-                EVENT_OBJECT_LOCATIONCHANGE ,EVENT_OBJECT_LOCATIONCHANGE,
-                NULL,
-                handleWinEvent,
-                getPpid(), 0,
-                WINEVENT_OUTOFCONTEXT );
+                (DWORD)EVENT_OBJECT_LOCATIONCHANGE, (DWORD)EVENT_OBJECT_LOCATIONCHANGE,
+                (HMODULE)NULL,
+                (WINEVENTPROC)handleWinEvent,
+                (DWORD)getPpid(), (DWORD)0,
+                (DWORD)WINEVENT_OUTOFCONTEXT );
 }
 
 
@@ -308,7 +308,7 @@ void    WindowCtrlWin::stopInterceptMinimizeWindow()
 /*
  * Hook callback
  */
-void    WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hWnd,
+void CALLBACK   WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hWnd,
                          LONG idObject, LONG idChild,
                          DWORD dwEventThread, DWORD dwmsEventTime )
 {

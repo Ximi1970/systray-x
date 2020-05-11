@@ -252,9 +252,9 @@ class WindowCtrlWin : public QObject
          *  @param dwEventThread
          *  @param dwmsEventTime
          */
-        static void     handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hwnd,
-                                LONG idObject, LONG idChild,
-                                DWORD dwEventThread, DWORD dwmsEventTime);
+        static void CALLBACK    handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hwnd,
+                                                    LONG idObject, LONG idChild,
+                                                    DWORD dwEventThread, DWORD dwmsEventTime);
 
         /**
          * @brief hookAction. Non-static function to be used by the hook callback.
