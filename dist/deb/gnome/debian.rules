@@ -60,21 +60,21 @@ install: build
 	# Add here commands to install the package
 	# The DESTDIR Has To Be Exactly  /usr/src/packages/BUILD/debian/<nameOfPackage>
 	
-	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/bin
-	cp -f SysTray-X /usr/src/packages/BUILD/debian/systray-x/usr/bin/SysTray-X
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-gnome/usr/bin
+	cp -f SysTray-X /usr/src/packages/BUILD/debian/systray-x-gnome/usr/bin/SysTray-X
 	
-	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/mozilla/native-messaging-hosts
-	cp -f SysTray_X.json /usr/src/packages/BUILD/debian/systray-x/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/mozilla/native-messaging-hosts
+	cp -f SysTray_X.json /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json
 
 ifeq (Debian,$(DEB_VENDOR))
-	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions
-	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
-	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird/extensions
-	cd  /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird/extensions ;\
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird-addons/extensions
+	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird/extensions
+	cd  /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird/extensions ;\
 	ln -sf ../../thunderbird-addons/extensions/systray-x@Ximi1970.xpi systray-x@Ximi1970.xpi
 else
-	mkdir -p /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions
-	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird-addons/extensions
+	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x-gnome/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 endif
 
 	# --- end custom part for installing
