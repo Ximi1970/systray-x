@@ -15,15 +15,14 @@
 # Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
-%define base_name    systray-x
-Name:           %{base_name}-gnome
+Name:           systray-x-gnome
 Version:        0
 Release:        0
 Summary:        A system tray extension for Thunderbird 68+
 License:        MPL-2.0
 Group:          Productivity/Networking/Email/Clients
 URL:            https://github.com/Ximi1970/systray-x
-Source0:        %{base_name}-%{version}.tar.xz
+Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
@@ -53,7 +52,7 @@ The add-on and system tray application can do:
   * minimize on close
 
 %prep
-%autosetup -p1 -n %{base_name}-%{version}
+%autosetup -p1
 
 %build
 export VERSION=`cat %{S:1} | grep VERSION | sed -e "s/VERSION=\(.*\)/\1/"`
