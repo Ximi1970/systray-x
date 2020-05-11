@@ -15,7 +15,8 @@
 # Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
-Name:           systray-x-gnome
+%define base_name    systray-x
+Name:           %{base_name}-gnome
 Version:        0
 Release:        0
 Summary:        A system tray extension for Thunderbird 68+
@@ -52,7 +53,7 @@ The add-on and system tray application can do:
   * minimize on close
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n %{base_name}-%{version}
 
 %build
 export VERSION=`cat %{S:1} | grep VERSION | sed -e "s/VERSION=\(.*\)/\1/"`
