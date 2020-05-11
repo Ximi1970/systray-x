@@ -23,7 +23,7 @@ Summary:        A system tray extension for Thunderbird 68+
 License:        MPL-2.0
 Group:          Productivity/Networking/Email/Clients
 URL:            https://github.com/Ximi1970/systray-x
-Source0:        %{name}-%{version}.tar.xz
+Source0:        %{base_name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
