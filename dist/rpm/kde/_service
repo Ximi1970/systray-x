@@ -1,0 +1,23 @@
+<services>
+  <service name="obs_scm">
+    <param name="url">https://github.com/Ximi1970/systray-x.git</param>
+    <param name="scm">git</param>
+    <param name="revision">0.1.5</param>
+    <param name="versionformat">0.1.5</param>    
+    <param name="extract">dist/rpm/kde/systray-x.changes</param>
+    <param name="extract">dist/rpm/kde/systray-x.spec</param>
+    <param name="extract">dist/rpm/VERSION</param>
+    <param name="extract">dist/deb/kde/debian.changelog</param>
+    <param name="extract">dist/deb/kde/debian.compat</param>
+    <param name="extract">dist/deb/kde/debian.control</param>
+    <param name="extract">dist/deb/kde/debian.rules</param>
+    <param name="extract">dist/deb/kde/debian.postinst</param>
+    <param name="extract">dist/deb/kde/systray-x.dsc</param>
+  </service>
+  <service mode="buildtime" name="tar" />
+  <service mode="buildtime" name="recompress">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service mode="buildtime" name="set_version" />
+</services>

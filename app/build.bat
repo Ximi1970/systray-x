@@ -25,8 +25,8 @@ if "%ARCH%" == "" (
 )
 
 set QT_VER=
-if /I "%2"=="5.14.1" (
-  set QT_VER=5.14.1
+if /I "%2"=="5.14.2" (
+  set QT_VER=5.14.2
 )
 if "%QT_VER%" == "" (
   goto :usage

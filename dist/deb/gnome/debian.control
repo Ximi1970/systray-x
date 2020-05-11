@@ -16,3 +16,4 @@ Description: SysTray-X is a system tray extension for Thunderbird 68+.
   * show / hide Thunderbird (minimize)
   * minimizing hides to tray
   * minimize on startup
+  * minimize on close

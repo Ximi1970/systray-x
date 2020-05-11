@@ -67,10 +67,10 @@ systray-x-app:
 	mkdir -p app/build32 ;\
 	mkdir -p app/dist/win32 ;\
 	cd app/build32 ;\
-	../build.bat x86 5.14.1 ;\
+	../build.bat x86 5.14.2 ;\
 	cd ../.. ;\
 	mkdir -p app/build64 ;\
 	cd app/build64 ;\
-	../build.bat x86_64 5.14.1 ;\
+	../build.bat x86_64 5.14.2 ;\
 	cd ../..
 endif

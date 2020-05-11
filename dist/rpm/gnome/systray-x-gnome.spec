@@ -1,5 +1,5 @@
 #
-# spec file for package systray-x
+# spec file for package systray-x-gnome
 #
 # Copyright (c) 2020 SUSE LLC
 #
@@ -15,8 +15,7 @@
 # Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
-
-Name:           systray-x
+Name:           systray-x-gnome
 Version:        0
 Release:        0
 Summary:        A system tray extension for Thunderbird 68+
@@ -50,6 +49,7 @@ The add-on and system tray application can do:
   * show / hide Thunderbird (minimize)
   * minimizing hides to tray
   * minimize on startup
+  * minimize on close
 
 %prep
 %autosetup -p1
