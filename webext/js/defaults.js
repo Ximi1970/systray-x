@@ -93,6 +93,8 @@ async function checkFilters() {
 
     console.debug("Converting filters....")
 
+    console.debug("Old filters: "+ JSON.stringify(filters));
+
 
     //  Store extended query filters
     /*
