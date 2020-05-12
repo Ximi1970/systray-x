@@ -89,11 +89,23 @@ async function getMinimizeOnClose() {
 //
 async function getFilters() {
   function getFiltersCb(result) {
-    return result.filters || undefined;
+    let filters = result.filters || undefined;
+
+    console.debug("Converting filters....")
+
+
+    //  Store extended query filters
+    /*
+    browser.storage.sync.set({
+      filtersExt: filters,
+    });
+    */
+
+    return true;
   }
 
   function onFiltersError() {
-    return undefined;
+    return false;
   }
 
   const getFilters = browser.storage.sync.get("filters");
@@ -105,7 +117,13 @@ async function getFilters() {
 //
 async function getFiltersExt() {
   function getFiltersExtCb(result) {
-    return result.filtersExt || undefined;
+    const filtersExt = result.filtersExt || undefined;
+    console.debug("Accounts: " + SysTrayX.Messaging.accounts);
+
+
+
+    
+    return filtersExt;
   }
 
   function onFiltersExtError() {
