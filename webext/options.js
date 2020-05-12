@@ -31,34 +31,18 @@ SysTrayX.SaveOptions = {
     });
 
     let filters = [];
-    let filtersExt = [];
     checkedFolders.forEach((folder) => {
       const mailFolderExt = JSON.parse(folder.value);
 
-      filtersExt.push({
+      filters.push({
         unread: true,
         folder: mailFolderExt,
       });
-
-      filters.push({
-        unread: true,
-        folder: {
-          accountId: mailFolderExt.accountId,
-          path: mailFolderExt.path,
-        },
-      });
     });
 
-    //  Store them in the options HTML
-    const filtersDiv = document.getElementById("filters");
-    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
+    console.debug("Filters: " + JSON.stringify(filters));
 
     //  Store extended query filters
-    browser.storage.sync.set({
-      filtersExt: filtersExt,
-    });
-
-    //  Store query filters
     browser.storage.sync.set({
       filters: filters,
     });
@@ -497,10 +481,6 @@ SysTrayX.RestoreOptions = {
         });
       });
     }
-
-    //  Store them in the options HTML
-    const filtersDiv = document.getElementById("filters");
-    filtersDiv.setAttribute("data-filters", JSON.stringify(filters));
   },
 
   onFiltersError: function (error) {

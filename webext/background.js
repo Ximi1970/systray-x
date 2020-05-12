@@ -11,7 +11,6 @@ var SysTrayX = {
 SysTrayX.Messaging = {
   accounts: [],
   countType: 0,
-  filtersExt: undefined,
   filters: undefined,
 
   init: function () {
@@ -53,7 +52,7 @@ SysTrayX.Messaging = {
     browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
 
     //  Set the filters in the folderChange listener
-    browser.folderChange.setFilters(SysTrayX.Messaging.filtersExt);
+    browser.folderChange.setFilters(SysTrayX.Messaging.filters);
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
@@ -71,14 +70,10 @@ SysTrayX.Messaging = {
   storageChanged: function (changes, area) {
     //  Get the new preferences
 
-    if ("filtersExt" in changes && changes["filtersExt"].newValue) {
-      SysTrayX.Messaging.filtersExt = changes["filtersExt"].newValue;
-
-      browser.folderChange.setFilters(SysTrayX.Messaging.filtersExt);
-    }
-
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
+
+      browser.folderChange.setFilters(SysTrayX.Messaging.filters);
     }
 
     if ("minimizeOnClose" in changes && changes["minimizeOnClose"].newValue) {
@@ -412,13 +407,13 @@ async function start() {
   SysTrayX.Messaging.accounts = await browser.accounts.list();
 
   // Get the filters and convert old filters
-  const converted = await getFilters();
+  const converted = await checkFilters();
   if( converted ) {
     console.log("Filters converted to new format");
   }
 
   // Get the extended filters
-  SysTrayX.Messaging.filtersExt = await getFiltersExt();
+  SysTrayX.Messaging.filters = await getFilters();
 
   // Get the count type
   SysTrayX.Messaging.countType = await getCountType();

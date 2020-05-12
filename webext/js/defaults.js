@@ -85,10 +85,10 @@ async function getMinimizeOnClose() {
 }
 
 //
-//  Get filters
+//  Check filters
 //
-async function getFilters() {
-  function getFiltersCb(result) {
+async function checkFilters() {
+  function checkFiltersCb(result) {
     let filters = result.filters || undefined;
 
     console.debug("Converting filters....")
@@ -97,41 +97,35 @@ async function getFilters() {
     //  Store extended query filters
     /*
     browser.storage.sync.set({
-      filtersExt: filters,
+      filters: filters,
     });
     */
 
     return true;
   }
 
-  function onFiltersError() {
+  function onCheckFiltersError() {
     return false;
   }
 
   const getFilters = browser.storage.sync.get("filters");
-  return await getFilters.then(getFiltersCb, onFiltersError);
+  return await getFilters.then(checkFiltersCb, onCheckFiltersError);
 }
 
 //
-//  Get extended filters
+//  Get filters
 //
-async function getFiltersExt() {
-  function getFiltersExtCb(result) {
-    const filtersExt = result.filtersExt || undefined;
-    console.debug("Accounts: " + SysTrayX.Messaging.accounts);
-
-
-
-    
-    return filtersExt;
+async function getFilters() {
+  function getFiltersCb(result) {
+    return result.filters || undefined;;
   }
 
-  function onFiltersExtError() {
+  function onFiltersError() {
     return undefined;
   }
 
-  const getFiltersExt = browser.storage.sync.get("filtersExt");
-  return await getFiltersExt.then(getFiltersExtCb, onFiltersExtError);
+  const getFiltersStorage = browser.storage.sync.get("filters");
+  return await getFiltersStorage.then(getFiltersCb, onFiltersError);
 }
 
 //
