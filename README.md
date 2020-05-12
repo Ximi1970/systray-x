@@ -84,74 +84,129 @@ sudo zypper in systray-x-gnome
 
 ### xUbuntu
 
-#### 20.04 LTS
+#### Repository
+
+Installing the repository:
+
+###### 20.04 LTS
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
-sudo apt install systray-x
 ```
 
-#### 19.10
+###### 19.10
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
-sudo apt install systray-x
 ```
 
-#### 18.04 LTS
+###### 18.04 LTS
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
-sudo apt install systray-x
 ```
 
-#### 16.04 LTS
+###### 16.04 LTS
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
 sudo apt install systray-x
 ```
 
+###### GNOME
+
+```bash
+sudo apt install systray-x-gnome
+```
+
+
 ### Debian
 
-#### 10
+#### Repository
+
+Installing the repository:
+
+###### 10
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
 sudo apt install systray-x
 ```
 
+###### GNOME
+
+```bash
+sudo apt install systray-x-gnome
+```
+
+
 ### Fedora
 
-#### 32
+#### Repository
+
+Installing the repository:
+
+###### 32
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_32/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
-sudo dnf install systray-x
 ```
 
-#### 31
+###### 31
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_31/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
 sudo dnf install systray-x
+```
+
+###### GNOME
+
+```bash
+sudo dnf install systray-x-gnome
 ```
 
 
