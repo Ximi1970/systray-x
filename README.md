@@ -31,40 +31,56 @@ Root credentials are required.
 
 ### openSuSE
 
-#### Tumbleweed
+#### Repository
+
+Installing the repository:
+
+###### Tumbleweed
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
-sudo zypper in systray-x
 ```
 
-#### Leap 15.2
+###### Leap 15.2
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
-sudo zypper in systray-x
 ```
 
-#### Leap 15.1
+###### Leap 15.1
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
-sudo zypper in systray-x
 ```
 
-#### SLE 15 SP1
+###### SLE 15 SP1
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
-sudo zypper in systray-x
 ```
 
-#### SLE 15
+###### SLE 15
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15/ SysTray-X
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
 sudo zypper in systray-x
 ```
+
+###### GNOME
+
+```bash
+sudo zypper in systray-x-gnome
+```
+
 
 ### xUbuntu
 
