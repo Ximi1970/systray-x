@@ -92,39 +92,58 @@ function checkFilters(filters) {
 
   if (filters === undefined) {
     //  Create base filters
+    newFilters = [];
+    for (const account of SysTrayX.Messaging.accounts) {
+      const inbox = account.folders.filter((folder) => folder.type == "inbox");
+
+      if (inbox.length > 0) {
+        let folder = { ...inbox[0], accountName: account.name };
+        delete folder.type;
+        delete folder.subFolders;
+
+        newFilters.push({
+          unread: true,
+          folder: folder,
+        });
+      }
+    }
+
+    //
+    //  Store the converted filters
+    //
+    browser.storage.sync.set({
+      filters: newFilters,
+    });
   } else if (filters.length > 0) {
     //  Check the format
     if (filters[0].folder.accountName === undefined) {
       //  Old format, convert
-      console.debug("Converting filters....");
-      console.debug("Old filters: " + JSON.stringify(filters));
-      console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
+
+      console.log("Converting old filters");
 
       accountNames = {};
       for (const account of SysTrayX.Messaging.accounts) {
         accountNames[account.id] = account.name;
       }
-      console.debug("AccountNames: " + JSON.stringify(accountNames));
 
       function findFolder(accountId, path) {
         const account = SysTrayX.Messaging.accounts.filter(
           (account) => account.id === accountId
         );
 
-        console.debug(
-          "Account scanning: " + accountId + ": " + JSON.stringify(account)
-        );
-
         if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+          //
+          //  Search the pre TB74 account structure
+          //
           const folder = account[0].folders.filter(
             (folder) => folder.path === path
           );
 
           const folders = account[0].folders.filter((folder) =>
-            folder.pathstartsWith(path)
+            folder.path.startsWith(path)
           );
 
-          if (folders.length > 0) {
+          if (folders.length > 1) {
             return "^ Add base folder";
           } else {
             return folder[0].name;
@@ -164,55 +183,12 @@ function checkFilters(filters) {
         );
       }
 
-      /*
-      newFilters.foreach((filter) => {
-        filter.folder.accountName = accountNames[filter.accountId];
-      });
-      */
-
-      console.debug("New filters: " + JSON.stringify(newFilters));
-
-      /*
-      let folderArrays = {};
-      SysTrayX.Messaging.accounts.foreach((account) => {
-        if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
-          //  Pre TB74 accounts API
-          folderArrays[account.id] = account.folders;
-        } else {
-          //  TB74+ accounts API, (this shit never ends...)
-          let folderArray = [];
-  
-          function traverse(folders) {
-            if (!folders) {
-              return;
-            }
-            for (let f of folders) {
-              arrayOfFolders.push(f);
-              traverse(f.subFolders);
-            }
-          }
-  
-          traverse(account.folders);
-  
-          folderArrays[account.id] = folderArray;
-        }
-      });
-  
-      console.debug("FolderArrays: " + JSON.stringify(folderArrays));
-*/
-
-      //    accountName: accountName,
-      //    name: folder.name,
-      //    Special:  "name":"^ Add base folder"
-      //    TB74+ check for subfolders var,
-      //    before TB75 scan all folders for substring in path?
-
-      //  Store extended query filters
-      /*
+      //
+      //  Store the converted filters
+      //
       browser.storage.sync.set({
         filters: newFilters,
       });
-      */
     }
   }
 

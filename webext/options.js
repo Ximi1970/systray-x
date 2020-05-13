@@ -40,8 +40,6 @@ SysTrayX.SaveOptions = {
       });
     });
 
-    console.debug("Filters: " + JSON.stringify(filters));
-
     //  Store extended query filters
     browser.storage.sync.set({
       filters: filters,
