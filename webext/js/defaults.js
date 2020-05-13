@@ -101,16 +101,76 @@ function checkFilters(filters) {
       console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
 
       accountNames = {};
-      SysTrayX.Messaging.accounts.foreach(
-        (account) => (accountNames[(account, id)] = account),
-        name
-      );
+      for (const account of SysTrayX.Messaging.accounts) {
+        accountNames[account.id] = account.name;
+      }
+      console.debug("AccountNames: " + JSON.stringify(accountNames));
 
+      function findFolder(accountId, path) {
+        const account = SysTrayX.Messaging.accounts.filter(
+          (account) => account.id === accountId
+        );
+
+        console.debug(
+          "Account scanning: " + accountId + ": " + JSON.stringify(account)
+        );
+
+        if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+          const folder = account[0].folders.filter(
+            (folder) => folder.path === path
+          );
+
+          const folders = account[0].folders.filter((folder) =>
+            folder.pathstartsWith(path)
+          );
+
+          if (folders.length > 0) {
+            return "^ Add base folder";
+          } else {
+            return folder[0].name;
+          }
+        } else {
+          //
+          //  Search the TB74+ account structure
+          //
+          let arrayOfFolders = [];
+
+          function traverse(folders, path) {
+            if (!folders) {
+              return;
+            }
+            for (let f of folders) {
+              if (f.path === path) arrayOfFolders.push(f);
+              traverse(f.subFolders, path);
+            }
+          }
+
+          traverse(account[0].folders, path);
+
+          if (arrayOfFolders[0].subFolders.length > 0) {
+            return "^ Add base folder";
+          } else {
+            return arrayOfFolders[0].name;
+          }
+        }
+      }
+
+      for (let i = 0; i < newFilters.length; ++i) {
+        newFilters[i].folder.accountName =
+          accountNames[newFilters[i].folder.accountId];
+        newFilters[i].folder.name = findFolder(
+          newFilters[i].folder.accountId,
+          newFilters[i].folder.path
+        );
+      }
+
+      /*
       newFilters.foreach((filter) => {
-        newFilters.folder["accountName"] = accountName[filter.accountId];
+        filter.folder.accountName = accountNames[filter.accountId];
       });
+      */
 
-      console.debug("Old filters: " + JSON.stringify(newFilters));
+      console.debug("New filters: " + JSON.stringify(newFilters));
 
       /*
       let folderArrays = {};

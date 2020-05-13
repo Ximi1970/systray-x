@@ -1,4 +1,6 @@
 var SysTrayX = {
+  accounts: [],
+
   startupState: undefined,
 
   platformInfo: undefined,
