@@ -406,13 +406,7 @@ async function start() {
   //  Get all accounts
   SysTrayX.Messaging.accounts = await browser.accounts.list();
 
-  // Get the filters and convert old filters
-  const converted = await checkFilters();
-  if( converted ) {
-    console.log("Filters converted to new format");
-  }
-
-  // Get the extended filters
+  // Get the filters (needs the accounts)
   SysTrayX.Messaging.filters = await getFilters();
 
   // Get the count type

@@ -87,31 +87,76 @@ async function getMinimizeOnClose() {
 //
 //  Check filters
 //
-async function checkFilters() {
-  function checkFiltersCb(result) {
-    let filters = result.filters || undefined;
+function checkFilters(filters) {
+  let newFilters = filters;
 
-    console.debug("Converting filters....")
+  if (filters === undefined) {
+    //  Create base filters
+  } else if (filters.length > 0) {
+    //  Check the format
+    if (filters[0].folder.accountName === undefined) {
+      //  Old format, convert
+      console.debug("Converting filters....");
+      console.debug("Old filters: " + JSON.stringify(filters));
+      console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
 
-    console.debug("Old filters: "+ JSON.stringify(filters));
+      accountNames = {};
+      SysTrayX.Messaging.accounts.foreach(
+        (account) => (accountNames[(account, id)] = account),
+        name
+      );
 
+      newFilters.foreach((filter) => {
+        newFilters.folder["accountName"] = accountName[filter.accountId];
+      });
 
-    //  Store extended query filters
-    /*
-    browser.storage.sync.set({
-      filters: filters,
-    });
-    */
+      console.debug("Old filters: " + JSON.stringify(newFilters));
 
-    return true;
+      /*
+      let folderArrays = {};
+      SysTrayX.Messaging.accounts.foreach((account) => {
+        if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+          //  Pre TB74 accounts API
+          folderArrays[account.id] = account.folders;
+        } else {
+          //  TB74+ accounts API, (this shit never ends...)
+          let folderArray = [];
+  
+          function traverse(folders) {
+            if (!folders) {
+              return;
+            }
+            for (let f of folders) {
+              arrayOfFolders.push(f);
+              traverse(f.subFolders);
+            }
+          }
+  
+          traverse(account.folders);
+  
+          folderArrays[account.id] = folderArray;
+        }
+      });
+  
+      console.debug("FolderArrays: " + JSON.stringify(folderArrays));
+*/
+
+      //    accountName: accountName,
+      //    name: folder.name,
+      //    Special:  "name":"^ Add base folder"
+      //    TB74+ check for subfolders var,
+      //    before TB75 scan all folders for substring in path?
+
+      //  Store extended query filters
+      /*
+      browser.storage.sync.set({
+        filters: newFilters,
+      });
+      */
+    }
   }
 
-  function onCheckFiltersError() {
-    return false;
-  }
-
-  const getFilters = browser.storage.sync.get("filters");
-  return await getFilters.then(checkFiltersCb, onCheckFiltersError);
+  return newFilters;
 }
 
 //
@@ -119,7 +164,11 @@ async function checkFilters() {
 //
 async function getFilters() {
   function getFiltersCb(result) {
-    return result.filters || undefined;;
+    let filters = result.filters || undefined;
+
+    filters = checkFilters(filters);
+
+    return filters;
   }
 
   function onFiltersError() {
