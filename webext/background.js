@@ -81,7 +81,7 @@ SysTrayX.Messaging = {
     if ("minimizeOnClose" in changes && changes["minimizeOnClose"].newValue) {
       const minimizeOnClose = changes["minimizeOnClose"].newValue;
 
-      if (minimizeOnClose) {
+      if (minimizeOnClose === "true") {
         browser.windowEvent.onCloseButtonClick.addListener(
           SysTrayX.Messaging.onCloseButton
         );
@@ -307,16 +307,6 @@ SysTrayX.Link = {
         browser.storage.sync.set({
           minimizeOnClose: minimizeOnClose,
         });
-
-        if (minimizeOnClose) {
-          browser.windowEvent.onCloseButtonClick.addListener(
-            SysTrayX.Messaging.onCloseButton
-          );
-        } else {
-          browser.windowEvent.onCloseButtonClick.removeListener(
-            SysTrayX.Messaging.onCloseButton
-          );
-        }
       }
 
       const debug = response["preferences"].debug;
