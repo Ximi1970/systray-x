@@ -54,7 +54,8 @@ async function getDefaultIcon() {
 //
 async function getStartupState() {
   function getStartupState(result) {
-    return result.startMinimized === "true" ? "minimized" : "normal";
+    const startMinimized = result.startMinimized || "false";
+    return startMinimized === "true" ? "minimized" : "normal";
   }
 
   function onStartupStateError() {
@@ -70,7 +71,8 @@ async function getStartupState() {
 //
 async function getMinimizeOnClose() {
   function getMinimizeOnClosePref(result) {
-    return result.minimizeOnClose === "true";
+    const minimizeOnClose = result.minimizeOnClose || "true";
+    return minimizeOnClose === "true";
   }
 
   function onMinimizeOnClosePrefError() {
