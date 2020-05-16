@@ -14,28 +14,28 @@ OBS_RPM_PKS=""
 OBS_RPM_GNOME_EXT=""
 OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
 OBS_RPM_PKS+="_ "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_PKS+="_ "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
 OBS_RPM_PKS+="tmblwd "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/x86_64 "
 OBS_RPM_PKS+="tmblwd "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="SLE_15/x86_64 "
 OBS_RPM_PKS+="sle150 "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
 OBS_RPM_PKS+="sle151 "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="Fedora_31/x86_64 "
 OBS_RPM_PKS+="fed31 "
-OBS_RPM_GNOME_EXT+="26 "
+OBS_RPM_GNOME_EXT+="v26 "
 OBS_RPM_ARCHS+="Fedora_32/x86_64 "
 OBS_RPM_PKS+="fed32 "
-OBS_RPM_GNOME_EXT+="33 "
+OBS_RPM_GNOME_EXT+="master "
 
 
 OBS_DEB_ARCHS=""
@@ -43,28 +43,28 @@ OBS_DEB_PKS=""
 OBS_DEB_GNOME_EXT=""
 OBS_DEB_ARCHS+="Debian_10/i386 "
 OBS_DEB_PKS+="deb10 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_16.04/i386 "
 OBS_DEB_PKS+="xenial1604 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_16.04/amd64 "
 OBS_DEB_PKS+="xenial1604 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/i386 "
 OBS_DEB_PKS+="bionic1804 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_18.04/amd64 "
 OBS_DEB_PKS+="bionic1804 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_19.04/amd64 "
 OBS_DEB_PKS+="disco1904 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
 OBS_DEB_PKS+="eoan1910 "
-OBS_DEB_GNOME_EXT+="26 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
 OBS_DEB_GNOME_EXT+="0 "
@@ -86,13 +86,13 @@ create_gnome_extension_tar() {
     return
   fi
   
-  if [ ${GNOME_EXT} != "26" ] && [ ${GNOME_EXT} != "33" ] ; then
+  if [ ${GNOME_EXT} != "v26" ] && [ ${GNOME_EXT} != "master" ] ; then
     return
   fi
   
   git clone -q ${GIT_BASE}
   pushd gnome-shell-extension-appindicator > /dev/null 2>&1
-  git checkout -q v${GNOME_EXT}
+  git checkout -q ${GNOME_EXT}
   popd > /dev/null 2>&1
   
   #
@@ -153,11 +153,11 @@ create_rpm_tar() {
   #
   # Add the gnome extension to the tar
   #
-  if [ "${GNOME_EXT}" == "26" ] && [ -f gnome-shell-extension-26.tar.xz ] ; then
-    cp -f gnome-shell-extension-26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  if [ "${GNOME_EXT}" == "v26" ] && [ -f gnome-shell-extension-v26.tar.xz ] ; then
+    cp -f gnome-shell-extension-v26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
-  if [ "${GNOME_EXT}" == "33" ] && [ -f gnome-shell-extension-33.tar.xz ] ; then
-    cp -f gnome-shell-extension-33.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  if [ "${GNOME_EXT}" == "master" ] && [ -f gnome-shell-extension-master.tar.xz ] ; then
+    cp -f gnome-shell-extension-master.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   
   #
@@ -283,11 +283,11 @@ create_deb_tar() {
   #
   # Add the gnome extension to the tar
   #
-  if [ "${GNOME_EXT}" == "26" ] && [ -f gnome-shell-extension-26.tar.xz ] ; then
-    cp -f gnome-shell-extension-26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  if [ "${GNOME_EXT}" == "v26" ] && [ -f gnome-shell-extension-v26.tar.xz ] ; then
+    cp -f gnome-shell-extension-v26.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
-  if [ "${GNOME_EXT}" == "33" ] && [ -f gnome-shell-extension-33.tar.xz ] ; then
-    cp -f gnome-shell-extension-33.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  if [ "${GNOME_EXT}" == "master" ] && [ -f gnome-shell-extension-master.tar.xz ] ; then
+    cp -f gnome-shell-extension-master.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   
   #

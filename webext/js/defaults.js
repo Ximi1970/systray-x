@@ -108,13 +108,6 @@ function checkFilters(filters) {
         });
       }
     }
-
-    //
-    //  Store the converted filters
-    //
-    browser.storage.sync.set({
-      filters: newFilters,
-    });
   } else if (filters.length > 0) {
     //  Check the format
 
