@@ -35,10 +35,8 @@ SysTrayX.Accounts = {
             if (!r[name]) {
               r[name] = { result: [] };
               r.result.push({
-                accountName: accountName,
                 accountId: folder.accountId,
                 name: folder.name,
-                path: folder.path,
                 subFolders: r[name].result,
               });
             }
@@ -47,21 +45,35 @@ SysTrayX.Accounts = {
           }, level);
       });
 
-      return result;
-    }
-
-    function createFolderTree(accountName, folders) {
-      function traverse(folders) {
+      function traverse(path, folders) {
         if (!folders) {
           return;
         }
         for (let f of folders) {
           f.accountName = accountName;
-          traverse(f.subFolders);
+          f.path = path + "/" + f.name;
+          traverse(path + "/" + f.name, f.subFolders);
         }
       }
 
-      traverse(folders);
+      traverse("", result);
+
+      return result;
+    }
+
+    function createFolderTree(accountName, folders) {
+      function traverse(path, folders) {
+        if (!folders) {
+          return;
+        }
+        for (let f of folders) {
+          f.accountName = accountName;
+          f.path = path + "/" + f.name;
+          traverse(path + "/" + f.name, f.subFolders);
+        }
+      }
+
+      traverse("", folders);
 
       return folders;
     }
