@@ -252,41 +252,67 @@ var SysTrayX = {
 
       this.applyToSubfolders(
         accountServer.prettyName,
+        "",
         accountServer.rootFolder,
         true,
-        function (folder) {
-          this.msgCountIterate(countType, accountServer.prettyName, folder);
+        function (path, folder) {
+          this.msgCountIterate(
+            countType,
+            accountServer.prettyName,
+            path,
+            folder
+          );
         }
       );
     }
   },
 
-  applyToSubfolders(account, folder, recursive, fun) {
+  applyToSubfolders(account, path, folder, recursive, fun) {
     if (folder.hasSubFolders) {
       let subFolders = folder.subFolders;
       while (subFolders.hasMoreElements()) {
         let subFolder = subFolders.getNext().QueryInterface(Ci.nsIMsgFolder);
         if (recursive && subFolder.hasSubFolders)
-          this.applyToSubfoldersRecursive(account, subFolder, recursive, fun);
-        else fun.call(this, subFolder);
+          this.applyToSubfoldersRecursive(
+            account,
+            path,
+            subFolder,
+            recursive,
+            fun
+          );
+        else fun.call(this, path, subFolder);
       }
     }
   },
 
-  applyToSubfoldersRecursive(account, folder, recursive, fun) {
-    fun.call(this, folder);
-    this.applyToSubfolders(account, folder, recursive, fun);
+  applyToSubfoldersRecursive(account, path, folder, recursive, fun) {
+    fun.call(this, path, folder);
+    this.applyToSubfolders(
+      account,
+      path + "/" + folder.prettyName,
+      folder,
+      recursive,
+      fun
+    );
   },
 
-  msgCountIterate(type, account, folder) {
+  msgCountIterate(type, account, path, folder) {
     let count = false;
 
+    const folderPath = path + "/" + folder.prettyName;
+
     if (SysTrayX.filters) {
-      const match = SysTrayX.filters.filter(
-        (filter) =>
+      const match = SysTrayX.filters.filter((filter) => {
+        function ciEquals(a, b) {
+          return typeof a === "string" && typeof b === "string"
+            ? a.localeCompare(b, undefined, { sensitivity: "accent" }) === 0
+            : a === b;
+        }
+        return (
           filter.folder.accountName === account &&
-          filter.folder.name === folder.prettyName
-      );
+          ciEquals(filter.folder.path, folderPath)
+        );
+      });
 
       count = match.length > 0;
     } else {
