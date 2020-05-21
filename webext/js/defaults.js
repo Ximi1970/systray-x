@@ -98,7 +98,11 @@ function checkFilters(filters) {
       const inbox = account.folders.filter((folder) => folder.type == "inbox");
 
       if (inbox.length > 0) {
-        let folder = { ...inbox[0], accountName: account.name };
+        let folder = {
+          ...inbox[0],
+          accountName: account.name,
+          path: "/" + inbox[0].name,
+        };
         delete folder.type;
         delete folder.subFolders;
 
@@ -254,7 +258,11 @@ async function getFilters() {
   function getFiltersCb(result) {
     const filters = result.filters || undefined;
 
+    console.debug("Stored fiilters: " + JSON.stringify(filters));
+
     const newFilters = checkFilters(filters);
+
+    console.debug("Checked fiilters: " + JSON.stringify(newFilters));
 
     return newFilters;
   }

@@ -444,9 +444,17 @@ SysTrayX.RestoreOptions = {
         );
 
         if (inbox.length > 0) {
+          let folder = {
+            ...inbox[0],
+            accountName: account.name,
+            path: "/" + inbox[0].name,
+          };
+          delete folder.type;
+          delete folder.subFolders;
+
           filters.push({
             unread: true,
-            folder: inbox[0],
+            folder: folder,
           });
         }
       });
