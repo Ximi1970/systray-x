@@ -197,7 +197,7 @@ SysTrayX.Accounts = {
                   accountName: element.accountName,
                   accountId: element.accountId,
                   path: element.path,
-                  name: element.name,
+                  name: element.path.split("/").pop(),
                   version: SysTrayX.version,
                 })
               );

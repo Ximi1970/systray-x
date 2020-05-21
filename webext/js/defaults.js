@@ -212,6 +212,7 @@ function checkFolderFilters(filters) {
     if (filter.folder.version === undefined) {
       folder.version = SysTrayX.version;
       folder.path = found[0].path;
+      folder.name = found[0].path.split("/").pop();
       filtersChanged = true;
     }
 
