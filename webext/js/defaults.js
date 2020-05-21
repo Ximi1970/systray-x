@@ -86,6 +86,142 @@ async function getMinimizeOnClose() {
   );
 }
 
+//  Check if the filters are for existing accounts
+function checkAccountFilters(filters) {
+  let filtersChanged = false;
+  let newFilters = [];
+
+  //  Create an id -> name map
+  accountNames = {};
+  for (const account of SysTrayX.Messaging.accounts) {
+    accountNames[account.id] = account.name;
+  }
+
+  for (let i = 0; i < filters.length; ++i) {
+    let filter = filters[i];
+
+    const accountName = accountNames[filter.folder.accountId];
+    if (accountName === undefined) {
+      filtersChanged = true;
+      continue;
+    }
+
+    //  Store the passed filter
+    newFilters.push(filter);
+  }
+
+  return filtersChanged ? newFilters : undefined;
+}
+
+//  Create a folders array with paths for TB74+
+function createFoldersArrayPre74(baseFolders) {
+  let result = [];
+  let level = { result };
+
+  baseFolders.forEach((folder) => {
+    folder.path
+      .slice(1)
+      .split("/")
+      .reduce((r, name, i, a) => {
+        if (!r[name]) {
+          r[name] = { result: [] };
+          r.result.push({
+            accountId: folder.accountId,
+            name: folder.name,
+            path: folder.path,
+            subFolders: r[name].result,
+          });
+        }
+
+        return r[name];
+      }, level);
+  });
+
+  return createFoldersArray(result);
+}
+
+//  Create a folders array with paths for TB74+
+function createFoldersArray(baseFolders) {
+  let newFolders = [];
+
+  function traverse(path, folders) {
+    if (!folders) {
+      return;
+    }
+    for (let i = 0; i < folders.length; ++i) {
+      newFolders.push({
+        ...folders[i],
+        pathOrig: folders[i].path,
+        path: path + "/" + folders[i].name,
+      });
+      traverse(folders[i].path, folders[i].subFolders);
+    }
+  }
+
+  traverse("", baseFolders);
+
+  return newFolders;
+}
+
+//  Check if the filter folders still exists
+function checkFolderFilters(filters) {
+  let filtersChanged = false;
+  let newFilters = [];
+
+  //  Create an id -> name map
+  accountNames = {};
+  accountFolders = {};
+  for (const account of SysTrayX.Messaging.accounts) {
+    accountNames[account.id] = account.name;
+
+    if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+      //  Pre TB74 accounts API
+      accountFolders[account.id] = createFoldersArrayPre74(account.folders);
+    } else {
+      //  TB74+ accounts API
+      accountFolders[account.id] = createFoldersArray(account.folders);
+    }
+  }
+
+  for (let i = 0; i < filters.length; ++i) {
+    let filter = filters[i];
+
+    const found = accountFolders[filter.folder.accountId].filter((folder) => {
+      if (filter.folder.version) {
+        return folder.path === filter.folder.path;
+      } else {
+        return folder.pathOrig === filter.folder.path;
+      }
+    });
+
+    if (found.length === 0) {
+      filtersChanged = true;
+      continue;
+    }
+
+    //  Upgrade filter
+    let folder = filter.folder;
+    if (filter.folder.accountName === undefined) {
+      folder.accountName = accountNames[found[0].accountId];
+      filtersChanged = true;
+    }
+    if (filter.folder.name === undefined) {
+      folder.name = found[0].name;
+      filtersChanged = true;
+    }
+    if (filter.folder.version === undefined) {
+      folder.version = SysTrayX.version;
+      folder.path = found[0].path;
+      filtersChanged = true;
+    }
+
+    //  Store the passed filter
+    newFilters.push(filter);
+  }
+
+  return filtersChanged ? newFilters : undefined;
+}
+
 //
 //  Check filters
 //
@@ -102,6 +238,7 @@ function checkFilters(filters) {
           ...inbox[0],
           accountName: account.name,
           path: "/" + inbox[0].name,
+          version: SysTrayX.version,
         };
         delete folder.type;
         delete folder.subFolders;
@@ -113,138 +250,33 @@ function checkFilters(filters) {
       }
     }
   } else if (filters.length > 0) {
-    //  Check the format
+    //  Check the filters
 
-    //  Find a folder in a account structure
-    function findFolder(accountId, path) {
-      const account = SysTrayX.Messaging.accounts.filter(
-        (account) => account.id === accountId
-      );
+    let filtersChanged = false;
+    let tmpFilters = undefined;
+    newFilters = filters;
 
-      if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
-        //
-        //  Search the pre TB74 account structure
-        //
-        const folder = account[0].folders.filter(
-          (folder) => folder.path === path
-        );
-
-        const folders = account[0].folders.filter((folder) =>
-          folder.path.startsWith(path)
-        );
-
-        if (folders.length === 0) {
-          return undefined;
-        } else if (folders.length === 1) {
-          return folder[0].name;
-        } else {
-          return "^ Add base folder";
-        }
-      } else {
-        //
-        //  Search the TB74+ account structure
-        //
-        let arrayOfFolders = [];
-
-        function traverse(folders, path) {
-          if (!folders) {
-            return;
-          }
-          for (let f of folders) {
-            if (f.path === path) arrayOfFolders.push(f);
-            traverse(f.subFolders, path);
-          }
-        }
-
-        traverse(account[0].folders, path);
-
-        if (arrayOfFolders.length === 0) {
-          return undefined;
-        } else if (arrayOfFolders[0].subFolders.length > 0) {
-          return "^ Add base folder";
-        } else {
-          return arrayOfFolders[0].name;
-        }
-      }
+    // Check if the filters are for the current accounts
+    tmpFilters = checkAccountFilters(newFilters);
+    if (tmpFilters) {
+      newFilters = tmpFilters;
+      filtersChanged = true;
     }
 
-    if (filters[0].folder.accountName === undefined) {
-      //  Old format, convert
+    // Check if the filters are for the current folders
+    tmpFilters = checkFolderFilters(newFilters);
+    if (tmpFilters) {
+      newFilters = tmpFilters;
+      filtersChanged = true;
+    }
 
-      console.log("Converting old filters");
-
-      //  Create an id -> name map
-      accountNames = {};
-      for (const account of SysTrayX.Messaging.accounts) {
-        accountNames[account.id] = account.name;
-      }
-
-      for (let i = 0; i < filters.length; ++i) {
-        let filter = filters[i];
-
-        const accountName = accountNames[filter.folder.accountId];
-        if (accountName === undefined) {
-          continue;
-        }
-
-        //  Account still active
-        filter.folder.accountName = accountName;
-
-        const name = findFolder(filter.folder.accountId, filter.folder.path);
-        if (name === undefined) {
-          continue;
-        }
-
-        //  Folder still active
-        filter.folder.name = name;
-
-        //  Store the new filter
-        newFilters.push(filter);
-      }
-
+    if (filtersChanged) {
       //
       //  Store the converted filters
       //
       browser.storage.sync.set({
         filters: newFilters,
       });
-    } else {
-      // Need to check if the accounts still exist
-
-      //  Create an id -> name map
-      accountNames = {};
-      for (const account of SysTrayX.Messaging.accounts) {
-        accountNames[account.id] = account.name;
-      }
-
-      let filtersChanged = false;
-      for (let i = 0; i < filters.length; ++i) {
-        let filter = filters[i];
-
-        const accountName = accountNames[filter.folder.accountId];
-        if (accountName === undefined) {
-          let filtersChanged = true;
-          continue;
-        }
-
-        const name = findFolder(filter.folder.accountId, filter.folder.path);
-        if (name === undefined) {
-          let filtersChanged = true;
-          continue;
-        }
-
-        //  Store the new filter
-        newFilters.push(filter);
-      }
-
-      if (filtersChanged) {
-        //
-        //  Store the converted filters
-        //
-        browser.storage.sync.set({
-          filters: newFilters,
-        });
-      }
     }
   }
 
@@ -258,11 +290,11 @@ async function getFilters() {
   function getFiltersCb(result) {
     const filters = result.filters || undefined;
 
-    console.debug("Stored fiilters: " + JSON.stringify(filters));
+    console.debug("Stored filters: " + JSON.stringify(filters));
 
     const newFilters = checkFilters(filters);
 
-    console.debug("Checked fiilters: " + JSON.stringify(newFilters));
+    console.debug("Checked filters: " + JSON.stringify(newFilters));
 
     return newFilters;
   }

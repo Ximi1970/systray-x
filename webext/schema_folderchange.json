@@ -45,6 +45,9 @@
                     },
                     "path": {
                       "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
                     }
                   }
                 }

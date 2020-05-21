@@ -1,4 +1,6 @@
-var SysTrayX = {};
+var SysTrayX = {
+  version: "0",
+};
 
 var BrowserInfo = {};
 
@@ -196,6 +198,7 @@ SysTrayX.Accounts = {
                   accountId: element.accountId,
                   path: element.path,
                   name: element.name,
+                  version: SysTrayX.version,
                 })
               );
               if (element.subFolders.length > 0) {
@@ -295,5 +298,7 @@ SysTrayX.Accounts = {
     }
   },
 };
+
+SysTrayX.version = browser.runtime.getManifest().version;
 
 SysTrayX.Accounts.init();
