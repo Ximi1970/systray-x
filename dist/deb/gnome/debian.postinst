@@ -44,7 +44,7 @@ case $DEB_VENDOR in
     Ubuntu)
         RELEASE=$(lsb_release -rs)
         case $RELEASE in
-            16.04|18.04|19.04|19.10)
+            16.04)
                 EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
                 ;;
 
