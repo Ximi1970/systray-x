@@ -35,13 +35,28 @@ EOF
 
 fi
 
-
 DEB_VENDOR=$(cat /etc/dpkg/origins/default | grep Vendor: | sed -e "s/Vendor: //")
-if [ "$DEB_VENDOR" = "Debian" ] ; then
-    EXTENSION="ubuntu-appindicators@ubuntu.com"
-else
-    EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
-fi
+case $DEB_VENDOR in
+    Debian)
+        EXTENSION="ubuntu-appindicators@ubuntu.com"
+        ;;
+        
+    Ubuntu)
+        RELEASE=$(lsb_release -rs)
+        case $RELEASE in
+            16.04|18.04|19.04|19.10)
+                EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+                ;;
+
+            *)
+                EXTENSION="ubuntu-appindicators@ubuntu.com"
+                ;;
+        esac
+
+    *)
+        EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+        ;;
+esac
 
 CONF_DIR=/etc/dconf/db/local.d
 CONF_FILE=00-extensions
