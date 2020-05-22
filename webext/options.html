@@ -71,7 +71,59 @@
       <form name="iconform">
         <h3>Icon</h3>
 
+        <table id="defaulticonselect">
+          <caption>
+            Default icon
+          </caption>
+          <tr>
+            <td>
+              <input type="radio" name="defaultIconType" value="0" /> Default
+              Thunderbird
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="radio" name="defaultIconType" value="1" /> Hide icon
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="radio" name="defaultIconType" value="2" /> Custom
+              icon
+            </td>
+            <td>
+              <img
+                id="defaultCustomIconImage"
+                height="25"
+                width="25"
+                align="middle"
+                src="icons/Thunderbird.png"
+              />
+            </td>
+            <td>
+              <label
+                for="selectedFileDefaultIconType"
+                style="-moz-appearance: button;"
+                }
+                >Browse...</label
+              >
+              <input
+                type="file"
+                id="selectedFileDefaultIconType"
+                accept="image/*"
+                style="display: none;"
+              />
+            </td>
+            <td>
+              &emsp;
+            </td>
+          </tr>
+        </table>
+
         <table id="iconselect">
+          <caption>
+            Unread mail icon
+          </caption>
           <tr>
             <td><input type="radio" name="iconType" value="0" /> Blank icon</td>
           </tr>
@@ -129,7 +181,7 @@
           </tr>
         </table>
 
-        <table id="countprops" style="display:none">
+        <table id="countprops" style="display: none;">
           <tr>
             <td>
               <label for="countType">Message count type: </label>
@@ -139,6 +191,8 @@
           </tr>
         </table>
       </form>
+
+      <div id="defaultIcon" data-default-icon-mime="" data-default-icon=""></div>
 
       <div id="icon" data-icon-mime="" data-icon=""></div>
 

@@ -86,6 +86,30 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save default icon preferences
+    //
+    const defaultIconType = document.querySelector(
+      'input[name="defaultIconType"]:checked'
+    ).value;
+
+    //  Store default icon type
+    browser.storage.sync.set({
+      defaultIconType: defaultIconType,
+    });
+
+    const defaultIconDiv = document.getElementById("defaultIcon");
+    const defaultIconBase64 = defaultIconDiv.getAttribute("data-default-icon");
+    const defaultIconMime = defaultIconDiv.getAttribute(
+      "data-default-icon-mime"
+    );
+
+    //  Store default icon (base64)
+    browser.storage.sync.set({
+      defaultIconMime: defaultIconMime,
+      defaultIcon: defaultIconBase64,
+    });
+
+    //
     // Save icon preferences
     //
     const iconType = document.querySelector('input[name="iconType"]:checked')
@@ -104,11 +128,6 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       iconMime: iconMime,
       icon: iconBase64,
-    });
-
-    //  Mark add-on preferences changed
-    browser.storage.sync.set({
-      addonprefchanged: true,
     });
 
     //
@@ -136,6 +155,11 @@ SysTrayX.SaveOptions = {
       .value;
     browser.storage.sync.set({
       countType: countType,
+    });
+
+    //  Mark add-on preferences changed
+    browser.storage.sync.set({
+      addonprefchanged: true,
     });
   },
 };
@@ -179,6 +203,27 @@ SysTrayX.RestoreOptions = {
     getMinimizeOnClose.then(
       SysTrayX.RestoreOptions.setMinimizeOnClose,
       SysTrayX.RestoreOptions.onMinimizeOnCloseError
+    );
+
+    //
+    //  Restore default icon type
+    //
+    const getDefaultIconType = browser.storage.sync.get("defaultIconType");
+    getDefaultIconType.then(
+      SysTrayX.RestoreOptions.setDefaultIconType,
+      SysTrayX.RestoreOptions.onDefaultIconTypeError
+    );
+
+    //
+    //  Restore default icon
+    //
+    const getDefaultIcon = browser.storage.sync.get([
+      "defaultIconMime",
+      "defaultIcon",
+    ]);
+    getDefaultIcon.then(
+      SysTrayX.RestoreOptions.setDefaultIcon,
+      SysTrayX.RestoreOptions.onDefaultIconError
     );
 
     //
@@ -321,6 +366,73 @@ SysTrayX.RestoreOptions = {
 
   onIconTypeError: function (error) {
     console.log(`Icon type Error: ${error}`);
+  },
+
+  //
+  //  Restore default icon type callbacks
+  //
+  setDefaultIconType: function (result) {
+    const defaultIconType = result.defaultIconType || "0";
+    const radioButton = document.querySelector(
+      `input[name="defaultIconType"][value="${defaultIconType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onDefaultIconTypeError: function (error) {
+    console.log(`Default icon type Error: ${error}`);
+  },
+
+  //
+  //  Restore default icon
+  //
+  setDefaultIconMime: function (result) {
+    const defaultIconMime = result.defaultIconMime || "";
+
+    const valid = defaultIconMime !== "";
+    if (valid) {
+      const defaultIconDiv = document.getElementById("defaultIcon");
+      defaultIconDiv.setAttribute("data-default-icon-mime", defaultIconMime);
+    }
+
+    return valid;
+  },
+
+  setDefaultIconData: function (result) {
+    const defaultIconBase64 = result.defaultIcon || "";
+
+    const valid = defaultIconBase64 !== "";
+    if (valid) {
+      const defaultIconDiv = document.getElementById("defaultIcon");
+      defaultIconDiv.setAttribute("data-default-icon", defaultIconBase64);
+    }
+
+    return valid;
+  },
+
+  updateDefaultIconImage: function () {
+    const defaultIconDiv = document.getElementById("defaultIcon");
+    default_icon_mime = defaultIconDiv.getAttribute("data-default-icon-mime");
+    default_icon_data = defaultIconDiv.getAttribute("data-default-icon");
+
+    const image = document.getElementById("defaultCustomIconImage");
+    image.setAttribute(
+      "src",
+      `data:${default_icon_mime};base64,${default_icon_data}`
+    );
+  },
+
+  setDefaultIcon: function (result) {
+    const validMime = SysTrayX.RestoreOptions.setDefaultIconMime(result);
+    const validData = SysTrayX.RestoreOptions.setDefaultIconData(result);
+
+    if (validMime && validData) {
+      SysTrayX.RestoreOptions.updateDefaultIconImage();
+    }
+  },
+
+  onDefaultIconError: function (error) {
+    console.log(`Default icon Error: ${error}`);
   },
 
   //
@@ -501,6 +613,8 @@ SysTrayX.StorageChanged = {
 
     let changed_icon = false;
     let changed_icon_mime = false;
+    let changed_default_icon = false;
+    let changed_default_icon_mime = false;
     for (let item of changedItems) {
       if (item === "iconMime") {
         SysTrayX.RestoreOptions.setIconMime({
@@ -516,6 +630,18 @@ SysTrayX.StorageChanged = {
           iconType: changes[item].newValue,
         });
         changed_icon_mime = true;
+      }
+      if (item === "defaultIcon") {
+        SysTrayX.RestoreOptions.setDefaultIcon({
+          defaultIcon: changes[item].newValue,
+        });
+        changed_default_icon = true;
+      }
+      if (item === "defaultIconType") {
+        SysTrayX.RestoreOptions.setDefaultIconType({
+          defaultIconType: changes[item].newValue,
+        });
+        changed_default_icon_mime = true;
       }
       if (item === "showNumber") {
         SysTrayX.RestoreOptions.setShowNumber({
@@ -558,10 +684,15 @@ SysTrayX.StorageChanged = {
       SysTrayX.RestoreOptions.updateIconImage();
     }
 
+    if (changed_default_icon_mime && changed_default_icon) {
+      SysTrayX.RestoreOptions.updateDefaultIconImage();
+    }
+
     //
     //  Update element
     //
     document.getElementById("debugselect").className = "active";
+    document.getElementById("defaulticonselect").className = "active";
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
   },

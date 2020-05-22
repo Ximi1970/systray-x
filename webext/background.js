@@ -143,6 +143,9 @@ SysTrayX.Messaging = {
       "minimizeType",
       "startMinimized",
       "minimizeOnClose",
+      "defaultIconType",
+      "defaultIconMime",
+      "defaultIcon",
       "iconType",
       "iconMime",
       "icon",
@@ -158,6 +161,9 @@ SysTrayX.Messaging = {
     const minimizeType = result.minimizeType || "1";
     const startMinimized = result.startMinimized || "false";
     const minimizeOnClose = result.minimizeOnClose || "true";
+    const defaultIconType = result.defaultIconType || "0";
+    const defaultIconMime = result.defaultIconMime || "image/png";
+    const defaultIcon = result.defaultIcon || [];
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
@@ -172,6 +178,9 @@ SysTrayX.Messaging = {
         minimizeType: minimizeType,
         startMinimized: startMinimized,
         minimizeOnClose: minimizeOnClose,
+        defaultIconType: defaultIconType,
+        defaultIconMime: defaultIconMime,
+        defaultIcon: defaultIcon,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon,
@@ -246,6 +255,27 @@ SysTrayX.Link = {
 
     if (response["preferences"]) {
       //  Store the preferences from the app
+      const defaultIconMime = response["preferences"].defaultIconMime;
+      if (defaultIconMime) {
+        browser.storage.sync.set({
+          defaultIconMime: defaultIconMime,
+        });
+      }
+
+      const defaultIcon = response["preferences"].defaultIcon;
+      if (defaultIcon) {
+        browser.storage.sync.set({
+          defaultIcon: defaultIcon,
+        });
+      }
+
+      const defaultIconType = response["preferences"].defaultIconType;
+      if (defaultIconType) {
+        browser.storage.sync.set({
+          defaultIconType: defaultIconType,
+        });
+      }
+
       const iconMime = response["preferences"].iconMime;
       if (iconMime) {
         browser.storage.sync.set({
@@ -390,6 +420,7 @@ async function start() {
 
   //  Init defaults before everything
   await getDefaultIcon();
+  await getIcon();
 
   SysTrayX.Window.startWindow = await browser.windows
     .getCurrent()

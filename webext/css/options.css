@@ -67,7 +67,16 @@ body {
   padding: 10px 10px 10px 10px;
 }
 
+#defaulticonselect {
+  width: 20em;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
 #iconselect {
+  width: 20em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;

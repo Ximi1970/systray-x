@@ -1,8 +1,68 @@
 //
-//  Set default icon
+//  Set default default icon
 //  Use <div> as storage
 //
 async function getDefaultIcon() {
+  function getStoredDefaultIcon(result) {
+    return result.defaultIconMime && result.defaultIcon;
+  }
+
+  function onStoredDefaultIconError() {
+    return false;
+  }
+
+  const getDefaultIcon = browser.storage.sync.get([
+    "defaultIconMime",
+    "defaultIcon",
+  ]);
+  const defaultIconStored = await getDefaultIcon.then(
+    getStoredDefaultIcon,
+    onStoredDefaultIconError
+  );
+
+  if (!defaultIconStored) {
+    const toDataURL = (url) =>
+      fetch(url)
+        .then((response) => response.blob())
+        .then(
+          (blob) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            })
+        );
+
+    //  Convert image to storage param
+    let { defaultIconMime, defaultIconBase64 } = await toDataURL(
+      "icons/Thunderbird.png"
+    ).then((dataUrl) => {
+      const data = dataUrl.split(":").pop().split(",");
+      return {
+        defaultIconMime: data[0].split(";")[0],
+        defaultIconBase64: data[1],
+      };
+    });
+
+    //  Store default icon (base64)
+    browser.storage.sync.set({
+      defaultIconMime: defaultIconMime,
+      defaultIcon: defaultIconBase64,
+    });
+
+    //  Store in HTML
+    const defaultIconDiv = document.getElementById("defaultIcon");
+    defaultIconDiv.setAttribute("data-default-icon-mime", defaultIconMime);
+    defaultIconDiv.setAttribute("data-default-icon", defaultIconBase64);
+  }
+}
+
+//
+//  Set default unread icon
+//  Use <div> as storage
+//
+async function getIcon() {
   function getStoredIcon(result) {
     return result.iconMime && result.icon;
   }
