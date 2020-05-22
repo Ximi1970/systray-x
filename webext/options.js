@@ -612,14 +612,13 @@ SysTrayX.StorageChanged = {
     const changedItems = Object.keys(changes);
 
     let changed_icon = false;
-    let changed_icon_mime = false;
     let changed_default_icon = false;
-    let changed_default_icon_mime = false;
     for (let item of changedItems) {
       if (item === "iconMime") {
         SysTrayX.RestoreOptions.setIconMime({
           iconMime: changes[item].newValue,
         });
+        changed_icon = true;
       }
       if (item === "icon") {
         SysTrayX.RestoreOptions.setIcon({ icon: changes[item].newValue });
@@ -629,7 +628,12 @@ SysTrayX.StorageChanged = {
         SysTrayX.RestoreOptions.setIconType({
           iconType: changes[item].newValue,
         });
-        changed_icon_mime = true;
+      }
+      if (item === "defaultIconMime") {
+        SysTrayX.RestoreOptions.setDefaultIconMime({
+          defaultIconMime: changes[item].newValue,
+        });
+        changed_default_icon = true;
       }
       if (item === "defaultIcon") {
         SysTrayX.RestoreOptions.setDefaultIcon({
@@ -641,7 +645,6 @@ SysTrayX.StorageChanged = {
         SysTrayX.RestoreOptions.setDefaultIconType({
           defaultIconType: changes[item].newValue,
         });
-        changed_default_icon_mime = true;
       }
       if (item === "showNumber") {
         SysTrayX.RestoreOptions.setShowNumber({
@@ -680,11 +683,11 @@ SysTrayX.StorageChanged = {
       }
     }
 
-    if (changed_icon_mime && changed_icon) {
+    if (changed_icon) {
       SysTrayX.RestoreOptions.updateIconImage();
     }
 
-    if (changed_default_icon_mime && changed_default_icon) {
+    if (changed_default_icon) {
       SysTrayX.RestoreOptions.updateDefaultIconImage();
     }
 
