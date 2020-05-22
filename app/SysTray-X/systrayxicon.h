@@ -34,6 +34,27 @@ class SysTrayXIcon : public QSystemTrayIcon
         SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent = nullptr );
 
         /**
+         * @brief setDefaultIconType. Set the sytem tray default icon type.
+         *
+         *  @param icon_type    The icon type
+         */
+        void    setDefaultIconType( Preferences::DefaultIconType icon_type );
+
+        /**
+         * @brief setDefaultIconMime. Set the sytem tray icon mime.
+         *
+         *  @param icon_mime    The icon mime
+         */
+        void    setDefaultIconMime( const QString& icon_mime );
+
+        /**
+         * @brief setDefaultIconData. Set the custom icon data.
+         *
+         *  @param icon_data    The icon data.
+         */
+        void    setDefaultIconData( const QByteArray& icon_data );
+
+        /**
          * @brief setIconType. Set the sytem tray icon type.
          *
          *  @param icon_type    The icon type
@@ -99,6 +120,16 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    slotSetUnreadMail( int unread_mail );
 
         /**
+         * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
+         */
+        void    slotDefaultIconTypeChange();
+
+        /**
+         * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
+         */
+        void    slotDefaultIconDataChange();
+
+        /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
          */
         void    slotIconTypeChange();
@@ -138,6 +169,21 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_pref    Pointer to the preferences storage.
          */
         Preferences*    m_pref;
+
+        /**
+         * @brief m_default_icon_type. Storage for the default icon type.
+         */
+        Preferences::DefaultIconType   m_default_icon_type;
+
+        /**
+         * @brief m_default_icon_mime. Storage for the default icon mime.
+         */
+        QString m_default_icon_mime;
+
+        /**
+         * @brief m_default_icon_data. Storage for the default icon.
+         */
+        QByteArray  m_default_icon_data;
 
         /**
          * @brief m_icon_type. Storage for the icon type.

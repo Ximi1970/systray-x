@@ -34,6 +34,10 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
      */
     m_app_pref_changed = false;
 
+    m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
+    m_default_icon_mime = "image/png";
+    m_default_icon_data = QByteArray();
+
     m_icon_type = PREF_BLANK_ICON;
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
@@ -139,6 +143,77 @@ void    Preferences::setBrowserVersion( const QString version )
 void    Preferences::setBrowserBuildID( const QString buildID )
 {
     m_browser_buildID = buildID;
+}
+
+
+/*
+ *  Get the default icon type.
+ */
+Preferences::DefaultIconType Preferences::getDefaultIconType() const
+{
+    return m_default_icon_type;
+}
+
+
+/*
+ *  Set the default icon type.
+ */
+void    Preferences::setDefaultIconType( DefaultIconType icon_type )
+{
+    if( m_default_icon_type != icon_type)
+    {
+        m_default_icon_type = icon_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalDefaultIconTypeChange();
+    }
+}
+
+
+/*
+ *  Get the default icon mime.
+ */
+const QString&  Preferences::getDefaultIconMime() const
+{
+    return m_icon_mime;
+}
+
+
+/*
+ *  Set the default icon mime.
+ */
+void    Preferences::setDefaultIconMime( const QString& icon_mime )
+{
+    m_default_icon_mime = icon_mime;
+}
+
+
+/*
+ *  Get the default icon data.
+ */
+const QByteArray&   Preferences::getDefaultIconData() const
+{
+    return m_default_icon_data;
+}
+
+
+/*
+ *  Set the icon data.
+ */
+void    Preferences::setDefaultIconData( const QByteArray& icon_data )
+{
+
+    if( m_default_icon_data != icon_data )
+    {
+        m_default_icon_data = icon_data;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalDefaultIconDataChange();
+    }
 }
 
 

@@ -38,6 +38,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     m_win_ctrl = new WindowCtrl( m_preferences );
 
+#ifdef QT_NO_DEBUG
+
     if( !m_win_ctrl->thunderbirdStart() )
     {
         /*
@@ -45,6 +47,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
          */
         exit(0);
     }
+
+#endif
 
     /*
      *  Setup the link
@@ -88,6 +92,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect preferences signals
      */
+    connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconTypeChange );
+    connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconDataChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
@@ -96,6 +102,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
+    connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconTypeChange );
+    connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconDataChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
@@ -106,6 +114,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_pref_dialog, &PreferencesDialog::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
+    connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
+    connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_link, &SysTrayXLink::slotDefaultIconDataChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
@@ -207,6 +217,13 @@ void    SysTrayX::createTrayIcon()
      */
     m_tray_icon = new SysTrayXIcon( m_link, m_preferences );
     m_tray_icon->setContextMenu( m_tray_icon_menu );
+
+    /*
+     *  Set default icon
+     */
+    m_tray_icon->setDefaultIconMime( m_preferences->getDefaultIconMime() );
+    m_tray_icon->setDefaultIconData( m_preferences->getDefaultIconData() );
+    m_tray_icon->setDefaultIconType( m_preferences->getDefaultIconType() );
 
     /*
      *  Set icon

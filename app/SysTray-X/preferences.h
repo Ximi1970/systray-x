@@ -30,6 +30,12 @@ class Preferences : public QObject
             PREF_MINIMIZE_METHOD_2
         };
 
+        enum DefaultIconType {
+            PREF_DEFAULT_ICON_DEFAULT = 0,
+            PREF_DEFAULT_ICON_HIDE,
+            PREF_DEFAULT_ICON_CUSTOM
+        };
+
         /*
          *  Icon types
          */
@@ -134,6 +140,48 @@ class Preferences : public QObject
          *  @param buildID  The id.
          */
         void setBrowserBuildID( const QString buildID );
+
+        /**
+         * @brief getDefaultIconType. Get the default icon type.
+         *
+         * @return      The icon type.
+         */
+        DefaultIconType getDefaultIconType() const;
+
+        /**
+         * @brief setDefaultIconType. Set the default icon type.
+         *
+         * @param      The icon type.
+         */
+        void setDefaultIconType( DefaultIconType icon_type );
+
+        /**
+         * @brief getDefaultIconMime. Get the default icon mime.
+         *
+         * @return      The icon mime.
+         */
+        const QString& getDefaultIconMime() const;
+
+        /**
+         * @brief setDefaultIconMime. Set the default icon mime.
+         *
+         * @param      The icon mime.
+         */
+        void setDefaultIconMime( const QString& icon_mime );
+
+        /**
+         * @brief getDefaultIconData. Get the default icon data.
+         *
+         * @return      The icon data.
+         */
+        const QByteArray& getDefaultIconData() const;
+
+        /**
+         * @brief setDefaultIconData. Set the default icon data.
+         *
+         * @param      The icon data.
+         */
+        void setDefaultIconData( const QByteArray& icon_data );
 
         /**
          * @brief getIconType. Get the icon type.
@@ -313,6 +361,16 @@ class Preferences : public QObject
         void    signalConsole( QString message );
 
         /**
+         * @brief signalDefaultIconTypeChange. Signal a default icon type change.
+         */
+        void signalDefaultIconTypeChange();
+
+        /**
+         * @brief signalDefaultIconDataChange. Signal a default icon data change.
+         */
+        void signalDefaultIconDataChange();
+
+        /**
          * @brief signalIconTypeChange. Signal a icon type change.
          */
         void signalIconTypeChange();
@@ -378,6 +436,21 @@ class Preferences : public QObject
         QString m_browser_vendor;
         QString m_browser_version;
         QString m_browser_buildID;
+
+        /**
+         * @brief m_default_icon_type. Selected icon type.
+         */
+        DefaultIconType m_default_icon_type;
+
+        /**
+         * @brief m_default_icon_mime. Selected icon mime.
+         */
+        QString m_default_icon_mime;
+
+        /**
+         * @brief m_default_icon_data. Binary data icon image.
+         */
+        QByteArray m_default_icon_data;
 
         /**
          * @brief m_icon_type. Selected icon type.

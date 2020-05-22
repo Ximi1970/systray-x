@@ -77,6 +77,13 @@ class PreferencesDialog : public QDialog
         void    setIconType( Preferences::IconType icon_type );
 
         /**
+         * @brief setDefaultIconType. Set the default icon type.
+         *
+         *  @param icon_type    The icon type.
+         */
+        void    setDefaultIconType( Preferences::DefaultIconType icon_type );
+
+        /**
          * @brief setIcon. Set the icon.
          *
          *  @param icon     The icon mime.
@@ -88,6 +95,19 @@ class PreferencesDialog : public QDialog
          * @brief setIcon. Set the icon.
          */
         void    setIcon();
+
+        /**
+         * @brief setDefaultIcon. Set the default icon.
+         *
+         *  @param icon     The icon mime.
+         *  @param icon     The icon data.
+         */
+        void    setDefaultIcon( const QString& icon_mime, const QByteArray& icon );
+
+        /**
+         * @brief setDefaultIcon. Set the default icon.
+         */
+        void    setDefaultIcon();
 
         /**
          * @brief setShowNumber. Set the show number state.
@@ -152,9 +172,19 @@ class PreferencesDialog : public QDialog
         void    slotIconTypeChange();
 
         /**
+         * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
+         */
+        void    slotDefaultIconTypeChange();
+
+        /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.
          */
         void    slotIconDataChange();
+
+        /**
+         * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
+         */
+        void    slotDefaultIconDataChange();
 
         /**
          * @brief slotShowNumberChange. Slot for handling show number state change.
@@ -189,6 +219,11 @@ class PreferencesDialog : public QDialog
         void    slotFileSelect();
 
         /**
+         * @brief slotDefaultFileSelect. Handle the choose default custom button click.
+         */
+        void    slotDefaultFileSelect();
+
+        /**
          * @brief slotColorSelect. Handle the choose color button click.
          */
         void    slotColorSelect();
@@ -219,6 +254,16 @@ class PreferencesDialog : public QDialog
          * @brief m_tmp_icon_data. Temporary storage for icon data.
          */
         QByteArray m_tmp_icon_data;
+
+        /**
+         * @brief m_tmp_default_icon_mime. Temporary storage for default icon mime.
+         */
+        QString m_tmp_default_icon_mime;
+
+        /**
+         * @brief m_tmp_default_icon_data. Temporary storage for default icon data.
+         */
+        QByteArray m_tmp_default_icon_data;
 
         /**
          * @brief m_number_color. Temporary storage for the number color.

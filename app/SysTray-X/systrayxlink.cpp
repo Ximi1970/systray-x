@@ -447,6 +447,36 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
     /*
      *  Check the received object
      */
+    if( pref.contains( "defaultIconType" ) && pref[ "defaultIconType" ].isString() )
+    {
+        Preferences::DefaultIconType icon_type = static_cast< Preferences::DefaultIconType >( pref[ "defaultIconType" ].toString().toInt() );
+
+        /*
+         *  Store the new default icon type
+         */
+        m_pref->setDefaultIconType( icon_type );
+    }
+
+    if( pref.contains( "defaultIconMime" ) && pref[ "defaultIconMime" ].isString() )
+    {
+        QString icon_mime = pref[ "defaultIconMime" ].toString();
+
+        /*
+         *  Store the new icon mime
+         */
+        m_pref->setDefaultIconMime( icon_mime );
+    }
+
+    if( pref.contains( "defaultIcon" ) && pref[ "defaultIcon" ].isString() )
+    {
+        QString icon_base64 = pref[ "defaultIcon" ].toString();
+
+        /*
+         *  Store the new default icon data
+         */
+        m_pref->setDefaultIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
+    }
+
     if( pref.contains( "iconType" ) && pref[ "iconType" ].isString() )
     {
         Preferences::IconType icon_type = static_cast< Preferences::IconType >( pref[ "iconType" ].toString().toInt() );
@@ -476,7 +506,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          */
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
-
     if( pref.contains( "showNumber" ) && pref[ "showNumber" ].isString() )
     {
         bool show_number = pref[ "showNumber" ].toString() == "true";
@@ -502,7 +531,7 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
 
         /*
-         *  Store the new icon type
+         *  Store the new count type
          */
         m_pref->setCountType( count_type );
     }
@@ -512,7 +541,7 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
 
         /*
-         *  Store the new icon type
+         *  Store the new minimize type
          */
         m_pref->setMinimizeType( minimize_type );
     }
@@ -562,6 +591,9 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("minimizeOnClose", QJsonValue::fromVariant( QString( pref.getMinimizeOnClose() ? "true" : "false" ) ) );
+    prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
+    prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
+    prefObject.insert("defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -646,6 +678,31 @@ void    SysTrayXLink::slotMinimizeOnCloseChange()
         sendPreferences();
     }
 }
+
+
+/*
+ *  Handle the default icon type change signal
+ */
+void    SysTrayXLink::slotDefaultIconTypeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the default icon data change signal
+ */
+void    SysTrayXLink::slotDefaultIconDataChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
 
 /*
  *  Handle the icon type change signal

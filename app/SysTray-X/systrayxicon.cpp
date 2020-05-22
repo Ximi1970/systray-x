@@ -38,6 +38,61 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
 
 
 /*
+ *  Set the default icon type
+ */
+void    SysTrayXIcon::setDefaultIconType( Preferences::DefaultIconType icon_type )
+{
+    if( m_default_icon_type != icon_type )
+    {
+        /*
+         *  Store the new value
+         */
+        m_default_icon_type = icon_type;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Set the default icon mime
+ */
+void    SysTrayXIcon::setDefaultIconMime( const QString& icon_mime )
+{
+    if( m_default_icon_mime != icon_mime )
+    {
+        /*
+         *  Store the new value
+         */
+        m_default_icon_mime = icon_mime;
+    }
+}
+
+
+/*
+ *  Set the default icon data
+ */
+void    SysTrayXIcon::setDefaultIconData( const QByteArray& icon_data )
+{
+    if( m_default_icon_data != icon_data )
+    {
+        /*
+         *  Store the new value
+         */
+        m_default_icon_data = icon_data;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
  *  Set the icon type
  */
 void    SysTrayXIcon::setIconType( Preferences::IconType icon_type )
@@ -73,7 +128,7 @@ void    SysTrayXIcon::setIconMime( const QString& icon_mime )
 
 
 /*
- *  Set the icon type
+ *  Set the icon data
  */
 void    SysTrayXIcon::setIconData( const QByteArray& icon_data )
 {
@@ -225,6 +280,25 @@ void    SysTrayXIcon::renderIcon()
 void    SysTrayXIcon::slotSetUnreadMail( int unread_mail )
 {
     setUnreadMail( unread_mail );
+}
+
+
+/*
+ *  Handle the default icon type change signal
+ */
+void    SysTrayXIcon::slotDefaultIconTypeChange()
+{
+    setDefaultIconType( m_pref->getDefaultIconType() );
+}
+
+
+/*
+ *  Handle the default icon data change signal
+ */
+void    SysTrayXIcon::slotDefaultIconDataChange()
+{
+    setDefaultIconMime( m_pref->getDefaultIconMime() );
+    setDefaultIconData( m_pref->getDefaultIconData() );
 }
 
 

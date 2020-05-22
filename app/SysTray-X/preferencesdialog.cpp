@@ -62,17 +62,31 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      */
     m_ui->countTypeGroupBox->setVisible(false);
 //    m_ui->unreadRadioButton->setVisible(false);
-  //  m_ui->newRadioButton->setVisible(false);
+//    m_ui->newRadioButton->setVisible(false);
 
     /*
-     *  Set defaults
+     *  Set icon type defaults
      */
     m_tmp_icon_data = QByteArray();
     m_tmp_icon_mime = QString();
 
     /*
+     *  Set default icon type button Ids
+     */
+    m_ui->defaultIconTypeGroup->setId( m_ui->defaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_DEFAULT );
+    m_ui->defaultIconTypeGroup->setId( m_ui->hideDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_HIDE );
+    m_ui->defaultIconTypeGroup->setId( m_ui->customDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_CUSTOM );
+
+    /*
+     *  Set icon type defaults
+     */
+    m_tmp_default_icon_data = QByteArray();
+    m_tmp_default_icon_mime = QString();
+
+    /*
      *  Signals and slots
      */
+    connect( m_ui->chooseCustomDefaultIconButton, &QPushButton::clicked, this, &PreferencesDialog::slotDefaultFileSelect );
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
     connect( m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::slotAccept );
     connect( m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::slotReject );
@@ -129,6 +143,16 @@ void    PreferencesDialog::setIconType( Preferences::IconType icon_type )
    ( m_ui->iconTypeGroup->button( icon_type ) )->setChecked( true );
 }
 
+
+/*
+ *  Set the default icon type
+ */
+void    PreferencesDialog::setDefaultIconType( Preferences::DefaultIconType icon_type )
+{
+   ( m_ui->defaultIconTypeGroup->button( icon_type ) )->setChecked( true );
+}
+
+
 /*
  *  Set the icon
  */
@@ -164,6 +188,41 @@ void    PreferencesDialog::setIcon()
     m_ui->imageLabel->setPixmap( pixmap.scaledToHeight( m_ui->chooseCustomButton->size().height() ) );
 }
 
+
+/*
+ *  Set the default icon
+ */
+void    PreferencesDialog::setDefaultIcon( const QString& icon_mime, const QByteArray& icon )
+{
+    /*
+     *  Store the new icon
+     */
+    m_tmp_default_icon_mime = icon_mime;
+    m_tmp_default_icon_data = icon;
+
+    /*
+     *  Display the new icon
+     */
+    setDefaultIcon();
+}
+
+
+/*
+ *  Set the default icon
+ */
+void    PreferencesDialog::setDefaultIcon()
+{
+    /*
+     *  Convert data to pixmap
+     */
+    QPixmap  pixmap;
+    pixmap.loadFromData( m_tmp_default_icon_data );
+
+    /*
+     *  Display the icon
+     */
+    m_ui->defaultImageLabel->setPixmap( pixmap.scaledToHeight( m_ui->chooseCustomButton->size().height() ) );
+}
 
 /*
  *  Set the enable number state
@@ -210,6 +269,10 @@ void    PreferencesDialog::slotAccept()
     /*
      *  Get all the selected values and store them in the preferences
      */
+    m_pref->setDefaultIconType( static_cast< Preferences::DefaultIconType >( m_ui->defaultIconTypeGroup->checkedId() ) );
+    m_pref->setDefaultIconMime( m_tmp_default_icon_mime );
+    m_pref->setDefaultIconData( m_tmp_default_icon_data );
+
     m_pref->setIconType( static_cast< Preferences::IconType >( m_ui->iconTypeGroup->checkedId() ) );
     m_pref->setIconMime( m_tmp_icon_mime );
     m_pref->setIconData( m_tmp_icon_data );
@@ -274,9 +337,33 @@ void    PreferencesDialog::slotFileSelect()
     }
 }
 
+/*
+ *  Handle the default choose button
+ */
+void    PreferencesDialog::slotDefaultFileSelect()
+{
+    QFileDialog file_dialog( this, tr( "Open Image" ), "", tr( "Image Files (*.png *.jpg *.bmp)" ) );
+
+    if( file_dialog.exec() )
+    {
+        QFile file( file_dialog.selectedFiles()[ 0 ] );
+        file.open( QIODevice::ReadOnly );
+        m_tmp_default_icon_data = file.readAll();
+        file.close();
+
+        QMimeType type = QMimeDatabase().mimeTypeForData( m_tmp_default_icon_data );
+        m_tmp_default_icon_mime = type.name();
+
+        /*
+         *  Display the default icon
+         */
+        setDefaultIcon();
+    }
+}
+
 
 /*
- *  Handle the choose button
+ *  Handle the colro select button
  */
 void    PreferencesDialog::slotColorSelect()
 {
@@ -336,6 +423,15 @@ void    PreferencesDialog::slotIconTypeChange()
 
 
 /*
+ *  Handle the default icon type change signal
+ */
+void    PreferencesDialog::slotDefaultIconTypeChange()
+{
+    setDefaultIconType( m_pref->getDefaultIconType() );
+}
+
+
+/*
  *  Handle the icon data change signal
  */
 void    PreferencesDialog::slotIconDataChange()
@@ -347,6 +443,21 @@ void    PreferencesDialog::slotIconDataChange()
      *  Display the icon
      */
     setIcon();
+}
+
+
+/*
+ *  Handle the default icon data change signal
+ */
+void    PreferencesDialog::slotDefaultIconDataChange()
+{
+    m_tmp_default_icon_mime = m_pref->getDefaultIconMime();
+    m_tmp_default_icon_data = m_pref->getDefaultIconData();
+
+    /*
+     *  Display the icon
+     */
+    setDefaultIcon();
 }
 
 
