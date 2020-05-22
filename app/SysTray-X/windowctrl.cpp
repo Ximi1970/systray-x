@@ -50,6 +50,18 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
 }
 
 
+/*
+ *  Is thunderbird our parent?
+ */
+bool    WindowCtrl::thunderbirdStart() const
+{
+   return isThunderbird( getPpid() );
+}
+
+
+/*
+ *  Test func 1
+ */
 void    WindowCtrl::slotWindowTest1()
 {
     emit signalConsole("Test 1 started");
@@ -67,6 +79,9 @@ void    WindowCtrl::slotWindowTest1()
 }
 
 
+/*
+ *  Test func 2
+ */
 void    WindowCtrl::slotWindowTest2()
 {
     emit signalConsole("Test 2 started");
@@ -81,6 +96,9 @@ void    WindowCtrl::slotWindowTest2()
 }
 
 
+/*
+ *  Test func 3
+ */
 void    WindowCtrl::slotWindowTest3()
 {
     emit signalConsole("Test 3 started");

@@ -38,6 +38,14 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     m_win_ctrl = new WindowCtrl( m_preferences );
 
+    if( !m_win_ctrl->thunderbirdStart() )
+    {
+        /*
+         *  Let's quit
+         */
+        exit(0);
+    }
+
     /*
      *  Setup the link
      */

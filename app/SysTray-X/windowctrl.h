@@ -40,6 +40,13 @@ class WindowCtrl : public QObject
          */
         explicit WindowCtrl( Preferences* pref, QObject *parent = nullptr );
 
+        /**
+         * @brief thunderbirdStart. Has the app been started by TB.
+         *
+         * @return  True if Thunderbird is our parent.
+         */
+        bool    thunderbirdStart() const;
+
     public slots:
 
         /**
