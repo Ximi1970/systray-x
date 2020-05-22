@@ -216,6 +216,8 @@ void    SysTrayXIcon::renderIcon()
 
     if( m_unread_mail > 0 )
     {
+        show();
+
         switch( m_icon_type )
         {
             case Preferences::PREF_BLANK_ICON:
@@ -240,7 +242,29 @@ void    SysTrayXIcon::renderIcon()
     }
     else
     {
-        pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+        switch( m_default_icon_type )
+        {
+            case Preferences::PREF_DEFAULT_ICON_DEFAULT:
+            {
+                show();
+                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                break;
+            }
+
+            case Preferences::PREF_DEFAULT_ICON_HIDE:
+            {
+                hide();
+                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                break;
+            }
+
+            case Preferences::PREF_DEFAULT_ICON_CUSTOM:
+            {
+                show();
+                pixmap.loadFromData( m_default_icon_data );
+                break;
+            }
+        }
     }
 
     if( m_show_number && ( m_unread_mail > 0 ) )
