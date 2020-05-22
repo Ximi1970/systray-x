@@ -100,7 +100,7 @@ Preferences::MinimizeType    WindowCtrlWin::getMinimizeType() const
 /*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
-qint64  WindowCtrlWin::getPpid()
+qint64  WindowCtrlWin::getPpid() const
 {
     HANDLE h = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
     PROCESSENTRY32 pe;
@@ -131,7 +131,7 @@ qint64  WindowCtrlWin::getPpid()
 /*
  *  Is the pid from thunderbird
  */
-bool    WindowCtrlWin::isThunderbird( qint64 pid )
+bool    WindowCtrlWin::isThunderbird( qint64 pid ) const
 {
     return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
 }
@@ -140,7 +140,7 @@ bool    WindowCtrlWin::isThunderbird( qint64 pid )
 /*
  *  Get the process name
  */
-QString WindowCtrlWin::getProcessName( qint64 pid )
+QString WindowCtrlWin::getProcessName( qint64 pid ) const
 {
     HANDLE proc = OpenProcess( PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, pid );
     char name[ 256 ];

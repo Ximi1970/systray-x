@@ -97,7 +97,7 @@ class WindowCtrlWin : public QObject
          *
          *  @return     The ppid
          */
-        qint64  getPpid();
+        qint64  getPpid() const;
 
         /**
          * @brief isThunderbird. Is this a thunderbird pid.
@@ -106,7 +106,7 @@ class WindowCtrlWin : public QObject
          *
          *  @return     True if this is thunderbird.
          */
-        bool    isThunderbird( qint64 pid );
+        bool    isThunderbird( qint64 pid ) const;
 
         /**
          * @brief getProcessName. Get the name of the proces by pid.
@@ -115,7 +115,7 @@ class WindowCtrlWin : public QObject
          *
          *  @return     The process name.
          */
-        QString getProcessName( qint64 pid );
+        QString getProcessName( qint64 pid ) const;
 
         /**
          * @brief findWindow. Find window by title.
