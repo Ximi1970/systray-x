@@ -60,7 +60,12 @@ class SysTrayX : public QObject
         /**
          * @brief createActions. Create the menu actions.
          */
-        void    createActions();
+        void    createMenu();
+
+
+        void    showTrayIcon();
+        void    hideTrayIcon();
+
 
     signals:
 
@@ -84,6 +89,13 @@ class SysTrayX : public QObject
         void    signalConsole( QString message );
 
     private slots:
+
+        /**
+         * @brief slotUnreadMail. Handle unread mail signal.
+         *
+         *  @param unread_mail  Number of unread mail.
+         */
+        void    slotUnreadMail( int unread_mail );
 
         /**
          * @brief slotAddOnShutdown. Handle shutdown request from the add-on.

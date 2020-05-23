@@ -216,8 +216,6 @@ void    SysTrayXIcon::renderIcon()
 
     if( m_unread_mail > 0 )
     {
-        show();
-
         switch( m_icon_type )
         {
             case Preferences::PREF_BLANK_ICON:
@@ -246,21 +244,19 @@ void    SysTrayXIcon::renderIcon()
         {
             case Preferences::PREF_DEFAULT_ICON_DEFAULT:
             {
-                show();
                 pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
                 break;
             }
 
             case Preferences::PREF_DEFAULT_ICON_HIDE:
             {
-                hide();
-                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                pixmap = QPixmap();
+
                 break;
             }
 
             case Preferences::PREF_DEFAULT_ICON_CUSTOM:
             {
-                show();
                 pixmap.loadFromData( m_default_icon_data );
                 break;
             }
@@ -369,18 +365,22 @@ void    SysTrayXIcon::slotNumberColorChange()
 void    SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reason )
 {
     switch (reason) {
-    case QSystemTrayIcon::Trigger:
-    {
-        //  Clicked
-        emit signalShowHide();
-        break;
-    }
+        case QSystemTrayIcon::Trigger:
+        {
+            //  Clicked
+            emit signalShowHide();
+            break;
+        }
 
-    case QSystemTrayIcon::DoubleClick:
-    case QSystemTrayIcon::MiddleClick:
-        break;
+        case QSystemTrayIcon::DoubleClick:
+        case QSystemTrayIcon::MiddleClick:
+        {
+            break;
+        }
 
-    default:
-        ;
+        default:
+        {
+            break;
+        }
     }
 }
