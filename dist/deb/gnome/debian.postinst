@@ -55,7 +55,7 @@ case $DEB_VENDOR in
         ;;
         
     *)
-        EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+        EXTENSION="ubuntu-appindicators@ubuntu.com"
         ;;
 esac
 
