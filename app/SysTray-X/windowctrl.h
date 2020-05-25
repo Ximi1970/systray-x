@@ -47,6 +47,11 @@ class WindowCtrl : public QObject
          */
         bool    thunderbirdStart() const;
 
+    signals:
+
+        void    signalShow();
+        void    signalHide();
+
     public slots:
 
         /**

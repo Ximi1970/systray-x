@@ -43,6 +43,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     m_win_ctrl = new WindowCtrl( m_preferences );
 
+    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
+    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
+
 #ifdef QT_NO_DEBUG
 
     if( !m_win_ctrl->thunderbirdStart() )
@@ -333,6 +336,17 @@ void    SysTrayX::hideTrayIcon()
         delete m_tray_icon;
         m_tray_icon = nullptr;
     }
+}
+
+
+void    SysTrayX::slotShow()
+{
+    showTrayIcon();
+}
+
+void    SysTrayX::slotHide()
+{
+    hideTrayIcon();
 }
 
 

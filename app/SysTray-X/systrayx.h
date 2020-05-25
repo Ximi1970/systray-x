@@ -90,6 +90,9 @@ class SysTrayX : public QObject
 
     private slots:
 
+        void    slotShow();
+        void    slotHide();
+
         /**
          * @brief slotUnreadMail. Handle unread mail signal.
          *
