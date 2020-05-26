@@ -90,6 +90,13 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    setNumberColor( const QString& color );
 
         /**
+         * @brief setNumberSize. Set the number size.
+         *
+         *  @param size    The size.
+         */
+        void    setNumberSize( int size );
+
+        /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread_mail  The number of unread mails.
@@ -148,6 +155,11 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief slotNumberColorChange. Slot for handling number color change signals.
          */
         void    slotNumberColorChange();
+
+        /**
+         * @brief slotNumberSizeChange. Slot for handling number size change signals.
+         */
+        void    slotNumberSizeChange();
 
     private slots:
 
@@ -209,6 +221,11 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_number_color. Color of the unread mail number.
          */
         QString m_number_color;
+
+        /**
+         * @brief m_number_size. Size of the unread mail number.
+         */
+        int m_number_size;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

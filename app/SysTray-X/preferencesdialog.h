@@ -119,9 +119,16 @@ class PreferencesDialog : public QDialog
         /**
          * @brief setNumberColor. Set the number color.
          *
-         *  @param state    The state.
+         *  @param color    The color.
          */
         void    setNumberColor( QString color );
+
+        /**
+         * @brief setNumberSize. Set the number size.
+         *
+         *  @param size    The size.
+         */
+        void    setNumberSize( int size );
 
         /**
          * @brief setCountType. Set the count type.
@@ -195,6 +202,11 @@ class PreferencesDialog : public QDialog
          * @brief slotNumberColorChange. Slot for handling number color change.
          */
         void    slotNumberColorChange();
+
+        /**
+         * @brief slotNumberSizeChange. Slot for handling number size change.
+         */
+        void    slotNumberSizeChange();
 
         /**
          * @brief slotCountTypeChange. Slot for handling count type change.

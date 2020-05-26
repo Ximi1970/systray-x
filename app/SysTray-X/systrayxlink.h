@@ -241,6 +241,11 @@ class SysTrayXLink : public QObject
         void    slotNumberColorChange();
 
         /**
+         * @brief slotNumberSizeChange. Handle a change in number size.
+         */
+        void    slotNumberSizeChange();
+
+        /**
          * @brief slotCountTypeChange. Slot for handling count type change signals.
          */
         void    slotCountTypeChange();

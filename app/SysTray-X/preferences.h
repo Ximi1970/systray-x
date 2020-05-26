@@ -254,6 +254,20 @@ class Preferences : public QObject
         void setNumberColor( QString color );
 
         /**
+         * @brief getNumberSize. Get the number size.
+         *
+         * @return      The size.
+         */
+        int getNumberSize() const;
+
+        /**
+         * @brief setNumberSize. Set the number size.
+         *
+         * @param      The size.
+         */
+        void setNumberSize( int size );
+
+        /**
          * @brief getCountType. Get the count type.
          *
          * @return      The count type.
@@ -391,6 +405,11 @@ class Preferences : public QObject
         void signalNumberColorChange();
 
         /**
+         * @brief signalNumberSizeChange. Signal a number size change.
+         */
+        void signalNumberSizeChange();
+
+        /**
          * @brief signalCountTypeChange. Signal a count type change.
          */
         void signalCountTypeChange();
@@ -476,6 +495,11 @@ class Preferences : public QObject
          * @brief m_number_color. The color of the number in systray icon.
          */
         QString m_number_color;
+
+        /**
+         * @brief m_number_size. The size of the number in systray icon.
+         */
+        int m_number_size;
 
         /**
          * @brief m_count_type. Selected count type.

@@ -96,6 +96,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set number color
      */
     setNumberColor( m_pref->getNumberColor() );
+
+    /*
+     *  Set number size
+     */
+    setNumberSize( m_pref->getNumberSize() );
 }
 
 
@@ -248,6 +253,15 @@ void    PreferencesDialog::setNumberColor( QString color )
 
 
 /*
+ *  Set the number size
+ */
+void    PreferencesDialog::setNumberSize( int size )
+{
+    m_ui->numberSizeSpinBox->setValue( size );
+}
+
+
+/*
  *  Set the count type
  */
 void    PreferencesDialog::setCountType( Preferences::CountType count_type )
@@ -283,6 +297,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberColor( m_number_color );
+    m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
@@ -476,6 +491,15 @@ void    PreferencesDialog::slotShowNumberChange()
 void    PreferencesDialog::slotNumberColorChange()
 {
     setNumberColor( m_pref->getNumberColor() );
+}
+
+
+/*
+ *  Handle the number size change
+ */
+void    PreferencesDialog::slotNumberSizeChange()
+{
+    setNumberSize( m_pref->getNumberSize() );
 }
 
 

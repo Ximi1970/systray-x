@@ -151,6 +151,7 @@ SysTrayX.Messaging = {
       "icon",
       "showNumber",
       "numberColor",
+      "numberSize",
       "countType",
     ]);
     getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
@@ -169,6 +170,7 @@ SysTrayX.Messaging = {
     const icon = result.icon || [];
     const showNumber = result.showNumber || "true";
     const numberColor = result.numberColor || "#000000";
+    const numberSize = result.numberSize || 10;
     const countType = result.countType || "0";
 
     //  Send it to the app
@@ -186,6 +188,7 @@ SysTrayX.Messaging = {
         icon: icon,
         showNumber: showNumber,
         numberColor: numberColor,
+        numberSize: numberSize,
         countType: countType,
       },
     });
@@ -308,6 +311,13 @@ SysTrayX.Link = {
       if (numberColor) {
         browser.storage.sync.set({
           numberColor: numberColor,
+        });
+      }
+
+      const numberSize = response["preferences"].numberSize;
+      if (numberSize) {
+        browser.storage.sync.set({
+          numberSize: numberSize,
         });
       }
 

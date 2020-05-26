@@ -32,6 +32,7 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
 
     m_show_number = m_pref->getShowNumber();
     m_number_color = m_pref->getNumberColor();
+    m_number_size = m_pref->getNumberSize();
 
     connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
@@ -168,7 +169,7 @@ void    SysTrayXIcon::showNumber( bool state )
 
 
 /*
- *  Enable/disable number
+ *  Set number color
  */
 void    SysTrayXIcon::setNumberColor( const QString& color )
 {
@@ -186,6 +187,25 @@ void    SysTrayXIcon::setNumberColor( const QString& color )
     }
 }
 
+
+/*
+ *  Set number size
+ */
+void    SysTrayXIcon::setNumberSize( int size )
+{
+    if( m_number_size != size )
+    {
+        /*
+         *  Store the new value
+         */
+        m_number_size = size;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
 
 /*
  *  Set the number of unread mails
@@ -278,7 +298,7 @@ void    SysTrayXIcon::renderIcon()
         double factor = pixmap.width() / ( 3 * painter.fontMetrics().horizontalAdvance( "0" ) );
 #endif
         QFont font = painter.font();
-        font.setPointSizeF( font.pointSizeF() * factor );
+        font.setPointSizeF( font.pointSizeF() * ( factor * m_number_size / 10 ) );
         font.setBold( true );
         painter.setFont( font );
 
@@ -356,6 +376,15 @@ void    SysTrayXIcon::slotShowNumberChange()
 void    SysTrayXIcon::slotNumberColorChange()
 {
     setNumberColor( m_pref->getNumberColor() );
+}
+
+
+/*
+ *  Handle the number size change signal
+ */
+void    SysTrayXIcon::slotNumberSizeChange()
+{
+    setNumberSize( m_pref->getNumberSize() );
 }
 
 

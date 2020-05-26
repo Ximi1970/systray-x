@@ -149,6 +149,14 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save number size
+    //
+    const numberSize = document.querySelector('input[name="numberSize"]').value;
+    browser.storage.sync.set({
+      numberSize: numberSize,
+    });
+
+    //
     // Save count type preferences
     //
     const countType = document.querySelector('input[name="countType"]:checked')
@@ -269,6 +277,15 @@ SysTrayX.RestoreOptions = {
     getNumberColor.then(
       SysTrayX.RestoreOptions.setNumberColor,
       SysTrayX.RestoreOptions.onNumberColorError
+    );
+
+    //
+    //  Restore number size
+    //
+    const getNumberSize = browser.storage.sync.get("numberSize");
+    getNumberSize.then(
+      SysTrayX.RestoreOptions.setNumberSize,
+      SysTrayX.RestoreOptions.onNumberSizeError
     );
 
     //
@@ -513,6 +530,20 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore number size
+  //
+  setNumberSize: function (result) {
+    const numberSize = result.numberSize || 10;
+
+    const input = document.querySelector(`input[name="numberSize"]`);
+    input.value = numberSize;
+  },
+
+  onNumberSizeError: function (error) {
+    console.log(`numberSize Error: ${error}`);
+  },
+
+  //
   //  Restore count type
   //
   setCountType: function (result) {
@@ -654,6 +685,11 @@ SysTrayX.StorageChanged = {
       if (item === "numberColor") {
         SysTrayX.RestoreOptions.setNumberColor({
           numberColor: changes[item].newValue,
+        });
+      }
+      if (item === "numberSize") {
+        SysTrayX.RestoreOptions.setNumberSize({
+          numberSize: changes[item].newValue,
         });
       }
       if (item === "countType") {

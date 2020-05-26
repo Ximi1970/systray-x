@@ -44,6 +44,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_show_number = true;
     m_number_color = "#000000";
+    m_number_size = 10;
     m_count_type = PREF_COUNT_UNREAD;
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
@@ -336,6 +337,32 @@ void    Preferences::setNumberColor( QString color )
          *  Tell the world the new preference
          */
         emit signalNumberColorChange();
+    }
+}
+
+
+/*
+ *  Get the number size.
+ */
+int Preferences::getNumberSize() const
+{
+    return m_number_size;
+}
+
+
+/*
+ *  Set the enable number state.
+ */
+void    Preferences::setNumberSize( int size )
+{
+    if( m_number_size != size )
+    {
+        m_number_size = size;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalNumberSizeChange();
     }
 }
 
