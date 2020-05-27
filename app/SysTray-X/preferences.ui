@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>540</height>
+    <width>525</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -275,6 +275,33 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QRadioButton" name="noIconRadioButton">
+              <property name="text">
+               <string>No icon</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">iconTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
          </layout>
         </item>
        </layout>
@@ -457,9 +484,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
  </buttongroups>
 </ui>

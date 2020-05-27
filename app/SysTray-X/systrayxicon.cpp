@@ -234,6 +234,8 @@ void    SysTrayXIcon::renderIcon()
 {
     QPixmap pixmap;
 
+    m_unread_mail = 9;
+
     if( m_unread_mail > 0 )
     {
         switch( m_icon_type )
@@ -254,6 +256,14 @@ void    SysTrayXIcon::renderIcon()
             case Preferences::PREF_CUSTOM_ICON:
             {
                 pixmap.loadFromData( m_icon_data );
+                break;
+            }
+
+            case Preferences::PREF_NO_ICON:
+            {
+                QPixmap lookthrough( 256, 256 );
+                lookthrough.fill( Qt::transparent );
+                pixmap = lookthrough;
                 break;
             }
         }

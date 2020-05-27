@@ -42,7 +42,8 @@ class Preferences : public QObject
         enum IconType {
             PREF_BLANK_ICON = 0,
             PREF_NEWMAIL_ICON,
-            PREF_CUSTOM_ICON
+            PREF_CUSTOM_ICON,
+            PREF_NO_ICON
         };
 
         /*
