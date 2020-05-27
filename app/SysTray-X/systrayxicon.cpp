@@ -234,8 +234,6 @@ void    SysTrayXIcon::renderIcon()
 {
     QPixmap pixmap;
 
-    m_unread_mail = 9;
-
     if( m_unread_mail > 0 )
     {
         switch( m_icon_type )
