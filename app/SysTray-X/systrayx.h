@@ -53,19 +53,19 @@ class SysTrayX : public QObject
         void    getPreferences();
 
         /**
-         * @brief createTrayIcon. Create the system tray icon.
-         */
-        void    createTrayIcon();
-
-        /**
          * @brief createActions. Create the menu actions.
          */
         void    createMenu();
 
-
+        /**
+         * @brief showTrayIcon. Create and show the icon.
+         */
         void    showTrayIcon();
-        void    hideTrayIcon();
 
+        /**
+         * @brief hideTrayIcon. Hide and destroy the icon.
+         */
+        void    hideTrayIcon();
 
     signals:
 

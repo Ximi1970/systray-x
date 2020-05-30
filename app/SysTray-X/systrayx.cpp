@@ -43,9 +43,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     m_win_ctrl = new WindowCtrl( m_preferences );
 
-    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
-    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
-
 #ifdef QT_NO_DEBUG
 
     if( !m_win_ctrl->thunderbirdStart() )
@@ -72,13 +69,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Setup tray icon
      */
     createMenu();
-
     showTrayIcon();
-
-#ifdef  FF_NEET
-    createTrayIcon();
-    m_tray_icon->show();
-#endif
 
     /*
      *  Setup debug window
@@ -92,7 +83,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect debug link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
-    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotUnreadMail );
+//    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotUnreadMail );
+//    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
+//    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
 
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_preferences, &Preferences::signalConsole, m_debug, &DebugWidget::slotConsole );
@@ -107,16 +100,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect preferences signals
      */
-#ifdef  FF_NEET
-    connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconTypeChange );
-    connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconDataChange );
-    connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
-    connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
-    connect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
-    connect( m_preferences, &Preferences::signalNumberSizeChange, m_tray_icon, &SysTrayXIcon::slotNumberSizeChange );
-#endif
-
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
@@ -151,20 +134,10 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect link signals
      */
-#ifdef  FF_NEET
-    connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
-#endif
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
-
-    /*
-     *  Connect system tray signals
-     */
-#ifdef  FF_NEET
-    connect( m_tray_icon, &SysTrayXIcon::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
-#endif
 
     /*
      *  SysTrayX
@@ -223,38 +196,6 @@ void    SysTrayX::createMenu()
     m_tray_icon_menu->addAction( m_about_action );
     m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_quit_action );
-}
-
-
-/*
- *  Create the system tray icon
- */
-void    SysTrayX::createTrayIcon()
-{
-    /*
-     *  Setup menu actions
-     */
-    createMenu();
-
-    /*
-     *  Create system tray icon
-     */
-    m_tray_icon = new SysTrayXIcon( m_link, m_preferences );
-    m_tray_icon->setContextMenu( m_tray_icon_menu );
-
-    /*
-     *  Set default icon
-     */
-    m_tray_icon->setDefaultIconMime( m_preferences->getDefaultIconMime() );
-    m_tray_icon->setDefaultIconData( m_preferences->getDefaultIconData() );
-    m_tray_icon->setDefaultIconType( m_preferences->getDefaultIconType() );
-
-    /*
-     *  Set icon
-     */
-    m_tray_icon->setIconMime( m_preferences->getIconMime() );
-    m_tray_icon->setIconData( m_preferences->getIconData() );
-    m_tray_icon->setIconType( m_preferences->getIconType() );
 }
 
 
@@ -344,26 +285,44 @@ void    SysTrayX::hideTrayIcon()
 }
 
 
+/*
+ *  Handle icon show signal
+ */
 void    SysTrayX::slotShow()
 {
     showTrayIcon();
 }
 
+
+/*
+ *  Handle icon hide signal
+ */
 void    SysTrayX::slotHide()
 {
     hideTrayIcon();
 }
 
 
+/*
+ *  Hndle the unread mail signal
+ */
 void    SysTrayX::slotUnreadMail( int unread_mail )
 {
-    if( unread_mail > 0 )
+    if( m_preferences->getDefaultIconType() == Preferences::PREF_DEFAULT_ICON_HIDE )
     {
-        showTrayIcon();
+        if( unread_mail > 0 )
+        {
+            showTrayIcon();
+        }
+        else
+        {
+            hideTrayIcon();
+        }
     }
     else
     {
-        hideTrayIcon();
+        showTrayIcon();
+
     }
 }
 

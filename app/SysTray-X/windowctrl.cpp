@@ -68,7 +68,7 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    emit signalShow();
+//    emit signalShow();
 
 //    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
 //    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
@@ -91,7 +91,7 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
-    emit signalHide();
+//    emit signalHide();
 
 //    hideWindow( getWinId(), true );
 
@@ -110,7 +110,7 @@ void    WindowCtrl::slotWindowTest3()
     emit signalConsole("Test 3 started");
 
     // Do something.
-    hideWindow( getWinId(), false );
+//    hideWindow( getWinId(), false );
 
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
