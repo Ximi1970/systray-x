@@ -7,4 +7,4 @@ Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Build-Depends: debhelper (>= 4.1.16), libfontconfig1-dev, libfreetype6-dev, libssl-dev, libx11-dev, libxcb1-dev, libx11-xcb-dev, libxcb-xkb-dev, libxkbcommon-dev, libxkbcommon-x11-dev, libxcursor-dev
 Files:
  b3d2b6d00e6ca8a8ede6d1c9bdc74daf 549205340 libqt5-opensource-5.14.2-minimal_5.14.2.orig.tar.xz
- ec525ca0bb568caa6674d68dd318b362 2076 libqt5-opensource-5.14.2-minimal_5.14.2-1.debian.tar.xz
+ 965b78a76e79fa2d0a2f0204d0939787 2068 libqt5-opensource-5.14.2-minimal_5.14.2-1.debian.tar.xz
