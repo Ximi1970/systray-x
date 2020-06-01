@@ -1,0 +1,27 @@
+diff -urN qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/data/mac/objc_namespace.sh qt-everywhere-src-5.14.2/qtbase/mkspecs/features/data/mac/objc_namespace.sh
+--- qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/data/mac/objc_namespace.sh	2020-03-27 10:49:31.000000000 +0100
++++ qt-everywhere-src-5.14.2/qtbase/mkspecs/features/data/mac/objc_namespace.sh	2020-05-31 12:11:40.399393824 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/usr/bin/bash
+ 
+ #############################################################################
+ ##
+diff -urN qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/uikit/device_destinations.sh qt-everywhere-src-5.14.2/qtbase/mkspecs/features/uikit/device_destinations.sh
+--- qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/uikit/device_destinations.sh	2020-03-27 10:49:31.000000000 +0100
++++ qt-everywhere-src-5.14.2/qtbase/mkspecs/features/uikit/device_destinations.sh	2020-05-31 12:10:58.719661513 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/usr/bin/bash
+ 
+ #############################################################################
+ ##
+diff -urN qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/uikit/devices.py qt-everywhere-src-5.14.2/qtbase/mkspecs/features/uikit/devices.py
+--- qt-everywhere-src-5.14.2.orig/qtbase/mkspecs/features/uikit/devices.py	2020-03-27 10:49:31.000000000 +0100
++++ qt-everywhere-src-5.14.2/qtbase/mkspecs/features/uikit/devices.py	2020-05-31 12:09:44.742136970 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ #############################################################################
+ ##
