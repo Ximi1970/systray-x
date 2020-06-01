@@ -22,7 +22,19 @@
    <param name="protocol">https</param>
    <param name="host">download.qt.io</param>
    <param name="path">archive/qt/5.14/5.14.2/single/qt-everywhere-src-5.14.2.tar.xz</param>
- </service>
+  </service>
+   <service name="download_url">
+   <param name="protocol">https</param>
+   <param name="host">download.qt.io</param>
+   <param name="path">archive/qt/5.14/5.14.2/single/qt-everywhere-src-5.14.2.tar.xz</param>
+   <param name="filename">libqt5-opensource-5.14.2-minimal_5.14.2.orig.tar.xz</param>
+  </service>
+  <service name="download_url">
+   <param name="protocol">https</param>
+   <param name="host">download.qt.io</param>
+   <param name="path">archive/qt/5.14/5.14.2/single/qt-everywhere-src-5.14.2.tar.xz</param>
+   <param name="filename">libqt5-opensource-5.14.2-minimal-static_5.14.2.orig.tar.xz</param>
+  </service>
   <service mode="buildtime" name="tar" />
   <service mode="buildtime" name="recompress">
     <param name="file">*.tar</param>
