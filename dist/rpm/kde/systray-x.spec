@@ -26,11 +26,8 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Widgets)
-BuildRequires:  pkgconfig(x11)
+BuildRequires:  libqt5-opensource-5.14.2-minimal
 %if 0%{?fedora_version}
-Requires:       qt5-qtwayland
 Requires:       thunderbird >= 68
 %else
 Requires:       MozillaThunderbird >= 68
