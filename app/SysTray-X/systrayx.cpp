@@ -83,9 +83,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect debug link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
-//    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotUnreadMail );
-//    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
-//    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
+    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotUnreadMail );
+    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
+    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
 
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_preferences, &Preferences::signalConsole, m_debug, &DebugWidget::slotConsole );
