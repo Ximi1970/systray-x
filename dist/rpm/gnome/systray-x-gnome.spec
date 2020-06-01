@@ -26,6 +26,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
+BuildRequires:  gcc-c++
 BuildRequires:  libqt5-opensource-5.14.2-minimal
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version}
