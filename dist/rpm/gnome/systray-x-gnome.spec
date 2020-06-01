@@ -27,7 +27,14 @@ Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  gcc-c++
+BuildRequires:  fontconfig-devel
+%if 0%{?fedora_version}
+BuildRequires:  freetype-devel
+%else
+BuildRequires:  freetype2-devel
+%endif
 BuildRequires:  libX11-devel
+BuildRequires:  libxkbcommon-x11-devel
 BuildRequires:  libqt5-opensource-5.14.2-minimal-static
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version}
