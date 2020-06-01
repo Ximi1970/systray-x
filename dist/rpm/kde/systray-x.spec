@@ -27,7 +27,7 @@ Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  gcc-c++
-BuildRequires:  libqt5-opensource-5.14.2-minimal
+BuildRequires:  libqt5-opensource-5.14.2-minimal-static
 %if 0%{?fedora_version}
 Requires:       thunderbird >= 68
 %else
