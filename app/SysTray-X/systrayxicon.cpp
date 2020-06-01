@@ -20,8 +20,17 @@
  *	Constructor
  */
 SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent )
-    : QSystemTrayIcon( QIcon( ":/files/icons/Thunderbird.png" ), parent )
+    : QSystemTrayIcon(  parent )
 {
+    /*
+     *  Set the tray icon
+     */
+    QPixmap lookthrough( 256, 256 );
+    lookthrough.fill( Qt::transparent );
+
+    //    QSystemTrayIcon::setIcon( QIcon( ":/files/icons/Thunderbird.png" ) );
+    QSystemTrayIcon::setIcon( QIcon( lookthrough ) );
+
     /*
      *  Initialize
      */
