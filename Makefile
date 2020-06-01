@@ -4,14 +4,21 @@ ifeq (Cygwin,$(shell uname -o))
 else
 ifeq (GNU/Linux,$(shell uname -o))
  SYSTEM = Linux
- 
- QMAKE = qmake-qt5
- ifeq (, $(shell which qmake-qt5 2>/dev/null))
-  ifeq (, $(shell which qmake 2>/dev/null))
-     $(error "No qmake in $(PATH)")
-  endif
-  QMAKE = qmake
- endif
+
+#QMAKE = ../rootfs/usr/Qt-opensource-5.14.2/bin/qmake
+#QMAKE = ../rootfs/usr/Qt-opensource-5.14.2-static/bin/qmake
+
+
+QMAKE = /usr/Qt-opensource-5.14.2-static/bin/qmake
+
+
+#QMAKE = qmake-qt5
+# ifeq (, $(shell which qmake-qt5 2>/dev/null))
+#  ifeq (, $(shell which qmake 2>/dev/null))
+#     $(error "No qmake in $(PATH)")
+#  endif
+#  QMAKE = qmake
+# endif
 else
  $(error "Unknown system")
 endif
