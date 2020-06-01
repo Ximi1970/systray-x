@@ -207,9 +207,16 @@ void    SysTrayX::showTrayIcon()
     if( !m_tray_icon )
     {
         /*
+         *  Create invisible icon
+         */
+        QPixmap lookthrough( 256, 256 );
+        lookthrough.fill( Qt::transparent );
+
+        /*
          *  Create system tray icon
          */
         m_tray_icon = new SysTrayXIcon( m_link, m_preferences );
+        m_tray_icon->setIcon( QIcon( lookthrough ) );
         m_tray_icon->setContextMenu( m_tray_icon_menu );
 
         /*
