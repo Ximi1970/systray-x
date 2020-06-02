@@ -15,6 +15,7 @@ ifeq (GNU/Linux,$(shell uname -o))
     ifeq (,$(wildcard /usr/Qt-opensource-5.14.2-static/bin/qmake))
       $(error "No qmake in $(PATH)")
     endif
+  endif
   QMAKE = qmake
  endif
 else
