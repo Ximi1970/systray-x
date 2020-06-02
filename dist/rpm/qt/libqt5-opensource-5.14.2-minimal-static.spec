@@ -13,12 +13,11 @@ BuildRequires:  pkgconfig
 BuildRequires:  fdupes
 
 BuildRequires:  fontconfig-devel
+BuildRequires:  openssl-devel
 %if 0%{?fedora_version}
 BuildRequires:  freetype-devel
-BuildRequires:  openssl-devel
 %else
 BuildRequires:  freetype2-devel
-BuildRequires:  libopenssl-1_0_0-devel
 %endif
 
 BuildRequires:  libxcb-devel
