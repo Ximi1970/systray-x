@@ -28,7 +28,7 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
     QPixmap lookthrough( 256, 256 );
     lookthrough.fill( Qt::transparent );
 
-    //    QSystemTrayIcon::setIcon( QIcon( ":/files/icons/Thunderbird.png" ) );
+//    QSystemTrayIcon::setIcon( QIcon( ":/files/icons/Thunderbird.png" ) );
     QSystemTrayIcon::setIcon( QIcon( lookthrough ) );
 
     /*
