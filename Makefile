@@ -12,8 +12,9 @@ ifeq (GNU/Linux,$(shell uname -o))
  QMAKE = qmake-qt5
  ifeq (, $(shell which qmake-qt5 2>/dev/null))
   ifeq (, $(shell which qmake 2>/dev/null))
-     $(error "No qmake in $(PATH)")
-  endif
+    ifeq (,$(wildcard /usr/Qt-opensource-5.14.2-static/bin/qmake))
+      $(error "No qmake in $(PATH)")
+    endif
   QMAKE = qmake
  endif
 else
