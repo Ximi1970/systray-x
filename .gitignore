@@ -2,5 +2,8 @@
 /SysTray-X
 /app/SysTray-X/.qmake.stash
 /app/SysTray-X/SysTray-X.pro.user.*
+/app/rootfs
 /bin
 /bin-*
+/libs/qt-*/*.tar.xz
+/libs/qt-*/qt-everywhere-src-*
