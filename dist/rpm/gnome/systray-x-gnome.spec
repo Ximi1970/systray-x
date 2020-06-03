@@ -28,6 +28,7 @@ BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  knotifications-devel
 Requires:       gnome-shell-extension-appindicator
