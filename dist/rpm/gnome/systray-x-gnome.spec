@@ -29,6 +29,7 @@ BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  knotifications-devel
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version}
 Requires:       qt5-qtwayland
