@@ -2,7 +2,7 @@ Source: systray-x
 Section: misc
 Priority: optional
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
-Build-Depends: debhelper (>= 4.1.16), zip, qt5-default, qtbase5-dev, libkf5notifications-dev, thunderbird
+Build-Depends: debhelper (>= 4.1.16), zip, qt5-default, qtbase5-dev, qdbus-qt5, libkf5notifications-dev, thunderbird
 
 Package: systray-x
 Architecture: any
