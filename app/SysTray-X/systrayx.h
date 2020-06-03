@@ -25,6 +25,8 @@ class SysTrayXIcon;
 class SysTrayXLink;
 class WindowCtrl;
 
+class SysTrayXStatusNotifier;
+
 /**
  * @brief The SysTrayX class
  */
@@ -66,6 +68,16 @@ class SysTrayX : public QObject
          * @brief hideTrayIcon. Hide and destroy the icon.
          */
         void    hideTrayIcon();
+
+        /**
+         * @brief showTrayIconKDE. Create and show the KDE icon.
+         */
+        void    showTrayIconKDE();
+
+        /**
+         * @brief hideTrayIcon. Hide and destroy the KDE icon.
+         */
+        void    hideTrayIconKDE();
 
     signals:
 
@@ -151,6 +163,11 @@ class SysTrayX : public QObject
          * @brief m_tray_icon. Pointer to the system tray icon.
          */
         SysTrayXIcon*   m_tray_icon;
+
+        /**
+         * @brief m_tray_icon2. Pointer to the KDE system tray icon.
+         */
+        SysTrayXStatusNotifier*   m_tray_icon2;
 
         /**
          * @brief m_tray_icon_menu. Pointer to the tray icon menu.

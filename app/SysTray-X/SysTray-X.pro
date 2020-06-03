@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui dbus KNotifications
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -154,7 +154,8 @@ SOURCES += \
         debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp \
-        windowctrl.cpp
+        windowctrl.cpp \
+    systrayxstatusnotifier.cpp
 unix: {
 SOURCES += \
         windowctrl-unix.cpp
@@ -171,7 +172,8 @@ HEADERS += \
         debugwidget.h \
         preferencesdialog.h \
         preferences.h \
-        windowctrl.h
+        windowctrl.h \
+    systrayxstatusnotifier.h
 unix: {
 HEADERS += \
         windowctrl-unix.h

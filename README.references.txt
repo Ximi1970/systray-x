@@ -1,5 +1,14 @@
 #<script>
 
+Notifier
+
+https://stackoverflow.com/questions/52935526/kstatusnotifieritem-instantiation-crashes-qt
+
+
+kstatusnotifieritem.h => knotifications-devel
+
+
+
 
 Installers
 

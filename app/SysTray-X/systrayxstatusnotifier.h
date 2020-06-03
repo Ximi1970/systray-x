@@ -1,0 +1,244 @@
+#ifndef SYSTRAYXSTATUSNOTIFIER_H
+#define SYSTRAYXSTATUSNOTIFIER_H
+
+/*
+ *	Local includes
+ */
+#include "preferences.h"
+
+/*
+ *	Qt includes
+ */
+#include <KStatusNotifierItem>
+
+/*
+ *	Predefines
+ */
+class SysTrayXLink;
+
+
+/**
+ * @brief The SysTrayXStatusNotifier class. The system tray icon.
+ */
+class SysTrayXStatusNotifier : public KStatusNotifierItem
+{
+    Q_OBJECT
+
+    public:
+
+        /**
+         * @brief SysTrayXStatusNotifier. Constructor.
+         *
+         *  @param parent   My parent.
+         */
+        SysTrayXStatusNotifier( SysTrayXLink* link, Preferences* pref, QObject* parent = nullptr );
+
+        /**
+         * @brief setDefaultIconType. Set the sytem tray default icon type.
+         *
+         *  @param icon_type    The icon type
+         */
+        void    setDefaultIconType( Preferences::DefaultIconType icon_type );
+
+        /**
+         * @brief setDefaultIconMime. Set the sytem tray icon mime.
+         *
+         *  @param icon_mime    The icon mime
+         */
+        void    setDefaultIconMime( const QString& icon_mime );
+
+        /**
+         * @brief setDefaultIconData. Set the custom icon data.
+         *
+         *  @param icon_data    The icon data.
+         */
+        void    setDefaultIconData( const QByteArray& icon_data );
+
+        /**
+         * @brief setIconType. Set the sytem tray icon type.
+         *
+         *  @param icon_type    The icon type
+         */
+        void    setIconType( Preferences::IconType icon_type );
+
+        /**
+         * @brief setIconMime. Set the sytem tray icon mime.
+         *
+         *  @param icon_mime    The icon mime
+         */
+        void    setIconMime( const QString& icon_mime );
+
+        /**
+         * @brief setIconData. Set the custom icon data.
+         *
+         *  @param icon_data    The icon data.
+         */
+        void    setIconData( const QByteArray& icon_data );
+
+        /**
+         * @brief showNumber. Set the show number state.
+         *
+         *  @param state    Show / hide.
+         */
+        void    showNumber( bool state );
+
+        /**
+         * @brief setNumberColor. Set the number color.
+         *
+         *  @param color    The color.
+         */
+        void    setNumberColor( const QString& color );
+
+        /**
+         * @brief setNumberSize. Set the number size.
+         *
+         *  @param size    The size.
+         */
+        void    setNumberSize( int size );
+
+        /**
+         * @brief setUnreadMail. Set the number of unread mails.
+         *
+         *  @param unread_mail  The number of unread mails.
+         */
+        void    setUnreadMail( int unread_mail );
+
+    private:
+
+        /**
+         * @brief setIcon. Set a new rendered icon.
+         */
+        void    renderIcon();
+
+    signals:
+
+        /**
+         * @brief signalShowHide. Signal show / hide window.
+         */
+        void    signalShowHide();
+
+    public slots:
+
+        /**
+         * @brief slotSetUnreadMail. Slot for handling unread mail signals.
+         *
+         *  @param unread_mail  The number of unread mails.
+         */
+        void    slotSetUnreadMail( int unread_mail );
+
+        /**
+         * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
+         */
+        void    slotDefaultIconTypeChange();
+
+        /**
+         * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
+         */
+        void    slotDefaultIconDataChange();
+
+        /**
+         * @brief slotIconTypeChange. Slot for handling icon type change signals.
+         */
+        void    slotIconTypeChange();
+
+        /**
+         * @brief slotIconDataChange. Slot for handling icon data change signals.
+         */
+        void    slotIconDataChange();
+
+        /**
+         * @brief slotShowNumberChange. Slot for handling show number change signals.
+         */
+        void    slotShowNumberChange();
+
+        /**
+         * @brief slotNumberColorChange. Slot for handling number color change signals.
+         */
+        void    slotNumberColorChange();
+
+        /**
+         * @brief slotNumberSizeChange. Slot for handling number size change signals.
+         */
+        void    slotNumberSizeChange();
+
+    private slots:
+
+        /**
+         * @brief slotActivateRequested. Handle a activate request of the notifier.
+         *
+         *  @param active       Window request show / hide.
+         *  @param pos          Click position.
+         */
+        void    slotActivateRequested( bool active, const QPoint &pos );
+
+        /**
+         * @brief slotSecondaryActivateRequested. Handle a secondary activate request of the notifier.
+         *
+         *  @param pos          Click position.
+         */
+        void    slotSecondaryActivateRequested( const QPoint &pos );
+
+    private:
+
+        /**
+         * @brief m_link.   Pointer to the link.
+         */
+        SysTrayXLink*   m_link;
+
+        /**
+         * @brief m_pref    Pointer to the preferences storage.
+         */
+        Preferences*    m_pref;
+
+        /**
+         * @brief m_default_icon_type. Storage for the default icon type.
+         */
+        Preferences::DefaultIconType   m_default_icon_type;
+
+        /**
+         * @brief m_default_icon_mime. Storage for the default icon mime.
+         */
+        QString m_default_icon_mime;
+
+        /**
+         * @brief m_default_icon_data. Storage for the default icon.
+         */
+        QByteArray  m_default_icon_data;
+
+        /**
+         * @brief m_icon_type. Storage for the icon type.
+         */
+        Preferences::IconType   m_icon_type;
+
+        /**
+         * @brief m_icon_mime. Storage for the icon mime.
+         */
+        QString m_icon_mime;
+
+        /**
+         * @brief m_icon_data. Storage for the icon.
+         */
+        QByteArray  m_icon_data;
+
+        /**
+         * @brief m_show_number. Show the unread mail count.
+         */
+        bool m_show_number;
+
+        /**
+         * @brief m_number_color. Color of the unread mail number.
+         */
+        QString m_number_color;
+
+        /**
+         * @brief m_number_size. Size of the unread mail number.
+         */
+        int m_number_size;
+
+        /**
+         * @brief m_unread_mail. Storage for the number of unread mails.
+         */
+        int m_unread_mail;
+};
+
+#endif // SYSTRAYXSTATUSNOTIFIER_H
