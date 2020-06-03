@@ -185,6 +185,20 @@ class Preferences : public QObject
         void setDefaultIconData( const QByteArray& icon_data );
 
         /**
+         * @brief getHideDefaultIcon. Get the hide default icon state.
+         *
+         * @return      The state.
+         */
+        bool    getHideDefaultIcon() const;
+
+        /**
+         * @brief setHideDefaultIcon. Set the hide default icon state.
+         *
+         * @param      The state.
+         */
+        void setHideDefaultIcon( bool hide );
+
+        /**
          * @brief getIconType. Get the icon type.
          *
          * @return      The icon type.
@@ -386,6 +400,11 @@ class Preferences : public QObject
         void signalDefaultIconDataChange();
 
         /**
+         * @brief signalHideDefaultIconChange. Signal a hide default icon change.
+         */
+        void signalHideDefaultIconChange();
+
+        /**
          * @brief signalIconTypeChange. Signal a icon type change.
          */
         void signalIconTypeChange();
@@ -471,6 +490,11 @@ class Preferences : public QObject
          * @brief m_default_icon_data. Binary data icon image.
          */
         QByteArray m_default_icon_data;
+
+        /**
+         * @brief m_hide_default_icon. Hide default icon state.
+         */
+        bool    m_hide_default_icon;
 
         /**
          * @brief m_icon_type. Selected icon type.

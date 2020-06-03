@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>600</height>
+    <width>500</width>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,160 +17,96 @@
    <iconset resource="SysTray-X.qrc">
     <normaloff>:/files/icons/SysTray-X.png</normaloff>:/files/icons/SysTray-X.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
+  <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_15">
+     <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
         <string>Default icon</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_12">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_9">
-          <item>
-           <widget class="QRadioButton" name="defaultIconRadioButton">
-            <property name="text">
-             <string>Default Thunderbird</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">defaultIconTypeGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="hideDefaultIconRadioButton">
-            <property name="text">
-             <string>Hide icon</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">defaultIconTypeGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QRadioButton" name="customDefaultIconRadioButton">
-              <property name="text">
-               <string>Custom icon</string>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">defaultIconTypeGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="defaultImageLabel">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="chooseCustomDefaultIconButton">
-              <property name="text">
-               <string>Choose</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="0" column="1" rowspan="2">
-      <widget class="QGroupBox" name="groupBox">
-       <property name="title">
-        <string>Windows</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_11">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_10">
-          <item>
-           <widget class="QGroupBox" name="groupBox_4">
-            <property name="title">
-             <string>Minimize</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_3">
+         <widget class="QGroupBox" name="groupBox_5">
+          <property name="title">
+           <string>Icon</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QRadioButton" name="defaultIconRadioButton">
+               <property name="text">
+                <string>Default Thunderbird</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">defaultIconTypeGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="lookThroughDefaultIconRadioButton">
+               <property name="text">
+                <string>Lookthrough icon</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">defaultIconTypeGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
                <item>
-                <widget class="QRadioButton" name="defaultMinimizeRadioButton">
+                <widget class="QRadioButton" name="customDefaultIconRadioButton">
                  <property name="text">
-                  <string>Default minimize</string>
+                  <string>Custom icon</string>
                  </property>
-                 <property name="checked">
+                 <attribute name="buttonGroup">
+                  <string notr="true">defaultIconTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="defaultImageLabel">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="chooseCustomDefaultIconButton">
+                 <property name="text">
+                  <string>Choose</string>
+                 </property>
+                 <property name="flat">
                   <bool>false</bool>
                  </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">minimizeTypeGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="minimizeMethod1RadioButton">
-                 <property name="text">
-                  <string>Minimize to tray, method 1</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">minimizeTypeGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="minimizeMethod2RadioButton">
-                 <property name="text">
-                  <string>Minimize to tray, method 2</string>
-                 </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">minimizeTypeGroup</string>
-                 </attribute>
                 </widget>
                </item>
               </layout>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QCheckBox" name="startMinimizedCheckBox">
-              <property name="text">
-               <string>Start application minimized</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
-              <property name="text">
-               <string>Minimize on close</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="hideDefaultIconCheckBox">
+          <property name="text">
+           <string>Hide icon (KDE)</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
      </item>
-     <item row="1" column="0" rowspan="2">
+     <item>
       <widget class="QGroupBox" name="iconTypeGroupBox">
        <property name="title">
         <string>Mail notification icon</string>
@@ -307,7 +243,107 @@
        </layout>
       </widget>
      </item>
-     <item row="2" column="1" rowspan="2">
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>113</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout_14">
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Windows</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string>Minimize</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QRadioButton" name="defaultMinimizeRadioButton">
+                 <property name="text">
+                  <string>Default minimize</string>
+                 </property>
+                 <property name="checked">
+                  <bool>false</bool>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">minimizeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="minimizeMethod1RadioButton">
+                 <property name="text">
+                  <string>Minimize to tray, method 1</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">minimizeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="minimizeMethod2RadioButton">
+                 <property name="text">
+                  <string>Minimize to tray, method 2</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">minimizeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QCheckBox" name="startMinimizedCheckBox">
+              <property name="text">
+               <string>Start application minimized</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
+              <property name="text">
+               <string>Minimize on close</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
         <string>Number properties</string>
@@ -411,20 +447,7 @@
        </layout>
       </widget>
      </item>
-     <item row="3" column="0">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>113</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="4" column="1">
+     <item>
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -439,7 +462,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
       <widget class="QCheckBox" name="debugWindowCheckBox">
@@ -484,9 +507,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="countTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
  </buttongroups>
 </ui>

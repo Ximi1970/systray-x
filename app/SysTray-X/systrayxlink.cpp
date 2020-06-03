@@ -477,6 +477,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setDefaultIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "hideDefaultIcon" ) && pref[ "hideDefaultIcon" ].isString() )
+    {
+        bool hide_default_icon = pref[ "hideDefaultIcon" ].toString() == "true";
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setHideDefaultIcon( hide_default_icon );
+    }
+
     if( pref.contains( "iconType" ) && pref[ "iconType" ].isString() )
     {
         Preferences::IconType icon_type = static_cast< Preferences::IconType >( pref[ "iconType" ].toString().toInt() );
@@ -604,6 +614,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
     prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
     prefObject.insert("defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
+    prefObject.insert("hideDefaultIcon", QJsonValue::fromVariant( QString( pref.getHideDefaultIcon() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -707,6 +718,18 @@ void    SysTrayXLink::slotDefaultIconTypeChange()
  *  Handle the default icon data change signal
  */
 void    SysTrayXLink::slotDefaultIconDataChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the hide default icon change signal
+ */
+void    SysTrayXLink::slotHideDefaultIconChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

@@ -71,7 +71,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Setup tray icon
      */
     createMenu();
-    showTrayIcon();
+//    showTrayIcon();
     showTrayIconKDE();
 
     /*
@@ -108,6 +108,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconDataChange );
+    connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_pref_dialog, &PreferencesDialog::slotHideDefaultIconChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
@@ -121,6 +122,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_link, &SysTrayXLink::slotDefaultIconDataChange );
+    connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_link, &SysTrayXLink::slotHideDefaultIconChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
@@ -323,6 +325,7 @@ void    SysTrayX::showTrayIconKDE()
 
         connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_tray_icon2, &SysTrayXStatusNotifier::slotDefaultIconTypeChange );
         connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon2, &SysTrayXStatusNotifier::slotDefaultIconDataChange );
+        connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_tray_icon2, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
         connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon2, &SysTrayXStatusNotifier::slotIconTypeChange );
         connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon2, &SysTrayXStatusNotifier::slotIconDataChange );
         connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon2, &SysTrayXStatusNotifier::slotShowNumberChange );
@@ -348,6 +351,7 @@ void    SysTrayX::hideTrayIconKDE()
 
         disconnect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_tray_icon2, &SysTrayXStatusNotifier::slotDefaultIconTypeChange );
         disconnect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon2, &SysTrayXStatusNotifier::slotDefaultIconDataChange );
+        disconnect( m_preferences, &Preferences::signalHideDefaultIconChange, m_tray_icon2, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
         disconnect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon2, &SysTrayXStatusNotifier::slotIconTypeChange );
         disconnect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon2, &SysTrayXStatusNotifier::slotIconDataChange );
         disconnect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon2, &SysTrayXStatusNotifier::slotShowNumberChange );

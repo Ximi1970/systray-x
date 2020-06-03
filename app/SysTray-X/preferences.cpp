@@ -37,6 +37,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
     m_default_icon_mime = "image/png";
     m_default_icon_data = QByteArray();
+    m_hide_default_icon = true;
 
     m_icon_type = PREF_BLANK_ICON;
     m_icon_mime = "image/png";
@@ -214,6 +215,32 @@ void    Preferences::setDefaultIconData( const QByteArray& icon_data )
          *  Tell the world the new preference
          */
         emit signalDefaultIconDataChange();
+    }
+}
+
+
+/*
+ *  Get the hide default icon state.
+ */
+bool    Preferences::getHideDefaultIcon() const
+{
+    return m_hide_default_icon;
+}
+
+
+/*
+ *  Set the hide default icon state.
+ */
+void    Preferences::setHideDefaultIcon( bool hide )
+{
+    if( m_hide_default_icon != hide)
+    {
+        m_hide_default_icon = hide;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalHideDefaultIconChange();
     }
 }
 

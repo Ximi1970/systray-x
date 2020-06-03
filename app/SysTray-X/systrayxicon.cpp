@@ -279,7 +279,6 @@ void    SysTrayXIcon::renderIcon()
             case Preferences::PREF_DEFAULT_ICON_HIDE:
             {
                 pixmap = QPixmap();
-
                 break;
             }
 

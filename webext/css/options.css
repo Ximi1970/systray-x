@@ -61,6 +61,7 @@ body {
 }
 
 #minimizeselect {
+  width: 20em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
@@ -98,6 +99,7 @@ ul,
 
 /* Remove margins and padding from the parent ul */
 #accountsTree {
+  width: 20em;
   border-style: solid;
   border-width: 1px;
   margin: 0;

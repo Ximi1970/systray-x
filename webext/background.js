@@ -146,6 +146,7 @@ SysTrayX.Messaging = {
       "defaultIconType",
       "defaultIconMime",
       "defaultIcon",
+      "hideDefaultIcon",
       "iconType",
       "iconMime",
       "icon",
@@ -165,6 +166,7 @@ SysTrayX.Messaging = {
     const defaultIconType = result.defaultIconType || "0";
     const defaultIconMime = result.defaultIconMime || "image/png";
     const defaultIcon = result.defaultIcon || [];
+    const hideDefaultIcon = result.hideDefaultIcon || "true";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
@@ -183,6 +185,7 @@ SysTrayX.Messaging = {
         defaultIconType: defaultIconType,
         defaultIconMime: defaultIconMime,
         defaultIcon: defaultIcon,
+        hideDefaultIcon: hideDefaultIcon,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon,
@@ -276,6 +279,13 @@ SysTrayX.Link = {
       if (defaultIconType) {
         browser.storage.sync.set({
           defaultIconType: defaultIconType,
+        });
+      }
+
+      const hideDefaultIcon = response["preferences"].hideDefaultIcon;
+      if (hideDefaultIcon) {
+        browser.storage.sync.set({
+          hideDefaultIcon: hideDefaultIcon,
         });
       }
 

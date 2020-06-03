@@ -55,6 +55,13 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    setDefaultIconData( const QByteArray& icon_data );
 
         /**
+         * @brief setHideDefaultIcon. Set hide default icon.
+         *
+         *  @param hide    The state
+         */
+        void    setHideDefaultIcon( bool hide );
+
+        /**
          * @brief setIconType. Set the sytem tray icon type.
          *
          *  @param icon_type    The icon type
@@ -110,6 +117,11 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
          */
         void    renderIcon();
 
+        /**
+         * @brief showIcon. Show the icon.
+         */
+        void    showIcon();
+
     signals:
 
         /**
@@ -135,6 +147,11 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
          * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
          */
         void    slotDefaultIconDataChange();
+
+        /**
+         * @brief slotHideDefaultIconChange. Slot for handling hide default icon change signals.
+         */
+        void    slotHideDefaultIconChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
@@ -204,6 +221,11 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
          * @brief m_default_icon_data. Storage for the default icon.
          */
         QByteArray  m_default_icon_data;
+
+        /**
+         * @brief m_hide_default_icon. Storage for the hide default icon state.
+         */
+        bool    m_hide_default_icon;
 
         /**
          * @brief m_icon_type. Storage for the icon type.

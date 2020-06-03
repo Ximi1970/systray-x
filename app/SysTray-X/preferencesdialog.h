@@ -110,6 +110,13 @@ class PreferencesDialog : public QDialog
         void    setDefaultIcon();
 
         /**
+         * @brief setHideDefaultIcon. Set the hide default icon.
+         *
+         *  @param hide     The state.
+         */
+        void    setHideDefaultIcon( bool hide );
+
+        /**
          * @brief setShowNumber. Set the show number state.
          *
          *  @param state    The state.
@@ -182,6 +189,11 @@ class PreferencesDialog : public QDialog
          * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
          */
         void    slotDefaultIconTypeChange();
+
+        /**
+         * @brief slotHideDefaultIconChange. Slot for handling hide default icon change signals.
+         */
+        void    slotHideDefaultIconChange();
 
         /**
          * @brief slotIconDataChange. Slot for handling icon data change signals.

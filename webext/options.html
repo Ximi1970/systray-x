@@ -34,6 +34,9 @@
       <form>
         <h3>Windows</h3>
         <table id="minimizeselect">
+          <caption>
+            Minimize
+          </caption>
           <tr id="minimizedefault">
             <td>
               <input type="radio" name="minimizeType" value="0" />
@@ -83,7 +86,8 @@
           </tr>
           <tr>
             <td>
-              <input type="radio" name="defaultIconType" value="1" /> Hide icon
+              <input type="radio" name="defaultIconType" value="1" />
+              Lookthrough icon
             </td>
           </tr>
           <tr>
@@ -119,6 +123,9 @@
             </td>
           </tr>
         </table>
+
+        <input type="checkbox" name="hideDefaultIcon" value="" /> Hide default
+        icon (KDE)<br />
 
         <table id="iconselect">
           <caption>

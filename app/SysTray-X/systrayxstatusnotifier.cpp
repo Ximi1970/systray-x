@@ -14,6 +14,7 @@
  *	Qt includes
  */
 #include <QIcon>
+#include <QTimer>
 #include <QPixmap>
 #include <QPainter>
 
@@ -44,8 +45,10 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
     setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird.png") ) );
     setTitle("SysTray-X");
 
-//  setStatus(KStatusNotifierItem::ItemStatus::Passive);
-    setStatus(KStatusNotifierItem::ItemStatus::Active);
+    setStatus( KStatusNotifierItem::ItemStatus::Passive );
+    m_hide_default_icon = true;
+
+//  setStatus(KStatusNotifierItem::ItemStatus::Active);
 //  setStatus(KStatusNotifierItem::ItemStatus::NeedsAttention);
 
     connect( this, &KStatusNotifierItem::activateRequested, this, &SysTrayXStatusNotifier::slotActivateRequested );
@@ -104,6 +107,21 @@ void    SysTrayXStatusNotifier::setDefaultIconData( const QByteArray& icon_data 
          *  Render and set a new icon in the tray
          */
         renderIcon();
+    }
+}
+
+
+/*
+ *  Set the hide default icon
+ */
+void    SysTrayXStatusNotifier::setHideDefaultIcon( bool hide )
+{
+    if( m_hide_default_icon != hide )
+    {
+        /*
+         *  Store the new value
+         */
+        m_hide_default_icon = hide;
     }
 }
 
@@ -294,7 +312,6 @@ void    SysTrayXStatusNotifier::renderIcon()
             case Preferences::PREF_DEFAULT_ICON_HIDE:
             {
                 pixmap = QPixmap();
-
                 break;
             }
 
@@ -334,6 +351,27 @@ void    SysTrayXStatusNotifier::renderIcon()
      *  Set the tray icon
      */
     setIconByPixmap( QIcon( pixmap ) );
+
+    /*
+     *  Hide the icon?
+     */
+    if( m_hide_default_icon && m_unread_mail == 0 )
+    {
+        setStatus( KStatusNotifierItem::ItemStatus::Passive );
+    }
+    else
+    {
+        QTimer::singleShot(500, this, &SysTrayXStatusNotifier::showIcon);
+    }
+}
+
+
+void    SysTrayXStatusNotifier::showIcon()
+{
+    if( !m_hide_default_icon || m_unread_mail > 0 )
+    {
+        setStatus( KStatusNotifierItem::ItemStatus::Active );
+    }
 }
 
 
@@ -362,6 +400,15 @@ void    SysTrayXStatusNotifier::slotDefaultIconDataChange()
 {
     setDefaultIconMime( m_pref->getDefaultIconMime() );
     setDefaultIconData( m_pref->getDefaultIconData() );
+}
+
+
+/*
+ *  Handle the hide default icon change signal
+ */
+void    SysTrayXStatusNotifier::slotHideDefaultIconChange()
+{
+    setHideDefaultIcon( m_pref->getHideDefaultIcon() );
 }
 
 
