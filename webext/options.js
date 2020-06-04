@@ -475,7 +475,7 @@ SysTrayX.RestoreOptions = {
   //  Restore hide default icon callbacks
   //
   setHideDefaultIcon: function (result) {
-    const hideDefaultIcon = result.hideDefaultIcon || "true";
+    const hideDefaultIcon = result.hideDefaultIcon || "false";
 
     const checkbox = document.querySelector(`input[name="hideDefaultIcon"]`);
     checkbox.checked = hideDefaultIcon === "true";

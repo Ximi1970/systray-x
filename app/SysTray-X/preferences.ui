@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>540</height>
+    <width>543</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -96,10 +96,10 @@
         <item>
          <widget class="QCheckBox" name="hideDefaultIconCheckBox">
           <property name="text">
-           <string>Hide icon (KDE)</string>
+           <string>KDE integration (Hide)</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -507,9 +507,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
  </buttongroups>
 </ui>

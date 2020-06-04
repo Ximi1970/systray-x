@@ -37,7 +37,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
     m_default_icon_mime = "image/png";
     m_default_icon_data = QByteArray();
-    m_hide_default_icon = true;
+    m_hide_default_icon = false;
 
     m_icon_type = PREF_BLANK_ICON;
     m_icon_mime = "image/png";
