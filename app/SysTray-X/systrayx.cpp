@@ -419,7 +419,10 @@ void    SysTrayX::slotAddOnShutdown()
     /*
      *  Hide systray icon to prevent ghost systray icon in Windows
      */
-    m_tray_icon->hide();
+    if( m_tray_icon )
+    {
+        m_tray_icon->hide();
+    }
 
     /*
      *  Close the TB window
@@ -448,7 +451,10 @@ void    SysTrayX::slotShutdown()
         /*
          *  Hide systray icon to prevent ghost systray icon in Windows
          */
-        m_tray_icon->hide();
+        if( m_tray_icon )
+        {
+            m_tray_icon->hide();
+        }
 
         /*
          *  Close the TB window
@@ -493,6 +499,11 @@ void    SysTrayX::slotVersion( QString version )
         {
             m_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app",
                 QSystemTrayIcon::Warning );
+        }
+
+        if( m_tray_icon2 )
+        {
+            m_tray_icon2->showMessage("SysTray-X Warning", "Version mismatch addon and app", ":/files/icons/dialog-warning.png" );
         }
     }
 }
