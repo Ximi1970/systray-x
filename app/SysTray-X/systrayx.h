@@ -60,6 +60,11 @@ class SysTrayX : public QObject
         void    createMenu();
 
         /**
+         * @brief destroyMenu. Destroy the menu.
+         */
+        void    destroyMenu();
+
+        /**
          * @brief showTrayIcon. Create and show the icon.
          */
         void    showTrayIcon();
@@ -70,14 +75,14 @@ class SysTrayX : public QObject
         void    hideTrayIcon();
 
         /**
-         * @brief showTrayIconKDE. Create and show the KDE icon.
+         * @brief showKdeTrayIcon. Create and show the KDE icon.
          */
-        void    showTrayIconKDE();
+        void    showKdeTrayIcon();
 
         /**
-         * @brief hideTrayIcon. Hide and destroy the KDE icon.
+         * @brief hideKdeTrayIcon. Hide and destroy the KDE icon.
          */
-        void    hideTrayIconKDE();
+        void    hideKdeTrayIcon();
 
     signals:
 
@@ -102,15 +107,13 @@ class SysTrayX : public QObject
 
     private slots:
 
-        void    slotShow();
-        void    slotHide();
-
         /**
-         * @brief slotUnreadMail. Handle unread mail signal.
+         * @brief slotSelectIconObject. Select the prefered icon.
          *
-         *  @param unread_mail  Number of unread mail.
+         *  @param state    The state.
          */
-        void    slotUnreadMail( int unread_mail );
+        void    slotSelectIconObjectPref();
+        void    slotSelectIconObject( bool state );
 
         /**
          * @brief slotAddOnShutdown. Handle shutdown request from the add-on.
@@ -165,9 +168,9 @@ class SysTrayX : public QObject
         SysTrayXIcon*   m_tray_icon;
 
         /**
-         * @brief m_tray_icon2. Pointer to the KDE system tray icon.
+         * @brief m_kde_tray_icon. Pointer to the KDE system tray icon.
          */
-        SysTrayXStatusNotifier*   m_tray_icon2;
+        SysTrayXStatusNotifier*   m_kde_tray_icon;
 
         /**
          * @brief m_tray_icon_menu. Pointer to the tray icon menu.

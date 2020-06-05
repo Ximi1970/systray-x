@@ -49,8 +49,10 @@ class WindowCtrl : public QObject
 
     signals:
 
-        void    signalShow();
-        void    signalHide();
+//        void    signalShow();
+//        void    signalHide();
+
+        void    signalHideDefaultIconChange(bool hide );
 
     public slots:
 

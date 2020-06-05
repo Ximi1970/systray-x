@@ -182,6 +182,13 @@ class SysTrayXLink : public QObject
         void    signalWindowState( int state );
 
         /**
+         * @brief signalKdeIntegration. Signal KDE integration (and use the KStatusNotifierItem icon)
+         *
+         *   @param state   The prefered state
+         */
+        void    signalKdeIntegration( bool state );
+
+        /**
          * @brief signalUnreadMail. Signal numder of unread mails.
          *
          * @param unreadMail    The number of unread mails.

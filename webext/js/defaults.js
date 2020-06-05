@@ -146,6 +146,26 @@ async function getMinimizeOnClose() {
   );
 }
 
+//
+//  Get KDE integration, default icon hide
+//
+async function getHideDefaultIcon() {
+  function getHideDefaultIconPref(result) {
+    const hideDefaultIcon = result.hideDefaultIcon || "false";
+    return hideDefaultIcon === "true";
+  }
+
+  function onHideDefaultIconPrefError() {
+    return false;
+  }
+
+  const getState = browser.storage.sync.get("hideDefaultIcon");
+  return await getState.then(
+    getHideDefaultIconPref,
+    onHideDefaultIconPrefError
+  );
+}
+
 //  Check if the filters are for existing accounts
 function checkAccountFilters(filters) {
   let filtersChanged = false;

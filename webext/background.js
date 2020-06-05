@@ -3,6 +3,8 @@ var SysTrayX = {
 
   startupState: undefined,
 
+  hideDefaultIcon: false,
+
   platformInfo: undefined,
 
   browserInfo: undefined,
@@ -30,6 +32,9 @@ SysTrayX.Messaging = {
 
     //  Send version to app
     SysTrayX.Messaging.sendVersion();
+
+    //  Send hide default icon preference
+    SysTrayX.Messaging.sendHideDefaultIcon();
 
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
@@ -135,6 +140,14 @@ SysTrayX.Messaging = {
 
   sendVersion: function () {
     SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.version });
+  },
+
+  sendHideDefaultIcon: function () {
+    console.debug("HideIcon:" + SysTrayX.hideDefaultIcon);
+
+    SysTrayX.Link.postSysTrayXMessage({
+      hideDefaultIcon: SysTrayX.hideDefaultIcon,
+    });
   },
 
   sendPreferences: function () {
@@ -400,6 +413,10 @@ async function start() {
       SysTrayX.Messaging.onCloseButton
     );
   }
+
+  //  Hide the default icon
+  const hideDefaultIcon = await getHideDefaultIcon();
+  SysTrayX.hideDefaultIcon = hideDefaultIcon;
 
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime
