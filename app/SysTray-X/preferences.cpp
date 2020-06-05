@@ -52,8 +52,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_start_minimized = false;
     m_minimize_on_close = true;
 
-//    m_debug = false;
-    m_debug = true;
+    m_debug = false;
 
     m_version_major = QLatin1String( APP_VERSION_MAJOR );
     m_version_minor = QLatin1String( APP_VERSION_MINOR );
