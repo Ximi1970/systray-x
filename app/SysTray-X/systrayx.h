@@ -84,7 +84,19 @@ class SysTrayX : public QObject
          */
         void    hideKdeTrayIcon();
 
+        /**
+         * @brief resendUnreadMail. Send another unread mail signal to the icon.
+         */
+        void    resendUnreadMail();
+
     signals:
+
+        /**
+         * @brief signalUnreadMail. Signal numder of unread mails.
+         *
+         * @param unreadMail    The number of unread mails.
+         */
+        void    signalUnreadMail( int unread_mail );
 
         /**
          * @brief signalWriteMessage
@@ -104,6 +116,15 @@ class SysTrayX : public QObject
          *  @param message      The message.
          */
         void    signalConsole( QString message );
+
+    public slots:
+
+        /**
+         * @brief slotSetUnreadMail. Handle the unred mail signal.
+         *
+         *  @param unread   Number of unread mail.
+         */
+        void    slotSetUnreadMail( int unread );
 
     private slots:
 
@@ -184,6 +205,11 @@ class SysTrayX : public QObject
         QAction*    m_pref_action;
         QAction*    m_about_action;
         QAction*    m_quit_action;
+
+        /**
+         * @brief m_unread_mail. Number of unread mails
+         */
+        int m_unread_mail;
 };
 
 #endif // SYSTRAYX_H

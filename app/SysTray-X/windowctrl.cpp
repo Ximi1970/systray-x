@@ -68,7 +68,7 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-    signalHideDefaultIconChange( true );
+//    signalHideDefaultIconChange( true );
 
 //    emit signalShow();
 
@@ -93,7 +93,7 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
-    signalHideDefaultIconChange( false );
+//    signalHideDefaultIconChange( false );
 
 //    emit signalHide();
 

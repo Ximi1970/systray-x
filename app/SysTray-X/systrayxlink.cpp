@@ -262,13 +262,14 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
     {
         QJsonObject jsonObject = jsonResponse.object();
 
-        /*
+/*
         QStringList list = jsonObject.keys();
         for( int i = 0 ;  i < list.length() ; ++i )
         {
             emit signalConsole( QString("Message %1").arg(list.at(i)) );
         }
 */
+
         if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
         {
             int unreadMail = jsonObject[ "unreadMail" ].toInt();
@@ -295,10 +296,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
             QString window_state_str = jsonObject[ "window" ].toString();
-
-
-            emit signalConsole( QString( "Window state (%1)" ).arg( window_state_str ) );
-
 
             int window_state;
             if( window_state_str == Preferences::STATE_NORMAL_STR )
@@ -330,8 +327,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
                 /*
                  *  Unknown state
                  */
-                emit signalConsole( QString( "Error: unknow window state (%1)" ).arg( window_state_str ) );
-
                 window_state = Preferences::STATE_NORMAL;
             }
 
@@ -341,8 +336,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "hideDefaultIcon" ) && jsonObject[ "hideDefaultIcon" ].isBool() )
         {
             bool hide_default_icon = jsonObject[ "hideDefaultIcon" ].toBool();
-
-            emit signalConsole(QString("hideDefaultIcon %1").arg(hide_default_icon));
 
             /*
              *  Signal the KDE integration or hide default icon
@@ -362,8 +355,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
-            emit signalConsole( QString("preferences") );
-
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
         }
     }
@@ -501,8 +492,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
     if( pref.contains( "hideDefaultIcon" ) && pref[ "hideDefaultIcon" ].isString() )
     {
         bool hide_default_icon = pref[ "hideDefaultIcon" ].toString() == "true";
-
-        emit signalConsole(QString("hideDefaultIcon %1").arg(hide_default_icon));
 
         /*
          *  Store the new start minimized state

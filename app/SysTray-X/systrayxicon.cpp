@@ -212,8 +212,8 @@ void    SysTrayXIcon::setNumberSize( int size )
  */
 void    SysTrayXIcon::setUnreadMail( int unread_mail )
 {
-    if( unread_mail != m_unread_mail ) {
-
+    if( m_unread_mail != unread_mail )
+    {
         /*
          *  Store the new value
          */

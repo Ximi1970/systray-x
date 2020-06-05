@@ -15,8 +15,8 @@
  */
 #include <QCoreApplication>
 #include <QMenu>
-#include <QStyle>
 #include <QIcon>
+#include <QTimer>
 
 /*
  *  Constants
@@ -36,6 +36,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     m_kde_tray_icon = nullptr;
 
     m_tray_icon_menu = nullptr;
+
+    m_unread_mail = 0;
 
     /*
      *  Setup preferences storage
@@ -139,8 +141,10 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
+    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
+
 
     /*
      *  SysTrayX
@@ -262,10 +266,14 @@ void    SysTrayX::showTrayIcon()
 
         connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
+        connect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+
         /*
          *  Show it
          */
         m_tray_icon->show();
+
+        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
     }
 }
 
@@ -291,6 +299,8 @@ void    SysTrayX::hideTrayIcon()
         disconnect( m_preferences, &Preferences::signalNumberSizeChange, m_tray_icon, &SysTrayXIcon::slotNumberSizeChange );
 
         disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+
+        disconnect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
         /*
          *  Hide the icon  first to prevent "ghosts"
@@ -359,6 +369,13 @@ void    SysTrayX::showKdeTrayIcon()
         connect( m_preferences, &Preferences::signalNumberSizeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberSizeChange );
 
         connect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        connect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        /*
+         *  Show
+         */
+        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
     }
 }
 
@@ -386,6 +403,8 @@ void    SysTrayX::hideKdeTrayIcon()
 
         disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
 
+        disconnect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
         /*
          *  Remove the notifier icon
          */
@@ -402,6 +421,15 @@ void    SysTrayX::hideKdeTrayIcon()
 
 
 /*
+ *  Resend unread mail
+ */
+void    SysTrayX::resendUnreadMail()
+{
+    emit signalUnreadMail( m_unread_mail );
+}
+
+
+/*
  *  Select the prefered icon
  */
 void    SysTrayX::slotSelectIconObjectPref()
@@ -414,7 +442,7 @@ void    SysTrayX::slotSelectIconObject( bool state )
     if( state )
     {
         //  Use the KDE icon object
-        emit signalConsole("Enable KDE icon");
+//        emit signalConsole("Enable KDE icon");
 
         //  Remove the Qt tray icon
         hideTrayIcon();
@@ -425,7 +453,7 @@ void    SysTrayX::slotSelectIconObject( bool state )
     else
     {
         //  Use default Qt system tray icon
-        emit signalConsole("Enable Qt icon");
+//        emit signalConsole("Enable Qt icon");
 
         //  Remove KDE trsy icon
         hideKdeTrayIcon();
@@ -531,4 +559,13 @@ void    SysTrayX::slotVersion( QString version )
             m_kde_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app", ":/files/icons/dialog-warning.png" );
         }
     }
+}
+
+
+/*
+ *  Handle unread mail signal
+ */
+void    SysTrayX::slotSetUnreadMail( int unread )
+{
+    m_unread_mail = unread;
 }
