@@ -402,6 +402,7 @@ void    SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reaso
 {
     switch (reason) {
         case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::MiddleClick:
         {
             //  Clicked
             emit signalShowHide();
@@ -409,7 +410,6 @@ void    SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reaso
         }
 
         case QSystemTrayIcon::DoubleClick:
-        case QSystemTrayIcon::MiddleClick:
         {
             break;
         }
