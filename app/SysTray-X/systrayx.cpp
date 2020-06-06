@@ -94,7 +94,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_debug, &DebugWidget::signalTest2ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest2 );
     connect( m_debug, &DebugWidget::signalTest3ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest3 );
 
+#ifdef Q_OS_UNIX
+
     connect( m_win_ctrl, &WindowCtrl::signalHideDefaultIconChange, this, &SysTrayX::slotSelectIconObject );
+
+#endif
+
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
 
     /*
@@ -130,7 +135,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
-
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
@@ -140,11 +144,10 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
-    connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
     connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
-
+    connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
 
     /*
      *  SysTrayX
@@ -321,6 +324,8 @@ void    SysTrayX::hideTrayIcon()
 }
 
 
+#ifdef Q_OS_UNIX
+
 /*
  *  Show / create tray icon
  */
@@ -419,14 +424,7 @@ void    SysTrayX::hideKdeTrayIcon()
     }
 }
 
-
-/*
- *  Resend unread mail
- */
-void    SysTrayX::resendUnreadMail()
-{
-    emit signalUnreadMail( m_unread_mail );
-}
+#endif
 
 
 /*
@@ -439,6 +437,9 @@ void    SysTrayX::slotSelectIconObjectPref()
 
 void    SysTrayX::slotSelectIconObject( bool state )
 {
+
+#ifdef Q_OS_UNIX
+
     if( state )
     {
         //  Use the KDE icon object
@@ -461,6 +462,25 @@ void    SysTrayX::slotSelectIconObject( bool state )
         //  Setup the Qt tray icon
         showTrayIcon();
     }
+
+#else
+
+    Q_UNUSED( state )
+
+    //  Setup the Qt tray icon
+    showTrayIcon();
+
+#endif
+
+}
+
+
+/*
+ *  Resend unread mail
+ */
+void    SysTrayX::resendUnreadMail()
+{
+    emit signalUnreadMail( m_unread_mail );
 }
 
 
@@ -554,10 +574,15 @@ void    SysTrayX::slotVersion( QString version )
                 QSystemTrayIcon::Warning );
         }
 
+#ifdef Q_OS_UNIX
+
         if( m_kde_tray_icon )
         {
             m_kde_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app", ":/files/icons/dialog-warning.png" );
         }
+
+#endif
+
     }
 }
 

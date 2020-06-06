@@ -4,7 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += core gui dbus KNotifications
+QT       += core gui
+unix:!macx: {
+QT       += dbus KNotifications
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

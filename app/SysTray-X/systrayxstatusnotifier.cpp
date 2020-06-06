@@ -1,5 +1,7 @@
 #include "systrayxstatusnotifier.h"
 
+#ifdef Q_OS_UNIX
+
 /*
  *	Local includes
  */
@@ -479,3 +481,5 @@ void    SysTrayXStatusNotifier::slotSecondaryActivateRequested( const QPoint &po
 
     emit signalShowHide();
 }
+
+#endif

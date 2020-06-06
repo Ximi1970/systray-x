@@ -42,6 +42,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod1RadioButton->setText( "Minimize to tray" );
     m_ui->minimizeMethod2RadioButton->hide();
 
+    m_ui->hideDefaultIconCheckBox->hide();
+
 #endif
 
     /*

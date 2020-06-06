@@ -1,5 +1,9 @@
+#include <QtGlobal>
+#ifdef Q_OS_UNIX
+
 #ifndef SYSTRAYXSTATUSNOTIFIER_H
 #define SYSTRAYXSTATUSNOTIFIER_H
+
 
 /*
  *	Local includes
@@ -264,3 +268,5 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
 };
 
 #endif // SYSTRAYXSTATUSNOTIFIER_H
+
+#endif

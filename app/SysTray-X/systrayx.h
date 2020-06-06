@@ -74,6 +74,8 @@ class SysTrayX : public QObject
          */
         void    hideTrayIcon();
 
+#ifdef Q_OS_UNIX
+
         /**
          * @brief showKdeTrayIcon. Create and show the KDE icon.
          */
@@ -83,6 +85,8 @@ class SysTrayX : public QObject
          * @brief hideKdeTrayIcon. Hide and destroy the KDE icon.
          */
         void    hideKdeTrayIcon();
+
+#endif
 
         /**
          * @brief resendUnreadMail. Send another unread mail signal to the icon.
