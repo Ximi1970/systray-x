@@ -1,5 +1,5 @@
 #include <QtGlobal>
-#ifdef Q_OS_UNIX
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
 
 #ifndef SYSTRAYXSTATUSNOTIFIER_H
 #define SYSTRAYXSTATUSNOTIFIER_H

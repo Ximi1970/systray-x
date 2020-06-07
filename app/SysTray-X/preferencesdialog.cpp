@@ -46,6 +46,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 #endif
 
+#if defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION )
+
+    m_ui->hideDefaultIconCheckBox->hide();
+
+#endif
+
     /*
      *  Set icon type button Ids
      */

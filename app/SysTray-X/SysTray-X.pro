@@ -4,13 +4,28 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+#DEFINES += NO_KDE_INTEGRATION
+
+
+!contains(DEFINES,NO_KDE_INTEGRATION) {
+    DEFINES += KDE_INTEGRATION
+}
+
+#
+# Set the Qt modules
+#
+QT += core gui
 unix:!macx: {
-QT       += dbus KNotifications
+    contains(DEFINES,KDE_INTEGRATION) {
+        QT += dbus KNotifications
+    }
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#
+# Define the target
+#
 TARGET = SysTray-X
 TEMPLATE = app
 

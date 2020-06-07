@@ -324,7 +324,7 @@ void    SysTrayX::hideTrayIcon()
 }
 
 
-#ifdef Q_OS_UNIX
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
 
 /*
  *  Show / create tray icon
@@ -438,7 +438,7 @@ void    SysTrayX::slotSelectIconObjectPref()
 void    SysTrayX::slotSelectIconObject( bool state )
 {
 
-#ifdef Q_OS_UNIX
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
 
     if( state )
     {
@@ -574,7 +574,7 @@ void    SysTrayX::slotVersion( QString version )
                 QSystemTrayIcon::Warning );
         }
 
-#ifdef Q_OS_UNIX
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
 
         if( m_kde_tray_icon )
         {

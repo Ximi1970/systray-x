@@ -17,6 +17,8 @@ else
 endif
 endif
 
+#OPTIONS = "DEFINES += NO_KDE_INTEGRATION"
+
 .PHONY:	clean \
 	systray-x-xpi \
 	systray-x-app
@@ -56,7 +58,7 @@ systray-x-app:
 	rm -f SysTray-X ;\
 	mkdir -p app/build ;\
 	cd app/build ;\
-	$(QMAKE) $(EXT_VERSION) ../SysTray-X/SysTray-X.pro ;\
+	$(QMAKE) $(EXT_VERSION) $(OPTIONS) ../SysTray-X/SysTray-X.pro ;\
 	make ;\
 	cd ../.. ;\
 	cp app/build/SysTray-X .
