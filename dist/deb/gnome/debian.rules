@@ -34,7 +34,7 @@ build-stamp:
 	# Add here commands to compile the package.
 	sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|/usr/bin/SysTray-X|' > SysTray_X.json
 
-	make OPTIONS="DEFINES += NO_KDE_INTEGRATION" EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\\\\\\\\\"$(VERSION_MAJOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_MINOR=\\\\\\\\\\\\\\\"$(VERSION_MINOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_PATCH=\\\\\\\\\\\\\\\"$(VERSION_PATCH)\\\\\\\\\\\\\\\" DEFINES+=APP_BUILD=\\\\\\\\\\\\\\\"$(BUILD_NUMBER)\\\\\\\\\\\\\\\" DEFINES+=APP_GITHASH=\\\\\\\\\\\\\\\"$(GIT_HASH)\\\\\\\\\\\\\\\" DEFINES+=APP_GITBRANCH=\\\\\\\\\\\\\\\"$(GIT_BRANCH)\\\\\\\\\\\\\\\""
+	make OPTIONS="DEFINES+=NO_KDE_INTEGRATION" EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\\\\\\\\\"$(VERSION_MAJOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_MINOR=\\\\\\\\\\\\\\\"$(VERSION_MINOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_PATCH=\\\\\\\\\\\\\\\"$(VERSION_PATCH)\\\\\\\\\\\\\\\" DEFINES+=APP_BUILD=\\\\\\\\\\\\\\\"$(BUILD_NUMBER)\\\\\\\\\\\\\\\" DEFINES+=APP_GITHASH=\\\\\\\\\\\\\\\"$(GIT_HASH)\\\\\\\\\\\\\\\" DEFINES+=APP_GITBRANCH=\\\\\\\\\\\\\\\"$(GIT_BRANCH)\\\\\\\\\\\\\\\""
 
 	# --- end custom part for compiling
 
