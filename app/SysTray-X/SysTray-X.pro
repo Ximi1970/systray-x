@@ -172,11 +172,14 @@ SOURCES += \
         debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp \
-        windowctrl.cpp \
-    systrayxstatusnotifier.cpp
+        windowctrl.cpp
 unix: {
 SOURCES += \
         windowctrl-unix.cpp
+    contains(DEFINES,KDE_INTEGRATION) {
+        SOURCES += \
+            systrayxstatusnotifier.cpp
+    }
 }
 win32: {
 SOURCES += \
@@ -190,11 +193,15 @@ HEADERS += \
         debugwidget.h \
         preferencesdialog.h \
         preferences.h \
-        windowctrl.h \
-    systrayxstatusnotifier.h
+        windowctrl.h
 unix: {
 HEADERS += \
         windowctrl-unix.h
+
+    contains(DEFINES,KDE_INTEGRATION) {
+        HEADERS += \
+            systrayxstatusnotifier.h
+    }
 }
 win32: {
 HEADERS += \

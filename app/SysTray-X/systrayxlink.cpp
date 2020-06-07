@@ -251,6 +251,26 @@ void    SysTrayXLink::sendShutdown()
 
 
 /*
+ *  Send disable KDE integration to the add-on
+ */
+void    SysTrayXLink::sendDisableKdeIntegration()
+{
+    QJsonObject shutdownObject;
+    shutdownObject.insert("kdeIntegration", QJsonValue::fromVariant( "false" ) );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( shutdownObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -341,6 +361,12 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
              *  Signal the KDE integration or hide default icon
              */
             emit signalKdeIntegration( hide_default_icon );
+
+#if defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION )
+
+            sendDisableKdeIntegration();
+
+#endif
         }
 
         if( jsonObject.contains( "platformInfo" ) && jsonObject[ "platformInfo" ].isObject() )

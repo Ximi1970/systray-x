@@ -143,8 +143,6 @@ SysTrayX.Messaging = {
   },
 
   sendHideDefaultIcon: function () {
-    console.debug("HideIcon:" + SysTrayX.hideDefaultIcon);
-
     SysTrayX.Link.postSysTrayXMessage({
       hideDefaultIcon: SysTrayX.hideDefaultIcon,
     });
@@ -270,6 +268,13 @@ SysTrayX.Link = {
       );
 
       SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
+    }
+
+    const kdeIntegration = response["kdeIntegration"];
+    if (kdeIntegration) {
+      browser.storage.sync.set({
+        kdeIntegration: kdeIntegration,
+      });
     }
 
     if (response["preferences"]) {
@@ -449,6 +454,11 @@ async function start() {
   //  Store browser info
   browser.storage.sync.set({
     browserInfo: SysTrayX.browserInfo,
+  });
+
+  //  Reset KDE integration
+  browser.storage.sync.set({
+    kdeIntegration: true,
   });
 
   //  Get addon version

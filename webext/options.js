@@ -247,7 +247,10 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore hide default icon
     //
-    const getHideDefaultIcon = browser.storage.sync.get("hideDefaultIcon");
+    const getHideDefaultIcon = browser.storage.sync.get([
+      "kdeIntegration",
+      "hideDefaultIcon",
+    ]);
     getHideDefaultIcon.then(
       SysTrayX.RestoreOptions.setHideDefaultIcon,
       SysTrayX.RestoreOptions.onHideDefaultIconError
@@ -475,9 +478,15 @@ SysTrayX.RestoreOptions = {
   //  Restore hide default icon callbacks
   //
   setHideDefaultIcon: function (result) {
+    const kdeIntegration = result.kdeIntegration || "true";
     const hideDefaultIcon = result.hideDefaultIcon || "false";
 
     const checkbox = document.querySelector(`input[name="hideDefaultIcon"]`);
+
+    if (kdeIntegration === "false") {
+      checkbox.parentNode.setAttribute("style", "display: none;");
+    }
+
     checkbox.checked = hideDefaultIcon === "true";
   },
 

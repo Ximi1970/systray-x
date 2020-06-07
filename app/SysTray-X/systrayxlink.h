@@ -115,6 +115,11 @@ class SysTrayXLink : public QObject
          */
         void    sendShutdown();
 
+        /**
+         * @brief sendDisableKdeIntegration. Disable KDE integration.
+         */
+        void    sendDisableKdeIntegration();
+
     private:
 
         /**
