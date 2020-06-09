@@ -273,10 +273,16 @@ Requirements:
     gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
     ```
 
-Build:
+Build (KDE):
 ```bash
 cd systray-x
 make
+```
+
+Build (GNOME):
+```bash
+cd systray-x
+make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
 Install and run SysTray-X from the build directory in the repository:
