@@ -11,5 +11,6 @@
         <file>files/icons/window-restore.png</file>
         <file>files/icons/mail-unread.png</file>
         <file>files/icons/help-about.png</file>
+        <file>files/icons/dialog-warning.png</file>
     </qresource>
 </RCC>

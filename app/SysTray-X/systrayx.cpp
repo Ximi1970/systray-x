@@ -7,6 +7,7 @@
 #include "preferencesdialog.h"
 #include "systrayxlink.h"
 #include "systrayxicon.h"
+#include "systrayxstatusnotifier.h"
 #include "windowctrl.h"
 
 /*
@@ -14,8 +15,8 @@
  */
 #include <QCoreApplication>
 #include <QMenu>
-#include <QStyle>
 #include <QIcon>
+#include <QTimer>
 
 /*
  *  Constants
@@ -32,6 +33,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tray_icon = nullptr;
+    m_kde_tray_icon = nullptr;
+
+    m_tray_icon_menu = nullptr;
+
+    m_unread_mail = 0;
 
     /*
      *  Setup preferences storage
@@ -66,12 +72,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     m_pref_dialog = new PreferencesDialog( m_link, m_preferences );
 
     /*
-     *  Setup tray icon
-     */
-    createMenu();
-    showTrayIcon();
-
-    /*
      *  Setup debug window
      */
     m_debug = new DebugWidget( m_preferences );
@@ -83,9 +83,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect debug link signals
      */
     connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
-//    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotUnreadMail );
-//    connect( m_win_ctrl, &WindowCtrl::signalShow, this, &SysTrayX::slotShow );
-//    connect( m_win_ctrl, &WindowCtrl::signalHide, this, &SysTrayX::slotHide );
 
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_preferences, &Preferences::signalConsole, m_debug, &DebugWidget::slotConsole );
@@ -97,6 +94,14 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_debug, &DebugWidget::signalTest2ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest2 );
     connect( m_debug, &DebugWidget::signalTest3ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest3 );
 
+#ifdef Q_OS_UNIX
+
+    connect( m_win_ctrl, &WindowCtrl::signalHideDefaultIconChange, this, &SysTrayX::slotSelectIconObject );
+
+#endif
+
+    connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
+
     /*
      *  Connect preferences signals
      */
@@ -105,6 +110,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconDataChange );
+    connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_pref_dialog, &PreferencesDialog::slotHideDefaultIconChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_pref_dialog, &PreferencesDialog::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
@@ -118,6 +124,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_link, &SysTrayXLink::slotDefaultIconDataChange );
+    connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_link, &SysTrayXLink::slotHideDefaultIconChange );
     connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
@@ -128,6 +135,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
+    connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
 
@@ -136,8 +144,10 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
+    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
+    connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
 
     /*
      *  SysTrayX
@@ -200,12 +210,30 @@ void    SysTrayX::createMenu()
 
 
 /*
+ *  Destroy the icon menu
+ */
+void    SysTrayX::destroyMenu()
+{
+    if( m_tray_icon_menu )
+    {
+        delete m_tray_icon_menu;
+        m_tray_icon_menu = nullptr;
+    }
+}
+
+
+/*
  *  Show / create tray icon
  */
 void    SysTrayX::showTrayIcon()
 {
     if( !m_tray_icon )
-    {
+    {        
+        /*
+         *  Setup tray menu
+         */
+        createMenu();
+
         /*
          *  Create system tray icon
          */
@@ -241,10 +269,14 @@ void    SysTrayX::showTrayIcon()
 
         connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
+        connect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+
         /*
          *  Show it
          */
         m_tray_icon->show();
+
+        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
     }
 }
 
@@ -271,6 +303,8 @@ void    SysTrayX::hideTrayIcon()
 
         disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
+        disconnect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+
         /*
          *  Hide the icon  first to prevent "ghosts"
          */
@@ -281,49 +315,172 @@ void    SysTrayX::hideTrayIcon()
          */
         delete m_tray_icon;
         m_tray_icon = nullptr;
+
+        /*
+         *  Destroy the mennu
+         */
+        destroyMenu();
+    }
+}
+
+
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+
+/*
+ *  Show / create tray icon
+ */
+void    SysTrayX::showKdeTrayIcon()
+{
+    if( !m_kde_tray_icon )
+    {
+        /*
+         *  Setup tray menu
+         */
+        createMenu();
+
+        /*
+         *  Create system tray icon
+         */
+        m_kde_tray_icon = new SysTrayXStatusNotifier( m_link, m_preferences );
+        m_kde_tray_icon->setStandardActionsEnabled( false );
+        m_kde_tray_icon->setContextMenu( m_tray_icon_menu );
+
+        /*
+         *  Set default icon
+         */
+        m_kde_tray_icon->setDefaultIconMime( m_preferences->getDefaultIconMime() );
+        m_kde_tray_icon->setDefaultIconData( m_preferences->getDefaultIconData() );
+        m_kde_tray_icon->setDefaultIconType( m_preferences->getDefaultIconType() );
+
+        /*
+         *  Set icon
+         */
+        m_kde_tray_icon->setIconMime( m_preferences->getIconMime() );
+        m_kde_tray_icon->setIconData( m_preferences->getIconData() );
+        m_kde_tray_icon->setIconType( m_preferences->getIconType() );
+
+        /*
+         *  Connect the world
+         */
+        connect( m_kde_tray_icon, &SysTrayXStatusNotifier::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
+
+        connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotDefaultIconTypeChange );
+        connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotDefaultIconDataChange );
+        connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
+        connect( m_preferences, &Preferences::signalIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconTypeChange );
+        connect( m_preferences, &Preferences::signalIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconDataChange );
+        connect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
+        connect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );
+        connect( m_preferences, &Preferences::signalNumberSizeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberSizeChange );
+
+        connect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        connect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        /*
+         *  Show
+         */
+        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
     }
 }
 
 
 /*
- *  Handle icon show signal
+ *  Hide / remove tray icon
  */
-void    SysTrayX::slotShow()
+void    SysTrayX::hideKdeTrayIcon()
 {
-    showTrayIcon();
-}
-
-
-/*
- *  Handle icon hide signal
- */
-void    SysTrayX::slotHide()
-{
-    hideTrayIcon();
-}
-
-
-/*
- *  Hndle the unread mail signal
- */
-void    SysTrayX::slotUnreadMail( int unread_mail )
-{
-    if( m_preferences->getDefaultIconType() == Preferences::PREF_DEFAULT_ICON_HIDE )
+    if( m_kde_tray_icon )
     {
-        if( unread_mail > 0 )
-        {
-            showTrayIcon();
-        }
-        else
-        {
-            hideTrayIcon();
-        }
+        /*
+         *  Disconnect all signals
+         */
+        disconnect( m_kde_tray_icon, &SysTrayXStatusNotifier::signalShowHide, m_win_ctrl, &WindowCtrl::slotShowHide );
+
+        disconnect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotDefaultIconTypeChange );
+        disconnect( m_preferences, &Preferences::signalDefaultIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotDefaultIconDataChange );
+        disconnect( m_preferences, &Preferences::signalHideDefaultIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
+        disconnect( m_preferences, &Preferences::signalIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconTypeChange );
+        disconnect( m_preferences, &Preferences::signalIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconDataChange );
+        disconnect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
+        disconnect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );
+        disconnect( m_preferences, &Preferences::signalNumberSizeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberSizeChange );
+
+        disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        disconnect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+
+        /*
+         *  Remove the notifier icon
+         */
+        delete m_kde_tray_icon;
+        m_kde_tray_icon = nullptr;
+
+        /*
+         *  Destroy the mennu
+         */
+        m_tray_icon_menu = nullptr;
+        //destroyMenu();
+    }
+}
+
+#endif
+
+
+/*
+ *  Select the prefered icon
+ */
+void    SysTrayX::slotSelectIconObjectPref()
+{
+    slotSelectIconObject( m_preferences->getHideDefaultIcon() );
+}
+
+void    SysTrayX::slotSelectIconObject( bool state )
+{
+
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+
+    if( state )
+    {
+        //  Use the KDE icon object
+//        emit signalConsole("Enable KDE icon");
+
+        //  Remove the Qt tray icon
+        hideTrayIcon();
+
+        //  Setup KDE tray icon
+        showKdeTrayIcon();
     }
     else
     {
-        showTrayIcon();
+        //  Use default Qt system tray icon
+//        emit signalConsole("Enable Qt icon");
 
+        //  Remove KDE trsy icon
+        hideKdeTrayIcon();
+
+        //  Setup the Qt tray icon
+        showTrayIcon();
     }
+
+#else
+
+    Q_UNUSED( state )
+
+    //  Setup the Qt tray icon
+    showTrayIcon();
+
+#endif
+
+}
+
+
+/*
+ *  Resend unread mail
+ */
+void    SysTrayX::resendUnreadMail()
+{
+    emit signalUnreadMail( m_unread_mail );
 }
 
 
@@ -335,7 +492,10 @@ void    SysTrayX::slotAddOnShutdown()
     /*
      *  Hide systray icon to prevent ghost systray icon in Windows
      */
-    m_tray_icon->hide();
+    if( m_tray_icon )
+    {
+        m_tray_icon->hide();
+    }
 
     /*
      *  Close the TB window
@@ -364,7 +524,10 @@ void    SysTrayX::slotShutdown()
         /*
          *  Hide systray icon to prevent ghost systray icon in Windows
          */
-        m_tray_icon->hide();
+        if( m_tray_icon )
+        {
+            m_tray_icon->hide();
+        }
 
         /*
          *  Close the TB window
@@ -410,5 +573,24 @@ void    SysTrayX::slotVersion( QString version )
             m_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app",
                 QSystemTrayIcon::Warning );
         }
+
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+
+        if( m_kde_tray_icon )
+        {
+            m_kde_tray_icon->showMessage("SysTray-X Warning", "Version mismatch addon and app", ":/files/icons/dialog-warning.png" );
+        }
+
+#endif
+
     }
+}
+
+
+/*
+ *  Handle unread mail signal
+ */
+void    SysTrayX::slotSetUnreadMail( int unread )
+{
+    m_unread_mail = unread;
 }

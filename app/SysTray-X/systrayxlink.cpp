@@ -251,6 +251,26 @@ void    SysTrayXLink::sendShutdown()
 
 
 /*
+ *  Send disable KDE integration to the add-on
+ */
+void    SysTrayXLink::sendDisableKdeIntegration()
+{
+    QJsonObject shutdownObject;
+    shutdownObject.insert("kdeIntegration", QJsonValue::fromVariant( "false" ) );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( shutdownObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -261,6 +281,14 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
     if( jsonError.error == QJsonParseError::NoError )
     {
         QJsonObject jsonObject = jsonResponse.object();
+
+/*
+        QStringList list = jsonObject.keys();
+        for( int i = 0 ;  i < list.length() ; ++i )
+        {
+            emit signalConsole( QString("Message %1").arg(list.at(i)) );
+        }
+*/
 
         if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
         {
@@ -288,10 +316,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
         {
             QString window_state_str = jsonObject[ "window" ].toString();
-
-
-            emit signalConsole( QString( "Window state (%1)" ).arg( window_state_str ) );
-
 
             int window_state;
             if( window_state_str == Preferences::STATE_NORMAL_STR )
@@ -323,12 +347,26 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
                 /*
                  *  Unknown state
                  */
-                emit signalConsole( QString( "Error: unknow window state (%1)" ).arg( window_state_str ) );
-
                 window_state = Preferences::STATE_NORMAL;
             }
 
             emit signalWindowState( window_state );
+        }
+
+        if( jsonObject.contains( "hideDefaultIcon" ) && jsonObject[ "hideDefaultIcon" ].isBool() )
+        {
+            bool hide_default_icon = jsonObject[ "hideDefaultIcon" ].toBool();
+
+            /*
+             *  Signal the KDE integration or hide default icon
+             */
+            emit signalKdeIntegration( hide_default_icon );
+
+#if defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION )
+
+            sendDisableKdeIntegration();
+
+#endif
         }
 
         if( jsonObject.contains( "platformInfo" ) && jsonObject[ "platformInfo" ].isObject() )
@@ -477,6 +515,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setDefaultIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "hideDefaultIcon" ) && pref[ "hideDefaultIcon" ].isString() )
+    {
+        bool hide_default_icon = pref[ "hideDefaultIcon" ].toString() == "true";
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setHideDefaultIcon( hide_default_icon );
+    }
+
     if( pref.contains( "iconType" ) && pref[ "iconType" ].isString() )
     {
         Preferences::IconType icon_type = static_cast< Preferences::IconType >( pref[ "iconType" ].toString().toInt() );
@@ -604,6 +652,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
     prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
     prefObject.insert("defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
+    prefObject.insert("hideDefaultIcon", QJsonValue::fromVariant( QString( pref.getHideDefaultIcon() ? "true" : "false" ) ) );
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
@@ -707,6 +756,18 @@ void    SysTrayXLink::slotDefaultIconTypeChange()
  *  Handle the default icon data change signal
  */
 void    SysTrayXLink::slotDefaultIconDataChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the hide default icon change signal
+ */
+void    SysTrayXLink::slotHideDefaultIconChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

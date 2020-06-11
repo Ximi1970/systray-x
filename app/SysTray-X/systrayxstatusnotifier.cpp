@@ -1,4 +1,6 @@
-#include "systrayxicon.h"
+#include "systrayxstatusnotifier.h"
+
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
 
 /*
  *	Local includes
@@ -13,14 +15,17 @@
 /*
  *	Qt includes
  */
+#include <QIcon>
+#include <QTimer>
+#include <QPixmap>
 #include <QPainter>
 
 
 /*
  *	Constructor
  */
-SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent )
-    : QSystemTrayIcon( QIcon( ":/files/icons/Thunderbird.png" ), parent )
+SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences* pref, QObject* parent )
+    : KStatusNotifierItem( parent )
 {
     /*
      *  Initialize
@@ -34,14 +39,29 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
     m_number_color = m_pref->getNumberColor();
     m_number_size = m_pref->getNumberSize();
 
-    connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
+    /*
+     * Setup notifier
+     */
+    setCategory( KStatusNotifierItem::ApplicationStatus );
+
+    setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird.png") ) );
+    setTitle("SysTray-X");
+
+    setStatus( KStatusNotifierItem::ItemStatus::Passive );
+    m_hide_default_icon = true;
+
+//  setStatus(KStatusNotifierItem::ItemStatus::Active);
+//  setStatus(KStatusNotifierItem::ItemStatus::NeedsAttention);
+
+    connect( this, &KStatusNotifierItem::activateRequested, this, &SysTrayXStatusNotifier::slotActivateRequested );
+    connect( this, &KStatusNotifierItem::secondaryActivateRequested, this, &SysTrayXStatusNotifier::slotSecondaryActivateRequested );
 }
 
 
 /*
  *  Set the default icon type
  */
-void    SysTrayXIcon::setDefaultIconType( Preferences::DefaultIconType icon_type )
+void    SysTrayXStatusNotifier::setDefaultIconType( Preferences::DefaultIconType icon_type )
 {
     if( m_default_icon_type != icon_type )
     {
@@ -61,7 +81,7 @@ void    SysTrayXIcon::setDefaultIconType( Preferences::DefaultIconType icon_type
 /*
  *  Set the default icon mime
  */
-void    SysTrayXIcon::setDefaultIconMime( const QString& icon_mime )
+void    SysTrayXStatusNotifier::setDefaultIconMime( const QString& icon_mime )
 {
     if( m_default_icon_mime != icon_mime )
     {
@@ -76,7 +96,7 @@ void    SysTrayXIcon::setDefaultIconMime( const QString& icon_mime )
 /*
  *  Set the default icon data
  */
-void    SysTrayXIcon::setDefaultIconData( const QByteArray& icon_data )
+void    SysTrayXStatusNotifier::setDefaultIconData( const QByteArray& icon_data )
 {
     if( m_default_icon_data != icon_data )
     {
@@ -94,9 +114,24 @@ void    SysTrayXIcon::setDefaultIconData( const QByteArray& icon_data )
 
 
 /*
+ *  Set the hide default icon
+ */
+void    SysTrayXStatusNotifier::setHideDefaultIcon( bool hide )
+{
+    if( m_hide_default_icon != hide )
+    {
+        /*
+         *  Store the new value
+         */
+        m_hide_default_icon = hide;
+    }
+}
+
+
+/*
  *  Set the icon type
  */
-void    SysTrayXIcon::setIconType( Preferences::IconType icon_type )
+void    SysTrayXStatusNotifier::setIconType( Preferences::IconType icon_type )
 {
     if( icon_type != m_icon_type )
     {
@@ -116,7 +151,7 @@ void    SysTrayXIcon::setIconType( Preferences::IconType icon_type )
 /*
  *  Set the icon mime
  */
-void    SysTrayXIcon::setIconMime( const QString& icon_mime )
+void    SysTrayXStatusNotifier::setIconMime( const QString& icon_mime )
 {
     if( m_icon_mime != icon_mime )
     {
@@ -131,7 +166,7 @@ void    SysTrayXIcon::setIconMime( const QString& icon_mime )
 /*
  *  Set the icon data
  */
-void    SysTrayXIcon::setIconData( const QByteArray& icon_data )
+void    SysTrayXStatusNotifier::setIconData( const QByteArray& icon_data )
 {
     if( m_icon_data != icon_data )
     {
@@ -151,7 +186,7 @@ void    SysTrayXIcon::setIconData( const QByteArray& icon_data )
 /*
  *  Enable/disable number
  */
-void    SysTrayXIcon::showNumber( bool state )
+void    SysTrayXStatusNotifier::showNumber( bool state )
 {
     if( m_show_number != state )
     {
@@ -171,7 +206,7 @@ void    SysTrayXIcon::showNumber( bool state )
 /*
  *  Set number color
  */
-void    SysTrayXIcon::setNumberColor( const QString& color )
+void    SysTrayXStatusNotifier::setNumberColor( const QString& color )
 {
     if( m_number_color != color )
     {
@@ -191,7 +226,7 @@ void    SysTrayXIcon::setNumberColor( const QString& color )
 /*
  *  Set number size
  */
-void    SysTrayXIcon::setNumberSize( int size )
+void    SysTrayXStatusNotifier::setNumberSize( int size )
 {
     if( m_number_size != size )
     {
@@ -210,7 +245,7 @@ void    SysTrayXIcon::setNumberSize( int size )
 /*
  *  Set the number of unread mails
  */
-void    SysTrayXIcon::setUnreadMail( int unread_mail )
+void    SysTrayXStatusNotifier::setUnreadMail( int unread_mail )
 {
     if( m_unread_mail != unread_mail )
     {
@@ -230,7 +265,7 @@ void    SysTrayXIcon::setUnreadMail( int unread_mail )
 /*
  *  Set and render the icon in the system tray
  */
-void    SysTrayXIcon::renderIcon()
+void    SysTrayXStatusNotifier::renderIcon()
 {
     QPixmap pixmap;
 
@@ -317,14 +352,35 @@ void    SysTrayXIcon::renderIcon()
     /*
      *  Set the tray icon
      */
-    QSystemTrayIcon::setIcon( QIcon( pixmap ) );
+    setIconByPixmap( QIcon( pixmap ) );
+
+    /*
+     *  Hide the icon?
+     */
+    if( m_hide_default_icon && m_unread_mail == 0 )
+    {
+        setStatus( KStatusNotifierItem::ItemStatus::Passive );
+    }
+    else
+    {
+        QTimer::singleShot(500, this, &SysTrayXStatusNotifier::showIcon);
+    }
+}
+
+
+void    SysTrayXStatusNotifier::showIcon()
+{
+    if( !m_hide_default_icon || m_unread_mail > 0 )
+    {
+        setStatus( KStatusNotifierItem::ItemStatus::Active );
+    }
 }
 
 
 /*
  *  Handle unread mail signal
  */
-void    SysTrayXIcon::slotSetUnreadMail( int unread_mail )
+void    SysTrayXStatusNotifier::slotSetUnreadMail( int unread_mail )
 {
     setUnreadMail( unread_mail );
 }
@@ -333,7 +389,7 @@ void    SysTrayXIcon::slotSetUnreadMail( int unread_mail )
 /*
  *  Handle the default icon type change signal
  */
-void    SysTrayXIcon::slotDefaultIconTypeChange()
+void    SysTrayXStatusNotifier::slotDefaultIconTypeChange()
 {
     setDefaultIconType( m_pref->getDefaultIconType() );
 }
@@ -342,7 +398,7 @@ void    SysTrayXIcon::slotDefaultIconTypeChange()
 /*
  *  Handle the default icon data change signal
  */
-void    SysTrayXIcon::slotDefaultIconDataChange()
+void    SysTrayXStatusNotifier::slotDefaultIconDataChange()
 {
     setDefaultIconMime( m_pref->getDefaultIconMime() );
     setDefaultIconData( m_pref->getDefaultIconData() );
@@ -350,9 +406,18 @@ void    SysTrayXIcon::slotDefaultIconDataChange()
 
 
 /*
+ *  Handle the hide default icon change signal
+ */
+void    SysTrayXStatusNotifier::slotHideDefaultIconChange()
+{
+    setHideDefaultIcon( m_pref->getHideDefaultIcon() );
+}
+
+
+/*
  *  Handle the icon type change signal
  */
-void    SysTrayXIcon::slotIconTypeChange()
+void    SysTrayXStatusNotifier::slotIconTypeChange()
 {
     setIconType( m_pref->getIconType() );
 }
@@ -361,7 +426,7 @@ void    SysTrayXIcon::slotIconTypeChange()
 /*
  *  Handle the icon data change signal
  */
-void    SysTrayXIcon::slotIconDataChange()
+void    SysTrayXStatusNotifier::slotIconDataChange()
 {
     setIconMime( m_pref->getIconMime() );
     setIconData( m_pref->getIconData() );
@@ -371,7 +436,7 @@ void    SysTrayXIcon::slotIconDataChange()
 /*
  *  Handle the enable number state change signal
  */
-void    SysTrayXIcon::slotShowNumberChange()
+void    SysTrayXStatusNotifier::slotShowNumberChange()
 {
     showNumber( m_pref->getShowNumber() );
 }
@@ -380,7 +445,7 @@ void    SysTrayXIcon::slotShowNumberChange()
 /*
  *  Handle the number color change signal
  */
-void    SysTrayXIcon::slotNumberColorChange()
+void    SysTrayXStatusNotifier::slotNumberColorChange()
 {
     setNumberColor( m_pref->getNumberColor() );
 }
@@ -389,34 +454,32 @@ void    SysTrayXIcon::slotNumberColorChange()
 /*
  *  Handle the number size change signal
  */
-void    SysTrayXIcon::slotNumberSizeChange()
+void    SysTrayXStatusNotifier::slotNumberSizeChange()
 {
     setNumberSize( m_pref->getNumberSize() );
 }
 
 
 /*
- *  Handle activation of the tray icon
+ *  Handle activate request of the notification icon
  */
-void    SysTrayXIcon::slotIconActivated( QSystemTrayIcon::ActivationReason reason )
+void    SysTrayXStatusNotifier::slotActivateRequested( bool active, const QPoint &pos )
 {
-    switch (reason) {
-        case QSystemTrayIcon::Trigger:
-        case QSystemTrayIcon::MiddleClick:
-        {
-            //  Clicked
-            emit signalShowHide();
-            break;
-        }
+    Q_UNUSED( active )
+    Q_UNUSED( pos )
 
-        case QSystemTrayIcon::DoubleClick:
-        {
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-    }
+    emit signalShowHide();
 }
+
+
+/*
+ *  Handle secondary activate request of the notification icon
+ */
+void    SysTrayXStatusNotifier::slotSecondaryActivateRequested( const QPoint &pos )
+{
+    Q_UNUSED( pos )
+
+    emit signalShowHide();
+}
+
+#endif

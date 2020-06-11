@@ -118,7 +118,7 @@ sudo apt update
 ###### 16.04 LTS
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
+wget -q http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
@@ -273,10 +273,16 @@ Requirements:
     gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
     ```
 
-Build:
+Build (KDE):
 ```bash
 cd systray-x
 make
+```
+
+Build (GNOME):
+```bash
+cd systray-x
+make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
 Install and run SysTray-X from the build directory in the repository:

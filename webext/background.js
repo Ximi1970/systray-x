@@ -3,6 +3,8 @@ var SysTrayX = {
 
   startupState: undefined,
 
+  hideDefaultIcon: false,
+
   platformInfo: undefined,
 
   browserInfo: undefined,
@@ -30,6 +32,9 @@ SysTrayX.Messaging = {
 
     //  Send version to app
     SysTrayX.Messaging.sendVersion();
+
+    //  Send hide default icon preference
+    SysTrayX.Messaging.sendHideDefaultIcon();
 
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
@@ -137,6 +142,12 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.version });
   },
 
+  sendHideDefaultIcon: function () {
+    SysTrayX.Link.postSysTrayXMessage({
+      hideDefaultIcon: SysTrayX.hideDefaultIcon,
+    });
+  },
+
   sendPreferences: function () {
     const getter = browser.storage.sync.get([
       "debug",
@@ -146,6 +157,7 @@ SysTrayX.Messaging = {
       "defaultIconType",
       "defaultIconMime",
       "defaultIcon",
+      "hideDefaultIcon",
       "iconType",
       "iconMime",
       "icon",
@@ -165,6 +177,7 @@ SysTrayX.Messaging = {
     const defaultIconType = result.defaultIconType || "0";
     const defaultIconMime = result.defaultIconMime || "image/png";
     const defaultIcon = result.defaultIcon || [];
+    const hideDefaultIcon = result.hideDefaultIcon || "false";
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
@@ -183,6 +196,7 @@ SysTrayX.Messaging = {
         defaultIconType: defaultIconType,
         defaultIconMime: defaultIconMime,
         defaultIcon: defaultIcon,
+        hideDefaultIcon: hideDefaultIcon,
         iconType: iconType,
         iconMime: iconMime,
         icon: icon,
@@ -256,6 +270,13 @@ SysTrayX.Link = {
       SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
     }
 
+    const kdeIntegration = response["kdeIntegration"];
+    if (kdeIntegration) {
+      browser.storage.sync.set({
+        kdeIntegration: kdeIntegration,
+      });
+    }
+
     if (response["preferences"]) {
       //  Store the preferences from the app
       const defaultIconMime = response["preferences"].defaultIconMime;
@@ -276,6 +297,13 @@ SysTrayX.Link = {
       if (defaultIconType) {
         browser.storage.sync.set({
           defaultIconType: defaultIconType,
+        });
+      }
+
+      const hideDefaultIcon = response["preferences"].hideDefaultIcon;
+      if (hideDefaultIcon) {
+        browser.storage.sync.set({
+          hideDefaultIcon: hideDefaultIcon,
         });
       }
 
@@ -391,6 +419,10 @@ async function start() {
     );
   }
 
+  //  Hide the default icon
+  const hideDefaultIcon = await getHideDefaultIcon();
+  SysTrayX.hideDefaultIcon = hideDefaultIcon;
+
   //  Set platform
   SysTrayX.platformInfo = await browser.runtime
     .getPlatformInfo()
@@ -422,6 +454,11 @@ async function start() {
   //  Store browser info
   browser.storage.sync.set({
     browserInfo: SysTrayX.browserInfo,
+  });
+
+  //  Reset KDE integration
+  browser.storage.sync.set({
+    kdeIntegration: true,
   });
 
   //  Get addon version

@@ -4,10 +4,28 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+#DEFINES += NO_KDE_INTEGRATION
+
+
+!contains(DEFINES,NO_KDE_INTEGRATION) {
+    DEFINES += KDE_INTEGRATION
+}
+
+#
+# Set the Qt modules
+#
+QT += core gui
+unix:!macx: {
+    contains(DEFINES,KDE_INTEGRATION) {
+        QT += dbus KNotifications
+    }
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#
+# Define the target
+#
 TARGET = SysTray-X
 TEMPLATE = app
 
@@ -158,6 +176,10 @@ SOURCES += \
 unix: {
 SOURCES += \
         windowctrl-unix.cpp
+    contains(DEFINES,KDE_INTEGRATION) {
+        SOURCES += \
+            systrayxstatusnotifier.cpp
+    }
 }
 win32: {
 SOURCES += \
@@ -175,6 +197,11 @@ HEADERS += \
 unix: {
 HEADERS += \
         windowctrl-unix.h
+
+    contains(DEFINES,KDE_INTEGRATION) {
+        HEADERS += \
+            systrayxstatusnotifier.h
+    }
 }
 win32: {
 HEADERS += \

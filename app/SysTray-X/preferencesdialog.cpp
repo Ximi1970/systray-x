@@ -42,6 +42,14 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod1RadioButton->setText( "Minimize to tray" );
     m_ui->minimizeMethod2RadioButton->hide();
 
+    m_ui->hideDefaultIconCheckBox->hide();
+
+#endif
+
+#if defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION )
+
+    m_ui->hideDefaultIconCheckBox->hide();
+
 #endif
 
     /*
@@ -75,7 +83,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set default icon type button Ids
      */
     m_ui->defaultIconTypeGroup->setId( m_ui->defaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_DEFAULT );
-    m_ui->defaultIconTypeGroup->setId( m_ui->hideDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_HIDE );
+    m_ui->defaultIconTypeGroup->setId( m_ui->lookThroughDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_HIDE );
     m_ui->defaultIconTypeGroup->setId( m_ui->customDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_CUSTOM );
 
     /*
@@ -230,6 +238,16 @@ void    PreferencesDialog::setDefaultIcon()
     m_ui->defaultImageLabel->setPixmap( pixmap.scaledToHeight( m_ui->chooseCustomButton->size().height() ) );
 }
 
+
+/*
+ *  Set the hide default icon
+ */
+void    PreferencesDialog::setHideDefaultIcon( bool hide )
+{
+    m_ui->hideDefaultIconCheckBox->setChecked( hide );
+}
+
+
 /*
  *  Set the enable number state
  */
@@ -287,6 +305,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setDefaultIconType( static_cast< Preferences::DefaultIconType >( m_ui->defaultIconTypeGroup->checkedId() ) );
     m_pref->setDefaultIconMime( m_tmp_default_icon_mime );
     m_pref->setDefaultIconData( m_tmp_default_icon_data );
+    m_pref->setHideDefaultIcon( m_ui->hideDefaultIconCheckBox->isChecked() );
 
     m_pref->setIconType( static_cast< Preferences::IconType >( m_ui->iconTypeGroup->checkedId() ) );
     m_pref->setIconMime( m_tmp_icon_mime );
@@ -474,6 +493,15 @@ void    PreferencesDialog::slotDefaultIconDataChange()
      *  Display the icon
      */
     setDefaultIcon();
+}
+
+
+/*
+ *  Handle the hide default icon change signal
+ */
+void    PreferencesDialog::slotHideDefaultIconChange()
+{
+    setHideDefaultIcon( m_pref->getHideDefaultIcon() );
 }
 
 

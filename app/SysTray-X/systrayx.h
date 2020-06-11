@@ -25,6 +25,8 @@ class SysTrayXIcon;
 class SysTrayXLink;
 class WindowCtrl;
 
+class SysTrayXStatusNotifier;
+
 /**
  * @brief The SysTrayX class
  */
@@ -58,6 +60,11 @@ class SysTrayX : public QObject
         void    createMenu();
 
         /**
+         * @brief destroyMenu. Destroy the menu.
+         */
+        void    destroyMenu();
+
+        /**
          * @brief showTrayIcon. Create and show the icon.
          */
         void    showTrayIcon();
@@ -67,7 +74,33 @@ class SysTrayX : public QObject
          */
         void    hideTrayIcon();
 
+#ifdef Q_OS_UNIX
+
+        /**
+         * @brief showKdeTrayIcon. Create and show the KDE icon.
+         */
+        void    showKdeTrayIcon();
+
+        /**
+         * @brief hideKdeTrayIcon. Hide and destroy the KDE icon.
+         */
+        void    hideKdeTrayIcon();
+
+#endif
+
+        /**
+         * @brief resendUnreadMail. Send another unread mail signal to the icon.
+         */
+        void    resendUnreadMail();
+
     signals:
+
+        /**
+         * @brief signalUnreadMail. Signal numder of unread mails.
+         *
+         * @param unreadMail    The number of unread mails.
+         */
+        void    signalUnreadMail( int unread_mail );
 
         /**
          * @brief signalWriteMessage
@@ -88,17 +121,24 @@ class SysTrayX : public QObject
          */
         void    signalConsole( QString message );
 
-    private slots:
-
-        void    slotShow();
-        void    slotHide();
+    public slots:
 
         /**
-         * @brief slotUnreadMail. Handle unread mail signal.
+         * @brief slotSetUnreadMail. Handle the unred mail signal.
          *
-         *  @param unread_mail  Number of unread mail.
+         *  @param unread   Number of unread mail.
          */
-        void    slotUnreadMail( int unread_mail );
+        void    slotSetUnreadMail( int unread );
+
+    private slots:
+
+        /**
+         * @brief slotSelectIconObject. Select the prefered icon.
+         *
+         *  @param state    The state.
+         */
+        void    slotSelectIconObjectPref();
+        void    slotSelectIconObject( bool state );
 
         /**
          * @brief slotAddOnShutdown. Handle shutdown request from the add-on.
@@ -153,6 +193,11 @@ class SysTrayX : public QObject
         SysTrayXIcon*   m_tray_icon;
 
         /**
+         * @brief m_kde_tray_icon. Pointer to the KDE system tray icon.
+         */
+        SysTrayXStatusNotifier*   m_kde_tray_icon;
+
+        /**
          * @brief m_tray_icon_menu. Pointer to the tray icon menu.
          */
         QMenu*  m_tray_icon_menu;
@@ -164,6 +209,11 @@ class SysTrayX : public QObject
         QAction*    m_pref_action;
         QAction*    m_about_action;
         QAction*    m_quit_action;
+
+        /**
+         * @brief m_unread_mail. Number of unread mails
+         */
+        int m_unread_mail;
 };
 
 #endif // SYSTRAYX_H

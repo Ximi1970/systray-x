@@ -68,6 +68,8 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
+//    signalHideDefaultIconChange( true );
+
 //    emit signalShow();
 
 //    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
@@ -90,6 +92,8 @@ void    WindowCtrl::slotWindowTest2()
     emit signalConsole("Test 2 started");
 
     // Do something.
+
+//    signalHideDefaultIconChange( false );
 
 //    emit signalHide();
 

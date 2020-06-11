@@ -110,6 +110,16 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save hide default icon state
+    //
+    let hideDefaultIcon = document.querySelector(
+      'input[name="hideDefaultIcon"]'
+    ).checked;
+    browser.storage.sync.set({
+      hideDefaultIcon: `${hideDefaultIcon}`,
+    });
+
+    //
     // Save icon preferences
     //
     const iconType = document.querySelector('input[name="iconType"]:checked')
@@ -232,6 +242,18 @@ SysTrayX.RestoreOptions = {
     getDefaultIcon.then(
       SysTrayX.RestoreOptions.setDefaultIcon,
       SysTrayX.RestoreOptions.onDefaultIconError
+    );
+
+    //
+    //  Restore hide default icon
+    //
+    const getHideDefaultIcon = browser.storage.sync.get([
+      "kdeIntegration",
+      "hideDefaultIcon",
+    ]);
+    getHideDefaultIcon.then(
+      SysTrayX.RestoreOptions.setHideDefaultIcon,
+      SysTrayX.RestoreOptions.onHideDefaultIconError
     );
 
     //
@@ -450,6 +472,26 @@ SysTrayX.RestoreOptions = {
 
   onDefaultIconError: function (error) {
     console.log(`Default icon Error: ${error}`);
+  },
+
+  //
+  //  Restore hide default icon callbacks
+  //
+  setHideDefaultIcon: function (result) {
+    const kdeIntegration = result.kdeIntegration || "true";
+    const hideDefaultIcon = result.hideDefaultIcon || "false";
+
+    const checkbox = document.querySelector(`input[name="hideDefaultIcon"]`);
+
+    if (kdeIntegration === "false") {
+      checkbox.parentNode.setAttribute("style", "display: none;");
+    }
+
+    checkbox.checked = hideDefaultIcon === "true";
+  },
+
+  onHideDefaultIconError: function (error) {
+    console.log(`hideDefaultIcon Error: ${error}`);
   },
 
   //
@@ -675,6 +717,11 @@ SysTrayX.StorageChanged = {
       if (item === "defaultIconType") {
         SysTrayX.RestoreOptions.setDefaultIconType({
           defaultIconType: changes[item].newValue,
+        });
+      }
+      if (item === "hideDefaultIcon") {
+        SysTrayX.RestoreOptions.setHideDefaultIcon({
+          hideDefaultIcon: changes[item].newValue,
         });
       }
       if (item === "showNumber") {

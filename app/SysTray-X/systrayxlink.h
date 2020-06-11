@@ -115,6 +115,11 @@ class SysTrayXLink : public QObject
          */
         void    sendShutdown();
 
+        /**
+         * @brief sendDisableKdeIntegration. Disable KDE integration.
+         */
+        void    sendDisableKdeIntegration();
+
     private:
 
         /**
@@ -182,6 +187,13 @@ class SysTrayXLink : public QObject
         void    signalWindowState( int state );
 
         /**
+         * @brief signalKdeIntegration. Signal KDE integration (and use the KStatusNotifierItem icon)
+         *
+         *   @param state   The prefered state
+         */
+        void    signalKdeIntegration( bool state );
+
+        /**
          * @brief signalUnreadMail. Signal numder of unread mails.
          *
          * @param unreadMail    The number of unread mails.
@@ -219,6 +231,11 @@ class SysTrayXLink : public QObject
          * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
          */
         void    slotDefaultIconDataChange();
+
+        /**
+         * @brief slotHideDefaultIconChange. Slot for handling hide default icon change signals.
+         */
+        void    slotHideDefaultIconChange();
 
         /**
          * @brief slotIconTypeChange. Slot for handling icon type change signals.
