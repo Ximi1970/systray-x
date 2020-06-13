@@ -27,5 +27,165 @@
   "tab_debug": {
     "message": "Debug",
     "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Vensters",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimaliseren",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Standaard minimalisatie",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Minimaliseer naar systeemvak, methode 1",
+    "description": "Minimize option 2"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Minimaliseer naar systeemvak, methode 2",
+    "description": "Minimize option 3"
+  },
+
+  "windows_start_min": {
+    "message": "Start programma geminimaliseerd",
+    "description": "Start minimized"
+  },
+
+  "windows_min_close": {
+    "message": "Minimaliseren bij sluiten",
+    "description": "Minimize on close"
+  },
+
+  "icons": {
+    "message": "Pictogrammen",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Standaard pictogram",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Standaard Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Doorzichtig pictogram",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Aangepast pictogram",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Kies...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "KDE integratie (Verbergen)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Berichten notificatie pictogram",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Leeg pictogram",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Nieuw bericht pictogram",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Aangepast pictogram",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Kies...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Geen pictogram",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Nummer opties",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Aantal ongelezen berichten weergeven",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Nummer kleur:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Nummer grootte:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "Type berichttelling:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Ongelezen",
+    "description": "SCount unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "Nieuw",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Accounts",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Debug",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Toon debug venster",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Voorkeuren bewaren",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Opslaan",
+    "description": "Save preferences button"
   }
 }

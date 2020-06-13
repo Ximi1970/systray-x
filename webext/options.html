@@ -32,68 +32,107 @@
 
     <div id="WindowsContent" class="tabcontent" style="display: block;">
       <form>
-        <h3>Windows</h3>
+        <h3>__MSG_windows__</h3>
         <table id="minimizeselect">
           <caption>
-            Minimize
+            __MSG_windows_min_options__
           </caption>
           <tr id="minimizedefault">
-            <td>
-              <input type="radio" name="minimizeType" value="0" />
-              <label for="0" id="minimizedefaultlabel">Default minimize</label
+            <td id="inputradio">
+              <input
+                type="radio"
+                name="minimizeType"
+                id="minDefault"
+                value="0"
+              />
+              <label for="minDefault" id="minimizedefaultlabel"
+                >&nbsp;__MSG_windows_min_default__</label
               ><br />
             </td>
           </tr>
           <tr id="minimizemethod1">
-            <td>
-              <input type="radio" name="minimizeType" value="1" />
-              <label for="1" id="minimizemethod1label"
-                >Minimize to tray, method 1</label
+            <td id="inputradio">
+              <input type="radio" name="minimizeType" id="minMeth1" value="1" />
+              <label for="minMeth1" id="minimizemethod1label"
+                >&nbsp;__MSG_windows_min_to_tray_1__</label
               ><br />
             </td>
           </tr>
           <tr id="minimizemethod2">
-            <td>
-              <input type="radio" name="minimizeType" value="2" />
-              <label for="2" id="minimizemethod2label"
-                >Minimize to tray, method 2</label
+            <td id="inputradio">
+              <input type="radio" name="minimizeType" id="minMeth2" value="2" />
+              <label for="minMeth2" id="minimizemethod2label"
+                >&nbsp;__MSG_windows_min_to_tray_2__</label
               ><br />
             </td>
           </tr>
         </table>
 
-        <input type="checkbox" name="startMinimized" value="" /> Start
-        application minimized<br />
+        <div id="inputcheck">
+          <input
+            type="checkbox"
+            name="startMinimized"
+            value=""
+          />&nbsp;__MSG_windows_start_min__
+          <br />
+        </div>
 
-        <input type="checkbox" name="minimizeOnClose" value="" /> Minimize on
-        close<br />
+        <div id="inputcheck">
+          <input
+            type="checkbox"
+            name="minimizeOnClose"
+            value=""
+          />&nbsp;__MSG_windows_min_close__
+          <br />
+        </div>
       </form>
     </div>
 
     <div id="IconContent" class="tabcontent">
       <form name="iconform">
-        <h3>Icon</h3>
+        <h3>__MSG_icons__</h3>
 
         <table id="defaulticonselect">
           <caption>
-            Default icon
+            __MSG_icons_default_options__
           </caption>
           <tr>
-            <td>
-              <input type="radio" name="defaultIconType" value="0" /> Default
-              Thunderbird
+            <td id="inputradio">
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defauttTb"
+                value="0"
+              />
+              <label for="defauttTb" id="defauttTbLabel"
+                >&nbsp;__MSG_icons_default_tb__</label
+              >
             </td>
           </tr>
           <tr>
-            <td>
-              <input type="radio" name="defaultIconType" value="1" />
-              Lookthrough icon
+            <td id="inputradio">
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defauttLookThrough"
+                value="1"
+              />
+              <label for="defauttLookThrough" id="defauttLookThroughLabel"
+                >&nbsp;__MSG_icons_default_lookthrough__</label
+              >
             </td>
           </tr>
           <tr>
-            <td>
-              <input type="radio" name="defaultIconType" value="2" /> Custom
-              icon
+            <td id="inputradio">
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defaultCustom"
+                value="2"
+              />
+              <label for="defaultCustom" id="defaultCustomLabel"
+                >&nbsp;__MSG_icons_default_custom__</label
+              >
             </td>
             <td>
               <img
@@ -109,7 +148,7 @@
                 for="selectedFileDefaultIconType"
                 style="-moz-appearance: button;"
                 }
-                >Browse...</label
+                >__MSG_icons_default_custom_choose__</label
               >
               <input
                 type="file"
@@ -125,25 +164,41 @@
         </table>
 
         <div id="kdeintegration">
-          <input type="checkbox" name="hideDefaultIcon" value="" /> KDE
-          integration (Hide)<br />
+          <div id="inputcheck">
+            <input
+              type="checkbox"
+              name="hideDefaultIcon"
+              value=""
+            />&nbsp;__MSG_icons_default_kde_integration__<br />
+          </div>
         </div>
 
         <table id="iconselect">
           <caption>
-            Unread mail icon
+            &nbsp;__MSG_icons_unread_options__
           </caption>
           <tr>
-            <td><input type="radio" name="iconType" value="0" /> Blank icon</td>
-          </tr>
-          <tr>
-            <td>
-              <input type="radio" name="iconType" value="1" /> New mail icon
+            <td id="inputradio">
+              <input type="radio" name="iconType" id="unreadBlank" value="0" />
+              <label for="unreadBlank" id="unreadBlankLabel"
+                >&nbsp;__MSG_icons_unread_blank__</label
+              >
             </td>
           </tr>
           <tr>
-            <td>
-              <input type="radio" name="iconType" value="2" /> Custom icon
+            <td id="inputradio">
+              <input type="radio" name="iconType" id="unreadNew" value="1" />
+              <label for="unreadNew" id="unreadNewLabel"
+                >&nbsp;__MSG_icons_unread_new__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="inputradio">
+              <input type="radio" name="iconType" id="unreadCustom" value="2" />
+              <label for="unreadCustom" id="unreadCustomLabel"
+                >&nbsp;__MSG_icons_unread_custom__</label
+              >
             </td>
             <td>
               <img
@@ -159,7 +214,7 @@
                 for="selectedFileIconType"
                 style="-moz-appearance: button;"
                 }
-                >Browse...</label
+                >__MSG_icons_unread_custom_choose__</label
               >
               <input
                 type="file"
@@ -173,18 +228,28 @@
             </td>
           </tr>
           <tr>
-            <td><input type="radio" name="iconType" value="3" /> No icon</td>
+            <td id="inputradio">
+              <input type="radio" name="iconType" id="unreadNo" value="3" />
+              <label for="unreadNo" id="unreadNoLabel"
+                >&nbsp;__MSG_icons_unread_no__</label
+              >
+            </td>
           </tr>
         </table>
 
         <table id="numberprops">
           <caption>
-            Number
+            __MSG_icons_number_options__
           </caption>
           <tr>
             <td>
-              <input type="checkbox" name="showNumber" value="" /> Display
-              unread message count &emsp;
+              <div id="inputcheck">
+                <input
+                  type="checkbox"
+                  name="showNumber"
+                  value=""
+                />&nbsp;__MSG_icons_number_display__
+              </div>
             </td>
           </tr>
           <tr>
@@ -195,7 +260,7 @@
           <tr></tr>
           <tr>
             <td>
-              <label for="numberColor">Number color:</label>
+              <label for="numberColor">__MSG_icons_number_color__&nbsp;</label>
               <input
                 type="color"
                 id="numberColor"
@@ -206,7 +271,7 @@
           </tr>
           <tr>
             <td>
-              <label for="numberSize">Number size:</label>
+              <label for="numberSize">__MSG_icons_number_size__&nbsp;</label>
               <input
                 type="number"
                 name="numberSize"
@@ -223,9 +288,19 @@
         <table id="countprops" style="display: none;">
           <tr>
             <td>
-              <label for="countType">Message count type: </label>
-              <input type="radio" name="countType" value="0" /> Unread
-              <input type="radio" name="countType" value="1" /> New
+              <label for="countType"
+                >__MSG_icons_number_count_type__&nbsp;</label
+              >
+              <input
+                type="radio"
+                name="countType"
+                value="0"
+              />&nbsp;__MSG_icons_number_count_unread__
+              <input
+                type="radio"
+                name="countType"
+                value="1"
+              />&nbsp;__MSG_icons_number_count_new__
             </td>
           </tr>
         </table>
@@ -244,7 +319,7 @@
 
     <div id="MailContent" class="tabcontent">
       <form name="mailform">
-        <h3>Accounts</h3>
+        <h3>__MSG_accounts__</h3>
 
         <ul id="accountsTree"></ul>
 
@@ -256,11 +331,21 @@
 
     <div id="DebugContent" class="tabcontent">
       <form name="debugform">
-        <h3>Debug options</h3>
+        <h3>__MSG_debug__</h3>
         <br />
         <div id="debugselect">
-          <input type="checkbox" name="debug" value="Debug" /> Display debug
-          window<br />
+          <div id="inputcheck">
+            <input
+              type="checkbox"
+              name="debug"
+              id="debugDisplay"
+              value="Debug"
+            />
+            <label for="debugDisplay" id="debugDisplayLabel"
+              >&nbsp;__MSG_debug_display__</label
+            >
+            <br />
+          </div>
         </div>
         <br />
       </form>
@@ -268,8 +353,8 @@
 
     <br />
     <form name="saveform">
-      <label>Save preferences</label>
-      <button type="submit">Save</button>
+      <label>__MSG_save_preferences__</label>
+      <button type="submit">__MSG_save_preferences_button__</button>
     </form>
 
     <script src="js/options_tabbutton.js"></script>
