@@ -658,7 +658,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
-    prefObject.insert("numberSize", QJsonValue::fromVariant( pref.getNumberSize() ) );
+    prefObject.insert("numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
 
     QJsonObject preferencesObject;

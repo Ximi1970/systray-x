@@ -575,7 +575,7 @@ SysTrayX.RestoreOptions = {
   //  Restore number size
   //
   setNumberSize: function (result) {
-    const numberSize = result.numberSize || 10;
+    const numberSize = result.numberSize || "10";
 
     const input = document.querySelector(`input[name="numberSize"]`);
     input.value = numberSize;

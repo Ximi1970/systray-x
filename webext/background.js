@@ -183,7 +183,7 @@ SysTrayX.Messaging = {
     const icon = result.icon || [];
     const showNumber = result.showNumber || "true";
     const numberColor = result.numberColor || "#000000";
-    const numberSize = result.numberSize || 10;
+    const numberSize = result.numberSize || "10";
     const countType = result.countType || "0";
 
     //  Send it to the app
