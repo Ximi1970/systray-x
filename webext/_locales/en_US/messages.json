@@ -27,5 +27,165 @@
   "tab_debug": {
     "message": "Debug",
     "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Windows",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimize",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Default minimize",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Minimize to tray, method 1",
+    "description": "Minimize option 2"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Minimize to tray, method 2",
+    "description": "Minimize option 3"
+  },
+
+  "windows_start_min": {
+    "message": "Start application minimized",
+    "description": "Start minimized"
+  },
+
+  "windows_min_close": {
+    "message": "Minimize on close",
+    "description": "Minimize on close"
+  },
+
+  "icons": {
+    "message": "Icons",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Default icon",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Default Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Lookthrough icon",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Custom icon",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Choose...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "KDE integration (Hide)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Unread mail icon",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Blank icon",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "New mail icon",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Custom icon ",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Choose...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "No icon ",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Number",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Display unread message count",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Number color:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Number size:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "Message count type:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Unread",
+    "description": "SCount unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "New",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Accounts",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Debug",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Display debug window",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Save preferences",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Save",
+    "description": "Save preferences button"
   }
 }

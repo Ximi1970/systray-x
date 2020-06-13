@@ -60,8 +60,22 @@ body {
   color: dodgerblue;
 }
 
+#inputradio > input[type="radio"] {
+  margin: 0;
+}
+
+#inputradio > label {
+  display: inline;
+  vertical-align: top;
+}
+
+#inputcheck {
+  display: flex;
+  align-items: center;
+}
+
 #minimizeselect {
-  width: 20em;
+  width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
@@ -77,7 +91,7 @@ body {
 }
 
 #defaulticonselect {
-  width: 20em;
+  width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
@@ -85,7 +99,7 @@ body {
 }
 
 #iconselect {
-  width: 20em;
+  width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
@@ -93,7 +107,7 @@ body {
 }
 
 #numberprops {
-  width: 20em;
+  width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
@@ -107,7 +121,7 @@ ul,
 
 /* Remove margins and padding from the parent ul */
 #accountsTree {
-  width: 20em;
+  width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 0;
