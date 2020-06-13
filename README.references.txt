@@ -1,5 +1,17 @@
 #<script>
 
+
+Translations
+============
+
+https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Internationalization
+
+
+
+
+
+
+
 Notifier
 
 https://stackoverflow.com/questions/52935526/kstatusnotifieritem-instantiation-crashes-qt

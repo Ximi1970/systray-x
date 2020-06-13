@@ -1,0 +1,31 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Systeemvak besturings addon. Download ook de bijbehorende app.",
+    "description": "Webextension descriptions"
+  },
+
+  "tab_windows": {
+    "message": "Vensters",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Pictogrammen",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_mail": {
+    "message": "Berichten",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_debug": {
+    "message": "Debug",
+    "description": "Tab for Debug options"
+  }
+}
