@@ -12,6 +12,7 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QTranslator>
 #include <QSystemTrayIcon>
 
 /*
@@ -130,6 +131,13 @@ class SysTrayX : public QObject
          */
         void    slotSetUnreadMail( int unread );
 
+        /**
+         * @brief slotLoadLanguage. Handle locale change signal.
+         *
+         *  @param locale   The requested locale.
+         */
+        void    slotLoadLanguage( QString locale );
+
     private slots:
 
         /**
@@ -214,6 +222,16 @@ class SysTrayX : public QObject
          * @brief m_unread_mail. Number of unread mails
          */
         int m_unread_mail;
+
+        /**
+         * @brief m_translator. The translator object.
+         */
+        QTranslator m_translator;
+
+        /**
+         * @brief m_locale. Storage for the current locale.
+         */
+        QString m_locale;
 };
 
 #endif // SYSTRAYX_H

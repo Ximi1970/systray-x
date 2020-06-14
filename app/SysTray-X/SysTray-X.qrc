@@ -12,5 +12,7 @@
         <file>files/icons/mail-unread.png</file>
         <file>files/icons/help-about.png</file>
         <file>files/icons/dialog-warning.png</file>
+        <file>languages/SysTray-X.en_US.qm</file>
+        <file>languages/SysTray-X.nl.qm</file>
     </qresource>
 </RCC>

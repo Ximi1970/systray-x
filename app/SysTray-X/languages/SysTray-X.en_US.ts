@@ -227,14 +227,24 @@
         <translation>Display debug window</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="356"/>
-        <location filename="../preferencesdialog.cpp" line="380"/>
+        <location filename="../preferences.ui" line="490"/>
+        <source>Save</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="497"/>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="368"/>
+        <location filename="../preferencesdialog.cpp" line="392"/>
         <source>Open Image</source>
         <translation>Open Image</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="356"/>
-        <location filename="../preferencesdialog.cpp" line="380"/>
+        <location filename="../preferencesdialog.cpp" line="368"/>
+        <location filename="../preferencesdialog.cpp" line="392"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Image Files (*.png *.jpg *.bmp)</translation>
     </message>
@@ -242,24 +252,29 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="182"/>
+        <location filename="../systrayx.cpp" line="190"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Show/Hide</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="186"/>
+        <location filename="../systrayx.cpp" line="194"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferences</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="190"/>
+        <location filename="../systrayx.cpp" line="198"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="194"/>
+        <location filename="../systrayx.cpp" line="202"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="571"/>
+        <source>Close</source>
+        <translation>Close</translation>
     </message>
 </context>
 </TS>

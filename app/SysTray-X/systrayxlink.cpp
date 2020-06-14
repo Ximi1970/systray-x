@@ -369,6 +369,13 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 #endif
         }
 
+        if( jsonObject.contains( "locale" ) && jsonObject[ "locale" ].isString() )
+        {
+            QString locale = jsonObject[ "locale" ].toString();
+
+            emit signalLocale( locale );
+        }
+
         if( jsonObject.contains( "platformInfo" ) && jsonObject[ "platformInfo" ].isObject() )
         {
             DecodePlatform( jsonObject[ "platformInfo" ].toObject() );

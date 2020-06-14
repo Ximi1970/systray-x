@@ -22,6 +22,9 @@ SysTrayX.Messaging = {
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
     //  Send the platform info to app
+    SysTrayX.Messaging.sendLocale();
+
+    //  Send the platform info to app
     SysTrayX.Messaging.sendPlatformInfo();
 
     //  Send the browser info to app
@@ -145,6 +148,16 @@ SysTrayX.Messaging = {
   sendHideDefaultIcon: function () {
     SysTrayX.Link.postSysTrayXMessage({
       hideDefaultIcon: SysTrayX.hideDefaultIcon,
+    });
+  },
+
+  sendLocale: function () {
+    const locale = browser.i18n.getUILanguage();
+
+    console.log("Locale: " + locale);
+
+    SysTrayX.Link.postSysTrayXMessage({
+      locale: locale,
     });
   },
 

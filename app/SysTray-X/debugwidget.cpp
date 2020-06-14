@@ -37,6 +37,18 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
 
 
 /*
+ *  Handle the language change event
+ */
+void    DebugWidget::changeEvent( QEvent* event )
+{
+    if( event->type() == QEvent::LanguageChange )
+    {
+        m_ui->retranslateUi( this );
+    }
+}
+
+
+/*
  *  Set the number of unread mail
  */
 void    DebugWidget::setUnreadMail( int unread )

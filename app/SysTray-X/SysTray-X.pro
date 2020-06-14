@@ -33,8 +33,8 @@ TEMPLATE = app
 #  Translations
 #
 TRANSLATIONS = \
-    languages/$${TARGET}_en.ts \
-    languages/$${TARGET}_nl.ts
+    languages/$${TARGET}.en_US.ts \
+    languages/$${TARGET}.nl.ts
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -218,7 +218,7 @@ HEADERS += \
 FORMS += \
         debugwidget.ui \
         preferences.ui \
-    aboutdialog.ui
+        aboutdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
