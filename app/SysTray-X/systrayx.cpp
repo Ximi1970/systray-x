@@ -18,6 +18,7 @@
 #include <QIcon>
 #include <QTimer>
 
+
 /*
  *  Constants
  */
@@ -38,6 +39,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     m_tray_icon_menu = nullptr;
 
     m_unread_mail = 0;
+    m_locale = QString();
 
     /*
      *  Setup preferences storage
@@ -149,6 +151,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
+    connect( m_link, &SysTrayXLink::signalLocale, this, &SysTrayX::slotLoadLanguage );
 
     /*
      *  SysTrayX
@@ -159,6 +162,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Request preferences from add-on
      */
     getPreferences();
+
+/*
+    slotLoadLanguage( "nl" );
+    //slotLoadLanguage( "en_US" );
+    slotSelectIconObject( false );
+*/
 }
 
 
@@ -587,6 +596,11 @@ void    SysTrayX::slotAbout()
     ui.hash->setText( m_preferences->getHash() );
     ui.branch->setText( m_preferences->getBranch() );
 
+    /*
+     *  Set the translation for the button box
+     */
+    ui.buttonBox->button( QDialogButtonBox::Close )->setText( tr( "Close" ) );
+
     dialog.exec();
 }
 
@@ -623,4 +637,28 @@ void    SysTrayX::slotVersion( QString version )
 void    SysTrayX::slotSetUnreadMail( int unread )
 {
     m_unread_mail = unread;
+}
+
+
+/*
+ *  Handle a change in locale
+ */
+void    SysTrayX::slotLoadLanguage( QString locale )
+{
+    if( m_locale != locale)
+    {
+        m_locale = locale;
+
+        if (!m_translator.isEmpty())
+        {
+            qApp->removeTranslator( &m_translator );
+        }
+
+        QString locale_path = "SysTray-X."+ locale;
+        bool status = m_translator.load( locale_path, ":/languages/" );
+        qApp->installTranslator( &m_translator );
+
+
+        emit signalConsole( QString( "Language loaded %1").arg(status));
+    }
 }
