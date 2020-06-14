@@ -199,6 +199,11 @@ class SysTrayXLink : public QObject
         void    signalKdeIntegration( bool state );
 
         /**
+         * @brief signalLocale. Signal the locale.
+         */
+        void    signalLocale( QString locale );
+
+        /**
          * @brief signalUnreadMail. Signal numder of unread mails.
          *
          * @param unreadMail    The number of unread mails.

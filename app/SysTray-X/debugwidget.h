@@ -39,6 +39,13 @@ class DebugWidget : public QWidget
         explicit DebugWidget( Preferences* pref, QWidget* parent = nullptr );
 
         /**
+         * @brief changeEvent. Override the change event.
+         *
+         *  @param event    The event.
+         */
+        void    changeEvent( QEvent *event );
+
+        /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread    The number of unread mails.

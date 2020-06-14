@@ -111,8 +111,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      */
     connect( m_ui->chooseCustomDefaultIconButton, &QPushButton::clicked, this, &PreferencesDialog::slotDefaultFileSelect );
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
-    connect( m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::slotAccept );
-    connect( m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::slotReject );
+    connect( m_ui->savePushButton, &QPushButton::clicked, this, &PreferencesDialog::slotAccept );
+    connect( m_ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotReject );
     connect( m_ui->numberColorPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotColorSelect );
 
     /*
@@ -124,6 +124,18 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set number size
      */
     setNumberSize( m_pref->getNumberSize() );
+}
+
+
+/*
+ *  Handle the language change event
+ */
+void    PreferencesDialog::changeEvent( QEvent* event )
+{
+    if( event->type() == QEvent::LanguageChange )
+    {
+        m_ui->retranslateUi( this );
+    }
 }
 
 
@@ -358,6 +370,31 @@ void    PreferencesDialog::slotReject()
      *  Close it
      */
 //    QDialog::reject();
+
+    /*
+     *  Restore values
+     */
+    setDefaultIconType( m_pref->getDefaultIconType() );
+    setDefaultIcon( m_pref->getDefaultIconMime(),  m_pref->getDefaultIconData() );
+    setHideDefaultIcon( m_pref->getHideDefaultIcon() );
+
+    setIconType( m_pref->getIconType() );
+    setIcon( m_pref->getIconMime(), m_pref->getIconData() );
+
+    setMinimizeType( m_pref->getMinimizeType() );
+    setStartMinimized( m_pref->getStartMinimized() );
+    setMinimizeOnClose( m_pref->getMinimizeOnClose() );
+
+    setShowNumber( m_pref->getShowNumber() );
+    setNumberColor( m_pref->getNumberColor() );
+    setNumberSize( m_pref->getNumberSize() );
+    setCountType( m_pref->getCountType() );
+
+    setDebug( m_pref->getDebug() );
+
+    /*
+     *  Hide it
+     */
     hide();
 }
 
