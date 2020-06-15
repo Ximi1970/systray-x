@@ -1,0 +1,191 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Add-On zur Steuerung der Taskleiste. Bitte laden Sie auch die Begleiter-App herunter.",
+    "description": "Webextension descriptions"
+  },
+
+  "tab_windows": {
+    "message": "Fenster",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Symbol",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_mail": {
+    "message": "Nachrichten",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_debug": {
+    "message": "Debug",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Fenster",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimieren",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Standard Minimieren",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "In Systemleiste verbergen, Methode 1",
+    "description": "Minimize option 2"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "In Systemleiste verbergen, Methode 2",
+    "description": "Minimize option 3"
+  },
+
+  "windows_start_min": {
+    "message": "Anwendung minimiert starten",
+    "description": "Start minimized"
+  },
+
+  "windows_min_close": {
+    "message": "Beim Fensterschließen, Minimieren",
+    "description": "Minimize on close"
+  },
+
+  "icons": {
+    "message": "Symbole",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Standardsymbol",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Thunderbird Symbol",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Unsichtbares Symbol",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Benutzerdefiniert Symbol",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Wählen...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "KDE integration (Verbergen)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "E-Mail-Benachrichtigung Symbol",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Leeres Symbol",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Neue Nachricht Symbol",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Benutzerdefiniert Symbol",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Wählen...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Kein Symbol",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Nummereigenschaften",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Anzahl neuer Nachrichten anzeigen",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Nummerfarbe:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Nummergröße:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "E-Mail-Benachrichtigungstyp:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Ungelesene Nachrichten",
+    "description": "SCount unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "Neue Nachrichten",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Konten",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Debug",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Debug-Fenster anzeigen",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Einstellungen speichern",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Speichern",
+    "description": "Save preferences button"
+  }
+}
