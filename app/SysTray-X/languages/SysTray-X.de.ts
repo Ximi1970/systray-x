@@ -180,7 +180,7 @@
     <message>
         <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation>Beim Fensterminimieren, in Systemleiste verbergen</translation>
+        <translation>Beim Fensterschließen, Minimieren</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="349"/>
