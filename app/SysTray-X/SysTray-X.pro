@@ -34,7 +34,19 @@ TEMPLATE = app
 #
 TRANSLATIONS = \
     languages/$${TARGET}.en_US.ts \
-    languages/$${TARGET}.nl.ts
+    languages/$${TARGET}.bg.ts \
+    languages/$${TARGET}.de.ts \
+    languages/$${TARGET}.es_AR.ts \
+    languages/$${TARGET}.fr.ts \
+    languages/$${TARGET}.hr.ts \
+    languages/$${TARGET}.it.ts \
+    languages/$${TARGET}.nl.ts \
+    languages/$${TARGET}.pl.ts \
+    languages/$${TARGET}.ru.ts \
+    languages/$${TARGET}.sk.ts \
+    languages/$${TARGET}.uk.ts \
+    languages/$${TARGET}.zh_CN.ts \
+    languages/$${TARGET}.zh_TW.ts
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
