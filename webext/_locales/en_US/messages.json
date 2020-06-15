@@ -115,7 +115,7 @@
   },
 
   "icons_unread_custom": {
-    "message": "Custom icon ",
+    "message": "Custom icon",
     "description": "Unread Icon option 3"
   },
 
@@ -125,7 +125,7 @@
   },
 
   "icons_unread_no": {
-    "message": "No icon ",
+    "message": "No icon",
     "description": "Unread Icon option 4"
   },
 
