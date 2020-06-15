@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.1" language="es_AR">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../aboutdialog.ui" line="14"/>
         <source>About SysTray-X</source>
-        <translation>Over SysTray-X</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>SysTray-X Companion App by Ximi1970</source>
-        <translation>SysTray-X Companion App door Ximi1970</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="40"/>
         <source>Version:</source>
-        <translation>Versie:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="47"/>
         <source>0.0.1</source>
-        <translatorcomment>Niet vertalen</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="54"/>
         <source>Build:</source>
-        <translation>Build:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="61"/>
         <location filename="../aboutdialog.ui" line="75"/>
         <source>0</source>
-        <translatorcomment>Niet vertalen</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="68"/>
         <source>Hash:</source>
-        <translation>Hash:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="82"/>
         <source>Branch:</source>
-        <translation>Branch:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="89"/>
         <source>master</source>
-        <translatorcomment>Niet vertalen</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -58,33 +55,32 @@
     <message>
         <location filename="../debugwidget.ui" line="14"/>
         <source>SysTray-X Debug</source>
-        <translation>SysTray-X Debug</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="59"/>
         <source>Test 2</source>
-        <translation>Test 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="69"/>
         <source>Unread mail:</source>
-        <translation>Ongelezen berichten:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="76"/>
         <source>Test 1</source>
-        <translation>Test 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="83"/>
         <source>0</source>
-        <translatorcomment>Niet vertalen</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="90"/>
         <source>Test 3</source>
-        <translation>Test 3</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -92,161 +88,161 @@
     <message>
         <location filename="../preferences.ui" line="14"/>
         <source>SysTray-X Preferences</source>
-        <translation>SysTray-X Opties</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="26"/>
         <source>Default icon</source>
-        <translation>Standaard pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="32"/>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="40"/>
         <source>Default Thunderbird</source>
-        <translation>Standaard Thunderbird</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="53"/>
         <source>Lookthrough icon</source>
-        <translation>Doorzichtig pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="65"/>
         <location filename="../preferences.ui" line="188"/>
         <source>Custom icon</source>
-        <translation>Aangepast pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="82"/>
         <location filename="../preferences.ui" line="205"/>
         <source>Choose</source>
-        <translation>Kies</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="99"/>
         <source>KDE integration (Hide)</source>
-        <translation>KDE integratie (Verbergen)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="112"/>
         <source>Mail notification icon</source>
-        <translation>Berichten notificatie pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="125"/>
         <source>Blank icon</source>
-        <translation>Leeg pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="158"/>
         <source>New mail icon</source>
-        <translation>Nieuw bericht pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="219"/>
         <source>No icon</source>
-        <translation>Geen pictogram</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="266"/>
         <source>Windows</source>
-        <translation>Vensters</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="274"/>
         <source>Minimize</source>
-        <translation>Minimaliseren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>
         <source>Default minimize</source>
-        <translation>Standaard minimalisatie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="295"/>
         <source>Minimize to tray, method 1</source>
-        <translation>Minimaliseer naar systeemvak, methode 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="308"/>
         <source>Minimize to tray, method 2</source>
-        <translation>Minimaliseer naar systeemvak, methode 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="325"/>
         <source>Start application minimized</source>
-        <translation>Start programma geminimaliseerd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation>Minimaliseren bij sluiten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="349"/>
         <source>Number properties</source>
-        <translation>Nummer opties</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="357"/>
         <source>Display unread message count</source>
-        <translation>Aantal ongelezen berichten weergeven</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="369"/>
         <source>Number color</source>
-        <translation>Nummer kleur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="390"/>
         <source>Number size</source>
-        <translation>Nummer grootte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="412"/>
         <source>Count type</source>
-        <translation>Type berichttelling</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="420"/>
         <source>Unread</source>
-        <translation>Ongelezen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="433"/>
         <source>New</source>
-        <translation>Nieuw</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="470"/>
         <source>Display debug window</source>
-        <translation>Toon debug venster</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="490"/>
         <source>Save</source>
-        <translation>Bewaren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="497"/>
         <source>Cancel</source>
-        <translation>Annnuleren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="393"/>
         <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Open Image</source>
-        <translation>Open afbeelding</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="393"/>
         <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -254,27 +250,27 @@
     <message>
         <location filename="../systrayx.cpp" line="191"/>
         <source>&amp;Show/Hide</source>
-        <translation>&amp;Tonen/Verbergen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="195"/>
         <source>&amp;Preferences</source>
-        <translation>&amp;Opties</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="199"/>
         <source>&amp;About</source>
-        <translation>O&amp;ver</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="203"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Afsluiten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="572"/>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
