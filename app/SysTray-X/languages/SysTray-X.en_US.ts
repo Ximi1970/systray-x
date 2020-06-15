@@ -237,14 +237,14 @@
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="368"/>
-        <location filename="../preferencesdialog.cpp" line="392"/>
+        <location filename="../preferencesdialog.cpp" line="393"/>
+        <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Open Image</source>
         <translation>Open Image</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="368"/>
-        <location filename="../preferencesdialog.cpp" line="392"/>
+        <location filename="../preferencesdialog.cpp" line="393"/>
+        <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Image Files (*.png *.jpg *.bmp)</translation>
     </message>
@@ -252,27 +252,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="190"/>
+        <location filename="../systrayx.cpp" line="191"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Show/Hide</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="194"/>
+        <location filename="../systrayx.cpp" line="195"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferences</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="198"/>
+        <location filename="../systrayx.cpp" line="199"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="202"/>
+        <location filename="../systrayx.cpp" line="203"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="571"/>
+        <location filename="../systrayx.cpp" line="572"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
