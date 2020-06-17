@@ -121,7 +121,7 @@
         <location filename="../preferences.ui" line="82"/>
         <location filename="../preferences.ui" line="205"/>
         <source>Choose</source>
-        <translation>Выбать</translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="99"/>
