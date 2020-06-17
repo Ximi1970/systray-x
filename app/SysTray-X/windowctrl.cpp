@@ -44,7 +44,7 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
     m_ppid = getPpid();
 
     /*
-     *  Get the TB window
+     *  Get the TB windows
      */
     findWindows( m_ppid );
 }
@@ -170,6 +170,14 @@ void    WindowCtrl::slotWindowState( int state )
 
     if( getWindowState() != state )
     {
+        /*
+         *  Update the TB windows
+         */
+        findWindows( m_ppid );
+
+        /*
+         *  Set the new state
+         */
         setWindowState( state );
 
         QList< quint64 > win_ids = getWinIds();
@@ -203,8 +211,19 @@ void    WindowCtrl::slotWindowState( int state )
  */
 void    WindowCtrl::slotShowHide()
 {
+    /*
+     *  Update the TB windows
+     */
+    findWindows( m_ppid );
+
+    /*
+     *  Get the window ids
+     */
     QList< quint64 > win_ids = getWinIds();
 
+    /*
+     *  Show or hide the windows
+     */
     if( getWindowState() == Preferences::STATE_MINIMIZED )
     {
         setWindowState( Preferences::STATE_NORMAL );
@@ -231,8 +250,19 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
+    /*
+     *  Update the TB windows
+     */
+    findWindows( m_ppid );
+
+    /*
+     *  Get the window ids
+     */
     QList< quint64 > win_ids = getWinIds();
 
+    /*
+     *  Delete all
+     */
     for( int i = 0 ; i < win_ids.count() ; ++i )
     {
         deleteWindow( win_ids.at( i ) );
