@@ -46,7 +46,7 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
     /*
      *  Get the TB window
      */
-    findWindow( m_ppid );
+    findWindows( m_ppid );
 }
 
 
@@ -79,6 +79,9 @@ void    WindowCtrl::slotWindowTest1()
 //    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
+
+
+    findWindows( m_ppid );
 
     emit signalConsole("Test 1 done");
 }
@@ -169,13 +172,21 @@ void    WindowCtrl::slotWindowState( int state )
     {
         setWindowState( state );
 
+        QList< quint64 > win_ids = getWinIds();
+
         if( state == Preferences::STATE_MINIMIZED )
         {
-            hideWindow( getWinId(), getMinimizeType() );
+            for( int i = 0 ; i < win_ids.count() ; ++i )
+            {
+                hideWindow( win_ids.at( i ), getMinimizeType() );
+            }
         }
         else
         {
-            hideWindow( getWinId(), false );
+            for( int i = 0 ; i < win_ids.count() ; ++i )
+            {
+                hideWindow( win_ids.at( i ), false );
+            }
         }
     }
 
@@ -192,15 +203,25 @@ void    WindowCtrl::slotWindowState( int state )
  */
 void    WindowCtrl::slotShowHide()
 {
+    QList< quint64 > win_ids = getWinIds();
+
     if( getWindowState() == Preferences::STATE_MINIMIZED )
     {
         setWindowState( Preferences::STATE_NORMAL );
-        normalizeWindow( getWinId() );
+
+        for( int i = 0 ; i < win_ids.count() ; ++i )
+        {
+            normalizeWindow( win_ids.at( i ) );
+        }
     }
     else
     {
         setWindowState( Preferences::STATE_MINIMIZED );
-        minimizeWindow( getWinId(), getMinimizeType() );
+
+        for( int i = 0 ; i < win_ids.count() ; ++i )
+        {
+            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+        }
     }
 }
 
@@ -210,5 +231,10 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
-    deleteWindow( getWinId() );
+    QList< quint64 > win_ids = getWinIds();
+
+    for( int i = 0 ; i < win_ids.count() ; ++i )
+    {
+        deleteWindow( win_ids.at( i ) );
+    }
 }

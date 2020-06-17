@@ -19,7 +19,6 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     /*
      *  Initialize
      */
-    m_tb_window = 0;
     m_tb_windows = QList< quint64 >();
     m_window_state = Preferences::STATE_UNKNOWN;
 
@@ -137,7 +136,7 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
 /*
  *  Find a window by PID
  */
-void    WindowCtrlUnix::findWindow( qint64 pid )
+void    WindowCtrlUnix::findWindows( qint64 pid )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -148,7 +147,7 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
         return;
     }
 
-    m_tb_window = 0;
+    m_tb_windows = QList< quint64 >();
     foreach( WindowItem win, windows )
     {
         Atom           type;
@@ -168,10 +167,7 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
 
                     if( state > 0 )
                     {
-                        m_tb_window = win.window;
-
-                        XFree( propPID );
-                        return;
+                        m_tb_windows.append( win.window );
                     }
                 }
 
@@ -179,6 +175,8 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
             }
         }
     }
+
+    emit signalConsole( QString( "Number of windows found: %1").arg(m_tb_windows.length()));
 }
 
 
@@ -276,15 +274,6 @@ void    WindowCtrlUnix::displayWindowElements( quint64 window )
     {
         emit signalConsole( "Window State: Normal" );
     }
-}
-
-
-/*
- *  Get the Thunderbird window ID
- */
-quint64 WindowCtrlUnix::getWinId()
-{
-    return m_tb_window;
 }
 
 

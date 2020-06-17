@@ -188,11 +188,11 @@ class WindowCtrlUnix : public QObject
         bool    findWindow( const QString& title );
 
         /**
-         * @brief findWindow. Find window of a process.
+         * @brief findWindows. Find all windows of a process.
          *
          *  @param pid      The process id.
          */
-        void    findWindow( qint64 pid );
+        void    findWindows( qint64 pid );
 
         /**
          * @brief displayWindowElements. Display window elements (atoms).
@@ -207,13 +207,6 @@ class WindowCtrlUnix : public QObject
          *  @param window    The window.
          */
         void    displayWindowElements( quint64 window );
-
-        /**
-         * @brief getWinId. Get the Thunderbird window ID.
-         *
-         *  @return     The window ID.
-         */
-        quint64 getWinId();
 
         /**
          * @brief getWinIds. Get the Thunderbird window IDs.
@@ -362,12 +355,7 @@ class WindowCtrlUnix : public QObject
         quint64 m_root_window;
 
         /**
-         * @brief m_tb_window. The Thunderbird window.
-         */
-        quint64 m_tb_window;
-
-        /**
-         * @brief m_tb_windows. The Thunderbird windows (used by title search).
+         * @brief m_tb_windows. The Thunderbird windows.
          */
         QList< quint64 >    m_tb_windows;
 
