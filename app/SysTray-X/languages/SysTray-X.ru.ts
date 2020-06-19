@@ -11,7 +11,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>SysTray-X Companion App by Ximi1970</source>
-        <translation>SysTray-X Приложение компаньен Ximi1970</translation>
+        <translation>Приложение-компаньон к дополнению SysTray-X от Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="40"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../preferences.ui" line="112"/>
         <source>Mail notification icon</source>
-        <translation>Иконка уведомление</translation>
+        <translation>Иконка уведомления</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="125"/>
