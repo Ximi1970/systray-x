@@ -60,26 +60,6 @@ WindowCtrlWin::~WindowCtrlWin()
 
 
 /*
- * Set the window state.
- */
-void    WindowCtrlWin::setWindowState( int state )
-{
-    m_window_state = state;
-}
-
-
-/**
- * @brief getWindowState. Get the window state.
- *
- *  @return     The state.
- */
-int WindowCtrlWin::getWindowState() const
-{
-    return m_window_state;
-}
-
-
-/*
  *  Set the minimize type
  */
 void    WindowCtrlWin::setMinimizeType( Preferences::MinimizeType type )
@@ -190,7 +170,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 /*
  *  Find the window by pid
  */
-bool    WindowCtrlWin::findWindow( qint64 pid )
+bool    WindowCtrlWin::findWindows( qint64 pid )
 {
     EnumWindowsPidProcData data;
     data.pid = pid;
@@ -261,15 +241,6 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 void    WindowCtrlWin::displayWindowElements( quint64 window )
 {
     emit signalConsole( QString( "Found: XID %1" ).arg( window ) );
-}
-
-
-/*
- *  Get the Thunderbird window ID
- */
-quint64 WindowCtrlWin::getWinId()
-{
-    return m_tb_window;
 }
 
 
