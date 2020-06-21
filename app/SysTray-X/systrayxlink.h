@@ -184,7 +184,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief signalWindowState. Signal a change in the window state.
          */
-        void    signalWindowState( int state );
+        void    signalWindowState( Preferences::WindowState state );
 
         /**
          * @brief signalKdeIntegration. Signal KDE integration (and use the KStatusNotifierItem icon)

@@ -164,35 +164,51 @@ void    WindowCtrl::slotStartMinimizedChange()
 /*
  *  Handle change in window state
  */
-void    WindowCtrl::slotWindowState( int state )
+void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 {
+
+    emit signalConsole( QString( "State change to: %1" ).arg( state ) );
+
 #ifdef Q_OS_UNIX
 
-    if( getWindowState() != state )
+    /*
+     *  Update the TB windows and states
+     */
+    findWindows( m_ppid );
+
+    QList< quint64 > win_ids = getWinIds();
+
+    /*
+     *  Minimize all?
+     */
+    if( state == Preferences::STATE_MINIMIZED_ALL )
     {
-        /*
-         *  Update the TB windows
-         */
-        findWindows( m_ppid );
+        emit signalConsole( QString( "Minimize all" ) );
 
         /*
-         *  Set the new state
+         *   Close pressed on one of the windows, minimize them all
          */
-        setWindowState( state );
-
-        QList< quint64 > win_ids = getWinIds();
-
-        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
+        for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-            for( int i = 0 ; i < win_ids.count() ; ++i )
+            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+        }
+    }
+    else
+    {
+        QList< Preferences::WindowState >    win_states = getWindowStates();
+
+        for( int i = 0 ; i < win_ids.length() ; ++i )
+        {
+            if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
             {
+                emit signalConsole( QString( "Hide: %1" ).arg( win_ids.at( i ) ) );
+
                 hideWindow( win_ids.at( i ), getMinimizeType() );
             }
-        }
-        else
-        {
-            for( int i = 0 ; i < win_ids.count() ; ++i )
+            else
             {
+                emit signalConsole( QString( "Unhide: %1" ).arg( win_ids.at( i ) ) );
+
                 hideWindow( win_ids.at( i ), false );
             }
         }
@@ -211,6 +227,9 @@ void    WindowCtrl::slotWindowState( int state )
  */
 void    WindowCtrl::slotShowHide()
 {
+
+    emit signalConsole( QString( "Show/Hide" ) );
+
     /*
      *  Update the TB windows
      */
@@ -220,25 +239,20 @@ void    WindowCtrl::slotShowHide()
      *  Get the window ids
      */
     QList< quint64 > win_ids = getWinIds();
+    QList< Preferences::WindowState >    win_states = getWindowStates();
 
-    /*
-     *  Show or hide the windows
-     */
-    if( getWindowState() == Preferences::STATE_MINIMIZED )
+    for( int i = 0 ; i < win_ids.length() ; ++i )
     {
-        setWindowState( Preferences::STATE_NORMAL );
-
-        for( int i = 0 ; i < win_ids.count() ; ++i )
+        if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
         {
+            emit signalConsole( QString( "Show %1" ).arg( win_ids.at( i ) ) );
+
             normalizeWindow( win_ids.at( i ) );
         }
-    }
-    else
-    {
-        setWindowState( Preferences::STATE_MINIMIZED );
-
-        for( int i = 0 ; i < win_ids.count() ; ++i )
+        else
         {
+            emit signalConsole( QString( "Hide %1" ).arg( win_ids.at( i ) ) );
+
             minimizeWindow( win_ids.at( i ), getMinimizeType() );
         }
     }
@@ -250,6 +264,9 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
+
+    emit signalConsole( QString( "Close" ) );
+
     /*
      *  Update the TB windows
      */

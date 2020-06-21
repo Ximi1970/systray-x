@@ -20,7 +20,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
-    m_window_state = Preferences::STATE_UNKNOWN;
+    m_tb_window_states = QList< Preferences::WindowState >();;
 
     /*
      *  Get the base display and window
@@ -37,26 +37,6 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 void    WindowCtrlUnix::setMinimizeType( Preferences::MinimizeType type )
 {
     m_minimize_type = type;
-}
-
-
-/*
- * Set the window state.
- */
-void    WindowCtrlUnix::setWindowState( int state )
-{
-    m_window_state = state;
-}
-
-
-/**
- * @brief getWindowState. Get the window state.
- *
- *  @return     The state.
- */
-int WindowCtrlUnix::getWindowState() const
-{
-    return m_window_state;
 }
 
 
@@ -107,8 +87,10 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
     m_tb_windows = QList< quint64 >();
-    foreach( WindowItem win, windows )
+    for( int i = 0 ; i < windows.length() ; ++i )
     {
+        WindowItem win = windows.at( i );
+
         char *name = nullptr;
         if( XFetchName( m_display, win.window, &name ) > 0 ) {
             QString win_name( name );
@@ -148,8 +130,10 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     }
 
     m_tb_windows = QList< quint64 >();
-    foreach( WindowItem win, windows )
+    for( int i = 0 ; i < windows.length() ; ++i )
     {
+        WindowItem win = windows.at( i );
+
         Atom           type;
         int            format;
         unsigned long  nItems;
@@ -176,7 +160,38 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
         }
     }
 
-    emit signalConsole( QString( "Number of windows found: %1").arg(m_tb_windows.length()));
+    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
+
+    /*
+     *  Get the new window states, store the old ones
+     */
+    m_tb_window_states = QList< Preferences::WindowState >();
+    for( int i = 0 ; i< m_tb_windows.length() ; ++i )
+    {
+        QStringList atom_list = atomNetWmState( m_display, m_tb_windows.at( i ) );
+
+        emit signalConsole( QString( "WinID %1, Atoms: %2" ).arg( m_tb_windows.at( i ) ).arg( atom_list.join(",") ) );
+
+        if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+        {
+            m_tb_window_states.append( Preferences::STATE_MINIMIZED );
+        }
+        else
+        {
+            m_tb_window_states.append( Preferences::STATE_NORMAL );
+
+        }
+    }
+}
+
+
+
+/*
+ *  Get the states of the TB windows.
+ */
+const QList< Preferences::WindowState >&    WindowCtrlUnix::getWindowStates() const
+{
+    return m_tb_window_states;
 }
 
 
@@ -187,8 +202,10 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
-    foreach( WindowItem win, windows )
+    for( int i = 0 ; i < windows.length() ; ++i )
     {
+        WindowItem win = windows.at( i );
+
         char *name = nullptr;
         if( XFetchName( m_display, win.window, &name ) > 0 ) {
             QString win_name( name );
@@ -215,9 +232,9 @@ void    WindowCtrlUnix::displayWindowElements( quint64 window )
     emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
 
     QStringList types = atomWindowType( m_display, window );
-    foreach( QString type, types )
+    for( int i = 0 ; i < types.length() ; ++i )
     {
-        emit signalConsole( QString( "Atom type: %1" ).arg( type ) );
+        emit signalConsole( QString( "Atom type: %1" ).arg( types.at( i ) ) );
     }
 
     QStringList states = atomNetWmState( m_display, window );
@@ -226,8 +243,10 @@ void    WindowCtrlUnix::displayWindowElements( quint64 window )
     bool max_horz = false;
     bool hidden = false;
 
-    foreach( QString state, states )
+    for( int i = 0 ; i < states.length() ; ++i )
     {
+        QString state = states.at( i );
+
         emit signalConsole( QString( "Atom state: %1" ).arg( state ) );
 
         int state_code = WindowStates.indexOf( state ) ;

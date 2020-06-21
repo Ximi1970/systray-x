@@ -317,7 +317,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         {
             QString window_state_str = jsonObject[ "window" ].toString();
 
-            int window_state;
+            Preferences::WindowState window_state;
             if( window_state_str == Preferences::STATE_NORMAL_STR )
             {
                 window_state = Preferences::STATE_NORMAL;

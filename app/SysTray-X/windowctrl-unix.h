@@ -70,6 +70,7 @@ class WindowCtrlUnix : public QObject
          */
         enum WindowState
         {
+            STATE_NORMAL = -1,
             STATE_MODAL = 0,
             STATE_STICKY,
             STATE_MAXIMIZED_VERT,
@@ -126,20 +127,6 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
-         * @brief setWindowState. Set the window state.
-         *
-         *  @param state    The state.
-         */
-        void    setWindowState( int state );
-
-        /**
-         * @brief getWindowState. Get the window state.
-         *
-         *  @return     The state.
-         */
-        int getWindowState() const;
-
-        /**
          * @brief setMinimizeType
          *
          *  @param type     Set the minimize type.
@@ -193,6 +180,20 @@ class WindowCtrlUnix : public QObject
          *  @param pid      The process id.
          */
         void    findWindows( qint64 pid );
+
+        /**
+         * @brief getWindowStates. Get the states of the TB windows.
+         *
+         *  @return     The list of window states.
+         */
+        const QList< Preferences::WindowState >&    getWindowStates() const;
+
+        /**
+         * @brief getWindowStates. Get the states of the TB windows.
+         *
+         *  @return     The list of window states.
+         */
+        const QList< Preferences::WindowState >&    getWindowPrevStates() const;
 
         /**
          * @brief displayWindowElements. Display window elements (atoms).
@@ -360,14 +361,14 @@ class WindowCtrlUnix : public QObject
         QList< quint64 >    m_tb_windows;
 
         /**
+         * @brief m_tb_window_states. The Thunderbird window states.
+         */
+        QList< Preferences::WindowState >    m_tb_window_states;
+
+        /**
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
-
-        /**
-         * @brief m_window_state. State of the TB window.
-         */
-        int m_window_state;
 };
 
 #endif // WINDOWCTRLUNIX_H
