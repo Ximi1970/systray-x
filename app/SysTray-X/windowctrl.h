@@ -4,7 +4,7 @@
 #include <QtGlobal>
 
 #ifdef Q_OS_LINUX
-#include "windowctrl-unix.h"
+#include "windowctrl-lin.h"
 #endif // Q_OS_LINUX
 
 #ifdef Q_OS_WIN

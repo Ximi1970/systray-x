@@ -11,6 +11,7 @@
 /*
  *	Qt includes
  */
+
 #include <QObject>
 #include <QSystemTrayIcon>
 
@@ -74,7 +75,7 @@ class SysTrayX : public QObject
          */
         void    hideTrayIcon();
 
-#if defined( Q_OS_LINUX ) && defined( NO_KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( KDE_INTEGRATION )
 
         /**
          * @brief showKdeTrayIcon. Create and show the KDE icon.
