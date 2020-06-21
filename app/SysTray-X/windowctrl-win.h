@@ -40,8 +40,8 @@ class WindowCtrlWin : public QObject
 
         struct EnumWindowsPidProcData
         {
-            unsigned long   pid;
-            HWND            hwnd;
+            WindowCtrlWin&  window_ctrl;
+            long long       pid;
         };
 
         struct EnumWindowsTitleProcData
@@ -63,6 +63,20 @@ class WindowCtrlWin : public QObject
          * @brief ~WindowCtrlWin. Destructor.
          */
         ~WindowCtrlWin();
+
+        /**
+         * @brief setWindowState. Set the window state.
+         *
+         *  @param state    The state.
+         */
+        void    setWindowState( int state );
+
+        /**
+         * @brief getWindowState. Get the window state.
+         *
+         *  @return     The state.
+         */
+        int getWindowState() const;
 
         /**
          * @brief setMinimizeType
@@ -116,10 +130,15 @@ class WindowCtrlWin : public QObject
          * @brief findWindow. Find window by pid.
          *
          *  @param pid  The pid to find.
-         *
-         *  @return     State of the find.
          */
-        bool    findWindows( qint64 pid );
+        void    findWindows( qint64 pid );
+
+        /**
+         * @brief getWindowStates. Get the states of the TB windows.
+         *
+         *  @return     The list of window states.
+         */
+        const QList< Preferences::WindowState >&    getWindowStates() const;
 
         /**
          * @brief displayWindowElements. Display window elements.
@@ -134,6 +153,13 @@ class WindowCtrlWin : public QObject
          *  @param title    The window id.
          */
         void    displayWindowElements( quint64 window );
+
+        /**
+         * @brief getWinId. Get the Thunderbird window ID.
+         *
+         *  @return     The TB window ID.
+         */
+        quint64 getWinId();
 
         /**
          * @brief getWinIds. Get the Thunderbird window IDs.
@@ -238,7 +264,7 @@ class WindowCtrlWin : public QObject
         /**
          * @brief hookAction. Non-static function to be used by the hook callback.
          */
-        void    hookAction();
+        void    hookAction( HWND hWnd );
 
     signals:
 
@@ -276,14 +302,29 @@ class WindowCtrlWin : public QObject
     private:
 
         /**
+         * @brief m_tb_window. The Thunderbird window.
+         */
+        quint64  m_tb_window;
+
+        /**
          * @brief m_tb_window. The Thunderbird windows.
          */
         QList< quint64 >  m_tb_windows;
 
         /**
+         * @brief m_tb_window_states. The Thunderbird window states.
+         */
+        QList< Preferences::WindowState >    m_tb_window_states;
+
+        /**
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
+
+        /**
+         * @brief m_window_state. State of the TB window.
+         */
+        int m_window_state;
 
         /**
          * @brief m_hook

@@ -169,6 +169,11 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 
     emit signalConsole( QString( "State change to: %1" ).arg( state ) );
 
+    /*
+     *  Update the TB windows and states
+     */
+    findWindows( m_ppid );
+
 #ifdef Q_OS_UNIX
 
     /*

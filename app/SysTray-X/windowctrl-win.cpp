@@ -36,8 +36,10 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
      *  Initialize
      */
     m_tb_window = 0;
-    m_tb_windows = QList< quint64 >();
     m_window_state = Preferences::STATE_UNKNOWN;
+
+    m_tb_windows = QList< quint64 >();
+    m_tb_window_states = QList< Preferences::WindowState >();
 
     /*
      * Setup the minimize intercept
@@ -56,6 +58,26 @@ WindowCtrlWin::~WindowCtrlWin()
      * Remove the intercept hook
      */
     stopInterceptMinimizeWindow();
+}
+
+
+/*
+ * Set the window state.
+ */
+void    WindowCtrlWin::setWindowState( int state )
+{
+    m_window_state = state;
+}
+
+
+/**
+ * @brief getWindowState. Get the window state.
+ *
+ *  @return     The state.
+ */
+int WindowCtrlWin::getWindowState() const
+{
+    return m_window_state;
 }
 
 
@@ -170,45 +192,72 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 /*
  *  Find the window by pid
  */
-bool    WindowCtrlWin::findWindows( qint64 pid )
+void    WindowCtrlWin::findWindows( qint64 pid )
 {
-    EnumWindowsPidProcData data;
-    data.pid = pid;
-    data.hwnd = nullptr;
+    m_tb_windows = QList< quint64 >();
+    m_tb_window_states = QList< Preferences::WindowState >();
+
+    EnumWindowsPidProcData data{ *this, pid };
     EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
 
-    if( data.hwnd == nullptr )
+    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
+
+    for( int i = 0 ; i< m_tb_windows.length() ; ++i )
     {
-        return false;
+        emit signalConsole( QString( "WinID %1, State %2" ).arg( m_tb_windows.at( i ) ).arg( m_tb_window_states.at( i ) ) );
     }
-
-    /*
-     *  Store it
-     */
-    m_tb_window = (quint64)data.hwnd;
-
-    return true;
 }
 
 
 /*
  *  Callback for the window enumaration pid find.
  */
-BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
+BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hWnd, LPARAM lParam )
 {
     auto& data = *reinterpret_cast<EnumWindowsPidProcData*>(lParam);
     unsigned long pid = 0;
 
-    GetWindowThreadProcessId( hwnd, &pid );
+    GetWindowThreadProcessId( hWnd, &pid );
 
-    if( data.pid != pid || !isMainWindow( hwnd ) )
+    if( data.pid != pid || !isMainWindow( hWnd ) )
     {
         return TRUE;
     }
 
-    data.hwnd = hwnd;
+    /*
+     *  Store the window id
+     */
+    data.window_ctrl.m_tb_windows.append( (quint64)hWnd );
 
-    return FALSE;
+    /*
+     *  Get the window state
+     */
+    WINDOWPLACEMENT wp;
+    wp.length = sizeof( WINDOWPLACEMENT );
+    GetWindowPlacement( hWnd, &wp );
+
+    if( SW_SHOWMINIMIZED == wp.showCmd )
+    {
+        /*
+         * Window is minimized
+         */
+        data.window_ctrl.m_tb_window_states.append( Preferences::STATE_MINIMIZED );
+    }
+    else
+    {
+        data.window_ctrl.m_tb_window_states.append( Preferences::STATE_NORMAL );
+    }
+
+    return TRUE;
+}
+
+
+/*
+ *  Get the states of the TB windows.
+ */
+const QList< Preferences::WindowState >&    WindowCtrlWin::getWindowStates() const
+{
+    return m_tb_window_states;
 }
 
 
@@ -217,7 +266,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hwnd, LPARAM lParam )
  */
 BOOL    WindowCtrlWin::isMainWindow( HWND hwnd )
 {
-    return GetWindow( hwnd, GW_OWNER ) == nullptr && IsWindowVisible( hwnd );
+    return GetWindow( hwnd, GW_OWNER ) == nullptr && ( IsWindowVisible( hwnd ) || IsIconic( hwnd ) );
 }
 
 
@@ -241,6 +290,15 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 void    WindowCtrlWin::displayWindowElements( quint64 window )
 {
     emit signalConsole( QString( "Found: XID %1" ).arg( window ) );
+}
+
+
+/*
+ *  Get the Thunderbird window ID
+ */
+quint64 WindowCtrlWin::getWinId()
+{
+    return m_tb_window;
 }
 
 
@@ -302,7 +360,7 @@ void CALLBACK   WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, 
              */
             if( m_ctrl_parent )
             {
-                m_ctrl_parent->hookAction();
+                m_ctrl_parent->hookAction( hWnd );
             }
         }
     }
@@ -312,16 +370,14 @@ void CALLBACK   WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, 
 /*
  * Non-static method to use by the hook callback
  */
-void    WindowCtrlWin::hookAction()
+void    WindowCtrlWin::hookAction( HWND hWnd )
 {
-    if( ( getWindowState() != Preferences::STATE_MINIMIZED ) && ( getMinimizeType() > 0 ) )
+    if( getMinimizeType() > 0 )
     {
-        setWindowState( Preferences::STATE_MINIMIZED );
-
         /*
          * Hide to tray
          */
-        hideWindow( (HWND)getWinId() );
+        hideWindow( hWnd );
     }
 }
 
