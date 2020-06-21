@@ -1,8 +1,8 @@
 #include <QtGlobal>
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 
-#ifndef WINDOWCTRLUNIX_H
-#define WINDOWCTRLUNIX_H
+#ifndef WINDOWCTRLLIN_H
+#define WINDOWCTRLLIN_H
 
 /*
  *	Local includes
@@ -25,9 +25,9 @@
 typedef struct _XDisplay Display;
 
 /**
- * @brief The WindowCtrlUnix class.
+ * @brief The WindowCtrlLin class.
  */
-class WindowCtrlUnix : public QObject
+class WindowCtrlLin : public QObject
 {
     Q_OBJECT
 
@@ -119,11 +119,11 @@ class WindowCtrlUnix : public QObject
     public:
 
         /**
-         * @brief WindowCtrlUnix. Constructor.
+         * @brief WindowCtrlLin. Constructor.
          *
          * @param parent    My parent.
          */
-        explicit WindowCtrlUnix( QObject *parent = nullptr );
+        explicit WindowCtrlLin( QObject *parent = nullptr );
 
         /**
          * @brief setWindowState. Set the window state.
@@ -382,6 +382,6 @@ class WindowCtrlUnix : public QObject
         int m_window_state;
 };
 
-#endif // WINDOWCTRLUNIX_H
+#endif // WINDOWCTRLLIN_H
 
-#endif // Q_OS_UNIX
+#endif // Q_OS_LINUX

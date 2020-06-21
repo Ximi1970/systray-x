@@ -19,10 +19,12 @@
  *  Constructor
  */
 WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
-#ifdef Q_OS_UNIX
-    : WindowCtrlUnix( parent )
+#ifdef Q_OS_LINUX
+    : WindowCtrlLin( parent )
 #elif defined Q_OS_WIN
     : WindowCtrlWin( parent )
+#elif defined Q_OS_MACOS
+    : WindowCtrlMac( parent )
 #else
     : public QObject
 #endif

@@ -3,13 +3,17 @@
 
 #include <QtGlobal>
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 #include "windowctrl-unix.h"
-#endif // Q_OS_UNIX
+#endif // Q_OS_LINUX
 
 #ifdef Q_OS_WIN
 #include "windowctrl-win.h"
 #endif // Q_OS_WIN
+
+#ifdef Q_OS_MACOS
+#include "windowctrl-mac.h"
+#endif // Q_OS_MACOS
 
 
 /*
@@ -21,10 +25,12 @@ class Preferences;
 /**
  * @brief The WindowCtrl class.
  */
-#ifdef Q_OS_UNIX
-class WindowCtrl : public WindowCtrlUnix
+#ifdef Q_OS_LINUX
+class WindowCtrl : public WindowCtrlLin
 #elif defined Q_OS_WIN
 class WindowCtrl : public WindowCtrlWin
+#elif defined Q_OS_MACOS
+class WindowCtrl : public WindowCtrlMac
 #else
 class WindowCtrl : public QObject
 #endif
@@ -34,7 +40,7 @@ class WindowCtrl : public QObject
     public:
 
         /**
-         * @brief WindowCtrlUnix. Constructor.
+         * @brief WindowCtrlLin. Constructor.
          *
          * @param parent    My parent.
          */

@@ -1,6 +1,6 @@
-#include "windowctrl-unix.h"
+#include "windowctrl-lin.h"
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 
 /*
  *  System includes
@@ -14,7 +14,7 @@
 /*
  *  Constructor
  */
-WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
+WindowCtrlLin::WindowCtrlLin( QObject *parent ) : QObject( parent )
 {
     /*
      *  Initialize
@@ -35,7 +35,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 /*
  *  Set the minimize type
  */
-void    WindowCtrlUnix::setMinimizeType( Preferences::MinimizeType type )
+void    WindowCtrlLin::setMinimizeType( Preferences::MinimizeType type )
 {
     m_minimize_type = type;
 }
@@ -44,7 +44,7 @@ void    WindowCtrlUnix::setMinimizeType( Preferences::MinimizeType type )
 /*
  * Set the window state.
  */
-void    WindowCtrlUnix::setWindowState( int state )
+void    WindowCtrlLin::setWindowState( int state )
 {
     m_window_state = state;
 }
@@ -55,7 +55,7 @@ void    WindowCtrlUnix::setWindowState( int state )
  *
  *  @return     The state.
  */
-int WindowCtrlUnix::getWindowState() const
+int WindowCtrlLin::getWindowState() const
 {
     return m_window_state;
 }
@@ -64,7 +64,7 @@ int WindowCtrlUnix::getWindowState() const
 /*
  *  Get the minimize type
  */
-Preferences::MinimizeType    WindowCtrlUnix::getMinimizeType() const
+Preferences::MinimizeType    WindowCtrlLin::getMinimizeType() const
 {
     return m_minimize_type;
 }
@@ -73,7 +73,7 @@ Preferences::MinimizeType    WindowCtrlUnix::getMinimizeType() const
 /*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
-qint64  WindowCtrlUnix::getPpid() const
+qint64  WindowCtrlLin::getPpid() const
 {
     return getppid();
 }
@@ -82,7 +82,7 @@ qint64  WindowCtrlUnix::getPpid() const
 /*
  *  Is the pid from thunderbird
  */
-bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
+bool    WindowCtrlLin::isThunderbird( qint64 pid ) const
 {
     return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
 }
@@ -91,7 +91,7 @@ bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
 /*
  *  Get the process name
  */
-QString WindowCtrlUnix::getProcessName( qint64 pid ) const
+QString WindowCtrlLin::getProcessName( qint64 pid ) const
 {
     QString process_name = QString( "/proc/%1/exe" ).arg( pid );
     QFileInfo process( process_name );
@@ -103,7 +103,7 @@ QString WindowCtrlUnix::getProcessName( qint64 pid ) const
 /*
  *  Find window(s) by title
  */
-bool    WindowCtrlUnix::findWindow( const QString& title )
+bool    WindowCtrlLin::findWindow( const QString& title )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -137,7 +137,7 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
 /*
  *  Find a window by PID
  */
-void    WindowCtrlUnix::findWindow( qint64 pid )
+void    WindowCtrlLin::findWindow( qint64 pid )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -185,7 +185,7 @@ void    WindowCtrlUnix::findWindow( qint64 pid )
 /*
  *  Display window atoms
  */
-void    WindowCtrlUnix::displayWindowElements( const QString& title )
+void    WindowCtrlLin::displayWindowElements( const QString& title )
 {
     QList< WindowItem > windows = listXWindows( m_display, m_root_window );
 
@@ -211,7 +211,7 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
 /*
  *  Display window atoms
  */
-void    WindowCtrlUnix::displayWindowElements( quint64 window )
+void    WindowCtrlLin::displayWindowElements( quint64 window )
 {
     QString name = atomName( m_display, window );
     emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
@@ -282,7 +282,7 @@ void    WindowCtrlUnix::displayWindowElements( quint64 window )
 /*
  *  Get the Thunderbird window ID
  */
-quint64 WindowCtrlUnix::getWinId()
+quint64 WindowCtrlLin::getWinId()
 {
     return m_tb_window;
 }
@@ -291,7 +291,7 @@ quint64 WindowCtrlUnix::getWinId()
 /*
  *  Get the Thunderbird window IDs
  */
-QList< quint64 >   WindowCtrlUnix::getWinIds()
+QList< quint64 >   WindowCtrlLin::getWinIds()
 {
     return m_tb_windows;
 }
@@ -300,7 +300,7 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
+void    WindowCtrlLin::minimizeWindow( quint64 window, int hide )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -317,7 +317,7 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
 /*
  *  Hide window to system tray
  */
-void    WindowCtrlUnix::hideWindow( quint64 window, int set )
+void    WindowCtrlLin::hideWindow( quint64 window, int set )
 {
     switch( m_minimize_type )
     {
@@ -344,7 +344,7 @@ void    WindowCtrlUnix::hideWindow( quint64 window, int set )
 /*
  *  Normalize a window
  */
-void    WindowCtrlUnix::normalizeWindow( quint64 window )
+void    WindowCtrlLin::normalizeWindow( quint64 window )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -380,7 +380,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 /*
  *  Delete the window
  */
-void    WindowCtrlUnix::deleteWindow( quint64 window )
+void    WindowCtrlLin::deleteWindow( quint64 window )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -416,7 +416,7 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
 /*
  *  Hide window to system tray
  */
-void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
+void    WindowCtrlLin::hideWindowEvent( quint64 window, bool set )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -445,7 +445,7 @@ void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
 /*
  *  Remove window from taskbar
  */
-void    WindowCtrlUnix::hideWindowAtom( quint64 window, bool set )
+void    WindowCtrlLin::hideWindowAtom( quint64 window, bool set )
 {
     if( !isThunderbird( getPpid() ) )
     {
@@ -532,7 +532,7 @@ void    WindowCtrlUnix::hideWindowAtom( quint64 window, bool set )
 /*
  *  Get the X11 window list
  */
-QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *display, quint64 window, int level )
+QList< WindowCtrlLin::WindowItem >   WindowCtrlLin::listXWindows( Display *display, quint64 window, int level )
 {
     Window root;
     Window parent;
@@ -558,7 +558,7 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *dis
 /*
  *  Send a X event
  */
-void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
+void    WindowCtrlLin::sendEvent( quint64 window, const char* msg, long action,
                                     long prop1, long prop2, long prop3, long prop4 )
 {
     Window win = static_cast<Window>( window );
@@ -589,7 +589,7 @@ void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
 /*
  *  Get the title of the window
  */
-QString   WindowCtrlUnix::atomName( Display *display, quint64 window )
+QString   WindowCtrlLin::atomName( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_NAME";
     Atom prop = XInternAtom( display, prop_name, True );
@@ -621,7 +621,7 @@ QString   WindowCtrlUnix::atomName( Display *display, quint64 window )
 /*
  *  Get the _NET_WM_STATE of the window
  */
-QStringList    WindowCtrlUnix::atomNetWmState( Display *display, quint64 window )
+QStringList    WindowCtrlLin::atomNetWmState( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_STATE";
     Atom prop = XInternAtom( display, prop_name, True );
@@ -664,7 +664,7 @@ QStringList    WindowCtrlUnix::atomNetWmState( Display *display, quint64 window 
 /*
  *  Get the WM_STATE of the window
  */
-long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
+long   WindowCtrlLin::atomWmState( Display *display, quint64 window )
 {
     char prop_name[] = "WM_STATE";
     Atom prop = XInternAtom( display, prop_name, False );
@@ -694,7 +694,7 @@ long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
 /*
  *  Get the type of the window
  */
-QStringList    WindowCtrlUnix::atomWindowType( Display *display, quint64 window )
+QStringList    WindowCtrlLin::atomWindowType( Display *display, quint64 window )
 {
     char prop_name[] = "_NET_WM_WINDOW_TYPE";
     Atom prop = XInternAtom( display, prop_name, True );

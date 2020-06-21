@@ -158,7 +158,9 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Request preferences from add-on
      */
     getPreferences();
-}
+
+    slotSelectIconObjectPref()
+;}
 
 
 /*
@@ -324,7 +326,7 @@ void    SysTrayX::hideTrayIcon()
 }
 
 
-#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( KDE_INTEGRATION )
 
 /*
  *  Show / create tray icon
@@ -438,7 +440,7 @@ void    SysTrayX::slotSelectIconObjectPref()
 void    SysTrayX::slotSelectIconObject( bool state )
 {
 
-#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( KDE_INTEGRATION )
 
     if( state )
     {
@@ -574,7 +576,7 @@ void    SysTrayX::slotVersion( QString version )
                 QSystemTrayIcon::Warning );
         }
 
-#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( KDE_INTEGRATION )
 
         if( m_kde_tray_icon )
         {

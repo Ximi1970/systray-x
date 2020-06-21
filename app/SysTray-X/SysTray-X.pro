@@ -78,7 +78,7 @@ win32: {
 }
 unix:macx: {
     QMAKE_LFLAGS += -framework IOKit -framework Foundation
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
 
     LIBS += -dead_strip
 }
@@ -173,16 +173,20 @@ SOURCES += \
         preferencesdialog.cpp \
         preferences.cpp \
         windowctrl.cpp
-unix: {
-SOURCES += \
-        windowctrl-unix.cpp
+unix:!macx: {
+    SOURCES += \
+        windowctrl-lin.cpp
     contains(DEFINES,KDE_INTEGRATION) {
         SOURCES += \
             systrayxstatusnotifier.cpp
     }
 }
+unix:macx: {
+    SOURCES += \
+        windowctrl-mac.cpp
+}
 win32: {
-SOURCES += \
+    SOURCES += \
         windowctrl-win.cpp
 }
 
@@ -194,17 +198,20 @@ HEADERS += \
         preferencesdialog.h \
         preferences.h \
         windowctrl.h
-unix: {
-HEADERS += \
-        windowctrl-unix.h
-
+unix:!macx: {
+    HEADERS += \
+        windowctrl-lin.h
     contains(DEFINES,KDE_INTEGRATION) {
         HEADERS += \
             systrayxstatusnotifier.h
     }
 }
+unix:macx: {
+    HEADERS += \
+        windowctrl-mac.h
+}
 win32: {
-HEADERS += \
+    HEADERS += \
         windowctrl-win.h
 }
 

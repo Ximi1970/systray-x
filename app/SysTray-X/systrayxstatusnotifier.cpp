@@ -1,6 +1,6 @@
 #include "systrayxstatusnotifier.h"
 
-#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( KDE_INTEGRATION )
 
 /*
  *	Local includes

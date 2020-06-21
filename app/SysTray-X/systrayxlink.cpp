@@ -362,7 +362,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
              */
             emit signalKdeIntegration( hide_default_icon );
 
-#if defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION )
+#if defined( Q_OS_LINUX ) && defined( NO_KDE_INTEGRATION )
 
             sendDisableKdeIntegration();
 
