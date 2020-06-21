@@ -43,7 +43,7 @@ TRANSLATIONS = \
     languages/$${TARGET}.nl.ts \
     languages/$${TARGET}.pl.ts \
     languages/$${TARGET}.pt_BR.ts \
-    languages/$${TARGET}.ru.ts \
+    languages/$${TARGET}.ru_RU.ts \
     languages/$${TARGET}.sk.ts \
     languages/$${TARGET}.uk.ts \
     languages/$${TARGET}.zh_CN.ts \
