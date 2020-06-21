@@ -1,0 +1,191 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Extensão de controle da system tray (bandeja de ícones). Por favor, também faça o download do programa necessário.",
+    "description": "Webextension descriptions"
+  },
+
+  "tab_windows": {
+    "message": "Janela",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Ícone",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_mail": {
+    "message": "E-mail",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_debug": {
+    "message": "Depuração",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Janela",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimizar",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Comportamento padrão",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Minimizar para a tray, método 1",
+    "description": "Minimize option 2"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Minimizar para a tray, método 2",
+    "description": "Minimize option 3"
+  },
+
+  "windows_start_min": {
+    "message": "Iniciar aplicação minimizada",
+    "description": "Start minimized"
+  },
+
+  "windows_min_close": {
+    "message": "Minimizar ao fechar",
+    "description": "Minimize on close"
+  },
+
+  "icons": {
+    "message": "Ícones",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Ícone padrão",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Padrão do Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Ícone transparente",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Ícone personalizado",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Escolher...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Integração com o KDE (oculta o ícone)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Ícone de notificação",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Ícone branco",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Ícone de novo e-mail",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Ícone personalizado",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Escolher...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Nenhum ícone",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Número",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Exibir contador de mensagens não lidas",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Cor do número:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Tamanho do número:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "Tipo do contador de mensagens:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Não lidos",
+    "description": "SCount unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "Novos",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Contas",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Depuração",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Mostrar janela de depuração",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Salvar preferências",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Salvar",
+    "description": "Save preferences button"
+  }
+}
