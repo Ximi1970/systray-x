@@ -63,7 +63,8 @@ class Preferences : public QObject
             STATE_MINIMIZED,
             STATE_MAXIMIZED,
             STATE_FULLSCREEN,
-            STATE_DOCKED
+            STATE_DOCKED,
+            STATE_MINIMIZED_ALL,
         };
 
         static const QString   STATE_NORMAL_STR;
@@ -71,6 +72,7 @@ class Preferences : public QObject
         static const QString   STATE_MAXIMIZED_STR;
         static const QString   STATE_FULLSCREEN_STR;
         static const QString   STATE_DOCKED_STR;
+        static const QString   STATE_MINIMIZED_ALL_STR;
 
     public:
 

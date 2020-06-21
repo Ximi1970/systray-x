@@ -22,6 +22,7 @@ const QString   Preferences::STATE_MINIMIZED_STR = "minimized";
 const QString   Preferences::STATE_MAXIMIZED_STR = "maximized";
 const QString   Preferences::STATE_FULLSCREEN_STR = "fullscreen";
 const QString   Preferences::STATE_DOCKED_STR = "docked";
+const QString   Preferences::STATE_MINIMIZED_ALL_STR = "minimized_all";
 
 
 /**

@@ -182,7 +182,7 @@ void    WindowCtrl::slotWindowState( int state )
 
         QList< quint64 > win_ids = getWinIds();
 
-        if( state == Preferences::STATE_MINIMIZED )
+        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
         {
             for( int i = 0 ; i < win_ids.count() ; ++i )
             {

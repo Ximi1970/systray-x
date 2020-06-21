@@ -343,6 +343,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
                 window_state = Preferences::STATE_DOCKED;
             }
             else
+            if( window_state_str == Preferences::STATE_MINIMIZED_ALL_STR )
+            {
+                window_state = Preferences::STATE_MINIMIZED_ALL;
+            }
+            else
             {
                 /*
                  *  Unknown state

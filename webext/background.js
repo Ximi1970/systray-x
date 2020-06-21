@@ -66,9 +66,12 @@ SysTrayX.Messaging = {
   },
 
   onCloseButton: function () {
+    SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+    /*
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
       state: "minimized",
     });
+    */
   },
 
   //
