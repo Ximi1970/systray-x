@@ -189,13 +189,6 @@ class WindowCtrlUnix : public QObject
         const QList< Preferences::WindowState >&    getWindowStates() const;
 
         /**
-         * @brief getWindowStates. Get the states of the TB windows.
-         *
-         *  @return     The list of window states.
-         */
-        const QList< Preferences::WindowState >&    getWindowPrevStates() const;
-
-        /**
          * @brief displayWindowElements. Display window elements (atoms).
          *
          *  @param title    The window title to find.

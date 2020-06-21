@@ -185,7 +185,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 }
 
 
-
 /*
  *  Get the states of the TB windows.
  */
