@@ -167,13 +167,13 @@
     <message>
         <location filename="../preferences.ui" line="295"/>
         <source>Minimize to tray, method 1</source>
-        <translatorcomment>Minimizar para a bandeja?</translatorcomment>
+        <translatorcomment>Minimizar para à área de notificações? (muito grande)</translatorcomment>
         <translation>Minimizar para a tray, método 1</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="308"/>
         <source>Minimize to tray, method 2</source>
-        <translatorcomment>Minimizar para a bandeja?</translatorcomment>
+        <translatorcomment>Minimizar para à área de notificações? (muito grande)</translatorcomment>
         <translation>Minimizar para a tray, método 2</translation>
     </message>
     <message>
