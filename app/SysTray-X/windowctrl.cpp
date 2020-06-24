@@ -169,11 +169,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 
     emit signalConsole( QString( "State change to: %1" ).arg( state ) );
 
-    /*
-     *  Update the TB windows and states
-     */
-    findWindows( m_ppid );
-
 #ifdef Q_OS_UNIX
 
     /*
@@ -221,7 +216,28 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 
 #else
 
-    Q_UNUSED( state )
+    /*
+     *  Update the TB windows and states
+     */
+    findWindows( m_ppid );
+
+    /*
+     *  Minimize all?
+     */
+    if( state == Preferences::STATE_MINIMIZED_ALL )
+    {
+        emit signalConsole( QString( "Minimize all" ) );
+
+        QList< quint64 > win_ids = getWinIds();
+
+        /*
+         *   Close pressed on one of the windows, minimize them all
+         */
+        for( int i = 0 ; i < win_ids.length() ; ++i )
+        {
+            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+        }
+    }
 
 #endif
 }
