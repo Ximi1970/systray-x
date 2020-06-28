@@ -213,7 +213,10 @@ SysTrayX.Messaging = {
     if (SysTrayX.startupState) {
       //  Send startup state after the prefs
       //  so the hide is handled conform the prefs
-      SysTrayX.Link.postSysTrayXMessage({ window: SysTrayX.startupState });
+      if (SysTrayX.startupState === "minimized") {
+        SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+        //SysTrayX.Link.postSysTrayXMessage({ window: SysTrayX.startupState });
+      }
 
       SysTrayX.startupState = undefined;
     }
