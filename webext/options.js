@@ -66,6 +66,18 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save close preferences
+    //
+    const closeType = document.querySelector(
+      'input[name="closeType"]:checked'
+    ).value;
+
+    //  Store minimize preferences
+    browser.storage.sync.set({
+      closeType: closeType,
+    });
+
+    //
     //  Save start minimized state
     //
     const startMinimized = document.querySelector(
@@ -203,6 +215,17 @@ SysTrayX.RestoreOptions = {
     getMinimizeType.then(
       SysTrayX.RestoreOptions.setMinimizeType,
       SysTrayX.RestoreOptions.onMinimizeTypeError
+    );
+
+    //
+    //  Restore close type
+    //
+    const getCloseType = browser.storage.sync.get(
+      "closeType",
+    );
+    getCloseType.then(
+      SysTrayX.RestoreOptions.setCloseType,
+      SysTrayX.RestoreOptions.onCloseTypeError
     );
 
     //
@@ -362,6 +385,22 @@ SysTrayX.RestoreOptions = {
 
   onMinimizeTypeError: function (error) {
     console.log(`Minimize type Error: ${error}`);
+  },
+
+  //
+  //  Restore close type callbacks
+  //
+  setCloseType: function (result) {
+    const closeType = result.closeType || "4";
+
+    const radioButton = document.querySelector(
+      `input[name="closeType"][value="${closeType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onCloseTypeError: function (error) {
+    console.log(`Close type Error: ${error}`);
   },
 
   //
@@ -749,6 +788,11 @@ SysTrayX.StorageChanged = {
           minimizeType: changes[item].newValue,
         });
       }
+      if (item === "closeType") {
+        SysTrayX.RestoreOptions.setCloseType({
+          closeType: changes[item].newValue,
+        });
+      }
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue,
@@ -781,6 +825,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("defaulticonselect").className = "active";
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
+    document.getElementById("closeselect").className = "active";
   },
 };
 

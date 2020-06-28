@@ -218,9 +218,9 @@ class SysTrayXLink : public QObject
         void    slotStartMinimizedChange();
 
         /**
-         * @brief slotMinimizeOnCloseChange. Handle a change in start minimized state.
+         * @brief slotCloseTypeChange. Slot for handling close type change signals.
          */
-        void    slotMinimizeOnCloseChange();
+        void    slotCloseTypeChange();
 
         /**
          * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.

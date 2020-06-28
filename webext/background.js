@@ -155,6 +155,7 @@ SysTrayX.Messaging = {
     const getter = browser.storage.sync.get([
       "debug",
       "minimizeType",
+      "closeType",
       "startMinimized",
       "minimizeOnClose",
       "defaultIconType",
@@ -175,6 +176,7 @@ SysTrayX.Messaging = {
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
     const minimizeType = result.minimizeType || "1";
+    const closeType = result.closeType || "4";
     const startMinimized = result.startMinimized || "false";
     const minimizeOnClose = result.minimizeOnClose || "true";
     const defaultIconType = result.defaultIconType || "0";
@@ -194,6 +196,7 @@ SysTrayX.Messaging = {
       preferences: {
         debug: debug,
         minimizeType: minimizeType,
+        closeType: closeType,
         startMinimized: startMinimized,
         minimizeOnClose: minimizeOnClose,
         defaultIconType: defaultIconType,
@@ -366,6 +369,13 @@ SysTrayX.Link = {
       if (minimizeType) {
         browser.storage.sync.set({
           minimizeType: minimizeType,
+        });
+      }
+
+      const closeType = response["preferences"].closeType;
+      if (closeType) {
+        browser.storage.sync.set({
+          closeType: closeType,
         });
       }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>543</width>
-    <height>600</height>
+    <width>515</width>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -271,7 +271,7 @@
           <item>
            <widget class="QGroupBox" name="groupBox_4">
             <property name="title">
-             <string>Minimize</string>
+             <string>Minimize action</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
@@ -318,21 +318,77 @@
            </widget>
           </item>
           <item>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="title">
+             <string>Close action</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_17">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <item>
+                <widget class="QRadioButton" name="closeWindowRadioButton">
+                 <property name="text">
+                  <string>Close windows individually</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">closeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="closeAllWindowsRadioButton">
+                 <property name="text">
+                  <string>Close all windows</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">closeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="closeAllMinimizeLastRadioButton">
+                 <property name="text">
+                  <string>Close all, minimize last</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">closeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="minimizeWindowRadioButton">
+                 <property name="text">
+                  <string>Minimize windows individually</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">closeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="minimizeAllWindowsRadioButton">
+                 <property name="text">
+                  <string>Minimize all windows</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">closeTypeGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <widget class="QCheckBox" name="startMinimizedCheckBox">
               <property name="text">
                <string>Start application minimized</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
-              <property name="text">
-               <string>Minimize on close</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -507,9 +563,10 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>

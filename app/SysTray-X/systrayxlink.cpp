@@ -619,14 +619,14 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartMinimized( start_minimized );
     }
 
-    if( pref.contains( "minimizeOnClose" ) && pref[ "minimizeOnClose" ].isString() )
+    if( pref.contains( "closeType" ) && pref[ "closeType" ].isString() )
     {
-        bool minimize_on_close = pref[ "minimizeOnClose" ].toString() == "true";
+        Preferences::CloseType close_type = static_cast< Preferences::CloseType >( pref[ "closeType" ].toString().toInt() );
 
         /*
-         *  Store the new start minimized state
+         *  Store the new close type
          */
-        m_pref->setMinimizeOnClose( minimize_on_close );
+        m_pref->setCloseType( close_type );
     }
 
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
@@ -653,7 +653,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
-    prefObject.insert("minimizeOnClose", QJsonValue::fromVariant( QString( pref.getMinimizeOnClose() ? "true" : "false" ) ) );
+    prefObject.insert("closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
     prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
     prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
     prefObject.insert("defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
@@ -734,9 +734,9 @@ void    SysTrayXLink::slotStartMinimizedChange()
 
 
 /*
- *  Handle a minimize on close state change signal
+ *  Handle a close type change signal
  */
-void    SysTrayXLink::slotMinimizeOnCloseChange()
+void    SysTrayXLink::slotCloseTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

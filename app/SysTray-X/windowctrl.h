@@ -47,6 +47,13 @@ class WindowCtrl : public QObject
          */
         bool    thunderbirdStart() const;
 
+        /**
+         * @brief visibleWindows. Get the number of visible windows.
+         *
+         *  @return     The number of windows.
+         */
+        int visibleWindows();
+
     signals:
 
 //        void    signalShow();

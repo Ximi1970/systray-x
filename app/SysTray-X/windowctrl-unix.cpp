@@ -68,6 +68,23 @@ bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
 
 
 /*
+ *  Get the number of visible windows.
+ */
+int WindowCtrlUnix::getVisibleWindows()
+{
+    /*
+     *  Get the TB windows and states
+     */
+    findWindows( getppid() );
+
+    /*
+     *  Count the visible states
+     */
+    return m_tb_window_states.count( Preferences::STATE_NORMAL );
+}
+
+
+/*
  *  Get the process name
  */
 QString WindowCtrlUnix::getProcessName( qint64 pid ) const

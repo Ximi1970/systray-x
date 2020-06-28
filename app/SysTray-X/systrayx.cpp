@@ -119,7 +119,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalCountTypeChange, m_pref_dialog, &PreferencesDialog::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
-    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_pref_dialog, &PreferencesDialog::slotMinimizeOnCloseChange );
+    connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
@@ -133,7 +133,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalCountTypeChange, m_link, &SysTrayXLink::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
-    connect( m_preferences, &Preferences::signalMinimizeOnCloseChange, m_link, &SysTrayXLink::slotMinimizeOnCloseChange );
+    connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
@@ -514,30 +514,41 @@ void    SysTrayX::slotAddOnShutdown()
  */
 void    SysTrayX::slotShutdown()
 {
-
-    if( m_preferences->getMinimizeOnClose() )
+    /*
+     *  What shall we do?
+     */
+    switch( m_preferences->getCloseType() )
     {
-        m_link->sendShutdown();
-    }
-    else
-    {
-        /*
-         *  Hide systray icon to prevent ghost systray icon in Windows
-         */
-        if( m_tray_icon )
+        case Preferences::PREF_CLOSE_WINDOW:
+        case Preferences::PREF_CLOSE_ALL_WINDOWS:
         {
-            m_tray_icon->hide();
+            /*
+             *  Hide systray icon to prevent ghost systray icon in Windows
+             */
+            if( m_tray_icon )
+            {
+                m_tray_icon->hide();
+            }
+
+            /*
+             *  Close the TB window
+             */
+            emit signalClose();
+
+            /*
+             *  Let's quit
+             */
+            QCoreApplication::quit();
+            break;
         }
 
-        /*
-         *  Close the TB window
-         */
-        emit signalClose();
-
-        /*
-         *  Let's quit
-         */
-        QCoreApplication::quit();
+        case Preferences::PREF_CLOSE_ALL_MINIMIZE_LAST:
+        case Preferences::PREF_MINIMIZE_WINDOW:
+        case Preferences::PREF_MINIMIZE_ALL_WINDOWS:
+        {
+            m_link->sendShutdown();
+            break;
+        }
     }
 }
 

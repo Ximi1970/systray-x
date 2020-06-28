@@ -51,7 +51,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
-    m_minimize_on_close = true;
+    m_close_type = PREF_MINIMIZE_ALL_WINDOWS;
 
     m_debug = false;
 
@@ -474,27 +474,27 @@ void    Preferences::setStartMinimized( bool state )
 
 
 /*
- *  Get the minmize on close pref.
+ *  Get the close type pref.
  */
-bool    Preferences::getMinimizeOnClose() const
+Preferences::CloseType    Preferences::getCloseType() const
 {
-    return m_minimize_on_close;
+    return m_close_type;
 }
 
 
 /*
- *  Set the minmize on close pref.
+ *  Set the close type pref.
  */
-void    Preferences::setMinimizeOnClose( bool state )
+void    Preferences::setCloseType( CloseType close_type )
 {
-    if( m_minimize_on_close != state )
+    if( m_close_type != close_type )
     {
-        m_minimize_on_close = state;
+        m_close_type = close_type;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalMinimizeOnCloseChange();
+        emit signalCloseTypeChange();
     }
 }
 

@@ -31,6 +31,15 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_pref = pref;
 
     /*
+     *  Set close type button Ids
+     */
+    m_ui->closeTypeGroup->setId( m_ui->closeWindowRadioButton, Preferences::PREF_CLOSE_WINDOW);
+    m_ui->closeTypeGroup->setId( m_ui->closeAllWindowsRadioButton, Preferences::PREF_CLOSE_ALL_WINDOWS );
+    m_ui->closeTypeGroup->setId( m_ui->closeAllMinimizeLastRadioButton, Preferences::PREF_CLOSE_ALL_MINIMIZE_LAST );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeWindowRadioButton, Preferences::PREF_MINIMIZE_WINDOW );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeAllWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS );
+
+    /*
      *  Set minimize type button Ids
      */
     m_ui->minimizeTypeGroup->setId( m_ui->defaultMinimizeRadioButton, Preferences::PREF_DEFAULT_MINIMIZE);
@@ -43,6 +52,13 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod2RadioButton->hide();
 
     m_ui->hideDefaultIconCheckBox->hide();
+
+#endif
+
+#ifdef Q_OS_LINUX
+
+    m_ui->minimizeMethod1RadioButton->setText( "Minimize to tray" );
+    m_ui->minimizeMethod2RadioButton->hide();
 
 #endif
 
@@ -143,9 +159,9 @@ void    PreferencesDialog::setStartMinimized( bool state )
 /*
  *  Set the minimize on close state
  */
-void    PreferencesDialog::setMinimizeOnClose( bool state )
+void    PreferencesDialog::setCloseType( Preferences::CloseType close_type )
 {
-   m_ui->minimizeOnCloseCheckBox->setChecked( state );
+    ( m_ui->closeTypeGroup->button( close_type ) )->setChecked( true );
 }
 
 
@@ -313,7 +329,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
-    m_pref->setMinimizeOnClose( m_ui->minimizeOnCloseCheckBox->isChecked() );
+    m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberColor( m_number_color );
@@ -442,9 +458,9 @@ void    PreferencesDialog::slotStartMinimizedChange()
 /*
  *  Handle the minimize on close change signal
  */
-void    PreferencesDialog::slotMinimizeOnCloseChange()
+void    PreferencesDialog::slotCloseTypeChange()
 {
-    setMinimizeOnClose( m_pref->getMinimizeOnClose() );
+    setCloseType( m_pref->getCloseType() );
 }
 
 

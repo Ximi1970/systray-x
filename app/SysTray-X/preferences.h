@@ -22,6 +22,17 @@ class Preferences : public QObject
     public:
 
         /*
+         *  Close types
+         */
+        enum CloseType {
+            PREF_CLOSE_WINDOW = 0,
+            PREF_CLOSE_ALL_WINDOWS,
+            PREF_CLOSE_ALL_MINIMIZE_LAST,
+            PREF_MINIMIZE_WINDOW,
+            PREF_MINIMIZE_ALL_WINDOWS
+        };
+
+        /*
          *  Minimize types
          */
         enum MinimizeType {
@@ -327,18 +338,18 @@ class Preferences : public QObject
         void setStartMinimized( bool state );
 
         /**
-         * @brief getMinimizeOnClose. Get the minimize on close state.
+         * @brief getCloseType. Get the close type.
          *
          * @return      The state.
          */
-        bool getMinimizeOnClose() const;
+        CloseType   getCloseType() const;
 
         /**
-         * @brief setMinimizeOnClose. Set the minimize on close state.
+         * @brief setCloseType. Set the close type.
          *
-         * @param      The state.
+         * @param      The close type.
          */
-        void setMinimizeOnClose( bool state );
+        void setCloseType( CloseType close_type );
 
         /**
          * @brief getDebug. Get the debug windows state.
@@ -447,9 +458,9 @@ class Preferences : public QObject
         void signalStartMinimizedChange();
 
         /**
-         * @brief signalMinimizeOnCloseChange. Signal a minimize on close state change.
+         * @brief signalCloseTypeChange. Signal a close type change.
          */
-        void signalMinimizeOnCloseChange();
+        void signalCloseTypeChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
@@ -544,9 +555,9 @@ class Preferences : public QObject
         bool m_start_minimized;
 
         /**
-         * @brief m_minimize_on_close. Minimize TB instead of closing.
+         * @brief m_close_type. Closing type for TB.
          */
-        bool m_minimize_on_close;
+        CloseType m_close_type;
 
         /**
          * @brief m_debug. Display debug window.
