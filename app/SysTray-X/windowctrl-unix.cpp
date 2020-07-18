@@ -26,7 +26,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     /*
      *  Get the base display and window
      */
-    m_display = XOpenDisplay( ":0" );
+    m_display = XOpenDisplay( NULL );
     m_screen = 0;
     m_root_window = XDefaultRootWindow( m_display );
 }
