@@ -60,15 +60,6 @@ bool    WindowCtrl::thunderbirdStart() const
 
 
 /*
- *  Get the number of visible windows.
- */
-int WindowCtrl::visibleWindows()
-{
-   return getVisibleWindows();
-}
-
-
-/*
  *  Test func 1
  */
 void    WindowCtrl::slotWindowTest1()
