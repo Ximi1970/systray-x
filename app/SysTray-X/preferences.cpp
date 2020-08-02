@@ -51,7 +51,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
-    m_close_type = PREF_MINIMIZE_ALL_WINDOWS;
+    m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
 
     m_debug = false;
 

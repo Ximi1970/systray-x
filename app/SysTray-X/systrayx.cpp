@@ -519,8 +519,7 @@ void    SysTrayX::slotShutdown()
      */
     switch( m_preferences->getCloseType() )
     {
-        case Preferences::PREF_CLOSE_WINDOW:
-        case Preferences::PREF_CLOSE_ALL_WINDOWS:
+        case Preferences::PREF_DEFAULT_CLOSE_WINDOWS:
         {
             /*
              *  Hide systray icon to prevent ghost systray icon in Windows
@@ -542,8 +541,7 @@ void    SysTrayX::slotShutdown()
             break;
         }
 
-        case Preferences::PREF_CLOSE_ALL_MINIMIZE_LAST:
-        case Preferences::PREF_MINIMIZE_WINDOW:
+        case Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS:
         case Preferences::PREF_MINIMIZE_ALL_WINDOWS:
         {
             m_link->sendShutdown();

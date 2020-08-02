@@ -25,10 +25,8 @@ class Preferences : public QObject
          *  Close types
          */
         enum CloseType {
-            PREF_CLOSE_WINDOW = 0,
-            PREF_CLOSE_ALL_WINDOWS,
-            PREF_CLOSE_ALL_MINIMIZE_LAST,
-            PREF_MINIMIZE_WINDOW,
+            PREF_DEFAULT_CLOSE_WINDOWS = 0,
+            PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS,
             PREF_MINIMIZE_ALL_WINDOWS
         };
 

@@ -176,7 +176,7 @@ SysTrayX.Messaging = {
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
     const minimizeType = result.minimizeType || "1";
-    const closeType = result.closeType || "4";
+    const closeType = result.closeType || "1";
     const startMinimized = result.startMinimized || "false";
     const minimizeOnClose = result.minimizeOnClose || "true";
     const defaultIconType = result.defaultIconType || "0";

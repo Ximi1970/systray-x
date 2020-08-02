@@ -68,9 +68,8 @@ SysTrayX.SaveOptions = {
     //
     // Save close preferences
     //
-    const closeType = document.querySelector(
-      'input[name="closeType"]:checked'
-    ).value;
+    const closeType = document.querySelector('input[name="closeType"]:checked')
+      .value;
 
     //  Store minimize preferences
     browser.storage.sync.set({
@@ -220,9 +219,7 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore close type
     //
-    const getCloseType = browser.storage.sync.get(
-      "closeType",
-    );
+    const getCloseType = browser.storage.sync.get("closeType");
     getCloseType.then(
       SysTrayX.RestoreOptions.setCloseType,
       SysTrayX.RestoreOptions.onCloseTypeError
@@ -365,17 +362,17 @@ SysTrayX.RestoreOptions = {
     const minimizeType = result.minimizeType || "1";
 
     // Tweak option for platform
-    if (platformInfo.os === "win") {
-      document.getElementById("minimizemethod1label").innerHTML =
-        "Minimize to tray";
-      document
-        .getElementById("minimizemethod2")
-        .setAttribute("style", "display:none;");
+    //    if (platformInfo.os === "win") {
+    document.getElementById("minimizemethod1label").innerHTML =
+      "Minimize to tray";
+    document
+      .getElementById("minimizemethod2")
+      .setAttribute("style", "display:none;");
 
-      if (minimizeType === "2") {
-        minimizeType = "1";
-      }
+    if (minimizeType === "2") {
+      minimizeType = "1";
     }
+    //    }
 
     const radioButton = document.querySelector(
       `input[name="minimizeType"][value="${minimizeType}"]`
@@ -391,7 +388,7 @@ SysTrayX.RestoreOptions = {
   //  Restore close type callbacks
   //
   setCloseType: function (result) {
-    const closeType = result.closeType || "4";
+    const closeType = result.closeType || "1";
 
     const radioButton = document.querySelector(
       `input[name="closeType"][value="${closeType}"]`

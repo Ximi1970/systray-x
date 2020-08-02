@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>696</height>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -326,9 +326,9 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QRadioButton" name="closeWindowRadioButton">
+                <widget class="QRadioButton" name="defaultCloseWindowsRadioButton">
                  <property name="text">
-                  <string>Close windows individually</string>
+                  <string>Default close</string>
                  </property>
                  <attribute name="buttonGroup">
                   <string notr="true">closeTypeGroup</string>
@@ -336,29 +336,12 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="closeAllWindowsRadioButton">
+                <widget class="QRadioButton" name="minimizeMainCloseChildrenWindowsRadioButton">
                  <property name="text">
-                  <string>Close all windows</string>
+                  <string>Minimize main, close children</string>
                  </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">closeTypeGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="closeAllMinimizeLastRadioButton">
-                 <property name="text">
-                  <string>Close all, minimize last</string>
-                 </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">closeTypeGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="minimizeWindowRadioButton">
-                 <property name="text">
-                  <string>Minimize windows individually</string>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                  <attribute name="buttonGroup">
                   <string notr="true">closeTypeGroup</string>
@@ -371,7 +354,7 @@
                   <string>Minimize all windows</string>
                  </property>
                  <property name="checked">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <attribute name="buttonGroup">
                   <string notr="true">closeTypeGroup</string>
@@ -407,6 +390,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QColumnView" name="columnView"/>
+          </item>
           <item>
            <widget class="QCheckBox" name="showNumberCheckBox">
             <property name="text">
@@ -564,9 +550,9 @@
  </connections>
  <buttongroups>
   <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
  </buttongroups>
 </ui>

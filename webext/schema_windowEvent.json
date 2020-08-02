@@ -1,8 +1,24 @@
 [
   {
     "namespace": "windowEvent",
+    "functions": [
+      {
+        "name": "setCloseType",
+        "type": "function",
+        "description": "Set the close type.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type",
+            "minimum": 0,
+            "maximum": 2
+          }
+        ]
+      }
+    ],
     "events": [
-     {
+      {
         "name": "onCloseButtonClick",
         "type": "function",
         "description": "Fires when the user clicks on the close button of the main window.",

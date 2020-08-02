@@ -43,6 +43,10 @@ var windowEvent = class extends ExtensionCommon.ExtensionAPI {
     return {
       // Again, this key must have the same name.
       windowEvent: {
+        setCloseType: async function (type) {
+          windowListener.setCloseType(type);
+        },
+
         // An event. Most of this is boilerplate you don't need to worry about, just copy it.
         onCloseButtonClick: new ExtensionCommon.EventManager({
           context,
@@ -92,6 +96,23 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
     super();
     this.callbackCount = 0;
     this.callbackOnCloseButtonCount = 0;
+    this.hijackTitlebarCloseButtonCount = 0;
+
+    this.MESSAGE_CLOSE_TYPE_DEFAULT = 0;
+    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN = 1;
+    this.MESSAGE_CLOSE_TYPE_MIN_ALL = 2;
+
+    this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
+  }
+
+  setCloseType(closeType) {
+    if (closeType === 0) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_DEFAULT;
+    } else if (closeType === 1) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
+    } else if (closeType === 2) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
+    } else console.log("Unknown close type: " + closeType);
   }
 
   addOnCloseButton(callback) {
@@ -105,8 +126,18 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
           "chrome://messenger/content/messenger.xul",
         ],
         onLoadWindow: function (window) {
-          window.addEventListener("close", windowListener.onCloseButton, true);
-          windowListener.hijackTitlebarCloseButton(window);
+          if (
+            windowListener.callbackOnCloseButtonCount < 2 ||
+            this.closeType === this.MESSAGE_CLOSE_TYPE_MIN_ALL
+          ) {
+            windowListener.callbackOnCloseButtonCount++;
+            window.addEventListener(
+              "close",
+              windowListener.onCloseButton,
+              true
+            );
+            windowListener.hijackTitlebarCloseButton(window);
+          }
         },
       });
     }

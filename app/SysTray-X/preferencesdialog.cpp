@@ -33,10 +33,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Set close type button Ids
      */
-    m_ui->closeTypeGroup->setId( m_ui->closeWindowRadioButton, Preferences::PREF_CLOSE_WINDOW);
-    m_ui->closeTypeGroup->setId( m_ui->closeAllWindowsRadioButton, Preferences::PREF_CLOSE_ALL_WINDOWS );
-    m_ui->closeTypeGroup->setId( m_ui->closeAllMinimizeLastRadioButton, Preferences::PREF_CLOSE_ALL_MINIMIZE_LAST );
-    m_ui->closeTypeGroup->setId( m_ui->minimizeWindowRadioButton, Preferences::PREF_MINIMIZE_WINDOW );
+    m_ui->closeTypeGroup->setId( m_ui->defaultCloseWindowsRadioButton, Preferences::PREF_DEFAULT_CLOSE_WINDOWS);
+    m_ui->closeTypeGroup->setId( m_ui->minimizeMainCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS );
     m_ui->closeTypeGroup->setId( m_ui->minimizeAllWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS );
 
     /*
