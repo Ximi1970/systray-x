@@ -15,6 +15,7 @@ var SysTrayX = {
 SysTrayX.Messaging = {
   accounts: [],
   countType: 0,
+  closeType: 1,
   filters: undefined,
 
   init: function () {
@@ -98,6 +99,12 @@ SysTrayX.Messaging = {
           SysTrayX.Messaging.onCloseButton
         );
       }
+    }
+
+    if ("closeType" in changes && changes["closeType"].newValue) {
+      SysTrayX.Messaging.closeType = changes["closeType"].newValue;
+
+      browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
     }
 
     if ("countType" in changes && changes["countType"].newValue) {
@@ -424,6 +431,10 @@ async function start() {
   }
 
   SysTrayX.startupState = state;
+
+  // Get the close type
+  SysTrayX.Messaging.closeType = await getCloseType();
+  browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
   //  Get the minimize on close preference
   const minimizeOnClose = await getMinimizeOnClose();

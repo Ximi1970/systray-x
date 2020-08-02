@@ -403,3 +403,19 @@ async function getCountType() {
   const getCountType = browser.storage.sync.get("countType");
   return await getCountType.then(getCountTypeCb, onCountTypeError);
 }
+
+//
+//  Get close type
+//
+async function getCloseType() {
+  function getCloseTypeCb(result) {
+    return result.closeType || "1";
+  }
+
+  function onCloseTypeError() {
+    return undefined;
+  }
+
+  const getCloseType = browser.storage.sync.get("closeType");
+  return await getCloseType.then(getCloseTypeCb, onCloseTypeError);
+}

@@ -128,7 +128,8 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
         onLoadWindow: function (window) {
           if (
             windowListener.callbackOnCloseButtonCount < 2 ||
-            this.closeType === this.MESSAGE_CLOSE_TYPE_MIN_ALL
+            windowListener.closeType ===
+              windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL
           ) {
             windowListener.callbackOnCloseButtonCount++;
             window.addEventListener(
