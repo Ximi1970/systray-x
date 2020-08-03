@@ -94,9 +94,8 @@ var { ExtensionSupport } = ChromeUtils.import(
 var windowListener = new (class extends ExtensionCommon.EventEmitter {
   constructor() {
     super();
-    this.callbackCount = 0;
     this.callbackOnCloseButtonCount = 0;
-    this.hijackTitlebarCloseButtonCount = 0;
+    this.callbackOnLoadWindowCount = 0;
 
     this.MESSAGE_CLOSE_TYPE_DEFAULT = 0;
     this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN = 1;
@@ -126,12 +125,12 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
           "chrome://messenger/content/messenger.xul",
         ],
         onLoadWindow: function (window) {
+          windowListener.callbackOnLoadWindowCount++;
           if (
-            windowListener.callbackOnCloseButtonCount < 2 ||
+            windowListener.callbackOnLoadWindowCount === 1 ||
             windowListener.closeType ===
               windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL
           ) {
-            windowListener.callbackOnCloseButtonCount++;
             window.addEventListener(
               "close",
               windowListener.onCloseButton,
