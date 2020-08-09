@@ -136,7 +136,7 @@ void    SysTrayXLinkReader::slotWorker()
 
                 if( error_count > 20 )
                 {
- //                   emit signalAddOnShutdown();
+                    emit signalErrorAddOnShutdown();
                 }
             }
         }
@@ -182,7 +182,7 @@ SysTrayXLink::SysTrayXLink( Preferences* pref )
 
     connect( m_reader_thread, &QThread::finished, reader, &QObject::deleteLater );
     connect( reader, &SysTrayXLinkReader::signalReceivedMessage, this, &SysTrayXLink::slotLinkRead );
-    connect( reader, &SysTrayXLinkReader::signalAddOnShutdown, this, &SysTrayXLink::slotAddOnShutdown );
+    connect( reader, &SysTrayXLinkReader::signalErrorAddOnShutdown, this, &SysTrayXLink::slotErrorAddOnShutdown );
 
     connect( m_reader_thread, &QThread::started, reader, &SysTrayXLinkReader::startThread, Qt::QueuedConnection );
     m_reader_thread->start();
@@ -679,9 +679,9 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 /*
  *  Relay shutdown signal
  */
-void    SysTrayXLink::slotAddOnShutdown()
+void    SysTrayXLink::slotErrorAddOnShutdown()
 {
-    emit signalAddOnShutdown();
+    emit signalErrorAddOnShutdown();
 }
 
 

@@ -143,6 +143,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect link signals
      */
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
+    connect( m_link, &SysTrayXLink::signalErrorAddOnShutdown, this, &SysTrayX::slotErrorAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
     connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
@@ -501,6 +502,26 @@ void    SysTrayX::slotAddOnShutdown()
      *  Close the TB window
      */
     emit signalClose();
+
+    /*
+     *  Let's quit
+     */
+    QCoreApplication::quit();
+}
+
+
+/*
+ *  Quit the app by add-on request
+ */
+void    SysTrayX::slotErrorAddOnShutdown()
+{
+    /*
+     *  Hide systray icon to prevent ghost systray icon in Windows
+     */
+    if( m_tray_icon )
+    {
+        m_tray_icon->hide();
+    }
 
     /*
      *  Let's quit

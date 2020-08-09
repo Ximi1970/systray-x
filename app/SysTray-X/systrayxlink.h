@@ -67,7 +67,7 @@ class SysTrayXLinkReader : public QObject
         /**
          * @brief signalAddOnShutdown. Signal to shutdown the app.
          */
-        void    signalAddOnShutdown();
+        void    signalErrorAddOnShutdown();
 
     private:
 
@@ -182,6 +182,11 @@ class SysTrayXLink : public QObject
         void    signalAddOnShutdown();
 
         /**
+         * @brief signalErrorAddOnShutdown. Signal to shutdown the app.
+         */
+        void    signalErrorAddOnShutdown();
+
+        /**
          * @brief signalWindowState. Signal a change in the window state.
          */
         void    signalWindowState( Preferences::WindowState state );
@@ -275,9 +280,9 @@ class SysTrayXLink : public QObject
         void    slotLinkRead( QByteArray message );
 
         /**
-         * @brief slotAddOnShutdown. Handle sahutdown signal from reader thread.
+         * @brief slotErrorAddOnShutdown. Handle shutdown signal from reader thread.
          */
-        void    slotAddOnShutdown();
+        void    slotErrorAddOnShutdown();
 
     private:
 

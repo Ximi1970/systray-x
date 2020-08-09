@@ -146,6 +146,11 @@ class SysTrayX : public QObject
         void    slotAddOnShutdown();
 
         /**
+         * @brief slotErrorAddOnShutdown. Handle shutdown request from the add-on.
+         */
+        void    slotErrorAddOnShutdown();
+
+        /**
          * @brief slotShutdown. Handle shutdown request from the menu.
          */
         void    slotShutdown();
