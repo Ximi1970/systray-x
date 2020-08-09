@@ -127,26 +127,6 @@ async function getStartupState() {
 }
 
 //
-//  Get minimize on close state
-//
-async function getMinimizeOnClose() {
-  function getMinimizeOnClosePref(result) {
-    const minimizeOnClose = result.minimizeOnClose || "true";
-    return minimizeOnClose === "true";
-  }
-
-  function onMinimizeOnClosePrefError() {
-    return true;
-  }
-
-  const getState = browser.storage.sync.get("minimizeOnClose");
-  return await getState.then(
-    getMinimizeOnClosePref,
-    onMinimizeOnClosePrefError
-  );
-}
-
-//
 //  Get KDE integration, default icon hide
 //
 async function getHideDefaultIcon() {

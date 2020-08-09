@@ -87,16 +87,6 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    //  Save minimize on close state
-    //
-    let minimizeOnClose = document.querySelector(
-      'input[name="minimizeOnClose"]'
-    ).checked;
-    browser.storage.sync.set({
-      minimizeOnClose: `${minimizeOnClose}`,
-    });
-
-    //
     // Save default icon preferences
     //
     const defaultIconType = document.querySelector(
@@ -232,15 +222,6 @@ SysTrayX.RestoreOptions = {
     getStartMinimized.then(
       SysTrayX.RestoreOptions.setStartMinimized,
       SysTrayX.RestoreOptions.onStartMinimizedError
-    );
-
-    //
-    //  Restore minimize on close
-    //
-    const getMinimizeOnClose = browser.storage.sync.get("minimizeOnClose");
-    getMinimizeOnClose.then(
-      SysTrayX.RestoreOptions.setMinimizeOnClose,
-      SysTrayX.RestoreOptions.onMinimizeOnCloseError
     );
 
     //
@@ -412,20 +393,6 @@ SysTrayX.RestoreOptions = {
 
   onStartMinimizedError: function (error) {
     console.log(`startMinimized Error: ${error}`);
-  },
-
-  //
-  //  Restore minimize on close callbacks
-  //
-  setMinimizeOnClose: function (result) {
-    const minimizeOnClose = result.minimizeOnClose || "true";
-
-    const checkbox = document.querySelector(`input[name="minimizeOnClose"]`);
-    checkbox.checked = minimizeOnClose === "true";
-  },
-
-  onMinimizeOnCloseError: function (error) {
-    console.log(`minimizeOnClose Error: ${error}`);
   },
 
   //
@@ -793,11 +760,6 @@ SysTrayX.StorageChanged = {
       if (item === "startMinimized") {
         SysTrayX.RestoreOptions.setStartMinimized({
           startMinimized: changes[item].newValue,
-        });
-      }
-      if (item === "minimizeOnClose") {
-        SysTrayX.RestoreOptions.setMinimizeOnClose({
-          minimizeOnClose: changes[item].newValue,
         });
       }
       if (item === "debug") {
