@@ -200,12 +200,14 @@ void    WindowCtrlWin::findWindows( qint64 pid )
     EnumWindowsPidProcData data{ *this, pid };
     EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
 
+ /*
     emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
 
     for( int i = 0 ; i< m_tb_windows.length() ; ++i )
     {
         emit signalConsole( QString( "WinID %1, State %2" ).arg( m_tb_windows.at( i ) ).arg( m_tb_window_states.at( i ) ) );
     }
+ */
 }
 
 

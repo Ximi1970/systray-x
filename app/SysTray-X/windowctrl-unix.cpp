@@ -177,7 +177,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
         }
     }
 
-    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
+//    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
 
     /*
      *  Get the new window states, store the old ones
@@ -187,7 +187,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     {
         QStringList atom_list = atomNetWmState( m_display, m_tb_windows.at( i ) );
 
-        emit signalConsole( QString( "WinID %1, Atoms: %2" ).arg( m_tb_windows.at( i ) ).arg( atom_list.join(",") ) );
+//        emit signalConsole( QString( "WinID %1, Atoms: %2" ).arg( m_tb_windows.at( i ) ).arg( atom_list.join(",") ) );
 
         if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
         {
