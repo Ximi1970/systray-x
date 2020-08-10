@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>789</height>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -391,9 +391,6 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <widget class="QColumnView" name="columnView"/>
-          </item>
-          <item>
            <widget class="QCheckBox" name="showNumberCheckBox">
             <property name="text">
              <string>Display unread message count</string>
@@ -550,9 +547,9 @@
  </connections>
  <buttongroups>
   <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
  </buttongroups>
 </ui>
