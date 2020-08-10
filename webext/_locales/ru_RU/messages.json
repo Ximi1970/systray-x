@@ -1,0 +1,191 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Дополнение \"Системный трей\". Пожалуйста установите также приложение-компаньон",
+    "description": "Webextension descriptions"
+  },
+
+  "tab_windows": {
+    "message": "Окна",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Иконка",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_mail": {
+    "message": "Письма",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_debug": {
+    "message": "Отладка",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Окна",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Свернуть",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Свернуть окно",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Свернуть в трей, вариант 1",
+    "description": "Minimize option 2"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Свернуть в трей, вариант 2",
+    "description": "Minimize option 3"
+  },
+
+  "windows_start_min": {
+    "message": "Запуск приложения свернутым",
+    "description": "Start minimized"
+  },
+
+  "windows_min_close": {
+    "message": "Сворачивать при закрытии",
+    "description": "Minimize on close"
+  },
+
+  "icons": {
+    "message": "Иконка",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Обычная иконка",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Стандартная Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Невидимая иконка",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Своя иконка",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Выбрать...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Интеграция с KDE (Скрыть)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Иконка уведомления",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Пустая иконка (квадрат)",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Иконка \"Новые письма\"",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Своя иконка",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Выбрать...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Без иконки (только цифры)",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Настройки индикатора кол-ва",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Показывать кол-во непрочитанных писем",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Цвет шрифта:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Размер шрифта:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "Вариант подсчета:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Непрочитанные",
+    "description": "SCount unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "Новые",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Аккаунты",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Отладка",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Показать окно отладки",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Сохранить настройки",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Сохранить",
+    "description": "Save preferences button"
+  }
+}

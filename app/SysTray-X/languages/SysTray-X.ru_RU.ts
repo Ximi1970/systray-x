@@ -6,48 +6,48 @@
     <message>
         <location filename="../aboutdialog.ui" line="14"/>
         <source>About SysTray-X</source>
-        <translation type="unfinished"></translation>
+        <translation>О SysTray-X</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>SysTray-X Companion App by Ximi1970</source>
-        <translation type="unfinished"></translation>
+        <translation>Приложение-компаньон к дополнению SysTray-X от Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="40"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="47"/>
         <source>0.0.1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="54"/>
         <source>Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>Сборка:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="61"/>
         <location filename="../aboutdialog.ui" line="75"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="68"/>
         <source>Hash:</source>
-        <translation type="unfinished"></translation>
+        <translation>Хеш:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="82"/>
         <source>Branch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ветка:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="89"/>
         <source>master</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -55,32 +55,32 @@
     <message>
         <location filename="../debugwidget.ui" line="14"/>
         <source>SysTray-X Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>SysTray-X Отладка</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="59"/>
         <source>Test 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Тест 2</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="69"/>
         <source>Unread mail:</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрочитанных писем:</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="76"/>
         <source>Test 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Тест 1</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="83"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="90"/>
         <source>Test 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Тест 3</translation>
     </message>
 </context>
 <context>
@@ -88,161 +88,163 @@
     <message>
         <location filename="../preferences.ui" line="14"/>
         <source>SysTray-X Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>SysTray-X Настройки</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="26"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычная иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="32"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="40"/>
         <source>Default Thunderbird</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандартная Thunderbird</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="53"/>
         <source>Lookthrough icon</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Not sure what author means invisible or noicon or blank or something else</translatorcomment>
+        <translation>Невидимая иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="65"/>
         <location filename="../preferences.ui" line="188"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Своя иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="82"/>
         <location filename="../preferences.ui" line="205"/>
         <source>Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="99"/>
         <source>KDE integration (Hide)</source>
-        <translation type="unfinished"></translation>
+        <translation>Интеграция с KDE (Скрыть)</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="112"/>
         <source>Mail notification icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Иконка уведомления</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="125"/>
         <source>Blank icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустая иконка (квадрат)</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="158"/>
         <source>New mail icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Иконка &quot;Новые письма&quot;</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="219"/>
         <source>No icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Без иконки (только цифры)</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="266"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Окна</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="274"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>
         <source>Default minimize</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Need documentation what methods do...</translatorcomment>
+        <translation>Свернуть окно</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="295"/>
         <source>Minimize to tray, method 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть в трей, вариант 1</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="308"/>
         <source>Minimize to tray, method 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть в трей, вариант 2</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="325"/>
         <source>Start application minimized</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск приложения свернутым</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation type="unfinished"></translation>
+        <translation>Сворачивать при закрытии</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="349"/>
         <source>Number properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки индикатора кол-ва</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="357"/>
         <source>Display unread message count</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать кол-во непрочитанных писем</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="369"/>
         <source>Number color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет шрифта</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="390"/>
         <source>Number size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер шрифта</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="412"/>
         <source>Count type</source>
-        <translation type="unfinished"></translation>
+        <translation>Вариант подсчета</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="420"/>
         <source>Unread</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрочитанные</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="433"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Новые</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="470"/>
         <source>Display debug window</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать окно отладки</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="490"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="497"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="393"/>
         <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Open Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть изображение</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="393"/>
         <location filename="../preferencesdialog.cpp" line="417"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы изображений (*.png *.jpg *.bmp</translation>
     </message>
 </context>
 <context>
@@ -250,27 +252,28 @@
     <message>
         <location filename="../systrayx.cpp" line="191"/>
         <source>&amp;Show/Hide</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Not sure how hotkeys work</translatorcomment>
+        <translation>Показать/Скр&amp;ыть</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="195"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="199"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>О приложении</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="203"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="572"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 </TS>
