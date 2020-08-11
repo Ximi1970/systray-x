@@ -157,6 +157,11 @@
         <translation>Vensters</translation>
     </message>
     <message>
+        <location filename="../preferences.ui" line="323"/>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
         <location filename="../preferences.ui" line="274"/>
         <source>Minimize</source>
         <translation>Minimaliseren</translation>
@@ -177,74 +182,92 @@
         <translation>Minimaliseer naar systeemvak, methode 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="325"/>
+        <location filename="../preferences.ui" line="344"/>
+        <source>Default close</source>
+        <translation>Standaard sluiting</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="354"/>
+        <source>Minimize main, close children</source>
+        <translation>Minimaliseer hoofdvenster, sluit kindvensters</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="367"/>
+        <source>Minimize all windows</source>
+        <translation>Minimaliseer alle vensters</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="387"/>
         <source>Start application minimized</source>
         <translation>Start programma geminimaliseerd</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation>Minimaliseren bij sluiten</translation>
+        <translation type="vanished">Minimaliseren bij sluiten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="349"/>
+        <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
         <translation>Nummer opties</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="357"/>
+        <location filename="../preferences.ui" line="409"/>
         <source>Display unread message count</source>
         <translation>Aantal ongelezen berichten weergeven</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="369"/>
+        <location filename="../preferences.ui" line="421"/>
         <source>Number color</source>
         <translation>Nummer kleur</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="390"/>
+        <location filename="../preferences.ui" line="442"/>
         <source>Number size</source>
         <translation>Nummer grootte</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="412"/>
+        <location filename="../preferences.ui" line="464"/>
         <source>Count type</source>
         <translation>Type berichttelling</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="420"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>Unread</source>
         <translation>Ongelezen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="433"/>
+        <location filename="../preferences.ui" line="485"/>
         <source>New</source>
         <translation>Nieuw</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="470"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Display debug window</source>
         <translation>Toon debug venster</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="490"/>
         <source>Save</source>
-        <translation>Bewaren</translation>
+        <translation type="vanished">Bewaren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="497"/>
         <source>Cancel</source>
-        <translation>Annnuleren</translation>
+        <translation type="vanished">Annnuleren</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="49"/>
+        <location filename="../preferencesdialog.cpp" line="58"/>
+        <source>Minimize to tray</source>
+        <translation>Minimaliseer naar systeemvak</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Open Image</source>
         <translation>Open afbeelding</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
     </message>
@@ -252,27 +275,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="191"/>
+        <location filename="../systrayx.cpp" line="192"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Tonen/Verbergen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="195"/>
+        <location filename="../systrayx.cpp" line="196"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Opties</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="199"/>
+        <location filename="../systrayx.cpp" line="200"/>
         <source>&amp;About</source>
         <translation>O&amp;ver</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="203"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Quit</source>
         <translation>&amp;Afsluiten</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="572"/>
+        <location filename="../systrayx.cpp" line="602"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>

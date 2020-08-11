@@ -154,6 +154,11 @@
         <translation>Окна</translation>
     </message>
     <message>
+        <location filename="../preferences.ui" line="323"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрыть</translation>
+    </message>
+    <message>
         <location filename="../preferences.ui" line="274"/>
         <source>Minimize</source>
         <translation>Свернуть</translation>
@@ -175,74 +180,92 @@
         <translation>Свернуть в трей, вариант 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="325"/>
+        <location filename="../preferences.ui" line="344"/>
+        <source>Default close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="354"/>
+        <source>Minimize main, close children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="367"/>
+        <source>Minimize all windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="387"/>
         <source>Start application minimized</source>
         <translation>Запуск приложения свернутым</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation>Сворачивать при закрытии</translation>
+        <translation type="vanished">Сворачивать при закрытии</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="349"/>
+        <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
         <translation>Настройки индикатора кол-ва</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="357"/>
+        <location filename="../preferences.ui" line="409"/>
         <source>Display unread message count</source>
         <translation>Показывать кол-во непрочитанных писем</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="369"/>
+        <location filename="../preferences.ui" line="421"/>
         <source>Number color</source>
         <translation>Цвет шрифта</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="390"/>
+        <location filename="../preferences.ui" line="442"/>
         <source>Number size</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="412"/>
+        <location filename="../preferences.ui" line="464"/>
         <source>Count type</source>
         <translation>Вариант подсчета</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="420"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>Unread</source>
         <translation>Непрочитанные</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="433"/>
+        <location filename="../preferences.ui" line="485"/>
         <source>New</source>
         <translation>Новые</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="470"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Display debug window</source>
         <translation>Показать окно отладки</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="490"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="497"/>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation type="vanished">Отменить</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="49"/>
+        <location filename="../preferencesdialog.cpp" line="58"/>
+        <source>Minimize to tray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Файлы изображений (*.png *.jpg *.bmp</translation>
     </message>
@@ -250,28 +273,28 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="191"/>
+        <location filename="../systrayx.cpp" line="192"/>
         <source>&amp;Show/Hide</source>
         <translatorcomment>Not sure how hotkeys work</translatorcomment>
         <translation>Показать/Скр&amp;ыть</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="195"/>
+        <location filename="../systrayx.cpp" line="196"/>
         <source>&amp;Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="199"/>
+        <location filename="../systrayx.cpp" line="200"/>
         <source>&amp;About</source>
         <translation>О приложении</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="203"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="572"/>
+        <location filename="../systrayx.cpp" line="602"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>

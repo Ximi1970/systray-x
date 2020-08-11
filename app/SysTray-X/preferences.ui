@@ -271,7 +271,7 @@
           <item>
            <widget class="QGroupBox" name="groupBox_4">
             <property name="title">
-             <string>Minimize action</string>
+             <string>Minimize</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
@@ -320,9 +320,22 @@
           <item>
            <widget class="QGroupBox" name="groupBox_6">
             <property name="title">
-             <string>Close action</string>
+             <string>Close</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_17">
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
@@ -546,10 +559,10 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
  </buttongroups>
 </ui>

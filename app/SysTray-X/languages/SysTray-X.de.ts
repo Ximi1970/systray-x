@@ -153,6 +153,11 @@
         <translation>Fenster</translation>
     </message>
     <message>
+        <location filename="../preferences.ui" line="323"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+    <message>
         <location filename="../preferences.ui" line="274"/>
         <source>Minimize</source>
         <translation>Minimieren</translation>
@@ -173,74 +178,92 @@
         <translation>In Systemleiste verbergen, Methode 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="325"/>
+        <location filename="../preferences.ui" line="344"/>
+        <source>Default close</source>
+        <translation>Standard Schließen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="354"/>
+        <source>Minimize main, close children</source>
+        <translation>Hauptfenster minimieren, Kinderfenster schließen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="367"/>
+        <source>Minimize all windows</source>
+        <translation>Alle Fenster minimieren</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="387"/>
         <source>Start application minimized</source>
         <translation>Anwendung minimiert starten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="332"/>
         <source>Minimize on close</source>
-        <translation>Beim Fensterschließen, Minimieren</translation>
+        <translation type="vanished">Beim Fensterschließen, Minimieren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="349"/>
+        <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
         <translation>Nummereigenschaften</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="357"/>
+        <location filename="../preferences.ui" line="409"/>
         <source>Display unread message count</source>
         <translation>Anzahl neuer Nachrichten anzeigen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="369"/>
+        <location filename="../preferences.ui" line="421"/>
         <source>Number color</source>
         <translation>Nummerfarbe</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="390"/>
+        <location filename="../preferences.ui" line="442"/>
         <source>Number size</source>
         <translation>Nummergröße</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="412"/>
+        <location filename="../preferences.ui" line="464"/>
         <source>Count type</source>
         <translation>E-Mail-Benachrichtigungstyp</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="420"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>Unread</source>
         <translation>Ungelesene Nachrichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="433"/>
+        <location filename="../preferences.ui" line="485"/>
         <source>New</source>
         <translation>Neue Nachrichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="470"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Display debug window</source>
         <translation>Debug-Fenster anzeigen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="490"/>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="vanished">Speichern</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="497"/>
         <source>Cancel</source>
-        <translation>Annullieren</translation>
+        <translation type="vanished">Annullieren</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="49"/>
+        <location filename="../preferencesdialog.cpp" line="58"/>
+        <source>Minimize to tray</source>
+        <translation>Hauptfenster minimieren</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Open Image</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Bilddateien (*.png *.jpg *.bmp)</translation>
     </message>
@@ -248,27 +271,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="191"/>
+        <location filename="../systrayx.cpp" line="192"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Anzeigen/Verbergen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="195"/>
+        <location filename="../systrayx.cpp" line="196"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="199"/>
+        <location filename="../systrayx.cpp" line="200"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="203"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="572"/>
+        <location filename="../systrayx.cpp" line="602"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
