@@ -41,27 +41,42 @@
 
   "windows_min_default": {
     "message": "Standaard minimalisatie",
-    "description": "Minimize option 1"
+    "description": "Minimize option 0"
   },
 
   "windows_min_to_tray_1": {
     "message": "Minimaliseer naar systeemvak, methode 1",
-    "description": "Minimize option 2"
+    "description": "Minimize option 1"
   },
 
   "windows_min_to_tray_2": {
     "message": "Minimaliseer naar systeemvak, methode 2",
-    "description": "Minimize option 3"
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "Sluiten",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Standaard sluiting",
+    "description": "Close option 0"
+  },
+
+  "windows_close_to_tray_1": {
+    "message": "Minimaliseer hoofdvenster, sluit kindvensters",
+    "description": "Close option 1"
+  },
+
+  "windows_close_to_tray_2": {
+    "message": "Minimaliseer alle vensters",
+    "description": "Close option 2"
   },
 
   "windows_start_min": {
     "message": "Start programma geminimaliseerd",
     "description": "Start minimized"
-  },
-
-  "windows_min_close": {
-    "message": "Minimaliseren bij sluiten",
-    "description": "Minimize on close"
   },
 
   "icons": {

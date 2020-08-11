@@ -158,6 +158,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../preferences.ui" line="323"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../preferences.ui" line="282"/>
         <source>Default minimize</source>
         <translation type="unfinished"></translation>
@@ -173,74 +178,80 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="325"/>
+        <location filename="../preferences.ui" line="344"/>
+        <source>Default close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="354"/>
+        <source>Minimize main, close children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="367"/>
+        <source>Minimize all windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="387"/>
         <source>Start application minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="332"/>
-        <source>Minimize on close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../preferences.ui" line="349"/>
+        <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="357"/>
+        <location filename="../preferences.ui" line="409"/>
         <source>Display unread message count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="369"/>
+        <location filename="../preferences.ui" line="421"/>
         <source>Number color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="390"/>
+        <location filename="../preferences.ui" line="442"/>
         <source>Number size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="412"/>
+        <location filename="../preferences.ui" line="464"/>
         <source>Count type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="420"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>Unread</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="433"/>
+        <location filename="../preferences.ui" line="485"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="470"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Display debug window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="490"/>
-        <source>Save</source>
+        <location filename="../preferencesdialog.cpp" line="49"/>
+        <location filename="../preferencesdialog.cpp" line="58"/>
+        <source>Minimize to tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="497"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="393"/>
-        <location filename="../preferencesdialog.cpp" line="417"/>
+        <location filename="../preferencesdialog.cpp" line="370"/>
+        <location filename="../preferencesdialog.cpp" line="394"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -248,27 +259,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="191"/>
+        <location filename="../systrayx.cpp" line="192"/>
         <source>&amp;Show/Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="195"/>
+        <location filename="../systrayx.cpp" line="196"/>
         <source>&amp;Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="199"/>
+        <location filename="../systrayx.cpp" line="200"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="203"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="572"/>
+        <location filename="../systrayx.cpp" line="602"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

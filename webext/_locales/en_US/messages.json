@@ -41,27 +41,42 @@
 
   "windows_min_default": {
     "message": "Default minimize",
-    "description": "Minimize option 1"
+    "description": "Minimize option 0"
   },
 
   "windows_min_to_tray_1": {
     "message": "Minimize to tray, method 1",
-    "description": "Minimize option 2"
+    "description": "Minimize option 1"
   },
 
   "windows_min_to_tray_2": {
     "message": "Minimize to tray, method 2",
-    "description": "Minimize option 3"
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "Close",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Default close",
+    "description": "Close option 0"
+  },
+
+  "windows_close_to_tray_1": {
+    "message": "Minimize main, close children",
+    "description": "Close option 1"
+  },
+
+  "windows_close_to_tray_2": {
+    "message": "Minimize all windows",
+    "description": "Close option 2"
   },
 
   "windows_start_min": {
     "message": "Start application minimized",
     "description": "Start minimized"
-  },
-
-  "windows_min_close": {
-    "message": "Minimize on close",
-    "description": "Minimize on close"
   },
 
   "icons": {
