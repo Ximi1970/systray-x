@@ -156,7 +156,7 @@
     <message>
         <location filename="../preferences.ui" line="323"/>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>При закрытии</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="274"/>
@@ -182,17 +182,18 @@
     <message>
         <location filename="../preferences.ui" line="344"/>
         <source>Default close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
         <source>Minimize main, close children</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Свернуть все окна</translatorcomment>
+        <translation>Свернуть главное окно, закрыть другие</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="367"/>
         <source>Minimize all windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть все окна</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="387"/>
@@ -255,7 +256,7 @@
         <location filename="../preferencesdialog.cpp" line="49"/>
         <location filename="../preferencesdialog.cpp" line="58"/>
         <source>Minimize to tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть в трей</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="370"/>
