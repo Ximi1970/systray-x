@@ -187,7 +187,6 @@
     <message>
         <location filename="../preferences.ui" line="354"/>
         <source>Minimize main, close children</source>
-        <translatorcomment>Свернуть все окна</translatorcomment>
         <translation>Свернуть главное окно, закрыть другие</translation>
     </message>
     <message>

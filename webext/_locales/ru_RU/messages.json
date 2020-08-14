@@ -55,22 +55,22 @@
   },
 
   "windows_close_options": {
-    "message": "Close",
+    "message": "При закрытии",
     "description": "Caption for Close options"
   },
 
   "windows_close_default": {
-    "message": "Default close",
+    "message": "Закрыть",
     "description": "Close option 0"
   },
 
   "windows_close_to_tray_1": {
-    "message": "Minimize main, close children",
+    "message": "Свернуть главное окно, закрыть другие",
     "description": "Close option 1"
   },
 
   "windows_close_to_tray_2": {
-    "message": "Minimize all windows",
+    "message": "Свернуть все окна",
     "description": "Close option 2"
   },
 
