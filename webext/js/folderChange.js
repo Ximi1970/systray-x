@@ -81,6 +81,24 @@ var folderChange = class extends ExtensionCommon.ExtensionAPI {
             };
           },
         }).api(),
+
+        onFolderChange: new ExtensionCommon.EventManager({
+          context,
+          name: "folderChange.onFolderChange",
+          // In this function we add listeners for any events we want to listen to, and return a
+          // function that removes those listeners. To have the event fire in your extension,
+          // call fire.async.
+          register(fire) {
+            function callback(event,added) {
+              return fire.async(added);
+            }
+
+            SysTrayX.addOnFolderChange(callback);
+            return function () {
+              SysTrayX.removeOnFolderChange(callback);
+            };
+          },
+        }).api(),
       },
     };
   }
@@ -123,7 +141,8 @@ var SysTrayX = {
   currentMsgCount: null,
   newMsgCount: null,
 
-  callback: undefined,
+  callbackOnUnreadMailChange: undefined,
+  callbackOnFolderChange: undefined,
 
   init: function () {
     if (this.initialized) {
@@ -174,9 +193,23 @@ var SysTrayX = {
 
   mailSessionListener: {
     notificationFlags:
+      Ci.nsIFolderListener.added |
+      Ci.nsIFolderListener.removed |
       Ci.nsIFolderListener.propertyFlagChanged |
       Ci.nsIFolderListener.boolPropertyChanged |
       Ci.nsIFolderListener.intPropertyChanged,
+
+    OnItemAdded(parentItem, item) {
+      if (SysTrayX.callbackOnFolderChange) {
+        SysTrayX.callbackOnFolderChange("folder-changed", true);
+      }
+    },
+
+    OnItemRemoved(parentItem, item) {
+      if (SysTrayX.callbackOnFolderChange) {
+        SysTrayX.callbackOnFolderChange("folder-changed", false);
+      }
+    },
 
     OnItemIntPropertyChanged(item, property, oldValue, newValue) {
       // TotalUnreadMessages, BiffState (per server)
@@ -219,8 +252,8 @@ var SysTrayX = {
   updateMsgCountWithCb(callback) {
     if (callback === undefined || !callback) {
       callback = function (currentMsgCount, newMsgCount) {
-        if (SysTrayX.callback) {
-          SysTrayX.callback("unread-changed", newMsgCount);
+        if (SysTrayX.callbackOnUnreadMailChange) {
+          SysTrayX.callbackOnUnreadMailChange("unread-changed", newMsgCount);
         }
       };
     }
@@ -368,10 +401,18 @@ var SysTrayX = {
   },
 
   add(callback) {
-    this.callback = callback;
+    this.callbackOnUnreadMailChange = callback;
   },
 
   remove(callback) {
-    this.callback = undefined;
+    this.callbackOnUnreadMailChange = undefined;
+  },
+
+  addOnFolderChange(callback) {
+    this.callbackOnFolderChange = callback;
+  },
+
+  removeOnFolderChange(callback) {
+    this.callbackOnFolderChange = undefined;
   },
 };

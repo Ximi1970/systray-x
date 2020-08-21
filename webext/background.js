@@ -56,6 +56,10 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.unreadCb(unread);
     });
 
+    browser.folderChange.onFolderChange.addListener(function () {
+      SysTrayX.Messaging.updateFilters();
+    });
+
     //  Set the count type in the folderChange listener
     browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
 
@@ -127,6 +131,13 @@ SysTrayX.Messaging = {
   //
   unreadCb: function (count) {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  },
+
+  //
+  //  Callback for folder changes
+  //
+  updateFilters: function (count) {
+    console.debug("Folder changed");
   },
 
   sendBrowserInfo: function () {

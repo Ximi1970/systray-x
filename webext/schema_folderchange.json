@@ -68,7 +68,19 @@
             "type": "integer"
           }
         ]
+      },
+      {
+        "name": "onFolderChange",
+        "type": "function",
+        "description": "Fires when there is a folder added or removed.",
+        "parameters": [
+          {
+            "name": "added",
+            "type": "boolean"
+          }
+        ]
       }
+
     ]
   }
 ]
