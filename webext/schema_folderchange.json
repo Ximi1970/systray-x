@@ -75,12 +75,23 @@
         "description": "Fires when there is a folder added or removed.",
         "parameters": [
           {
+            "name": "rootFolder",
+            "type": "string"
+          },
+          {
+            "name": "parentFolder",
+            "type": "string"
+          },
+          {
+            "name": "folder",
+            "type": "string"
+          },
+          {
             "name": "added",
             "type": "boolean"
           }
         ]
       }
-
     ]
   }
 ]

@@ -14,6 +14,7 @@ var SysTrayX = {
 
 SysTrayX.Messaging = {
   accounts: [],
+  folderTree: {},
   countType: 0,
   closeType: 1,
   filters: undefined,
@@ -56,8 +57,13 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.unreadCb(unread);
     });
 
-    browser.folderChange.onFolderChange.addListener(function () {
-      SysTrayX.Messaging.updateFilters();
+    browser.folderChange.onFolderChange.addListener(function (
+      rootFolder,
+      parentFolder,
+      folder,
+      added
+    ) {
+      SysTrayX.Messaging.updateFilters(rootFolder, parentFolder, folder, added);
     });
 
     //  Set the count type in the folderChange listener
@@ -136,8 +142,36 @@ SysTrayX.Messaging = {
   //
   //  Callback for folder changes
   //
-  updateFilters: function (count) {
-    console.debug("Folder changed");
+  updateFilters: async function (rootFolder, parentFolder, folder, added) {
+    console.debug("Folder changed account: " + rootFolder);
+    console.debug("Folder changed parent folder: " + parentFolder);
+    console.debug("Folder changed folder: " + folder);
+
+    if (added) {
+      console.debug("Folder changed : added");
+    } else {
+      console.debug("Folder changed : removed");
+    }
+
+    const oldFolders = SysTrayX.Messaging.folderTree[rootFolder];
+    const oldPaths = getFolderPaths(oldFolders);
+
+    //  Get new accounts for the changes
+    const accounts = await browser.accounts.list();
+
+    //  Get new folder tree
+    const folderTree = getFolderTree(accounts, SysTrayX.browserInfo);
+    const newFolders = folderTree[rootFolder];
+    const newPaths = getFolderPaths(newFolders);
+    const changes = findFolderPathsDiff(oldPaths, newPaths);
+
+    console.debug("Folder paths old: " + JSON.stringify(oldPaths));
+    console.debug("Folder paths new: " + JSON.stringify(newPaths));
+    console.debug("Folder changes: " + JSON.stringify(changes));
+
+    //  Store the new accounts and folder tree
+    SysTrayX.Messaging.accounts = accounts;
+    SysTrayX.Messaging.folderTree = folderTree;
   },
 
   sendBrowserInfo: function () {
@@ -496,6 +530,12 @@ async function start() {
 
   //  Get all accounts
   SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+  //  Get folder tree
+  SysTrayX.Messaging.folderTree = getFolderTree(
+    SysTrayX.Messaging.accounts,
+    SysTrayX.browserInfo
+  );
 
   // Get the filters (needs the accounts)
   SysTrayX.Messaging.filters = await getFilters();

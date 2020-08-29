@@ -89,8 +89,8 @@ var folderChange = class extends ExtensionCommon.ExtensionAPI {
           // function that removes those listeners. To have the event fire in your extension,
           // call fire.async.
           register(fire) {
-            function callback(event,added) {
-              return fire.async(added);
+            function callback(event, rootFolder, parentFolder, folder, added) {
+              return fire.async(rootFolder, parentFolder, folder, added);
             }
 
             SysTrayX.addOnFolderChange(callback);
@@ -201,13 +201,25 @@ var SysTrayX = {
 
     OnItemAdded(parentItem, item) {
       if (SysTrayX.callbackOnFolderChange) {
-        SysTrayX.callbackOnFolderChange("folder-changed", true);
+        SysTrayX.callbackOnFolderChange(
+          "folder-changed",
+          parentItem.rootFolder.prettyName,
+          parentItem.prettyName,
+          item.prettyName,
+          true
+        );
       }
     },
 
     OnItemRemoved(parentItem, item) {
       if (SysTrayX.callbackOnFolderChange) {
-        SysTrayX.callbackOnFolderChange("folder-changed", false);
+        SysTrayX.callbackOnFolderChange(
+          "folder-changed",
+          parentItem.rootFolder.prettyName,
+          parentItem.prettyName,
+          item.prettyName,
+          false
+        );
       }
     },
 
