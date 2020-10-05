@@ -142,32 +142,101 @@ SysTrayX.Messaging = {
   //
   //  Callback for folder changes
   //
-  updateFilters: async function (rootFolder, parentFolder, folder, added) {
-    console.debug("Folder changed account: " + rootFolder);
-    console.debug("Folder changed parent folder: " + parentFolder);
-    console.debug("Folder changed folder: " + folder);
-
-    if (added) {
-      console.debug("Folder changed : added");
-    } else {
-      console.debug("Folder changed : removed");
-    }
-
+  updateFilters: function (rootFolder, parentFolder, folder, added) {
     const oldFolders = SysTrayX.Messaging.folderTree[rootFolder];
     const oldPaths = getFolderPaths(oldFolders);
 
-    //  Get new accounts for the changes
-    const accounts = await browser.accounts.list();
+    browser.accounts.list().then(
+      (accounts) => {
+        this.updateFiltersCallback(
+          rootFolder,
+          parentFolder,
+          folder,
+          added,
+          oldFolders,
+          oldPaths,
+          accounts
+        );
+      },
+      () => console.log("Failed to get the accounts")
+    );
+  },
 
+  updateFiltersCallback: function (
+    rootFolder,
+    parentFolder,
+    folder,
+    added,
+    oldFolders,
+    oldPaths,
+    accounts
+  ) {
     //  Get new folder tree
     const folderTree = getFolderTree(accounts, SysTrayX.browserInfo);
     const newFolders = folderTree[rootFolder];
     const newPaths = getFolderPaths(newFolders);
-    const changes = findFolderPathsDiff(oldPaths, newPaths);
+    const changes = findFolderPathsDiff(oldPaths, newPaths).filter((change) =>
+      change.endsWith(parentFolder + "/" + folder)
+    );
 
-    console.debug("Folder paths old: " + JSON.stringify(oldPaths));
-    console.debug("Folder paths new: " + JSON.stringify(newPaths));
-    console.debug("Folder changes: " + JSON.stringify(changes));
+    if (changes.length === 1 && added) {
+      //  Folder has beeen added
+
+      const addedFolder = changes[0];
+
+      //  Is parent selected?
+      const parentAddedFolder = addedFolder.substring(
+        0,
+        addedFolder.lastIndexOf("/")
+      );
+
+      const parentSelected = findFolderPath(
+        SysTrayX.Messaging.filters,
+        parentAddedFolder
+      );
+
+      if (parentSelected) {
+        //  Add the new folder to the filters
+
+        const newFilter = {
+          ...parentSelected,
+          folder: {
+            ...parentSelected.folder,
+            path: changes[0],
+            name: changes[0].substring(changes[0].lastIndexOf("/") + 1),
+          },
+        };
+
+        if (
+          SysTrayX.Messaging.filters.filter(
+            (filter) => filter.folder.path === newFilter.folder.path
+          ).length === 0
+        ) {
+          SysTrayX.Messaging.filters.push(newFilter);
+
+          //  Store the new filters
+          browser.storage.sync.set({
+            filters: SysTrayX.Messaging.filters,
+          });
+        }
+      }
+    } else if (changes.length === 1 && !added) {
+      //  Folder has been removed, remove also all children
+
+      const filters = SysTrayX.Messaging.filters.filter(
+        (filter) => !filter.folder.path.startsWith(changes[0])
+      );
+
+      if (filters.length !== SysTrayX.Messaging.filters.length) {
+        //  Remove found filters (and children) from the filters
+        SysTrayX.Messaging.filters = filters;
+
+        //  Store the new filters
+        browser.storage.sync.set({
+          filters: SysTrayX.Messaging.filters,
+        });
+      }
+    }
 
     //  Store the new accounts and folder tree
     SysTrayX.Messaging.accounts = accounts;
