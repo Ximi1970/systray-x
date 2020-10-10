@@ -86,7 +86,6 @@ function getFolderTree(mailAccounts, browserInfo) {
         if (browserInfo.version.split(".")[0] < 74) {
           //  Pre TB74 accounts API
           folders = createFolderTreePre74(
-            accountName,
             accounts[prop][i].name,
             accounts[prop][i].folders
           );
