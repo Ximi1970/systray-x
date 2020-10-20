@@ -1,0 +1,19 @@
+Source: systray-x-minimal
+Section: misc
+Priority: optional
+Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
+Build-Depends: debhelper (>= 4.1.16), zip, qt5-default, qtbase5-dev, qdbus-qt5, thunderbird
+
+Package: systray-x-minimal
+Architecture: any
+Depends: ${shlibs:Depends}, thunderbird
+Description: SysTray-X is a system tray extension for Thunderbird 68+.
+ The add-on uses the WebExtension API's to control an external system
+ dependent system tray application.
+ The add-on and system tray application can do:
+  * custom new mail icon
+  * display number of unread mails
+  * show / hide Thunderbird (minimize)
+  * minimizing hides to tray
+  * minimize on startup
+  * minimize on close
