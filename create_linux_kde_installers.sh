@@ -21,6 +21,8 @@ OBS_RPM_ARCHS+="SLE_15/x86_64 "
 OBS_RPM_PKS+="sle150 "
 OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
 OBS_RPM_PKS+="sle151 "
+OBS_RPM_ARCHS+="SLE_15_SP2/x86_64 "
+OBS_RPM_PKS+="sle152 "
 OBS_RPM_ARCHS+="Fedora_31/x86_64 "
 OBS_RPM_PKS+="fed31 "
 OBS_RPM_ARCHS+="Fedora_32/x86_64 "
@@ -69,7 +71,7 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dg].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
