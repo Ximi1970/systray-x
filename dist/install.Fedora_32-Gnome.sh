@@ -33,12 +33,12 @@ if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     #
     # Check for Qt
     #
-    dnf list installed "libQt5*" | grep -q libQt5Widgets5
+    dnf list installed "qt5-qtbase*" | grep -q qt5-qtbase-gui
     if [ "$?" == "1" ] ; then
         echo
-        echo "Please install the package libqt5widgets5"
+        echo "Please install the package qt5-qtbase-gui"
         echo
-        echo "sudo dnf install libQt5Widgets5"
+        echo "sudo dnf install qt5-qtbase-gui"
         echo
     fi
 else
