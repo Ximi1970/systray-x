@@ -288,13 +288,13 @@ for rpmdir in $OBS_RPM_ARCHS ; do
   #
   # Create installer
   #
-  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-install.sh
+  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh
   cp -f ../dist/install.sh ${INSTALLER}
 
   #
   # Insert Minimal setup
   #
-  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Minimal.sh" ${INSTALLER}
+  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}.sh" ${INSTALLER}
   sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
   sed -i -e "s/__KDE_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh/" ${INSTALLER}
   sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
@@ -349,7 +349,7 @@ for debdir in $OBS_DEB_ARCHS ; do
   #
   # Insert Minimal setup
   #
-  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Minimal.sh" ${INSTALLER}
+  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}.sh" ${INSTALLER}
   sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
   sed -i -e "s/__KDE_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh/" ${INSTALLER}
   sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
