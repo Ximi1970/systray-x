@@ -32,10 +32,11 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version}
 BuildRequires:  kf5-knotifications-devel
-Requires:       qt5-qtwayland
+Requires:       kf5-knotifications
 Requires:       thunderbird >= 68
 %else
 BuildRequires:  knotifications-devel
+Requires:       libKF5Notifications5
 Requires:       MozillaThunderbird >= 68
 %endif
 

@@ -32,11 +32,8 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(x11)
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version}
-BuildRequires:  kf5-knotifications-devel
-Requires:       qt5-qtwayland
 Requires:       thunderbird >= 68
 %else
-BuildRequires:  knotifications-devel
 Requires:       MozillaThunderbird >= 68
 %endif
 
