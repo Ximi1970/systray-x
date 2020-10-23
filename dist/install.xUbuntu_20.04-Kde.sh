@@ -14,12 +14,12 @@ if [ "$XDG_CURRENT_DESKTOP" == "KDE" ] ; then
         echo
     fi
     
-    dpkg -l | grep -q libkf5notifications-dev
+    dpkg -l | grep -q libkf5notifications5
     if [ "$?" == "1" ] ; then
         echo
-        echo "Please install the package libkf5notifications-dev"
+        echo "Please install the package libkf5notifications5"
         echo
-        echo "sudo apt install libkf5notifications-dev"
+        echo "sudo apt install libkf5notifications5"
         echo
     fi
 else
