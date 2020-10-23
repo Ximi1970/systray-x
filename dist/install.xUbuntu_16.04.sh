@@ -1,7 +1,7 @@
 #
 #   Check for Gnome
 #
-if [ "$XDG_CURRENT_DESKTOP" == "Unity" ] ; then
+if [ "$XDG_CURRENT_DESKTOP" == "ubuntu:GNOME" ] ; then
       echo
       echo "Please use the __GNOME_INSTALLER__ installer."
       echo "This setup will not work."

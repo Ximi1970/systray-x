@@ -457,7 +457,7 @@ for debdir in $OBS_DEB_ARCHS ; do
   #
   sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Gnome.sh" ${INSTALLER}
   sed -i -e "s/__KDE_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh/" ${INSTALLER}
-  sed -i -e "s/__XFCE_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-XFCE-install.sh/" ${INSTALLER}
+  sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
   sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
 
   #
