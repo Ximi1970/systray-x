@@ -85,6 +85,8 @@ install -Dm0644 systray-x@Ximi1970.xpi %{buildroot}/usr/lib/thunderbird-addons/e
 %doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
 %{_libdir}/mozilla
+%dir /usr/lib/thunderbird-addons
+%dir /usr/lib/thunderbird-addons/extensions
 /usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 
 %changelog
