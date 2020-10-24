@@ -74,11 +74,13 @@ install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
 mkdir -pv $_systx_dir
 unzip -d $_systx_dir systray-x@Ximi1970.xpi
 install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
+install -Dm0644 systray-x@Ximi1970.xpi %{buildroot}/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 
 %files
 %license LICENSE 
 %doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
 %{_libdir}/mozilla
+/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
 
 %changelog
