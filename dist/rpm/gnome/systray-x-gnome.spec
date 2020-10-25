@@ -149,6 +149,7 @@ fi
 %license LICENSE 
 %doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
+%{_libdir}/mozilla
 %if 0%{?fedora_version}
 #   Option 1
 #%dir /usr/lib/thunderbird-addons
@@ -163,8 +164,6 @@ fi
 %dir %{_libdir}/thunderbird/distribution
 %dir %{_libdir}/thunderbird/distribution/extensions
 %{_libdir}/thunderbird/distribution/extensions/systray-x@Ximi1970.xpi
-%else
-%{_libdir}/mozilla
 %endif
 
 %changelog
