@@ -70,12 +70,24 @@ make %{?_smp_mflags} OPTIONS="DEFINES+=NO_KDE_INTEGRATION" EXT_VERSION="DEFINES+
 sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
 %install
-_systx_dir=%{buildroot}%{_libdir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
 install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
+install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
+%if 0%{?fedora_version}
+# Option 1 (enigmail way) does not work
+#_systx_dir=%{buildroot}%{_datadir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
+#mkdir -pv $_systx_dir
+#unzip -d $_systx_dir systray-x@Ximi1970.xpi
+
+# Option 2 (Ubuntu way) does not work
+#install -Dm0644 systray-x@Ximi1970.xpi %{buildroot}/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+
+# Force into thunderbird dir, system addons not working / not allowed / unknown extensions search path
+install -Dm0644 systray-x@Ximi1970.xpi %{buildroot}%{_libdir}/thunderbird/distribution/extensions/systray-x@Ximi1970.xpi
+%else
+_systx_dir=%{buildroot}%{_libdir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
 mkdir -pv $_systx_dir
 unzip -d $_systx_dir systray-x@Ximi1970.xpi
-install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
-#install -Dm0644 systray-x@Ximi1970.xpi %{buildroot}/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+%endif
 
 %post
 PROF_DIR="/etc/dconf/profile"
@@ -137,9 +149,22 @@ fi
 %license LICENSE 
 %doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
-%{_libdir}/mozilla
+%if 0%{?fedora_version}
+#   Option 1
 #%dir /usr/lib/thunderbird-addons
 #%dir /usr/lib/thunderbird-addons/extensions
 #/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+#   Option 2
+#%dir %{_datadir}/mozilla/
+#%dir %{_datadir}/mozilla/extensions
+#%dir %{_datadir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}
+#%{_datadir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
+%dir %{_libdir}/thunderbird
+%dir %{_libdir}/thunderbird/distribution
+%dir %{_libdir}/thunderbird/distribution/extensions
+%{_libdir}/thunderbird/distribution/extensions/systray-x@Ximi1970.xpi
+%else
+%{_libdir}/mozilla
+%endif
 
 %changelog
