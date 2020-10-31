@@ -1,6 +1,6 @@
 Format: 1.0
 Source: systray-x-gnome
-Version: 0
+Version: 0-0
 Binary: systray-x-gnome
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Architecture: any
