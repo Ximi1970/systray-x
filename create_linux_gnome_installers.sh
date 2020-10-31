@@ -39,6 +39,9 @@ OBS_RPM_GNOME_EXT+="v34 "
 OBS_RPM_ARCHS+="Fedora_32/x86_64 "
 OBS_RPM_PKS+="fed32 "
 OBS_RPM_GNOME_EXT+="master "
+OBS_RPM_ARCHS+="Fedora_33/x86_64 "
+OBS_RPM_PKS+="fed33 "
+OBS_RPM_GNOME_EXT+="master "
 
 
 OBS_DEB_ARCHS=""
@@ -67,6 +70,9 @@ OBS_DEB_PKS+="eoan1910 "
 OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
+OBS_DEB_GNOME_EXT+="0 "
+OBS_DEB_ARCHS+="xUbuntu_20.10/amd64 "
+OBS_DEB_PKS+="groovy2010 "
 OBS_DEB_GNOME_EXT+="0 "
 
 

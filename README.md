@@ -94,6 +94,15 @@ sudo zypper in systray-x-minimal
 
 Installing the repository:
 
+###### 20.10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.10/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 20.04 LTS
 
 ```bash
@@ -190,6 +199,13 @@ sudo apt install systray-x-gnome
 #### Repository
 
 Installing the repository:
+
+###### 33
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_33/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
 
 ###### 32
 

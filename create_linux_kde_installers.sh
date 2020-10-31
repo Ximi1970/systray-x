@@ -27,6 +27,8 @@ OBS_RPM_ARCHS+="Fedora_31/x86_64 "
 OBS_RPM_PKS+="fed31 "
 OBS_RPM_ARCHS+="Fedora_32/x86_64 "
 OBS_RPM_PKS+="fed32 "
+OBS_RPM_ARCHS+="Fedora_33/x86_64 "
+OBS_RPM_PKS+="fed33 "
 
 
 OBS_DEB_ARCHS=""
@@ -47,6 +49,8 @@ OBS_DEB_ARCHS+="xUbuntu_19.10/amd64 "
 OBS_DEB_PKS+="eoan1910 "
 OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
+OBS_DEB_ARCHS+="xUbuntu_20.10/amd64 "
+OBS_DEB_PKS+="groovy2010 "
 
 
 create_rpm_tar() {
