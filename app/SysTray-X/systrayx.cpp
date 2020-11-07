@@ -163,11 +163,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     getPreferences();
 
-
+/*
     //slotLoadLanguage( "nl" );
     slotLoadLanguage( "en_US" );
     slotSelectIconObject( false );
-
+*/
 }
 
 
@@ -655,10 +655,9 @@ void    SysTrayX::slotLoadLanguage( QString locale )
         }
 
         QString locale_path = "SysTray-X."+ locale;
-        bool status = m_translator.load( locale_path, ":/languages/" );
+        m_translator.load( locale_path, ":/languages/" );
+//        bool status = m_translator.load( locale_path, ":/languages/" );
+//        emit signalConsole( QString( "Language loaded %1").arg(status));
         qApp->installTranslator( &m_translator );
-
-
-        emit signalConsole( QString( "Language loaded %1").arg(status));
     }
 }
