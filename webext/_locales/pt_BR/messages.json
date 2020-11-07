@@ -84,12 +84,12 @@
     "description": "Close option 0"
   },
 
-  "windows_close_to_tray_1": {
+  "windows_close_1": {
     "message": "Minimize main, close children",
     "description": "Close option 1"
   },
 
-  "windows_close_to_tray_2": {
+  "windows_close_2": {
     "message": "Minimize all windows",
     "description": "Close option 2"
   },
