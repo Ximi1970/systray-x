@@ -41,6 +41,8 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
  */
 void    DebugWidget::changeEvent( QEvent* event )
 {
+    QWidget::changeEvent( event );
+
     if( event->type() == QEvent::LanguageChange )
     {
         m_ui->retranslateUi( this );

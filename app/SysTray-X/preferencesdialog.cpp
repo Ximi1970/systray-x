@@ -128,11 +128,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 void PreferencesDialog::changeEvent(QEvent *event)
 {
-    QDialog::changeEvent(event);
+    QDialog::changeEvent( event );
 
     if( QEvent::LanguageChange == event->type() )
     {
-        m_ui->retranslateUi(this);
+        m_ui->retranslateUi( this );
     }
 }
 
