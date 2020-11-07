@@ -14,5 +14,18 @@
         <file>files/icons/dialog-warning.png</file>
         <file>languages/SysTray-X.en_US.qm</file>
         <file>languages/SysTray-X.nl.qm</file>
+        <file>languages/SysTray-X.bg.qm</file>
+        <file>languages/SysTray-X.de.qm</file>
+        <file>languages/SysTray-X.es_AR.qm</file>
+        <file>languages/SysTray-X.fr.qm</file>
+        <file>languages/SysTray-X.hr.qm</file>
+        <file>languages/SysTray-X.it.qm</file>
+        <file>languages/SysTray-X.pl.qm</file>
+        <file>languages/SysTray-X.pt_BR.qm</file>
+        <file>languages/SysTray-X.ru_RU.qm</file>
+        <file>languages/SysTray-X.sk.qm</file>
+        <file>languages/SysTray-X.uk.qm</file>
+        <file>languages/SysTray-X.zh_CN.qm</file>
+        <file>languages/SysTray-X.zh_TW.qm</file>
     </qresource>
 </RCC>
