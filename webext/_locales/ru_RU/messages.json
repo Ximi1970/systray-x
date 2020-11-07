@@ -14,6 +14,21 @@
     "description": "Tab for Window options"
   },
 
+  "preferences": {
+    "message": "SysTray-X предпочтения",
+    "description": "Title of preferences page"
+  },
+  
+  "intro_line_1": {
+    "message": "Для работы этого дополнения требуется внешнее приложение. Вы можете получить его здесь:",
+    "description": "Introduction line 1"
+  },
+  
+  "intro_link": {
+    "message": "Загрузите приложение SysTray-X Companion здесь",
+    "description": "Link description"
+  },
+  
   "tab_icon": {
     "message": "Иконка",
     "description": "Tab for Icon options"
@@ -42,6 +57,11 @@
   "windows_min_default": {
     "message": "Свернуть окно",
     "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Свернуть в трей",
+    "description": "Minimize"
   },
 
   "windows_min_to_tray_1": {

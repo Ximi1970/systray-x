@@ -9,6 +9,21 @@
     "description": "Webextension descriptions"
   },
 
+  "preferences": {
+    "message": "SysTray-X Optionen",
+    "description": "Title of preferences page"
+  },
+  
+  "intro_line_1": {
+    "message": "Dieses Add-On benötigt eine Begleiter-App um zu funktionieren. Sie können es hier bekommen:",
+    "description": "Introduction line 1"
+  },
+  
+  "intro_link": {
+    "message": "Laden Sie hier die SysTray-X Begleiter-App herunter",
+    "description": "Link description"
+  },
+
   "tab_windows": {
     "message": "Fenster",
     "description": "Tab for Window options"
@@ -44,6 +59,11 @@
     "description": "Minimize option 0"
   },
 
+  "windows_min_to_tray": {
+    "message": "In Systemleiste verbergen",
+    "description": "Minimize option 1"
+  },
+
   "windows_min_to_tray_1": {
     "message": "In Systemleiste verbergen, Methode 1",
     "description": "Minimize option 1"
@@ -64,12 +84,12 @@
     "description": "Close option 0"
   },
 
-  "windows_close_to_tray_1": {
+  "windows_close_1": {
     "message": "Hauptfenster minimieren, Kinderfenster schließen",
     "description": "Close option 1"
   },
 
-  "windows_close_to_tray_2": {
+  "windows_close_2": {
     "message": "Alle Fenster minimieren",
     "description": "Close option 2"
   },

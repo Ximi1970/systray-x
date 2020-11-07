@@ -9,6 +9,21 @@
     "description": "Webextension descriptions"
   },
 
+  "preferences": {
+    "message": "SysTray-X Preferences",
+    "description": "Title of preferences page"
+  },
+  
+  "intro_line_1": {
+    "message": "Este addon precisa de um aplicativo externo para funcionar. Você pode obtê-lo aqui:",
+    "description": "Introduction line 1"
+  },
+  
+  "intro_link": {
+    "message": "Baixe o aplicativo SysTray-X Companion aqui",
+    "description": "Link description"
+  },
+
   "tab_windows": {
     "message": "Janela",
     "description": "Tab for Window options"
@@ -42,6 +57,11 @@
   "windows_min_default": {
     "message": "Comportamento padrão",
     "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Minimizar para a tray",
+    "description": "Minimize"
   },
 
   "windows_min_to_tray_1": {

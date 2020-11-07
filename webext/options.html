@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SysTray-X Preferences</title>
+    <title>__MSG_preferences__</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
@@ -11,13 +11,13 @@
     <script src="js/options_accounts.js"></script>
 
     <p>
-      This addon needs an external application to work. You can get it here:
+      __MSG_intro_line_1__
       <br />
       <br />
       <a
         href="https://github.com/Ximi1970/systray-x/releases"
         id="VersioHomeLink"
-        >Download the SysTray-X Companion application here</a
+        >__MSG_intro_link__</a
       >
     </p>
 
@@ -30,7 +30,7 @@
       <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
     </div>
 
-    <div id="WindowsContent" class="tabcontent" style="display: block;">
+    <div id="WindowsContent" class="tabcontent" style="display: block">
       <form>
         <h3>__MSG_windows__</h3>
         <table id="minimizeselect">
@@ -38,7 +38,7 @@
             __MSG_windows_min_options__
           </caption>
           <tr id="minimizedefault">
-            <td id="inputradio">
+            <td>
               <input
                 type="radio"
                 name="minimizeType"
@@ -46,24 +46,24 @@
                 value="0"
               />
               <label for="minDefault" id="minimizedefaultlabel"
-                >&nbsp;__MSG_windows_min_default__</label
-              ><br />
+                >__MSG_windows_min_default__</label
+              >
             </td>
           </tr>
           <tr id="minimizemethod1">
-            <td id="inputradio">
+            <td>
               <input type="radio" name="minimizeType" id="minMeth1" value="1" />
               <label for="minMeth1" id="minimizemethod1label"
-                >&nbsp;__MSG_windows_min_to_tray_1__</label
-              ><br />
+                >__MSG_windows_min_to_tray_1__</label
+              >
             </td>
           </tr>
           <tr id="minimizemethod2">
-            <td id="inputradio">
+            <td>
               <input type="radio" name="minimizeType" id="minMeth2" value="2" />
               <label for="minMeth2" id="minimizemethod2label"
-                >&nbsp;__MSG_windows_min_to_tray_2__</label
-              ><br />
+                >__MSG_windows_min_to_tray_2__</label
+              >
             </td>
           </tr>
         </table>
@@ -74,37 +74,40 @@
           </caption>
           <tr id="defaultclosewindows">
             <td>
-              <input type="radio" name="closeType" value="0" />
-              <label for="0" id="defaultclosewindowslabel"
-                >&nbsp;__MSG_windows_close_default__</label
-              ><br />
+              <input
+                type="radio"
+                name="closeType"
+                id="closeDefault"
+                value="0"
+              />
+              <label for="closeDefault" id="defaultclosewindowslabel"
+                >__MSG_windows_close_default__</label
+              >
             </td>
           </tr>
           <tr id="minimizemainclosechildrenwindows">
             <td>
-              <input type="radio" name="closeType" value="1" />
-              <label for="1" id="minimizemainclosechildrenwindowslabel"
-                >&nbsp;__MSG_windows_close_1__</label
-              ><br />
+              <input type="radio" name="closeType" id="closeMeth1" value="1" />
+              <label for="closeMeth1" id="minimizemainclosechildrenwindowslabel"
+                >__MSG_windows_close_1__</label
+              >
             </td>
           </tr>
           <tr id="minimizeallwindows">
             <td>
-              <input type="radio" name="closeType" value="2" />
-              <label for="2" id="minimizeallwindowslabel"
-                >&nbsp;__MSG_windows_close_2__</label
-              ><br />
+              <input type="radio" name="closeType" id="closeMeth2" value="2" />
+              <label for="closeMeth2" id="minimizeallwindowslabel"
+                >__MSG_windows_close_2__</label
+              >
             </td>
           </tr>
         </table>
 
         <div id="inputcheck">
-          <input
-            type="checkbox"
-            name="startMinimized"
-            value=""
-          />&nbsp;__MSG_windows_start_min__
-          <br />
+          <input type="checkbox" name="startMinimized" id="startMin" value="" />
+          <label for="startMin" id="startMinimizedLabel"
+            >__MSG_windows_start_min__</label
+          >
         </div>
       </form>
     </div>
@@ -118,7 +121,7 @@
             __MSG_icons_default_options__
           </caption>
           <tr>
-            <td id="inputradio">
+            <td>
               <input
                 type="radio"
                 name="defaultIconType"
@@ -126,12 +129,12 @@
                 value="0"
               />
               <label for="defauttTb" id="defauttTbLabel"
-                >&nbsp;__MSG_icons_default_tb__</label
+                >__MSG_icons_default_tb__</label
               >
             </td>
           </tr>
           <tr>
-            <td id="inputradio">
+            <td>
               <input
                 type="radio"
                 name="defaultIconType"
@@ -139,12 +142,12 @@
                 value="1"
               />
               <label for="defauttLookThrough" id="defauttLookThroughLabel"
-                >&nbsp;__MSG_icons_default_lookthrough__</label
+                >__MSG_icons_default_lookthrough__</label
               >
             </td>
           </tr>
           <tr>
-            <td id="inputradio">
+            <td>
               <input
                 type="radio"
                 name="defaultIconType"
@@ -152,7 +155,7 @@
                 value="2"
               />
               <label for="defaultCustom" id="defaultCustomLabel"
-                >&nbsp;__MSG_icons_default_custom__</label
+                >__MSG_icons_default_custom__</label
               >
             </td>
             <td>
@@ -167,7 +170,7 @@
             <td>
               <label
                 for="selectedFileDefaultIconType"
-                style="-moz-appearance: button;"
+                style="-moz-appearance: button"
                 }
                 >__MSG_icons_default_custom_choose__</label
               >
@@ -175,12 +178,10 @@
                 type="file"
                 id="selectedFileDefaultIconType"
                 accept="image/*"
-                style="display: none;"
+                style="display: none"
               />
             </td>
-            <td>
-              &emsp;
-            </td>
+            <td>&emsp;</td>
           </tr>
         </table>
 
@@ -189,36 +190,52 @@
             <input
               type="checkbox"
               name="hideDefaultIcon"
+              id="kdeInt"
               value=""
-            />&nbsp;__MSG_icons_default_kde_integration__<br />
+            />
+            <label for="kdeInt" id="kdeIntegrationLabel"
+              >__MSG_icons_default_kde_integration__</label
+            >
           </div>
         </div>
 
         <table id="iconselect">
           <caption>
-            &nbsp;__MSG_icons_unread_options__
+            __MSG_icons_unread_options__
           </caption>
           <tr>
-            <td id="inputradio">
-              <input type="radio" name="iconType" id="unreadBlank" value="0" />
-              <label for="unreadBlank" id="unreadBlankLabel"
-                >&nbsp;__MSG_icons_unread_blank__</label
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadBlank"
+                value="0"
+              /><label for="unreadBlank" id="unreadBlankLabel"
+                >__MSG_icons_unread_blank__</label
               >
             </td>
           </tr>
           <tr>
-            <td id="inputradio">
-              <input type="radio" name="iconType" id="unreadNew" value="1" />
-              <label for="unreadNew" id="unreadNewLabel"
-                >&nbsp;__MSG_icons_unread_new__</label
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadNew"
+                value="1"
+              /><label for="unreadNew" id="unreadNewLabel"
+                >__MSG_icons_unread_new__</label
               >
             </td>
           </tr>
           <tr>
-            <td id="inputradio">
-              <input type="radio" name="iconType" id="unreadCustom" value="2" />
-              <label for="unreadCustom" id="unreadCustomLabel"
-                >&nbsp;__MSG_icons_unread_custom__</label
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadCustom"
+                value="2"
+              /><label for="unreadCustom" id="unreadCustomLabel"
+                >__MSG_icons_unread_custom__</label
               >
             </td>
             <td>
@@ -233,7 +250,7 @@
             <td>
               <label
                 for="selectedFileIconType"
-                style="-moz-appearance: button;"
+                style="-moz-appearance: button"
                 }
                 >__MSG_icons_unread_custom_choose__</label
               >
@@ -241,18 +258,20 @@
                 type="file"
                 id="selectedFileIconType"
                 accept="image/*"
-                style="display: none;"
+                style="display: none"
               />
             </td>
-            <td>
-              &emsp;
-            </td>
+            <td>&emsp;</td>
           </tr>
           <tr>
-            <td id="inputradio">
-              <input type="radio" name="iconType" id="unreadNo" value="3" />
-              <label for="unreadNo" id="unreadNoLabel"
-                >&nbsp;__MSG_icons_unread_no__</label
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadNo"
+                value="3"
+              /><label for="unreadNo" id="unreadNoLabel"
+                >__MSG_icons_unread_no__</label
               >
             </td>
           </tr>
@@ -265,23 +284,20 @@
           <tr>
             <td>
               <div id="inputcheck">
-                <input
-                  type="checkbox"
-                  name="showNumber"
-                  value=""
-                />&nbsp;__MSG_icons_number_display__
+                <input type="checkbox" name="showNumber" id="showNo" value="" />
+                <label for="showNo" id="showNumberLabel"
+                  >__MSG_icons_number_display__</label
+                >
               </div>
             </td>
           </tr>
           <tr>
-            <td>
-              &emsp;
-            </td>
+            <td>&emsp;</td>
           </tr>
           <tr></tr>
           <tr>
             <td>
-              <label for="numberColor">__MSG_icons_number_color__&nbsp;</label>
+              <label for="numberColor">__MSG_icons_number_color__</label>
               <input
                 type="color"
                 id="numberColor"
@@ -292,9 +308,10 @@
           </tr>
           <tr>
             <td>
-              <label for="numberSize">__MSG_icons_number_size__&nbsp;</label>
+              <label for="numberSize">__MSG_icons_number_size__</label>
               <input
                 type="number"
+                id="numberSize"
                 name="numberSize"
                 value="0"
                 min="1"
@@ -306,22 +323,21 @@
           </tr>
         </table>
 
-        <table id="countprops" style="display: none;">
+        <table id="countprops" style="display: none">
           <tr>
             <td>
-              <label for="countType"
-                >__MSG_icons_number_count_type__&nbsp;</label
-              >
+              <label for="countType">__MSG_icons_number_count_type__</label>
               <input
                 type="radio"
                 name="countType"
+                id="numberUnread"
                 value="0"
-              />&nbsp;__MSG_icons_number_count_unread__
-              <input
-                type="radio"
-                name="countType"
-                value="1"
-              />&nbsp;__MSG_icons_number_count_new__
+              />
+              <label for="numberUnread"
+                >__MSG_icons_number_count_unread__</label
+              >
+              <input type="radio" name="countType" id="numberNew" value="1" />
+              <label for="numberNew">__MSG_icons_number_count_new__</label>
             </td>
           </tr>
         </table>
@@ -361,9 +377,8 @@
               name="debug"
               id="debugDisplay"
               value="Debug"
-            />
-            <label for="debugDisplay" id="debugDisplayLabel"
-              >&nbsp;__MSG_debug_display__</label
+            /><label for="debugDisplay" id="debugDisplayLabel"
+              >__MSG_debug_display__</label
             >
             <br />
           </div>

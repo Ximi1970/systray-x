@@ -9,6 +9,21 @@
     "description": "Webextension descriptions"
   },
 
+  "preferences": {
+    "message": "SysTray-X Preferences",
+    "description": "Title of preferences page"
+  },
+  
+  "intro_line_1": {
+    "message": "This addon needs an external application to work. You can get it here:",
+    "description": "Introduction line 1"
+  },
+  
+  "intro_link": {
+    "message": "Download the SysTray-X Companion application here",
+    "description": "Link description"
+  },
+  
   "tab_windows": {
     "message": "Windows",
     "description": "Tab for Window options"
@@ -44,6 +59,11 @@
     "description": "Minimize option 0"
   },
 
+  "windows_min_to_tray": {
+    "message": "Minimize to tray",
+    "description": "Minimize to tray"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Minimize to tray, method 1",
     "description": "Minimize option 1"
@@ -64,12 +84,12 @@
     "description": "Close option 0"
   },
 
-  "windows_close_to_tray_1": {
+  "windows_close_1": {
     "message": "Minimize main, close children",
     "description": "Close option 1"
   },
 
-  "windows_close_to_tray_2": {
+  "windows_close_2": {
     "message": "Minimize all windows",
     "description": "Close option 2"
   },

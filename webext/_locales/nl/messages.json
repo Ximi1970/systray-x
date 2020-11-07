@@ -9,6 +9,21 @@
     "description": "Webextension descriptions"
   },
 
+  "preferences": {
+    "message": "SysTray-X Opties",
+    "description": "Title of preferences page"
+  },
+  
+  "intro_line_1": {
+    "message": "Deze uitbreiding heeft ook nog een extern programma nodig. Dit kunt U hier downloaden:",
+    "description": "Introduction line 1"
+  },
+  
+  "intro_link": {
+    "message": "Download het bijbehorende SysTray-X programma hier",
+    "description": "Link description"
+  },
+
   "tab_windows": {
     "message": "Vensters",
     "description": "Tab for Window options"
@@ -42,6 +57,11 @@
   "windows_min_default": {
     "message": "Standaard minimalisatie",
     "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Minimaliseer naar systeemvak",
+    "description": "Minimize option"
   },
 
   "windows_min_to_tray_1": {
