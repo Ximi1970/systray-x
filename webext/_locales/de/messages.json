@@ -13,12 +13,12 @@
     "message": "SysTray-X Optionen",
     "description": "Title of preferences page"
   },
-  
+
   "intro_line_1": {
     "message": "Dieses Add-On benötigt eine Begleiter-App um zu funktionieren. Sie können es hier bekommen:",
     "description": "Introduction line 1"
   },
-  
+
   "intro_link": {
     "message": "Laden Sie hier die SysTray-X Begleiter-App herunter",
     "description": "Link description"

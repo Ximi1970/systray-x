@@ -18,17 +18,17 @@
     "message": "SysTray-X предпочтения",
     "description": "Title of preferences page"
   },
-  
+
   "intro_line_1": {
     "message": "Для работы этого дополнения требуется внешнее приложение. Вы можете получить его здесь:",
     "description": "Introduction line 1"
   },
-  
+
   "intro_link": {
     "message": "Загрузите приложение SysTray-X Companion здесь",
     "description": "Link description"
   },
-  
+
   "tab_icon": {
     "message": "Иконка",
     "description": "Tab for Icon options"

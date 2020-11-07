@@ -13,12 +13,12 @@
     "message": "SysTray-X Opties",
     "description": "Title of preferences page"
   },
-  
+
   "intro_line_1": {
     "message": "Deze uitbreiding heeft ook nog een extern programma nodig. Dit kunt U hier downloaden:",
     "description": "Introduction line 1"
   },
-  
+
   "intro_link": {
     "message": "Download het bijbehorende SysTray-X programma hier",
     "description": "Link description"

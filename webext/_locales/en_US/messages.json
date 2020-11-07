@@ -13,17 +13,17 @@
     "message": "SysTray-X Preferences",
     "description": "Title of preferences page"
   },
-  
+
   "intro_line_1": {
     "message": "This addon needs an external application to work. You can get it here:",
     "description": "Introduction line 1"
   },
-  
+
   "intro_link": {
     "message": "Download the SysTray-X Companion application here",
     "description": "Link description"
   },
-  
+
   "tab_windows": {
     "message": "Windows",
     "description": "Tab for Window options"
