@@ -126,6 +126,15 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setNumberSize( m_pref->getNumberSize() );
 }
 
+void PreferencesDialog::changeEvent(QEvent *event)
+{
+    QDialog::changeEvent(event);
+
+    if( QEvent::LanguageChange == event->type() )
+    {
+        m_ui->retranslateUi(this);
+    }
+}
 
 /*
  *  Set the debug state

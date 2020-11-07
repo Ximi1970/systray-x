@@ -39,6 +39,13 @@ class PreferencesDialog : public QDialog
          */
         PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWidget *parent = nullptr );
 
+        /**
+         * @brief changeEvent. Catch the event.
+         *
+         *  @param event    The event
+         */
+        void    changeEvent(QEvent* event);
+
     private:
 
         /**
