@@ -1,0 +1,336 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Estensione per controllo da vassoio di sistema. Scarica anche la companion app.",
+    "description": "Webextension descriptions"
+  },
+
+  "preferences": {
+    "message": "Preferenze di SysTray-X",
+    "description": "Title of preferences page"
+  },
+
+  "intro_line_1": {
+    "message": "Questa estensione necessita di un'applicazione esterna per poter funzionare. Puoi ottenerla qui:",
+    "description": "Introduction line 1"
+  },
+
+  "intro_link": {
+    "message": "Scarica la companion app per SysTray-X qui",
+    "description": "Link description"
+  },
+
+  "tab_windows": {
+    "message": "Finestre",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Icona",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_mail": {
+    "message": "Posta",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_debug": {
+    "message": "Debug",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Finestre",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimizza",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Minimizzazione predefinita",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Minimizza nel vassoio",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Minimizza nel vassoio, metodo 1",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Minimizza nel vassoio, metodo 2",
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "Chiudi",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Chiusura predefinita",
+    "description": "Close option 0"
+  },
+
+  "windows_close_1": {
+    "message": "Minimizza principale, chiudi sottofinestre",
+    "description": "Close option 1"
+  },
+
+  "windows_close_2": {
+    "message": "Minimizza tutte le finestre",
+    "description": "Close option 2"
+  },
+
+  "windows_start_min": {
+    "message": "Avvia applicazione minimizzata",
+    "description": "Start minimized"
+  },
+
+  "icons": {
+    "message": "Icona",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Icona predefinita",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Predefinita di Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Icona trasparente",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Icona personalizzata",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Scegli",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Integrazione KDE (Nascondi)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Icona notifica posta",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Icona vuota",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Icona nuova posta",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Icona personalizzata",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Scegli",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Nessuna icona",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_number_options": {
+    "message": "Proprietà numero",
+    "description": "Caption for Number options"
+  },
+
+  "icons_number_display": {
+    "message": "Mostra numero di messaggi non letti",
+    "description": "Display the number"
+  },
+
+  "icons_number_color": {
+    "message": "Colore numero:",
+    "description": "Color of the number"
+  },
+
+  "icons_number_size": {
+    "message": "Dimensione numero:",
+    "description": "Size of the number"
+  },
+
+  "icons_number_count_type": {
+    "message": "Tipo conteggio:",
+    "description": "Count type options"
+  },
+
+  "icons_number_count_unread": {
+    "message": "Non letti",
+    "description": "Count unread mails"
+  },
+
+  "icons_number_count_new": {
+    "message": "Nuovi",
+    "description": "Count new mails"
+  },
+
+  "accounts": {
+    "message": "Account",
+    "description": "Title for Accounts options"
+  },
+
+  "debug": {
+    "message": "Debug",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Mostra finestra di debug",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Salva preferenze",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Salva",
+    "description": "Save preferences button"
+  },
+
+  "about_title": {
+    "message": "Informazioni su SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "SysTray-X Companion App by Ximi1970",
+    "description": "Line 1"
+  },
+  
+  "about_version": {
+    "message": "Versione:",
+    "description": "Version"
+  },
+  
+  "about_build": {
+    "message": "Build:",
+    "description": "Build"
+  },
+  
+  "about_hash": {
+    "message": "Hash:",
+    "description": "Hash"
+  },
+  
+  "about_branch": {
+    "message": "Branch:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "Debug di SysTray-X",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Test 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Test 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Test 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Posta non letta:",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "&Mostra/Nascondi",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "&Preferenze",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "&Informazioni",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "&Esci",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Chiudi",
+    "description": "Close button"
+  },
+  
+  "mail_notification_icon": {
+    "message": "Icona notifica posta",
+    "description": "Mail icon selection title"
+  },
+  
+  "number_properties": {
+    "message": "Proprietà numero",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "Apri immagine",
+    "description": "File image dialog"
+  },
+  
+  "image_files": {
+    "message": "File immagine (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+  
+  "image_save": {
+    "message": "Salva",
+    "description": "File image save"
+  },
+  
+  "image_cancel": {
+    "message": "Annulla",
+    "description": "File image cancel"
+  }
+}
