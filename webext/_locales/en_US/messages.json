@@ -191,7 +191,7 @@
 
   "icons_number_count_unread": {
     "message": "Unread",
-    "description": "SCount unread mails"
+    "description": "Count unread mails"
   },
 
   "icons_number_count_new": {
@@ -279,22 +279,22 @@
     "description": "Unread label"
   },
 
-  "menu_showhhide": {
+  "menu_showhide": {
     "message": "&Show/Hide",
     "description": "Show Hide menu entry"
   },
 
-  "menu_showhhide": {
+  "menu_preferences": {
     "message": "&Preferences",
     "description": "Preferences menu entry"
   },
 
-  "menu_showhhide": {
+  "menu_about": {
     "message": "&About",
     "description": "About menu entry"
   },
 
-  "menu_showhhide": {
+  "menu_quit": {
     "message": "&Quit",
     "description": "Quit menu entry"
   },
@@ -313,22 +313,7 @@
     "message": "Number properties",
     "description": "Number properties title"
   },
-  
-  "count_type": {
-    "message": "Count type",
-    "description": "Count type title"
-  },
-  
-  "count_unread": {
-    "message": "Unread",
-    "description": "Count type unread"
-  },
-  
-  "count_new": {
-    "message": "New",
-    "description": "Count type new"
-  },
-  
+
   "image_open": {
     "message": "Open image",
     "description": "File image dialog"
