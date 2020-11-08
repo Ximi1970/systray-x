@@ -18,7 +18,7 @@
 Name:           systray-x
 Version:        0
 Release:        0
-Summary:        A system tray extension for Thunderbird 68+
+Summary:        A system tray extension for Thunderbird 68+ (KDE)
 License:        MPL-2.0
 Group:          Productivity/Networking/Email/Clients
 URL:            https://github.com/Ximi1970/systray-x
@@ -44,6 +44,7 @@ Requires:       MozillaThunderbird <= 83
 
 %description
 SysTray-X is a system tray extension for Thunderbird 68+.
+This version is optimized for the KDE desktop.
 The add-on uses the WebExtension API's to control an external system
 dependent system tray application.
 
