@@ -350,7 +350,7 @@ Clone the repository using TortoiseGit:
 ...
 
 
-### Tramslations
+### Translations
 
 de      :  
 el      :   askembris  
