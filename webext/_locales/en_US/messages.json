@@ -302,5 +302,50 @@
   "menu_close": {
     "message": "Close",
     "description": "Close button"
+  },
+  
+  "mail_notification_icon": {
+    "message": "Mail notification icon",
+    "description": "Mail icon selection title"
+  },
+  
+  "number_properties": {
+    "message": "Number properties",
+    "description": "Number properties title"
+  },
+  
+  "count_type": {
+    "message": "Count type",
+    "description": "Count type title"
+  },
+  
+  "count_unread": {
+    "message": "Unread",
+    "description": "Count type unread"
+  },
+  
+  "count_new": {
+    "message": "New",
+    "description": "Count type new"
+  },
+  
+  "image_open": {
+    "message": "Open image",
+    "description": "File image dialog"
+  },
+  
+  "image_files": {
+    "message": "Image Files (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+  
+  "image_save": {
+    "message": "Save",
+    "description": "File image save"
+  },
+  
+  "image_cancel": {
+    "message": "Cancel",
+    "description": "File image cancel"
   }
 }
