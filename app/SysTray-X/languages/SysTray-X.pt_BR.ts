@@ -182,22 +182,22 @@
         <translation>Minimizar para a tray, método 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="344"/>
+        <location filename="../preferences.ui" line="331"/>
         <source>Default close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="354"/>
+        <location filename="../preferences.ui" line="341"/>
         <source>Minimize main, close children</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="367"/>
+        <location filename="../preferences.ui" line="354"/>
         <source>Minimize all windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="387"/>
+        <location filename="../preferences.ui" line="374"/>
         <source>Start application minimized</source>
         <translation>Iniciar aplicação minimizada</translation>
     </message>
@@ -206,42 +206,42 @@
         <translation type="vanished">Minimizar ao fechar</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="401"/>
+        <location filename="../preferences.ui" line="388"/>
         <source>Number properties</source>
         <translation>Propriedades do número</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="409"/>
+        <location filename="../preferences.ui" line="396"/>
         <source>Display unread message count</source>
         <translation>Exibir contador de mensagens não lidas</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="421"/>
+        <location filename="../preferences.ui" line="408"/>
         <source>Number color</source>
         <translation>Cor do número</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="429"/>
         <source>Number size</source>
         <translation>Tamanho do número</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="464"/>
+        <location filename="../preferences.ui" line="451"/>
         <source>Count type</source>
         <translation>Tipo do contador</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="459"/>
         <source>Unread</source>
         <translation>Não lidos</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="485"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>New</source>
         <translation>Novos</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="522"/>
+        <location filename="../preferences.ui" line="509"/>
         <source>Display debug window</source>
         <translation>Mostrar janela de depuração</translation>
     </message>
@@ -260,14 +260,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Open Image</source>
         <translation>Abrir imagem</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Arquivo de imagem (*.png *.jpg *.bmp)</translation>
     </message>

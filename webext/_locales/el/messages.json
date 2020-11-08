@@ -5,222 +5,222 @@
   },
 
   "extension_description": {
-    "message": "Дополнение \"Системный трей\". Пожалуйста установите также приложение-компаньон",
+    "message": "Πρόσθετο ελέγχου από την περιοχή ειδοποιήσεων. Παρακαλώ κατεβάστε και τη συνοδευτική εφαρμογή.",
     "description": "Webextension descriptions"
   },
 
-  "tab_windows": {
-    "message": "Окна",
-    "description": "Tab for Window options"
-  },
-
   "preferences": {
-    "message": "SysTray-X предпочтения",
+    "message": "Προτιμήσεις SysTray-X",
     "description": "Title of preferences page"
   },
 
   "intro_line_1": {
-    "message": "Для работы этого дополнения требуется внешнее приложение. Вы можете получить его здесь:",
+    "message": "Αυτό το πρόσθετο απαιτεί και μία εξωτερική εφαρμογή για να λειτουργήσει. Μπορείτε να τη βρείτε εδώ:",
     "description": "Introduction line 1"
   },
 
   "intro_link": {
-    "message": "Загрузите приложение SysTray-X Companion здесь",
+    "message": "Κατεβάστε τη συνοδευτική εφαρμογή του SysTray-X εδώ",
     "description": "Link description"
   },
 
+  "tab_windows": {
+    "message": "Παράθυρα",
+    "description": "Tab for Window options"
+  },
+
   "tab_icon": {
-    "message": "Иконка",
+    "message": "Εικονίδιο",
     "description": "Tab for Icon options"
   },
 
   "tab_mail": {
-    "message": "Письма",
+    "message": "Αλληλογραφία",
     "description": "Tab for Mail options"
   },
 
   "tab_debug": {
-    "message": "Отладка",
+    "message": "Αποσφαλμάτωση",
     "description": "Tab for Debug options"
   },
 
   "windows": {
-    "message": "Окна",
+    "message": "Παράθυρα",
     "description": "Title for Windows options"
   },
 
   "windows_min_options": {
-    "message": "Свернуть",
+    "message": "Ελαχιστοποίηση",
     "description": "Caption for Minimize options"
   },
 
   "windows_min_default": {
-    "message": "Свернуть окно",
+    "message": "Προεπιλεγμένη ελαχιστοποίηση",
     "description": "Minimize option 0"
   },
 
   "windows_min_to_tray": {
-    "message": "Свернуть в трей",
-    "description": "Minimize"
+    "message": "Ελαχιστοποίηση στην περιοχή ειδοποιήσεων",
+    "description": "Minimize to tray"
   },
 
   "windows_min_to_tray_1": {
-    "message": "Свернуть в трей, вариант 1",
+    "message": "Μέθοδος 1",
     "description": "Minimize option 1"
   },
 
   "windows_min_to_tray_2": {
-    "message": "Свернуть в трей, вариант 2",
+    "message": "Μέθοδος 2",
     "description": "Minimize option 2"
   },
 
   "windows_close_options": {
-    "message": "При закрытии",
+    "message": "Κλείσιμο",
     "description": "Caption for Close options"
   },
 
   "windows_close_default": {
-    "message": "Закрыть",
+    "message": "Προεπιλεγμένο κλείσιμο",
     "description": "Close option 0"
   },
 
   "windows_close_1": {
-    "message": "Свернуть главное окно, закрыть другие",
+    "message": "Ελαχιστοποίηση κυρίως παραθύρου, κλείσιμο θυγατρικών",
     "description": "Close option 1"
   },
 
   "windows_close_2": {
-    "message": "Свернуть все окна",
+    "message": "Ελαχιστοποίηση όλων των παραθύρων",
     "description": "Close option 2"
   },
 
   "windows_start_min": {
-    "message": "Запуск приложения свернутым",
+    "message": "Ελαχιστοποιημένη εκκίνηση της εφαρμογής",
     "description": "Start minimized"
   },
 
   "icons": {
-    "message": "Иконка",
+    "message": "Εικονίδια",
     "description": "Title for Icons options"
   },
 
   "icons_default_options": {
-    "message": "Обычная иконка",
+    "message": "Προεπιλεγμένο εικονίδιο",
     "description": "Caption for Default Icon options"
   },
 
   "icons_default_tb": {
-    "message": "Стандартная Thunderbird",
+    "message": "Προεπιλογή Thunderbird",
     "description": "Default icon option 1"
   },
 
   "icons_default_lookthrough": {
-    "message": "Невидимая иконка",
+    "message": "Διαφανές εικονίδιο",
     "description": "Default icon option 2"
   },
 
   "icons_default_custom": {
-    "message": "Своя иконка",
+    "message": "Προσαρμοσμένο εικονίδιο",
     "description": "Default icon option 3"
   },
 
   "icons_default_custom_choose": {
-    "message": "Выбрать...",
+    "message": "Επιλέξτε...",
     "description": "Default icon option 3 button"
   },
 
   "icons_default_kde_integration": {
-    "message": "Интеграция с KDE (Скрыть)",
+    "message": "Ενσωμάτωση στον KDE (Απόκρυψη)",
     "description": "Default icon KDE integration"
   },
 
   "icons_unread_options": {
-    "message": "Иконка уведомления",
+    "message": "Εικονίδιο μη-αναγνωσμένης αλληλογραφίας",
     "description": "Caption for Unread Icon options"
   },
 
   "icons_unread_blank": {
-    "message": "Пустая иконка (квадрат)",
+    "message": "Κενό εικονίδιο",
     "description": "Unread Icon option 1"
   },
 
   "icons_unread_new": {
-    "message": "Иконка \"Новые письма\"",
+    "message": "Εικονίδιο νέας αλληλογραφίας",
     "description": "Unread Icon option 2"
   },
 
   "icons_unread_custom": {
-    "message": "Своя иконка",
+    "message": "Προσαρμοσμένο εικονίδιο",
     "description": "Unread Icon option 3"
   },
 
   "icons_unread_custom_choose": {
-    "message": "Выбрать...",
+    "message": "Επιλέξτε...",
     "description": "Unread Icon option 3 button"
   },
 
   "icons_unread_no": {
-    "message": "Без иконки (только цифры)",
+    "message": "Χωρίς εικονίδιο",
     "description": "Unread Icon option 4"
   },
 
   "icons_number_options": {
-    "message": "Настройки индикатора кол-ва",
+    "message": "Αριθμός",
     "description": "Caption for Number options"
   },
 
   "icons_number_display": {
-    "message": "Показывать кол-во непрочитанных писем",
+    "message": "Προβολή μετρητή μη-αναγνωσμένης αλληλογραφίας",
     "description": "Display the number"
   },
 
   "icons_number_color": {
-    "message": "Цвет шрифта:",
+    "message": "Χρώμα μετρητή:",
     "description": "Color of the number"
   },
 
   "icons_number_size": {
-    "message": "Размер шрифта:",
+    "message": "Μέγεθος μετρητή:",
     "description": "Size of the number"
   },
 
   "icons_number_count_type": {
-    "message": "Вариант подсчета:",
+    "message": "Τύπος μετρητή μηνυμάτων:",
     "description": "Count type options"
   },
 
   "icons_number_count_unread": {
-    "message": "Непрочитанные",
-    "description": "SCount unread mails"
+    "message": "Μη αναγνωσμένα",
+    "description": "Count unread mails"
   },
 
   "icons_number_count_new": {
-    "message": "Новые",
+    "message": "Νέα",
     "description": "Count new mails"
   },
 
   "accounts": {
-    "message": "Аккаунты",
+    "message": "Λογαριασμοί",
     "description": "Title for Accounts options"
   },
 
   "debug": {
-    "message": "Отладка",
+    "message": "Αποσφαλμάτωση",
     "description": "Title for Debug options"
   },
 
   "debug_display": {
-    "message": "Показать окно отладки",
+    "message": "Προβολή παραθύρου αποσφαλμάτωσης",
     "description": "Display the debug window"
   },
 
   "save_preferences": {
-    "message": "Сохранить настройки",
+    "message": "Αποθήκευση προτιμήσεων",
     "description": "Save preferences"
   },
 
   "save_preferences_button": {
-    "message": "Сохранить",
+    "message": "Αποθήκευση",
     "description": "Save preferences button"
   },
 
@@ -280,57 +280,57 @@
   },
 
   "menu_showhide": {
-    "message": "Показать/Скр&ыть",
+    "message": "&Show/Hide",
     "description": "Show Hide menu entry"
   },
 
   "menu_preferences": {
-    "message": "Настройки",
+    "message": "&Preferences",
     "description": "Preferences menu entry"
   },
 
   "menu_about": {
-    "message": "О приложении",
+    "message": "&About",
     "description": "About menu entry"
   },
 
   "menu_quit": {
-    "message": "Выход",
+    "message": "&Quit",
     "description": "Quit menu entry"
   },
 
   "menu_close": {
-    "message": "Закрыть",
+    "message": "Close",
     "description": "Close button"
   },
   
   "mail_notification_icon": {
-    "message": "Иконка уведомления",
+    "message": "Mail notification icon",
     "description": "Mail icon selection title"
   },
   
   "number_properties": {
-    "message": "Настройки индикатора кол-ва",
+    "message": "Number properties",
     "description": "Number properties title"
   },
 
   "image_open": {
-    "message": "Открыть изображение",
+    "message": "Open image",
     "description": "File image dialog"
   },
   
   "image_files": {
-    "message": "IФайлы изображений (*.png *.jpg *.bmp)",
+    "message": "Image Files (*.png *.jpg *.bmp)",
     "description": "File image selection"
   },
   
   "image_save": {
-    "message": "Сохранить",
+    "message": "Save",
     "description": "File image save"
   },
   
   "image_cancel": {
-    "message": "Отменить",
+    "message": "Cancel",
     "description": "File image cancel"
   }
 }

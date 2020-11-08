@@ -222,5 +222,115 @@
   "save_preferences_button": {
     "message": "Opslaan",
     "description": "Save preferences button"
+  },
+
+  "about_title": {
+    "message": "Over SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "SysTray-X Companion App door Ximi1970",
+    "description": "Line 1"
+  },
+  
+  "about_version": {
+    "message": "Versie:",
+    "description": "Version"
+  },
+  
+  "about_build": {
+    "message": "Build:",
+    "description": "Build"
+  },
+  
+  "about_hash": {
+    "message": "Hash:",
+    "description": "Hash"
+  },
+  
+  "about_branch": {
+    "message": "Branch:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "SysTray-X Debug",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Test 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Test 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Test 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Ongelezen berichten:",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "&Tonen/Verbergen",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "&Opties",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "O&ver",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "&Afsluiten",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Sluiten",
+    "description": "Close button"
+  },
+  
+  "mail_notification_icon": {
+    "message": "Berichten notificatie pictogram",
+    "description": "Mail icon selection title"
+  },
+  
+  "number_properties": {
+    "message": "Nummer opties",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "Open afbeelding",
+    "description": "File image dialog"
+  },
+  
+  "image_files": {
+    "message": "Afbeeldingsbestanden (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+  
+  "image_save": {
+    "message": "Bewaren",
+    "description": "File image save"
+  },
+  
+  "image_cancel": {
+    "message": "Annnuleren",
+    "description": "File image cancel"
   }
 }

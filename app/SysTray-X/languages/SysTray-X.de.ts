@@ -178,22 +178,22 @@
         <translation>In Systemleiste verbergen, Methode 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="344"/>
+        <location filename="../preferences.ui" line="331"/>
         <source>Default close</source>
         <translation>Standard Schließen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="354"/>
+        <location filename="../preferences.ui" line="341"/>
         <source>Minimize main, close children</source>
         <translation>Hauptfenster minimieren, Kinderfenster schließen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="367"/>
+        <location filename="../preferences.ui" line="354"/>
         <source>Minimize all windows</source>
         <translation>Alle Fenster minimieren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="387"/>
+        <location filename="../preferences.ui" line="374"/>
         <source>Start application minimized</source>
         <translation>Anwendung minimiert starten</translation>
     </message>
@@ -202,42 +202,42 @@
         <translation type="vanished">Beim Fensterschließen, Minimieren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="401"/>
+        <location filename="../preferences.ui" line="388"/>
         <source>Number properties</source>
         <translation>Nummereigenschaften</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="409"/>
+        <location filename="../preferences.ui" line="396"/>
         <source>Display unread message count</source>
         <translation>Anzahl neuer Nachrichten anzeigen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="421"/>
+        <location filename="../preferences.ui" line="408"/>
         <source>Number color</source>
         <translation>Nummerfarbe</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="429"/>
         <source>Number size</source>
         <translation>Nummergröße</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="464"/>
+        <location filename="../preferences.ui" line="451"/>
         <source>Count type</source>
         <translation>E-Mail-Benachrichtigungstyp</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="459"/>
         <source>Unread</source>
         <translation>Ungelesene Nachrichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="485"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>New</source>
         <translation>Neue Nachrichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="522"/>
+        <location filename="../preferences.ui" line="509"/>
         <source>Display debug window</source>
         <translation>Debug-Fenster anzeigen</translation>
     </message>
@@ -256,14 +256,14 @@
         <translation>Hauptfenster minimieren</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Open Image</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Bilddateien (*.png *.jpg *.bmp)</translation>
     </message>

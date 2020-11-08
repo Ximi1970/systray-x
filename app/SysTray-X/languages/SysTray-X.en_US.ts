@@ -182,22 +182,22 @@
         <translation>Minimize to tray, method 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="344"/>
+        <location filename="../preferences.ui" line="331"/>
         <source>Default close</source>
         <translation>Default close</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="354"/>
+        <location filename="../preferences.ui" line="341"/>
         <source>Minimize main, close children</source>
         <translation>Minimize main, close children</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="367"/>
+        <location filename="../preferences.ui" line="354"/>
         <source>Minimize all windows</source>
         <translation>Minimize all windows</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="387"/>
+        <location filename="../preferences.ui" line="374"/>
         <source>Start application minimized</source>
         <translation>Start application minimized</translation>
     </message>
@@ -206,42 +206,42 @@
         <translation type="vanished">Minimize on close</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="401"/>
+        <location filename="../preferences.ui" line="388"/>
         <source>Number properties</source>
         <translation>Number properties</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="409"/>
+        <location filename="../preferences.ui" line="396"/>
         <source>Display unread message count</source>
         <translation>Display unread message count</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="421"/>
+        <location filename="../preferences.ui" line="408"/>
         <source>Number color</source>
         <translation>Number color</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="429"/>
         <source>Number size</source>
         <translation>Number size</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="464"/>
+        <location filename="../preferences.ui" line="451"/>
         <source>Count type</source>
         <translation>Count type</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="459"/>
         <source>Unread</source>
         <translation>Unread</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="485"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>New</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="522"/>
+        <location filename="../preferences.ui" line="509"/>
         <source>Display debug window</source>
         <translation>Display debug window</translation>
     </message>
@@ -260,14 +260,14 @@
         <translation>Minimize to tray</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Open Image</source>
         <translation>Open Image</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="370"/>
-        <location filename="../preferencesdialog.cpp" line="394"/>
+        <location filename="../preferencesdialog.cpp" line="384"/>
+        <location filename="../preferencesdialog.cpp" line="408"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Image Files (*.png *.jpg *.bmp)</translation>
     </message>
