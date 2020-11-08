@@ -350,6 +350,17 @@ Clone the repository using TortoiseGit:
 ...
 
 
+### Tramslations
+
+de      :
+el      :   askembris
+en_US   :
+it      :   lgbaldoni
+nl      :
+pt_BR   :   fabianski7
+ru_RU   :   PutinVladimir
+
+
 ### Remarks
 
 Branches:  
