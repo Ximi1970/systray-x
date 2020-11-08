@@ -1,7 +1,25 @@
-systray-x-minimal (0.4.0-1) unstable; urgency=low
+systray-x-minimal (0.5.0-0) unstable; urgency=low
+
+  * Update to 0.5.0
+    
+    - Added translations logic
+    - Languages:
+      - de
+      - en_US
+      - nl
+      - pt_BR (by PutinVladimir)
+      - ru_RU (by fabianski7)
+
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 07 Nov 2020 23:37:00 +0100
+      
+systray-x-minimal (0.4.0-0) unstable; urgency=low
 
   * Update to 0.4.0
 
-systray-x-minimal (0.0.1-1) unstable; urgency=low
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 10 Oct 2020 14:10:00 +0100
+
+systray-x-minimal (0.0.1-0) unstable; urgency=low
 
   * Initial Release
+
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Tue, 11 Feb 2020 19:05:19 +0100

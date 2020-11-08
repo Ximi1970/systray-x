@@ -1,5 +1,18 @@
 -------------------------------------------------------------------
-Sat Oct 10 14:10:00 UTC 2020 - Maxime Rijnders <ximi.obs@gmail.com
+Sat Nov  7 23:37:00 UTC 2020 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.5.0
+    
+    * Added translations logic
+    * Languages:
+        - de
+        - en_US
+        - nl
+        - pt_BR (by PutinVladimir)
+        - ru_RU (by fabianski7)
+
+-------------------------------------------------------------------
+Sat Oct 10 14:10:00 UTC 2020 - Maxime Rijnders <ximi.obs@gmail.com>
 
 - Update to 0.4.0
 
