@@ -81,7 +81,7 @@ sudo zypper in systray-x
 sudo zypper in systray-x-gnome
 ```
 
-###### XFCE / Others
+###### XFCE / Others (non-KDE, non-GNOME)
 
 ```bash
 sudo zypper in systray-x-minimal
@@ -155,7 +155,7 @@ sudo apt install systray-x
 sudo apt install systray-x-gnome
 ```
 
-###### Unity / XFCE / Others
+###### Unity / XFCE / Others (non-KDE, non-GNOME)
 
 ```bash
 sudo apt install systray-x-minimal
@@ -191,6 +191,12 @@ sudo apt install systray-x
 
 ```bash
 sudo apt install systray-x-gnome
+```
+
+###### XFCE / Others (non-KDE, non-GNOME)
+
+```bash
+sudo apt install systray-x-minimal
 ```
 
 
@@ -237,7 +243,7 @@ sudo dnf install systray-x
 sudo dnf install systray-x-gnome
 ```
 
-###### XFCE / Others
+###### XFCE / Others (non-KDE, non-GNOME)
 
 ```bash
 sudo dnf install systray-x-minimal
@@ -350,15 +356,15 @@ Clone the repository using TortoiseGit:
 ...
 
 
-### Tramslations
+### Translations
 
-de      :
-el      :   askembris
-en_US   :
-it      :   lgbaldoni
-nl      :
-pt_BR   :   fabianski7
-ru_RU   :   PutinVladimir
+de      :  
+el      :   askembris  
+en_US   :  
+it      :   lgbaldoni  
+nl      :  
+pt_BR   :   fabianski7  
+ru_RU   :   PutinVladimir  
 
 
 ### Remarks
