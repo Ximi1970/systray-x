@@ -155,7 +155,7 @@ sudo apt install systray-x
 sudo apt install systray-x-gnome
 ```
 
-###### Unity / XFCE / Others
+###### LXQt / Unity / XFCE / Others
 
 ```bash
 sudo apt install systray-x-minimal
