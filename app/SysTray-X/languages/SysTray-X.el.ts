@@ -281,7 +281,7 @@
     <message>
         <location filename="../systrayx.cpp" line="602"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Κλείσιμο</translation>
     </message>
 </context>
 </TS>
