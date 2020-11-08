@@ -222,5 +222,85 @@
   "save_preferences_button": {
     "message": "Save",
     "description": "Save preferences button"
+  },
+
+  "about_title": {
+    "message": "About SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "SysTray-X Companion App by Ximi1970",
+    "description": "Line 1"
+  },
+  
+  "about_version": {
+    "message": "Version:",
+    "description": "Version"
+  },
+  
+  "about_build": {
+    "message": "Build:",
+    "description": "Build"
+  },
+  
+  "about_hash": {
+    "message": "Hash:",
+    "description": "Hash"
+  },
+  
+  "about_branch": {
+    "message": "Branch:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "SysTray-X Debug",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Test 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Test 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Test 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Unread mail:",
+    "description": "Unread label"
+  },
+
+  "menu_showhhide": {
+    "message": "&Show/Hide",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_showhhide": {
+    "message": "&Preferences",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_showhhide": {
+    "message": "&About",
+    "description": "About menu entry"
+  },
+
+  "menu_showhhide": {
+    "message": "&Quit",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Close",
+    "description": "Close button"
   }
 }
