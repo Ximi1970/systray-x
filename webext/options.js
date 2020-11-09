@@ -344,11 +344,11 @@ SysTrayX.RestoreOptions = {
 
     // Tweak option for platform
     //    if (platformInfo.os === "win") {
-    document.getElementById("minimizemethod1label").innerHTML =
-      "Minimize to tray";
-    document
-      .getElementById("minimizemethod2")
-      .setAttribute("style", "display:none;");
+//    document.getElementById("minimizemethod1label").innerHTML =
+//      "Minimize to tray";
+//    document
+//      .getElementById("minimizemethod2")
+//      .setAttribute("style", "display:none;");
 
     if (minimizeType === "2") {
       minimizeType = "1";
