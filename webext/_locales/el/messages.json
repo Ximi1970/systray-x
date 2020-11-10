@@ -225,112 +225,112 @@
   },
 
   "about_title": {
-    "message": "About SysTray-X",
+    "message": "Σχετικά με το SysTray-X",
     "description": "About box title"
   },
 
   "about_line_1": {
-    "message": "SysTray-X Companion App by Ximi1970",
+    "message": "Συνοδευτική εφαρμογή SysTray-X από τον Ximi1970",
     "description": "Line 1"
   },
   
   "about_version": {
-    "message": "Version:",
+    "message": "Έκδοση:",
     "description": "Version"
   },
   
   "about_build": {
-    "message": "Build:",
+    "message": "Εξαγωγή:",
     "description": "Build"
   },
   
   "about_hash": {
-    "message": "Hash:",
+    "message": "Κωδικός:",
     "description": "Hash"
   },
   
   "about_branch": {
-    "message": "Branch:",
+    "message": "Κλαδί:",
     "description": "Branch"
   },
 
   "debug_title": {
-    "message": "SysTray-X Debug",
+    "message": "Αποσφαλμάτωση SysTray-X",
     "description": "Debug window title"
   },
 
   "debug_test_1": {
-    "message": "Test 1",
+    "message": "Τεστ 1",
     "description": "Button 1"
   },
 
   "debug_test_2": {
-    "message": "Test 2",
+    "message": "Τεστ 2",
     "description": "Button 2"
   },
 
   "debug_test_3": {
-    "message": "Test 3",
+    "message": "Τεστ 3",
     "description": "Button 3"
   },
 
   "debug_unread": {
-    "message": "Unread mail:",
+    "message": "Μη-αναγνωσμένη αλληλογραφία:",
     "description": "Unread label"
   },
 
   "menu_showhide": {
-    "message": "&Show/Hide",
+    "message": "&Εμφάνιση/Απόκρυψη",
     "description": "Show Hide menu entry"
   },
 
   "menu_preferences": {
-    "message": "&Preferences",
+    "message": "&Προτιμήσεις",
     "description": "Preferences menu entry"
   },
 
   "menu_about": {
-    "message": "&About",
+    "message": "&Σχετικά",
     "description": "About menu entry"
   },
 
   "menu_quit": {
-    "message": "&Quit",
+    "message": "&Έξοδος",
     "description": "Quit menu entry"
   },
 
   "menu_close": {
-    "message": "Close",
+    "message": "Κλείσιμο",
     "description": "Close button"
   },
   
   "mail_notification_icon": {
-    "message": "Mail notification icon",
+    "message": "Εικονίδιο ειδοποίησης αλληλογραφίας",
     "description": "Mail icon selection title"
   },
   
   "number_properties": {
-    "message": "Number properties",
+    "message": "Ιδιότητες αριθμών",
     "description": "Number properties title"
   },
 
   "image_open": {
-    "message": "Open image",
+    "message": "Άνοιγμα εικόνας",
     "description": "File image dialog"
   },
   
   "image_files": {
-    "message": "Image Files (*.png *.jpg *.bmp)",
+    "message": "Αρχεία εικόνας (*.png *.jpg *.bmp)",
     "description": "File image selection"
   },
   
   "image_save": {
-    "message": "Save",
+    "message": "Αποθήκευση",
     "description": "File image save"
   },
   
   "image_cancel": {
-    "message": "Cancel",
+    "message": "Άκυρο",
     "description": "File image cancel"
   }
 }

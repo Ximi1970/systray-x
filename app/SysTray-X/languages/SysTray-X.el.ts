@@ -11,12 +11,12 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>SysTray-X Companion App by Ximi1970</source>
-        <translation></translation>
+        <translation>Συνοδευτική εφαρμογή SysTray-X από τον Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="40"/>
         <source>Version:</source>
-        <translation>Εκδοχή:</translation>
+        <translation>Έκδοση:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="47"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="54"/>
         <source>Build:</source>
-        <translation>Χτίζω:</translation>
+        <translation>Εξαγωγή:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="61"/>
@@ -37,12 +37,12 @@
     <message>
         <location filename="../aboutdialog.ui" line="68"/>
         <source>Hash:</source>
-        <translation>μίγμα:</translation>
+        <translation>Κωδικός:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="82"/>
         <source>Branch:</source>
-        <translation>υποκατάστημα:</translation>
+        <translation>Κλαδί:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="89"/>
@@ -55,22 +55,22 @@
     <message>
         <location filename="../debugwidget.ui" line="14"/>
         <source>SysTray-X Debug</source>
-        <translation>SysTray-X Αποσφαλμάτωση</translation>
+        <translation>Αποσφαλμάτωση SysTray-X</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="59"/>
         <source>Test 2</source>
-        <translation>Δοκιμή 2</translation>
+        <translation>Τεστ 2</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="69"/>
         <source>Unread mail:</source>
-        <translation>Μη αναγνωσμένη αλληλογραφία:</translation>
+        <translation>Μη-αναγνωσμένη αλληλογραφία:</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="76"/>
         <source>Test 1</source>
-        <translation>Δοκιμή 1</translation>
+        <translation>Τεστ 1</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="83"/>
@@ -80,7 +80,7 @@
     <message>
         <location filename="../debugwidget.ui" line="90"/>
         <source>Test 3</source>
-        <translation>Δοκιμή 3</translation>
+        <translation>Τεστ 3</translation>
     </message>
 </context>
 <context>
@@ -130,7 +130,7 @@
     <message>
         <location filename="../preferences.ui" line="112"/>
         <source>Mail notification icon</source>
-        <translation>Εικονίδιο μη-αναγνωσμένης αλληλογραφίας</translation>
+        <translation>Εικονίδιο ειδοποίησης αλληλογραφίας</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="138"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
-        <translation>Αριθμός</translation>
+        <translation>Ιδιότητες αριθμών</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="409"/>
@@ -246,24 +246,24 @@
     <message>
         <location filename="../preferencesdialog.cpp" line="106"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="107"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="390"/>
         <location filename="../preferencesdialog.cpp" line="414"/>
         <source>Open Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα εικόνας</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="390"/>
         <location filename="../preferencesdialog.cpp" line="414"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχεία εικόνας (*.png *.jpg *.bmp)</translation>
     </message>
 </context>
 <context>
@@ -271,27 +271,27 @@
     <message>
         <location filename="../systrayx.cpp" line="193"/>
         <source>&amp;Show/Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Εμφάνιση/Απόκρυψη</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="197"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Προτιμήσεις</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="201"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Σχετικά</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="205"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Έξοδος</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="603"/>
         <source>Close</source>
-        <translation type="unfinished">Κλείσιμο</translation>
+        <translation>Κλείσιμο</translation>
     </message>
 </context>
 </TS>
