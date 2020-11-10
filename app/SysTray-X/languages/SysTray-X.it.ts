@@ -247,12 +247,12 @@
     <message>
         <location filename="../preferencesdialog.cpp" line="106"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="107"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../preferencesdialog.cpp" line="390"/>
