@@ -44,10 +44,14 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod1RadioButton, Preferences::PREF_MINIMIZE_METHOD_1 );
     m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod2RadioButton, Preferences::PREF_MINIMIZE_METHOD_2 );
 
+    m_ui->minimizeMethod2RadioButton->hide();
+
 #ifdef Q_OS_WIN
 
+#ifdef OBSOLETE
     m_ui->minimizeMethod1RadioButton->setText( tr( "Minimize to tray" ) );
     m_ui->minimizeMethod2RadioButton->hide();
+#endif
 
     m_ui->hideDefaultIconCheckBox->hide();
 
@@ -55,8 +59,10 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 #ifdef Q_OS_LINUX
 
+#ifdef OBSOLETE
     m_ui->minimizeMethod1RadioButton->setText( tr( "Minimize to tray" ) );
     m_ui->minimizeMethod2RadioButton->hide();
+#endif
 
 #endif
 
@@ -99,6 +105,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->defaultIconTypeGroup->setId( m_ui->defaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_DEFAULT );
     m_ui->defaultIconTypeGroup->setId( m_ui->lookThroughDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_HIDE );
     m_ui->defaultIconTypeGroup->setId( m_ui->customDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_CUSTOM );
+
+    /*
+     *  Translate the buttonbox
+     */
+    m_ui->buttonBox->button( QDialogButtonBox::Save )->setText( tr( "Save" ) );
+    m_ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
 
     /*
      *  Set icon type defaults

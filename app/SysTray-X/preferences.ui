@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>511</width>
-    <height>640</height>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -112,6 +112,19 @@
         <string>Mail notification icon</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
@@ -292,7 +305,7 @@
                <item>
                 <widget class="QRadioButton" name="minimizeMethod1RadioButton">
                  <property name="text">
-                  <string>Minimize to tray, method 1</string>
+                  <string>Minimize to tray</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -516,7 +529,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
        </property>
       </widget>
      </item>
@@ -546,10 +559,10 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
  </buttongroups>
 </ui>

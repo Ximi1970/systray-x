@@ -164,8 +164,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     getPreferences();
 
 /*
+    //slotLoadLanguage( "en-US" );
+    //slotLoadLanguage( "it" );
     slotLoadLanguage( "nl" );
-    //slotLoadLanguage( "en_US" );
+    //slotLoadLanguage( "pt-BR" );
+    //slotLoadLanguage( "ru" );
     slotSelectIconObject( false );
 */
 }

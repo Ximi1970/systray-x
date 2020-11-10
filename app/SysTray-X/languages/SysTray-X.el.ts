@@ -112,13 +112,13 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="65"/>
-        <location filename="../preferences.ui" line="188"/>
+        <location filename="../preferences.ui" line="201"/>
         <source>Custom icon</source>
         <translation>Προσαρμοσμένο εικονίδιο</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="82"/>
-        <location filename="../preferences.ui" line="205"/>
+        <location filename="../preferences.ui" line="218"/>
         <source>Choose</source>
         <translation>Επιλέξτε</translation>
     </message>
@@ -133,107 +133,107 @@
         <translation>Εικονίδιο μη-αναγνωσμένης αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="125"/>
+        <location filename="../preferences.ui" line="138"/>
         <source>Blank icon</source>
         <translation>Κενό εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="158"/>
+        <location filename="../preferences.ui" line="171"/>
         <source>New mail icon</source>
         <translation>Εικονίδιο νέας αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="219"/>
+        <location filename="../preferences.ui" line="232"/>
         <source>No icon</source>
         <translation>Χωρίς εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="266"/>
+        <location filename="../preferences.ui" line="279"/>
         <source>Windows</source>
         <translation>Παράθυρα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="274"/>
+        <location filename="../preferences.ui" line="287"/>
         <source>Minimize</source>
         <translation>Ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="282"/>
+        <location filename="../preferences.ui" line="295"/>
         <source>Default minimize</source>
         <translation>Προεπιλεγμένη ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="295"/>
+        <location filename="../preferences.ui" line="308"/>
         <source>Minimize to tray, method 1</source>
         <translation>Μέθοδος 1</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="308"/>
+        <location filename="../preferences.ui" line="321"/>
         <source>Minimize to tray, method 2</source>
         <translation>Μέθοδος 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="323"/>
+        <location filename="../preferences.ui" line="336"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="331"/>
+        <location filename="../preferences.ui" line="344"/>
         <source>Default close</source>
         <translation>Προεπιλεγμένο κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="341"/>
+        <location filename="../preferences.ui" line="354"/>
         <source>Minimize main, close children</source>
         <translation>Ελαχιστοποίηση κυρίως παραθύρου, κλείσιμο θυγατρικών</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="354"/>
+        <location filename="../preferences.ui" line="367"/>
         <source>Minimize all windows</source>
         <translation>Ελαχιστοποίηση όλων των παραθύρων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="374"/>
+        <location filename="../preferences.ui" line="387"/>
         <source>Start application minimized</source>
         <translation>Ελαχιστοποιημένη εκκίνηση της εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="388"/>
+        <location filename="../preferences.ui" line="401"/>
         <source>Number properties</source>
         <translation>Αριθμός</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="396"/>
+        <location filename="../preferences.ui" line="409"/>
         <source>Display unread message count</source>
         <translation>Προβολή μετρητή μη-αναγνωσμένης αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="408"/>
+        <location filename="../preferences.ui" line="421"/>
         <source>Number color</source>
         <translation>Χρώμα μετρητή:</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="429"/>
+        <location filename="../preferences.ui" line="442"/>
         <source>Number size</source>
         <translation>Μέγεθος μετρητή:</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="451"/>
+        <location filename="../preferences.ui" line="464"/>
         <source>Count type</source>
         <translation>Τύπος μετρητή μηνυμάτων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="459"/>
+        <location filename="../preferences.ui" line="472"/>
         <source>Unread</source>
         <translation>Μη αναγνωσμένα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="485"/>
         <source>New</source>
         <translation>Νέα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="509"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Display debug window</source>
         <translation>Προβολή παραθύρου αποσφαλμάτωσης</translation>
     </message>
@@ -244,14 +244,24 @@
         <translation>Ελαχιστοποίηση στην περιοχή ειδοποιήσεων</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="384"/>
-        <location filename="../preferencesdialog.cpp" line="408"/>
+        <location filename="../preferencesdialog.cpp" line="106"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="107"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="390"/>
+        <location filename="../preferencesdialog.cpp" line="414"/>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="384"/>
-        <location filename="../preferencesdialog.cpp" line="408"/>
+        <location filename="../preferencesdialog.cpp" line="390"/>
+        <location filename="../preferencesdialog.cpp" line="414"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -259,27 +269,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="192"/>
+        <location filename="../systrayx.cpp" line="193"/>
         <source>&amp;Show/Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="196"/>
+        <location filename="../systrayx.cpp" line="197"/>
         <source>&amp;Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="200"/>
+        <location filename="../systrayx.cpp" line="201"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="204"/>
+        <location filename="../systrayx.cpp" line="205"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="602"/>
+        <location filename="../systrayx.cpp" line="603"/>
         <source>Close</source>
         <translation type="unfinished">Κλείσιμο</translation>
     </message>
