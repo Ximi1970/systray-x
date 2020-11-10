@@ -169,9 +169,8 @@
         <translation>Minimizzazione predefinita</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="308"/>
         <source>Minimize to tray, method 1</source>
-        <translation>Minimizza nel vassoio, metodo 1</translation>
+        <translation type="vanished">Minimizza nel vassoio, metodo 1</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="321"/>
@@ -239,30 +238,31 @@
         <translation>Mostra finestra di debug</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="49"/>
-        <location filename="../preferencesdialog.cpp" line="58"/>
+        <location filename="../preferences.ui" line="308"/>
+        <location filename="../preferencesdialog.cpp" line="52"/>
+        <location filename="../preferencesdialog.cpp" line="63"/>
         <source>Minimize to tray</source>
         <translation>Minimizza nel vassoio</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="106"/>
+        <location filename="../preferences.ui" line="542"/>
         <source>Save</source>
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="107"/>
+        <location filename="../preferences.ui" line="549"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="390"/>
-        <location filename="../preferencesdialog.cpp" line="414"/>
+        <location filename="../preferencesdialog.cpp" line="391"/>
+        <location filename="../preferencesdialog.cpp" line="415"/>
         <source>Open Image</source>
         <translation>Apri immagine</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="390"/>
-        <location filename="../preferencesdialog.cpp" line="414"/>
+        <location filename="../preferencesdialog.cpp" line="391"/>
+        <location filename="../preferencesdialog.cpp" line="415"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>File immagine (*.png *.jpg *.bmp)</translation>
     </message>
@@ -270,27 +270,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="193"/>
+        <location filename="../systrayx.cpp" line="194"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Mostra/Nascondi</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="197"/>
+        <location filename="../systrayx.cpp" line="198"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferenze</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="201"/>
+        <location filename="../systrayx.cpp" line="202"/>
         <source>&amp;About</source>
         <translation>&amp;Informazioni</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="205"/>
+        <location filename="../systrayx.cpp" line="206"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="603"/>
+        <location filename="../systrayx.cpp" line="604"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>

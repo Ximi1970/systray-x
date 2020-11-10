@@ -107,12 +107,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->defaultIconTypeGroup->setId( m_ui->customDefaultIconRadioButton, Preferences::PREF_DEFAULT_ICON_CUSTOM );
 
     /*
-     *  Translate the buttonbox
-     */
-    m_ui->buttonBox->button( QDialogButtonBox::Save )->setText( tr( "Save" ) );
-    m_ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
-
-    /*
      *  Set icon type defaults
      */
     m_tmp_default_icon_data = QByteArray();
@@ -123,9 +117,10 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      */
     connect( m_ui->chooseCustomDefaultIconButton, &QPushButton::clicked, this, &PreferencesDialog::slotDefaultFileSelect );
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
-    connect( m_ui->buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::slotAccept );
-    connect( m_ui->buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::slotReject );
     connect( m_ui->numberColorPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotColorSelect );
+
+    connect( m_ui->savePushButton, &QPushButton::clicked, this, &PreferencesDialog::slotAccept);
+    connect( m_ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotReject);
 
     /*
      *  Set number color
