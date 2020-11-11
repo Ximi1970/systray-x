@@ -380,6 +380,27 @@ void    PreferencesDialog::slotReject()
      */
 //    QDialog::reject();
     hide();
+
+    /*
+     *  Reset all parameters
+     */
+    setDefaultIconType( m_pref->getDefaultIconType() );
+    slotDefaultIconDataChange();
+    setHideDefaultIcon( m_pref->getHideDefaultIcon() );
+
+    setIconType( m_pref->getIconType() );
+    slotIconDataChange();
+
+    setMinimizeType( m_pref->getMinimizeType() );
+    setStartMinimized( m_pref->getStartMinimized() );
+    setCloseType( m_pref->getCloseType() );
+
+    setShowNumber( m_pref->getShowNumber() );
+    setNumberColor( m_pref->getNumberColor() );
+    setNumberSize( m_pref->getNumberSize());
+    setCountType( m_pref->getCountType() );
+
+    setDebug( m_pref->getDebug());
 }
 
 
