@@ -7,7 +7,7 @@ The addon and system tray application can do:
 - custom new mail icon
 - display number of unread mails
 - show / hide Thunderbird (minimize)
-- minimizing hides to tray
+- minimizing hides to tray (remove Thunderbird from taskbar when minimized)
 - minimize on startup
 - minimize on close
 
