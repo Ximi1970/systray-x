@@ -34,12 +34,12 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  kf5-knotifications-devel
 Requires:       kf5-knotifications
 Requires:       thunderbird >= 68
-Requires:       thunderbird <= 83
+Requires:       thunderbird <= 84
 %else
 BuildRequires:  knotifications-devel
 Requires:       libKF5Notifications5
 Requires:       MozillaThunderbird >= 68
-Requires:       MozillaThunderbird <= 83
+Requires:       MozillaThunderbird <= 84
 %endif
 
 %description
