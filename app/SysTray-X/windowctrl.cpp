@@ -127,23 +127,6 @@ void    WindowCtrl::slotWindowTest3()
 
 
 /*
- *  Handle window title signal
- */
-void    WindowCtrl::slotWindowTitle( QString title )
-{
-    /*
-     *  Store the window title
-     */
-    m_window_title = title;
-
-    /*
-     *  Get the window IDs
-     */
-    findWindow( title );
-}
-
-
-/*
  *  Handle change in minimize type change
  */
 void    WindowCtrl::slotMinimizeTypeChange()

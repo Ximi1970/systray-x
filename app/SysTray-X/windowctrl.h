@@ -72,13 +72,6 @@ class WindowCtrl : public QObject
         void    slotWindowTest3();
 
         /**
-         * @brief slotWindowTitle. Handle the window title signal.
-         *
-         * @param state     The windows title.
-         */
-        void    slotWindowTitle( QString title );
-
-        /**
          * @brief slotMinimizeTypeChange. Handle the minimize type signal.
          */
         void    slotMinimizeTypeChange();
@@ -126,11 +119,6 @@ class WindowCtrl : public QObject
          * @brief m_tb_window. Pointer to the TB window.
          */
         QWindow*    m_tb_window;
-
-        /**
-         * @brief m_window_title. Title of the TB window.
-         */
-        QString m_window_title;
 
         /**
          * @brief m_start_minimized. State of start minimized.

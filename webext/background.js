@@ -32,9 +32,6 @@ SysTrayX.Messaging = {
     //  Send the browser info to app
     SysTrayX.Messaging.sendBrowserInfo();
 
-    //  Send the window title to app
-    SysTrayX.Messaging.sendTitle();
-
     //  Send version to app
     SysTrayX.Messaging.sendVersion();
 
@@ -256,11 +253,6 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({ platformInfo: info });
   },
 
-  sendTitle: function () {
-    const title = "-" + SysTrayX.Window.startWindow.title.split("-").pop();
-    SysTrayX.Link.postSysTrayXMessage({ title: title });
-  },
-
   sendVersion: function () {
     SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.version });
   },
@@ -273,8 +265,6 @@ SysTrayX.Messaging = {
 
   sendLocale: function () {
     const locale = browser.i18n.getUILanguage();
-
-    console.log("Locale: " + locale);
 
     SysTrayX.Link.postSysTrayXMessage({
       locale: locale,
@@ -383,21 +373,6 @@ SysTrayX.Link = {
   },
 
   receiveSysTrayXMessage: function (response) {
-    if (response["window"]) {
-      if (response["window"] === "minimized") {
-        browser.windows.update(SysTrayX.Window.startWindow.id, {
-          state: "minimized",
-        });
-      }
-
-      if (response["window"] === "normal") {
-        browser.windows.update(SysTrayX.Window.startWindow.id, {
-          state: "normal",
-          focused: true,
-        });
-      }
-    }
-
     if (response["shutdown"]) {
       browser.windowEvent.onCloseButtonClick.removeListener(
         SysTrayX.Messaging.onCloseButton
@@ -524,8 +499,6 @@ SysTrayX.Link = {
 };
 
 SysTrayX.Window = {
-  startWindow: undefined,
-
   focusChanged: function (windowId) {
     browser.windows.getCurrent().then((win) => {
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
@@ -605,10 +578,6 @@ async function start() {
   //  Init defaults before everything
   await getDefaultIcon();
   await getIcon();
-
-  SysTrayX.Window.startWindow = await browser.windows
-    .getCurrent()
-    .then((currentWindow) => currentWindow);
 
   //  Get all accounts
   SysTrayX.Messaging.accounts = await browser.accounts.list();
