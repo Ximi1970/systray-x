@@ -15,6 +15,7 @@
     <param name="extract">dist/deb/gnome/debian.postinst</param>
     <param name="extract">dist/deb/gnome/systray-x-gnome.dsc</param>
     <param name="extract">dist/arch/gnome/PKGBUILD</param>
+    <param name="extract">dist/arch/gnome/systray-x-gnome.install</param>
   </service>
   <service mode="buildtime" name="tar" />
   <service mode="buildtime" name="recompress">
