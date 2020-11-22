@@ -279,10 +279,7 @@ sudo pacman -S systray-x
 ```bash
 sudo pacman -S systray-x-gnome
 ```
-
-##### Activation
-
-Use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the  system.
+Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
 
 ``` bash
 sudo pacman -S gnome-tweaks
