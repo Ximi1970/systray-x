@@ -11,14 +11,14 @@ license=(MPL-2.0)
 depends=(
   'qt5-base'
   'thunderbird>=68'
-  'hunderbird<=84'
+  'thunderbird<=84'
 )
 makedepends=(
   'git'
   'unzip'
   'zip'
   'libx11'
-  't5-base'
+  'qt5-base'
 )
 provides=(
   'systray-x'
