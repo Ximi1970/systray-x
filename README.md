@@ -250,6 +250,43 @@ sudo dnf install systray-x-minimal
 ```
 
 
+### Arch
+
+#### Repository
+
+Installing the repository:
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Arch/x86_64/home_Ximi1970_Mozilla_Add-ons_Arch.key
+sudo pacman-key --add home_Ximi1970_Mozilla_Add-ons_Arch.key
+sudo pacman-key --lsign-key BEEF5C3607D86FE9
+sudo echo -e "\n[home_Ximi1970_Mozilla_Add-ons_Arch]\nSigLevel = PackageOptional\nServer = https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Arch/x86_64" | sudo tee -a /etc/pacman.conf 
+sudo pacman -Syyu
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
+sudo pacman -S systray-x
+```
+
+###### GNOME
+
+```bash
+sudo pacman -S systray-x-gnome
+```
+
+###### XFCE / Others (non-KDE, non-GNOME)
+
+```bash
+sudo pacman -S systray-x-minimal
+```
+
+
 ## Binaries (User)
 
 User installable package.  
