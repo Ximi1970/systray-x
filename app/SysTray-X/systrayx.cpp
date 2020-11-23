@@ -148,7 +148,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalErrorAddOnShutdown, this, &SysTrayX::slotErrorAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
     connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
-    connect( m_link, &SysTrayXLink::signalTitle, m_win_ctrl, &WindowCtrl::slotWindowTitle );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
     connect( m_link, &SysTrayXLink::signalLocale, this, &SysTrayX::slotLoadLanguage );

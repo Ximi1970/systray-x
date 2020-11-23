@@ -1,0 +1,58 @@
+# Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
+
+pkgname=systray-x-gnome
+pkgver=0
+pkgrel=0
+epoch=1
+pkgdesc='A system tray extension for Thunderbird 68+ (GNOME)'
+arch=(x86_64)
+url=https://github.com/Ximi1970/systray-x
+license=(MPL-2.0)
+depends=(
+  'qt5-base'
+  'gnome-shell-extension-appindicator'
+  'thunderbird>=68'
+  'thunderbird<=84'
+)
+makedepends=(
+  'git'
+  'unzip'
+  'zip'
+  'libx11'
+  'qt5-base'
+)
+provides=(
+  'systray-x'
+)
+source=($pkgname-$pkgver.tar.xz)
+sha256sums=(SKIP)
+install=systray-x-gnome.install
+
+build() {
+  cd $pkgname-$pkgver
+  
+  export VERSION=$(cat dist/rpm/VERSION | grep VERSION | sed -e "s/VERSION=\(.*\)/\1/")
+  
+  export VERSION_MAJOR=$(echo $VERSION | cut -d'.' -f1)
+  export VERSION_MINOR=$(echo $VERSION | cut -d'.' -f2)
+  export VERSION_PATCH=$(echo $VERSION | cut -d'.' -f3)
+
+  export BUILD_NUMBER=$(cat dist/rpm/VERSION | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)/\1/")
+  export GIT_HASH=$(cat dist/rpm/VERSION | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/")
+  export GIT_BRANCH=$(cat dist/rpm/VERSION | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/")
+
+  sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|/usr/bin/SysTray-X|' > SysTray_X.json
+
+  make OPTIONS="DEFINES+=NO_KDE_INTEGRATION" EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\\\\\\\\\"$VERSION_MAJOR\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_MINOR=\\\\\\\\\\\\\\\"$VERSION_MINOR\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_PATCH=\\\\\\\\\\\\\\\"$VERSION_PATCH\\\\\\\\\\\\\\\" DEFINES+=APP_BUILD=\\\\\\\\\\\\\\\"$BUILD_NUMBER\\\\\\\\\\\\\\\" DEFINES+=APP_GITHASH=\\\\\\\\\\\\\\\"$GIT_HASH\\\\\\\\\\\\\\\" DEFINES+=APP_GITBRANCH=\\\\\\\\\\\\\\\"$GIT_BRANCH\\\\\\\\\\\\\\\""
+}
+
+package() {
+	mkdir -p "${pkgdir}"/usr/bin
+	cp -f ${pkgname}-${pkgver}/app/build/SysTray-X "${pkgdir}"/usr/bin/SysTray-X
+	
+	mkdir -p "${pkgdir}"/usr/lib/mozilla/native-messaging-hosts
+	cp -f ${pkgname}-${pkgver}/SysTray_X.json "${pkgdir}"/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json
+
+	mkdir -p "${pkgdir}"/usr/lib/thunderbird/distribution/extensions
+	cp -f ${pkgname}-${pkgver}/systray-x@Ximi1970.xpi "${pkgdir}"/usr/lib//thunderbird/distribution/extensions/systray-x@Ximi1970.xpi
+}

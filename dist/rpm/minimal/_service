@@ -5,15 +5,16 @@
     <param name="revision">0.5.0</param>
     <param name="versionformat">0.5.0</param>
     <param name="filename">systray-x-minimal</param>
-    <param name="extract">dist/rpm/gnome/systray-x-minimal.changes</param>
-    <param name="extract">dist/rpm/gnome/systray-x-minimal.spec</param>
+    <param name="extract">dist/rpm/minimal/systray-x-minimal.changes</param>
+    <param name="extract">dist/rpm/minimal/systray-x-minimal.spec</param>
     <param name="extract">dist/rpm/VERSION</param>
-    <param name="extract">dist/deb/gnome/debian.changelog</param>
-    <param name="extract">dist/deb/gnome/debian.compat</param>
-    <param name="extract">dist/deb/gnome/debian.control</param>
-    <param name="extract">dist/deb/gnome/debian.rules</param>
-    <param name="extract">dist/deb/gnome/debian.postinst</param>
-    <param name="extract">dist/deb/gnome/systray-x-minimal.dsc</param>
+    <param name="extract">dist/deb/minimal/debian.changelog</param>
+    <param name="extract">dist/deb/minimal/debian.compat</param>
+    <param name="extract">dist/deb/minimal/debian.control</param>
+    <param name="extract">dist/deb/minimal/debian.rules</param>
+    <param name="extract">dist/deb/minimal/debian.postinst</param>
+    <param name="extract">dist/deb/minimal/systray-x-minimal.dsc</param>
+    <param name="extract">dist/arch/minimal/PKGBUILD</param>
   </service>
   <service mode="buildtime" name="tar" />
   <service mode="buildtime" name="recompress">

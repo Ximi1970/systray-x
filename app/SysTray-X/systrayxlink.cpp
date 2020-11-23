@@ -255,13 +255,13 @@ void    SysTrayXLink::sendShutdown()
  */
 void    SysTrayXLink::sendDisableKdeIntegration()
 {
-    QJsonObject shutdownObject;
-    shutdownObject.insert("kdeIntegration", QJsonValue::fromVariant( "false" ) );
+    QJsonObject integrationObject;
+    integrationObject.insert("kdeIntegration", QJsonValue::fromVariant( "false" ) );
 
     /*
      *  Store the new document
      */
-    QJsonDocument json_doc = QJsonDocument( shutdownObject );
+    QJsonDocument json_doc = QJsonDocument( integrationObject );
 
     /*
      *  Send it to the add-on
@@ -294,12 +294,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         {
             int unreadMail = jsonObject[ "unreadMail" ].toInt();
             emit signalUnreadMail( unreadMail );
-        }
-
-        if( jsonObject.contains( "title" ) && jsonObject[ "title" ].isString() )
-        {
-            QString title = jsonObject[ "title" ].toString();
-            emit signalTitle( title );
         }
 
         if( jsonObject.contains( "version" ) && jsonObject[ "version" ].isString() )
