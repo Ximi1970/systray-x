@@ -7,6 +7,10 @@ TARGET_DIR="bin"
 
 OBS_PACKAGE="systray-x"
 
+ENABLE_RPM=true
+ENABLE_DEB=true
+ENABLE_PAC=true
+
 OBS_RPM_ARCHS=""
 OBS_RPM_PKS=""
 OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
@@ -51,6 +55,12 @@ OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
 OBS_DEB_ARCHS+="xUbuntu_20.10/amd64 "
 OBS_DEB_PKS+="groovy2010 "
+
+
+OBS_PAC_ARCHS=""
+OBS_PAC_PKS=""
+OBS_PAC_ARCHS+="Arch/x86_64 "
+OBS_PAC_PKS+="arch "
 
 
 create_rpm_tar() {
@@ -254,6 +264,103 @@ create_deb_tar() {
   rm -rf ${TAR_DIR}
 }
 
+
+create_pac_tar() {
+
+  local REPO_BASE=$1
+  local REPO_DISTR=$2
+  local REPO_ARCH=$3
+  local PAC_NAME_EXT=$4
+
+  ##########################################
+  #
+  # Create the SysTray-X tar
+  #
+  ##########################################
+
+  #
+  # Get index.html
+  #
+  rm -f index.html
+  curl -s "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/" > index.html
+  
+  #
+  # Find rpm
+  #
+  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
+  rm -f index.html
+
+  echo "Found: "${PAC_FILE}
+  
+  FOUND_VERSION=$(echo ${PAC_FILE} | sed -e "s/${OBS_PACKAGE}-\(.*\)-.*/\1/")
+
+  echo "Version: "${FOUND_VERSION}
+
+  #
+  # Create tar dir
+  #
+  local TAR_DIR=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}
+
+  rm -rf ${TAR_DIR}
+  mkdir -p ${TAR_DIR}
+  
+  #
+  # Get the SysTray-X rpm
+  #
+  if [ ! -f ${PAC_FILE} ] ; then
+    wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/${PAC_FILE}"
+  fi
+
+  if [ ! -f systray-x.tar.zst ] ; then
+    cp -f ${PAC_FILE} systray-x.tar.zst
+  fi
+
+  tar -I zstd -xf systray-x.tar.zst
+  
+  rm -f systray-x.tar.zst
+
+  #
+  # Get files
+  #
+  cp -f ./usr/bin/SysTray-X ./${TAR_DIR}/SysTray-X
+  chmod 755 ./${TAR_DIR}/SysTray-X
+  cp -f ./usr/lib/thunderbird/distribution/extensions/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+  
+  #
+  # Cleanup
+  #
+  rm -rf ./usr
+  
+  if [ ! -f systray-x@Ximi1970.xpi ] ; then
+    cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
+  fi
+
+  #
+  # Get JSON
+  #
+  cp -f ../app/config/linux/SysTray_X.json.template ./${TAR_DIR}/SysTray_X.json.template
+
+  #
+  # Create tar
+  #
+#  tar -C "./${TAR_DIR}" -cJf "${TAR_DIR}.tar.xz" .
+  tar -C "./${TAR_DIR}" -cJf systray-x.tar.xz .
+  mv -f systray-x.tar.xz ${TAR_DIR}.tar.xz
+
+  #
+  # Rename the PAC
+  #
+  if [ "${PAC_NAME_EXT}" != "_" ] ; then
+    NEW_PAC_FILE=`echo ${PAC_FILE} | sed -s "s/\(${OBS_PACKAGE}-${FOUND_VERSION}-\)\(.*\)/\1${PAC_NAME_EXT}\.\2/"`
+    mv -f "${PAC_FILE}" "$NEW_PAC_FILE"
+  fi
+
+  #
+  # Cleanup
+  #
+  rm -rf "${TAR_DIR}"
+}
+
 #################################################################################
 #
 #
@@ -265,120 +372,124 @@ create_deb_tar() {
 mkdir -p $TARGET_DIR
 pushd $TARGET_DIR > /dev/null 2>&1
 
-#
-# Create bash installers for RPM based distributions
-#
-INDEX=1
-for rpmdir in $OBS_RPM_ARCHS ; do
+if [ "$ENABLE_RPM" = true ] ; then
+    #
+    # Create bash installers for RPM based distributions
+    #
+    INDEX=1
+    for rpmdir in $OBS_RPM_ARCHS ; do
 
-  echo
-  echo
-  echo "Generating installer: "${rpmdir}
-  echo
-  
-  #
-  # Get base of the repo
-  #
-  REPO_DISTR=$(echo ${rpmdir} | cut -d'/' -f1)
-  REPO_ARCH=$(echo ${rpmdir} | cut -d'/' -f2)
-  
-  RPM_NAME_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
-  
-  #
-  # Generate the SysTray-X tar file
-  #
-  create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT}
-  
-  #
-  # Create installer
-  #
-  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh
-  cp -f ../dist/install.sh ${INSTALLER}
+    echo
+    echo
+    echo "Generating installer: "${rpmdir}
+    echo
+    
+    #
+    # Get base of the repo
+    #
+    REPO_DISTR=$(echo ${rpmdir} | cut -d'/' -f1)
+    REPO_ARCH=$(echo ${rpmdir} | cut -d'/' -f2)
+    
+    RPM_NAME_EXT=$(echo ${OBS_RPM_PKS} | cut -d' ' -f${INDEX})
+    
+    #
+    # Generate the SysTray-X tar file
+    #
+    create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT}
+    
+    #
+    # Create installer
+    #
+    INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh
+    cp -f ../dist/install.sh ${INSTALLER}
 
-  #
-  # Insert Kde setup
-  #
-  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Kde.sh" ${INSTALLER}
-  sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
-  sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
-  sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
+    #
+    # Insert Kde setup
+    #
+    sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Kde.sh" ${INSTALLER}
+    sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
+    sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
+    sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
 
-  #
-  # Insert install tar
-  #
-  cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
-  chmod 755 ${INSTALLER}
+    #
+    # Insert install tar
+    #
+    cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
+    chmod 755 ${INSTALLER}
 
-  #
-  # Cleanup
-  #
-  rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
+    #
+    # Cleanup
+    #
+    rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
 
-  #
-  # Update index
-  #
-  INDEX=$((INDEX+1))
-done
+    #
+    # Update index
+    #
+    INDEX=$((INDEX+1))
+    done
+fi
 
-#
-# Cleanup
-#
-rm -f gnome-shell-extension.tar.xz
+if [ "$ENABLE_DEB" = true ] ; then
+    #
+    # Cleanup
+    #
+    rm -f gnome-shell-extension.tar.xz
 
-#
-# Create bash installers for DEB based distributions
-#
-INDEX=1
-for debdir in $OBS_DEB_ARCHS ; do
- 
-  echo
-  echo
-  echo "Generating installer: "${debdir}
-  echo
-  
-  #
-  # Get base of the repo
-  #
-  REPO_DISTR=$(echo ${debdir} | cut -d'/' -f1)
-  REPO_ARCH=$(echo ${debdir} | cut -d'/' -f2)
-  
-  DEB_NAME_EXT=$(echo ${OBS_DEB_PKS} | cut -d' ' -f${INDEX})
+    #
+    # Create bash installers for DEB based distributions
+    #
+    INDEX=1
+    for debdir in $OBS_DEB_ARCHS ; do
+    
+    echo
+    echo
+    echo "Generating installer: "${debdir}
+    echo
+    
+    #
+    # Get base of the repo
+    #
+    REPO_DISTR=$(echo ${debdir} | cut -d'/' -f1)
+    REPO_ARCH=$(echo ${debdir} | cut -d'/' -f2)
+    
+    DEB_NAME_EXT=$(echo ${OBS_DEB_PKS} | cut -d' ' -f${INDEX})
 
-  #
-  # Generate the SysTray-X tar file
-  #
-  create_deb_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${DEB_NAME_EXT}
- 
-  #
-  # Create installer
-  #
-  INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh
-  cp -f ../dist/install.sh ${INSTALLER}
+    #
+    # Generate the SysTray-X tar file
+    #
+    create_deb_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${DEB_NAME_EXT}
+    
+    #
+    # Create installer
+    #
+    INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh
+    cp -f ../dist/install.sh ${INSTALLER}
 
-  #
-  # Insert Kde setup
-  #
-  sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Kde.sh" ${INSTALLER}
-  sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
-  sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
-  sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
+    #
+    # Insert Kde setup
+    #
+    sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Kde.sh" ${INSTALLER}
+    sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
+    sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
+    sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
 
-  #
-  # Insert install tar
-  #
-  cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
-  chmod 755 ${INSTALLER}
+    #
+    # Insert install tar
+    #
+    cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
+    chmod 755 ${INSTALLER}
 
-  #
-  # Cleanup
-  #
-  rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
+    #
+    # Cleanup
+    #
+    rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
 
-  #
-  # Update index
-  #
-  INDEX=$((INDEX+1))
-done 
+    #
+    # Update index
+    #
+    INDEX=$((INDEX+1))
+    done 
+fi
 
 #
 # Cleanup
