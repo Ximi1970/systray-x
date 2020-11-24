@@ -30,7 +30,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(x11)
-%if 0%{?fedora_version}
+%if 0%{?fedora_version} || 0%{?centos_version}
 BuildRequires:  kf5-knotifications-devel
 Requires:       kf5-knotifications
 Requires:       thunderbird >= 68
@@ -78,7 +78,7 @@ sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/S
 %install
 install -Dm0755 SysTray-X %{buildroot}/%{_bindir}/SysTray-X
 install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-hosts/SysTray_X.json
-%if 0%{?fedora_version}
+%if 0%{?fedora_version} || 0%{?centos_version}
 # Option 1 (enigmail way) does not work
 #_systx_dir=%{buildroot}%{_datadir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}/systray-x@Ximi1970
 #mkdir -pv $_systx_dir
@@ -100,7 +100,7 @@ unzip -d $_systx_dir systray-x@Ximi1970.xpi
 %doc README.md systray-x@Ximi1970.xpi
 %{_bindir}/SysTray-X
 %{_libdir}/mozilla
-%if 0%{?fedora_version}
+%if 0%{?fedora_version} || 0%{?centos_version}
 #   Option 1
 #%dir /usr/lib/thunderbird-addons
 #%dir /usr/lib/thunderbird-addons/extensions
