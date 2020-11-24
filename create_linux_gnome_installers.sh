@@ -424,6 +424,10 @@ create_pac_tar() {
   tar -I zstd -xf systray-x.tar.zst
   
   rm -f systray-x.tar.zst
+  rm -f .BUILDINFO
+  rm -f .INSTALL
+  rm -f .MTREE
+  rm -f .PKGINFO
 
   #
   # Get files
