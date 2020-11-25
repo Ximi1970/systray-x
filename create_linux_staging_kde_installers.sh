@@ -33,6 +33,12 @@ OBS_RPM_ARCHS+="Fedora_32/x86_64 "
 OBS_RPM_PKS+="fed32 "
 OBS_RPM_ARCHS+="Fedora_33/x86_64 "
 OBS_RPM_PKS+="fed33 "
+OBS_RPM_ARCHS+="CentOS_7/x86_64 "
+OBS_RPM_PKS+="el7 "
+OBS_RPM_ARCHS+="CentOS_8/x86_64 "
+OBS_RPM_PKS+="el8 "
+OBS_RPM_ARCHS+="CentOS_8_Stream/x86_64 "
+OBS_RPM_PKS+="el8s "
 
 
 OBS_DEB_ARCHS=""

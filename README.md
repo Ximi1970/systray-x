@@ -291,6 +291,59 @@ sudo pacman -S systray-x-minimal
 ```
 
 
+### CentOS
+
+#### Repository
+
+Installing the repository:
+
+###### 8 Stream
+
+```bash
+yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8_Stream/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum update
+```
+
+###### 8
+
+```bash
+yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum update
+```
+
+###### 7
+
+```bash
+yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_7/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum update
+```
+
+#### Package
+
+Installing the SysTray-X addon and companion app package:
+
+###### KDE
+
+```bash
+sudo yum install systray-x-minimal
+```
+or
+```bash
+sudo yum install epel-release
+sudo yum install systray-x
+```
+
+
+###### GNOME
+
+```bash
+sudo yum install systray-x-gnome
+sudo yum install gnome-tweaks
+```
+Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
+
+
+
 ## Binaries (User)
 
 User installable package.  
