@@ -143,7 +143,7 @@ sudo apt update
 ```bash
 wget -q http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
 sudo apt-key add Release.key
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo bash -c 'echo "deb http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
