@@ -392,7 +392,7 @@ Requirements:
     sudo yum install kf5-knotifications-devel
     sudo yum install qt5-qtbase-devel
     ```
-    If you want to use systray-x under Gnome you also need to add the systray repository for your CentOS version (replace the XX with your version):
+    If you want to use systray-x under Gnome you also need to add the SysTray-X repository for your CentOS version (replace the XX with your version):
     ```bash
     sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_XX/home:Ximi1970:Mozilla:Add-ons.repo
     sudo yum install gnome-shell-extension-appindicator
