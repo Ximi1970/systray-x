@@ -375,13 +375,22 @@ Requirements:
   - OpenSuSE:
 
     ```bash
-    sudo zypper install zip git gcc-c++ make qt5-qtbase-devel
+    sudo zypper install zip git gcc-c++ make qt5-qtbase-devel knotifications-devel
     ```
 
-  - Fedora/Centos/RHEL:
+  - Fedora/RHEL:
 
     ```bash
-    sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator
+    sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator kf5-knotifications-devel
+    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+    ```
+
+  - CentOS:
+
+    ```bash
+    sudo yum install epel-release
+    sudo yum install kf5-knotifications-devel
+    sudo yun install qt5-qtbase-devel gnome-shell-extension-appindicator
     gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
     ```
     
@@ -420,6 +429,12 @@ Build (KDE):
 cd systray-x
 make
 ```
+or if `knotifications` is not available:
+```bash
+cd systray-x
+make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
+```
+
 
 Build (GNOME):
 ```bash
