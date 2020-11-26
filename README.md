@@ -24,6 +24,14 @@ To support this project, you can make a donation to its current maintainer:
 
 Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
 
+
+## Known issues
+
+Some Gnome status / application bars do not respect the "remove from taskbar X11 atom (_NET_WM_STATE_SKIP_TASKBAR)". So Thunderbird stays always visible when minimized.  
+- Ubuntu Gnome (red status dot stays visible) Please be aware that the icon always will be visible because is a launchbar also...  
+- CentOS Gnome (Thunderbird stays visible in the taskbar)  
+
+
 ## Binaries (System)
 
 These packages will install the Thunderbird addon and companion app system wide.  
@@ -300,21 +308,21 @@ Installing the repository:
 ###### 8 Stream
 
 ```bash
-yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8_Stream/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8_Stream/home:Ximi1970:Mozilla:Add-ons.repo
 sudo yum update
 ```
 
 ###### 8
 
 ```bash
-yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8/home:Ximi1970:Mozilla:Add-ons.repo
 sudo yum update
 ```
 
 ###### 7
 
 ```bash
-yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_7/home:Ximi1970:Mozilla:Add-ons.repo
+sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_7/home:Ximi1970:Mozilla:Add-ons.repo
 sudo yum update
 ```
 
