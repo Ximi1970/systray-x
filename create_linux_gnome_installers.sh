@@ -230,7 +230,11 @@ create_rpm_tar() {
       if [ -d ./usr/share/doc/packages ] ; then
         cp -f ./usr/share/doc/packages/${OBS_PACKAGE}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
       else
-        cp -f ./usr/share/doc/${OBS_PACKAGE}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi      
+       if [ -d ./usr/share/doc/${OBS_PACKAGE} ] ; then
+          cp -f ./usr/share/doc/${OBS_PACKAGE}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+        else
+          cp -f ./usr/share/doc/${OBS_PACKAGE}-${FOUND_VERSION}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+        fi
       fi
       ;;
   esac
