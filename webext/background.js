@@ -20,6 +20,11 @@ SysTrayX.Messaging = {
   filters: undefined,
 
   init: function () {
+    // Minimuze on startup handled by Companion app as backup
+    if (SysTrayX.startupState == "minimized") {
+      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+    }
+
     // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
 
