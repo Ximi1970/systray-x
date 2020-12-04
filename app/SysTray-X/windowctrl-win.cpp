@@ -413,6 +413,13 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
         return;
     }
 
+    long style = GetWindowLong( (HWND)window, GWL_STYLE );
+
+    style &= ~(WS_EX_TOOLWINDOW);
+    style |= WS_EX_APPWINDOW;
+
+    SetWindowLong( (HWND)window, GWL_STYLE, style );
+
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
 }
