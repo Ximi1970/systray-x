@@ -11,7 +11,7 @@ What happens if you clck the minimize button, select the hide/show menu entry of
 
 ### Close options  
 
-What happens if you click the close buttonn of Thunderbird.  
+What happens if you click the close button of Thunderbird.  
 
 - Default close:                The Thunderbird window will be close conform the desktop managers default close action, closing Thunderbird.  
 - Minimize main, close chldren: All Thunderbird windows will be close conform the desktop managers default action but the last remaining Thunderbird window will be minimized conform the selected minimize preference.  
