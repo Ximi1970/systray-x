@@ -2,14 +2,14 @@
 
 ## Windows  
 
-# Minimize options  
+### Minimize options  
 
 What happens if you clck the minimize button, select the hide/show menu entry of the system tray icon or click the system tray icon (KDE, Windows).  
 
 - Default minimize: The Thunderbird windows will be minimized conform the desktop managers default minimize (ex. minimize to the taskbar).  
 - Minimize to tray: The Thunderbird windows will be minimized to the system tray. The Thunderbird icon will not be visible in the taskbar if available.  
 
-# Close options  
+### Close options  
 
 What happens if you click the close buttonn of Thunderbird.  
 
@@ -17,7 +17,7 @@ What happens if you click the close buttonn of Thunderbird.
 - Minimize main, close chldren: All Thunderbird windows will be close conform the desktop managers default action but the last remaining Thunderbird window will be minimized conform the selected minimize preference.  
 - Minimize all windows:         All thunderbird windows will be minimized conform the selected minimize preference.  
 
-# Specials
+### Specials
 
 Special options / workarounds.  
 
@@ -26,7 +26,7 @@ Special options / workarounds.
 
 ## Icon  
 
-# Default icon (when there are no unread mails)  
+### Default icon (when there are no unread mails)  
 
 What icon should be used when there are no new/unread mails.  
 
@@ -34,7 +34,7 @@ What icon should be used when there are no new/unread mails.
 - Lookthrough icon:     Show empty space at the icon position.  
 - Custom icon:          Use a custom icon.  
 
-# Unread mail icon
+### Unread mail icon
 
 What icon should be used when there is new/unread mail.
 
@@ -43,7 +43,7 @@ What icon should be used when there is new/unread mail.
 - Custom icon:    Use a custom icon.  
 - No icon:        A blank spot on the system tray.
 
-# Number
+### Number
 
 Use a number to indicate the number of new/unread mails.
 
@@ -52,7 +52,7 @@ Use a number to indicate the number of new/unread mails.
 - Number size:  Change the size of the number.  
 
 
-# Specials
+### Specials
 
 Special options / workarounds.  
 
