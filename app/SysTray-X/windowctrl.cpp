@@ -236,9 +236,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
  */
 void    WindowCtrl::slotShowHide()
 {
-
-//    emit signalConsole( QString( "Show/Hide" ) );
-
     /*
      *  Update the TB windows
      */
@@ -252,18 +249,18 @@ void    WindowCtrl::slotShowHide()
 
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
+#ifdef Q_OS_UNIX
+
         updatePositions();
+
+#endif
 
         if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
         {
-//            emit signalConsole( QString( "Show %1" ).arg( win_ids.at( i ) ) );
-
             normalizeWindow( win_ids.at( i ) );
         }
         else
         {
-//            emit signalConsole( QString( "Hide %1" ).arg( win_ids.at( i ) ) );
-
             minimizeWindow( win_ids.at( i ), getMinimizeType() );
         }
     }
@@ -275,9 +272,6 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
-
-//    emit signalConsole( QString( "Close" ) );
-
     /*
      *  Update the TB windows
      */
