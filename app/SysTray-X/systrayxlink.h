@@ -277,6 +277,11 @@ class SysTrayXLink : public QObject
          */
         void    slotCountTypeChange();
 
+        /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
      private slots:
 
         /**

@@ -63,6 +63,11 @@ class Preferences : public QObject
             PREF_COUNT_NEW
         };
 
+        enum Theme {
+            PREF_THEME_LIGHT = 0,
+            PREF_THEME_DARK
+        };
+
         /*
          *  Window states
          */
@@ -350,6 +355,20 @@ class Preferences : public QObject
         void setCloseType( CloseType close_type );
 
         /**
+         * @brief getTheme. Get the theme state.
+         *
+         * @return      The state.
+         */
+        Theme getTheme() const;
+
+        /**
+         * @brief setTheme. Set the theme state.
+         *
+         * @param      The state.
+         */
+        void setTheme( Theme theme );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -464,6 +483,11 @@ class Preferences : public QObject
          * @brief signalDebugChange. Signal a debug state change.
          */
         void signalDebugChange();
+
+        /**
+         * @brief signalThemeChange. Signal a theme state change.
+         */
+        void signalThemeChange();
 
     private:
 
@@ -592,6 +616,10 @@ class Preferences : public QObject
          */
         QString m_version_branch;
 
+        /**
+         * @brief m_theme. The theme.
+         */
+        Theme m_theme;
 };
 
 #endif // PREFERENCES_H

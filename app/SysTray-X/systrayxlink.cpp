@@ -630,6 +630,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setCloseType( close_type );
     }
 
+    if( pref.contains( "theme" ) && pref[ "theme" ].isString() )
+    {
+        Preferences::Theme theme = static_cast< Preferences::Theme >( pref[ "theme" ].toString().toInt() );
+
+        /*
+         *  Store the new theme
+         */
+        m_pref->setTheme( theme );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -666,6 +676,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
     prefObject.insert("numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
+    prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
 
     QJsonObject preferencesObject;
     preferencesObject.insert("preferences", prefObject );
@@ -846,6 +857,18 @@ void    SysTrayXLink::slotNumberSizeChange()
  *  Handle the count type change signal
  */
 void    SysTrayXLink::slotCountTypeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a theme change signal
+ */
+void    SysTrayXLink::slotThemeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

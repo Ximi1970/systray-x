@@ -131,6 +131,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set number size
      */
     setNumberSize( m_pref->getNumberSize() );
+
+    /*
+     *  Set theme button Ids
+     */
+    m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT);
+    m_ui->themeGroup->setId( m_ui->darkRadioButton, Preferences::PREF_THEME_DARK );
 }
 
 
@@ -325,6 +331,15 @@ void    PreferencesDialog::setCountType( Preferences::CountType count_type )
 
 
 /*
+ *  Set the theme
+ */
+void    PreferencesDialog::setTheme( Preferences::Theme theme )
+{
+   ( m_ui->themeGroup->button( theme ) )->setChecked( true );
+}
+
+
+/*
  *  Handle the accept signal
  */
 void    PreferencesDialog::slotAccept()
@@ -351,9 +366,25 @@ void    PreferencesDialog::slotAccept()
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
-    m_pref->setNumberColor( m_number_color );
     m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
+
+    Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
+    m_pref->setTheme( theme );
+
+    /*
+     *  Force different color?
+     */
+    if( theme == Preferences::PREF_THEME_LIGHT && m_number_color == "#ffffff" )
+    {
+        setNumberColor( "#000000" );
+    }
+    else
+    if( theme == Preferences::PREF_THEME_DARK && m_number_color == "#000000" )
+    {
+        setNumberColor( "#ffffff" );
+    }
+    m_pref->setNumberColor( m_number_color );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
@@ -399,6 +430,8 @@ void    PreferencesDialog::slotReject()
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
     setCountType( m_pref->getCountType() );
+
+    setTheme( m_pref->getTheme() );
 
     setDebug( m_pref->getDebug());
 }
@@ -594,4 +627,13 @@ void    PreferencesDialog::slotNumberSizeChange()
 void    PreferencesDialog::slotCountTypeChange()
 {
     setCountType( m_pref->getCountType() );
+}
+
+
+/*
+ *  Handle the theme change signal
+ */
+void    PreferencesDialog::slotThemeChange()
+{
+    setTheme( m_pref->getTheme() );
 }

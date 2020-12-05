@@ -199,6 +199,21 @@
     "description": "Count new mails"
   },
 
+  "icons_theme": {
+    "message": "Thema",
+    "description": "The theme"
+  },
+
+  "icons_theme_light": {
+    "message": "Licht",
+    "description": "The light theme"
+  },
+
+  "icons_theme_dark": {
+    "message": "Dunkel",
+    "description": "The dark theme"
+  },
+
   "accounts": {
     "message": "Konten",
     "description": "Title for Accounts options"
