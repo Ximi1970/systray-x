@@ -113,7 +113,7 @@ async function getIcon() {
 //  Get window startup state
 //
 async function getStartupState() {
-  function getStartupState(result) {
+  function getStartupStateCb(result) {
     const startMinimized = result.startMinimized || "false";
     return startMinimized === "true" ? "minimized" : "normal";
   }
@@ -123,7 +123,47 @@ async function getStartupState() {
   }
 
   const getState = browser.storage.sync.get("startMinimized");
-  return await getState.then(getStartupState, onStartupStateError);
+  return await getState.then(getStartupStateCb, onStartupStateError);
+}
+
+//
+//  Get window restore position state
+//
+async function getRestorePositionsState() {
+  function getRestorePositionsStateCb(result) {
+    const restorePositions = result.restorePositions || "false";
+    return restorePositions;
+  }
+
+  function onRestorePositionsStateError() {
+    return "false";
+  }
+
+  const getState = browser.storage.sync.get("restorePositions");
+  return await getState.then(
+    getRestorePositionsStateCb,
+    onRestorePositionsStateError
+  );
+}
+
+//
+//  Get window startup window positions
+//
+async function getStartupWindowPositions() {
+  function getStartupWindowPositionsCb(result) {
+    const windowPositions = result.windowPositions || [];
+    return windowPositions;
+  }
+
+  function onStartupWindowPositionsError() {
+    return [];
+  }
+
+  const getWindowPositions = browser.storage.sync.get("windowPositions");
+  return await getWindowPositions.then(
+    getStartupWindowPositionsCb,
+    onStartupWindowPositionsError
+  );
 }
 
 //

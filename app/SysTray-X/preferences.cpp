@@ -23,6 +23,7 @@ const QString   Preferences::STATE_MAXIMIZED_STR = "maximized";
 const QString   Preferences::STATE_FULLSCREEN_STR = "fullscreen";
 const QString   Preferences::STATE_DOCKED_STR = "docked";
 const QString   Preferences::STATE_MINIMIZED_ALL_STR = "minimized_all";
+const QString   Preferences::STATE_MINIMIZED_ALL_STARTUP_STR = "minimized_all_startup";
 
 
 /**
@@ -52,6 +53,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
     m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
+
+    m_restore_window_positions = false;
 
     m_debug = false;
 
@@ -469,6 +472,32 @@ void    Preferences::setStartMinimized( bool state )
          *  Tell the world the new preference
          */
         emit signalStartMinimizedChange();
+    }
+}
+
+
+/*
+ *  Get the start minmized pref.
+ */
+bool    Preferences::getRestoreWindowPositions() const
+{
+    return m_restore_window_positions;
+}
+
+
+/*
+ *  Set the start minimized pref.
+ */
+void    Preferences::setRestoreWindowPositions( bool state )
+{
+    if( m_restore_window_positions != state )
+    {
+        m_restore_window_positions = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalRestoreWindowPositionsChange();
     }
 }
 

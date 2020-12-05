@@ -99,6 +99,11 @@
     "description": "Start minimized"
   },
 
+  "restore_positions_on_startup": {
+    "message": "Herstel vensterposities bij opstarten",
+    "description": "Restore the window positions on startup"
+  },
+
   "icons": {
     "message": "Pictogrammen",
     "description": "Title for Icons options"

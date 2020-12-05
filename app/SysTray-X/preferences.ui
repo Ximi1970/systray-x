@@ -388,6 +388,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="restorePositionscheckBox">
+              <property name="text">
+               <string>Restore startup positions</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -559,10 +566,10 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>

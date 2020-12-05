@@ -74,6 +74,7 @@ class Preferences : public QObject
             STATE_FULLSCREEN,
             STATE_DOCKED,
             STATE_MINIMIZED_ALL,
+            STATE_MINIMIZED_ALL_STARTUP,
         };
 
         static const QString   STATE_NORMAL_STR;
@@ -82,6 +83,7 @@ class Preferences : public QObject
         static const QString   STATE_FULLSCREEN_STR;
         static const QString   STATE_DOCKED_STR;
         static const QString   STATE_MINIMIZED_ALL_STR;
+        static const QString   STATE_MINIMIZED_ALL_STARTUP_STR;
 
     public:
 
@@ -336,6 +338,20 @@ class Preferences : public QObject
         void setStartMinimized( bool state );
 
         /**
+         * @brief getRestoreWindowPositions. Get the restore window positions state.
+         *
+         * @return      The state.
+         */
+        bool getRestoreWindowPositions() const;
+
+        /**
+         * @brief setRestoreWindowPositions. Set the restore window positions state.
+         *
+         * @param      The state.
+         */
+        void setRestoreWindowPositions( bool state );
+
+        /**
          * @brief getCloseType. Get the close type.
          *
          * @return      The state.
@@ -456,6 +472,11 @@ class Preferences : public QObject
         void signalStartMinimizedChange();
 
         /**
+         * @brief signalRestoreWindowPositionsChange. Signal a restore window positions state change.
+         */
+        void signalRestoreWindowPositionsChange();
+
+        /**
          * @brief signalCloseTypeChange. Signal a close type change.
          */
         void signalCloseTypeChange();
@@ -551,6 +572,11 @@ class Preferences : public QObject
          * @brief m_start_minimized. Start TB minimized.
          */
         bool m_start_minimized;
+
+        /**
+         * @brief m_restore_window_positions. Force the same window positions on startup as recorded on the last hide.
+         */
+        bool m_restore_window_positions;
 
         /**
          * @brief m_close_type. Closing type for TB.

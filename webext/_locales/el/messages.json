@@ -99,6 +99,11 @@
     "description": "Start minimized"
   },
 
+  "restore_positions_on_startup": {
+    "message": "Επαναφορά θέσεων παραθύρου κατά την εκκίνηση",
+    "description": "Restore the window positions on startup"
+  },
+
   "icons": {
     "message": "Εικονίδια",
     "description": "Title for Icons options"

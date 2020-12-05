@@ -159,6 +159,11 @@
         <translation>При закрытии</translation>
     </message>
     <message>
+        <location filename="../preferences.ui" line="394"/>
+        <source>Restore startup positions</source>
+        <translation>Восстановить положение окон при запуске</translation>
+    </message>
+    <message>
         <location filename="../preferences.ui" line="287"/>
         <source>Minimize</source>
         <translation>Свернуть</translation>
@@ -203,71 +208,69 @@
         <translation type="vanished">Сворачивать при закрытии</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="401"/>
+        <location filename="../preferences.ui" line="408"/>
         <source>Number properties</source>
         <translation>Настройки индикатора кол-ва</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="409"/>
+        <location filename="../preferences.ui" line="416"/>
         <source>Display unread message count</source>
         <translation>Показывать кол-во непрочитанных писем</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="421"/>
+        <location filename="../preferences.ui" line="428"/>
         <source>Number color</source>
         <translation>Цвет шрифта</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="449"/>
         <source>Number size</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="464"/>
+        <location filename="../preferences.ui" line="471"/>
         <source>Count type</source>
         <translation>Вариант подсчета</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="479"/>
         <source>Unread</source>
         <translation>Непрочитанные</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="485"/>
+        <location filename="../preferences.ui" line="492"/>
         <source>New</source>
         <translation>Новые</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="522"/>
+        <location filename="../preferences.ui" line="529"/>
         <source>Display debug window</source>
         <translation>Показать окно отладки</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="542"/>
+        <location filename="../preferences.ui" line="549"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="549"/>
+        <location filename="../preferences.ui" line="556"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="308"/>
-        <location filename="../preferencesdialog.cpp" line="52"/>
-        <location filename="../preferencesdialog.cpp" line="63"/>
         <source>Minimize to tray</source>
         <translation>Свернуть в трей</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="391"/>
-        <location filename="../preferencesdialog.cpp" line="415"/>
+        <location filename="../preferencesdialog.cpp" line="410"/>
+        <location filename="../preferencesdialog.cpp" line="434"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="391"/>
-        <location filename="../preferencesdialog.cpp" line="415"/>
+        <location filename="../preferencesdialog.cpp" line="410"/>
+        <location filename="../preferencesdialog.cpp" line="434"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Файлы изображений (*.png *.jpg *.bmp</translation>
     </message>
@@ -275,28 +278,28 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="194"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Show/Hide</source>
         <translatorcomment>Not sure how hotkeys work</translatorcomment>
         <translation>Показать/Скр&amp;ыть</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="198"/>
+        <location filename="../systrayx.cpp" line="208"/>
         <source>&amp;Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="202"/>
+        <location filename="../systrayx.cpp" line="212"/>
         <source>&amp;About</source>
         <translation>О приложении</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="206"/>
+        <location filename="../systrayx.cpp" line="216"/>
         <source>&amp;Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="604"/>
+        <location filename="../systrayx.cpp" line="614"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>

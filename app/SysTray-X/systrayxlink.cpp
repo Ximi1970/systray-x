@@ -27,6 +27,7 @@
 #include <QVariant>
 #include <QJsonValue>
 #include <QJsonObject>
+#include <QJsonArray>
 
 
 /*****************************************************************************
@@ -116,16 +117,11 @@ void    SysTrayXLinkReader::slotWorker()
             QByteArray data( data_len, 0 );
             std::cin.read( data.data(), data_len );
 
-            /*
-             *  Send the data to my parent
-             */
-            emit signalReceivedMessage( data );
-
-            /*
-             *  Send the data to my parent
-             */
             if( data.at( 0 ) == '{' )
-            {
+            {                
+                /*
+                 *  Send the data to my parent
+                 */
                 emit signalReceivedMessage( data );
 
                 error_count = 0;
@@ -271,6 +267,37 @@ void    SysTrayXLink::sendDisableKdeIntegration()
 
 
 /*
+ *  Send the window positions to the add-on
+ */
+void    SysTrayXLink::sendPositions( QList< QPoint > positions )
+{
+    QJsonArray positionsArray;
+
+    for( int i = 0; i < positions.length(); ++i )
+    {
+        QJsonObject positionObject;
+        positionObject.insert("x", QString::number( positions.at( i ).x() ) );
+        positionObject.insert("y", QString::number( positions.at( i ).y() ) );
+
+        positionsArray.append( positionObject );
+    }
+
+    QJsonObject positionsObject;
+    positionsObject.insert("positions", positionsArray );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( positionsObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -342,6 +369,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
                 window_state = Preferences::STATE_MINIMIZED_ALL;
             }
             else
+            if( window_state_str == Preferences::STATE_MINIMIZED_ALL_STARTUP_STR )
+            {
+                window_state = Preferences::STATE_MINIMIZED_ALL_STARTUP;
+            }
+            else
             {
                 /*
                  *  Unknown state
@@ -383,6 +415,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "browserInfo" ) && jsonObject[ "browserInfo" ].isObject() )
         {
             DecodeBrowser( jsonObject[ "browserInfo" ].toObject() );
+        }
+
+        if( jsonObject.contains( "positions" ) && jsonObject[ "positions" ].isArray() )
+        {
+            DecodePositions( jsonObject[ "positions" ].toArray() );
         }
 
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
@@ -484,6 +521,41 @@ void    SysTrayXLink::DecodeBrowser( const QJsonObject& browser )
 
 
 /*
+ *  Decode positions from JSON message
+ */
+void    SysTrayXLink::DecodePositions( const QJsonArray& positions )
+{
+    QList< QPoint > window_positions;
+    for( int i = 0; i < positions.count(); ++i )
+    {
+        QJsonObject positionObject = positions.at( i ).toObject();
+
+        QPoint  position;
+        bool valid_x = false;
+        bool valid_y = false;
+        if( positionObject.contains( "x" ) && positionObject[ "x" ].isString() )
+        {
+            position.setX( positionObject[ "x" ].toString().toInt() );
+            valid_x = true;
+        }
+
+        if( positionObject.contains( "y" ) && positionObject[ "y" ].isString() )
+        {
+            position.setY( positionObject[ "y" ].toString().toInt() );
+            valid_y = true;
+        }
+
+        if( valid_x && valid_y )
+        {
+            window_positions.append( position );
+        }
+    }
+
+    emit signalWindowPositions( window_positions );
+}
+
+
+/*
  *  Decode preferences from JSON message
  */
 void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
@@ -526,7 +598,7 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         bool hide_default_icon = pref[ "hideDefaultIcon" ].toString() == "true";
 
         /*
-         *  Store the new start minimized state
+         *  Store the new hide default icon state
          */
         m_pref->setHideDefaultIcon( hide_default_icon );
     }
@@ -620,6 +692,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartMinimized( start_minimized );
     }
 
+    if( pref.contains( "restorePositions" ) && pref[ "restorePositions" ].isString() )
+    {
+        bool resore_window_positions = pref[ "restorePositions" ].toString() == "true";
+
+        /*
+         *  Store the new restore window positions state
+         */
+        m_pref->setRestoreWindowPositions( resore_window_positions );
+    }
+
     if( pref.contains( "closeType" ) && pref[ "closeType" ].isString() )
     {
         Preferences::CloseType close_type = static_cast< Preferences::CloseType >( pref[ "closeType" ].toString().toInt() );
@@ -654,6 +736,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
+    prefObject.insert("restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
     prefObject.insert("closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
     prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
     prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
@@ -726,6 +809,18 @@ void    SysTrayXLink::slotMinimizeTypeChange()
  *  Handle a start minimized state change signal
  */
 void    SysTrayXLink::slotStartMinimizedChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a restore window positions state change signal
+ */
+void    SysTrayXLink::slotRestoreWindowPositionsChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -851,4 +946,10 @@ void    SysTrayXLink::slotCountTypeChange()
     {
         sendPreferences();
     }
+}
+
+
+void    SysTrayXLink::slotPositions( QList< QPoint > positions )
+{
+   sendPositions( positions );
 }

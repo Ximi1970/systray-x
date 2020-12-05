@@ -87,6 +87,16 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save restore window positions state
+    //
+    const restorePositions = document.querySelector(
+      'input[name="restorePositions"]'
+    ).checked;
+    browser.storage.sync.set({
+      restorePositions: `${restorePositions}`,
+    });
+
+    //
     // Save default icon preferences
     //
     const defaultIconType = document.querySelector(
@@ -197,10 +207,7 @@ SysTrayX.RestoreOptions = {
     //
     //  Restore minimize type
     //
-    const getMinimizeType = browser.storage.sync.get([
-      "platformInfo",
-      "minimizeType",
-    ]);
+    const getMinimizeType = browser.storage.sync.get("minimizeType");
     getMinimizeType.then(
       SysTrayX.RestoreOptions.setMinimizeType,
       SysTrayX.RestoreOptions.onMinimizeTypeError
@@ -222,6 +229,18 @@ SysTrayX.RestoreOptions = {
     getStartMinimized.then(
       SysTrayX.RestoreOptions.setStartMinimized,
       SysTrayX.RestoreOptions.onStartMinimizedError
+    );
+
+    //
+    //  Restore restore position state
+    //
+    const getRestorePositions = browser.storage.sync.get([
+      "platformInfo",
+      "restorePositions",
+    ]);
+    getRestorePositions.then(
+      SysTrayX.RestoreOptions.setRestorePositions,
+      SysTrayX.RestoreOptions.onRestorePositionsError
     );
 
     //
@@ -339,7 +358,7 @@ SysTrayX.RestoreOptions = {
   //  Restore minimize type callbacks
   //
   setMinimizeType: function (result) {
-    const platformInfo = result.platformInfo || { os: "linux" };
+    //    const platformInfo = result.platformInfo || { os: "linux" };
     const minimizeType = result.minimizeType || "1";
 
     // Tweak option for platform
@@ -382,7 +401,7 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore hide on minimize callbacks
+  //  Restore start minimized callbacks
   //
   setStartMinimized: function (result) {
     const startMinimized = result.startMinimized || "false";
@@ -393,6 +412,31 @@ SysTrayX.RestoreOptions = {
 
   onStartMinimizedError: function (error) {
     console.log(`startMinimized Error: ${error}`);
+  },
+
+  //
+  //  Restore restore position state callbacks
+  //
+  setRestorePositions: function (result) {
+    const platformInfo = result.platformInfo || { os: "linux" };
+    const restorePositions = result.restorePositions || "false";
+
+    // Tweak option for platform
+    if (platformInfo.os === "win") {
+      document
+        .getElementById("restorePos")
+        .setAttribute("style", "display:none;");
+      document
+        .getElementById("restorePositionsLabel")
+        .setAttribute("style", "display:none;");
+    }
+
+    const checkbox = document.querySelector(`input[name="restorePositions"]`);
+    checkbox.checked = restorePositions === "true";
+  },
+
+  onRestorePositionsError: function (error) {
+    console.log(`RestorePositions Error: ${error}`);
   },
 
   //
@@ -765,6 +809,11 @@ SysTrayX.StorageChanged = {
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
           debug: changes[item].newValue,
+        });
+      }
+      if (item === "restorePositions") {
+        SysTrayX.RestoreOptions.setRestorePositions({
+          restorePositions: changes[item].newValue,
         });
       }
     }

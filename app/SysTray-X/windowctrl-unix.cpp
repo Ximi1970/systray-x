@@ -20,6 +20,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
+    m_tb_windows_pos = QList< QPoint >();
     m_tb_window_states = QList< Preferences::WindowState >();;
 
     /*
@@ -196,7 +197,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
         else
         {
             m_tb_window_states.append( Preferences::STATE_NORMAL );
-
         }
     }
 }
@@ -322,6 +322,38 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 
 
 /*
+ *  Get window positions
+ */
+void    WindowCtrlUnix::updatePositions()
+{
+    QList< QPoint > positions;
+    for( int i = 0 ; i < m_tb_windows.length() ; ++i )
+    {
+        quint64 window = m_tb_windows.at( i );
+
+        //  Get border / title bar sizes
+        QMargins margin = atomFrameExtents( m_display, window );
+
+        int x, y;
+        Window child;
+        XWindowAttributes xwa;
+        Window win = static_cast<Window>( window );
+        XTranslateCoordinates( m_display, win, m_root_window, 0, 0, &x, &y, &child );
+        XGetWindowAttributes( m_display, win, &xwa );
+
+        positions.append( QPoint( x - xwa.x - margin.left(), y - xwa.y - margin.top() ) );
+    }
+
+    if( m_tb_windows_pos != positions )
+    {
+        m_tb_windows_pos = positions;
+
+        emit signalPositions( m_tb_windows_pos );
+    }
+}
+
+
+/*
  *  Minimize a window
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
@@ -433,6 +465,24 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
     event.xclient.data.l[0] = static_cast<long>( delete_prop );
     event.xclient.data.l[1] = CurrentTime;
     XSendEvent( m_display, win, False, NoEventMask, &event );
+    XFlush( m_display );
+}
+
+
+/*
+ *  Set the window positions
+ */
+void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
+{
+    for( int i = 0 ; i < m_tb_windows.length() ; ++i )
+    {
+        quint64 window = m_tb_windows.at( i );
+
+        if( i < window_positions.length() ) {
+            XMoveWindow( m_display, window, window_positions.at( i ).x(), window_positions.at( i ).y() );
+        }
+    }
+
     XFlush( m_display );
 }
 
@@ -754,5 +804,47 @@ QStringList    WindowCtrlUnix::atomWindowType( Display *display, quint64 window 
 
     return states;
 }
+
+
+/*
+ *  Get the title of the window
+ */
+QMargins   WindowCtrlUnix::atomFrameExtents( Display *display, quint64 window )
+{
+    char prop_name[] = "_NET_FRAME_EXTENTS";
+    Atom prop = XInternAtom( display, prop_name, True );
+
+    Atom type;
+    int format;
+    unsigned long remain;
+    unsigned long len;
+    unsigned char* list = nullptr;
+    XEvent event;
+
+    //  Get the frame extentions
+    while( XGetWindowProperty( display, window, prop, 0, 4, False, AnyPropertyType,
+                &type, &format, &len, &remain, &list ) != Success || len != 4 || remain != 0 )
+    {
+        XNextEvent( display, &event );
+    }
+
+    QMargins margins;
+    if( list && len == 4 )
+    {
+        long* extents = (long*)list;
+        margins.setLeft( extents[ 0 ] );
+        margins.setRight( extents[ 1 ] );
+        margins.setTop( extents[ 2 ] );
+        margins.setBottom( extents[ 3 ] );
+    }
+
+    if( list )
+    {
+        XFree( list );
+    }
+
+    return margins;
+}
+
 
 #endif // Q_OS_UNIX

@@ -99,6 +99,11 @@
     "description": "Start minimized"
   },
 
+  "restore_positions_on_startup": {
+    "message": "Восстановить положение окон при запуске",
+    "description": "Restore the window positions on startup"
+  },
+
   "icons": {
     "message": "Иконка",
     "description": "Title for Icons options"

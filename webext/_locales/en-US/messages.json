@@ -99,6 +99,11 @@
     "description": "Start minimized"
   },
 
+  "restore_positions_on_startup": {
+    "message": "Restore window positions on startup",
+    "description": "Restore the window positions on startup"
+  },
+
   "icons": {
     "message": "Icons",
     "description": "Title for Icons options"
@@ -233,22 +238,22 @@
     "message": "SysTray-X Companion App by Ximi1970",
     "description": "Line 1"
   },
-  
+
   "about_version": {
     "message": "Version:",
     "description": "Version"
   },
-  
+
   "about_build": {
     "message": "Build:",
     "description": "Build"
   },
-  
+
   "about_hash": {
     "message": "Hash:",
     "description": "Hash"
   },
-  
+
   "about_branch": {
     "message": "Branch:",
     "description": "Branch"
@@ -303,12 +308,12 @@
     "message": "Close",
     "description": "Close button"
   },
-  
+
   "mail_notification_icon": {
     "message": "Mail notification icon",
     "description": "Mail icon selection title"
   },
-  
+
   "number_properties": {
     "message": "Number properties",
     "description": "Number properties title"
@@ -318,17 +323,17 @@
     "message": "Open image",
     "description": "File image dialog"
   },
-  
+
   "image_files": {
     "message": "Image Files (*.png *.jpg *.bmp)",
     "description": "File image selection"
   },
-  
+
   "image_save": {
     "message": "Save",
     "description": "File image save"
   },
-  
+
   "image_cancel": {
     "message": "Cancel",
     "description": "File image cancel"

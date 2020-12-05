@@ -198,71 +198,74 @@
         <translation>Avvia applicazione minimizzata</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="401"/>
+        <location filename="../preferences.ui" line="394"/>
+        <source>Restore startup positions</source>
+        <translation>Ripristina le posizioni della finestra all&apos;avvio</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="408"/>
         <source>Number properties</source>
         <translation>Proprietà numero</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="409"/>
+        <location filename="../preferences.ui" line="416"/>
         <source>Display unread message count</source>
         <translation>Mostra numero di messaggi non letti</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="421"/>
+        <location filename="../preferences.ui" line="428"/>
         <source>Number color</source>
         <translation>Colore numero</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="449"/>
         <source>Number size</source>
         <translation>Dimensione numero</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="464"/>
+        <location filename="../preferences.ui" line="471"/>
         <source>Count type</source>
         <translation>Tipo conteggio</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="472"/>
+        <location filename="../preferences.ui" line="479"/>
         <source>Unread</source>
         <translation>Non letti</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="485"/>
+        <location filename="../preferences.ui" line="492"/>
         <source>New</source>
         <translation>Nuovi</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="522"/>
+        <location filename="../preferences.ui" line="529"/>
         <source>Display debug window</source>
         <translation>Mostra finestra di debug</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="308"/>
-        <location filename="../preferencesdialog.cpp" line="52"/>
-        <location filename="../preferencesdialog.cpp" line="63"/>
         <source>Minimize to tray</source>
         <translation>Minimizza nel vassoio</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="542"/>
+        <location filename="../preferences.ui" line="549"/>
         <source>Save</source>
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="549"/>
+        <location filename="../preferences.ui" line="556"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="391"/>
-        <location filename="../preferencesdialog.cpp" line="415"/>
+        <location filename="../preferencesdialog.cpp" line="410"/>
+        <location filename="../preferencesdialog.cpp" line="434"/>
         <source>Open Image</source>
         <translation>Apri immagine</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="391"/>
-        <location filename="../preferencesdialog.cpp" line="415"/>
+        <location filename="../preferencesdialog.cpp" line="410"/>
+        <location filename="../preferencesdialog.cpp" line="434"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>File immagine (*.png *.jpg *.bmp)</translation>
     </message>
@@ -270,27 +273,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="194"/>
+        <location filename="../systrayx.cpp" line="204"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Mostra/Nascondi</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="198"/>
+        <location filename="../systrayx.cpp" line="208"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferenze</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="202"/>
+        <location filename="../systrayx.cpp" line="212"/>
         <source>&amp;About</source>
         <translation>&amp;Informazioni</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="206"/>
+        <location filename="../systrayx.cpp" line="216"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="604"/>
+        <location filename="../systrayx.cpp" line="614"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>

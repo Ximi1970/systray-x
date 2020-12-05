@@ -13,7 +13,8 @@
  */
 #include <QObject>
 #include <QJsonDocument>
-
+#include <QList>
+#include <QPoint>
 
 /*
  *	Predefines
@@ -120,6 +121,13 @@ class SysTrayXLink : public QObject
          */
         void    sendDisableKdeIntegration();
 
+        /**
+         * @brief sendPositions
+         *
+         * @param positions     List of the positions of the TB windows
+         */
+        void    sendPositions( QList< QPoint > positions );
+
     private:
 
         /**
@@ -149,6 +157,13 @@ class SysTrayXLink : public QObject
          * @param pref  The JSON preferences.
          */
         void    DecodePreferences( const QJsonObject& pref );
+
+        /**
+         * @brief DecodePositions
+         *
+         * @param positions     The JSON positions.
+         */
+        void    DecodePositions( const QJsonArray& positions );
 
         /**
          * @brief EncodePreferences. Encode the preferences into a JSON document.
@@ -210,6 +225,13 @@ class SysTrayXLink : public QObject
          */
         void    signalUnreadMail( int unread_mail );
 
+        /**
+         * @brief signalWindowPositions. Signal the startup positions.
+         *
+         * @param window_positions  The list with positions.
+         */
+        void    signalWindowPositions( QList< QPoint > window_positions );
+
     public slots:
 
         /**
@@ -226,6 +248,11 @@ class SysTrayXLink : public QObject
          * @brief slotStartMinimizedChange. Handle a change in start minimized state.
          */
         void    slotStartMinimizedChange();
+
+        /**
+         * @brief slotRestoreWindowPositionsChange. Handle a change in restore window positions state.
+         */
+        void    slotRestoreWindowPositionsChange();
 
         /**
          * @brief slotCloseTypeChange. Slot for handling close type change signals.
@@ -276,6 +303,11 @@ class SysTrayXLink : public QObject
          * @brief slotCountTypeChange. Slot for handling count type change signals.
          */
         void    slotCountTypeChange();
+
+        /**
+         * @brief slotPositions. Slot for handling a window positions change.
+         */
+        void    slotPositions( QList< QPoint > positions );
 
      private slots:
 

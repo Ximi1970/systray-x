@@ -18,6 +18,8 @@
  */
 #include <QObject>
 #include <QFileInfo>
+#include <QMargins>
+#include <QPoint>
 
 /*
  *  Predefines
@@ -217,6 +219,11 @@ class WindowCtrlUnix : public QObject
         QList< quint64 >    getWinIds();
 
         /**
+         * @brief updatePositions. Update the window positions.
+         */
+        void    updatePositions();
+
+        /**
          * @brief minimizeWindow. Minimize window.
          *
          *  @param window   The window.
@@ -245,6 +252,13 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          */
         void    deleteWindow( quint64 window );
+
+        /**
+         * @brief setPositions. Set the startup positions.
+         *
+         * @param window_positions  The window positions list.
+         */
+        void    setPositions( QList< QPoint > window_positions );
 
     private:
 
@@ -329,6 +343,16 @@ class WindowCtrlUnix : public QObject
          */
         QStringList atomWindowType( Display* display, quint64 window );
 
+        /**
+         * @brief atomFrameExtents. Get the frame extents of the window.
+         *
+         *  @param display  The display
+         *  @param window   The window
+         *
+         *  @return     Type of the window.
+         */
+        QMargins atomFrameExtents( Display *display, quint64 window );
+
     signals:
 
         /**
@@ -337,6 +361,13 @@ class WindowCtrlUnix : public QObject
          *  @param message      The message.
          */
         void    signalConsole( QString message );
+
+        /**
+         * @brief signalPosition. Signal the new window position.
+         *
+         * @param position
+         */
+        void    signalPositions( QList< QPoint > positions );
 
    private:
 
@@ -359,6 +390,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_windows. The Thunderbird windows.
          */
         QList< quint64 >    m_tb_windows;
+
+        /**
+         * @brief m_tb_windows_pos. The Thunderbird window positions.
+         */
+        QList< QPoint >    m_tb_windows_pos;
 
         /**
          * @brief m_tb_window_states. The Thunderbird window states.

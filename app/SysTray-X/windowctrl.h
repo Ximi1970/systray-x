@@ -98,6 +98,11 @@ class WindowCtrl : public QObject
          */
         void    slotClose();
 
+        /**
+         * @brief slotPositions. Slot for handling of the startup window posiions.
+         */
+        void    slotPositions( QList< QPoint > window_positions );
+
     private:
 
         /**

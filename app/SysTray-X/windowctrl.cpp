@@ -164,9 +164,14 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     /*
      *  Minimize all?
      */
-    if( state == Preferences::STATE_MINIMIZED_ALL )
+    if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
 //        emit signalConsole( QString( "Minimize all" ) );
+
+        if( state == Preferences::STATE_MINIMIZED_ALL )
+        {
+            updatePositions();
+        }
 
         /*
          *   Close pressed on one of the windows, minimize them all
@@ -207,7 +212,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     /*
      *  Minimize all?
      */
-    if( state == Preferences::STATE_MINIMIZED_ALL )
+    if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
 //        emit signalConsole( QString( "Minimize all" ) );
 
@@ -247,6 +252,8 @@ void    WindowCtrl::slotShowHide()
 
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
+        updatePositions();
+
         if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
         {
 //            emit signalConsole( QString( "Show %1" ).arg( win_ids.at( i ) ) );
@@ -288,4 +295,17 @@ void    WindowCtrl::slotClose()
     {
         deleteWindow( win_ids.at( i ) );
     }
+}
+
+
+/*
+ *  Handle the startup window posiions.
+ */
+void    WindowCtrl::slotPositions( QList< QPoint > window_positions )
+{
+#ifdef Q_OS_UNIX
+
+    setPositions( window_positions );
+
+#endif
 }

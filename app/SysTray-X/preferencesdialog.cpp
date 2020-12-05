@@ -48,21 +48,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 #ifdef Q_OS_WIN
 
-#ifdef OBSOLETE
-    m_ui->minimizeMethod1RadioButton->setText( tr( "Minimize to tray" ) );
-    m_ui->minimizeMethod2RadioButton->hide();
-#endif
-
     m_ui->hideDefaultIconCheckBox->hide();
-
-#endif
-
-#ifdef Q_OS_LINUX
-
-#ifdef OBSOLETE
-    m_ui->minimizeMethod1RadioButton->setText( tr( "Minimize to tray" ) );
-    m_ui->minimizeMethod2RadioButton->hide();
-#endif
+    m_ui->restorePositionscheckBox->hide();
 
 #endif
 
@@ -172,6 +159,15 @@ void    PreferencesDialog::setMinimizeType( Preferences::MinimizeType minimize_t
 void    PreferencesDialog::setStartMinimized( bool state )
 {
    m_ui->startMinimizedCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the restore window positions state
+ */
+void    PreferencesDialog::setRestoreWindowPositions( bool state )
+{
+   m_ui->restorePositionscheckBox->setChecked( state );
 }
 
 
@@ -348,6 +344,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
+    m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
@@ -393,6 +390,7 @@ void    PreferencesDialog::slotReject()
 
     setMinimizeType( m_pref->getMinimizeType() );
     setStartMinimized( m_pref->getStartMinimized() );
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
 
     setShowNumber( m_pref->getShowNumber() );
@@ -494,6 +492,14 @@ void    PreferencesDialog::slotStartMinimizedChange()
     setStartMinimized( m_pref->getStartMinimized() );
 }
 
+
+/*
+ *  Handle the restore window positions change signal
+ */
+void    PreferencesDialog::slotRestoreWindowPositionsChange()
+{
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
+}
 
 /*
  *  Handle the minimize on close change signal

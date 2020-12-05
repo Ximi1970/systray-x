@@ -70,6 +70,13 @@ class PreferencesDialog : public QDialog
         void    setStartMinimized( bool state );
 
         /**
+         * @brief setRestoreWindowPositions. Set the restore window positions state.
+         *
+         *  @param state    The state.
+         */
+        void    setRestoreWindowPositions( bool state );
+
+        /**
          * @brief setCloseType. Set the close type.
          *
          *  @param state    The close type.
@@ -181,6 +188,11 @@ class PreferencesDialog : public QDialog
          * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
          */
         void    slotStartMinimizedChange();
+
+        /**
+         * @brief slotRestoreWindowPositionsChange. Slot for handling restore window positions change signals.
+         */
+        void    slotRestoreWindowPositionsChange();
 
         /**
          * @brief slotCloseTypeChange. Slot for handling close type change signals.

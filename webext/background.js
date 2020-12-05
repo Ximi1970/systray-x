@@ -3,6 +3,9 @@ var SysTrayX = {
 
   startupState: undefined,
 
+  restorePositions: false,
+  startupWindowPositions: [],
+
   hideDefaultIcon: false,
 
   platformInfo: undefined,
@@ -22,7 +25,14 @@ SysTrayX.Messaging = {
   init: function () {
     // Minimuze on startup handled by Companion app as backup
     if (SysTrayX.startupState == "minimized") {
-      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
+    }
+
+    // Send the startup positions?
+    if (SysTrayX.restorePositions) {
+      SysTrayX.Link.postSysTrayXMessage({
+        positions: SysTrayX.startupWindowPositions,
+      });
     }
 
     // Lookout for storage changes
@@ -393,6 +403,15 @@ SysTrayX.Link = {
       });
     }
 
+    const positions = response["positions"];
+    if (positions) {
+      console.debug("Positions" + JSON.stringify(positions));
+
+      browser.storage.sync.set({
+        windowPositions: positions,
+      });
+    }
+
     if (response["preferences"]) {
       //  Store the preferences from the app
       const defaultIconMime = response["preferences"].defaultIconMime;
@@ -522,6 +541,16 @@ async function start() {
   }
 
   SysTrayX.startupState = state;
+
+  //  Restore window positions
+  const restorePositions = await getRestorePositionsState();
+
+  if (restorePositions == "true") {
+    SysTrayX.restorePositions = true;
+
+    // Get the start window positions
+    SysTrayX.startupWindowPositions = await getStartupWindowPositions();
+  }
 
   // Get the close type
   SysTrayX.Messaging.closeType = await getCloseType();
