@@ -303,6 +303,7 @@ SysTrayX.Messaging = {
       "numberColor",
       "numberSize",
       "countType",
+      "theme",
     ]);
     getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
   },
@@ -320,9 +321,16 @@ SysTrayX.Messaging = {
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
     const showNumber = result.showNumber || "true";
-    const numberColor = result.numberColor || "#000000";
+    let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
     const countType = result.countType || "0";
+    const theme = result.theme || "0";
+
+    if (theme == "0" && numberColor == "#ffffff") {
+      numberColor = "#000000";
+    } else if (theme == "1" && numberColor == "#000000") {
+      numberColor = "#ffffff";
+    }
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
@@ -342,6 +350,7 @@ SysTrayX.Messaging = {
         numberColor: numberColor,
         numberSize: numberSize,
         countType: countType,
+        theme: theme,
       },
     });
 
@@ -509,6 +518,13 @@ SysTrayX.Link = {
       if (startMinimized) {
         browser.storage.sync.set({
           startMinimized: startMinimized,
+        });
+      }
+
+      const theme = response["preferences"].theme;
+      if (theme) {
+        browser.storage.sync.set({
+          theme: theme,
         });
       }
 

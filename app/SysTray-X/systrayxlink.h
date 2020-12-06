@@ -309,6 +309,11 @@ class SysTrayXLink : public QObject
          */
         void    slotPositions( QList< QPoint > positions );
 
+        /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
      private slots:
 
         /**

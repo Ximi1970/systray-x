@@ -161,6 +161,11 @@ class SysTrayXIcon : public QSystemTrayIcon
          */
         void    slotNumberSizeChange();
 
+        /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
     private slots:
 
         /**

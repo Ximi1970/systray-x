@@ -65,6 +65,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_build = QLatin1String( APP_BUILD );
     m_version_hash = QLatin1String( APP_GITHASH );
     m_version_branch = QLatin1String( APP_GITBRANCH );
+
+    m_theme = PREF_THEME_LIGHT;
 }
 
 
@@ -524,6 +526,32 @@ void    Preferences::setCloseType( CloseType close_type )
          *  Tell the world the new preference
          */
         emit signalCloseTypeChange();
+    }
+}
+
+
+/*
+ *  Get the theme pref.
+ */
+Preferences::Theme    Preferences::getTheme() const
+{
+    return m_theme;
+}
+
+
+/*
+ *  Set the theme pref.
+ */
+void    Preferences::setTheme( Theme theme )
+{
+    if( m_theme != theme )
+    {
+        m_theme = theme;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalThemeChange();
     }
 }
 

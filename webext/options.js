@@ -161,10 +161,28 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save theme preferences
+    //
+    const theme = document.querySelector('input[name="theme"]:checked').value;
+
+    //  Store minimize preferences
+    browser.storage.sync.set({
+      theme: theme,
+    });
+
+    //
     //  Save number color
     //
-    const numberColor = document.querySelector('input[name="numberColor"]')
+    let numberColor = document.querySelector('input[name="numberColor"]')
       .value;
+
+    //  Force different color?
+    if (theme == "0" && numberColor == "#ffffff") {
+      numberColor = "#000000";
+    } else if (theme == "1" && numberColor == "#000000") {
+      numberColor = "#ffffff";
+    }
+
     browser.storage.sync.set({
       numberColor: `${numberColor}`,
     });
@@ -185,6 +203,7 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       countType: countType,
     });
+
 
     //  Mark add-on preferences changed
     browser.storage.sync.set({
@@ -337,6 +356,15 @@ SysTrayX.RestoreOptions = {
     getCountType.then(
       SysTrayX.RestoreOptions.setCountType,
       SysTrayX.RestoreOptions.onCountTypeError
+    );
+
+    //
+    //  Restore theme
+    //
+    const getTheme = browser.storage.sync.get("theme");
+    getTheme.then(
+      SysTrayX.RestoreOptions.setTheme,
+      SysTrayX.RestoreOptions.onThemeError
     );
   },
 
@@ -649,6 +677,22 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore theme callbacks
+  //
+  setTheme: function (result) {
+    const theme = result.theme || "0";
+
+    const radioButton = document.querySelector(
+      `input[name="theme"][value="${theme}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onThemeError: function (error) {
+    console.log(`Theme Error: ${error}`);
+  },
+
+  //
   //  Restore filters callbacks
   //
   setFilters: function (result) {
@@ -806,6 +850,12 @@ SysTrayX.StorageChanged = {
           startMinimized: changes[item].newValue,
         });
       }
+      if (item === "theme") {
+        SysTrayX.RestoreOptions.setTheme({
+          theme: changes[item].newValue,
+        });
+      }
+
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
           debug: changes[item].newValue,
@@ -834,6 +884,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
     document.getElementById("closeselect").className = "active";
+    document.getElementById("themeselect").className = "active";
   },
 };
 

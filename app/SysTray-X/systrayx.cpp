@@ -123,6 +123,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
+    connect( m_preferences, &Preferences::signalThemeChange, m_pref_dialog, &PreferencesDialog::slotThemeChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
@@ -138,6 +139,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
+    connect( m_preferences, &Preferences::signalThemeChange, m_link, &SysTrayXLink::slotThemeChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
@@ -288,6 +290,7 @@ void    SysTrayX::showTrayIcon()
         connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
         connect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
         connect( m_preferences, &Preferences::signalNumberSizeChange, m_tray_icon, &SysTrayXIcon::slotNumberSizeChange );
+        connect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
 
         connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
@@ -322,6 +325,7 @@ void    SysTrayX::hideTrayIcon()
         disconnect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
         disconnect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
         disconnect( m_preferences, &Preferences::signalNumberSizeChange, m_tray_icon, &SysTrayXIcon::slotNumberSizeChange );
+        disconnect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
 
         disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
 
@@ -394,6 +398,7 @@ void    SysTrayX::showKdeTrayIcon()
         connect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
         connect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );
         connect( m_preferences, &Preferences::signalNumberSizeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberSizeChange );
+        connect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
 
         connect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
 
@@ -427,6 +432,7 @@ void    SysTrayX::hideKdeTrayIcon()
         disconnect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
         disconnect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );
         disconnect( m_preferences, &Preferences::signalNumberSizeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberSizeChange );
+        disconnect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
 
         disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
 

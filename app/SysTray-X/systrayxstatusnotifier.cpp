@@ -275,7 +275,16 @@ void    SysTrayXStatusNotifier::renderIcon()
         {
             case Preferences::PREF_BLANK_ICON:
             {
-                pixmap = QPixmap( ":/files/icons/blank-icon.png" );
+                Preferences::Theme theme = m_pref->getTheme();
+
+                if( theme == Preferences::PREF_THEME_LIGHT )
+                {
+                    pixmap = QPixmap( ":/files/icons/blank-icon.png" );
+                }
+                else
+                {
+                    pixmap = QPixmap( ":/files/icons/blank-icon-dark.png" );
+                }
                 break;
             }
 
@@ -457,6 +466,15 @@ void    SysTrayXStatusNotifier::slotNumberColorChange()
 void    SysTrayXStatusNotifier::slotNumberSizeChange()
 {
     setNumberSize( m_pref->getNumberSize() );
+}
+
+
+/*
+ *  Handle the theme change signal
+ */
+void    SysTrayXStatusNotifier::slotThemeChange()
+{
+    renderIcon();
 }
 
 

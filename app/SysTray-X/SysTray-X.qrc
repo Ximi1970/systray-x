@@ -28,5 +28,6 @@
         <file>languages/SysTray-X.pt-BR.ts</file>
         <file>languages/SysTray-X.zh-CN.qm</file>
         <file>languages/SysTray-X.zh-TW.qm</file>
+        <file>files/icons/blank-icon-dark.png</file>
     </qresource>
 </RCC>

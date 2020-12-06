@@ -158,6 +158,13 @@ class PreferencesDialog : public QDialog
          */
         void    setCountType( Preferences::CountType count_type );
 
+        /**
+         * @brief setTheme. Set the theme.
+         *
+         * @param theme     The theme.
+         */
+        void    setTheme( Preferences::Theme theme );
+
     signals:
 
         /**
@@ -243,6 +250,11 @@ class PreferencesDialog : public QDialog
          * @brief slotCountTypeChange. Slot for handling count type change.
          */
         void    slotCountTypeChange();
+
+        /**
+         * @brief slotThemeChange. Slot for handling theme change.
+         */
+        void    slotThemeChange();
 
     private slots:
 
