@@ -228,6 +228,7 @@ function createFoldersArrayPre74(baseFolders) {
           r.result.push({
             accountId: folder.accountId,
             name: folder.name,
+            type: folder.type,
             path: folder.path,
             subFolders: r[name].result,
           });
@@ -288,13 +289,45 @@ function checkFolderFilters(filters) {
 
     const found = accountFolders[filter.folder.accountId].filter((folder) => {
       if (filter.folder.version) {
-        return folder.path === filter.folder.path;
+        const folderPaths = folder.path.split("/");
+        const folderPathLast = folderPaths.pop();
+        const folderPathFirst = folderPaths.join("/");
+
+        const filterFolderPaths = filter.folder.path.split("/");
+        const filterFolderPathLast = filterFolderPaths.pop();
+        const filterFolderPathFirst = filterFolderPaths.join("/");
+
+        if (
+          folderPathFirst === filterFolderPathFirst &&
+          folderPathLast !== filterFolderPathLast &&
+          ((folder.type === "inbox" && filter.folder.type === "inbox") ||
+            (folder.type === "trash" && filter.folder.type === "trash") ||
+            (folder.type === "drafts" && filter.folder.type === "drafts") ||
+            (folder.type === "outbox" && filter.folder.type === "outbox"))
+        ) {
+          filter.folder.path = folder.path;
+          filter.folder.name = folder.name;
+          filtersChanged = true;
+          return true;
+        }
+
+        if (folder.path === filter.folder.path) {
+          if (folder.type != filter.folder.type && filter.folder.type == undefined ) {
+            filter.folder.type = folder.type !== undefined ? folder.type : "";
+            filtersChanged = true;
+          }
+          return true;
+        }
+
+        return false;
       } else {
         return folder.pathOrig === filter.folder.path;
       }
     });
 
     if (found.length === 0) {
+      console.debug("Removed filter: " + JSON.stringify(filter));
+
       filtersChanged = true;
       continue;
     }
@@ -329,9 +362,32 @@ function checkFolderFilters(filters) {
 function checkFilters(filters) {
   let newFilters = [];
 
+  console.debug(
+    "Current accounts: " + JSON.stringify(SysTrayX.Messaging.accounts)
+  );
+
   if (filters === undefined) {
     //  Create base filters
     for (const account of SysTrayX.Messaging.accounts) {
+      /*
+      //
+      //  Display specials
+      //
+      accountFolders = [];
+      if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+        //  Pre TB74 accounts API
+        accountFolders = createFoldersArrayPre74(account.folders);
+      } else {
+        //  TB74+ accounts API
+        accountFolders = createFoldersArray(account.folders);
+      }
+
+      const specials = accountFolders.filter(
+        (folder) => folder.type != undefined
+      );
+      console.debug("Special folders: " + JSON.stringify(specials));
+*/
+
       const inbox = account.folders.filter((folder) => folder.type == "inbox");
 
       if (inbox.length > 0) {
