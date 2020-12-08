@@ -39,6 +39,7 @@ SysTrayX.Accounts = {
               r.result.push({
                 accountId: folder.accountId,
                 name: folder.name,
+                type: folder.type,
                 subFolders: r[name].result,
               });
             }
@@ -196,6 +197,7 @@ SysTrayX.Accounts = {
                 JSON.stringify({
                   accountName: element.accountName,
                   accountId: element.accountId,
+                  type: element.type != undefined ? element.type : "",
                   path: element.path,
                   name: element.path.split("/").pop(),
                   version: SysTrayX.version,

@@ -43,6 +43,9 @@
                     "name": {
                       "type": "string"
                     },
+                    "type": {
+                      "type": "string"
+                    },
                     "path": {
                       "type": "string"
                     },
