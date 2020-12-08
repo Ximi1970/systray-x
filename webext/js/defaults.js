@@ -301,8 +301,13 @@ function checkFolderFilters(filters) {
           folderPathFirst === filterFolderPathFirst &&
           folderPathLast !== filterFolderPathLast &&
           ((folder.type === "inbox" && filter.folder.type === "inbox") ||
-            (folder.type === "trash" && filter.folder.type === "trash") ||
             (folder.type === "drafts" && filter.folder.type === "drafts") ||
+            (folder.type === "sent" && filter.folder.type === "sent") ||
+            (folder.type === "trash" && filter.folder.type === "trash") ||
+            (folder.type === "templates" &&
+              filter.folder.type === "templates") ||
+            (folder.type === "archives" && filter.folder.type === "archives") ||
+            (folder.type === "junk" && filter.folder.type === "junk") ||
             (folder.type === "outbox" && filter.folder.type === "outbox"))
         ) {
           filter.folder.path = folder.path;
@@ -312,7 +317,10 @@ function checkFolderFilters(filters) {
         }
 
         if (folder.path === filter.folder.path) {
-          if (folder.type != filter.folder.type && filter.folder.type == undefined ) {
+          if (
+            folder.type != filter.folder.type &&
+            filter.folder.type == undefined
+          ) {
             filter.folder.type = folder.type !== undefined ? folder.type : "";
             filtersChanged = true;
           }
