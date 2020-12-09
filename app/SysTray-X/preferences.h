@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QString>
 #include <QByteArray>
+#include <QMargins>
 
 /**
  * @brief The Preferences class. Class to hold the preferences.
@@ -301,6 +302,34 @@ class Preferences : public QObject
         void setNumberSize( int size );
 
         /**
+         * @brief getNumberAlignment. Get the number alignment.
+         *
+         * @return      The alignment.
+         */
+        int getNumberAlignment() const;
+
+        /**
+         * @brief setumberAlignment. Set the number alignment.
+         *
+         * @param      The alignment.
+         */
+        void setNumberAlignment( int alignment );
+
+        /**
+         * @brief getNumberMargins. Get the number margins.
+         *
+         * @return      The margins.
+         */
+        QMargins getNumberMargins() const;
+
+        /**
+         * @brief setNumberMargins. Set the number margins.
+         *
+         * @param      The margins.
+         */
+        void setNumberMargins( QMargins margins );
+
+        /**
          * @brief getCountType. Get the count type.
          *
          * @return      The count type.
@@ -476,6 +505,16 @@ class Preferences : public QObject
         void signalNumberSizeChange();
 
         /**
+         * @brief signalNumberAlignmmentChange. Signal a number alignment change.
+         */
+        void signalNumberAlignmentChange();
+
+        /**
+         * @brief signalNumberMarginsChange. Signal a number margins change.
+         */
+        void signalNumberMarginsChange();
+
+        /**
          * @brief signalCountTypeChange. Signal a count type change.
          */
         void signalCountTypeChange();
@@ -581,6 +620,16 @@ class Preferences : public QObject
          * @brief m_number_size. The size of the number in systray icon.
          */
         int m_number_size;
+
+        /**
+         * @brief m_number_alignment. Number alignment within the icon.
+         */
+        int m_number_alignment;
+
+        /**
+         * @brief m_number_margins. Margins for the number.
+         */
+        QMargins m_number_margins;
 
         /**
          * @brief m_count_type. Selected count type.

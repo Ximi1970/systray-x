@@ -16,6 +16,8 @@
 #include <QMimeDatabase>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QRegExpValidator>
+#include <QTextStream>
 
 /*
  *  Constructor
@@ -124,6 +126,19 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      */
     m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT);
     m_ui->themeGroup->setId( m_ui->darkRadioButton, Preferences::PREF_THEME_DARK );
+
+    /*
+     *  Set number alignment
+     */
+    setNumberAlignment( m_pref->getNumberAlignment() );
+
+    /*
+     *  Set number margins
+     */
+    QRegExpValidator *number_margins_validator = new QRegExpValidator( QRegExp("[0-9]*,[0-9]*,[0-9]*,[0-9]*") );
+    m_ui->numberMarginsLineEdit->setValidator(number_margins_validator);
+
+    setNumberMargins( m_pref->getNumberMargins() );
 }
 
 
@@ -327,6 +342,42 @@ void    PreferencesDialog::setCountType( Preferences::CountType count_type )
 
 
 /*
+ *  Set the number alignment
+ */
+void    PreferencesDialog::setNumberAlignment( int alignment )
+{
+   ( m_ui->numberAlignmentComboBox->setCurrentIndex( alignment ) );
+}
+
+
+/*
+ *  Set the number alignment
+ */
+void    PreferencesDialog::setNumberMargins( QMargins margins )
+{
+   ( m_ui->numberMarginsLineEdit->setText( QString("%1,%2,%3,%4").arg(margins.left() ).arg(margins.top() ).arg(margins.right() ).arg(margins.bottom() ) ) );
+}
+
+
+/*
+ *  Set the number alignment
+ */
+QMargins    PreferencesDialog::getNumberMargins() const
+{
+    QString margins_text = m_ui->numberMarginsLineEdit->text();
+    margins_text.replace( ",", " " );
+
+    int left;
+    int top;
+    int right;
+    int bottom;
+    QTextStream( &margins_text ) >> left >> top >> right >> bottom;
+
+    return QMargins( left, top, right, bottom );
+}
+
+
+/*
  *  Set the theme
  */
 void    PreferencesDialog::setTheme( Preferences::Theme theme )
@@ -365,6 +416,9 @@ void    PreferencesDialog::slotAccept()
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
+
+    m_pref->setNumberAlignment( m_ui->numberAlignmentComboBox->currentIndex() );
+    m_pref->setNumberMargins( getNumberMargins() );
 
     Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
     m_pref->setTheme( theme );
@@ -428,7 +482,8 @@ void    PreferencesDialog::slotReject()
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
     setCountType( m_pref->getCountType() );
-
+    setNumberAlignment( m_pref->getNumberAlignment() );
+    setNumberMargins( m_pref->getNumberMargins() );
     setTheme( m_pref->getTheme() );
 
     setDebug( m_pref->getDebug());
@@ -633,6 +688,24 @@ void    PreferencesDialog::slotNumberSizeChange()
 void    PreferencesDialog::slotCountTypeChange()
 {
     setCountType( m_pref->getCountType() );
+}
+
+
+/*
+ *  Handle the number size change
+ */
+void    PreferencesDialog::slotNumberAlignmentChange()
+{
+    setNumberAlignment( m_pref->getNumberAlignment() );
+}
+
+
+/*
+ *  Handle the number size change
+ */
+void    PreferencesDialog::slotNumberMarginsChange()
+{
+    setNumberMargins( m_pref->getNumberMargins() );
 }
 
 

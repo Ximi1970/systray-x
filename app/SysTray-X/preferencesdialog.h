@@ -152,6 +152,27 @@ class PreferencesDialog : public QDialog
         void    setNumberSize( int size );
 
         /**
+         * @brief setNumberAlignment. Set the number alignment.
+         *
+         *  @param alignment    The alignment.
+         */
+        void    setNumberAlignment( int alignment );
+
+        /**
+         * @brief setNumberMargins. Set the number margins.
+         *
+         *  @param margins    The margins.
+         */
+        void    setNumberMargins( QMargins margins );
+
+        /**
+         * @brief getNumberMargins. Get the number margins.
+         *
+         * @return The margins.
+         */
+        QMargins    getNumberMargins() const;
+
+        /**
          * @brief setCountType. Set the count type.
          *
          *  @param count_type    The count type.
@@ -245,6 +266,16 @@ class PreferencesDialog : public QDialog
          * @brief slotNumberSizeChange. Slot for handling number size change.
          */
         void    slotNumberSizeChange();
+
+        /**
+         * @brief slotNumberAlignmentChange. Slot for handling number alignment change.
+         */
+        void    slotNumberAlignmentChange();
+
+        /**
+         * @brief slotNumberMarginsChange. Slot for handling number margins change.
+         */
+        void    slotNumberMarginsChange();
 
         /**
          * @brief slotCountTypeChange. Slot for handling count type change.

@@ -662,6 +662,26 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setNumberSize( number_size );
     }
 
+    if( pref.contains( "numberAlignment" ) && pref[ "numberAlignment" ].isString() )
+    {
+        int number_size = pref[ "numberAlignment" ].toString().toInt();
+
+        /*
+         *  Store the new number size
+         */
+        m_pref->setNumberAlignment( number_size );
+    }
+
+    if( pref.contains( "numberMargins" ) && pref[ "numberMargins" ].isObject() )
+    {
+        QMargins margins = DecodeMargins( pref[ "numberMargins" ].toObject() );
+
+        /*
+         *  Store the new number size
+         */
+        m_pref->setNumberMargins( margins );
+    }
+
     if( pref.contains( "countType" ) && pref[ "countType" ].isString() )
     {
         Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
@@ -735,6 +755,36 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 
 
 /*
+ *  Decode preferences from JSON message
+ */
+QMargins    SysTrayXLink::DecodeMargins( const QJsonObject& marginsJson )
+{
+    QMargins    margins;
+    if( marginsJson.contains( "left" ) && marginsJson[ "left" ].isString() )
+    {
+        margins.setLeft( marginsJson[ "left" ].toString().toInt() );
+    }
+
+    if( marginsJson.contains( "top" ) && marginsJson[ "top" ].isString() )
+    {
+        margins.setTop( marginsJson[ "top" ].toString().toInt() );
+    }
+
+    if( marginsJson.contains( "right" ) && marginsJson[ "right" ].isString() )
+    {
+        margins.setRight( marginsJson[ "right" ].toString().toInt() );
+    }
+
+    if( marginsJson.contains( "bottom" ) && marginsJson[ "bottom" ].isString() )
+    {
+        margins.setBottom( marginsJson[ "bottom" ].toString().toInt() );
+    }
+
+    return margins;
+}
+
+
+/*
  *  Encode preferences to JSON message
  */
 void    SysTrayXLink::EncodePreferences( const Preferences& pref )
@@ -758,6 +808,15 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
     prefObject.insert("numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
+    prefObject.insert("numberAlignment", QJsonValue::fromVariant( QString::number( pref.getNumberAlignment() ) ) );
+
+    QJsonObject marginsObject;
+    marginsObject.insert("left", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().left() ) ) );
+    marginsObject.insert("top", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().top() ) ) );
+    marginsObject.insert("right", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().right() ) ) );
+    marginsObject.insert("bottom", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().bottom() ) ) );
+
+    prefObject.insert("numberMargins", marginsObject );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
 
@@ -940,6 +999,30 @@ void    SysTrayXLink::slotNumberColorChange()
  *  Handle a number size change signal
  */
 void    SysTrayXLink::slotNumberSizeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a number alignment change signal
+ */
+void    SysTrayXLink::slotNumberAlignmentChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a number margins change signal
+ */
+void    SysTrayXLink::slotNumberMarginsChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

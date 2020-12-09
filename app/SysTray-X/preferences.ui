@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>541</width>
-    <height>648</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -492,6 +492,78 @@
            </layout>
           </item>
           <item>
+           <widget class="QComboBox" name="numberAlignmentComboBox">
+            <property name="currentIndex">
+             <number>4</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>Top left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top centre</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Middle left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Middle centre</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Middle right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom centre</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="numberMarginsLabel">
+            <property name="text">
+             <string>Margins (left, top, right, bottom):</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="numberMarginsLineEdit">
+            <property name="inputMask">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>0,0,0,0</string>
+            </property>
+            <property name="maxLength">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QGroupBox" name="countTypeGroupBox">
             <property name="title">
              <string>Count type</string>
@@ -592,11 +664,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
-  <buttongroup name="themeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="themeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
  </buttongroups>
 </ui>

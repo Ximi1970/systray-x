@@ -33,6 +33,9 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
     m_show_number = m_pref->getShowNumber();
     m_number_color = m_pref->getNumberColor();
     m_number_size = m_pref->getNumberSize();
+    m_number_alignment = Qt::AlignHCenter | Qt::AlignVCenter;
+    setNumberAlignment( m_pref->getNumberAlignment() );
+    m_number_margins = m_pref->getNumberMargins();
 
     connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
@@ -207,6 +210,69 @@ void    SysTrayXIcon::setNumberSize( int size )
     }
 }
 
+
+/*
+ *  Set number alignment
+ */
+void    SysTrayXIcon::setNumberAlignment( int alignment )
+{
+    int alignment_qt;
+    switch( alignment )
+    {
+        case 0: alignment_qt = Qt::AlignTop | Qt::AlignLeft; break;
+        case 1: alignment_qt = Qt::AlignTop | Qt::AlignHCenter; break;
+        case 2: alignment_qt = Qt::AlignTop | Qt::AlignRight; break;
+
+        case 3: alignment_qt = Qt::AlignVCenter | Qt::AlignLeft; break;
+        case 4: alignment_qt = Qt::AlignVCenter | Qt::AlignHCenter; break;
+        case 5: alignment_qt = Qt::AlignVCenter | Qt::AlignRight; break;
+
+        case 6: alignment_qt = Qt::AlignBottom | Qt::AlignLeft; break;
+        case 7: alignment_qt = Qt::AlignBottom | Qt::AlignHCenter; break;
+        case 8: alignment_qt = Qt::AlignBottom | Qt::AlignRight; break;
+
+        default:
+        {
+            alignment_qt = Qt::AlignHCenter | Qt::AlignVCenter;
+            break;
+        }
+    }
+
+    if( m_number_alignment != alignment_qt )
+    {
+        /*
+         *  Store the new value
+         */
+        m_number_alignment = alignment_qt;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Set number alignment
+ */
+void    SysTrayXIcon::setNumberMargins( QMargins margins )
+{
+    if( m_number_margins != margins )
+    {
+        /*
+         *  Store the new value
+         */
+        m_number_margins = margins;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
 /*
  *  Set the number of unread mails
  */
@@ -318,10 +384,12 @@ void    SysTrayXIcon::renderIcon()
         font.setPointSizeF( font.pointSizeF() * ( factor * m_number_size / 10 ) );
         font.setBold( true );
         painter.setFont( font );
-
         painter.setPen( QColor( m_number_color ) );
 
-        painter.drawText( pixmap.rect(), Qt::AlignCenter, QString::number( m_unread_mail ) );
+        QRect bounding = pixmap.rect().adjusted( m_number_margins.left(), m_number_margins.top(),
+                                                 -m_number_margins.right(), -m_number_margins.bottom());
+
+        painter.drawText( bounding, m_number_alignment, QString::number( m_unread_mail ) );
     }
 
     /*
@@ -402,6 +470,24 @@ void    SysTrayXIcon::slotNumberColorChange()
 void    SysTrayXIcon::slotNumberSizeChange()
 {
     setNumberSize( m_pref->getNumberSize() );
+}
+
+
+/*
+ *  Handle the number alignment change signal
+ */
+void    SysTrayXIcon::slotNumberAlignmentChange()
+{
+    setNumberAlignment( m_pref->getNumberAlignment() );
+}
+
+
+/*
+ *  Handle the number margins change signal
+ */
+void    SysTrayXIcon::slotNumberMarginsChange()
+{
+    setNumberMargins( m_pref->getNumberMargins() );
 }
 
 

@@ -49,6 +49,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_number_color = "#000000";
     m_number_size = 10;
     m_count_type = PREF_COUNT_UNREAD;
+    m_number_alignment = 4;
+    m_number_margins = QMargins();
 
     m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
@@ -396,6 +398,58 @@ void    Preferences::setNumberSize( int size )
          *  Tell the world the new preference
          */
         emit signalNumberSizeChange();
+    }
+}
+
+
+/*
+ *  Get the count type.
+ */
+int Preferences::getNumberAlignment() const
+{
+    return m_number_alignment;
+}
+
+
+/*
+ *  Set the count type.
+ */
+void    Preferences::setNumberAlignment( int alignment )
+{
+    if( m_number_alignment != alignment)
+    {
+        m_number_alignment = alignment;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalNumberAlignmentChange();
+    }
+}
+
+
+/*
+ *  Get the count type.
+ */
+QMargins Preferences::getNumberMargins() const
+{
+    return m_number_margins;
+}
+
+
+/*
+ *  Set the count type.
+ */
+void    Preferences::setNumberMargins( QMargins margins )
+{
+    if( m_number_margins != margins)
+    {
+        m_number_margins = margins;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalNumberMarginsChange();
     }
 }
 

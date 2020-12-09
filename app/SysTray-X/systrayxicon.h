@@ -97,6 +97,20 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    setNumberSize( int size );
 
         /**
+         * @brief setNumberAlignment. Set the number alignment.
+         *
+         * @param alignment     The alignment.
+         */
+        void    setNumberAlignment( int alignment );
+
+        /**
+         * @brief setNumberMargins. Set the number margins.
+         *
+         * @param margins     The margins.
+         */
+        void    setNumberMargins( QMargins margins );
+
+        /**
          * @brief setUnreadMail. Set the number of unread mails.
          *
          *  @param unread_mail  The number of unread mails.
@@ -160,6 +174,16 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief slotNumberSizeChange. Slot for handling number size change signals.
          */
         void    slotNumberSizeChange();
+
+        /**
+         * @brief slotNumberAlignmentChange. Slot for handling number alignment change signals.
+         */
+        void    slotNumberAlignmentChange();
+
+        /**
+         * @brief slotNumberMarginsChange. Slot for handling number margins change signals.
+         */
+        void    slotNumberMarginsChange();
 
         /**
          * @brief slotThemeChange. Slot for handling theme change signals.
@@ -231,6 +255,16 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_number_size. Size of the unread mail number.
          */
         int m_number_size;
+
+        /**
+         * @brief m_number_alignment. The number alignment.
+         */
+        int m_number_alignment;
+
+        /**
+         * @brief m_margins. The number margins.
+         */
+        QMargins m_number_margins;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

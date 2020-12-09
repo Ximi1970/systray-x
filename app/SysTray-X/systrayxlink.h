@@ -159,6 +159,15 @@ class SysTrayXLink : public QObject
         void    DecodePreferences( const QJsonObject& pref );
 
         /**
+         * @brief DecodeMargins. Decode the margins object.
+         *
+         * @param margins   The JSON margins.
+         *
+         * @return  The margins.
+         */
+        QMargins    DecodeMargins( const QJsonObject& margins );
+
+        /**
          * @brief DecodePositions
          *
          * @param positions     The JSON positions.
@@ -298,6 +307,16 @@ class SysTrayXLink : public QObject
          * @brief slotNumberSizeChange. Handle a change in number size.
          */
         void    slotNumberSizeChange();
+
+        /**
+         * @brief slotNumberAlignmentChange. Handle a change in number alignment.
+         */
+        void    slotNumberAlignmentChange();
+
+        /**
+         * @brief slotNumberMarginsChange. Handle a change in number margins.
+         */
+        void    slotNumberMarginsChange();
 
         /**
          * @brief slotCountTypeChange. Slot for handling count type change signals.
