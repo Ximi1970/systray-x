@@ -57,7 +57,7 @@ Use a number to indicate the number of new/unread mails.
 
 Set the theme of the icon.
 
-- Light:  Light icon, black numer.__
+- Light:  Light icon, black number.__
 - Dark:   Dark icon, white number.  
 
 ### Specials
