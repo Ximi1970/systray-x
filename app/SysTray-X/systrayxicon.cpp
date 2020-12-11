@@ -254,7 +254,7 @@ void    SysTrayXIcon::setNumberAlignment( int alignment )
 
 
 /*
- *  Set number alignment
+ *  Set number margins
  */
 void    SysTrayXIcon::setNumberMargins( QMargins margins )
 {

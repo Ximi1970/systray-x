@@ -664,12 +664,12 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 
     if( pref.contains( "numberAlignment" ) && pref[ "numberAlignment" ].isString() )
     {
-        int number_size = pref[ "numberAlignment" ].toString().toInt();
+        int number_alignment = pref[ "numberAlignment" ].toString().toInt();
 
         /*
-         *  Store the new number size
+         *  Store the new number alignment
          */
-        m_pref->setNumberAlignment( number_size );
+        m_pref->setNumberAlignment( number_alignment );
     }
 
     if( pref.contains( "numberMargins" ) && pref[ "numberMargins" ].isObject() )

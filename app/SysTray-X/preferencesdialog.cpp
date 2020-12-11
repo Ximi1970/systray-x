@@ -16,8 +16,6 @@
 #include <QMimeDatabase>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QRegExpValidator>
-#include <QTextStream>
 
 /*
  *  Constructor
@@ -400,7 +398,6 @@ void    PreferencesDialog::slotAccept()
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
 
     m_pref->setNumberAlignment( m_ui->numberAlignmentComboBox->currentIndex() );
-//    m_pref->setNumberMargins( getNumberMargins() );
     m_pref->setNumberMargins( QMargins( m_ui->numberMarginLeftSpinBox->value(),  m_ui->numberMarginTopSpinBox->value(),
                    m_ui->numberMarginRightSpinBox->value(),  m_ui->numberMarginBottomSpinBox->value() ) );
 
@@ -676,7 +673,7 @@ void    PreferencesDialog::slotCountTypeChange()
 
 
 /*
- *  Handle the number size change
+ *  Handle the number alignment change
  */
 void    PreferencesDialog::slotNumberAlignmentChange()
 {
@@ -685,7 +682,7 @@ void    PreferencesDialog::slotNumberAlignmentChange()
 
 
 /*
- *  Handle the number size change
+ *  Handle the number margins change
  */
 void    PreferencesDialog::slotNumberMarginsChange()
 {

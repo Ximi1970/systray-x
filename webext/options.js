@@ -741,10 +741,14 @@ SysTrayX.RestoreOptions = {
     const inputTop = document.querySelector(`input[name="numberMarginTop"]`);
     inputTop.value = numberMargins.top;
 
-    const inputRight = document.querySelector(`input[name="numberMarginRight"]`);
+    const inputRight = document.querySelector(
+      `input[name="numberMarginRight"]`
+    );
     inputRight.value = numberMargins.right;
 
-    const inputBottom = document.querySelector(`input[name="numberMarginBottom"]`);
+    const inputBottom = document.querySelector(
+      `input[name="numberMarginBottom"]`
+    );
     inputBottom.value = numberMargins.bottom;
   },
 

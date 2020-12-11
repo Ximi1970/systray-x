@@ -178,7 +178,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     getPreferences();
 
-///*
+/*
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
     //slotLoadLanguage( "nl" );
@@ -187,7 +187,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     slotSelectIconObject( false );
 
     slotSetUnreadMail( 10 );
-//*/
+*/
 }
 
 

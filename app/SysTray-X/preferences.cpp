@@ -403,7 +403,7 @@ void    Preferences::setNumberSize( int size )
 
 
 /*
- *  Get the count type.
+ *  Get the number alignment.
  */
 int Preferences::getNumberAlignment() const
 {
@@ -412,7 +412,7 @@ int Preferences::getNumberAlignment() const
 
 
 /*
- *  Set the count type.
+ *  Set the number alignment.
  */
 void    Preferences::setNumberAlignment( int alignment )
 {
@@ -429,7 +429,7 @@ void    Preferences::setNumberAlignment( int alignment )
 
 
 /*
- *  Get the count type.
+ *  Get the number margins.
  */
 QMargins Preferences::getNumberMargins() const
 {
@@ -438,7 +438,7 @@ QMargins Preferences::getNumberMargins() const
 
 
 /*
- *  Set the count type.
+ *  Set the number margins.
  */
 void    Preferences::setNumberMargins( QMargins margins )
 {
