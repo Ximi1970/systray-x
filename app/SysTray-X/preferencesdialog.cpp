@@ -135,9 +135,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Set number margins
      */
-    QRegExpValidator *number_margins_validator = new QRegExpValidator( QRegExp("[0-9]*,[0-9]*,[0-9]*,[0-9]*") );
-    m_ui->numberMarginsLineEdit->setValidator(number_margins_validator);
-
     setNumberMargins( m_pref->getNumberMargins() );
 }
 
@@ -333,47 +330,32 @@ void    PreferencesDialog::setNumberSize( int size )
 
 
 /*
+ *  Set the number alignment
+ */
+void    PreferencesDialog::setNumberAlignment( int alignment )
+{
+   m_ui->numberAlignmentComboBox->setCurrentIndex( alignment );
+}
+
+
+/*
+ *  Set the number margns
+ */
+void    PreferencesDialog::setNumberMargins( QMargins margins )
+{
+   m_ui->numberMarginLeftSpinBox->setValue( margins.left() );
+   m_ui->numberMarginTopSpinBox->setValue( margins.top() );
+   m_ui->numberMarginRightSpinBox->setValue( margins.right() );
+   m_ui->numberMarginBottomSpinBox->setValue( margins.bottom() );
+}
+
+
+/*
  *  Set the count type
  */
 void    PreferencesDialog::setCountType( Preferences::CountType count_type )
 {
    ( m_ui->countTypeGroup->button( count_type ) )->setChecked( true );
-}
-
-
-/*
- *  Set the number alignment
- */
-void    PreferencesDialog::setNumberAlignment( int alignment )
-{
-   ( m_ui->numberAlignmentComboBox->setCurrentIndex( alignment ) );
-}
-
-
-/*
- *  Set the number alignment
- */
-void    PreferencesDialog::setNumberMargins( QMargins margins )
-{
-   ( m_ui->numberMarginsLineEdit->setText( QString("%1,%2,%3,%4").arg(margins.left() ).arg(margins.top() ).arg(margins.right() ).arg(margins.bottom() ) ) );
-}
-
-
-/*
- *  Set the number alignment
- */
-QMargins    PreferencesDialog::getNumberMargins() const
-{
-    QString margins_text = m_ui->numberMarginsLineEdit->text();
-    margins_text.replace( ",", " " );
-
-    int left;
-    int top;
-    int right;
-    int bottom;
-    QTextStream( &margins_text ) >> left >> top >> right >> bottom;
-
-    return QMargins( left, top, right, bottom );
 }
 
 
@@ -418,7 +400,9 @@ void    PreferencesDialog::slotAccept()
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
 
     m_pref->setNumberAlignment( m_ui->numberAlignmentComboBox->currentIndex() );
-    m_pref->setNumberMargins( getNumberMargins() );
+//    m_pref->setNumberMargins( getNumberMargins() );
+    m_pref->setNumberMargins( QMargins( m_ui->numberMarginLeftSpinBox->value(),  m_ui->numberMarginTopSpinBox->value(),
+                   m_ui->numberMarginRightSpinBox->value(),  m_ui->numberMarginBottomSpinBox->value() ) );
 
     Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
     m_pref->setTheme( theme );

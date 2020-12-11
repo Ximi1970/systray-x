@@ -189,6 +189,61 @@
     "description": "Size of the number"
   },
 
+  "icons_number_alignment": {
+    "message": "Alignment:",
+    "description": "Number alignment"
+  },
+
+  "icons_number_top_left": {
+    "message": "Top left",
+    "description": "Number alignment top left"
+  },
+
+  "icons_number_top_center": {
+    "message": "Top center",
+    "description": "Number alignment top center"
+  },
+
+  "icons_number_top_right": {
+    "message": "Top right",
+    "description": "Number alignment top right"
+  },
+
+  "icons_number_middle_left": {
+    "message": "Middle left",
+    "description": "Number alignment middle left"
+  },
+
+  "icons_number_middle_center": {
+    "message": "Middle center",
+    "description": "Number alignment middle center"
+  },
+
+  "icons_number_middle_right": {
+    "message": "Middle right",
+    "description": "Number alignment middle right"
+  },
+
+  "icons_number_bottom_left": {
+    "message": "Bottom left",
+    "description": "Number alignment bottom left"
+  },
+
+  "icons_number_bottom_center": {
+    "message": "Bottom center",
+    "description": "Number alignment bottom center"
+  },
+
+  "icons_number_bottom_right": {
+    "message": "Bottom right",
+    "description": "Number alignment bottom right"
+  },
+
+  "icons_number_margins": {
+    "message": "Margins (left, top, right, bottom",
+    "description": "Number margins (left, top, right, bottom"
+  },
+
   "icons_number_count_type": {
     "message": "Message count type:",
     "description": "Count type options"

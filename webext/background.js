@@ -302,6 +302,8 @@ SysTrayX.Messaging = {
       "showNumber",
       "numberColor",
       "numberSize",
+      "numberAlignment",
+      "numberMargins",
       "countType",
       "theme",
     ]);
@@ -323,6 +325,13 @@ SysTrayX.Messaging = {
     const showNumber = result.showNumber || "true";
     let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
+    const numberAlignment = result.numberAlignment || "4";
+    const numberMargins = result.numberMargins || {
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+    };
     const countType = result.countType || "0";
     const theme = result.theme || "0";
 
@@ -349,6 +358,8 @@ SysTrayX.Messaging = {
         showNumber: showNumber,
         numberColor: numberColor,
         numberSize: numberSize,
+        numberAlignment: numberAlignment,
+        numberMargins: numberMargins,
         countType: countType,
         theme: theme,
       },
@@ -414,8 +425,6 @@ SysTrayX.Link = {
 
     const positions = response["positions"];
     if (positions) {
-      console.debug("Positions" + JSON.stringify(positions));
-
       browser.storage.sync.set({
         windowPositions: positions,
       });
@@ -490,6 +499,20 @@ SysTrayX.Link = {
       if (numberSize) {
         browser.storage.sync.set({
           numberSize: numberSize,
+        });
+      }
+
+      const numberAlignment = response["preferences"].numberAlignment;
+      if (numberAlignment) {
+        browser.storage.sync.set({
+          numberAlignment: numberAlignment,
+        });
+      }
+
+      const numberMargins = response["preferences"].numberMargins;
+      if (numberMargins) {
+        browser.storage.sync.set({
+          numberMargins: numberMargins,
         });
       }
 

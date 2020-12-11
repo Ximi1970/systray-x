@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>541</width>
-    <height>768</height>
+    <width>544</width>
+    <height>772</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -562,17 +562,36 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="numberMarginsLineEdit">
-            <property name="inputMask">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>0,0,0,0</string>
-            </property>
-            <property name="maxLength">
-             <number>16</number>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QSpinBox" name="numberMarginLeftSpinBox">
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="numberMarginTopSpinBox">
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="numberMarginRightSpinBox">
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="numberMarginBottomSpinBox">
+              <property name="maximum">
+               <number>999</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QGroupBox" name="countTypeGroupBox">
@@ -675,11 +694,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="themeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="themeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
  </buttongroups>
 </ui>

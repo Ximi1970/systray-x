@@ -173,8 +173,7 @@ SysTrayX.SaveOptions = {
     //
     //  Save number color
     //
-    let numberColor = document.querySelector('input[name="numberColor"]')
-      .value;
+    let numberColor = document.querySelector('input[name="numberColor"]').value;
 
     //  Force different color?
     if (theme == "0" && numberColor == "#ffffff") {
@@ -196,6 +195,40 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save number alignment
+    //
+    const numberAlignment = document.querySelector(
+      'select[name="numberAlignment"]'
+    ).value;
+    browser.storage.sync.set({
+      numberAlignment: numberAlignment,
+    });
+
+    //
+    //  Save number margins
+    //
+    const numberMarginLeft = document.querySelector(
+      'input[name="numberMarginLeft"]'
+    ).value;
+    const numberMarginTop = document.querySelector(
+      'input[name="numberMarginTop"]'
+    ).value;
+    const numberMarginRight = document.querySelector(
+      'input[name="numberMarginRight"]'
+    ).value;
+    const numberMarginBottom = document.querySelector(
+      'input[name="numberMarginBottom"]'
+    ).value;
+    browser.storage.sync.set({
+      numberMargins: {
+        left: numberMarginLeft,
+        top: numberMarginTop,
+        right: numberMarginRight,
+        bottom: numberMarginBottom,
+      },
+    });
+
+    //
     // Save count type preferences
     //
     const countType = document.querySelector('input[name="countType"]:checked')
@@ -203,7 +236,6 @@ SysTrayX.SaveOptions = {
     browser.storage.sync.set({
       countType: countType,
     });
-
 
     //  Mark add-on preferences changed
     browser.storage.sync.set({
@@ -347,6 +379,24 @@ SysTrayX.RestoreOptions = {
     getNumberSize.then(
       SysTrayX.RestoreOptions.setNumberSize,
       SysTrayX.RestoreOptions.onNumberSizeError
+    );
+
+    //
+    //  Restore number alignment
+    //
+    const getNumberAlignment = browser.storage.sync.get("numberAlignment");
+    getNumberAlignment.then(
+      SysTrayX.RestoreOptions.setNumberAlignment,
+      SysTrayX.RestoreOptions.onNumberAlignmentError
+    );
+
+    //
+    //  Restore number margins
+    //
+    const getNumberMargins = browser.storage.sync.get("numberMargins");
+    getNumberMargins.then(
+      SysTrayX.RestoreOptions.setNumberMargins,
+      SysTrayX.RestoreOptions.onNumberMarginsError
     );
 
     //
@@ -661,6 +711,48 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore number alignment
+  //
+  setNumberAlignment: function (result) {
+    const numberAlignment = result.numberAlignment || "4";
+
+    const input = document.querySelector(`select[name="numberAlignment"]`);
+    input.value = numberAlignment;
+  },
+
+  onNumberAlignmentError: function (error) {
+    console.log(`numberAlignment Error: ${error}`);
+  },
+
+  //
+  //  Restore number margins
+  //
+  setNumberMargins: function (result) {
+    const numberMargins = result.numberMargins || {
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+    };
+
+    const inputLeft = document.querySelector(`input[name="numberMarginLeft"]`);
+    inputLeft.value = numberMargins.left;
+
+    const inputTop = document.querySelector(`input[name="numberMarginTop"]`);
+    inputTop.value = numberMargins.top;
+
+    const inputRight = document.querySelector(`input[name="numberMarginRight"]`);
+    inputRight.value = numberMargins.right;
+
+    const inputBottom = document.querySelector(`input[name="numberMarginBottom"]`);
+    inputBottom.value = numberMargins.bottom;
+  },
+
+  onNumberMarginsError: function (error) {
+    console.log(`numberMargins Error: ${error}`);
+  },
+
+  //
   //  Restore count type
   //
   setCountType: function (result) {
@@ -828,6 +920,16 @@ SysTrayX.StorageChanged = {
       if (item === "numberSize") {
         SysTrayX.RestoreOptions.setNumberSize({
           numberSize: changes[item].newValue,
+        });
+      }
+      if (item === "numberAlignment") {
+        SysTrayX.RestoreOptions.setNumberAlignment({
+          numberAlignment: changes[item].newValue,
+        });
+      }
+      if (item === "numberMargins") {
+        SysTrayX.RestoreOptions.setNumberMargins({
+          numberMargins: changes[item].newValue,
         });
       }
       if (item === "countType") {
