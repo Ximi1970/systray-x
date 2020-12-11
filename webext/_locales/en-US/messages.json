@@ -240,8 +240,8 @@
   },
 
   "icons_number_margins": {
-    "message": "Margins (left, top, right, bottom",
-    "description": "Number margins (left, top, right, bottom"
+    "message": "Margins (left, top, right, bottom)",
+    "description": "Number margins (left, top, right, bottom)"
   },
 
   "icons_number_count_type": {

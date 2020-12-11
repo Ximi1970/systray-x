@@ -189,6 +189,61 @@
     "description": "Size of the number"
   },
 
+  "icons_number_alignment": {
+    "message": "Nummernausrichtung:",
+    "description": "Number alignment"
+  },
+
+  "icons_number_top_left": {
+    "message": "Oben links",
+    "description": "Number alignment top left"
+  },
+
+  "icons_number_top_center": {
+    "message": "Oben in der Mitte",
+    "description": "Number alignment top center"
+  },
+
+  "icons_number_top_right": {
+    "message": "Oben rechts",
+    "description": "Number alignment top right"
+  },
+
+  "icons_number_middle_left": {
+    "message": "Mitte links",
+    "description": "Number alignment middle left"
+  },
+
+  "icons_number_middle_center": {
+    "message": "Mittleres Zentrum",
+    "description": "Number alignment middle center"
+  },
+
+  "icons_number_middle_right": {
+    "message": "Mitte rechts",
+    "description": "Number alignment middle right"
+  },
+
+  "icons_number_bottom_left": {
+    "message": "Unten links",
+    "description": "Number alignment bottom left"
+  },
+
+  "icons_number_bottom_center": {
+    "message": "Unten in der Mitte",
+    "description": "Number alignment bottom center"
+  },
+
+  "icons_number_bottom_right": {
+    "message": "Unten rechts",
+    "description": "Number alignment bottom right"
+  },
+
+  "icons_number_margins": {
+    "message": "Ränder (links, oben, rechts, unten)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
   "icons_number_count_type": {
     "message": "E-Mail-Benachrichtigungstyp:",
     "description": "Count type options"
@@ -253,22 +308,22 @@
     "message": "SysTray-X Companion App by Ximi1970",
     "description": "Line 1"
   },
-  
+
   "about_version": {
     "message": "Ausführung:",
     "description": "Version"
   },
-  
+
   "about_build": {
     "message": "Build:",
     "description": "Build"
   },
-  
+
   "about_hash": {
     "message": "Hash:",
     "description": "Hash"
   },
-  
+
   "about_branch": {
     "message": "Branch:",
     "description": "Branch"
@@ -323,12 +378,12 @@
     "message": "Schließen",
     "description": "Close button"
   },
-  
+
   "mail_notification_icon": {
     "message": "E-Mail-Benachrichtigung Symbol",
     "description": "Mail icon selection title"
   },
-  
+
   "number_properties": {
     "message": "Nummereigenschaften",
     "description": "Number properties title"
@@ -338,17 +393,17 @@
     "message": "Bild öffnen",
     "description": "File image dialog"
   },
-  
+
   "image_files": {
     "message": "Bilddateien (*.png *.jpg *.bmp)",
     "description": "File image selection"
   },
-  
+
   "image_save": {
     "message": "Speichern",
     "description": "File image save"
   },
-  
+
   "image_cancel": {
     "message": "Annullieren",
     "description": "File image cancel"
