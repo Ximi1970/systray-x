@@ -48,9 +48,17 @@ What icon should be used when there is new/unread mail.
 Use a number to indicate the number of new/unread mails.
 
 - Display unread message count:   Display a number  
-- Number color: Change the color of the number.  
-- Number size:  Change the size of the number.  
+- Number color:     Change the color of the number.  
+- Number size:      Change the size of the number.  
+- Number alignment: Set the number alignment within the icon.  
+- Number margins:   Set the number margins from the icon border.  
 
+### Theme
+
+Set the theme of the icon.
+
+- Light:  Light icon, black numer.__
+- Dark:   Dark icon, white number.  
 
 ### Specials
 
