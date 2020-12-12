@@ -361,6 +361,17 @@ Download the installer here (click on the assets dropdown list):
 
 [Addon and companion app installer](https://github.com/Ximi1970/systray-x/releases)
 
+### Windows
+
+Get the `SysTray-X-setup32-x.x.x.exe` or `SysTray-X-setup64-x.x.x.exe` depending on the Thunderbird version (32bit or 64bit) you are using.  
+Run the installer.  
+If you want to change the install directory, please make sure to select an empty / unused directory.  
+ALL files in the selected install directory will be removed when uninstalling !!
+Please remove the Systray-X add-on from Thunderbird before uninstalling.
+
+When reinstalling you need to add the add-on manually to Thunderbird again by using the `Installl Add-On From File` option in the `Add-ons manager`.
+You can find add-on file in the install directory called `systray-x@Ximi1970.xpi`
+
 
 ## Building
 
