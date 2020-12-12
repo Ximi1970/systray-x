@@ -71,6 +71,7 @@ Section "Install"
 
   File "..\app\SysTray-X\files\icons\SysTray-X.ico"
   File /r "..\app\dist\win64\*"
+  File "..\systray-x@Ximi1970.xpi"
 
   StrCpy $0 "$INSTDIR\SysTray-X.exe"
   ${MyStrRep} $0 $0 "\" "\\" 
