@@ -383,7 +383,9 @@ var SysTrayX = {
   addHasNewMessages(folder) {
     let folderNewMsgCount = folder.hasNewMessages;
 
-    this.newMsgCount = this.newMsgCount || folderNewMsgCount;
+    if (folderNewMsgCount > 0) {
+      this.newMsgCount += folderNewMsgCount;
+    }
   },
 
   getAccounts() {

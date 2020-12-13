@@ -76,9 +76,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Hide the count type for now
      */
-    m_ui->countTypeGroupBox->setVisible(false);
-//    m_ui->unreadRadioButton->setVisible(false);
-//    m_ui->newRadioButton->setVisible(false);
+//    m_ui->countTypeGroupBox->setVisible(false);
 
     /*
      *  Set icon type defaults
