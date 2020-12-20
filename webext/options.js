@@ -956,6 +956,11 @@ SysTrayX.StorageChanged = {
           startMinimized: changes[item].newValue,
         });
       }
+      if (item === "restorePositions") {
+        SysTrayX.RestoreOptions.setRestorePositions({
+          restorePositions: changes[item].newValue,
+        });
+      }
       if (item === "theme") {
         SysTrayX.RestoreOptions.setTheme({
           theme: changes[item].newValue,
@@ -965,11 +970,6 @@ SysTrayX.StorageChanged = {
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
           debug: changes[item].newValue,
-        });
-      }
-      if (item === "restorePositions") {
-        SysTrayX.RestoreOptions.setRestorePositions({
-          restorePositions: changes[item].newValue,
         });
       }
     }

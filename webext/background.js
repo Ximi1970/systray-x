@@ -292,6 +292,7 @@ SysTrayX.Messaging = {
       "minimizeType",
       "closeType",
       "startMinimized",
+      "restorePositions",
       "defaultIconType",
       "defaultIconMime",
       "defaultIcon",
@@ -315,6 +316,7 @@ SysTrayX.Messaging = {
     const minimizeType = result.minimizeType || "1";
     const closeType = result.closeType || "1";
     const startMinimized = result.startMinimized || "false";
+    const restorePositions = result.restorePositions || "false";
     const defaultIconType = result.defaultIconType || "0";
     const defaultIconMime = result.defaultIconMime || "image/png";
     const defaultIcon = result.defaultIcon || [];
@@ -348,6 +350,7 @@ SysTrayX.Messaging = {
         minimizeType: minimizeType,
         closeType: closeType,
         startMinimized: startMinimized,
+        restorePositions: restorePositions,
         defaultIconType: defaultIconType,
         defaultIconMime: defaultIconMime,
         defaultIcon: defaultIcon,
@@ -541,6 +544,13 @@ SysTrayX.Link = {
       if (startMinimized) {
         browser.storage.sync.set({
           startMinimized: startMinimized,
+        });
+      }
+
+      const restorePositions = response["preferences"].restorePositions;
+      if (restorePositions) {
+        browser.storage.sync.set({
+          restorePositions: restorePositions,
         });
       }
 
