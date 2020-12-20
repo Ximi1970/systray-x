@@ -358,8 +358,12 @@ void    WindowCtrlUnix::updatePositions()
  */
 void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
 {
+    emit signalConsole( "Minimize" );
+
     if( !isThunderbird( getPpid() ) )
     {
+        emit signalConsole( "Minimize terminated" );
+
         return;
     }
 
@@ -375,22 +379,29 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, int set )
 {
+    emit signalConsole( "Hide" );
+
     switch( m_minimize_type )
     {
         case Preferences::PREF_MINIMIZE_METHOD_1:
         {
+            emit signalConsole( "Hide 1" );
+
             hideWindowEvent( window, set );
             break;
         }
 
         case Preferences::PREF_MINIMIZE_METHOD_2:
         {
+            emit signalConsole( "Hide 2" );
+
             hideWindowAtom( window, set );
             break;
         }
 
         default:
         {
+            emit signalConsole( "Hide default" );
             break;
         }
     }
@@ -402,8 +413,12 @@ void    WindowCtrlUnix::hideWindow( quint64 window, int set )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
+    emit signalConsole( "Normalize" );
+
     if( !isThunderbird( getPpid() ) )
     {
+        emit signalConsole( "Normalize terminated" );
+
         return;
     }
 
@@ -499,6 +514,8 @@ void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
 
     if( set )
     {
+        emit signalConsole( "Hide remove from taskbar" );
+
         sendEvent( window,
                     "_NET_WM_STATE",
                     _NET_WM_STATE_ADD,
@@ -506,6 +523,8 @@ void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
     }
     else
     {
+        emit signalConsole( "Show on taskbar" );
+
         sendEvent( window,
                     "_NET_WM_STATE",
                     _NET_WM_STATE_REMOVE,
