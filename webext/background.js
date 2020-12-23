@@ -23,7 +23,7 @@ SysTrayX.Messaging = {
   filters: undefined,
 
   init: function () {
-    // Minimuze on startup handled by Companion app as backup
+    // Minimize on startup handled by Companion app as backup
     if (SysTrayX.startupState == "minimized") {
       SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
     }
@@ -56,18 +56,7 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    /*
-    //  New mail listener (TB76+)
-    if (SysTrayX.browserInfo.majorVersion > 75) {
-      //
-      //  Mixed results, forgets accounts?, double events?
-      //
-      browser.messages.onNewMailReceived.addListener(
-        SysTrayX.Messaging.newMail
-      );
-    }
-    */
-
+    //  Catch the unread / new mails
     browser.folderChange.onUnreadMailChange.addListener(function (unread) {
       SysTrayX.Messaging.unreadCb(unread);
     });

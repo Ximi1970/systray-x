@@ -80,8 +80,7 @@ void    WindowCtrl::slotWindowTest1()
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
 
-
-    findWindows( m_ppid );
+//    findWindows( m_ppid );
 
     emit signalConsole("Test 1 done");
 }

@@ -353,6 +353,11 @@ class WindowCtrlUnix : public QObject
          */
         QMargins atomFrameExtents( Display *display, quint64 window );
 
+
+
+        void* GetWindowProperty( quint64 window, const char* atom, quint32* items = nullptr );
+
+
     signals:
 
         /**
@@ -375,16 +380,6 @@ class WindowCtrlUnix : public QObject
          * @brief m_display. Pointer to the main display.
          */
         Display*    m_display;
-
-        /**
-         * @brief m_screen. The screen number.
-         */
-        int m_screen;
-
-        /**
-         * @brief m_root_window. The root window.
-         */
-        quint64 m_root_window;
 
         /**
          * @brief m_tb_windows. The Thunderbird windows.

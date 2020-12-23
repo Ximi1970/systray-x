@@ -1,9 +1,11 @@
-#-------------------------------------------------
 #
-# Project created by QtCreator 2020-01-12T19:19:44
+#   Get the defaults
 #
-#-------------------------------------------------
+include( ../SysTray-X.pri )
 
+#
+#   Defines
+#
 #DEFINES += NO_KDE_INTEGRATION
 
 
@@ -104,61 +106,13 @@ unix:macx: {
     LIBS += -dead_strip
 }
 
-#
-#	Git version getters
-#
-win32: {
-    contains(QMAKE_HOST.os, Windows): {
-        #
-        #	Host is Windows
-        #
-        GIT = ""C:\\Progra~1\\Git\\bin\\git.exe""
-    }
-    else {
-        #
-        #	Host is Linux, cross compiling with mingw
-        #
-        GIT = git
-    }
-}
-unix:GIT = git
-
-#
-#	Define the app version strings
-#
-BUILD_NUMBER = $$system($$GIT rev-list --count HEAD)
-GIT_HASH = $$system($$GIT rev-parse HEAD)
-GIT_BRANCH = $$system($$GIT rev-parse --abbrev-ref HEAD)
-
-GIT_VERSION_LONG = $$system($$GIT describe --long)
-GIT_VERSION = $$section(GIT_VERSION_LONG, -, 0, 0)
-
-VERSION_MAJOR = $$section(GIT_VERSION, ., 0, 0)
-VERSION_MINOR = $$section(GIT_VERSION, ., 1, 1)
-VERSION_PATCH = $$section(GIT_VERSION, ., 2, 2)
-
-!contains(DEFINES,EXT_VERSION) {
-    DEFINES += APP_VERSION_MAJOR=\\\"$$VERSION_MAJOR\\\"
-    DEFINES += APP_VERSION_MINOR=\\\"$$VERSION_MINOR\\\"
-    DEFINES += APP_VERSION_PATCH=\\\"$$VERSION_PATCH\\\"
-    DEFINES += APP_BUILD=\\\"$$BUILD_NUMBER\\\"
-    DEFINES += APP_GITHASH=\\\"$$GIT_HASH\\\"
-    DEFINES += APP_GITBRANCH=\\\"$$GIT_BRANCH\\\"
-
-    message("Buildnumber: "$$BUILD_NUMBER)
-    message("Git hash: "$$GIT_HASH)
-    message("Git branch: "$$GIT_BRANCH)
-    message("Version: "$$VERSION_MAJOR"."$$VERSION_MINOR"."$$VERSION_PATCH)
-    #message($$QMAKESPEC)
-}
-
 unix: {
     #
     #   Generate JSON
     #
-    QMAKE_POST_LINK = cp -f "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json.template" "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ;
-    QMAKE_POST_LINK += sed -i -e "s?SYSTRAY_X_PATH?$${OUT_PWD}/$${TARGET}?" "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ;
-#    QMAKE_POST_LINK += cp -f "$${_PRO_FILE_PWD_}/../config/linux/SysTray_X.json" ~/.mozilla/native-messaging-hosts/SysTray_X.json ;
+    QMAKE_POST_LINK = cp -f "$${_PRO_FILE_PWD_}/../../config/linux/SysTray_X.json.template" "$${_PRO_FILE_PWD_}/../../config/linux/SysTray_X.json" ;
+    QMAKE_POST_LINK += sed -i -e "s?SYSTRAY_X_PATH?$${OUT_PWD}/$${TARGET}?" "$${_PRO_FILE_PWD_}/../../config/linux/SysTray_X.json" ;
+#    QMAKE_POST_LINK += cp -f "$${_PRO_FILE_PWD_}/../../config/linux/SysTray_X.json" ~/.mozilla/native-messaging-hosts/SysTray_X.json ;
 }
 
 win32: {
@@ -166,17 +120,17 @@ win32: {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)').replace('\\','\\\\')")
 
         QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe \"$$shell_path($${OUT_PWD}/debug/$${TARGET}.exe)\" &
-        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\'\" &
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json)\'\" &
     } else {
         JSON_EXE_PATH = $$system(powershell -Command "('$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)').replace('\\','\\\\')")
 
         QMAKE_POST_LINK = $$[QT_INSTALL_BINS]\windeployqt.exe \"$$shell_path($${OUT_PWD}/release/$${TARGET}.exe)\" &
-        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)\'\" &
+        QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json.template)\' ).replace(\'SYSTRAY_X_PATH\',\'$$JSON_EXE_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json)\'\" &
     }
 
-    JSON_JSON_PATH = $$system(powershell -Command "('$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray_X.json)').replace('\\','\\\\')")
+    JSON_JSON_PATH = $$system(powershell -Command "('$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json)').replace('\\','\\\\')")
 
-    QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg.template)\' ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../config/win32/SysTray-X-User.reg)\'\" &
+    QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-User.reg.template)\' ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-User.reg)\'\" &
 }
 
 #
