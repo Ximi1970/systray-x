@@ -341,7 +341,6 @@ sudo yum install epel-release
 sudo yum install systray-x
 ```
 
-
 ###### GNOME
 
 ```bash
@@ -351,6 +350,23 @@ sudo yum install gnome-tweaks
 Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
 
 
+### MX
+
+First install the Debian latest Thunderbird version. Replace the xx.x.x with the correct version.
+```bash
+sudo apt install thunderbird=1:xx.x.x-1~deb10u1
+```
+
+Then add the SysTray-X Debian repository and install the SysTray-X package.
+
+```bash
+sudo apt install thunderbird=1:78.x.x-1~deb10u1
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+sudo apt install systray-x-minimal
+```
 
 ## Binaries (User)
 
