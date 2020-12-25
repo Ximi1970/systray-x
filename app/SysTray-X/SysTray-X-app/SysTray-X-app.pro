@@ -75,6 +75,20 @@ unix:!macx: {
     QMAKE_LFLAGS += $(RPM_OPT_FLAGS)
 #    QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
+    #
+    #   Add local ncludes
+    #
+    QMAKE_CFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
+    QMAKE_CXXFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
+
+    #
+    #   Add local libs
+    #
+    LIBS += -L../SysTray-X-lib-x11 -lSysTray-X-x11
+
+    #
+    #   Add system libs
+    #
     LIBS += -lX11
     
     #
@@ -162,6 +176,7 @@ SOURCES += \
 }
 
 HEADERS += \
+        debug.h \
         systrayxlink.h \
         systrayxicon.h \
         systrayx.h \

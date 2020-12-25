@@ -3,13 +3,20 @@
 #ifdef Q_OS_UNIX
 
 /*
+ *  Local includes
+ */
+#include "debug.h"
+#include "systray-x-lib-x11.h"
+
+/*
  *  System includes
  */
 #include <unistd.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
 
+/*
+ *  Qt includes
+ */
+#include <QFileInfo>
 
 /*
  *  Constructor
@@ -26,7 +33,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     /*
      *  Get the base display and window
      */
-    m_display = XOpenDisplay( NULL );
+    m_display = OpenDisplay();
 }
 
 
@@ -100,7 +107,7 @@ QString WindowCtrlUnix::getProcessName( qint64 pid ) const
  */
 bool    WindowCtrlUnix::findWindow( const QString& title )
 {
-    QList< WindowItem > windows = listXWindows( m_display, XDefaultRootWindow( m_display ) );
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
     m_tb_windows = QList< quint64 >();
     for( int i = 0 ; i < windows.length() ; ++i )
@@ -108,16 +115,16 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
         WindowItem win = windows.at( i );
 
         char *name = nullptr;
-        if( XFetchName( m_display, win.window, &name ) > 0 ) {
+        if( FetchName( m_display, win.window, &name ) > 0 ) {
             QString win_name( name );
 
-            XFree( name );
+            Free( name );
 
             if( win_name.contains( title, Qt::CaseInsensitive ) ) {
                 /*
                  *  Store the XID
                  */
-                m_tb_windows.append( static_cast<quint64>( win.window ) );
+                m_tb_windows.append( win.window );
             }
         }
     }
@@ -136,43 +143,35 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
  */
 void    WindowCtrlUnix::findWindows( qint64 pid )
 {
-    QList< WindowItem > windows = listXWindows( m_display, XDefaultRootWindow( m_display ) );
-
-    // Get the PID property atom.
-    Atom atom_PID = XInternAtom( m_display, "_NET_WM_PID", True );
-    if( atom_PID == None )
-    {
-        return;
-    }
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
     m_tb_windows = QList< quint64 >();
     for( int i = 0 ; i < windows.length() ; ++i )
     {
         WindowItem win = windows.at( i );
 
-        Atom           type;
-        int            format;
-        unsigned long  nItems;
-        unsigned long  bytesAfter;
+        quint32 n_propPID;
+        void* propPID = GetWindowProperty( m_display, win.window, "_NET_WM_PID", &n_propPID );
 
-        unsigned char* propPID = nullptr;
-        if( Success == XGetWindowProperty( m_display, win.window, atom_PID, 0, 1, False, XA_CARDINAL,
-                                             &type, &format, &nItems, &bytesAfter, &propPID ) )
+        if( propPID != nullptr )
         {
-            if( propPID != nullptr )
+            if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
             {
-                if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
-                {
-                    long state = atomWmState( m_display, win.window );
+                quint32 n_state;
+                void* state = GetWindowProperty( m_display, win.window, "WM_STATE", &n_state );
 
-                    if( state > 0 )
+                if( state != nullptr )
+                {
+                    if( *reinterpret_cast<long *>( state ) > 0 )
                     {
                         m_tb_windows.append( win.window );
                     }
-                }
 
-                XFree( propPID );
+                    Free( state );
+                }
             }
+
+            Free( propPID );
         }
     }
 
@@ -184,7 +183,27 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     m_tb_window_states = QList< Preferences::WindowState >();
     for( int i = 0 ; i< m_tb_windows.length() ; ++i )
     {
-        QStringList atom_list = atomNetWmState( m_display, m_tb_windows.at( i ) );
+        QStringList atom_list;
+
+        quint32 n_states;
+        void* states = GetWindowProperty( m_display, m_tb_windows.at( i ), "_NET_WM_STATE", &n_states );
+
+        if( states != nullptr )
+        {
+            for( quint32 i = 0; i < n_states ; ++i )
+            {
+                char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( states )[ i ] );
+
+                atom_list.append( atom_name );
+
+                if( atom_name )
+                {
+                    Free( atom_name );
+                }
+            }
+
+            Free( states );
+        }
 
 //        emit signalConsole( QString( "WinID %1, Atoms: %2" ).arg( m_tb_windows.at( i ) ).arg( atom_list.join(",") ) );
 
@@ -214,17 +233,17 @@ const QList< Preferences::WindowState >&    WindowCtrlUnix::getWindowStates() co
  */
 void    WindowCtrlUnix::displayWindowElements( const QString& title )
 {
-    QList< WindowItem > windows = listXWindows( m_display, XDefaultRootWindow( m_display ) );
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
     for( int i = 0 ; i < windows.length() ; ++i )
     {
         WindowItem win = windows.at( i );
 
         char *name = nullptr;
-        if( XFetchName( m_display, win.window, &name ) > 0 ) {
+        if( FetchName( m_display, win.window, &name ) > 0 ) {
             QString win_name( name );
 
-            XFree( name );
+            Free( name );
 
             if( win_name.contains( title, Qt::CaseInsensitive ) ) {
 
@@ -242,16 +261,68 @@ void    WindowCtrlUnix::displayWindowElements( const QString& title )
  */
 void    WindowCtrlUnix::displayWindowElements( quint64 window )
 {
-    QString name = atomName( m_display, window );
+    QString name;
+
+    quint32 n_name;
+    void* name_ptr = GetWindowProperty( m_display, window, "_NET_WM_NAME", &n_name );
+
+    if( name_ptr != nullptr )
+    {
+        name = QString( reinterpret_cast<char*>( name_ptr ) );
+
+        Free( name_ptr );
+    }
+
     emit signalConsole( QString( "Atom name: %1" ).arg( name ) );
 
-    QStringList types = atomWindowType( m_display, window );
+    QStringList types;
+
+    quint32 n_types;
+    void* types_ptr = GetWindowProperty( m_display, window, "_NET_WM_WINDOW_TYPE", &n_types );
+
+    if( types_ptr != nullptr )
+    {
+        for( quint32 i = 0; i < n_types; ++i )
+        {
+            char* type_name = GetAtomName( m_display, reinterpret_cast<long *>( types_ptr )[ i ] );
+
+            types.append( type_name );
+
+            if( type_name )
+            {
+                Free( type_name );
+            }
+        }
+
+        Free( types_ptr );
+    }
+
     for( int i = 0 ; i < types.length() ; ++i )
     {
         emit signalConsole( QString( "Atom type: %1" ).arg( types.at( i ) ) );
     }
 
-    QStringList states = atomNetWmState( m_display, window );
+    QStringList states;
+
+    quint32 n_states;
+    void* states_ptr = GetWindowProperty( m_display,window, "_NET_WM_STATE", &n_states );
+
+    if( states_ptr != nullptr )
+    {
+        for( quint32 i = 0; i < n_states ; ++i )
+        {
+            char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( states_ptr )[ i ] );
+
+            states.append( atom_name );
+
+            if( atom_name )
+            {
+                Free( atom_name );
+            }
+        }
+
+        Free( states_ptr );
+    }
 
     bool max_vert = false;
     bool max_horz = false;
@@ -329,17 +400,28 @@ void    WindowCtrlUnix::updatePositions()
     {
         quint64 window = m_tb_windows.at( i );
 
-        //  Get border / title bar sizes
-        QMargins margin = atomFrameExtents( m_display, window );
+        /*
+         *  Get border / title bar sizes
+         */
+        long left;
+        long top;
+        long right;
+        long bottom;
+        GetWindowFrameExtensions( m_display, window, &left, &top, &right, &bottom );
 
-        int x, y;
-        Window child;
-        XWindowAttributes xwa;
-        Window win = static_cast<Window>( window );
-        XTranslateCoordinates( m_display, win, XDefaultRootWindow( m_display ), 0, 0, &x, &y, &child );
-        XGetWindowAttributes( m_display, win, &xwa );
+        /*
+         *  Get the position
+         */
+        long x;
+        long y;
+        GetWindowPosition( m_display, window, &x, &y );
 
-        positions.append( QPoint( x - xwa.x - margin.left(), y - xwa.y - margin.top() ) );
+        /*
+         *  Add to the list
+         */
+        positions.append( QPoint( x - left, y - top ) );
+
+//        emit signalConsole( QString( "Update pos: %1, %2" ).arg( x - left ).arg( y - top ) );
     }
 
     if( m_tb_windows_pos != positions )
@@ -354,57 +436,55 @@ void    WindowCtrlUnix::updatePositions()
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window, int hide )
+void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
 {
+#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Minimize" );
+#endif
 
-    if( !isThunderbird( getPpid() ) )
-    {
-        emit signalConsole( "Minimize terminated" );
-
-        return;
-    }
-
+    /*
+     *  Remove from taskbar
+     */
     hideWindow( window, hide );
 
     /*
      *  Minimize the window
      */
-    XWindowAttributes xwa;
-    XGetWindowAttributes( m_display, window, &xwa );
-    int screen = XScreenNumberOfScreen( xwa.screen );
-
-    XIconifyWindow( m_display, window, screen );
+    IconifyWindow( m_display, window );
 
     /*
      *  Flush the pipes
      */
-    XFlush( m_display );
+    Flush( m_display );
 }
 
 
 /*
  *  Hide window to system tray
  */
-void    WindowCtrlUnix::hideWindow( quint64 window, int set )
+void    WindowCtrlUnix::hideWindow( quint64 window, bool hide )
 {
-    emit signalConsole( "Hide" );
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( QString( "Hide: %1").arg(hide) );
+#endif
 
-    switch( m_minimize_type )
+    if( hide )
     {
-        case Preferences::PREF_MINIMIZE_METHOD_1:
-        {
-            emit signalConsole( "Hide 1" );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
 
-            hideWindowEvent( window, set );
-            break;
-        }
+//        Sync( m_display );
 
-        default:
-        {
-            emit signalConsole( "Hide default" );
-            break;
-        }
+//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_DOCK" );
+    }
+    else
+    {
+//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_NORMAL" );
+
+//        Sync( m_display );
+
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
     }
 }
 
@@ -414,22 +494,17 @@ void    WindowCtrlUnix::hideWindow( quint64 window, int set )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
+#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Normalize" );
+#endif
 
     /*
      *  Get the current desktop
      */
     int current_desktop = 0;
 
-/*
-    XWindowAttributes xwa;
-    XGetWindowAttributes( m_display, window, &xwa);
-    int screen = XScreenNumberOfScreen( xwa.screen );
-    Window root = XRootWindow( m_display, screen );
-*/
-
     quint32 n_current_desktop;
-    long* current_desktop_ptr = (long*)GetWindowProperty( XDefaultRootWindow( m_display ), "_NET_CURRENT_DESKTOP", &n_current_desktop );
+    long* current_desktop_ptr = (long*)GetWindowProperty( m_display, 0, "_NET_CURRENT_DESKTOP", &n_current_desktop );
 
     if( current_desktop_ptr != nullptr )
     {
@@ -441,164 +516,34 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
         /*
          *  Cleanup
          */
-        XFree( current_desktop_ptr );
+        Free( current_desktop_ptr );
 
         /*
          *  Set the desktop for the window
          */
-        XEvent event_desktop;
-        event_desktop.xclient.type = ClientMessage;
-        event_desktop.xclient.serial = 0;
-        event_desktop.xclient.send_event = True;
-        event_desktop.xclient.message_type = XInternAtom( m_display, "_NET_WM_DESKTOP", True );
-        event_desktop.xclient.window = window;
-        event_desktop.xclient.format = 32;
-        event_desktop.xclient.data.l[0] = current_desktop;
-        event_desktop.xclient.data.l[1] = 1;
-
-        XSendEvent( m_display, XDefaultRootWindow( m_display ), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent*)&event_desktop );
+        SendEvent( m_display, window, "_NET_WM_DESKTOP", current_desktop, 1 );
     }
 
     /*
      *  Show window on taskbar
-     */
-    XEvent event_taskbar;
-    event_taskbar.xclient.type = ClientMessage;
-    event_taskbar.xclient.serial = 0;
-    event_taskbar.xclient.send_event = True;
-    event_taskbar.xclient.message_type = XInternAtom( m_display, "_NET_WM_STATE", False );
-    event_taskbar.xclient.window = window;
-    event_taskbar.xclient.format = 32;
-    event_taskbar.xclient.data.l[0] = _NET_WM_STATE_REMOVE;
-    event_taskbar.xclient.data.l[1] = XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False );
-
-    XSendEvent( m_display, XDefaultRootWindow( m_display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event_taskbar );
-
-    /*
-     *  Normalize
-     */
-    XEvent event_normalize;
-    event_normalize.xclient.type = ClientMessage;
-    event_normalize.xclient.serial = 0;
-    event_normalize.xclient.send_event = True;
-    event_normalize.xclient.message_type = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
-    event_normalize.xclient.window = window;
-    event_normalize.xclient.format = 32;
-
-    XSendEvent( m_display, XDefaultRootWindow( m_display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event_normalize );
-
-    /*
-     *  Raise the window to the top
-     */
-    XMapRaised( m_display, window );
-
-    /*
-     *  Flush the pipes
-     */
-    XFlush( m_display );
-}
-
-
-
-#ifdef WORKS
-
-
-/*
- *  Normalize a window
- */
-void    WindowCtrlUnix::normalizeWindow( quint64 window )
-{
-    emit signalConsole( "Normalize" );
-
-    if( !isThunderbird( getPpid() ) )
-    {
-        emit signalConsole( "Normalize terminated" );
-
-        return;
-    }
-
-    /*
-     *  Get the current desktop
-     */
-    int current_desktop = 0;
-
-/*
-    XWindowAttributes xwa;
-    XGetWindowAttributes( m_display, window, &xwa);
-    int screen = XScreenNumberOfScreen( xwa.screen );
-    Window root = XRootWindow( m_display, screen );
-*/
-
-    quint32 n_current_desktop;
-    long* current_desktop_ptr = (long*)GetWindowProperty( RootWindow( m_display, m_screen ), "_NET_CURRENT_DESKTOP", &n_current_desktop );
-
-    if( current_desktop_ptr != nullptr )
-    {
-        emit signalConsole( QString( "Pre Desktop %1" ).arg( *current_desktop_ptr ) );
-
-        /*
-         *  Store it
-         */
-        current_desktop = *current_desktop_ptr;
-
-        /*
-         * Cleanup
-         */
-        XFree( current_desktop_ptr );
-
-        /*
-         *  Set the desktop for the window
-         */
-        XClientMessageEvent event;
-        event.message_type = XInternAtom( m_display, "_NET_WM_DESKTOP", True );
-        event.window = window;
-        event.format = 32;
-        event.type = ClientMessage;
-        event.data.l[0] = current_desktop;
-        event.data.l[1] = 1;
-
-        XSendEvent( m_display, RootWindow( m_display, m_screen ), False, SubstructureRedirectMask | SubstructureNotifyMask, (XEvent*)&event );
-    }
-
-    /*
-     *  Unhide the window
      */
     hideWindow( window, false );
 
     /*
      *  Normalize
      */
+    SendEvent( m_display, window, "_NET_ACTIVE_WINDOW" );
 
-    XEvent event = { 0 };
-    event.xclient.type = ClientMessage;
-    event.xclient.serial = 0;
-    event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom( m_display, "_NET_ACTIVE_WINDOW", False );
-    event.xclient.window = window;
-    event.xclient.format = 32;
+    /*
+     *  Raise the window to the top
+     */
+    MapRaised( m_display, window );
 
-    XSendEvent( m_display, RootWindow( m_display, m_screen ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
-
-    XMapRaised( m_display, window );
-    XFlush( m_display );
-
-    quint32 ndesktop;
-    long* desktop = (long*)GetWindowProperty( window, "_NET_WM_DESKTOP", &ndesktop );
-
-    if( desktop != nullptr )
-    {
-        emit signalConsole( QString( "Desktop %1" ).arg( *desktop ) );
-
-        /*
-         * Cleanup
-         */
-        XFree( desktop );
-    }
+    /*
+     *  Flush the pipes
+     */
+    Flush( m_display );
 }
-
-#endif
-
-
 
 
 /*
@@ -606,34 +551,9 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::deleteWindow( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
+    SendEvent( m_display, window, "WM_PROTOCOLS", _ATOM_DELETE_WINDOW );
 
-    Window win = static_cast<Window>( window );
-
-    Atom msg_atom = XInternAtom( m_display, "WM_PROTOCOLS", True );
-    if( msg_atom == None )
-    {
-        return;
-    }
-
-    Atom delete_prop = XInternAtom( m_display, "WM_DELETE_WINDOW", False );
-    if( delete_prop == None )
-    {
-        return;
-    }
-
-    XEvent event;
-    event.xclient.type = ClientMessage;
-    event.xclient.window = win;
-    event.xclient.message_type = msg_atom;
-    event.xclient.format = 32;
-    event.xclient.data.l[0] = static_cast<long>( delete_prop );
-    event.xclient.data.l[1] = CurrentTime;
-    XSendEvent( m_display, win, False, NoEventMask, &event );
-    XFlush( m_display );
+    Flush( m_display );
 }
 
 
@@ -646,327 +566,42 @@ void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
     {
         quint64 window = m_tb_windows.at( i );
 
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( QString( "Set pos: %1, %2").arg( window_positions.at( i ).x() ).arg( window_positions.at( i ).y() ) );
+#endif
+
         if( i < window_positions.length() ) {
-            XMoveWindow( m_display, window, window_positions.at( i ).x(), window_positions.at( i ).y() );
+            MoveWindow( m_display, window, window_positions.at( i ).x(), window_positions.at( i ).y() );
         }
     }
 
-    XFlush( m_display );
-}
-
-
-/*
- *  Hide window to system tray
- */
-void    WindowCtrlUnix::hideWindowEvent( quint64 window, bool set )
-{
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
-    if( set )
-    {
-        emit signalConsole( "Hide remove from taskbar" );
-
-        sendEvent( window,
-                    "_NET_WM_STATE",
-                    _NET_WM_STATE_ADD,
-                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
-    }
-    else
-    {
-        emit signalConsole( "Show on taskbar" );
-
-        sendEvent( window,
-                    "_NET_WM_STATE",
-                    _NET_WM_STATE_REMOVE,
-                    static_cast<long>( XInternAtom( m_display, "_NET_WM_STATE_SKIP_TASKBAR", False ) ) );
-    }
-
-    XFlush( m_display );
+    Flush( m_display );
 }
 
 
 /*
  *  Get the X11 window list
  */
-QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( Display *display, quint64 window, int level )
+QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( void* display, quint64 window, int level )
 {
-    Window root;
-    Window parent;
-    Window *children;
+    quint64 root;
+    quint64 parent;
+    void* children;
     unsigned int childrenCount;
 
     QList< WindowItem > windows;
-    if( XQueryTree( display, window, &root, &parent, &children, &childrenCount) )
+    if( QueryTree( display, window, &root, &parent, &children, &childrenCount) )
     {
         for( unsigned int i = 0; i < childrenCount; ++i )
         {
-            windows.append( WindowItem( children[ i ], level ) );
-            windows.append( listXWindows( display, children[ i ], level + 1) );
+            windows.append( WindowItem( ((quint64*)children)[ i ], level ) );
+            windows.append( listXWindows( display, ((quint64*)children)[ i ], level + 1) );
         }
 
-        XFree( children );
+        Free( children );
     }
 
     return windows;
-}
-
-
-/*
- *  Send a X event
- */
-void    WindowCtrlUnix::sendEvent( quint64 window, const char* msg, long action,
-                                    long prop1, long prop2, long prop3, long prop4 )
-{
-    Window win = static_cast<Window>( window );
-
-    Atom msg_atom = XInternAtom( m_display, msg, False );
-    if( msg_atom == None )
-    {
-        return;
-    }
-
-    XEvent event;
-    event.xclient.type = ClientMessage;
-    event.xclient.serial = 0;
-    event.xclient.send_event = True;
-    event.xclient.message_type = msg_atom;
-    event.xclient.window = win;
-    event.xclient.format = 32;
-    event.xclient.data.l[0] = action;
-    event.xclient.data.l[1] = prop1;
-    event.xclient.data.l[2] = prop2;
-    event.xclient.data.l[3] = prop3;
-    event.xclient.data.l[4] = prop4;
-
-    XSendEvent( m_display, XDefaultRootWindow( m_display ), False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
-}
-
-
-/*
- *  Get the title of the window
- */
-QString   WindowCtrlUnix::atomName( Display *display, quint64 window )
-{
-    char prop_name[] = "_NET_WM_NAME";
-    Atom prop = XInternAtom( display, prop_name, True );
-    Atom utf8_string = XInternAtom( display, "UTF8_STRING", False );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    QString name;
-
-    if( XGetWindowProperty( display, window, prop, 0, LONG_MAX, False, utf8_string,
-                &type, &format, &len, &remain, &list ) == Success )
-    {
-        name = QString( reinterpret_cast<char*>( list ) );
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    return name;
-}
-
-
-/*
- *  Get the _NET_WM_STATE of the window
- */
-QStringList    WindowCtrlUnix::atomNetWmState( Display *display, quint64 window )
-{
-    char prop_name[] = "_NET_WM_STATE";
-    Atom prop = XInternAtom( display, prop_name, True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    QStringList states;
-
-//    if( XGetWindowProperty( display, window, prop, 0, LONG_MAX, False, AnyPropertyType,
-//                &type, &format, &len, &remain, &list ) == Success )
-    if( XGetWindowProperty( display, window, prop, 0, sizeof( Atom ), False, XA_ATOM,
-                &type, &format, &len, &remain, &list ) == Success )
-    {
-        for( unsigned long i = 0; i < len; ++i )
-        {
-            char* atom_name = XGetAtomName( display, reinterpret_cast<Atom *>( list )[ i ] );
-
-            states.append( atom_name );
-
-            if( atom_name )
-            {
-                XFree( atom_name );
-            }
-        }
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    return states;
-}
-
-
-/*
- *  Get the WM_STATE of the window
- */
-long   WindowCtrlUnix::atomWmState( Display *display, quint64 window )
-{
-    char prop_name[] = "WM_STATE";
-    Atom prop = XInternAtom( display, prop_name, False );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len = 0;
-    unsigned char* data = nullptr;
-
-    long state = -1;
-    if( XGetWindowProperty( display, window, prop, 0L, 2L, False, prop,
-                &type, &format, &len, &remain, &data ) == Success && len )
-    {
-        state = *reinterpret_cast<long *>( data );
-    }
-
-    if( data )
-    {
-        XFree( data );
-    }
-
-    return state;
-}
-
-
-/*
- *  Get the type of the window
- */
-QStringList    WindowCtrlUnix::atomWindowType( Display *display, quint64 window )
-{
-    char prop_name[] = "_NET_WM_WINDOW_TYPE";
-    Atom prop = XInternAtom( display, prop_name, True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    QStringList states;
-
-    if( XGetWindowProperty( display, window, prop, 0, sizeof( Atom ), False, XA_ATOM,
-                &type, &format, &len, &remain, &list ) == Success )
-    {
-        for( unsigned long i = 0; i < len; ++i )
-        {
-            char* atom_name = XGetAtomName( display, reinterpret_cast<Atom *>( list )[ i ] );
-
-            states.append( atom_name );
-
-            if( atom_name )
-            {
-                XFree( atom_name );
-            }
-        }
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    return states;
-}
-
-
-/*
- *  Get the title of the window
- */
-QMargins   WindowCtrlUnix::atomFrameExtents( Display *display, quint64 window )
-{
-    char prop_name[] = "_NET_FRAME_EXTENTS";
-    Atom prop = XInternAtom( display, prop_name, True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-    XEvent event;
-
-    //  Get the frame extentions
-    while( XGetWindowProperty( display, window, prop, 0, 4, False, AnyPropertyType,
-                &type, &format, &len, &remain, &list ) != Success || len != 4 || remain != 0 )
-    {
-        XNextEvent( display, &event );
-    }
-
-    QMargins margins;
-    if( list && len == 4 )
-    {
-        long* extents = (long*)list;
-        margins.setLeft( extents[ 0 ] );
-        margins.setRight( extents[ 1 ] );
-        margins.setTop( extents[ 2 ] );
-        margins.setBottom( extents[ 3 ] );
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    return margins;
-}
-
-
-/*
- *  Get the title of the window
- */
-void*   WindowCtrlUnix::GetWindowProperty( quint64 window, const char* atom, quint32* nlist )
-{
-    Atom prop = XInternAtom( m_display, atom, True );
-
-    Atom type;
-    int format;
-    unsigned long remain;
-    unsigned long len;
-    unsigned char* list = nullptr;
-
-    if( XGetWindowProperty( m_display, window, prop, 0, LONG_MAX, False, AnyPropertyType,
-                &type, &format, &len, &remain, &list ) == Success && len && list )
-    {
-        if( nlist != nullptr )
-        {
-            *nlist = (quint32)len;
-        }
-
-        return list;
-    }
-
-    if( nlist != nullptr )
-    {
-        *nlist = (quint32)0;
-    }
-
-    if( list )
-    {
-        XFree( list );
-    }
-
-    return nullptr;
 }
 
 #endif // Q_OS_UNIX

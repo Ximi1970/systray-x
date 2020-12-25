@@ -20,6 +20,6 @@ QMAKE_INCDIR_QT =
 QMAKE_LIBDIR_QT =
 
 
-SOURCES += systray-x-lib.cpp
+SOURCES += systray-x-lib-x11.cpp
 
-HEADERS += systray-x-lib.h
+HEADERS += systray-x-lib-x11.h
