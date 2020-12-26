@@ -141,7 +141,7 @@ void    ChangeWindowTypeProperty( void* display, quint64 window, const char* win
     int format;
     unsigned long remain;
     unsigned long len;
-    unsigned char* list = nullptr;
+    unsigned char* list = NULL;
 
     if( XGetWindowProperty( dsp, window, prop, 0, LONG_MAX, False, AnyPropertyType,
                 &type, &format, &len, &remain, &list ) == Success && len && list )
@@ -177,12 +177,12 @@ void*   GetWindowProperty( void* display, quint64 window, const char* atom, quin
     int format;
     unsigned long remain;
     unsigned long len;
-    unsigned char* list = nullptr;
+    unsigned char* list = NULL;
 
     if( XGetWindowProperty( dsp, win, prop, 0, LONG_MAX, False, AnyPropertyType,
                 &type, &format, &len, &remain, &list ) == Success && len && list )
     {
-        if( nlist != nullptr )
+        if( nlist != NULL )
         {
             *nlist = (quint32)len;
         }
@@ -190,7 +190,7 @@ void*   GetWindowProperty( void* display, quint64 window, const char* atom, quin
         return list;
     }
 
-    if( nlist != nullptr )
+    if( nlist != NULL )
     {
         *nlist = (quint32)0;
     }
@@ -200,7 +200,7 @@ void*   GetWindowProperty( void* display, quint64 window, const char* atom, quin
         XFree( list );
     }
 
-    return nullptr;
+    return NULL;
 }
 
 
@@ -314,7 +314,7 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
     int format;
     unsigned long remain;
     unsigned long len;
-    unsigned char* list = nullptr;
+    unsigned char* list = NULL;
     XEvent event;
 
     while( XGetWindowProperty( dsp, window, prop, 0, 4, False, AnyPropertyType,
