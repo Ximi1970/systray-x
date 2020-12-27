@@ -486,6 +486,8 @@ void    WindowCtrlUnix::hideWindow( quint64 window, bool hide )
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
     }
+
+    Flush( m_display );
 }
 
 
