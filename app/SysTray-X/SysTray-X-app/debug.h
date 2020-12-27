@@ -4,6 +4,6 @@
 /*
  *  show all actions (normalize, minimize, hide, show/hide)
  */
-//#define DEBUG_DISPLAY_ACTIONS
+#define DEBUG_DISPLAY_ACTIONS
 
 #endif // DEBUG_H
