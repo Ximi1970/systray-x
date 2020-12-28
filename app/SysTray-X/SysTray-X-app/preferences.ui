@@ -321,7 +321,7 @@
                   <string>Default minimize</string>
                  </property>
                  <property name="checked">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <attribute name="buttonGroup">
                   <string notr="true">minimizeTypeGroup</string>
@@ -334,7 +334,7 @@
                   <string>Minimize to tray</string>
                  </property>
                  <property name="checked">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <attribute name="buttonGroup">
                   <string notr="true">minimizeTypeGroup</string>
@@ -694,11 +694,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="themeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>

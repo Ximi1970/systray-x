@@ -62,7 +62,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_number_alignment = 4;
     m_number_margins = QMargins();
 
-    m_minimize_type = PREF_MINIMIZE_METHOD_1;
+    m_minimize_type = PREF_DEFAULT_MINIMIZE;
     m_start_minimized = false;
     m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
 

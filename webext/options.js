@@ -437,7 +437,7 @@ SysTrayX.RestoreOptions = {
   //
   setMinimizeType: function (result) {
     //    const platformInfo = result.platformInfo || { os: "linux" };
-    const minimizeType = result.minimizeType || "1";
+    const minimizeType = result.minimizeType || "0";
 
     // Tweak option for platform
     //    if (platformInfo.os === "win") {

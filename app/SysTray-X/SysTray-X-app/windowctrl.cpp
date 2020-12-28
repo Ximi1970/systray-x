@@ -348,6 +348,11 @@ void    WindowCtrl::slotPositions( QList< QPoint > window_positions )
 {
 #ifdef Q_OS_UNIX
 
+    /*
+     *  Update the TB windows
+     */
+    findWindows( m_ppid );
+
     setPositions( window_positions );
 
 #endif
