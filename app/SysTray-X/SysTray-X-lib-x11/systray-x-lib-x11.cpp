@@ -33,9 +33,18 @@ quint64 GetDefaultRootWindow( void* display  )
 
 
 /*
- *  Get the screen number
+ *  Get the default screen number
  */
-int GetScreen( void* display, quint64 window )
+int GetDefaultScreen( void* display  )
+{
+    return XDefaultScreen( (Display*)display );
+}
+
+
+/*
+ *  Get the screen number of window
+ */
+int GetScreenNumberOfScreen( void* display, quint64 window )
 {
     XWindowAttributes xwa;
     XGetWindowAttributes( (Display*)display, window, &xwa );
@@ -105,7 +114,85 @@ int FetchName( void* display, quint64 window, char** name )
  */
 void    IconifyWindow( void* display, quint64 window )
 {
-    XIconifyWindow( (Display*)display, window, GetScreen( display, window ) );
+    XIconifyWindow( (Display*)display, window, GetDefaultScreen( display ) );
+}
+
+
+/*
+ *  With draw the window
+ */
+void    WithdrawWindow( void* display, quint64 window )
+{
+    XWithdrawWindow( (Display*)display, window, GetDefaultScreen( display ) );
+}
+
+
+/*
+ *  Map the window
+ */
+void    MapWindow( void* display, quint64 window )
+{
+    XMapWindow( (Display*)display, window );
+}
+
+
+/*
+ *  Get the hints
+ */
+void    GetWMNormalHints( void* display, quint64 window, SizeHints* hints )
+{
+    XSizeHints size_hint;
+    long dummy;
+    XGetWMNormalHints( (Display*)display, window, &size_hint, &dummy);
+
+    hints->flags = size_hint.flags;
+    hints->x = size_hint.x;
+    hints->y = size_hint.y;
+    hints->width = size_hint.width;
+    hints->height = size_hint.height;
+    hints->min_width = size_hint.min_width;
+    hints->min_height = size_hint.min_height;
+    hints->max_width = size_hint.max_width;
+    hints->max_height = size_hint.max_height;
+    hints->width_inc = size_hint.width_inc;
+    hints->height_inc = size_hint.height_inc;
+    hints->min_aspect.x = size_hint.min_aspect.x;
+    hints->min_aspect.y = size_hint.min_aspect.y;
+    hints->max_aspect.x = size_hint.max_aspect.x;
+    hints->max_aspect.y = size_hint.max_aspect.y;
+    hints->base_width = size_hint.base_width;
+    hints->base_height = size_hint.base_height;
+    hints->win_gravity = size_hint.win_gravity;
+}
+
+
+/*
+ *  Set the hints
+ */
+void    SetWMNormalHints( void* display, quint64 window, SizeHints hints )
+{
+    XSizeHints size_hint;
+
+    size_hint.flags = USPosition;
+    size_hint.x = hints.x;
+    size_hint.y = hints.y;
+    size_hint.width = hints.width;
+    size_hint.height = hints.height;
+    size_hint.min_width = hints.min_width;
+    size_hint.min_height = hints.min_height;
+    size_hint.max_width = hints.max_width;
+    size_hint.max_height = hints.max_height;
+    size_hint.width_inc = hints.width_inc;
+    size_hint.height_inc = hints.height_inc;
+    size_hint.min_aspect.x = hints.min_aspect.x;
+    size_hint.min_aspect.y = hints.min_aspect.y;
+    size_hint.max_aspect.x = hints.max_aspect.x;
+    size_hint.max_aspect.y = hints.max_aspect.y;
+    size_hint.base_width = hints.base_width;
+    size_hint.base_height = hints.base_height;
+    size_hint.win_gravity = hints.win_gravity;
+
+    XSetWMNormalHints( (Display*)display, window, &size_hint );
 }
 
 
@@ -115,6 +202,15 @@ void    IconifyWindow( void* display, quint64 window )
 void    MapRaised( void* display, quint64 window )
 {
     XMapRaised( (Display*)display, window );
+}
+
+
+/*
+ *  Set the input focus
+ */
+void    SetInputFocus( void* display, quint64 window )
+{
+    XSetInputFocus( (Display*)display, window, RevertToParent, CurrentTime );
 }
 
 
@@ -157,7 +253,7 @@ void    ChangeWindowTypeProperty( void* display, quint64 window, const char* win
 /*
  *  Get the title of the window
  */
-void*   GetWindowProperty( void* display, quint64 window, const char* atom, quint32* nlist )
+void*   GetWindowProperty( void* display, quint64 window, const char* atom, qint32* nlist )
 {
     Display* dsp = (Display*)display;
 
@@ -180,20 +276,17 @@ void*   GetWindowProperty( void* display, quint64 window, const char* atom, quin
     unsigned char* list = NULL;
 
     if( XGetWindowProperty( dsp, win, prop, 0, LONG_MAX, False, AnyPropertyType,
-                &type, &format, &len, &remain, &list ) == Success && len && list )
+                &type, &format, &len, &remain, &list ) == Success )
     {
         if( nlist != NULL )
         {
-            *nlist = (quint32)len;
+            *nlist = (qint32)len;
         }
 
         return list;
     }
 
-    if( nlist != NULL )
-    {
-        *nlist = (quint32)0;
-    }
+    *nlist = (qint32)-1;
 
     if( list )
     {

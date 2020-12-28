@@ -8,6 +8,7 @@
  *	Local includes
  */
 #include "preferences.h"
+#include "systray-x-lib-x11.h"
 
 /*
  *  System includes
@@ -17,6 +18,7 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QMap>
 #include <QPoint>
 
 /*
@@ -171,6 +173,13 @@ class WindowCtrlUnix : public QObject
         void    findWindows( qint64 pid );
 
         /**
+         * @brief getWinIds. Get the Thunderbird window IDs.
+         *
+         *  @return     The list of window ID.
+         */
+        QList< quint64 >    getWinIds();
+
+        /**
          * @brief getWindowStates. Get the states of the TB windows.
          *
          *  @return     The list of window states.
@@ -192,13 +201,6 @@ class WindowCtrlUnix : public QObject
         void    displayWindowElements( quint64 window );
 
         /**
-         * @brief getWinIds. Get the Thunderbird window IDs.
-         *
-         *  @return     The list of window ID.
-         */
-        QList< quint64 >    getWinIds();
-
-        /**
          * @brief updatePositions. Update the window positions.
          */
         void    updatePositions();
@@ -207,9 +209,8 @@ class WindowCtrlUnix : public QObject
          * @brief minimizeWindow. Minimize window.
          *
          *  @param window   The window.
-         *  @param hide     Hide from taskbar.
          */
-        void    minimizeWindow( quint64 window, bool hide );
+        void    minimizeWindow( quint64 window );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -263,9 +264,9 @@ class WindowCtrlUnix : public QObject
         void    signalConsole( QString message );
 
         /**
-         * @brief signalPosition. Signal the new window position.
+         * @brief signalPositions. Signal the new window position.
          *
-         * @param position
+         * @param positions
          */
         void    signalPositions( QList< QPoint > positions );
 
@@ -282,14 +283,19 @@ class WindowCtrlUnix : public QObject
         QList< quint64 >    m_tb_windows;
 
         /**
-         * @brief m_tb_windows_pos. The Thunderbird window positions.
+         * @brief m_tb_window_positions. The Thunderbird window positions.
          */
-        QList< QPoint >    m_tb_windows_pos;
+        QList< QPoint >    m_tb_window_positions;
 
         /**
          * @brief m_tb_window_states. The Thunderbird window states.
          */
         QList< Preferences::WindowState >    m_tb_window_states;
+
+        /**
+         * @brief m_tb_window_hints. The Thunderbird window hints.
+         */
+        QMap< quint64, SizeHints >  m_tb_window_hints;
 
         /**
          * @brief m_minimize_type. Minimize type.
