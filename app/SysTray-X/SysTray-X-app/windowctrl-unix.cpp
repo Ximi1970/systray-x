@@ -258,6 +258,8 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
         {
             if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
             {
+                emit signalConsole( QString( "Pid found %1" ).arg( pid ) );
+
                 qint32 n_wm_state;
                 void* wm_stat_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
