@@ -267,7 +267,7 @@ void*   GetWindowProperty( void* display, quint64 window, const char* atom, qint
         win = window;
     }
 
-    Atom prop = XInternAtom( (Display*)display, atom, True );
+    Atom prop = XInternAtom( (Display*)display, atom, False );
 
     Atom type;
     int format;
