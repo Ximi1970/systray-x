@@ -171,6 +171,7 @@ class WindowCtrlUnix : public QObject
          *  @param pid      The process id.
          */
         void    findWindows( qint64 pid );
+        void    findWindows2( qint64 pid );
 
         /**
          * @brief getWinIds. Get the Thunderbird window IDs.

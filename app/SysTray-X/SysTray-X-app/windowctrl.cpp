@@ -144,6 +144,8 @@ void    WindowCtrl::slotWindowTest3()
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
+    findWindows2( m_ppid );
+
     emit signalConsole("Test 3 done");
 }
 

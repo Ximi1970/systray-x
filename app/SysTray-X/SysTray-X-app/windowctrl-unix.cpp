@@ -233,6 +233,115 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 
 
 /*
+ *  Find a window by PID
+ */
+void    WindowCtrlUnix::findWindows2( qint64 pid )
+{
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Find windows and states 2" );
+#endif
+
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
+
+    QList< QPoint > old_positions = m_tb_window_positions;
+
+    QList< quint64 > tb_windows;
+    QList< QPoint > tb_window_positions;
+    for( int i = 0 ; i < windows.length() ; ++i )
+    {
+        WindowItem win = windows.at( i );
+
+        qint32 n_propPID;
+        void* propPID = GetWindowProperty( m_display, win.window, "_NET_WM_PID", &n_propPID );
+
+        if( propPID != nullptr )
+        {
+            if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
+            {
+                qint32 n_wm_state;
+                void* wm_stat_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+
+                if( wm_stat_ptr != nullptr )
+                {
+                    int wm_state = *reinterpret_cast<long *>( wm_stat_ptr );
+
+                    Free( wm_stat_ptr );
+
+                    emit signalConsole( QString( "wm_state %1, nr: %2, %3" ).arg( win.window ).arg( n_wm_state ).arg( wm_state ) );
+                }
+
+                qint32 n_net_wm_state;
+                void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
+
+                if( net_wm_state_ptr != nullptr )
+                {
+                    tb_windows.append( win.window );
+
+                    emit signalConsole( QString( "net_wm_state %1, nr: %2" ).arg( win.window ).arg( n_net_wm_state ) );
+
+                    QPoint point;
+                    if( tb_windows.length() <= old_positions.length() )
+                    {
+                        point = old_positions.at( tb_window_positions.length() - 1 );
+                    }
+
+                    tb_window_positions.append( point );
+
+                    Free( net_wm_state_ptr );
+                }
+            }
+
+            Free( propPID );
+        }
+    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+    emit signalConsole( QString( "Number of windows found: %1" ).arg( tb_windows.length() ) );
+#endif
+
+    /*
+     *  Get the new window states, store the old ones
+     */
+    m_tb_window_states = QList< Preferences::WindowState >();
+    for( int i = 0 ; i< tb_windows.length() ; ++i )
+    {
+        int state = -1;
+
+        qint32 n_state;
+        void* state_ptr = GetWindowProperty( m_display, tb_windows.at( i ), "WM_STATE", &n_state );
+
+        if( state_ptr != nullptr )
+        {
+            state = *reinterpret_cast<long *>( state_ptr );
+
+            Free( state_ptr );
+        }
+
+        if( state == -1 || state == 3 )
+        {
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+            emit signalConsole( QString( "WinID %1, state: %2, Minimized").arg( tb_windows.at( i ) ).arg( state ) );
+#endif
+
+            m_tb_window_states.append( Preferences::STATE_MINIMIZED );
+        }
+        else
+        {
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+            emit signalConsole( QString( "WinID %1, state: %2, Normal").arg( tb_windows.at( i ) ).arg( state ) );
+#endif
+
+            m_tb_window_states.append( Preferences::STATE_NORMAL );
+        }
+    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_END
+    emit signalConsole( "Find windows and states 2 done" );
+#endif
+}
+
+
+/*
  *  Get the Thunderbird window IDs
  */
 QList< quint64 >   WindowCtrlUnix::getWinIds()
