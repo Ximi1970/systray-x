@@ -500,6 +500,15 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
 #ifdef DEBUG_DISPLAY_ACTIONS
         emit signalConsole( "Withdraw window" );
 #endif
+
+        /*
+         *  Set the flags (GNOME, Wayland?)
+         */
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
+
+        Flush( m_display );
+
         /*
          *  Remove from taskbar and task switchers
          */
@@ -572,6 +581,14 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
         MapWindow( m_display, window );
 
         SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
+
+        /*
+         *  Reset the hide flags
+         */
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
+
+        Flush( m_display );
     }
 
     /*
