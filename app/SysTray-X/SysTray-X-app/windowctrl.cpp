@@ -84,6 +84,7 @@ void    WindowCtrl::slotWindowTest1()
 
 //    findWindows( m_ppid );
 
+#define MINIMIZE_TEST
 #ifdef  MINIMIZE_TEST
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
@@ -114,8 +115,8 @@ void    WindowCtrl::slotWindowTest2()
 
 //    hideWindow( getWinId(), true );
 
+#define NORMALIZE_TEST
 #ifdef  NORMALIZE_TEST
-
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
 
