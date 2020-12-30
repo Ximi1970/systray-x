@@ -270,10 +270,11 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
         {
             if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
             {
-                emit signalConsole( QString( "Pid found %1" ).arg( pid ) );
-
                 qint32 n_wm_state;
                 void* wm_stat_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+
+                qint32 n_net_wm_state;
+                void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
 
                 if( wm_stat_ptr != nullptr )
                 {
@@ -284,14 +285,17 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
                     emit signalConsole( QString( "wm_state %1, nr: %2, %3" ).arg( win.window ).arg( n_wm_state ).arg( wm_state ) );
                 }
 
-                qint32 n_net_wm_state;
-                void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
-
                 if( net_wm_state_ptr != nullptr )
                 {
-                    tb_windows.append( win.window );
+                    Free( net_wm_state_ptr );
 
                     emit signalConsole( QString( "net_wm_state %1, nr: %2" ).arg( win.window ).arg( n_net_wm_state ) );
+                }
+
+
+                if( wm_stat_ptr != nullptr || net_wm_state_ptr != nullptr  )
+                {
+                    tb_windows.append( win.window );
 
                     QPoint point;
                     if( tb_windows.length() <= old_positions.length() )
@@ -300,8 +304,6 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
                     }
 
                     tb_window_positions.append( point );
-
-                    Free( net_wm_state_ptr );
                 }
             }
 
@@ -782,6 +784,10 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
  */
 void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
 {
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Set positions" );
+#endif
+
     for( int i = 0 ; i < m_tb_windows.length() ; ++i )
     {
         quint64 window = m_tb_windows.at( i );
@@ -796,6 +802,10 @@ void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
     }
 
     Flush( m_display );
+
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Set positions done" );
+#endif
 }
 
 
