@@ -151,7 +151,7 @@ void    WindowCtrl::slotStartMinimizedChange()
 void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 {
 #ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( QString( "State change to: %1" ).arg( state ) );
+    emit signalConsole( QString( "State change to: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
 #endif
 
 #ifdef Q_OS_UNIX
@@ -162,6 +162,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     findWindows( m_ppid );
 
     QList< quint64 > win_ids = getWinIds();
+    QList< Preferences::WindowState >    win_states = getWindowStates();
 
     /*
      *  Minimize all?
@@ -182,30 +183,32 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
          */
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-            minimizeWindow( win_ids.at( i ), getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE );
+#ifdef DEBUG_DISPLAY_ACTIONS
+            emit signalConsole( QString( "Window state: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+#endif
+
+            if( ( win_states.at( i ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
+                ( win_states.at( i ) != Preferences::STATE_DOCKED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
+            {
+                minimizeWindow( win_ids.at( i ), getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE );
+            }
         }
     }
     else
     {
-        QList< Preferences::WindowState >    win_states = getWindowStates();
-
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-            if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
-            {
 #ifdef DEBUG_DISPLAY_ACTIONS
-                emit signalConsole( QString( "Hide: %1" ).arg( win_ids.at( i ) ) );
+            emit signalConsole( QString( "Window state: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
 #endif
 
-                hideWindow( win_ids.at( i ), getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE );
-            }
-            else
+            if( ( win_states.at( i ) == Preferences::STATE_MINIMIZED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
             {
-#ifdef DEBUG_DISPLAY_ACTIONS
-                emit signalConsole( QString( "Unhide: %1" ).arg( win_ids.at( i ) ) );
-#endif
-
-                hideWindow( win_ids.at( i ), false );
+                minimizeWindow( win_ids.at( i ), true );
             }
         }
     }
@@ -235,6 +238,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
         }
     }
 
+#endif
+
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "State change done" );
 #endif
 }
 
@@ -267,7 +274,7 @@ void    WindowCtrl::slotShowHide()
 
 #endif
 
-        if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
+        if( win_states.at( i ) == Preferences::STATE_MINIMIZED || win_states.at( i ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
         }

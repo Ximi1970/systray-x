@@ -9,6 +9,11 @@
 #include "systray-x-lib-x11.h"
 
 /*
+ *  Local includes
+ */
+#include "preferences.h"
+
+/*
  *  System includes
  */
 #include <unistd.h>
@@ -70,23 +75,6 @@ qint64  WindowCtrlUnix::getPpid() const
 bool    WindowCtrlUnix::isThunderbird( qint64 pid ) const
 {
     return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
-}
-
-
-/*
- *  Get the number of visible windows.
- */
-int WindowCtrlUnix::getVisibleWindows()
-{
-    /*
-     *  Get the TB windows and states
-     */
-    findWindows( getppid() );
-
-    /*
-     *  Count the visible states
-     */
-    return m_tb_window_states.count( Preferences::STATE_NORMAL );
 }
 
 
@@ -207,6 +195,11 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 
 //        emit signalConsole( QString( "WinID %1, Atoms: %2" ).arg( m_tb_windows.at( i ) ).arg( atom_list.join(",") ) );
 
+        if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) )
+        {
+            m_tb_window_states.append( Preferences::STATE_DOCKED );
+        }
+        else
         if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
         {
             m_tb_window_states.append( Preferences::STATE_MINIMIZED );

@@ -10,6 +10,7 @@
  */
 #include <QObject>
 #include <QString>
+#include <QStringList>
 #include <QByteArray>
 #include <QMargins>
 
@@ -90,6 +91,8 @@ class Preferences : public QObject
         static const QString   STATE_DOCKED_STR;
         static const QString   STATE_MINIMIZED_ALL_STR;
         static const QString   STATE_MINIMIZED_ALL_STARTUP_STR;
+
+        static const QStringList  WindowStateString;
 
     public:
 

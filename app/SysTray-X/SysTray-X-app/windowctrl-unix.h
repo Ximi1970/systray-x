@@ -146,13 +146,6 @@ class WindowCtrlUnix : public QObject
         bool    isThunderbird( qint64 pid ) const;
 
         /**
-         * @brief visibleWindows. Get the number of visible windows.
-         *
-         *  @return     The number of windows.
-         */
-       int getVisibleWindows();
-
-        /**
          * @brief getProcessName. Get the name of the proces by pid.
          *
          *  @param pid  The process Id.

@@ -25,6 +25,16 @@ const QString   Preferences::STATE_DOCKED_STR = "docked";
 const QString   Preferences::STATE_MINIMIZED_ALL_STR = "minimized_all";
 const QString   Preferences::STATE_MINIMIZED_ALL_STARTUP_STR = "minimized_all_startup";
 
+const QStringList   Preferences::WindowStateString = {
+           "Unknown",
+           STATE_NORMAL_STR,
+           STATE_MINIMIZED_STR,
+           STATE_MAXIMIZED_STR,
+           STATE_FULLSCREEN_STR,
+           STATE_DOCKED_STR,
+           STATE_MINIMIZED_ALL_STR,
+           STATE_MINIMIZED_ALL_STARTUP_STR
+       };
 
 /**
  * @brief Preferences.  Constructor.
