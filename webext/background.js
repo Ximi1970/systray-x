@@ -23,16 +23,16 @@ SysTrayX.Messaging = {
   filters: undefined,
 
   init: function () {
-    // Minimize on startup handled by Companion app as backup
-    if (SysTrayX.startupState == "minimized") {
-      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
-    }
-
     // Send the startup positions?
     if (SysTrayX.restorePositions) {
       SysTrayX.Link.postSysTrayXMessage({
         positions: SysTrayX.startupWindowPositions,
       });
+    }
+
+    // Minimize on startup handled by Companion app as backup
+    if (SysTrayX.startupState == "minimized") {
+      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
     }
 
     // Lookout for storage changes
@@ -572,11 +572,11 @@ async function start() {
   //  Get the prefered start state
   const state = await getStartupState();
 
-  if (state == "minimized") {
-    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-      state: "minimized",
-    });
-  }
+//  if (state == "minimized") {
+//    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+//      state: "minimized",
+//    });
+//  }
 
   SysTrayX.startupState = state;
 
