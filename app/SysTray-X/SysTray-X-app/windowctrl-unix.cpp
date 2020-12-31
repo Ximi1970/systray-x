@@ -457,23 +457,25 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, bool hide )
  */
 void    WindowCtrlUnix::hideWindow( quint64 window, bool hide )
 {
-#ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( QString( "Hide: %1").arg(hide) );
-#endif
-
     if( hide )
     {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( "Remove from taskbar and pager" );
+#endif
+
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
 
 //        Sync( m_display );
-
 //        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_DOCK" );
     }
     else
     {
-//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_NORMAL" );
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( "Display in taskbar and pager" );
+#endif
 
+//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_NORMAL" );
 //        Sync( m_display );
 
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
