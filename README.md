@@ -13,7 +13,7 @@ The addon and system tray application can do:
 
 Warning:
 
-This add-on and companion app will NOT work with full wayland desktops.
+This add-on and companion app will NOT work with full Wayland desktops.
 
 
 ## Donations
