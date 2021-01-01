@@ -11,6 +11,9 @@ The addon and system tray application can do:
 - minimize on startup
 - minimize on close
 
+Warning:
+
+This add-on and companion app will NOT work with full wayland desktops.
 
 
 ## Donations
