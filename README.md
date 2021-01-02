@@ -59,12 +59,6 @@ Installing the repository:
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 ```
 
-###### Leap 15.3 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.3/ SysTray-X
-```
-
 ###### Leap 15.2
 
 ```bash
@@ -77,22 +71,16 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
 ```
 
-###### SLE 15 SP3 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP3/ SysTray-X
-```
-
-###### SLE 15 SP2 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP2/ SysTray-X
-```
-
-###### SLE 15 SP1 (not tested)
+###### SLE 15 SP1
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
+```
+
+###### SLE 15
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15/ SysTray-X
 ```
 
 #### Package
@@ -139,6 +127,15 @@ sudo apt update
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
+###### 19.10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_19.10 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
@@ -189,24 +186,6 @@ sudo apt install systray-x-minimal
 
 Installing the repository:
 
-###### Testing (not tested)
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing/Release.key
-sudo apt-key add Release.key
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-```
-
-###### Unstable (not tested)
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable/Release.key
-sudo apt-key add Release.key
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-```
-
 ###### 10
 
 ```bash
@@ -244,13 +223,6 @@ sudo apt install systray-x-minimal
 #### Repository
 
 Installing the repository:
-
-###### Rawhide (not tested)
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
 
 ###### 33
 
@@ -348,7 +320,7 @@ sudo pacman -S systray-x-minimal
 
 Installing the repository:
 
-###### 8 Stream (not tested)
+###### 8 Stream
 
 ```bash
 sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8_Stream/home:Ximi1970:Mozilla:Add-ons.repo
@@ -393,7 +365,7 @@ sudo yum install gnome-tweaks
 Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
 
 
-### MX (not tested)
+### MX
 
 First install the Debian latest Thunderbird version. Replace the xx.x.x with the correct version.
 ```bash
@@ -482,6 +454,13 @@ Requirements:
 
     ```bash
     sudo apt install zip git g++ make qt5-default
+    gnome-extensions enable ubuntu-appindicator@ubuntu.com
+    ```
+
+      19.10
+
+    ```bash
+    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
     gnome-extensions enable ubuntu-appindicator@ubuntu.com
     ```
 
