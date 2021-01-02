@@ -48,7 +48,7 @@ build() {
 
 package() {
 	mkdir -p "${pkgdir}"/usr/bin
-	cp -f ${pkgname}-${pkgver}/app/build/SysTray-X "${pkgdir}"/usr/bin/SysTray-X
+	cp -f ${pkgname}-${pkgver}/SysTray-X "${pkgdir}"/usr/bin/SysTray-X
 	
 	mkdir -p "${pkgdir}"/usr/lib/mozilla/native-messaging-hosts
 	cp -f ${pkgname}-${pkgver}/SysTray_X.json "${pkgdir}"/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json

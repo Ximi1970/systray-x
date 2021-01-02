@@ -23,16 +23,16 @@ SysTrayX.Messaging = {
   filters: undefined,
 
   init: function () {
-    // Minimuze on startup handled by Companion app as backup
-    if (SysTrayX.startupState == "minimized") {
-      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
-    }
-
     // Send the startup positions?
     if (SysTrayX.restorePositions) {
       SysTrayX.Link.postSysTrayXMessage({
         positions: SysTrayX.startupWindowPositions,
       });
+    }
+
+    // Minimize on startup handled by Companion app as backup
+    if (SysTrayX.startupState == "minimized") {
+      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
     }
 
     // Lookout for storage changes
@@ -56,18 +56,7 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    /*
-    //  New mail listener (TB76+)
-    if (SysTrayX.browserInfo.majorVersion > 75) {
-      //
-      //  Mixed results, forgets accounts?, double events?
-      //
-      browser.messages.onNewMailReceived.addListener(
-        SysTrayX.Messaging.newMail
-      );
-    }
-    */
-
+    //  Catch the unread / new mails
     browser.folderChange.onUnreadMailChange.addListener(function (unread) {
       SysTrayX.Messaging.unreadCb(unread);
     });
@@ -583,11 +572,11 @@ async function start() {
   //  Get the prefered start state
   const state = await getStartupState();
 
-  if (state == "minimized") {
-    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-      state: "minimized",
-    });
-  }
+//  if (state == "minimized") {
+//    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+//      state: "minimized",
+//    });
+//  }
 
   SysTrayX.startupState = state;
 

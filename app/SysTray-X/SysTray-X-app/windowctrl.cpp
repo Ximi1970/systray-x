@@ -1,3 +1,5 @@
+#include "windowctrl.h"
+
 /*
  *  Qt includes
  */
@@ -6,13 +8,13 @@
 #include <QCoreApplication>
 
 /*
- *  Main include
- */
-#include "windowctrl.h"
-
-/*
  *  System includes
  */
+
+/*
+ *  Local includes
+ */
+#include "debug.h"
 #include "preferences.h"
 
 /*
@@ -76,12 +78,11 @@ void    WindowCtrl::slotWindowTest1()
 //    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
 
 //    findWindow( "- Mozilla Thunderbird" );
-//    displayWindowElements( "- Mozilla Thunderbird" );
+    displayWindowElements( "- Mozilla Thunderbird" );
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
 
-
-    findWindows( m_ppid );
+//    findWindows( m_ppid );
 
     emit signalConsole("Test 1 done");
 }
@@ -149,8 +150,9 @@ void    WindowCtrl::slotStartMinimizedChange()
  */
 void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 {
-
-//    emit signalConsole( QString( "State change to: %1" ).arg( state ) );
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( QString( "State change to: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
+#endif
 
 #ifdef Q_OS_UNIX
 
@@ -160,13 +162,16 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     findWindows( m_ppid );
 
     QList< quint64 > win_ids = getWinIds();
+    QList< Preferences::WindowState >    win_states = getWindowStates();
 
     /*
      *  Minimize all?
      */
     if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
-//        emit signalConsole( QString( "Minimize all" ) );
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( QString( "Minimize all" ) );
+#endif
 
         if( state == Preferences::STATE_MINIMIZED_ALL )
         {
@@ -178,26 +183,32 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
          */
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+#ifdef DEBUG_DISPLAY_ACTIONS
+            emit signalConsole( QString( "Window state: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+#endif
+
+            if( ( win_states.at( i ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
+                ( win_states.at( i ) != Preferences::STATE_DOCKED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
+            {
+                minimizeWindow( win_ids.at( i ), getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE );
+            }
         }
     }
     else
     {
-        QList< Preferences::WindowState >    win_states = getWindowStates();
-
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-            if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
-            {
-//                emit signalConsole( QString( "Hide: %1" ).arg( win_ids.at( i ) ) );
+#ifdef DEBUG_DISPLAY_ACTIONS
+            emit signalConsole( QString( "Window state: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+#endif
 
-                hideWindow( win_ids.at( i ), getMinimizeType() );
-            }
-            else
+            if( ( win_states.at( i ) == Preferences::STATE_MINIMIZED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
             {
-//                emit signalConsole( QString( "Unhide: %1" ).arg( win_ids.at( i ) ) );
-
-                hideWindow( win_ids.at( i ), false );
+                minimizeWindow( win_ids.at( i ), true );
             }
         }
     }
@@ -228,6 +239,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
 
 #endif
+
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "State change done" );
+#endif
 }
 
 
@@ -236,6 +251,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
  */
 void    WindowCtrl::slotShowHide()
 {
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Show/Hide" );
+#endif
+
     /*
      *  Update the TB windows
      */
@@ -255,13 +274,13 @@ void    WindowCtrl::slotShowHide()
 
 #endif
 
-        if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
+        if( win_states.at( i ) == Preferences::STATE_MINIMIZED || win_states.at( i ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
         }
         else
         {
-            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+            minimizeWindow( win_ids.at( i ), getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE );
         }
     }
 }
@@ -272,6 +291,10 @@ void    WindowCtrl::slotShowHide()
  */
 void    WindowCtrl::slotClose()
 {
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Close" );
+#endif
+
     /*
      *  Update the TB windows
      */

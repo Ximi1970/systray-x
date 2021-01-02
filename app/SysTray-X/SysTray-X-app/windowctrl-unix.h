@@ -17,14 +17,11 @@
  *	Qt includes
  */
 #include <QObject>
-#include <QFileInfo>
-#include <QMargins>
 #include <QPoint>
 
 /*
  *  Predefines
  */
-typedef struct _XDisplay Display;
 
 /**
  * @brief The WindowCtrlUnix class.
@@ -55,16 +52,6 @@ class WindowCtrlUnix : public QObject
             TYPE_COMBO,
             TYPE_DND,
             TYPE_NORMAL
-        };
-
-        /*
-         *  State actions
-         */
-        enum StateActions
-        {
-            _NET_WM_STATE_REMOVE = 0,
-            _NET_WM_STATE_ADD,
-            _NET_WM_STATE_TOGGLE
         };
 
         /*
@@ -159,13 +146,6 @@ class WindowCtrlUnix : public QObject
         bool    isThunderbird( qint64 pid ) const;
 
         /**
-         * @brief visibleWindows. Get the number of visible windows.
-         *
-         *  @return     The number of windows.
-         */
-       int getVisibleWindows();
-
-        /**
          * @brief getProcessName. Get the name of the proces by pid.
          *
          *  @param pid  The process Id.
@@ -229,7 +209,7 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          *  @param hide     Hide from taskbar.
          */
-        void    minimizeWindow( quint64 window, int hide );
+        void    minimizeWindow( quint64 window, bool hide );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -242,9 +222,9 @@ class WindowCtrlUnix : public QObject
          * @brief hideWindow. Hide a window from the taskbar.
          *
          *  @param window   The window.
-         *  @param set      The state of the window.
+         *  @param hide     Hide state.
          */
-        void    hideWindow( quint64 window, int set );
+        void    hideWindow( quint64 window, bool hide );
 
         /**
          * @brief deleteWindow. Delete the window.
@@ -263,22 +243,6 @@ class WindowCtrlUnix : public QObject
     private:
 
         /**
-         * @brief hideWindowEvent. Hide a window from the taskbar using an event message.
-         *
-         *  @param window   The window.
-         *  @param set      The state of the window.
-         */
-        void    hideWindowEvent( quint64 window, bool set );
-
-        /**
-         * @brief hideWindowAtom. Hide a window from the taskbar editing the atoms.
-         *
-         *  @param window   The window.
-         *  @param set      The state of the window.
-         */
-        void    hideWindowAtom( quint64 window, bool set );
-
-        /**
          * @brief listXWindows. Get all the windows.
          *
          *  @param display  The display.
@@ -287,71 +251,7 @@ class WindowCtrlUnix : public QObject
          *
          *  @return     The windows list.
          */
-        QList< WindowItem > listXWindows( Display* display, quint64 window, int level = 0 );
-
-        /**
-         * @brief sendEvent. Send an event.
-         *
-         *  @param window    Event target.
-         *  @param msg       The message
-         *  @param action    The action for the properties
-         *  @param prop1     Property 1
-         *  @param prop2     Property 2
-         *  @param prop3     Property 3
-         *  @param prop4     Property 4
-         */
-        void    sendEvent( quint64 window, const char* msg, long action,
-                            long prop1, long prop2 = 0, long prop3 = 0, long prop4 = 0 );
-
-        /**
-         * @brief atomwName. Get the title of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     Name of the window.
-         */
-        QString atomName( Display* display, quint64 window );
-
-        /**
-         * @brief atomNetWmState. Get the _NET_WM_STATE of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     State of the window.
-         */
-        QStringList atomNetWmState( Display* display, quint64 window );
-
-        /**
-         * @brief atomWmState. Get the WM_STATE of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     State of the window.
-         */
-        long    atomWmState( Display* display, quint64 window );
-
-        /**
-         * @brief atomType. Get the type of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     Type of the window.
-         */
-        QStringList atomWindowType( Display* display, quint64 window );
-
-        /**
-         * @brief atomFrameExtents. Get the frame extents of the window.
-         *
-         *  @param display  The display
-         *  @param window   The window
-         *
-         *  @return     Type of the window.
-         */
-        QMargins atomFrameExtents( Display *display, quint64 window );
+        QList< WindowItem > listXWindows( void* display, quint64 window, int level = 0 );
 
     signals:
 
@@ -374,17 +274,7 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief m_display. Pointer to the main display.
          */
-        Display*    m_display;
-
-        /**
-         * @brief m_screen. The screen number.
-         */
-        int m_screen;
-
-        /**
-         * @brief m_root_window. The root window.
-         */
-        quint64 m_root_window;
+        void*    m_display;
 
         /**
          * @brief m_tb_windows. The Thunderbird windows.

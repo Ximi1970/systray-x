@@ -61,7 +61,7 @@ systray-x-app:
 	$(QMAKE) $(EXT_VERSION) $(OPTIONS) ../SysTray-X/SysTray-X.pro ;\
 	make ;\
 	cd ../.. ;\
-	cp app/build/SysTray-X .
+	cp app/build/SysTray-X-app/SysTray-X .
 else
 systray-x-app:
 	@echo "Creating systray-x app" ;\
