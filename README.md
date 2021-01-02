@@ -40,6 +40,9 @@ Some Gnome status / application bars do not respect the "remove from taskbar X11
 These packages will install the Thunderbird addon and companion app system wide.  
 Root credentials are required.
 
+Make shure you removed / uninstalled any SysTray-X package installed with a script installer.  
+You can verify this by checking the `~/.mozilla/native-messaging-hosts` directory. There should be NO SysTray-X packages or links in there. Remove them and remove the add-on from the Thunderbird add-ons page.
+
 ### openSuSE
 
 #### Repository
@@ -384,6 +387,11 @@ No root credentials required.
 Download the installer here (click on the assets dropdown list):
 
 [Addon and companion app installer](https://github.com/Ximi1970/systray-x/releases)
+
+
+Please keep in mind that using the script will override the SysTray-X packages installed with a repository.
+Use the `-u` option with the script installer to uninstall.
+
 
 ### Windows
 
