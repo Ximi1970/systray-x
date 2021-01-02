@@ -4,4 +4,4 @@ Version: 0-0
 Binary: systray-x-minimal
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Architecture: any
-Build-Depends: debhelper (>= 4.1.16), zip, qt5-default, qtbase5-dev, qdbus-qt5, thunderbird
+Build-Depends: debhelper (>= 4.1.16), zip, g++, libx11-dev, qt5-qmake, qtbase5-dev, qdbus-qt5, thunderbird
