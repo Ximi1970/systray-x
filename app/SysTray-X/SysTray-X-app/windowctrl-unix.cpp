@@ -540,7 +540,7 @@ void    WindowCtrlUnix::updatePositions()
     bool changed = false;
     for( int i = 0 ; i < m_tb_windows.length() ; ++i )
     {
-        if( m_tb_window_states.at( i ) != Preferences::STATE_MINIMIZED )
+        if( m_tb_window_states.at( i ) != Preferences::STATE_MINIMIZED && m_tb_window_states.at( i ) != Preferences::STATE_DOCKED )
         {
             quint64 window = m_tb_windows.at( i );
 
