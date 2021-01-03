@@ -297,6 +297,10 @@ void    WindowCtrl::slotShowHide()
         emit signalConsole( QString( "Window state: %1, %2" )
                             .arg( win_ids.at( i ) )
                             .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+
+        emit signalConsole( QString( "Window state: %1, %2" )
+                            .arg( win_ids.at( i ) )
+                            .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
 #endif
 
 #ifdef Q_OS_UNIX
@@ -305,7 +309,9 @@ void    WindowCtrl::slotShowHide()
 
 #endif
 
-        if( win_states.at( i ) == Preferences::STATE_MINIMIZED || win_states.at( i ) == Preferences::STATE_DOCKED )
+//        if( win_states.at( i ) == Preferences::STATE_MINIMIZED || win_states.at( i ) == Preferences::STATE_DOCKED )
+
+        if( getWindowStateInternal( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED || getWindowStateInternal( win_ids.at( i ) ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
         }

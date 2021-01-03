@@ -33,6 +33,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     m_tb_windows = QList< quint64 >();
     m_tb_window_positions = QList< QPoint >();
     m_tb_window_states = QList< Preferences::WindowState >();
+    m_tb_window_states_internal = QMap< quint64, Preferences::WindowState >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
     /*
@@ -376,6 +377,15 @@ const QList< Preferences::WindowState >&    WindowCtrlUnix::getWindowStates() co
 
 
 /*
+ *  Get the state of a TB window.
+ */
+Preferences::WindowState&    WindowCtrlUnix::getWindowStateInternal( quint64 window )
+{
+    return m_tb_window_states_internal[ window ];
+}
+
+
+/*
  *  Display window atoms
  */
 void    WindowCtrlUnix::displayWindowElements( const QString& title )
@@ -638,6 +648,18 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
          *  Remove from taskbar and task switchers
          */
         WithdrawWindow( m_display, window );
+
+        /*
+         *  Store the window state
+         */
+        m_tb_window_states_internal[ window ] = Preferences::STATE_DOCKED;
+    }
+    else
+    {
+        /*
+         *  Store the window state
+         */
+        m_tb_window_states_internal[ window ] = Preferences::STATE_MINIMIZED;
     }
 
     /*
@@ -715,6 +737,11 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 
         Flush( m_display );
     }
+
+    /*
+     *  Store the window state
+     */
+    m_tb_window_states_internal[ window ] = Preferences::STATE_NORMAL;
 
     /*
      *  Raise the window to the top

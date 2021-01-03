@@ -188,6 +188,15 @@ class WindowCtrlUnix : public QObject
         const QList< Preferences::WindowState >&    getWindowStates() const;
 
         /**
+         * @brief getWindowStateInternal
+         *
+         *  @param window
+         *
+         *  @return
+         */
+        Preferences::WindowState&    getWindowStateInternal( quint64 window );
+
+        /**
          * @brief displayWindowElements. Display window elements (atoms).
          *
          *  @param title    The window title to find.
@@ -292,6 +301,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_window_states. The Thunderbird window states.
          */
         QList< Preferences::WindowState >    m_tb_window_states;
+
+        /**
+         * @brief m_tb_window_states_internal. The Thunderbird window states (internal).
+         */
+        QMap< quint64, Preferences::WindowState >    m_tb_window_states_internal;
 
         /**
          * @brief m_tb_window_hints. The Thunderbird window hints.
