@@ -293,6 +293,12 @@ void    WindowCtrl::slotShowHide()
 
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( QString( "Window state: %1, %2" )
+                            .arg( win_ids.at( i ) )
+                            .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+#endif
+
 #ifdef Q_OS_UNIX
 
         updatePositions();
