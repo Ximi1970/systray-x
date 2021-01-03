@@ -210,6 +210,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             emit signalConsole( QString( "Window state: %1, %2" )
                                 .arg( win_ids.at( i ) )
                                 .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+
+            emit signalConsole( QString( "Window state internal: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
 #endif
 
             if( ( win_states.at( i ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
@@ -227,6 +231,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             emit signalConsole( QString( "Window state: %1, %2" )
                                 .arg( win_ids.at( i ) )
                                 .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+
+            emit signalConsole( QString( "Window state internal: %1, %2" )
+                                .arg( win_ids.at( i ) )
+                                .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
 #endif
 
             if( ( win_states.at( i ) == Preferences::STATE_MINIMIZED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
@@ -298,7 +306,7 @@ void    WindowCtrl::slotShowHide()
                             .arg( win_ids.at( i ) )
                             .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
 
-        emit signalConsole( QString( "Window state: %1, %2" )
+        emit signalConsole( QString( "Window state internal: %1, %2" )
                             .arg( win_ids.at( i ) )
                             .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
 #endif
