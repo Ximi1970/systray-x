@@ -144,7 +144,7 @@ void    WindowCtrl::slotWindowTest3()
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
-    findWindows2( m_ppid );
+    findWindows( m_ppid );
 
     emit signalConsole("Test 3 done");
 }
@@ -185,18 +185,13 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     findWindows( m_ppid );
 
     QList< quint64 > win_ids = getWinIds();
-    QList< Preferences::WindowState >    win_states = getWindowStates();
 
     /*
      *  Minimize all?
      */
     if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( QString( "Minimize all" ) );
-#endif
-
-        if( state == Preferences::STATE_MINIMIZED_ALL )
+        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
         {
             updatePositions();
         }
@@ -209,15 +204,11 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 #ifdef DEBUG_DISPLAY_ACTIONS
             emit signalConsole( QString( "Window state: %1, %2" )
                                 .arg( win_ids.at( i ) )
-                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
-
-            emit signalConsole( QString( "Window state internal: %1, %2" )
-                                .arg( win_ids.at( i ) )
-                                .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
+                                .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-            if( ( win_states.at( i ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
-                ( win_states.at( i ) != Preferences::STATE_DOCKED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
+            if( ( getWindowState( win_ids.at( i ) ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
+                ( getWindowState( win_ids.at( i ) ) != Preferences::STATE_DOCKED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
             {
                 minimizeWindow( win_ids.at( i ) );
             }
@@ -225,19 +216,14 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
     else
     {
+        /*
+         *  Compare the x11 states and the internal states
+         */
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-#ifdef DEBUG_DISPLAY_ACTIONS
-            emit signalConsole( QString( "Window state: %1, %2" )
-                                .arg( win_ids.at( i ) )
-                                .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
+            Preferences::WindowState    current_state = getWindowStateX11( i );
 
-            emit signalConsole( QString( "Window state internal: %1, %2" )
-                                .arg( win_ids.at( i ) )
-                                .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
-#endif
-
-            if( ( win_states.at( i ) == Preferences::STATE_MINIMIZED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
+            if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( win_ids.at( i ) ) )
             {
                 minimizeWindow( win_ids.at( i ) );
             }
@@ -293,33 +279,25 @@ void    WindowCtrl::slotShowHide()
      */
     findWindows( m_ppid );
 
+#ifdef Q_OS_UNIX
+
+//    updatePositions();
+
+#endif
     /*
      *  Get the window ids
      */
     QList< quint64 > win_ids = getWinIds();
-    QList< Preferences::WindowState >    win_states = getWindowStates();
 
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
 #ifdef DEBUG_DISPLAY_ACTIONS
         emit signalConsole( QString( "Window state: %1, %2" )
                             .arg( win_ids.at( i ) )
-                            .arg( Preferences::WindowStateString.at( win_states.at( i ) ) ) );
-
-        emit signalConsole( QString( "Window state internal: %1, %2" )
-                            .arg( win_ids.at( i ) )
-                            .arg( Preferences::WindowStateString.at( getWindowStateInternal( win_ids.at( i ) ) ) ) );
+                            .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-#ifdef Q_OS_UNIX
-
-        updatePositions();
-
-#endif
-
-//        if( win_states.at( i ) == Preferences::STATE_MINIMIZED || win_states.at( i ) == Preferences::STATE_DOCKED )
-
-        if( getWindowStateInternal( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED || getWindowStateInternal( win_ids.at( i ) ) == Preferences::STATE_DOCKED )
+        if( getWindowState( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED || getWindowState( win_ids.at( i ) ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
         }

@@ -31,9 +31,9 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
+    m_tb_window_states_x11 = QList< Preferences::WindowState >();
     m_tb_window_positions = QList< QPoint >();
-    m_tb_window_states = QList< Preferences::WindowState >();
-    m_tb_window_states_internal = QMap< quint64, Preferences::WindowState >();
+    m_tb_window_states = QMap< quint64, Preferences::WindowState >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
     /*
@@ -135,7 +135,7 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
 void    WindowCtrlUnix::findWindows( qint64 pid )
 {
 #ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( "Find windows and states" );
+    emit signalConsole( "Find windows" );
 #endif
 
     QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
@@ -143,6 +143,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     QList< QPoint > old_positions = m_tb_window_positions;
 
     m_tb_windows = QList< quint64 >();
+    m_tb_window_states_x11 = QList< Preferences::WindowState >();
     m_tb_window_positions = QList< QPoint >();
     for( int i = 0 ; i < windows.length() ; ++i )
     {
@@ -155,28 +156,96 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
         {
             if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
             {
-
                 qint32 n_wm_state;
-                void* wm_stat_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+                void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
                 qint32 n_net_wm_state;
                 void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
 
-                if( wm_stat_ptr != nullptr || net_wm_state_ptr != nullptr  )
+                if( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr  )
                 {
                     m_tb_windows.append( win.window );
+
+                    if( !m_tb_window_states.contains( win.window ) )
+                    {
+                        /*
+                         *  Set the startup state
+                         */
+                        m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
+                    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+                    emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
+                                        arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
+#endif
 
                     QPoint point;
                     if( m_tb_windows.length() <= old_positions.length() )
                     {
-                        point = old_positions.at( m_tb_window_positions.length() - 1 );
+                        point = old_positions.at( m_tb_windows.length() - 1 );
                     }
 
                     m_tb_window_positions.append( point );
 
-                    if( wm_stat_ptr != nullptr  )
+                    /*
+                     *  Get the current state
+                     */
+                    QStringList atom_list;
+                    if( net_wm_state_ptr != nullptr )
                     {
-                        Free( wm_stat_ptr );
+                        for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+                        {
+                             char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
+
+                             atom_list.append( atom_name );
+
+                             if( atom_name )
+                             {
+                                 Free( atom_name );
+                             }
+                        }
+                    }
+
+                    int state = -1;
+                    if( wm_state_ptr != nullptr )
+                    {
+                        state = *reinterpret_cast<long *>( wm_state_ptr );
+                    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+                    for( int j = 0 ; j < atom_list.length() ; ++j )
+                    {
+                        emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
+                    }
+
+                    emit signalConsole( QString( "State: %1").arg( state ) );
+#endif
+
+                    if( state == -1 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+                    {
+                        /*
+                         *  Docked
+                         */
+                        m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                    }
+                    else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+                    {
+                        /*
+                         *  Minimized
+                         */
+                        m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
+                    }
+                    else
+                    {
+                        /*
+                         *  Normal
+                         */
+                        m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
+                    }
+
+                    if( wm_state_ptr != nullptr  )
+                    {
+                        Free( wm_state_ptr );
                     }
 
                     if( net_wm_state_ptr != nullptr  )
@@ -194,166 +263,8 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
 #endif
 
-    /*
-     *  Get the new window states, store the old ones
-     */
-    m_tb_window_states = QList< Preferences::WindowState >();
-    for( int i = 0 ; i< m_tb_windows.length() ; ++i )
-    {
-        int state = -1;
-
-        qint32 n_state;
-        void* state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "WM_STATE", &n_state );
-
-        if( state_ptr != nullptr )
-        {
-            state = *reinterpret_cast<long *>( state_ptr );
-
-            Free( state_ptr );
-        }
-
-/*
-        if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) )
-        {
-            m_tb_window_states.append( Preferences::STATE_DOCKED );
-        }
-        else
-        if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
-*/
-
-        if( state == -1 || state == 3 )
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "WinID %1, state: %2, Minimized").arg( m_tb_windows.at( i ) ).arg( state ) );
-#endif
-
-            m_tb_window_states.append( Preferences::STATE_MINIMIZED );
-        }
-        else
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "WinID %1, state: %2, Normal").arg( m_tb_windows.at( i ) ).arg( state ) );
-#endif
-
-            m_tb_window_states.append( Preferences::STATE_NORMAL );
-        }
-    }
-
 #ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( "Find windows and states done" );
-#endif
-}
-
-
-/*
- *  Find a window by PID
- */
-void    WindowCtrlUnix::findWindows2( qint64 pid )
-{
-#ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( "Find windows and states 2" );
-#endif
-
-    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
-
-    QList< QPoint > old_positions = m_tb_window_positions;
-
-    QList< quint64 > tb_windows;
-    QList< QPoint > tb_window_positions;
-    for( int i = 0 ; i < windows.length() ; ++i )
-    {
-        WindowItem win = windows.at( i );
-
-        qint32 n_propPID;
-        void* propPID = GetWindowProperty( m_display, win.window, "_NET_WM_PID", &n_propPID );
-
-        if( propPID != nullptr )
-        {
-            if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
-            {
-                qint32 n_wm_state;
-                void* wm_stat_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
-
-                qint32 n_net_wm_state;
-                void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
-
-                if( wm_stat_ptr != nullptr )
-                {
-                    int wm_state = *reinterpret_cast<long *>( wm_stat_ptr );
-
-                    Free( wm_stat_ptr );
-
-                    emit signalConsole( QString( "wm_state %1, nr: %2, %3" ).arg( win.window ).arg( n_wm_state ).arg( wm_state ) );
-                }
-
-                if( net_wm_state_ptr != nullptr )
-                {
-                    Free( net_wm_state_ptr );
-
-                    emit signalConsole( QString( "net_wm_state %1, nr: %2" ).arg( win.window ).arg( n_net_wm_state ) );
-                }
-
-
-                if( wm_stat_ptr != nullptr || net_wm_state_ptr != nullptr  )
-                {
-                    tb_windows.append( win.window );
-
-                    QPoint point;
-                    if( tb_windows.length() <= old_positions.length() )
-                    {
-                        point = old_positions.at( tb_window_positions.length() - 1 );
-                    }
-
-                    tb_window_positions.append( point );
-                }
-            }
-
-            Free( propPID );
-        }
-    }
-
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-    emit signalConsole( QString( "Number of windows found: %1" ).arg( tb_windows.length() ) );
-#endif
-
-    /*
-     *  Get the new window states, store the old ones
-     */
-    m_tb_window_states = QList< Preferences::WindowState >();
-    for( int i = 0 ; i< tb_windows.length() ; ++i )
-    {
-        int state = -1;
-
-        qint32 n_state;
-        void* state_ptr = GetWindowProperty( m_display, tb_windows.at( i ), "WM_STATE", &n_state );
-
-        if( state_ptr != nullptr )
-        {
-            state = *reinterpret_cast<long *>( state_ptr );
-
-            Free( state_ptr );
-        }
-
-        if( state == -1 || state == 3 )
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "WinID %1, state: %2, Minimized").arg( tb_windows.at( i ) ).arg( state ) );
-#endif
-
-            m_tb_window_states.append( Preferences::STATE_MINIMIZED );
-        }
-        else
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "WinID %1, state: %2, Normal").arg( tb_windows.at( i ) ).arg( state ) );
-#endif
-
-            m_tb_window_states.append( Preferences::STATE_NORMAL );
-        }
-    }
-
-#ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( "Find windows and states 2 done" );
+    emit signalConsole( "Find windows done" );
 #endif
 }
 
@@ -370,18 +281,18 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 /*
  *  Get the states of the TB windows.
  */
-const QList< Preferences::WindowState >&    WindowCtrlUnix::getWindowStates() const
+const Preferences::WindowState&    WindowCtrlUnix::getWindowState( const quint64 window )
 {
-    return m_tb_window_states;
+    return m_tb_window_states[ window ];
 }
 
 
 /*
- *  Get the state of a TB window.
+ *  Get the x11 states of the TB windows.
  */
-Preferences::WindowState&    WindowCtrlUnix::getWindowStateInternal( quint64 window )
+const Preferences::WindowState&    WindowCtrlUnix::getWindowStateX11( int index )
 {
-    return m_tb_window_states_internal[ window ];
+    return m_tb_window_states_x11[ index ];
 }
 
 
@@ -550,10 +461,10 @@ void    WindowCtrlUnix::updatePositions()
     bool changed = false;
     for( int i = 0 ; i < m_tb_windows.length() ; ++i )
     {
-        if( m_tb_window_states.at( i ) != Preferences::STATE_MINIMIZED && m_tb_window_states.at( i ) != Preferences::STATE_DOCKED )
-        {
-            quint64 window = m_tb_windows.at( i );
+        quint64 window = m_tb_windows.at( i );
 
+        if( m_tb_window_states[ window ] != Preferences::STATE_MINIMIZED && m_tb_window_states[ window ] != Preferences::STATE_DOCKED )
+        {
             /*
              *  Get border / title bar sizes
              */
@@ -652,14 +563,14 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
         /*
          *  Store the window state
          */
-        m_tb_window_states_internal[ window ] = Preferences::STATE_DOCKED;
+        m_tb_window_states[ window ] = Preferences::STATE_DOCKED;
     }
     else
     {
         /*
          *  Store the window state
          */
-        m_tb_window_states_internal[ window ] = Preferences::STATE_MINIMIZED;
+        m_tb_window_states[ window ] = Preferences::STATE_MINIMIZED;
     }
 
     /*
@@ -669,44 +580,6 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
     emit signalConsole( "Minimize done" );
-#endif
-}
-
-
-/*
- *  Hide window to system tray
- */
-void    WindowCtrlUnix::hideWindow( quint64 window, bool hide )
-{
-    if( hide )
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( "Remove from taskbar and pager" );
-#endif
-
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
-
-//        Sync( m_display );
-//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_DOCK" );
-    }
-    else
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( "Display in taskbar and pager" );
-#endif
-
-//        ChangeWindowTypeProperty( m_display, window, "_NET_WM_WINDOW_TYPE_NORMAL" );
-//        Sync( m_display );
-
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
-    }
-
-    Flush( m_display );
-
-#ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( QString( "Hide: %1").arg(hide) );
 #endif
 }
 
@@ -741,7 +614,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     /*
      *  Store the window state
      */
-    m_tb_window_states_internal[ window ] = Preferences::STATE_NORMAL;
+    m_tb_window_states[ window ] = Preferences::STATE_NORMAL;
 
     /*
      *  Raise the window to the top
