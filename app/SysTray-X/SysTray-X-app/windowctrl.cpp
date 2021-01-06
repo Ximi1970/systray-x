@@ -144,6 +144,7 @@ void    WindowCtrl::slotWindowTest3()
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
+    emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
 
     emit signalConsole("Test 3 done");
@@ -280,6 +281,9 @@ void    WindowCtrl::slotShowHide()
     findWindows( m_ppid );
 
 #ifdef Q_OS_UNIX
+
+
+//    skoksdkdsofsdvjsdvsdmvdsvmdopvmopsdvmsp
 
 //    updatePositions();
 
