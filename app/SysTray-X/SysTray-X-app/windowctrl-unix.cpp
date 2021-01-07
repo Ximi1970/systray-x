@@ -159,6 +159,20 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                 qint32 n_wm_state;
                 void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
+                int state = -1;
+                if( wm_state_ptr != nullptr )
+                {
+                    state = *reinterpret_cast<long *>( wm_state_ptr );
+
+                    if( state == 0 )
+                    {
+                        state =  -1;
+
+                        Free( wm_state_ptr );
+                        wm_state_ptr = nullptr;
+                    }
+                }
+
                 qint32 n_net_wm_state;
                 void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
 
@@ -203,20 +217,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                              {
                                  Free( atom_name );
                              }
-                        }
-                    }
-
-                    int state = -1;
-                    if( wm_state_ptr != nullptr )
-                    {
-                        state = *reinterpret_cast<long *>( wm_state_ptr );
-
-                        if( state == 0 )
-                        {
-                            state =  -1;
-
-                            Free( wm_state_ptr );
-                            wm_state_ptr = nullptr;
                         }
                     }
 
