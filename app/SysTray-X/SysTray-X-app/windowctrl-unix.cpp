@@ -221,6 +221,8 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                 Free( net_wm_state_ptr );
                             }
 
+                            Free( propPID );
+
                             continue;
                         }
                     }
