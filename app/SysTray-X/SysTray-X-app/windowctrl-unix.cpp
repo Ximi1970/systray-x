@@ -159,20 +159,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                 qint32 n_wm_state;
                 void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
-                int state = -1;
-                if( wm_state_ptr != nullptr )
-                {
-                    state = *reinterpret_cast<long *>( wm_state_ptr );
-
-                    if( state == 0 )
-                    {
-                        state =  -1;
-
-                        Free( wm_state_ptr );
-                        wm_state_ptr = nullptr;
-                    }
-                }
-
                 qint32 n_net_wm_state;
                 void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
 
@@ -187,11 +173,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                          */
                         m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
                     }
-
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-                    emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
-                                        arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
-#endif
 
                     QPoint point;
                     if( m_tb_windows.length() <= old_positions.length() )
@@ -220,13 +201,40 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         }
                     }
 
+                    int state = -1;
+                    if( wm_state_ptr != nullptr )
+                    {
+                        state = *reinterpret_cast<long *>( wm_state_ptr );
+
+                        if( state == 0 )
+                        {
+                            state =  -1;
+
+                            m_tb_windows.removeLast();
+                            m_tb_window_positions.removeLast();
+
+                            Free( wm_state_ptr );
+                            wm_state_ptr = nullptr;
+
+                            if( net_wm_state_ptr != nullptr  )
+                            {
+                                Free( net_wm_state_ptr );
+                            }
+
+                            continue;
+                        }
+                    }
+
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+                    emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
+                                        arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
+
                     for( int j = 0 ; j < atom_list.length() ; ++j )
                     {
                         emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
                     }
 
-                    emit signalConsole( QString( "State: %1").arg( state ) );
+                    emit signalConsole( QString( "State x11: %1").arg( state ) );
 #endif
 
                     if( state == -1 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
