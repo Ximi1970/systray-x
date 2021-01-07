@@ -282,10 +282,7 @@ void    WindowCtrl::slotShowHide()
 
 #ifdef Q_OS_UNIX
 
-
-//    skoksdkdsofsdvjsdvsdmvdsvmdopvmopsdvmsp
-
-//    updatePositions();
+    updatePositions();
 
 #endif
     /*

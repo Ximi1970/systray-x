@@ -210,6 +210,14 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     if( wm_state_ptr != nullptr )
                     {
                         state = *reinterpret_cast<long *>( wm_state_ptr );
+
+                        if( state == 0 )
+                        {
+                            state =  -1;
+
+                            Free( wm_state_ptr );
+                            wm_state_ptr = nullptr;
+                        }
                     }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
