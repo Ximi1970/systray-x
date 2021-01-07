@@ -205,26 +205,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     if( wm_state_ptr != nullptr )
                     {
                         state = *reinterpret_cast<long *>( wm_state_ptr );
-
-                        if( state == 0 )
-                        {
-                            state =  -1;
-
-                            m_tb_windows.removeLast();
-                            m_tb_window_positions.removeLast();
-
-                            Free( wm_state_ptr );
-                            wm_state_ptr = nullptr;
-
-                            if( net_wm_state_ptr != nullptr  )
-                            {
-                                Free( net_wm_state_ptr );
-                            }
-
-                            Free( propPID );
-
-                            continue;
-                        }
                     }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
