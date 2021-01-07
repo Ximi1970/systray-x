@@ -156,13 +156,34 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
         {
             if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
             {
+                QStringList types;
+                qint32 n_types;
+                void* types_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_WINDOW_TYPE", &n_types );
+
+                if( types_ptr != nullptr )
+                {
+                    for( qint32 i = 0; i < n_types; ++i )
+                    {
+                        char* type_name = GetAtomName( m_display, reinterpret_cast<long *>( types_ptr )[ i ] );
+
+                        types.append( type_name );
+
+                        if( type_name )
+                        {
+                            Free( type_name );
+                        }
+                    }
+
+                    Free( types_ptr );
+                }
+
                 qint32 n_wm_state;
                 void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
                 qint32 n_net_wm_state;
                 void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
 
-                if( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr  )
+                if( ( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr ) && types.contains( "_NET_WM_WINDOW_TYPE_NORMAL" ) )
                 {
                     m_tb_windows.append( win.window );
 
@@ -219,7 +240,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     emit signalConsole( QString( "State x11: %1").arg( state ) );
 #endif
 
-                    if( state == -1 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+                    if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
                     {
                         /*
                          *  Docked
