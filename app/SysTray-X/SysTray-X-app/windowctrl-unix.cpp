@@ -678,6 +678,11 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     SendEvent( m_display, window, "_NET_ACTIVE_WINDOW" );
 
     /*
+     *  Set focus
+     */
+    SetInputFocus( m_display, window );
+
+    /*
      *  Flush the pipes
      */
 //    Flush( m_display );
