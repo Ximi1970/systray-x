@@ -217,16 +217,19 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
     else
     {
-        /*
-         *  Compare the x11 states and the internal states
-         */
-        for( int i = 0 ; i < win_ids.length() ; ++i )
+        if( state == Preferences::STATE_MINIMIZED )
         {
-            Preferences::WindowState    current_state = getWindowStateX11( i );
-
-            if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( win_ids.at( i ) ) )
+            /*
+             *  Compare the x11 states and the internal states
+             */
+            for( int i = 0 ; i < win_ids.length() ; ++i )
             {
-                minimizeWindow( win_ids.at( i ) );
+                Preferences::WindowState    current_state = getWindowStateX11( i );
+
+                if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( win_ids.at( i ) ) )
+                {
+                    minimizeWindow( win_ids.at( i ) );
+                }
             }
         }
     }
