@@ -20,7 +20,9 @@
 /*
  *  Qt includes
  */
+#include <QTimer>
 #include <QFileInfo>
+
 
 /*
  *  Constructor
@@ -40,6 +42,137 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Get the base display and window
      */
     m_display = OpenDisplay();
+
+    /*
+     *  State monitor
+     */
+    m_x11_window_states_monitor = new QTimer( this );
+    connect( m_x11_window_states_monitor, &QTimer::timeout, this, &WindowCtrlUnix::x11WindowStatesMonitor );
+    m_x11_window_states_monitor->start( STATES_MONITOR_TIMEOUT );
+}
+
+
+/*
+ *  Thunderbird x11 window states monitor
+ */
+void    WindowCtrlUnix::x11WindowStatesMonitor()
+{
+    /*
+     *  Stop the timer
+     */
+    m_x11_window_states_monitor->stop();
+
+    /*
+     *  Update the states
+     */
+    updateX11WindowStates();
+
+    /*
+     *  Start the timer
+     */
+    m_x11_window_states_monitor->start( STATES_MONITOR_TIMEOUT );
+}
+
+
+/*
+ *  Update the Thunderbird x11 window states
+ */
+void    WindowCtrlUnix::updateX11WindowStates()
+{
+    /*
+     *  Get the x11 window states
+     */
+    for( int i = 0 ; i < m_tb_windows.length() ; ++i )
+    {
+        /*
+         *  Get the WM_STATE
+         */
+        qint32 n_wm_state;
+        void* wm_state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "WM_STATE", &n_wm_state );
+
+        /*
+         *  Get the state
+         */
+        int state = -1;
+        if( wm_state_ptr != nullptr )
+        {
+            state = *reinterpret_cast<long *>( wm_state_ptr );
+
+            Free( wm_state_ptr );
+        }
+
+        /*
+         *  Get the _NET_WM_STATE
+         */
+        qint32 n_net_wm_state;
+        void* net_wm_state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "_NET_WM_STATE", &n_net_wm_state );
+
+        /*
+         *  Get the atoms
+         */
+        QStringList atom_list;
+        if( net_wm_state_ptr != nullptr )
+        {
+            for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+            {
+                 char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
+
+                 atom_list.append( atom_name );
+
+                 if( atom_name )
+                 {
+                     Free( atom_name );
+                 }
+            }
+
+            Free( net_wm_state_ptr );
+        }
+
+        /*
+         *  Determine the state of the window
+         */
+        Preferences::WindowState    current_state;
+        if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+        {
+            /*
+             *  Docked
+             */
+            current_state = Preferences::STATE_DOCKED;
+        }
+        else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+        {
+            /*
+             *  Minimized
+             */
+            current_state = Preferences::STATE_MINIMIZED;
+        }
+        else
+        {
+            /*
+             *  Normal
+             */
+            current_state = Preferences::STATE_NORMAL;
+        }
+
+        m_tb_window_states_x11[ i ] = current_state;
+
+        if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( m_tb_windows.at( i ) ) )
+        {
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+            emit signalConsole( QString( "WinID %1, state: %2").arg( m_tb_windows.at( i ) ).
+                                arg( Preferences::WindowStateString.at( m_tb_window_states[ m_tb_windows.at( i ) ] ) ) );
+
+            for( int j = 0 ; j < atom_list.length() ; ++j )
+            {
+                emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
+            }
+
+            emit signalConsole( QString( "State x11: %1").arg( state ) );
+#endif
+
+            minimizeWindow( m_tb_windows.at( i ) );
+        }
+    }
 }
 
 
@@ -177,99 +310,102 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     Free( types_ptr );
                 }
 
-                qint32 n_wm_state;
-                void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
-
-                qint32 n_net_wm_state;
-                void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
-
-                if( ( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr ) && types.contains( "_NET_WM_WINDOW_TYPE_NORMAL" ) )
+                if( types.contains( "_NET_WM_WINDOW_TYPE_NORMAL" ) )
                 {
-                    m_tb_windows.append( win.window );
+                    qint32 n_wm_state;
+                    void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
-                    if( !m_tb_window_states.contains( win.window ) )
+                    qint32 n_net_wm_state;
+                    void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
+
+                    if( ( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr ) )
                     {
-                        /*
-                         *  Set the startup state
-                         */
-                        m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
-                    }
+                        m_tb_windows.append( win.window );
 
-                    QPoint point;
-                    if( m_tb_windows.length() <= old_positions.length() )
-                    {
-                        point = old_positions.at( m_tb_windows.length() - 1 );
-                    }
-
-                    m_tb_window_positions.append( point );
-
-                    /*
-                     *  Get the current state
-                     */
-                    QStringList atom_list;
-                    if( net_wm_state_ptr != nullptr )
-                    {
-                        for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+                        if( !m_tb_window_states.contains( win.window ) )
                         {
-                             char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
-
-                             atom_list.append( atom_name );
-
-                             if( atom_name )
-                             {
-                                 Free( atom_name );
-                             }
+                            /*
+                             *  Set the startup state
+                             */
+                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
                         }
-                    }
 
-                    int state = -1;
-                    if( wm_state_ptr != nullptr )
-                    {
-                        state = *reinterpret_cast<long *>( wm_state_ptr );
-                    }
+                        QPoint point;
+                        if( m_tb_windows.length() <= old_positions.length() )
+                        {
+                            point = old_positions.at( m_tb_windows.length() - 1 );
+                        }
+
+                        m_tb_window_positions.append( point );
+
+                        /*
+                         *  Get the current state
+                         */
+                        QStringList atom_list;
+                        if( net_wm_state_ptr != nullptr )
+                        {
+                            for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+                            {
+                                 char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
+
+                                 atom_list.append( atom_name );
+
+                                 if( atom_name )
+                                 {
+                                     Free( atom_name );
+                                 }
+                            }
+                        }
+
+                        int state = -1;
+                        if( wm_state_ptr != nullptr )
+                        {
+                            state = *reinterpret_cast<long *>( wm_state_ptr );
+                        }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-                    emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
-                                        arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
+                        emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
+                                            arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
 
-                    for( int j = 0 ; j < atom_list.length() ; ++j )
-                    {
-                        emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
-                    }
+                        for( int j = 0 ; j < atom_list.length() ; ++j )
+                        {
+                            emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
+                        }
 
-                    emit signalConsole( QString( "State x11: %1").arg( state ) );
+                        emit signalConsole( QString( "State x11: %1").arg( state ) );
 #endif
 
-                    if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
-                    {
-                        /*
-                         *  Docked
-                         */
-                        m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
-                    }
-                    else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
-                    {
-                        /*
-                         *  Minimized
-                         */
-                        m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
-                    }
-                    else
-                    {
-                        /*
-                         *  Normal
-                         */
-                        m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
-                    }
+                        if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+                        {
+                            /*
+                             *  Docked
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                        }
+                        else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+                        {
+                            /*
+                             *  Minimized
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
+                        }
+                        else
+                        {
+                            /*
+                             *  Normal
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
+                        }
 
-                    if( wm_state_ptr != nullptr  )
-                    {
-                        Free( wm_state_ptr );
-                    }
+                        if( wm_state_ptr != nullptr  )
+                        {
+                            Free( wm_state_ptr );
+                        }
 
-                    if( net_wm_state_ptr != nullptr  )
-                    {
-                        Free( net_wm_state_ptr );
+                        if( net_wm_state_ptr != nullptr  )
+                        {
+                            Free( net_wm_state_ptr );
+                        }
                     }
                 }
             }
@@ -680,7 +816,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     /*
      *  Set focus
      */
-    SetInputFocus( m_display, window );
+//    SetInputFocus( m_display, window );
 
     /*
      *  Flush the pipes

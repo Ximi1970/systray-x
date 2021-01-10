@@ -18,12 +18,19 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QMutex>
 #include <QMap>
 #include <QPoint>
 
 /*
  *  Predefines
  */
+class QTimer;
+
+/*
+ *  Monitor timeout (ms)
+ */
+#define STATES_MONITOR_TIMEOUT  500
 
 /**
  * @brief The WindowCtrlUnix class.
@@ -244,7 +251,17 @@ class WindowCtrlUnix : public QObject
          */
         void    setPositions( QList< QPoint > window_positions );
 
+        /**
+         * @brief updateX11WindowStates. Update the x11 window states.
+         */
+        void    updateX11WindowStates();
+
     private:
+
+        /**
+         * @brief x11WindowStatesMonitor. Monitor the Thunderbird x11 window states.
+         */
+        void    x11WindowStatesMonitor();
 
         /**
          * @brief listXWindows. Get all the windows.
@@ -274,6 +291,11 @@ class WindowCtrlUnix : public QObject
         void    signalPositions( QList< QPoint > positions );
 
    private:
+
+        /**
+         * @brief m_x11_window_states_monitor. Timer to monitor the Thunderbird window states.
+         */
+        QTimer*  m_x11_window_states_monitor;
 
         /**
          * @brief m_display. Pointer to the main display.

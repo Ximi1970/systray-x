@@ -181,17 +181,17 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 #ifdef Q_OS_UNIX
 
     /*
-     *  Update the TB windows and states
-     */
-    findWindows( m_ppid );
-
-    QList< quint64 > win_ids = getWinIds();
-
-    /*
      *  Minimize all?
      */
     if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
+        /*
+         *  Update the TB windows and states
+         */
+        findWindows( m_ppid );
+
+        QList< quint64 > win_ids = getWinIds();
+
         if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
         {
             updatePositions();
@@ -217,8 +217,20 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
     else
     {
+        /*
+         *  Let the montor handle this
+         */
+
+#ifdef  MONITOR
         if( state == Preferences::STATE_MINIMIZED )
-        {
+        {            
+            /*
+             *  Update the TB windows and states
+             */
+            findWindows( m_ppid );
+
+            QList< quint64 > win_ids = getWinIds();
+
             /*
              *  Compare the x11 states and the internal states
              */
@@ -232,6 +244,8 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                 }
             }
         }
+#endif
+
     }
 
 #else
@@ -310,6 +324,12 @@ void    WindowCtrl::slotShowHide()
             minimizeWindow( win_ids.at( i ) );
         }
     }
+
+    /*
+     *  Update the TB windows
+     */
+    findWindows( m_ppid );
+//    updateX11WindowStates();   // WM_STATE not synced????
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Show/Hide end" );
