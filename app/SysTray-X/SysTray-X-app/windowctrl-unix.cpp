@@ -20,6 +20,8 @@
 /*
  *  Qt includes
  */
+#include <QApplication>
+#include <QTime>
 #include <QTimer>
 #include <QFileInfo>
 
@@ -745,7 +747,7 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
  */
 void    WindowCtrlUnix::normalizeWindow( quint64 window )
 {
-#ifdef DEBUG_DISPLAY_ACTIONS
+#if defined DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Normalize" );
 #endif
 
@@ -756,13 +758,19 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     {
         MapWindow( m_display, window );
 
+        emit signalConsole( "Mapped" );
+
         SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
+
+        emit signalConsole( "Hints set" );
 
         /*
          *  Reset the hide flags
          */
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
+        emit signalConsole( "Taskbar removed" );
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
+        emit signalConsole( "Pager removed" );
 
         Flush( m_display );
     }
@@ -776,6 +784,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
      *  Raise the window to the top
      */
     MapRaised( m_display, window );
+    emit signalConsole( "Map raised" );
 
     /*
      *  Flush the pipes
@@ -789,6 +798,8 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 
     qint32 n_current_desktop;
     long* current_desktop_ptr = (long*)GetWindowProperty( m_display, 0, "_NET_CURRENT_DESKTOP", &n_current_desktop );
+
+    emit signalConsole( "Got current desktop" );
 
     if( current_desktop_ptr != nullptr )
     {
@@ -806,12 +817,16 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
          *  Set the desktop for the window
          */
         SendEvent( m_display, window, "_NET_WM_DESKTOP", current_desktop, 1 );
+
+
+        emit signalConsole( "Desktop set" );
     }
 
     /*
      *  Normalize
      */
     SendEvent( m_display, window, "_NET_ACTIVE_WINDOW" );
+    emit signalConsole( "Window activated" );
 
     /*
      *  Set focus
@@ -823,6 +838,38 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
      */
 //    Flush( m_display );
     Sync( m_display );
+    emit signalConsole( "Synced" );
+
+    /*
+     *  Let us wait a bit, maybe this helps...
+     */
+    QTime state_wait;
+    state_wait.start();
+    bool win_normal = false;
+    while( state_wait.elapsed() < 1000 && !win_normal )
+    {
+        /*
+         *  Get the WM_STATE
+         */
+        qint32 n_wm_state;
+        void* wm_state_ptr = GetWindowProperty( m_display, window, "WM_STATE", &n_wm_state );
+
+        /*
+         *  Get the state
+         */
+        int state = -1;
+        if( wm_state_ptr != nullptr )
+        {
+            state = *reinterpret_cast<long *>( wm_state_ptr );
+
+            if( state == 1 )
+            {
+                win_normal = true;
+            }
+
+            Free( wm_state_ptr );
+        }
+    }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
     emit signalConsole( "Normalize done" );

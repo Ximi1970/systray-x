@@ -328,8 +328,8 @@ void    WindowCtrl::slotShowHide()
     /*
      *  Update the TB windows
      */
-    findWindows( m_ppid );
-//    updateX11WindowStates();   // WM_STATE not synced????
+//    findWindows( m_ppid );
+    updateX11WindowStates();
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Show/Hide end" );
