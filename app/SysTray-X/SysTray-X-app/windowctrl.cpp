@@ -318,6 +318,7 @@ void    WindowCtrl::slotShowHide()
         if( getWindowState( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED || getWindowState( win_ids.at( i ) ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
+            normalizeWindow( win_ids.at( i ) );
         }
         else
         {
