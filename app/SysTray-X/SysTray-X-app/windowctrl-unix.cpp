@@ -831,7 +831,7 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     /*
      *  Set focus
      */
-//    SetInputFocus( m_display, window );
+    SetInputFocus( m_display, window );
 
     /*
      *  Flush the pipes
