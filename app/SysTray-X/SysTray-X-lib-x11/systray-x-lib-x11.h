@@ -261,4 +261,9 @@ void    GetWindowPosition( void *display, quint64 window, long* pos_x, long* pos
  */
 void    MoveWindow( void* display, quint64 window, int x, int y );
 
+/**
+ * @brief SetErrorHandler. Set the x11 error handler.
+ */
+void    SetErrorHandler();
+
 #endif // SYSTRAY_X_LIB_H

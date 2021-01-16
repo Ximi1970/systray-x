@@ -41,6 +41,11 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
     /*
+     *  Set the X11 error handler
+     */
+    SetErrorHandler();
+
+    /*
      *  Get the base display and window
      */
     m_display = OpenDisplay();

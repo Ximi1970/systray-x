@@ -3,6 +3,7 @@
 /*
  *  System includes
  */
+#include <stdio.h>
 #include <limits.h>
 #include <string.h>
 
@@ -456,4 +457,28 @@ void    GetWindowPosition( void* display, quint64 window, long* pos_x, long* pos
 void    MoveWindow( void* display, quint64 window, int x, int y )
 {
     XMoveWindow( (Display*)display, window, x, y );
+}
+
+
+/*
+ *  The error handler
+ */
+int ErrorHandler( Display* display, XErrorEvent* event )
+{
+    fprintf( stderr, "Error code: %x", event->error_code );
+
+    char buf[ 1024 ];
+    XGetErrorText( display, event->error_code, buf, 1024 );
+    fprintf( stderr, "%s\n", buf );
+
+    return 0;
+}
+
+
+/*
+ *  Set the error handler
+ */
+void    SetErrorHandler()
+{
+    XSetErrorHandler( ErrorHandler );
 }
