@@ -41,7 +41,7 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2017\WDExpress\VC\Auxiliary
 C:\Qt\%QT_VER%\%SPEC%\bin\qmake ..\SysTray-X\SysTray-X.pro -spec win32-msvc
 nmake
 
-xcopy /Q /Y release\SysTray-X-app\SysTray-X.exe ..\dist\%WIN%\
+xcopy /Q /Y SysTray-X-app\release\SysTray-X.exe ..\dist\%WIN%\
 xcopy /Q /Y ..\config\win32\SysTray_X.json.template ..\dist\%WIN%\
 rename ..\dist\%WIN%\SysTray_X.json.template SysTray_X.json
 
