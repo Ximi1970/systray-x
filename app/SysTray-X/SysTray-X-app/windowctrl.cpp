@@ -84,7 +84,7 @@ void    WindowCtrl::slotWindowTest1()
 
 //    findWindows( m_ppid );
 
-#define MINIMIZE_TEST
+//#define MINIMIZE_TEST
 #ifdef  MINIMIZE_TEST
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
@@ -115,7 +115,7 @@ void    WindowCtrl::slotWindowTest2()
 
 //    hideWindow( getWinId(), true );
 
-#define NORMALIZE_TEST
+//#define NORMALIZE_TEST
 #ifdef  NORMALIZE_TEST
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
@@ -144,8 +144,11 @@ void    WindowCtrl::slotWindowTest3()
 //    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
 //    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
 
+//#define FINDWINDOW_TEST
+#ifdef  FINDWINDOW_TEST
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
     findWindows( m_ppid );
+#endif
 
     emit signalConsole("Test 3 done");
 }
@@ -233,38 +236,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             }
         }
     }
-    else
-    {
-        /*
-         *  Let the montor handle this
-         */
-
-#ifdef  MONITOR
-        if( state == Preferences::STATE_MINIMIZED )
-        {            
-            /*
-             *  Update the TB windows and states
-             */
-            findWindows( m_ppid );
-
-            QList< quint64 > win_ids = getWinIds();
-
-            /*
-             *  Compare the x11 states and the internal states
-             */
-            for( int i = 0 ; i < win_ids.length() ; ++i )
-            {
-                Preferences::WindowState    current_state = getWindowStateX11( i );
-
-                if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( win_ids.at( i ) ) )
-                {
-                    minimizeWindow( win_ids.at( i ) );
-                }
-            }
-        }
-#endif
-
-    }
 
 #else
 
@@ -349,7 +320,6 @@ void    WindowCtrl::slotShowHide()
     /*
      *  Update the TB windows
      */
-//    findWindows( m_ppid );
     updateX11WindowStates();
 
 #else

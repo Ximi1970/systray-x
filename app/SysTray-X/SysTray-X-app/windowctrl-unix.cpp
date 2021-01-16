@@ -763,7 +763,6 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
     /*
      *  Flush the pipes
      */
-//    Flush( m_display );
     Sync( m_display );
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
@@ -853,7 +852,6 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     /*
      *  Flush the pipes
      */
-//    Flush( m_display );
     Sync( m_display );
 
     /*
