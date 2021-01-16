@@ -310,16 +310,18 @@ void    WindowCtrl::slotShowHide()
     emit signalConsole( "Show/Hide" );
 #endif
 
+#ifdef Q_OS_UNIX
+
     /*
      *  Update the TB windows
      */
     findWindows( m_ppid );
 
-#ifdef Q_OS_UNIX
-
+    /*
+     *  Update the positions
+     */
     updatePositions();
 
-#endif
     /*
      *  Get the window ids
      */
@@ -349,6 +351,39 @@ void    WindowCtrl::slotShowHide()
      */
 //    findWindows( m_ppid );
     updateX11WindowStates();
+
+#else
+
+    /*
+     *  Update the TB windows
+     */
+    findWindows( m_ppid );
+
+    /*
+     *  Get the window ids
+     */
+    QList< quint64 > win_ids = getWinIds();
+    QList< Preferences::WindowState >    win_states = getWindowStates();
+
+    for( int i = 0 ; i < win_ids.length() ; ++i )
+    {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( QString( "Window state: %1, %2" )
+                            .arg( win_ids.at( i ) )
+                            .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
+#endif
+
+        if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
+        {
+            normalizeWindow( win_ids.at( i ) );
+        }
+        else
+        {
+            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+        }
+    }
+
+#endif
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Show/Hide end" );
