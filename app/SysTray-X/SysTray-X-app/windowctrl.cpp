@@ -199,15 +199,15 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 #ifdef Q_OS_UNIX
 
     /*
+     *  Update the TB windows and states
+     */
+    findWindows( m_ppid );
+
+    /*
      *  Minimize all?
      */
     if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
-        /*
-         *  Update the TB windows and states
-         */
-        findWindows( m_ppid );
-
         QList< quint64 > win_ids = getWinIds();
 
         if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
