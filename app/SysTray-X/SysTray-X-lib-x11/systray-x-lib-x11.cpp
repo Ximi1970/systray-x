@@ -465,7 +465,7 @@ void    MoveWindow( void* display, quint64 window, int x, int y )
  */
 int ErrorHandler( Display* display, XErrorEvent* event )
 {
-    fprintf( stderr, "Error code: %x", event->error_code );
+    fprintf( stderr, "Error code: %x\n", event->error_code );
 
     char buf[ 1024 ];
     XGetErrorText( display, event->error_code, buf, 1024 );
