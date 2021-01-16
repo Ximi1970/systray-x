@@ -72,6 +72,11 @@ class WindowCtrl : public QObject
         void    slotWindowTest3();
 
         /**
+         * @brief slotWindowTest4. Start a test.
+         */
+        void    slotWindowTest4();
+
+        /**
          * @brief slotMinimizeTypeChange. Handle the minimize type signal.
          */
         void    slotMinimizeTypeChange();

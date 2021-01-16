@@ -266,4 +266,9 @@ void    MoveWindow( void* display, quint64 window, int x, int y );
  */
 void    SetErrorHandler();
 
+/**
+ * @brief UnSetErrorHandler. Unset the x11 error handler.
+ */
+void    UnSetErrorHandler();
+
 #endif // SYSTRAY_X_LIB_H

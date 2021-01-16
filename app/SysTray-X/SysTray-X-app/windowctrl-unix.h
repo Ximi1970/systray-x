@@ -125,6 +125,11 @@ class WindowCtrlUnix : public QObject
         explicit WindowCtrlUnix( QObject *parent = nullptr );
 
         /**
+         * @brief disableX11ErrorHandler. Disable the X11 error handler.
+         */
+        void    disableX11ErrorHandler();
+
+        /**
          * @brief setMinimizeType
          *
          *  @param type     Set the minimize type.

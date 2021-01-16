@@ -482,3 +482,12 @@ void    SetErrorHandler()
 {
     XSetErrorHandler( ErrorHandler );
 }
+
+
+/*
+ *  Unset the error handler
+ */
+void    UnSetErrorHandler()
+{
+    XSetErrorHandler( NULL );
+}

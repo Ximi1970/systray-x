@@ -33,6 +33,7 @@ DebugWidget::DebugWidget( Preferences* pref, QWidget* parent ) : QWidget( parent
     connect( m_ui->test1PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest1Button);
     connect( m_ui->test2PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest2Button);
     connect( m_ui->test3PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest3Button);
+    connect( m_ui->test4PushButton, &QPushButton::clicked, this, &DebugWidget::slotHandleTest4Button);
 }
 
 
@@ -101,6 +102,15 @@ void    DebugWidget::slotHandleTest2Button()
 void    DebugWidget::slotHandleTest3Button()
 {
     emit signalTest3ButtonClicked();
+}
+
+
+/*
+ *  Handle test button 4 click
+ */
+void    DebugWidget::slotHandleTest4Button()
+{
+    emit signalTest4ButtonClicked();
 }
 
 

@@ -152,6 +152,24 @@ void    WindowCtrl::slotWindowTest3()
 
 
 /*
+ *  Test func 4
+ */
+void    WindowCtrl::slotWindowTest4()
+{
+    emit signalConsole("Test 4 started");
+
+    // Do something.
+
+#ifdef Q_OS_UNIX
+
+    disableX11ErrorHandler();
+
+#endif
+
+    emit signalConsole("Test 4 done");
+}
+
+/*
  *  Handle change in minimize type change
  */
 void    WindowCtrl::slotMinimizeTypeChange()

@@ -60,6 +60,15 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 
 
 /*
+ *  Disable te X11 error handler
+ */
+void    WindowCtrlUnix::disableX11ErrorHandler()
+{
+    UnSetErrorHandler();
+}
+
+
+/*
  *  Thunderbird x11 window states monitor
  */
 void    WindowCtrlUnix::x11WindowStatesMonitor()

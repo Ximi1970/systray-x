@@ -55,19 +55,24 @@ class DebugWidget : public QWidget
     signals:
 
         /**
-         * @brief signalTestButton1Clicked. Signal the test button was clicked.
+         * @brief signalTest1ButtonClicked. Signal the test 1 button was clicked.
          */
         void    signalTest1ButtonClicked();
 
         /**
-         * @brief signalTestButton2Clicked. Signal the test button was clicked.
+         * @brief signalTest2ButtonClicked. Signal the test 2 button was clicked.
          */
         void    signalTest2ButtonClicked();
 
         /**
-         * @brief signalTestButton3Clicked. Signal the test button was clicked.
+         * @brief signalTest3ButtonClicked. Signal the test 3 button was clicked.
          */
         void    signalTest3ButtonClicked();
+
+        /**
+         * @brief signalTest4ButtonClicked. Signal the test 4 button was clicked.
+         */
+        void    signalTest4ButtonClicked();
 
     public slots:
 
@@ -84,19 +89,24 @@ class DebugWidget : public QWidget
         void    slotUnreadMail( int unread_mail );
 
         /**
-         * @brief slotHandleTest1Button. Handle a click on the test button.
+         * @brief slotHandleTest1Button. Handle a click on the test 1 button.
          */
         void    slotHandleTest1Button();
 
         /**
-         * @brief slotHandleTest2Button. Handle a click on the test button.
+         * @brief slotHandleTest2Button. Handle a click on the test 2 button.
          */
         void    slotHandleTest2Button();
 
         /**
-         * @brief slotHandleTest2Button. Handle a click on the test button.
+         * @brief slotHandleTest3Button. Handle a click on the test 3 button.
          */
         void    slotHandleTest3Button();
+
+        /**
+         * @brief slotHandleTest4Button. Handle a click on the test 4 button.
+         */
+        void    slotHandleTest4Button();
 
         /**
          * @brief slotConsole. Handle console signal.

@@ -95,6 +95,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_debug, &DebugWidget::signalTest1ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest1 );
     connect( m_debug, &DebugWidget::signalTest2ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest2 );
     connect( m_debug, &DebugWidget::signalTest3ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest3 );
+    connect( m_debug, &DebugWidget::signalTest4ButtonClicked, m_win_ctrl, &WindowCtrl::slotWindowTest4 );
 
 #ifdef Q_OS_UNIX
 
