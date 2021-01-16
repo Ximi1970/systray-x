@@ -267,6 +267,13 @@ void    MoveWindow( void* display, quint64 window, int x, int y );
 void    SetErrorHandler();
 
 /**
+ * @brief Error. Get the error state.
+ *
+ *  @return     The error state.
+ */
+bool    Error();
+
+/**
  * @brief UnSetErrorHandler. Unset the x11 error handler.
  */
 void    UnSetErrorHandler();

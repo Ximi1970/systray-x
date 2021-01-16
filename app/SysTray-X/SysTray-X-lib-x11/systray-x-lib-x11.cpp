@@ -16,10 +16,18 @@
 
 
 /*
+ *  X11 error state
+ * */
+bool    x11Error = false;
+
+
+/*
  *  Open the display
  */
 void*   OpenDisplay()
 {
+    x11Error = false;
+
     return XOpenDisplay( NULL );
 }
 
@@ -471,6 +479,7 @@ int ErrorHandler( Display* display, XErrorEvent* event )
     XGetErrorText( display, event->error_code, buf, 1024 );
     fprintf( stderr, "%s\n", buf );
 
+    x11Error = true;
     return 0;
 }
 
@@ -485,9 +494,23 @@ void    SetErrorHandler()
 
 
 /*
+ *  Get the error state
+ */
+bool    Error()
+{
+    bool stete = x11Error;
+    x11Error = false;
+
+    return stete;
+}
+
+
+/*
  *  Unset the error handler
  */
 void    UnSetErrorHandler()
 {
+    x11Error = false;
+
     XSetErrorHandler( NULL );
 }

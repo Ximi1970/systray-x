@@ -106,6 +106,22 @@ void    WindowCtrlUnix::updateX11WindowStates()
         qint32 n_wm_state;
         void* wm_state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "WM_STATE", &n_wm_state );
 
+        if( Error() )
+        {
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+            emit signalConsole( QString( "Updatex11: Removing WinID %1").arg( m_tb_windows.at( i ) ) );
+#endif
+
+            /*
+             *  Window does not exist
+             */
+            m_tb_windows.removeAt( i );
+            m_tb_window_positions.removeAt( i );
+            m_tb_window_states_x11.removeAt( i );
+
+            continue;
+        }
+
         /*
          *  Get the state
          */
@@ -175,7 +191,7 @@ void    WindowCtrlUnix::updateX11WindowStates()
         if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( m_tb_windows.at( i ) ) )
         {
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "WinID %1, state: %2").arg( m_tb_windows.at( i ) ).
+            emit signalConsole( QString( "Updatex11: WinID %1, state: %2").arg( m_tb_windows.at( i ) ).
                                 arg( Preferences::WindowStateString.at( m_tb_window_states[ m_tb_windows.at( i ) ] ) ) );
 
             for( int j = 0 ; j < atom_list.length() ; ++j )
