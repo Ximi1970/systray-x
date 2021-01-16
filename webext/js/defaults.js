@@ -405,7 +405,6 @@ function checkFilters(filters) {
           path: "/" + inbox[0].name,
           version: SysTrayX.version,
         };
-        delete folder.type;
         delete folder.subFolders;
 
         newFilters.push({
