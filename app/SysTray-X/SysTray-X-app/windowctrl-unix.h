@@ -18,7 +18,6 @@
  *	Qt includes
  */
 #include <QObject>
-#include <QMutex>
 #include <QMap>
 #include <QPoint>
 
