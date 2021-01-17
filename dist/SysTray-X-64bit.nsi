@@ -3,8 +3,8 @@ Name "${Name}"
 Outfile "${Name}-setup64.exe"
 
 ; MUI Settings
-!define MUI_ICON "..\app\SysTray-X\files\icons\SysTray-X.ico"
-!define MUI_UNICON "..\app\SysTray-X\files\icons\SysTray-X.ico"
+!define MUI_ICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
+!define MUI_UNICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
 
 ;https://nsis.sourceforge.io/Docs/MultiUser/Readme.html
 
@@ -69,7 +69,7 @@ Section "Install"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayName" "$(^Name)"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
 
-  File "..\app\SysTray-X\files\icons\SysTray-X.ico"
+  File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
   File /r "..\app\dist\win64\*"
   File "..\systray-x@Ximi1970.xpi"
 
