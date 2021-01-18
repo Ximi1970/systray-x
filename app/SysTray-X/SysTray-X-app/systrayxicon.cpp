@@ -340,6 +340,12 @@ void    SysTrayXIcon::renderIcon()
                 pixmap = lookthrough;
                 break;
             }
+
+            case Preferences::PREF_TB_ICON:
+            {
+                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                break;
+            }
         }
     }
     else

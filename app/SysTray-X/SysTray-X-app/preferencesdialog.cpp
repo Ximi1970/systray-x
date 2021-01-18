@@ -66,6 +66,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->iconTypeGroup->setId( m_ui->newMailButton, Preferences::PREF_NEWMAIL_ICON );
     m_ui->iconTypeGroup->setId( m_ui->customRadioButton, Preferences::PREF_CUSTOM_ICON );
     m_ui->iconTypeGroup->setId( m_ui->noIconRadioButton, Preferences::PREF_NO_ICON );
+    m_ui->iconTypeGroup->setId( m_ui->tbIconRadioButton, Preferences::PREF_TB_ICON );
 
     /*
      *  Set count type button Ids
