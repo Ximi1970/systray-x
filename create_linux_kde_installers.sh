@@ -95,7 +95,7 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
@@ -218,12 +218,12 @@ create_deb_tar() {
   #
   # Find deb
   #
-  local DEB_FILE=$(grep ">systray-x_.*\.deb<" index.html | sed -e "s/.*>\(systray-x.*deb\)<.*/\1/")
+  local DEB_FILE=$(grep ">${OBS_PACKAGE}_${VERSION}.*\.deb<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*deb\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${DEB_FILE}
   
-  FOUND_VERSION=$(echo ${DEB_FILE} | sed -e "s/systray-x_\(.*\)_.*/\1/")
+  FOUND_VERSION=$(echo ${DEB_FILE} | sed -e "s/${OBS_PACKAGE}_\(.*\)_.*/\1/")
 
   echo "Version: "${FOUND_VERSION}
 
@@ -301,7 +301,7 @@ create_pac_tar() {
   #
   # Find rpm
   #
-  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
+  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${PAC_FILE}

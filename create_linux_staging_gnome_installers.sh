@@ -68,6 +68,7 @@ OBS_DEB_PKS+="deb10 "
 OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
+OBS_DEB_GNOME_EXT+="v26 "
 OBS_DEB_ARCHS+="Debian_Unstable/amd64 "
 OBS_DEB_PKS+="debunstable "
 OBS_DEB_GNOME_EXT+="v34 "
@@ -117,9 +118,9 @@ create_gnome_extension_tar() {
     return
   fi
   
-  if [ ${GNOME_EXT} != "v26" ] &&
-    [ ${GNOME_EXT} != "v34" ] &&
-    [ ${GNOME_EXT} != "master" ] ; then
+  if [ "${GNOME_EXT}" != "v26" ] &&
+    [ "${GNOME_EXT}" != "v34" ] &&
+    [ "${GNOME_EXT}" != "master" ] ; then
     return
   fi
   
@@ -164,7 +165,7 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^d].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^d].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
@@ -301,7 +302,7 @@ create_deb_tar() {
   #
   # Find deb
   #
-  local DEB_FILE=$(grep ">${OBS_PACKAGE}_.*\.deb<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*deb\)<.*/\1/")
+  local DEB_FILE=$(grep ">${OBS_PACKAGE}_${VERSION}.*\.deb<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*deb\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${DEB_FILE}
@@ -398,7 +399,7 @@ create_pac_tar() {
   #
   # Find rpm
   #
-  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
+  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${PAC_FILE}
