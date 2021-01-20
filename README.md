@@ -30,9 +30,7 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
 
 ## Known issues
 
-Some Gnome status / application bars do not respect the "remove from taskbar X11 atom (_NET_WM_STATE_SKIP_TASKBAR)". So Thunderbird stays always visible when minimized.  
-- Ubuntu Gnome (red status dot stays visible) Please be aware that the icon always will be visible because it is a launchbar also...  
-- CentOS Gnome (Thunderbird stays visible in the taskbar)  
+
 
 ## Limitations
 
