@@ -5,9 +5,9 @@ SysTray-X is a system tray extension for Thunderbird 68+. The addon uses the Web
 The addon and system tray application can do:
 
 - custom new mail icon
-- display number of unread mails
+- display number of unread / new mails
 - show / hide Thunderbird (minimize)
-- minimizing hides to tray (remove Thunderbird from taskbar when minimized)
+- minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
 - minimize on close
 
