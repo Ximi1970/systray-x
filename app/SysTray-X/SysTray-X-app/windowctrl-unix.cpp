@@ -81,7 +81,7 @@ void    WindowCtrlUnix::x11WindowStatesMonitor()
     /*
      *  Update the states
      */
-    updateX11WindowStates();
+    updateX11WindowStates( CHECK_MINIMIZE );
 
     /*
      *  Start the timer
@@ -93,7 +93,7 @@ void    WindowCtrlUnix::x11WindowStatesMonitor()
 /*
  *  Update the Thunderbird x11 window states
  */
-void    WindowCtrlUnix::updateX11WindowStates()
+void    WindowCtrlUnix::updateX11WindowStates( CheckType check_type )
 {
     /*
      *  Get the x11 window states
@@ -188,7 +188,8 @@ void    WindowCtrlUnix::updateX11WindowStates()
 
         m_tb_window_states_x11[ i ] = current_state;
 
-        if( ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( m_tb_windows.at( i ) ) )
+        if( ( check_type & CHECK_MINIMIZE ) &&
+                ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( m_tb_windows.at( i ) ) )
         {
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
             emit signalConsole( QString( "Updatex11: WinID %1, state: %2").arg( m_tb_windows.at( i ) ).
@@ -203,6 +204,11 @@ void    WindowCtrlUnix::updateX11WindowStates()
 #endif
 
             minimizeWindow( m_tb_windows.at( i ) );
+        }
+        else if( ( check_type & CHECK_NORMALIZE ) &&
+                 ( current_state == Preferences::STATE_NORMAL && current_state != getWindowState( m_tb_windows.at( i ) ) ) )
+        {
+            normalizeWindow( m_tb_windows.at( i ) );
         }
     }
 }

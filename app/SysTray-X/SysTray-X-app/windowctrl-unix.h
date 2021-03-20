@@ -98,6 +98,16 @@ class WindowCtrlUnix : public QObject
         };
 
         /*
+         *  Window types
+         */
+        enum CheckType
+        {
+            CHECK_MINIMIZE = 1,
+            CHECK_NORMALIZE,
+            CHECK_ALL,
+        };
+
+        /*
          *  Window list item
          */
         class WindowItem
@@ -258,7 +268,7 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief updateX11WindowStates. Update the x11 window states.
          */
-        void    updateX11WindowStates();
+        void    updateX11WindowStates( CheckType check_type );
 
     private:
 

@@ -38,6 +38,7 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
      *  Initialize
      */
     setMinimizeType( m_pref->getMinimizeType() );
+    m_show_hide_active = false;
 
     /*
      *  Get pids
@@ -195,6 +196,14 @@ void    WindowCtrl::slotStartMinimizedChange()
  */
 void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 {
+    if( m_show_hide_active )
+    {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( "State change blocked" );
+#endif
+        return;
+    }
+
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( QString( "State change to: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
 #endif
@@ -235,6 +244,13 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                 minimizeWindow( win_ids.at( i ) );
             }
         }
+    }
+    else
+    {
+        /*
+         *  Update the TB windows
+         */
+        updateX11WindowStates( CHECK_NORMALIZE );
     }
 
 #else
@@ -281,6 +297,11 @@ void    WindowCtrl::slotShowHide()
     emit signalConsole( "Show/Hide" );
 #endif
 
+    /*
+     *  Mark action
+     */
+    m_show_hide_active = true;
+
 #ifdef Q_OS_UNIX
 
     /*
@@ -320,7 +341,7 @@ void    WindowCtrl::slotShowHide()
     /*
      *  Update the TB windows
      */
-    updateX11WindowStates();
+    updateX11WindowStates( CHECK_MINIMIZE );
 
 #else
 
@@ -354,6 +375,11 @@ void    WindowCtrl::slotShowHide()
     }
 
 #endif
+
+    /*
+     *  Mark action
+     */
+    m_show_hide_active = false;
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Show/Hide end" );

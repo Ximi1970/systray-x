@@ -116,6 +116,11 @@ class WindowCtrl : public QObject
         Preferences*    m_pref;
 
         /**
+         * @brief m_show_hide_active
+         */
+        bool    m_show_hide_active;
+
+        /**
          * @brief m_pid. SysTray-X process pid.
          */
         qint64  m_pid;
