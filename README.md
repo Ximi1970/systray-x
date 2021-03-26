@@ -299,10 +299,10 @@ A `git` package is available in the user repository (KDE Plasma version). To ins
 Installing the repository:
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Arch/x86_64/home_Ximi1970_Mozilla_Add-ons_Arch.key
-sudo pacman-key --add home_Ximi1970_Mozilla_Add-ons_Arch.key
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/home_Ximi1970_Mozilla_Add-ons_Arch_Arch.key
+sudo pacman-key --add home_Ximi1970_Mozilla_Add-ons_Arch_Arch.key
 sudo pacman-key --lsign-key BEEF5C3607D86FE9
-sudo echo -e "\n[home_Ximi1970_Mozilla_Add-ons_Arch]\nSigLevel = PackageOptional\nServer = https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Arch/x86_64" | sudo tee -a /etc/pacman.conf 
+sudo echo -e "\n[home_Ximi1970_Mozilla_Add-ons_Arch_Arch]\nSigLevel = PackageOptional\nServer = https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64" | sudo tee -a /etc/pacman.conf 
 sudo pacman -Syyu
 ```
 
