@@ -315,24 +315,8 @@ var SysTrayX = {
   applyToSubfolders(account, path, folder, recursive, fun) {
     if (folder.hasSubFolders) {
       let subFolders = folder.subFolders;
-      console.debug("SubFolder: " + subFolders.length);
-      /*
       while (subFolders.hasMoreElements()) {
         let subFolder = subFolders.getNext().QueryInterface(Ci.nsIMsgFolder);
-        if (recursive && subFolder.hasSubFolders)
-          this.applyToSubfoldersRecursive(
-            account,
-            path,
-            subFolder,
-            recursive,
-            fun
-          );
-        else fun.call(this, path, subFolder);
-      }
-      */
-
-      for (let i = 0; i < subFolders.length; ++i) {
-        let subFolder = subFolders[i].QueryInterface(Ci.nsIMsgFolder);
         if (recursive && subFolder.hasSubFolders)
           this.applyToSubfoldersRecursive(
             account,
