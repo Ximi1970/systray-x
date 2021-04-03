@@ -3,6 +3,20 @@
     "namespace": "folderChange",
     "functions": [
       {
+        "name": "setVersion",
+        "type": "function",
+        "description": "Set the TB version.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "version",
+            "minimum": 0,
+            "maximum": 999
+          }
+        ]
+      },
+      {
         "name": "setCountType",
         "type": "function",
         "description": "Set the count type.",

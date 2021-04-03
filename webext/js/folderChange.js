@@ -56,6 +56,10 @@ var folderChange = class extends ExtensionCommon.ExtensionAPI {
     return {
       // Again, this key must have the same name.
       folderChange: {
+        setVersion: async function (version) {
+          SysTrayX.setVersion(version);
+        },
+
         setCountType: async function (type) {
           SysTrayX.setCountType(type);
         },
@@ -131,6 +135,8 @@ var SysTrayX = {
   MESSAGE_COUNT_TYPE_UNREAD: 0,
   MESSAGE_COUNT_TYPE_NEW: 1,
 
+  version: 0,
+
   countType: this.MESSAGE_COUNT_TYPE_UNREAD,
 
   initialized: false,
@@ -171,6 +177,10 @@ var SysTrayX = {
     MailServices.mailSession.RemoveFolderListener(this.mailSessionListener);
 
     this.initialized = false;
+  },
+
+  setVersion: function (version) {
+    this.version = version;
   },
 
   setCountType: function (type) {
@@ -315,17 +325,32 @@ var SysTrayX = {
   applyToSubfolders(account, path, folder, recursive, fun) {
     if (folder.hasSubFolders) {
       let subFolders = folder.subFolders;
-      while (subFolders.hasMoreElements()) {
-        let subFolder = subFolders.getNext().QueryInterface(Ci.nsIMsgFolder);
-        if (recursive && subFolder.hasSubFolders)
-          this.applyToSubfoldersRecursive(
-            account,
-            path,
-            subFolder,
-            recursive,
-            fun
-          );
-        else fun.call(this, path, subFolder);
+      if (this.version < 87) {
+        while (subFolders.hasMoreElements()) {
+          let subFolder = subFolders.getNext().QueryInterface(Ci.nsIMsgFolder);
+          if (recursive && subFolder.hasSubFolders)
+            this.applyToSubfoldersRecursive(
+              account,
+              path,
+              subFolder,
+              recursive,
+              fun
+            );
+          else fun.call(this, path, subFolder);
+        }
+      } else {
+        for (let i = 0; i < subFolders.length; ++i) {
+          let subFolder = subFolders[i].QueryInterface(Ci.nsIMsgFolder);
+          if (recursive && subFolder.hasSubFolders)
+            this.applyToSubfoldersRecursive(
+              account,
+              path,
+              subFolder,
+              recursive,
+              fun
+            );
+          else fun.call(this, path, subFolder);
+        }
       }
     }
   },

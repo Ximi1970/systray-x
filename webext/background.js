@@ -56,6 +56,9 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
+    //  Set TB versionn
+    browser.folderChange.setVersion(Number(SysTrayX.browserInfo.version));
+
     //  Catch the unread / new mails
     browser.folderChange.onUnreadMailChange.addListener(function (unread) {
       SysTrayX.Messaging.unreadCb(unread);
@@ -572,11 +575,11 @@ async function start() {
   //  Get the prefered start state
   const state = await getStartupState();
 
-//  if (state == "minimized") {
-//    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-//      state: "minimized",
-//    });
-//  }
+  //  if (state == "minimized") {
+  //    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+  //      state: "minimized",
+  //    });
+  //  }
 
   SysTrayX.startupState = state;
 
