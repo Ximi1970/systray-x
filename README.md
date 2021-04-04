@@ -30,6 +30,7 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
 
 ## Known issues
 
+- Preferences menu not working in TB 86.x throught TB 87.0b1 (beta releases)
 
 
 ## Limitations
