@@ -57,7 +57,8 @@ SysTrayX.Messaging = {
     SysTrayX.Messaging.sendPreferences();
 
     //  Set TB versionn
-    browser.folderChange.setVersion(Number(SysTrayX.browserInfo.version));
+    const version = SysTrayX.browserInfo.version.split(".")[0];
+    browser.folderChange.setVersion(Number(version));
 
     //  Catch the unread / new mails
     browser.folderChange.onUnreadMailChange.addListener(function (unread) {
