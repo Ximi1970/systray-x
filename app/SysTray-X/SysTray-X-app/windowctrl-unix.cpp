@@ -445,6 +445,12 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                             Free( net_wm_state_ptr );
                         }
                     }
+                     else
+                    {
+                        m_tb_windows.append( win.window );
+                        m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                    }
+
                 }
             }
 
