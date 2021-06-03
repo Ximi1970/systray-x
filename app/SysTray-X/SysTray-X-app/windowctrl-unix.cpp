@@ -449,8 +449,22 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     {
                         m_tb_windows.append( win.window );
                         m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
-                    }
+                        if( !m_tb_window_states.contains( win.window ) )
+                        {
+                            /*
+                             *  Set the startup state
+                             */
+                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
+                        }
 
+                        QPoint point;
+                        if( m_tb_windows.length() <= old_positions.length() )
+                        {
+                            point = old_positions.at( m_tb_windows.length() - 1 );
+                        }
+
+                        m_tb_window_positions.append( point );                         
+                    }
                 }
             }
 
