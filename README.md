@@ -126,7 +126,7 @@ Installing the repository:
 ###### 20.10
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.10/Release.key
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_20.10/Release.key
 sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.10 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
@@ -135,7 +135,7 @@ sudo apt update
 ###### 20.04 LTS
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04/Release.key
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_20.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
@@ -144,7 +144,7 @@ sudo apt update
 ###### 18.04 LTS
 
 ```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04/Release.key
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
@@ -153,7 +153,7 @@ sudo apt update
 ###### 16.04 LTS
 
 ```bash
-wget -q http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04/Release.key
+wget -q http://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_16.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
