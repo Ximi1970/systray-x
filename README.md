@@ -122,6 +122,15 @@ sudo zypper in systray-x-minimal
 
 Installing the repository:
 
+###### 21.04
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_21.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_21.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 20.10
 
 ```bash
@@ -169,6 +178,8 @@ sudo apt install systray-x
 ```
 
 ###### GNOME
+
+Please select the `Ubuntu on Xorg` session when login on 21.04. The `Ubuntu` (Wayland) session will not work.
 
 ```bash
 sudo apt install systray-x-gnome
