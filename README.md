@@ -250,6 +250,13 @@ sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/ho
 sudo dnf update --refresh
 ```
 
+###### 34
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_34/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
 ###### 33
 
 ```bash
