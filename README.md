@@ -173,13 +173,15 @@ Installing the SysTray-X addon and companion app package:
 
 ###### KDE
 
+Please select the `Plasma (X11)` session when loging in on 21.04. The `Plasma (Wayland)` session will not work.
+
 ```bash
 sudo apt install systray-x
 ```
 
 ###### GNOME
 
-Please select the `Ubuntu on Xorg` session when login on 21.04. The `Ubuntu` (Wayland) session will not work.
+Please select the `Ubuntu on Xorg` session when loging in on 21.04. The `Ubuntu` (Wayland) session will not work.
 
 ```bash
 sudo apt install systray-x-gnome
