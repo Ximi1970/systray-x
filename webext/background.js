@@ -82,6 +82,16 @@ SysTrayX.Messaging = {
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
+
+    //  Test new API from TB91
+    browser.folders.onFolderInfoChanged.addListener(
+      SysTrayX.Messaging.listenerTest
+    );
+  },
+
+  listenerTest: function (folder, folderInfo) {
+    console.debug("Folder: " + JSON.stringify(folder));
+    console.debug("FolderInfo: " + JSON.stringify(folderInfo));
   },
 
   onCloseButton: function () {
@@ -656,7 +666,14 @@ async function start() {
   await getIcon();
 
   //  Get all accounts
-  SysTrayX.Messaging.accounts = await browser.accounts.list();
+  if (SysTrayX.browserInfo.majorVersion < 91) {
+    SysTrayX.Messaging.accounts = await browser.accounts.list();
+  } else {
+    console.debug("Getting accounts with folders");
+
+    const includeFolders = true;
+    SysTrayX.Messaging.accounts = await browser.accounts.list(includeFolders);
+  }
 
   //  Get folder tree
   SysTrayX.Messaging.folderTree = getFolderTree(
@@ -669,6 +686,30 @@ async function start() {
 
   // Get the count type
   SysTrayX.Messaging.countType = await getCountType();
+
+  //  Test new API calls TB91
+
+  /*
+  const folder = {
+    accountId: "account1",
+    path: "/Inbox",
+  };
+*/
+
+  /*
+  const folder = {
+    accountId: "account1",
+    name: "Inbox",
+    path: "/Inbox",
+    type: "inbox",
+    subFolders: [],
+  };
+*/
+
+  /*
+  const mailFolderInfo = await browser.folders.getFolderInfo(folder);
+  console.debug("MailFolderInfo: " + JSON.stringify(mailFolderInfo));
+*/
 
   //  Setup the link first
   SysTrayX.Link.init();

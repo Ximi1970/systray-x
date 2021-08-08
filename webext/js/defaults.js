@@ -460,8 +460,9 @@ async function getFilters() {
 
     console.debug("Checked filters: " + JSON.stringify(newFilters));
 
-    return newFilters;
-  }
+//    return newFilters;
+    return filters;
+}
 
   function onFiltersError() {
     return undefined;

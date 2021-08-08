@@ -18,7 +18,18 @@ SysTrayX.Accounts = {
    * Be aware that the data is only avaiable inside the callback
    */
   getAccounts: async function () {
-    return await browser.accounts.list();
+    if (BrowserInfo.version.split(".")[0] < 91) {
+      return await browser.accounts.list();
+    } else {
+      console.debug("Get account with folders");
+
+      const includeFolders = true;
+      const accounts = await browser.accounts.list(includeFolders);
+
+      console.debug("Options accounts: " + JSON.stringify(accounts));
+
+      return accounts;
+    }
   },
 
   /*
