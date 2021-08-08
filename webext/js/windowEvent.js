@@ -43,7 +43,7 @@ var windowEvent = class extends ExtensionCommon.ExtensionAPI {
     return {
       // Again, this key must have the same name.
       windowEvent: {
-        setCloseType: async function (type) {
+        setCloseType: function (type) {
           windowListener.setCloseType(type);
         },
 
