@@ -1,6 +1,4 @@
 var SysTrayX = {
-  accounts: [],
-
   startupState: undefined,
 
   restorePositions: false,
@@ -21,6 +19,7 @@ SysTrayX.Messaging = {
   countType: 0,
   closeType: 1,
   filters: undefined,
+  unread: {},
 
   init: function () {
     // Send the startup positions?
@@ -92,6 +91,50 @@ SysTrayX.Messaging = {
   listenerTest: function (folder, folderInfo) {
     console.debug("Folder: " + JSON.stringify(folder));
     console.debug("FolderInfo: " + JSON.stringify(folderInfo));
+
+    if (folderInfo.unreadMessageCount !== undefined) {
+      if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
+        SysTrayX.Messaging.unread[folder.accountId] = {};
+      }
+
+      SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+        folderInfo.unreadMessageCount;
+    }
+
+    console.debug("Unread: " + JSON.stringify(SysTrayX.Messaging.unread));
+
+    let count = 0;
+    SysTrayX.Messaging.filters.forEach((filter) => {
+      const accountId = filter.folder.accountId;
+      const path = filter.folder.path;
+
+      //      console.debug("FilterId: " + accountId);
+      //      console.debug("FilterPath: " + path);
+
+      if (SysTrayX.Messaging.unread[accountId] !== undefined) {
+        if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
+          console.debug(
+            "Match found, count: " + SysTrayX.Messaging.unread[accountId][path]
+          );
+
+          count = count + SysTrayX.Messaging.unread[accountId][path];
+        } else if (
+          SysTrayX.Messaging.unread[accountId][path.toUpperCase()] !== undefined
+        ) {
+          console.debug(
+            "Match found, count: " +
+              SysTrayX.Messaging.unread[accountId][path.toUpperCase()]
+          );
+
+          count =
+            count + SysTrayX.Messaging.unread[accountId][path.toUpperCase()];
+        }
+      }
+    });
+
+    console.debug("Total count: " + count);
+
+    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
   onCloseButton: function () {
