@@ -55,40 +55,77 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    //  Set TB versionn
-    const version = SysTrayX.browserInfo.version.split(".")[0];
-    browser.folderChange.setVersion(Number(version));
+    if (SysTrayX.browserInfo.majorVersion < 91) {
+      //  Set TB versionn
+      const version = SysTrayX.browserInfo.version.split(".")[0];
+      browser.folderChange.setVersion(Number(version));
 
-    //  Catch the unread / new mails
-    browser.folderChange.onUnreadMailChange.addListener(function (unread) {
-      SysTrayX.Messaging.unreadCb(unread);
-    });
+      //  Catch the unread / new mails
+      browser.folderChange.onUnreadMailChange.addListener(function (unread) {
+        SysTrayX.Messaging.unreadCb(unread);
+      });
 
-    browser.folderChange.onFolderChange.addListener(function (
-      rootFolder,
-      parentFolder,
-      folder,
-      added
-    ) {
-      SysTrayX.Messaging.updateFilters(rootFolder, parentFolder, folder, added);
-    });
+      browser.folderChange.onFolderChange.addListener(function (
+        rootFolder,
+        parentFolder,
+        folder,
+        added
+      ) {
+        SysTrayX.Messaging.updateFilters(
+          rootFolder,
+          parentFolder,
+          folder,
+          added
+        );
+      });
 
-    //  Set the count type in the folderChange listener
-    browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
+      //  Set the count type in the folderChange listener
+      browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
 
-    //  Set the filters in the folderChange listener
-    browser.folderChange.setFilters(SysTrayX.Messaging.filters);
+      //  Set the filters in the folderChange listener
+      browser.folderChange.setFilters(SysTrayX.Messaging.filters);
+    } else {
+      browser.folders.onCreated.addListener(
+        SysTrayX.Messaging.listenerFolderCreated
+      );
+      browser.folders.onRenamed.addListener(
+        SysTrayX.Messaging.listenerFolderRenamed
+      );
+      browser.folders.onDeleted.addListener(
+        SysTrayX.Messaging.listenerFolderDeleted
+      );
+
+      //  Test new API from TB91
+      browser.folders.onFolderInfoChanged.addListener(
+        SysTrayX.Messaging.listenerFolderInfoChanged
+      );
+    }
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
-
-    //  Test new API from TB91
-    browser.folders.onFolderInfoChanged.addListener(
-      SysTrayX.Messaging.listenerTest
-    );
   },
 
-  listenerTest: function (folder, folderInfo) {
+  listenerFolderCreated: function (createdFolder) {
+    console.debug("Folder created: " + JSON.stringify(createdFolder));
+
+    const found = isParentFilteredFolder(createdFolder);
+    if (found) {
+      addFolderToFilters(createdFolder);
+    }
+  },
+
+  listenerFolderRenamed: function (originalFolder, renameFolder) {
+    console.debug("Folder renamed from: " + JSON.stringify(originalFolder));
+    console.debug("Folder renamed to: " + JSON.stringify(renameFolder));
+  },
+
+  listenerFolderDeleted: function (deletedFolder) {
+    console.debug("Folder deleted: " + JSON.stringify(deletedFolder));
+
+    deleteFilteredFolder(deletedFolder);
+  },
+
+  listenerFolderInfoChanged: function (folder, folderInfo) {
     console.debug("Folder: " + JSON.stringify(folder));
     console.debug("FolderInfo: " + JSON.stringify(folderInfo));
 
@@ -155,7 +192,11 @@ SysTrayX.Messaging = {
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
 
-      browser.folderChange.setFilters(SysTrayX.Messaging.filters);
+      if (SysTrayX.browserInfo.majorVersion < 91) {
+        browser.folderChange.setFilters(SysTrayX.Messaging.filters);
+      } else {
+        console.debug("StorageChanged filters not available");
+      }
     }
 
     if ("closeType" in changes && changes["closeType"].newValue) {
@@ -177,7 +218,11 @@ SysTrayX.Messaging = {
     if ("countType" in changes && changes["countType"].newValue) {
       SysTrayX.Messaging.countType = changes["countType"].newValue;
 
-      browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
+      if (SysTrayX.browserInfo.majorVersion < 91) {
+        browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
+      } else {
+        console.debug("StorageChanged counttype not available");
+      }
     }
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {

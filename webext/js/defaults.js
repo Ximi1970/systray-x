@@ -460,9 +460,9 @@ async function getFilters() {
 
     console.debug("Checked filters: " + JSON.stringify(newFilters));
 
-//    return newFilters;
+    //    return newFilters;
     return filters;
-}
+  }
 
   function onFiltersError() {
     return undefined;
@@ -502,4 +502,80 @@ async function getCloseType() {
 
   const getCloseType = browser.storage.sync.get("closeType");
   return await getCloseType.then(getCloseTypeCb, onCloseTypeError);
+}
+
+//  Helper funcs for TB91 and later folder handling
+
+// Check if a folder is in the filter list
+function isFilteredFolder(folder) {
+  return (
+    SysTrayX.Messaging.filters.filter(
+      (filter) =>
+        filter.folder.accountId === folder.accountId &&
+        (filter.folder.path === folder.path ||
+          filter.folder.path.toUpperCase() === folder.path)
+    ).length !== 0
+  );
+}
+
+// Check if the parent folder of a folder is in the filter list
+function isParentFilteredFolder(folder) {
+  const parentPath = folder.path.substring(0, folder.path.lastIndexOf("/"));
+
+  return (
+    SysTrayX.Messaging.filters.filter(
+      (filter) =>
+        filter.folder.accountId === folder.accountId &&
+        (filter.folder.path === parentPath ||
+          filter.folder.path.toUpperCase() === parentPath)
+    ).length !== 0
+  );
+}
+
+// Delete a folder from the filter list
+function deleteFilteredFolder(deleteFolder) {
+  const newFilters = SysTrayX.Messaging.filters.filter(
+    (filter) =>
+      !(
+        filter.folder.accountId === deleteFolder.accountId &&
+        (filter.folder.path === deleteFolder.path ||
+          filter.folder.path.toUpperCase() === deleteFolder.path)
+      )
+  );
+
+  //  Store the new filters
+  browser.storage.sync.set({
+    filters: newFilters,
+  });
+}
+
+// Get the account name from an id
+function getAccountName(id) {
+  const account = SysTrayX.Messaging.accounts.filter(
+    (account) => account.id === id
+  )[0];
+
+  return account.name;
+}
+
+// Add a folder to the filter list
+function addFolderToFilters(newFolder) {
+  const folder = {
+    ...newFolder,
+    accountName: getAccountName(newFolder.accountId),
+    version: SysTrayX.version,
+  };
+
+  const filter = {
+    unread: true,
+    folder: folder,
+  };
+
+  const newFilters = SysTrayX.Messaging.filters;
+  newFilters.push(filter);
+
+  //  Store the new filters
+  browser.storage.sync.set({
+    filters: newFilters,
+  });
 }
