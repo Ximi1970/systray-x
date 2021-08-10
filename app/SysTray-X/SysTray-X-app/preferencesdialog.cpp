@@ -77,7 +77,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Hide the count type for now
      */
-//    m_ui->countTypeGroupBox->setVisible(false);
+    m_ui->countTypeGroupBox->setVisible(false);
 
     /*
      *  Set icon type defaults
