@@ -507,7 +507,7 @@ async function getCloseType() {
 //  Helper funcs for TB91 and later folder handling
 
 // Check if a folder is in the filter list
-function isFilteredFolder(folder) {
+function isFolderInFilters(folder) {
   return (
     SysTrayX.Messaging.filters.filter(
       (filter) =>
@@ -519,7 +519,7 @@ function isFilteredFolder(folder) {
 }
 
 // Check if the parent folder of a folder is in the filter list
-function isParentFilteredFolder(folder) {
+function isParentFolderInFilters(folder) {
   const parentPath = folder.path.substring(0, folder.path.lastIndexOf("/"));
 
   return (
@@ -533,13 +533,13 @@ function isParentFilteredFolder(folder) {
 }
 
 // Delete a folder from the filter list
-function deleteFilteredFolder(deleteFolder) {
+function deleteFolderFromFilters(folder) {
   const newFilters = SysTrayX.Messaging.filters.filter(
     (filter) =>
       !(
-        filter.folder.accountId === deleteFolder.accountId &&
-        (filter.folder.path === deleteFolder.path ||
-          filter.folder.path.toUpperCase() === deleteFolder.path)
+        filter.folder.accountId === folder.accountId &&
+        (filter.folder.path === folder.path ||
+          filter.folder.path.toUpperCase() === folder.path)
       )
   );
 

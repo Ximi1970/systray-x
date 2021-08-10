@@ -108,7 +108,7 @@ SysTrayX.Messaging = {
   listenerFolderCreated: function (createdFolder) {
     console.debug("Folder created: " + JSON.stringify(createdFolder));
 
-    const found = isParentFilteredFolder(createdFolder);
+    const found = isParentFolderInFilters(createdFolder);
     if (found) {
       addFolderToFilters(createdFolder);
     }
@@ -117,12 +117,19 @@ SysTrayX.Messaging = {
   listenerFolderRenamed: function (originalFolder, renameFolder) {
     console.debug("Folder renamed from: " + JSON.stringify(originalFolder));
     console.debug("Folder renamed to: " + JSON.stringify(renameFolder));
+
+    deleteFolderFromFilters(originalFolder);
+
+    const found = isParentFolderInFilters(renameFolder);
+    if (found) {
+      addFolderToFilters(renameFolder);
+    }
   },
 
   listenerFolderDeleted: function (deletedFolder) {
     console.debug("Folder deleted: " + JSON.stringify(deletedFolder));
 
-    deleteFilteredFolder(deletedFolder);
+    deleteFolderFromFilters(deletedFolder);
   },
 
   listenerFolderInfoChanged: function (folder, folderInfo) {
