@@ -149,11 +149,25 @@ void    Preferences::setBrowserVendor( const QString vendor )
 
 
 /*
+ *  Get the browser
+ */
+const QString&    Preferences::getBrowserVersion() const
+{
+    return m_browser_version;
+}
+
+
+/*
  *  Set the browser
  */
 void    Preferences::setBrowserVersion( const QString version )
 {
     m_browser_version = version;
+
+    /*
+     *  Tell the world the new preference
+     */
+    emit signalBrowserVersion();
 }
 
 

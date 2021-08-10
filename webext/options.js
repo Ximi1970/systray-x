@@ -68,8 +68,9 @@ SysTrayX.SaveOptions = {
     //
     // Save close preferences
     //
-    const closeType = document.querySelector('input[name="closeType"]:checked')
-      .value;
+    const closeType = document.querySelector(
+      'input[name="closeType"]:checked'
+    ).value;
 
     //  Store minimize preferences
     browser.storage.sync.set({
@@ -133,8 +134,9 @@ SysTrayX.SaveOptions = {
     //
     // Save icon preferences
     //
-    const iconType = document.querySelector('input[name="iconType"]:checked')
-      .value;
+    const iconType = document.querySelector(
+      'input[name="iconType"]:checked'
+    ).value;
 
     //  Store icon type
     browser.storage.sync.set({
@@ -154,8 +156,9 @@ SysTrayX.SaveOptions = {
     //
     //  Save enable number state
     //
-    const showNumber = document.querySelector('input[name="showNumber"]')
-      .checked;
+    const showNumber = document.querySelector(
+      'input[name="showNumber"]'
+    ).checked;
     browser.storage.sync.set({
       showNumber: `${showNumber}`,
     });
@@ -231,8 +234,9 @@ SysTrayX.SaveOptions = {
     //
     // Save count type preferences
     //
-    const countType = document.querySelector('input[name="countType"]:checked')
-      .value;
+    const countType = document.querySelector(
+      'input[name="countType"]:checked'
+    ).value;
     browser.storage.sync.set({
       countType: countType,
     });
@@ -1007,5 +1011,14 @@ document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
 document
   .querySelector('[name="saveform"]')
   .addEventListener("submit", SysTrayX.SaveOptions.start);
+
+async function start() {
+  BrowserInfo = await browser.runtime.getBrowserInfo().then((info) => info);
+  if (BrowserInfo.version.split(".")[0] > 89) {
+    document.getElementById("counttype").style.display = "none";
+  }
+}
+
+start();
 
 browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);

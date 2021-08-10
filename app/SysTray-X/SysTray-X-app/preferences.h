@@ -152,6 +152,13 @@ class Preferences : public QObject
         void setBrowserVendor( const QString vendor );
 
         /**
+         * @brief getBrowserVersion. Get the browser version.
+         *
+         * @return      The browser version.
+         */
+        const QString& getBrowserVersion() const;
+
+        /**
          * @brief setBrowserVersion. Set the browser version.
          *
          *  @param version  The version.
@@ -467,6 +474,11 @@ class Preferences : public QObject
          *  @param message      The message.
          */
         void    signalConsole( QString message );
+
+        /**
+         * @brief signalBrowserVersion. Signal the browser version.
+         */
+        void signalBrowserVersion();
 
         /**
          * @brief signalDefaultIconTypeChange. Signal a default icon type change.

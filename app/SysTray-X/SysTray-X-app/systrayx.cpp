@@ -111,6 +111,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
+    connect( m_preferences, &Preferences::signalBrowserVersion, m_pref_dialog, &PreferencesDialog::slotBrowserVersion );
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconDataChange );
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_pref_dialog, &PreferencesDialog::slotHideDefaultIconChange );

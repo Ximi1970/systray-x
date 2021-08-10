@@ -75,11 +75,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->countTypeGroup->setId( m_ui->newRadioButton, Preferences::PREF_COUNT_NEW );
 
     /*
-     *  Hide the count type for now
-     */
-    m_ui->countTypeGroupBox->setVisible(false);
-
-    /*
      *  Set icon type defaults
      */
     m_tmp_icon_data = QByteArray();
@@ -540,6 +535,23 @@ void    PreferencesDialog::slotColorSelect()
 void    PreferencesDialog::slotDebugChange()
 {
     setDebug( m_pref->getDebug() );
+}
+
+
+/*
+ *  Handle the browser version signal
+ */
+void    PreferencesDialog::slotBrowserVersion()
+{
+    QString version = m_pref->getBrowserVersion();
+
+    if( version.section( '.', 0, 0 ).toInt() > 89 )
+    {
+        /*
+         *  Hide the count type for TB90 and up, not supported
+         */
+        m_ui->countTypeGroupBox->setVisible( false );
+    }
 }
 
 

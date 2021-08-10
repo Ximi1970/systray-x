@@ -208,6 +208,11 @@ class PreferencesDialog : public QDialog
         void    slotDebugChange();
 
         /**
+         * @brief slotBrowserVersion. Slot for handling the browser version signals.
+         */
+        void    slotBrowserVersion();
+
+        /**
          * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
          */
         void    slotMinimizeTypeChange();
