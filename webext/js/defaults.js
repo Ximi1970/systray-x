@@ -506,6 +506,10 @@ async function getCloseType() {
 
 //  Helper funcs for TB91 and later folder handling
 
+async function getMailFolderInfo(folder) {
+  return await browser.folders.getFolderInfo(folder);
+}
+
 // Check if a folder is in the filter list
 function isFolderInFilters(folder) {
   return (

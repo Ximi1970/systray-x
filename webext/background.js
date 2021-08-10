@@ -21,7 +21,7 @@ SysTrayX.Messaging = {
   filters: undefined,
   unread: {},
 
-  init: function () {
+  init: async function () {
     // Send the startup positions?
     if (SysTrayX.restorePositions) {
       SysTrayX.Link.postSysTrayXMessage({
@@ -95,7 +95,40 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.listenerFolderDeleted
       );
 
-      //  Test new API from TB91
+      // Get the start count
+      for (const filter of SysTrayX.Messaging.filters) {
+        const path =
+          filter.folder.path.toUpperCase() === "/INBOX"
+            ? "/INBOX"
+            : filter.folder.path;
+        const folder = {
+          accountId: filter.folder.accountId,
+          path: path,
+        };
+
+        const mailFolderInfo = await browser.folders.getFolderInfo(folder);
+
+        if (mailFolderInfo.unreadMessageCount !== undefined) {
+          if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
+            SysTrayX.Messaging.unread[folder.accountId] = {};
+          }
+
+          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+            mailFolderInfo.unreadMessageCount;
+        }
+      }
+
+      let count = 0;
+      Object.keys(SysTrayX.Messaging.unread).forEach((key) =>
+        Object.keys(SysTrayX.Messaging.unread[key]).forEach(
+          (path) => (count = count + SysTrayX.Messaging.unread[key][path])
+        )
+      );
+
+      console.debug("Count: " + count);
+      SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+
+      //  Set count listener
       browser.folders.onFolderInfoChanged.addListener(
         SysTrayX.Messaging.listenerFolderInfoChanged
       );
@@ -106,8 +139,6 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderCreated: function (createdFolder) {
-    console.debug("Folder created: " + JSON.stringify(createdFolder));
-
     const found = isParentFolderInFilters(createdFolder);
     if (found) {
       addFolderToFilters(createdFolder);
@@ -115,9 +146,6 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderRenamed: function (originalFolder, renameFolder) {
-    console.debug("Folder renamed from: " + JSON.stringify(originalFolder));
-    console.debug("Folder renamed to: " + JSON.stringify(renameFolder));
-
     deleteFolderFromFilters(originalFolder);
 
     const found = isParentFolderInFilters(renameFolder);
@@ -127,15 +155,10 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderDeleted: function (deletedFolder) {
-    console.debug("Folder deleted: " + JSON.stringify(deletedFolder));
-
     deleteFolderFromFilters(deletedFolder);
   },
 
   listenerFolderInfoChanged: function (folder, folderInfo) {
-    console.debug("Folder: " + JSON.stringify(folder));
-    console.debug("FolderInfo: " + JSON.stringify(folderInfo));
-
     if (folderInfo.unreadMessageCount !== undefined) {
       if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
         SysTrayX.Messaging.unread[folder.accountId] = {};
@@ -145,38 +168,20 @@ SysTrayX.Messaging = {
         folderInfo.unreadMessageCount;
     }
 
-    console.debug("Unread: " + JSON.stringify(SysTrayX.Messaging.unread));
-
     let count = 0;
     SysTrayX.Messaging.filters.forEach((filter) => {
       const accountId = filter.folder.accountId;
-      const path = filter.folder.path;
-
-      //      console.debug("FilterId: " + accountId);
-      //      console.debug("FilterPath: " + path);
+      const path =
+        filter.folder.path.toUpperCase() === "/INBOX"
+          ? "/INBOX"
+          : filter.folder.path;
 
       if (SysTrayX.Messaging.unread[accountId] !== undefined) {
         if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
-          console.debug(
-            "Match found, count: " + SysTrayX.Messaging.unread[accountId][path]
-          );
-
           count = count + SysTrayX.Messaging.unread[accountId][path];
-        } else if (
-          SysTrayX.Messaging.unread[accountId][path.toUpperCase()] !== undefined
-        ) {
-          console.debug(
-            "Match found, count: " +
-              SysTrayX.Messaging.unread[accountId][path.toUpperCase()]
-          );
-
-          count =
-            count + SysTrayX.Messaging.unread[accountId][path.toUpperCase()];
         }
       }
     });
-
-    console.debug("Total count: " + count);
 
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
@@ -781,30 +786,6 @@ async function start() {
 
   // Get the count type
   SysTrayX.Messaging.countType = await getCountType();
-
-  //  Test new API calls TB91
-
-  /*
-  const folder = {
-    accountId: "account1",
-    path: "/Inbox",
-  };
-*/
-
-  /*
-  const folder = {
-    accountId: "account1",
-    name: "Inbox",
-    path: "/Inbox",
-    type: "inbox",
-    subFolders: [],
-  };
-*/
-
-  /*
-  const mailFolderInfo = await browser.folders.getFolderInfo(folder);
-  console.debug("MailFolderInfo: " + JSON.stringify(mailFolderInfo));
-*/
 
   //  Setup the link first
   SysTrayX.Link.init();
