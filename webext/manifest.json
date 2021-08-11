@@ -22,7 +22,6 @@
 
   "permissions": [
     "accountsRead",
-    "messagesRead",
     "storage",
     "nativeMessaging",
     "tabs"
