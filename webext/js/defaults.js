@@ -456,12 +456,14 @@ async function getFilters() {
 
     console.debug("Stored filters: " + JSON.stringify(filters));
 
+    return filters;
+    /*
     const newFilters = checkFilters(filters);
 
     console.debug("Checked filters: " + JSON.stringify(newFilters));
 
-    //    return newFilters;
-    return filters;
+    return newFilters;
+    */
   }
 
   function onFiltersError() {

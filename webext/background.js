@@ -125,7 +125,6 @@ SysTrayX.Messaging = {
         )
       );
 
-      console.debug("Count: " + count);
       SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
 
       //  Set count listener
@@ -769,8 +768,6 @@ async function start() {
   if (SysTrayX.browserInfo.majorVersion < 91) {
     SysTrayX.Messaging.accounts = await browser.accounts.list();
   } else {
-    console.debug("Getting accounts with folders");
-
     const includeFolders = true;
     SysTrayX.Messaging.accounts = await browser.accounts.list(includeFolders);
   }
