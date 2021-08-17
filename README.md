@@ -568,7 +568,7 @@ en_US   :
 it      :   lgbaldoni  
 nl      :  
 pt_BR   :   fabianski7  
-ru_RU   :   PutinVladimir  
+ru_RU   :   agvantibo, PutinVladimir
 
 
 ### Remarks
