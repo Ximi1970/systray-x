@@ -21,7 +21,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="47"/>
         <source>0.0.1</source>
-        <translation></translation>
+        <translation>0.0.1</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="54"/>
@@ -32,7 +32,7 @@
         <location filename="../aboutdialog.ui" line="61"/>
         <location filename="../aboutdialog.ui" line="75"/>
         <source>0</source>
-        <translation></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="68"/>
@@ -42,12 +42,12 @@
     <message>
         <location filename="../aboutdialog.ui" line="82"/>
         <source>Branch:</source>
-        <translation>Ветка:</translation>
+        <translation>Ответвление:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="89"/>
         <source>master</source>
-        <translation></translation>
+        <translation>master</translation>
     </message>
 </context>
 <context>
@@ -55,7 +55,7 @@
     <message>
         <location filename="../debugwidget.ui" line="14"/>
         <source>SysTray-X Debug</source>
-        <translation>SysTray-X Отладка</translation>
+        <translation>Отладка SysTray-X</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="59"/>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../debugwidget.ui" line="83"/>
         <source>0</source>
-        <translation></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="90"/>
@@ -88,12 +88,12 @@
     <message>
         <location filename="../preferences.ui" line="14"/>
         <source>SysTray-X Preferences</source>
-        <translation>SysTray-X Настройки</translation>
+        <translation>Настройки SysTray-X</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="26"/>
         <source>Default icon</source>
-        <translation>Обычная иконка</translation>
+        <translation>Иконка по умолчанию</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="32"/>
@@ -103,13 +103,12 @@
     <message>
         <location filename="../preferences.ui" line="40"/>
         <source>Default Thunderbird</source>
-        <translation>Стандартная Thunderbird</translation>
+        <translation>Стандартная иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="53"/>
         <source>Lookthrough icon</source>
-        <translatorcomment>Not sure what author means invisible or noicon or blank or something else</translatorcomment>
-        <translation>Невидимая иконка</translation>
+        <translation>Прозрачная иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="65"/>
@@ -136,7 +135,7 @@
     <message>
         <location filename="../preferences.ui" line="125"/>
         <source>Blank icon</source>
-        <translation>Пустая иконка (квадрат)</translation>
+        <translation>Пустая иконка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="158"/>
@@ -156,12 +155,12 @@
     <message>
         <location filename="../preferences.ui" line="257"/>
         <source>Light</source>
-        <translation>светлая</translation>
+        <translation>Светлая</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="270"/>
         <source>Dark</source>
-        <translation>темная</translation>
+        <translation>Темная</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="305"/>
@@ -201,7 +200,7 @@
     <message>
         <location filename="../preferences.ui" line="370"/>
         <source>Default close</source>
-        <translation>Закрыть</translation>
+        <translation>Просто закрыть</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="380"/>
@@ -235,12 +234,12 @@
     <message>
         <location filename="../preferences.ui" line="454"/>
         <source>Number color</source>
-        <translation>Цвет шрифта</translation>
+        <translation>Цвет числа</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="475"/>
         <source>Number size</source>
-        <translation>Размер шрифта</translation>
+        <translation>Размер числа</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="499"/>
@@ -255,12 +254,12 @@
     <message>
         <location filename="../preferences.ui" line="515"/>
         <source>Top centre</source>
-        <translation>Верхний центр</translation>
+        <translation>Верхний центральный</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="520"/>
         <source>Top right</source>
-        <translation>Верхний правильно</translation>
+        <translation>Верхний правый</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="525"/>
@@ -270,7 +269,7 @@
     <message>
         <location filename="../preferences.ui" line="530"/>
         <source>Middle centre</source>
-        <translation>Средний центр</translation>
+        <translation>Средний центральный</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="535"/>
@@ -285,22 +284,22 @@
     <message>
         <location filename="../preferences.ui" line="545"/>
         <source>Bottom centre</source>
-        <translation>Нижний центр</translation>
+        <translation>Нижний центральный</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="550"/>
         <source>Bottom right</source>
-        <translation>Нижний центр</translation>
+        <translation>Нижний правый</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="560"/>
         <source>Margins (left, top, right, bottom):</source>
-        <translation>Маржа (левый, Верхний, правый, Нижний):</translation>
+        <translation>Отступ (левый, Верхний, правый, Нижний):</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="599"/>
         <source>Count type</source>
-        <translation>Вариант подсчета</translation>
+        <translation>Алгоритм подсчета</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="607"/>
@@ -315,7 +314,7 @@
     <message>
         <location filename="../preferences.ui" line="657"/>
         <source>Display debug window</source>
-        <translation>Показать окно отладки</translation>
+        <translation>Показывать окно отладки</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="677"/>
@@ -342,7 +341,7 @@
         <location filename="../preferencesdialog.cpp" line="479"/>
         <location filename="../preferencesdialog.cpp" line="503"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation>Файлы изображений (*.png *.jpg *.bmp</translation>
+        <translation>Файлы изображений (*.png *.jpg *.bmp)</translation>
     </message>
 </context>
 <context>
@@ -351,22 +350,22 @@
         <location filename="../systrayx.cpp" line="212"/>
         <source>&amp;Show/Hide</source>
         <translatorcomment>Not sure how hotkeys work</translatorcomment>
-        <translation>Показать/Скр&amp;ыть</translation>
+        <translation>&amp;Показать/Скрыть</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="216"/>
         <source>&amp;Preferences</source>
-        <translation>Настройки</translation>
+        <translation>&amp;Настройки</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="220"/>
         <source>&amp;About</source>
-        <translation>О приложении</translation>
+        <translation>&amp;О приложении</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="224"/>
         <source>&amp;Quit</source>
-        <translation>Выход</translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <location filename="../systrayx.cpp" line="634"/>
