@@ -458,7 +458,7 @@ async function getFilters() {
 
     const newFilters = checkFilters(filters);
 
-    if (filters === undefined) {
+    if (filters === undefined || filters.length === 0) {
       return newFilters;
     } else {
       return filters;
