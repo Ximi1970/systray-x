@@ -1,12 +1,36 @@
-var SysTrayX = {
-  platformInfo: undefined,
+//
+//  Get the prefered storage
+//
+function storage() {
+  if (SysTrayX.Info.storageType === "sync") {
+    console.log("Using sync storage");
 
-  version: 0,
-};
+    return browser.storage.sync;
+  } else {
+    console.log("Using local storage");
+
+    return browser.storage.local;
+  }
+}
 
 SysTrayX.SaveOptions = {
-  start: function (e) {
+  start: async function (e) {
     e.preventDefault();
+
+    //
+    //  Save storage type preferences
+    //  Always in sync space
+    //
+    const storageType = document.querySelector(
+      'input[name="storageType"]:checked'
+    ).value;
+
+    SysTrayX.Info.storageType = storageType === "0" ? "sync" : "local";
+
+    //  Store storage type preferences
+    browser.storage.sync.set({
+      storageType: SysTrayX.Info.storageType,
+    });
 
     //
     // Save accounts and filters
@@ -16,32 +40,63 @@ SysTrayX.SaveOptions = {
       'input[type="checkbox"][name*="account"]'
     );
 
-    let checkedFolders = [];
-    accounts.forEach((account) => {
-      if (account.checked || account.indeterminate) {
-        //  Find all selected folders
-        const folders = Array.from(
-          account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-          )
-        ).filter((folder) => folder.checked);
-
-        checkedFolders = checkedFolders.concat(folders);
-      }
-    });
-
     let filters = [];
-    checkedFolders.forEach((folder) => {
-      const mailFolderExt = JSON.parse(folder.value);
+    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+      let checkedFolders = [];
+      accounts.forEach((account) => {
+        if (account.checked || account.indeterminate) {
+          //  Find all selected folders
+          const folders = Array.from(
+            account.parentNode.querySelectorAll(
+              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            )
+          ).filter((folder) => folder.checked);
 
-      filters.push({
-        unread: true,
-        folder: mailFolderExt,
+          checkedFolders = checkedFolders.concat(folders);
+        }
       });
-    });
+
+      checkedFolders.forEach((folder) => {
+        const mailFolderExt = JSON.parse(folder.value);
+
+        filters.push({
+          unread: true,
+          folder: mailFolderExt,
+        });
+      });
+    } else {
+      accounts.forEach((account) => {
+        if (account.checked || account.indeterminate) {
+          //  Find all selected folders
+          const folders = Array.from(
+            account.parentNode.querySelectorAll(
+              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            )
+          ).filter((folder) => folder.checked);
+
+          if (folders.length > 0) {
+            const mailFolderExt = JSON.parse(folders[0].value);
+            filters.push({
+              accountId: mailFolderExt.accountId,
+              version: mailFolderExt.version,
+              folders: [],
+            });
+
+            folders.forEach((folder) => {
+              const mailFolderExt = JSON.parse(folder.value);
+              filters[filters.length - 1].folders.push(mailFolderExt.path);
+            });
+          }
+        }
+      });
+    }
 
     //  Store extended query filters
-    browser.storage.sync.set({
+
+    console.debug("Saving filters length: " + JSON.stringify(filters).length);
+    console.debug("Saving filters: " + JSON.stringify(filters));
+
+    await storage().set({
       filters: filters,
     });
 
@@ -49,7 +104,7 @@ SysTrayX.SaveOptions = {
     //  Save debug state
     //
     const debug = document.querySelector('input[name="debug"]').checked;
-    browser.storage.sync.set({
+    await storage().set({
       debug: `${debug}`,
     });
 
@@ -61,7 +116,7 @@ SysTrayX.SaveOptions = {
     ).value;
 
     //  Store minimize preferences
-    browser.storage.sync.set({
+    await storage().set({
       minimizeType: minimizeType,
     });
 
@@ -73,7 +128,7 @@ SysTrayX.SaveOptions = {
     ).value;
 
     //  Store minimize preferences
-    browser.storage.sync.set({
+    await storage().set({
       closeType: closeType,
     });
 
@@ -83,7 +138,7 @@ SysTrayX.SaveOptions = {
     const startMinimized = document.querySelector(
       'input[name="startMinimized"]'
     ).checked;
-    browser.storage.sync.set({
+    await storage().set({
       startMinimized: `${startMinimized}`,
     });
 
@@ -93,7 +148,7 @@ SysTrayX.SaveOptions = {
     const restorePositions = document.querySelector(
       'input[name="restorePositions"]'
     ).checked;
-    browser.storage.sync.set({
+    await storage().set({
       restorePositions: `${restorePositions}`,
     });
 
@@ -105,7 +160,7 @@ SysTrayX.SaveOptions = {
     ).value;
 
     //  Store default icon type
-    browser.storage.sync.set({
+    await storage().set({
       defaultIconType: defaultIconType,
     });
 
@@ -116,7 +171,7 @@ SysTrayX.SaveOptions = {
     );
 
     //  Store default icon (base64)
-    browser.storage.sync.set({
+    await storage().set({
       defaultIconMime: defaultIconMime,
       defaultIcon: defaultIconBase64,
     });
@@ -127,7 +182,7 @@ SysTrayX.SaveOptions = {
     let hideDefaultIcon = document.querySelector(
       'input[name="hideDefaultIcon"]'
     ).checked;
-    browser.storage.sync.set({
+    await storage().set({
       hideDefaultIcon: `${hideDefaultIcon}`,
     });
 
@@ -139,7 +194,7 @@ SysTrayX.SaveOptions = {
     ).value;
 
     //  Store icon type
-    browser.storage.sync.set({
+    await storage().set({
       iconType: iconType,
     });
 
@@ -148,7 +203,7 @@ SysTrayX.SaveOptions = {
     const iconMime = iconDiv.getAttribute("data-icon-mime");
 
     //  Store icon (base64)
-    browser.storage.sync.set({
+    await storage().set({
       iconMime: iconMime,
       icon: iconBase64,
     });
@@ -159,7 +214,7 @@ SysTrayX.SaveOptions = {
     const showNumber = document.querySelector(
       'input[name="showNumber"]'
     ).checked;
-    browser.storage.sync.set({
+    await storage().set({
       showNumber: `${showNumber}`,
     });
 
@@ -169,7 +224,7 @@ SysTrayX.SaveOptions = {
     const theme = document.querySelector('input[name="theme"]:checked').value;
 
     //  Store minimize preferences
-    browser.storage.sync.set({
+    await storage().set({
       theme: theme,
     });
 
@@ -185,7 +240,7 @@ SysTrayX.SaveOptions = {
       numberColor = "#ffffff";
     }
 
-    browser.storage.sync.set({
+    await storage().set({
       numberColor: `${numberColor}`,
     });
 
@@ -193,7 +248,7 @@ SysTrayX.SaveOptions = {
     //  Save number size
     //
     const numberSize = document.querySelector('input[name="numberSize"]').value;
-    browser.storage.sync.set({
+    await storage().set({
       numberSize: numberSize,
     });
 
@@ -203,7 +258,7 @@ SysTrayX.SaveOptions = {
     const numberAlignment = document.querySelector(
       'select[name="numberAlignment"]'
     ).value;
-    browser.storage.sync.set({
+    await storage().set({
       numberAlignment: numberAlignment,
     });
 
@@ -222,7 +277,7 @@ SysTrayX.SaveOptions = {
     const numberMarginBottom = document.querySelector(
       'input[name="numberMarginBottom"]'
     ).value;
-    browser.storage.sync.set({
+    await storage().set({
       numberMargins: {
         left: numberMarginLeft,
         top: numberMarginTop,
@@ -237,189 +292,225 @@ SysTrayX.SaveOptions = {
     const countType = document.querySelector(
       'input[name="countType"]:checked'
     ).value;
-    browser.storage.sync.set({
+    await storage().set({
       countType: countType,
     });
 
     //  Mark add-on preferences changed
-    browser.storage.sync.set({
+    await storage().set({
       addonprefchanged: true,
     });
+
+    const inUse = await browser.storage.sync.getBytesInUse();
+    console.log("Storage in use: " + inUse);
   },
 };
 
 SysTrayX.RestoreOptions = {
-  start: function () {
+  start: async function () {
+    //
+    //  Restore storage type
+    //
+    SysTrayX.RestoreOptions.setStorageType({
+      storageType: SysTrayX.Info.storageType,
+    });
+
     //
     //  Restore debug state
     //
-    const getDebug = browser.storage.sync.get("debug");
-    getDebug.then(
-      SysTrayX.RestoreOptions.setDebug,
-      SysTrayX.RestoreOptions.onDebugError
-    );
+    await storage()
+      .get("debug")
+      .then(
+        SysTrayX.RestoreOptions.setDebug,
+        SysTrayX.RestoreOptions.onDebugError
+      );
 
     //
     //  Restore minimize type
     //
-    const getMinimizeType = browser.storage.sync.get("minimizeType");
-    getMinimizeType.then(
-      SysTrayX.RestoreOptions.setMinimizeType,
-      SysTrayX.RestoreOptions.onMinimizeTypeError
-    );
+    await storage()
+      .get("minimizeType")
+      .then(
+        SysTrayX.RestoreOptions.setMinimizeType,
+        SysTrayX.RestoreOptions.onMinimizeTypeError
+      );
 
     //
     //  Restore close type
     //
-    const getCloseType = browser.storage.sync.get("closeType");
-    getCloseType.then(
-      SysTrayX.RestoreOptions.setCloseType,
-      SysTrayX.RestoreOptions.onCloseTypeError
-    );
+    await storage()
+      .get("closeType")
+      .then(
+        SysTrayX.RestoreOptions.setCloseType,
+        SysTrayX.RestoreOptions.onCloseTypeError
+      );
 
     //
     //  Restore start minimized
     //
-    const getStartMinimized = browser.storage.sync.get("startMinimized");
-    getStartMinimized.then(
-      SysTrayX.RestoreOptions.setStartMinimized,
-      SysTrayX.RestoreOptions.onStartMinimizedError
-    );
+    await storage()
+      .get("startMinimized")
+      .then(
+        SysTrayX.RestoreOptions.setStartMinimized,
+        SysTrayX.RestoreOptions.onStartMinimizedError
+      );
 
     //
     //  Restore restore position state
     //
-    const getRestorePositions = browser.storage.sync.get([
-      "platformInfo",
-      "restorePositions",
-    ]);
-    getRestorePositions.then(
-      SysTrayX.RestoreOptions.setRestorePositions,
-      SysTrayX.RestoreOptions.onRestorePositionsError
-    );
+    await storage()
+      .get("restorePositions")
+      .then(
+        SysTrayX.RestoreOptions.setRestorePositions,
+        SysTrayX.RestoreOptions.onRestorePositionsError
+      );
 
     //
     //  Restore default icon type
     //
-    const getDefaultIconType = browser.storage.sync.get("defaultIconType");
-    getDefaultIconType.then(
-      SysTrayX.RestoreOptions.setDefaultIconType,
-      SysTrayX.RestoreOptions.onDefaultIconTypeError
-    );
+    await storage()
+      .get("defaultIconType")
+      .then(
+        SysTrayX.RestoreOptions.setDefaultIconType,
+        SysTrayX.RestoreOptions.onDefaultIconTypeError
+      );
 
     //
     //  Restore default icon
     //
-    const getDefaultIcon = browser.storage.sync.get([
-      "defaultIconMime",
-      "defaultIcon",
-    ]);
-    getDefaultIcon.then(
-      SysTrayX.RestoreOptions.setDefaultIcon,
-      SysTrayX.RestoreOptions.onDefaultIconError
-    );
+    await storage()
+      .get(["defaultIconMime", "defaultIcon"])
+      .then(
+        SysTrayX.RestoreOptions.setDefaultIcon,
+        SysTrayX.RestoreOptions.onDefaultIconError
+      );
 
     //
     //  Restore hide default icon
     //
-    const getHideDefaultIcon = browser.storage.sync.get([
-      "kdeIntegration",
-      "hideDefaultIcon",
-    ]);
-    getHideDefaultIcon.then(
-      SysTrayX.RestoreOptions.setHideDefaultIcon,
-      SysTrayX.RestoreOptions.onHideDefaultIconError
-    );
+    await storage()
+      .get(["kdeIntegration", "hideDefaultIcon"])
+      .then(
+        SysTrayX.RestoreOptions.setHideDefaultIcon,
+        SysTrayX.RestoreOptions.onHideDefaultIconError
+      );
 
     //
     //  Restore icon type
     //
-    const getIconType = browser.storage.sync.get("iconType");
-    getIconType.then(
-      SysTrayX.RestoreOptions.setIconType,
-      SysTrayX.RestoreOptions.onIconTypeError
-    );
+    await storage()
+      .get("iconType")
+      .then(
+        SysTrayX.RestoreOptions.setIconType,
+        SysTrayX.RestoreOptions.onIconTypeError
+      );
 
     //
     //  Restore icon
     //
-    const getIcon = browser.storage.sync.get(["iconMime", "icon"]);
-    getIcon.then(
-      SysTrayX.RestoreOptions.setIcon,
-      SysTrayX.RestoreOptions.onIconError
-    );
+    await storage()
+      .get(["iconMime", "icon"])
+      .then(
+        SysTrayX.RestoreOptions.setIcon,
+        SysTrayX.RestoreOptions.onIconError
+      );
 
     //
     //  Restore filters
     //
-    const getFilters = browser.storage.sync.get("filters");
-    getFilters.then(
-      SysTrayX.RestoreOptions.setFilters,
-      SysTrayX.RestoreOptions.onFiltersError
-    );
+    await storage()
+      .get("filters")
+      .then(
+        SysTrayX.RestoreOptions.setFilters,
+        SysTrayX.RestoreOptions.onFiltersError
+      );
 
     //
     //  Restore enable number state
     //
-    const getShowNumber = browser.storage.sync.get("showNumber");
-    getShowNumber.then(
-      SysTrayX.RestoreOptions.setShowNumber,
-      SysTrayX.RestoreOptions.onShowNumberError
-    );
+    await storage()
+      .get("showNumber")
+      .then(
+        SysTrayX.RestoreOptions.setShowNumber,
+        SysTrayX.RestoreOptions.onShowNumberError
+      );
 
     //
     //  Restore number color
     //
-    const getNumberColor = browser.storage.sync.get("numberColor");
-    getNumberColor.then(
-      SysTrayX.RestoreOptions.setNumberColor,
-      SysTrayX.RestoreOptions.onNumberColorError
-    );
+    await storage()
+      .get("numberColor")
+      .then(
+        SysTrayX.RestoreOptions.setNumberColor,
+        SysTrayX.RestoreOptions.onNumberColorError
+      );
 
     //
     //  Restore number size
     //
-    const getNumberSize = browser.storage.sync.get("numberSize");
-    getNumberSize.then(
-      SysTrayX.RestoreOptions.setNumberSize,
-      SysTrayX.RestoreOptions.onNumberSizeError
-    );
+    await storage()
+      .get("numberSize")
+      .then(
+        SysTrayX.RestoreOptions.setNumberSize,
+        SysTrayX.RestoreOptions.onNumberSizeError
+      );
 
     //
     //  Restore number alignment
     //
-    const getNumberAlignment = browser.storage.sync.get("numberAlignment");
-    getNumberAlignment.then(
-      SysTrayX.RestoreOptions.setNumberAlignment,
-      SysTrayX.RestoreOptions.onNumberAlignmentError
-    );
+    await storage()
+      .get("numberAlignment")
+      .then(
+        SysTrayX.RestoreOptions.setNumberAlignment,
+        SysTrayX.RestoreOptions.onNumberAlignmentError
+      );
 
     //
     //  Restore number margins
     //
-    const getNumberMargins = browser.storage.sync.get("numberMargins");
-    getNumberMargins.then(
-      SysTrayX.RestoreOptions.setNumberMargins,
-      SysTrayX.RestoreOptions.onNumberMarginsError
-    );
+    await storage()
+      .get("numberMargins")
+      .then(
+        SysTrayX.RestoreOptions.setNumberMargins,
+        SysTrayX.RestoreOptions.onNumberMarginsError
+      );
 
     //
     //  Restore count type
     //
-    const getCountType = browser.storage.sync.get("countType");
-    getCountType.then(
-      SysTrayX.RestoreOptions.setCountType,
-      SysTrayX.RestoreOptions.onCountTypeError
-    );
+    await storage()
+      .get("countType")
+      .then(
+        SysTrayX.RestoreOptions.setCountType,
+        SysTrayX.RestoreOptions.onCountTypeError
+      );
 
     //
     //  Restore theme
     //
-    const getTheme = browser.storage.sync.get("theme");
-    getTheme.then(
-      SysTrayX.RestoreOptions.setTheme,
-      SysTrayX.RestoreOptions.onThemeError
-    );
+    await storage()
+      .get("theme")
+      .then(
+        SysTrayX.RestoreOptions.setTheme,
+        SysTrayX.RestoreOptions.onThemeError
+      );
+  },
+
+  //
+  //  Restore storage type callbacks
+  //
+  setStorageType: function (result) {
+    const storageType = result.storageType || "sync";
+
+    if (storageType === "sync") {
+      document.querySelector(
+        `input[name="storageType"][value="0"]`
+      ).checked = true;
+    } else {
+      document.querySelector(
+        `input[name="storageType"][value="1"]`
+      ).checked = true;
+    }
   },
 
   //
@@ -440,11 +531,10 @@ SysTrayX.RestoreOptions = {
   //  Restore minimize type callbacks
   //
   setMinimizeType: function (result) {
-    //    const platformInfo = result.platformInfo || { os: "linux" };
     const minimizeType = result.minimizeType || "1";
 
     // Tweak option for platform
-    //    if (platformInfo.os === "win") {
+    //    if (SysTrayX.Info.platformInfo.os === "win") {
     //    document.getElementById("minimizemethod1label").innerHTML =
     //      "Minimize to tray";
     //    document
@@ -500,11 +590,10 @@ SysTrayX.RestoreOptions = {
   //  Restore restore position state callbacks
   //
   setRestorePositions: function (result) {
-    const platformInfo = result.platformInfo || { os: "linux" };
     const restorePositions = result.restorePositions || "false";
 
     // Tweak option for platform
-    if (platformInfo.os === "win") {
+    if (SysTrayX.Info.platformInfo.os === "win") {
       document
         .getElementById("restorePos")
         .setAttribute("style", "display:none;");
@@ -798,8 +887,12 @@ SysTrayX.RestoreOptions = {
   setFilters: function (result) {
     let filters = result.filters || undefined;
 
+    const accounts = document
+      .getElementById("accountsTree")
+      .querySelectorAll('input[type="checkbox"][name*="account"]');
+
     //  No filters stored?
-    if (filters == undefined) {
+    if (filters === undefined || filters.length === 0) {
       //  Create default filters
 
       const treeBase = document.getElementById("accountsTree");
@@ -808,30 +901,38 @@ SysTrayX.RestoreOptions = {
       );
 
       let accounts = [];
-      accountsBoxes.forEach((acoountbox) => {
-        const value = JSON.parse(acoountbox.value);
+      accountsBoxes.forEach((accountbox) => {
+        const value = JSON.parse(accountbox.value);
         accounts.push({ folders: value.folders });
       });
 
       filters = [];
       accounts.forEach((account) => {
         const inbox = account.folders.filter(
-          (folder) => folder.type == "inbox"
+          (folder) => folder.type === "inbox"
         );
 
         if (inbox.length > 0) {
-          let folder = {
-            ...inbox[0],
-            accountName: account.name,
-            path: "/" + inbox[0].name,
-          };
-          delete folder.type;
-          delete folder.subFolders;
+          let folder = {};
+          if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+            folder = {
+              ...inbox[0],
+              accountName: account.name,
+              path: "/" + inbox[0].name,
+            };
+            delete folder.type;
+            delete folder.subFolders;
 
-          filters.push({
-            unread: true,
-            folder: folder,
-          });
+            filters.push({
+              unread: true,
+              folder: folder,
+            });
+          } else {
+            filters.push({
+              accountId: inbox[0].accountId,
+              folders: [inbox[0].path],
+            });
+          }
         }
       });
     }
@@ -839,34 +940,84 @@ SysTrayX.RestoreOptions = {
     if (filters) {
       const treeBase = document.getElementById("accountsTree");
 
-      filters.forEach((filter) => {
-        const folder = filter.folder;
+      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+        filters.forEach((filter) => {
+          const folder = filter.folder;
 
-        const account = treeBase.querySelector(
-          `input[name=${folder.accountId}]`
-        );
-        const checkboxes = Array.from(
-          account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-          )
-        );
+          const account = treeBase.querySelector(
+            `input[name=${folder.accountId}]`
+          );
+          const checkboxes = Array.from(
+            account.parentNode.querySelectorAll(
+              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            )
+          );
 
-        checkboxes.forEach((checkbox) => {
-          const value = JSON.parse(checkbox.value);
-          if (value.path === folder.path) {
-            checkbox.checked = true;
+          checkboxes.forEach((checkbox) => {
+            const value = JSON.parse(checkbox.value);
+            if (value.path === folder.path) {
+              checkbox.checked = true;
 
-            const event = document.createEvent("HTMLEvents");
-            event.initEvent("change", false, true);
-            checkbox.dispatchEvent(event);
-          }
+              const event = document.createEvent("HTMLEvents");
+              event.initEvent("change", false, true);
+              checkbox.dispatchEvent(event);
+            }
+          });
         });
-      });
+      } else {
+        filters.forEach((filter) => {
+          const account = treeBase.querySelector(
+            `input[name=${filter.accountId}]`
+          );
+          const checkboxes = Array.from(
+            account.parentNode.querySelectorAll(
+              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            )
+          );
+
+          filter.folders.forEach((path) => {
+            checkboxes.forEach((checkbox) => {
+              const value = JSON.parse(checkbox.value);
+              if (value.path === path) {
+                checkbox.checked = true;
+
+                const event = document.createEvent("HTMLEvents");
+                event.initEvent("change", false, true);
+                checkbox.dispatchEvent(event);
+              }
+            });
+          });
+        });
+      }
     }
   },
 
   onFiltersError: function (error) {
     console.log(`Filters Error: ${error}`);
+  },
+};
+
+SysTrayX.StorageReset = {
+  reset: async function () {
+    // Clear checkboxes
+    const checkboxes = document
+      .getElementById("accountsTree")
+      .querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+
+      const event = document.createEvent("HTMLEvents");
+      event.initEvent("change", false, false);
+      checkbox.dispatchEvent(event);
+    });
+
+    await browser.storage.sync.clear();
+    await browser.storage.local.clear();
+
+    //  Set new inbox checkboxes
+    SysTrayX.RestoreOptions.setFilters({
+      filters: undefined,
+    });
   },
 };
 
@@ -971,6 +1122,20 @@ SysTrayX.StorageChanged = {
         });
       }
 
+      if (item === "filters") {
+        console.debug("Filter changed");
+
+        SysTrayX.RestoreOptions.setFilters({
+          filters: changes[item].newValue,
+        });
+      }
+
+      if (item === "storageType") {
+        SysTrayX.RestoreOptions.setStorageType({
+          storageType: changes[item].newValue,
+        });
+      }
+
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
           debug: changes[item].newValue,
@@ -990,6 +1155,7 @@ SysTrayX.StorageChanged = {
     //  Update element
     //
     document.getElementById("debugselect").className = "active";
+    document.getElementById("storageselect").className = "active";
     document.getElementById("defaulticonselect").className = "active";
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
@@ -1002,23 +1168,57 @@ SysTrayX.StorageChanged = {
 //  Main
 //
 
-//  Get addon version
-SysTrayX.version = browser.runtime.getManifest().version;
-document.getElementById("VersioHomeLink").href =
-  "https://github.com/Ximi1970/systray-x/releases/tag/" + SysTrayX.version;
-
-document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
-document
-  .querySelector('[name="saveform"]')
-  .addEventListener("submit", SysTrayX.SaveOptions.start);
-
 async function start() {
-  BrowserInfo = await browser.runtime.getBrowserInfo().then((info) => info);
-  if (BrowserInfo.version.split(".")[0] > 89) {
+  //  Set platform
+  SysTrayX.Info.platformInfo = await browser.runtime.getPlatformInfo();
+
+  //  Set browser
+  SysTrayX.Info.browserInfo = await browser.runtime.getBrowserInfo();
+
+  const version = SysTrayX.Info.browserInfo.version.split(".");
+  SysTrayX.Info.browserInfo.majorVersion = version[0];
+  SysTrayX.Info.browserInfo.minorVersion = version[1];
+
+  //  Get addon version
+  SysTrayX.Info.version = browser.runtime.getManifest().version;
+
+  //  Get storage type
+  SysTrayX.Info.storageType = await browser.storage.sync
+    .get("storageType")
+    .then((result) => result.storageType || "sync");
+
+  SysTrayX.Info.displayInfo();
+
+  // Set link in options pageF
+  document.getElementById("VersioHomeLink").href =
+    "https://github.com/Ximi1970/systray-x/releases/tag/" +
+    SysTrayX.Info.version;
+
+  // Disable incompatible items
+  if (SysTrayX.Info.browserInfo.majorVersion > 89) {
     document.getElementById("counttype").style.display = "none";
   }
+
+  // Setup account tree
+  const accountsInitPromise = () =>
+    new Promise((res) => res(SysTrayX.Accounts.init()));
+  await accountsInitPromise();
+
+  // Set the options
+  //document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
+  SysTrayX.RestoreOptions.start();
+
+  // Enable save button
+  document
+    .querySelector('[name="saveform"]')
+    .addEventListener("submit", SysTrayX.SaveOptions.start);
+
+  // Enable reset button
+  document
+    .querySelector('[name="resetform"]')
+    .addEventListener("submit", SysTrayX.StorageReset.reset);
+
+  browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
 }
 
 start();
-
-browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);

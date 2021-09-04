@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
+    <script src="js/systrayx.js"></script>
+
     <script src="js/styles.js" stylesheet="css/options.css"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/info.js"></script>
     <script src="js/options_accounts.js"></script>
 
     <p>
@@ -465,6 +468,38 @@
     <div id="DebugContent" class="tabcontent">
       <form name="debugform">
         <h3>__MSG_debug__</h3>
+        <table id="storageselect">
+          <caption>
+            __MSG_system_storage__
+          </caption>
+          <tr id="storagesync">
+            <td>
+              <input
+                type="radio"
+                name="storageType"
+                id="storageSync"
+                value="0"
+              />
+              <label for="storageSync" id="storagesynclabel"
+                >__MSG_system_storage_sync__</label
+              >
+            </td>
+          </tr>
+          <tr id="storagelocal">
+            <td>
+              <input
+                type="radio"
+                name="storageType"
+                id="storageLocal"
+                value="1"
+              />
+              <label for="storageLocal" id="storagelocallabel"
+                >__MSG_system_storage_local__</label
+              >
+            </td>
+          </tr>
+        </table>
+
         <br />
         <div id="debugselect">
           <div id="inputcheck">
@@ -484,10 +519,32 @@
     </div>
 
     <br />
-    <form name="saveform">
-      <label>__MSG_save_preferences__</label>
-      <button type="submit">__MSG_save_preferences_button__</button>
-    </form>
+
+    <table id="buttonselect">
+      <tr>
+        <form name="saveform">
+          <td>
+            <label>__MSG_save_preferences__</label>
+          </td>
+          <td>
+            <button type="submit">__MSG_save_preferences_button__</button>
+          </td>
+        </form>
+      </tr>
+      <tr>
+        <td><br /></td>
+      </tr>
+      <tr>
+        <form name="resetform">
+          <td>
+            <label>__MSG_reset_preferences__</label>
+          </td>
+          <td>
+            <button type="submit">__MSG_reset_preferences_button__</button>
+          </td>
+        </form>
+      </tr>
+    </table>
 
     <script src="js/options_tabbutton.js"></script>
 

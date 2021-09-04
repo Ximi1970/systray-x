@@ -1,24 +1,111 @@
 //
+//  Get the prefered storage
+//
+function storage() {
+  if (SysTrayX.Info.storageType === "sync") {
+    console.log("Using sync storage");
+    return browser.storage.sync;
+  } else {
+    console.log("Using local storage");
+    return browser.storage.local;
+  }
+}
+
+//
+//  Get window startup state
+//
+async function getStartupState() {
+  function resolve(result) {
+    const startMinimized = result.startMinimized || "false";
+    return startMinimized === "true" ? "minimized" : "normal";
+  }
+
+  function reject() {
+    return "normal";
+  }
+
+  return await storage().get("startMinimized").then(resolve, reject);
+}
+
+//
+//  Get window restore position state
+//
+async function getRestorePositionsState() {
+  function resolve(result) {
+    const restorePositions = result.restorePositions || "false";
+    return restorePositions;
+  }
+
+  function reject() {
+    return "false";
+  }
+
+  return await storage().get("restorePositions").then(resolve, reject);
+}
+
+//
+//  Get window startup window positions
+//
+async function getStartupWindowPositions() {
+  function resolve(result) {
+    const windowPositions = result.windowPositions || [];
+    return windowPositions;
+  }
+
+  function reject() {
+    return [];
+  }
+
+  return await storage().get("windowPositions").then(resolve, reject);
+}
+
+//
+//  Get close type
+//
+async function getCloseType() {
+  function resolve(result) {
+    return result.closeType || "1";
+  }
+
+  function reject() {
+    return undefined;
+  }
+
+  return await storage().get("closeType").then(resolve, reject);
+}
+
+//
+//  Get KDE integration, default icon hide
+//
+async function getHideDefaultIcon() {
+  function resolve(result) {
+    const hideDefaultIcon = result.hideDefaultIcon || "false";
+    return hideDefaultIcon === "true";
+  }
+
+  function reject() {
+    return false;
+  }
+
+  return await storage().get("hideDefaultIcon").then(resolve, reject);
+}
+
+//
 //  Set default default icon
 //  Use <div> as storage
 //
 async function getDefaultIcon() {
-  function getStoredDefaultIcon(result) {
+  function resolve(result) {
     return result.defaultIconMime && result.defaultIcon;
   }
 
-  function onStoredDefaultIconError() {
+  function reject() {
     return false;
   }
 
-  const getDefaultIcon = browser.storage.sync.get([
-    "defaultIconMime",
-    "defaultIcon",
-  ]);
-  const defaultIconStored = await getDefaultIcon.then(
-    getStoredDefaultIcon,
-    onStoredDefaultIconError
-  );
+  const defaultIconStored = await storage()
+    .get(["defaultIconMime", "defaultIcon"])
+    .then(resolve, reject);
 
   if (!defaultIconStored) {
     const toDataURL = (url) =>
@@ -46,7 +133,7 @@ async function getDefaultIcon() {
     });
 
     //  Store default icon (base64)
-    browser.storage.sync.set({
+    await storage().set({
       defaultIconMime: defaultIconMime,
       defaultIcon: defaultIconBase64,
     });
@@ -63,16 +150,17 @@ async function getDefaultIcon() {
 //  Use <div> as storage
 //
 async function getIcon() {
-  function getStoredIcon(result) {
+  function resolve(result) {
     return result.iconMime && result.icon;
   }
 
-  function onStoredIconError() {
+  function reject() {
     return false;
   }
 
-  const getIcon = browser.storage.sync.get(["iconMime", "icon"]);
-  const iconStored = await getIcon.then(getStoredIcon, onStoredIconError);
+  const iconStored = await storage()
+    .get(["iconMime", "icon"])
+    .then(resolve, reject);
 
   if (!iconStored) {
     const toDataURL = (url) =>
@@ -97,7 +185,7 @@ async function getIcon() {
     );
 
     //  Store default icon (base64)
-    browser.storage.sync.set({
+    await storage().set({
       iconMime: iconMime,
       icon: iconBase64,
     });
@@ -110,83 +198,8 @@ async function getIcon() {
 }
 
 //
-//  Get window startup state
-//
-async function getStartupState() {
-  function getStartupStateCb(result) {
-    const startMinimized = result.startMinimized || "false";
-    return startMinimized === "true" ? "minimized" : "normal";
-  }
-
-  function onStartupStateError() {
-    return "normal";
-  }
-
-  const getState = browser.storage.sync.get("startMinimized");
-  return await getState.then(getStartupStateCb, onStartupStateError);
-}
-
-//
-//  Get window restore position state
-//
-async function getRestorePositionsState() {
-  function getRestorePositionsStateCb(result) {
-    const restorePositions = result.restorePositions || "false";
-    return restorePositions;
-  }
-
-  function onRestorePositionsStateError() {
-    return "false";
-  }
-
-  const getState = browser.storage.sync.get("restorePositions");
-  return await getState.then(
-    getRestorePositionsStateCb,
-    onRestorePositionsStateError
-  );
-}
-
-//
-//  Get window startup window positions
-//
-async function getStartupWindowPositions() {
-  function getStartupWindowPositionsCb(result) {
-    const windowPositions = result.windowPositions || [];
-    return windowPositions;
-  }
-
-  function onStartupWindowPositionsError() {
-    return [];
-  }
-
-  const getWindowPositions = browser.storage.sync.get("windowPositions");
-  return await getWindowPositions.then(
-    getStartupWindowPositionsCb,
-    onStartupWindowPositionsError
-  );
-}
-
-//
-//  Get KDE integration, default icon hide
-//
-async function getHideDefaultIcon() {
-  function getHideDefaultIconPref(result) {
-    const hideDefaultIcon = result.hideDefaultIcon || "false";
-    return hideDefaultIcon === "true";
-  }
-
-  function onHideDefaultIconPrefError() {
-    return false;
-  }
-
-  const getState = browser.storage.sync.get("hideDefaultIcon");
-  return await getState.then(
-    getHideDefaultIconPref,
-    onHideDefaultIconPrefError
-  );
-}
-
 //  Check if the filters are for existing accounts
+//
 function checkAccountFilters(filters) {
   let filtersChanged = false;
   let newFilters = [];
@@ -275,7 +288,7 @@ function checkFolderFilters(filters) {
   for (const account of SysTrayX.Messaging.accounts) {
     accountNames[account.id] = account.name;
 
-    if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 74) {
       //  Pre TB74 accounts API
       accountFolders[account.id] = createFoldersArrayPre74(account.folders);
     } else {
@@ -351,7 +364,7 @@ function checkFolderFilters(filters) {
       filtersChanged = true;
     }
     if (filter.folder.version === undefined) {
-      folder.version = SysTrayX.version;
+      folder.version = SysTrayX.Info.version;
       folder.path = found[0].path;
       folder.name = found[0].path.split("/").pop();
       filtersChanged = true;
@@ -370,60 +383,56 @@ function checkFolderFilters(filters) {
 function checkFilters(filters) {
   let newFilters = [];
 
-  console.debug(
-    "Current accounts: " + JSON.stringify(SysTrayX.Messaging.accounts)
-  );
-
-  if (filters === undefined) {
-    //  Create base filters
+  if (filters === undefined || filters.length === 0) {
+    //
+    //  No filters defined, create base filters
+    //
     for (const account of SysTrayX.Messaging.accounts) {
-      /*
-      //
-      //  Display specials
-      //
-      accountFolders = [];
-      if (SysTrayX.browserInfo.version.split(".")[0] < 74) {
-        //  Pre TB74 accounts API
-        accountFolders = createFoldersArrayPre74(account.folders);
-      } else {
-        //  TB74+ accounts API
-        accountFolders = createFoldersArray(account.folders);
-      }
-
-      const specials = accountFolders.filter(
-        (folder) => folder.type != undefined
-      );
-      console.debug("Special folders: " + JSON.stringify(specials));
-*/
-
       const inbox = account.folders.filter((folder) => folder.type == "inbox");
 
       if (inbox.length > 0) {
-        let folder = {
-          ...inbox[0],
-          accountName: account.name,
-          path: "/" + inbox[0].name,
-          version: SysTrayX.version,
-        };
-        delete folder.subFolders;
+        let folder = {};
+        if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+          //          console.debug("Folder pre 91: " + JSON.stringify(inbox[0]));
 
-        newFilters.push({
-          unread: true,
-          folder: folder,
-        });
+          folder = {
+            ...inbox[0],
+            accountName: account.name,
+            path: "/" + inbox[0].name,
+            version: SysTrayX.Info.version,
+          };
+          delete folder.subFolders;
+
+          newFilters.push({
+            unread: true,
+            folder: folder,
+          });
+        } else {
+          //          console.debug("Folder 91+: " + JSON.stringify(inbox[0]));
+
+          newFilters.push({
+            accountId: inbox[0].accountId,
+            version: SysTrayX.Info.version,
+            folders: [inbox[0].path],
+          });
+        }
       }
     }
   } else if (filters.length > 0) {
     //  Check the filters
+    newFilters = filters;
 
+    /*
     let filtersChanged = false;
     let tmpFilters = undefined;
-    newFilters = filters;
 
     // Check if the filters are for the current accounts
     tmpFilters = checkAccountFilters(newFilters);
     if (tmpFilters) {
       newFilters = tmpFilters;
+
+      console.debug("Filters Accounts updated")
+
       filtersChanged = true;
     }
 
@@ -431,6 +440,9 @@ function checkFilters(filters) {
     tmpFilters = checkFolderFilters(newFilters);
     if (tmpFilters) {
       newFilters = tmpFilters;
+
+      console.debug("Filters Folders updated")
+
       filtersChanged = true;
     }
 
@@ -438,10 +450,11 @@ function checkFilters(filters) {
       //
       //  Store the converted filters
       //
-      browser.storage.sync.set({
+      await storage().set({
         filters: newFilters,
       });
     }
+*/
   }
 
   return newFilters;
@@ -451,14 +464,21 @@ function checkFilters(filters) {
 //  Get filters
 //
 async function getFilters() {
-  function getFiltersCb(result) {
+  function resolve(result) {
     const filters = result.filters || undefined;
 
-    console.debug("Stored filters: " + JSON.stringify(filters));
+    if (filters !== undefined) {
+      console.debug("Stored filters length: " + JSON.stringify(filters).length);
+      console.debug("Stored filters: " + JSON.stringify(filters));
+    } else {
+      console.debug("Stored filters: undefined");
+    }
 
     const newFilters = checkFilters(filters);
 
     if (filters === undefined || filters.length === 0) {
+      console.debug("Force new filters: " + JSON.stringify(newFilters));
+
       return newFilters;
     } else {
       return filters;
@@ -471,44 +491,26 @@ async function getFilters() {
     */
   }
 
-  function onFiltersError() {
+  function reject() {
     return undefined;
   }
 
-  const getFiltersStorage = browser.storage.sync.get("filters");
-  return await getFiltersStorage.then(getFiltersCb, onFiltersError);
+  return await storage().get("filters").then(resolve, reject);
 }
 
 //
 //  Get count type
 //
 async function getCountType() {
-  function getCountTypeCb(result) {
+  function resolve(result) {
     return result.countType || "0";
   }
 
-  function onCountTypeError() {
+  function reject() {
     return undefined;
   }
 
-  const getCountType = browser.storage.sync.get("countType");
-  return await getCountType.then(getCountTypeCb, onCountTypeError);
-}
-
-//
-//  Get close type
-//
-async function getCloseType() {
-  function getCloseTypeCb(result) {
-    return result.closeType || "1";
-  }
-
-  function onCloseTypeError() {
-    return undefined;
-  }
-
-  const getCloseType = browser.storage.sync.get("closeType");
-  return await getCloseType.then(getCloseTypeCb, onCloseTypeError);
+  return await storage().get("countType").then(resolve, reject);
 }
 
 //  Helper funcs for TB91 and later folder handling
@@ -544,7 +546,7 @@ function isParentFolderInFilters(folder) {
 }
 
 // Delete a folder from the filter list
-function deleteFolderFromFilters(folder) {
+async function deleteFolderFromFilters(folder) {
   const newFilters = SysTrayX.Messaging.filters.filter(
     (filter) =>
       !(
@@ -555,7 +557,7 @@ function deleteFolderFromFilters(folder) {
   );
 
   //  Store the new filters
-  browser.storage.sync.set({
+  await storage().set({
     filters: newFilters,
   });
 }
@@ -570,11 +572,11 @@ function getAccountName(id) {
 }
 
 // Add a folder to the filter list
-function addFolderToFilters(newFolder) {
+async function addFolderToFilters(newFolder) {
   const folder = {
     ...newFolder,
     accountName: getAccountName(newFolder.accountId),
-    version: SysTrayX.version,
+    version: SysTrayX.Info.version,
   };
 
   const filter = {
@@ -586,7 +588,7 @@ function addFolderToFilters(newFolder) {
   newFilters.push(filter);
 
   //  Store the new filters
-  browser.storage.sync.set({
+  await storage().set({
     filters: newFilters,
   });
 }

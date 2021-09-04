@@ -1,35 +1,34 @@
-var SysTrayX = {
-  version: "0",
-};
-
-var BrowserInfo = {};
-
 SysTrayX.Accounts = {
-  initialized: false,
-
   init: async function () {
-    BrowserInfo = await browser.runtime.getBrowserInfo().then((info) => info);
+    const getAccountsPromise = () =>
+      new Promise((res) => res(SysTrayX.Accounts.getAccounts()));
+    const accounts = await getAccountsPromise();
 
-    this.getAccounts().then(this.getAccountsCb);
+    SysTrayX.Accounts.buildTree(accounts);
   },
 
-  /*
-   * Use the messages API to get the unread messages (Promise)
-   * Be aware that the data is only avaiable inside the callback
-   */
   getAccounts: async function () {
-    if (BrowserInfo.version.split(".")[0] < 91) {
-      return await browser.accounts.list();
+    let accounts;
+
+    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+      accounts = await browser.accounts.list();
     } else {
-      const includeFolders = true;
-      return await browser.accounts.list(includeFolders);
+      accounts = await browser.accounts.list(false);
+
+      // Fill the sub folders using the folders API, they are not same...
+      for (let i = 0; i < accounts.length; ++i) {
+        const subFolders = await browser.folders.getSubFolders(
+          accounts[i],
+          true
+        );
+        accounts[i].folders = subFolders;
+      }
     }
+
+    return accounts;
   },
 
-  /*
-   * Callback for getAccounts
-   */
-  getAccountsCb: function (mailAccount) {
+  buildTree: function (mailAccount) {
     function createFolderTreePre74(accountName, folders) {
       let result = [];
       let level = { result };
@@ -69,7 +68,7 @@ SysTrayX.Accounts = {
       return result;
     }
 
-    function createFolderTree(accountName, folders) {
+    function createFolderTreePre91(accountName, folders) {
       function traverse(path, folders) {
         if (!folders) {
           return;
@@ -78,6 +77,22 @@ SysTrayX.Accounts = {
           f.accountName = accountName;
           f.path = path + "/" + f.name;
           traverse(path + "/" + f.name, f.subFolders);
+        }
+      }
+
+      traverse("", folders);
+
+      return folders;
+    }
+
+    function createFolderTree(accountName, folders) {
+      function traverse(folders) {
+        if (!folders) {
+          return;
+        }
+        for (let f of folders) {
+          f.accountName = accountName;
+          traverse(f.subFolders);
         }
       }
 
@@ -158,14 +173,20 @@ SysTrayX.Accounts = {
 
           //  Create a usable folder tree
           let folders = [];
-          if (BrowserInfo.version.split(".")[0] < 74) {
+          if (SysTrayX.Info.browserInfo.majorVersion < 74) {
             //  Pre TB74 accounts API
             folders = createFolderTreePre74(
               accounts[prop][i].name,
               accounts[prop][i].folders
             );
+          } else if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+            //  TB74 - TB90? accounts API, (this shit never ends...)
+            folders = createFolderTreePre91(
+              accounts[prop][i].name,
+              accounts[prop][i].folders
+            );
           } else {
-            //  TB74+ accounts API, (this shit never ends...)
+            //  TB91+ accounts API, (this shit never ends...)
             folders = createFolderTree(
               accounts[prop][i].name,
               accounts[prop][i].folders
@@ -179,6 +200,7 @@ SysTrayX.Accounts = {
 
             if (parent) {
               parent.subFolders = [];
+              parent.originalName = parent.name;
               parent.name = "^ Add base folder";
 
               level.unshift(parent);
@@ -204,8 +226,13 @@ SysTrayX.Accounts = {
                   accountId: element.accountId,
                   type: element.type != undefined ? element.type : "",
                   path: element.path,
-                  name: element.path.split("/").pop(),
-                  version: SysTrayX.version,
+                  name:
+                    SysTrayX.Info.browserInfo.majorVersion < 91
+                      ? element.path.split("/").pop()
+                      : element.originalName
+                      ? element.originalName
+                      : element.name,
+                  version: SysTrayX.Info.version,
                 })
               );
               if (element.subFolders.length > 0) {
@@ -305,7 +332,3 @@ SysTrayX.Accounts = {
     }
   },
 };
-
-SysTrayX.version = browser.runtime.getManifest().version;
-
-SysTrayX.Accounts.init();

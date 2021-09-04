@@ -5,12 +5,21 @@ var SysTrayX = {
   startupWindowPositions: [],
 
   hideDefaultIcon: false,
+};
 
-  platformInfo: undefined,
-
-  browserInfo: undefined,
-
+SysTrayX.Info = {
   version: "0",
+  platformInfo: {},
+  browserInfo: {},
+
+  storageType: "",
+
+  displayInfo: function () {
+    console.debug("Info Addon version: " + this.version);
+    console.debug("Info Platform: " + JSON.stringify(this.platformInfo));
+    console.debug("Info Browser: " + JSON.stringify(this.browserInfo));
+    console.debug("Info Storage: " + this.storageType);
+  },
 };
 
 SysTrayX.Messaging = {
@@ -55,10 +64,47 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    if (SysTrayX.browserInfo.majorVersion < 91) {
+    //  Get all accounts
+    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
+      SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+      //  Get folder tree
+      SysTrayX.Messaging.folderTree = getFolderTree(
+        SysTrayX.Messaging.accounts,
+        SysTrayX.Info.browserInfo
+      );
+    } else {
+      //  Let us wait until TB is ready, needed for TB91 and higher?
+      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+      await delay(5000);
+
+      SysTrayX.Messaging.accounts = await browser.accounts.list(false);
+
+      // Fill the sub folders using the folders API, they are not same...
+      for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
+        const subFolders = await browser.folders.getSubFolders(
+          SysTrayX.Messaging.accounts[i],
+          true
+        );
+        SysTrayX.Messaging.accounts[i].folders = subFolders;
+      }
+
+      console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
+    }
+
+    // Get the filters (needs the accounts)
+    const getFiltersPromise = () => new Promise((res) => res(getFilters()));
+    SysTrayX.Messaging.filters = await getFiltersPromise();
+
+    // Get the count type
+    const getCountTypePromise = () => new Promise((res) => res(getCountType()));
+    SysTrayX.Messaging.countType = await getCountTypePromise();
+
+    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
       //  Set TB versionn
-      const version = SysTrayX.browserInfo.version.split(".")[0];
-      browser.folderChange.setVersion(Number(version));
+      browser.folderChange.setVersion(
+        Number(SysTrayX.Info.browserInfo.majorVersion)
+      );
 
       //  Catch the unread / new mails
       browser.folderChange.onUnreadMailChange.addListener(function (unread) {
@@ -95,26 +141,29 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.listenerFolderDeleted
       );
 
-      // Get the start count
       for (const filter of SysTrayX.Messaging.filters) {
-        const path =
-          filter.folder.path.toUpperCase() === "/INBOX"
-            ? "/INBOX"
-            : filter.folder.path;
-        const folder = {
-          accountId: filter.folder.accountId,
-          path: path,
-        };
+        for (const path of filter.folders) {
+          const folder = {
+            accountId: filter.accountId,
+            path: path,
+          };
 
-        const mailFolderInfo = await browser.folders.getFolderInfo(folder);
-
-        if (mailFolderInfo.unreadMessageCount !== undefined) {
-          if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
-            SysTrayX.Messaging.unread[folder.accountId] = {};
+          let mailFolderInfo = {};
+          try {
+            mailFolderInfo = await browser.folders.getFolderInfo(folder);
+          } catch (err) {
+            console.debug("Filter error: " + err);
+            console.debug("Filter error: " + JSON.stringify(folder));
           }
 
-          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
-            mailFolderInfo.unreadMessageCount;
+          if (mailFolderInfo.unreadMessageCount !== undefined) {
+            if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
+              SysTrayX.Messaging.unread[folder.accountId] = {};
+            }
+
+            SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+              mailFolderInfo.unreadMessageCount;
+          }
         }
       }
 
@@ -169,17 +218,14 @@ SysTrayX.Messaging = {
 
     let count = 0;
     SysTrayX.Messaging.filters.forEach((filter) => {
-      const accountId = filter.folder.accountId;
-      const path =
-        filter.folder.path.toUpperCase() === "/INBOX"
-          ? "/INBOX"
-          : filter.folder.path;
-
-      if (SysTrayX.Messaging.unread[accountId] !== undefined) {
-        if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
-          count = count + SysTrayX.Messaging.unread[accountId][path];
+      const accountId = filter.accountId;
+      filter.folders.forEach((path) => {
+        if (SysTrayX.Messaging.unread[accountId] !== undefined) {
+          if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
+            count = count + SysTrayX.Messaging.unread[accountId][path];
+          }
         }
-      }
+      });
     });
 
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
@@ -197,16 +243,20 @@ SysTrayX.Messaging = {
   //
   //  Handle a storage change
   //
-  storageChanged: function (changes, area) {
+  storageChanged: async function (changes, area) {
     //  Get the new preferences
+
+    if ("storageType" in changes && changes["storageType"].newValue) {
+      SysTrayX.Info.storageType = changes["storageType"].newValue;
+
+      console.debug("StorageType chnaged: " + SysTrayX.Info.storageType);
+    }
 
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
 
-      if (SysTrayX.browserInfo.majorVersion < 91) {
+      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setFilters(SysTrayX.Messaging.filters);
-      } else {
-        console.debug("StorageChanged filters not available");
       }
     }
 
@@ -229,10 +279,8 @@ SysTrayX.Messaging = {
     if ("countType" in changes && changes["countType"].newValue) {
       SysTrayX.Messaging.countType = changes["countType"].newValue;
 
-      if (SysTrayX.browserInfo.majorVersion < 91) {
+      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
-      } else {
-        console.debug("StorageChanged counttype not available");
       }
     }
 
@@ -243,7 +291,7 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.sendPreferences();
 
       //  Reset flag
-      browser.storage.sync.set({
+      await storage().set({
         addonprefchanged: false,
       });
     }
@@ -279,7 +327,7 @@ SysTrayX.Messaging = {
     );
   },
 
-  updateFiltersCallback: function (
+  updateFiltersCallback: async function (
     rootFolder,
     parentFolder,
     folder,
@@ -289,7 +337,7 @@ SysTrayX.Messaging = {
     accounts
   ) {
     //  Get new folder tree
-    const folderTree = getFolderTree(accounts, SysTrayX.browserInfo);
+    const folderTree = getFolderTree(accounts, SysTrayX.Info.browserInfo);
     const newFolders = folderTree[rootFolder];
     const newPaths = getFolderPaths(newFolders);
     const changes = findFolderPathsDiff(oldPaths, newPaths).filter((change) =>
@@ -332,7 +380,7 @@ SysTrayX.Messaging = {
           SysTrayX.Messaging.filters.push(newFilter);
 
           //  Store the new filters
-          browser.storage.sync.set({
+          await storage().set({
             filters: SysTrayX.Messaging.filters,
           });
         }
@@ -349,7 +397,7 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.filters = filters;
 
         //  Store the new filters
-        browser.storage.sync.set({
+        await storage().set({
           filters: SysTrayX.Messaging.filters,
         });
       }
@@ -361,17 +409,17 @@ SysTrayX.Messaging = {
   },
 
   sendBrowserInfo: function () {
-    const info = SysTrayX.browserInfo;
+    const info = SysTrayX.Info.browserInfo;
     SysTrayX.Link.postSysTrayXMessage({ browserInfo: info });
   },
 
   sendPlatformInfo: function () {
-    const info = SysTrayX.platformInfo;
+    const info = SysTrayX.Info.platformInfo;
     SysTrayX.Link.postSysTrayXMessage({ platformInfo: info });
   },
 
   sendVersion: function () {
-    SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.version });
+    SysTrayX.Link.postSysTrayXMessage({ version: SysTrayX.Info.version });
   },
 
   sendHideDefaultIcon: function () {
@@ -388,29 +436,33 @@ SysTrayX.Messaging = {
     });
   },
 
-  sendPreferences: function () {
-    const getter = browser.storage.sync.get([
-      "debug",
-      "minimizeType",
-      "closeType",
-      "startMinimized",
-      "restorePositions",
-      "defaultIconType",
-      "defaultIconMime",
-      "defaultIcon",
-      "hideDefaultIcon",
-      "iconType",
-      "iconMime",
-      "icon",
-      "showNumber",
-      "numberColor",
-      "numberSize",
-      "numberAlignment",
-      "numberMargins",
-      "countType",
-      "theme",
-    ]);
-    getter.then(this.sendPreferencesStorage, this.onSendPreferecesStorageError);
+  sendPreferences: async function () {
+    const getter = await storage()
+      .get([
+        "debug",
+        "minimizeType",
+        "closeType",
+        "startMinimized",
+        "restorePositions",
+        "defaultIconType",
+        "defaultIconMime",
+        "defaultIcon",
+        "hideDefaultIcon",
+        "iconType",
+        "iconMime",
+        "icon",
+        "showNumber",
+        "numberColor",
+        "numberSize",
+        "numberAlignment",
+        "numberMargins",
+        "countType",
+        "theme",
+      ])
+      .then(
+        SysTrayX.Messaging.sendPreferencesStorage,
+        SysTrayX.Messaging.onSendPreferecesStorageError
+      );
   },
 
   sendPreferencesStorage: function (result) {
@@ -512,7 +564,7 @@ SysTrayX.Link = {
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
-  receiveSysTrayXMessage: function (response) {
+  receiveSysTrayXMessage: async function (response) {
     if (response["shutdown"]) {
       browser.windowEvent.onCloseButtonClick.removeListener(
         SysTrayX.Messaging.onCloseButton
@@ -523,14 +575,14 @@ SysTrayX.Link = {
 
     const kdeIntegration = response["kdeIntegration"];
     if (kdeIntegration) {
-      browser.storage.sync.set({
+      await storage().set({
         kdeIntegration: kdeIntegration,
       });
     }
 
     const positions = response["positions"];
     if (positions) {
-      browser.storage.sync.set({
+      await storage().set({
         windowPositions: positions,
       });
     }
@@ -539,133 +591,133 @@ SysTrayX.Link = {
       //  Store the preferences from the app
       const defaultIconMime = response["preferences"].defaultIconMime;
       if (defaultIconMime) {
-        browser.storage.sync.set({
+        await storage().set({
           defaultIconMime: defaultIconMime,
         });
       }
 
       const defaultIcon = response["preferences"].defaultIcon;
       if (defaultIcon) {
-        browser.storage.sync.set({
+        await storage().set({
           defaultIcon: defaultIcon,
         });
       }
 
       const defaultIconType = response["preferences"].defaultIconType;
       if (defaultIconType) {
-        browser.storage.sync.set({
+        await storage().set({
           defaultIconType: defaultIconType,
         });
       }
 
       const hideDefaultIcon = response["preferences"].hideDefaultIcon;
       if (hideDefaultIcon) {
-        browser.storage.sync.set({
+        await storage().set({
           hideDefaultIcon: hideDefaultIcon,
         });
       }
 
       const iconMime = response["preferences"].iconMime;
       if (iconMime) {
-        browser.storage.sync.set({
+        await storage().set({
           iconMime: iconMime,
         });
       }
 
       const icon = response["preferences"].icon;
       if (icon) {
-        browser.storage.sync.set({
+        await storage().set({
           icon: icon,
         });
       }
 
       const iconType = response["preferences"].iconType;
       if (iconType) {
-        browser.storage.sync.set({
+        await storage().set({
           iconType: iconType,
         });
       }
 
       const showNumber = response["preferences"].showNumber;
       if (showNumber) {
-        browser.storage.sync.set({
+        await storage().set({
           showNumber: showNumber,
         });
       }
 
       const numberColor = response["preferences"].numberColor;
       if (numberColor) {
-        browser.storage.sync.set({
+        await storage().set({
           numberColor: numberColor,
         });
       }
 
       const numberSize = response["preferences"].numberSize;
       if (numberSize) {
-        browser.storage.sync.set({
+        await storage().set({
           numberSize: numberSize,
         });
       }
 
       const numberAlignment = response["preferences"].numberAlignment;
       if (numberAlignment) {
-        browser.storage.sync.set({
+        await storage().set({
           numberAlignment: numberAlignment,
         });
       }
 
       const numberMargins = response["preferences"].numberMargins;
       if (numberMargins) {
-        browser.storage.sync.set({
+        await storage().set({
           numberMargins: numberMargins,
         });
       }
 
       const countType = response["preferences"].countType;
       if (countType) {
-        browser.storage.sync.set({
+        await storage().set({
           countType: countType,
         });
       }
 
       const minimizeType = response["preferences"].minimizeType;
       if (minimizeType) {
-        browser.storage.sync.set({
+        await storage().set({
           minimizeType: minimizeType,
         });
       }
 
       const closeType = response["preferences"].closeType;
       if (closeType) {
-        browser.storage.sync.set({
+        await storage().set({
           closeType: closeType,
         });
       }
 
       const startMinimized = response["preferences"].startMinimized;
       if (startMinimized) {
-        browser.storage.sync.set({
+        await storage().set({
           startMinimized: startMinimized,
         });
       }
 
       const restorePositions = response["preferences"].restorePositions;
       if (restorePositions) {
-        browser.storage.sync.set({
+        await storage().set({
           restorePositions: restorePositions,
         });
       }
 
       const theme = response["preferences"].theme;
       if (theme) {
-        browser.storage.sync.set({
+        await storage().set({
           theme: theme,
         });
       }
 
       const debug = response["preferences"].debug;
       if (debug) {
-        browser.storage.sync.set({
+        await storage().set({
           debug: debug,
         });
       }
@@ -682,21 +734,21 @@ SysTrayX.Window = {
 };
 
 async function start() {
+  //
+  //  Get storage type
+  //
+  SysTrayX.Info.storageType = await browser.storage.sync
+    .get("storageType")
+    .then((result) => result.storageType || "sync");
+
   //  Get the prefered start state
   const state = await getStartupState();
-
-  //  if (state == "minimized") {
-  //    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-  //      state: "minimized",
-  //    });
-  //  }
-
   SysTrayX.startupState = state;
 
   //  Restore window positions
   const restorePositions = await getRestorePositionsState();
 
-  if (restorePositions == "true") {
+  if (restorePositions === "true") {
     SysTrayX.restorePositions = true;
 
     // Get the start window positions
@@ -719,70 +771,37 @@ async function start() {
   SysTrayX.hideDefaultIcon = hideDefaultIcon;
 
   //  Set platform
-  SysTrayX.platformInfo = await browser.runtime
+  SysTrayX.Info.platformInfo = await browser.runtime
     .getPlatformInfo()
     .then((info) => info);
 
-  console.log("OS: " + SysTrayX.platformInfo.os);
-  console.log("Arch: " + SysTrayX.platformInfo.arch);
-  console.log("Nack-Arch: " + SysTrayX.platformInfo.nacl_arch);
-
-  //  Store platform info
-  browser.storage.sync.set({
-    platformInfo: SysTrayX.platformInfo,
-  });
-
   //  Set browser
-  SysTrayX.browserInfo = await browser.runtime
+  SysTrayX.Info.browserInfo = await browser.runtime
     .getBrowserInfo()
     .then((info) => info);
 
-  const version = SysTrayX.browserInfo.version.split(".");
-  SysTrayX.browserInfo.majorVersion = version[0];
-  SysTrayX.browserInfo.minorVersion = version[1];
+  const version = SysTrayX.Info.browserInfo.version.split(".");
+  SysTrayX.Info.browserInfo.majorVersion = version[0];
+  SysTrayX.Info.browserInfo.minorVersion = version[1];
 
-  console.log("Browser: " + SysTrayX.browserInfo.name);
-  console.log("Vendor: " + SysTrayX.browserInfo.vendor);
-  console.log("Version: " + SysTrayX.browserInfo.version);
-  console.log("Build: " + SysTrayX.browserInfo.buildID);
+  //  Get addon version
+  SysTrayX.Info.version = browser.runtime.getManifest().version;
 
-  //  Store browser info
-  browser.storage.sync.set({
-    browserInfo: SysTrayX.browserInfo,
-  });
+  SysTrayX.Info.displayInfo();
+
+  //   Used sync storage
+  const inUse = await browser.storage.sync.getBytesInUse();
+  console.log("Storage in use: " + inUse);
+
+  //  Init defaults before everything
 
   //  Reset KDE integration
-  browser.storage.sync.set({
+  await storage().set({
     kdeIntegration: true,
   });
 
-  //  Get addon version
-  SysTrayX.version = browser.runtime.getManifest().version;
-  console.log("Addon version: " + SysTrayX.version);
-
-  //  Init defaults before everything
-  await getDefaultIcon();
-  await getIcon();
-
-  //  Get all accounts
-  if (SysTrayX.browserInfo.majorVersion < 91) {
-    SysTrayX.Messaging.accounts = await browser.accounts.list();
-  } else {
-    const includeFolders = true;
-    SysTrayX.Messaging.accounts = await browser.accounts.list(includeFolders);
-  }
-
-  //  Get folder tree
-  SysTrayX.Messaging.folderTree = getFolderTree(
-    SysTrayX.Messaging.accounts,
-    SysTrayX.browserInfo
-  );
-
-  // Get the filters (needs the accounts)
-  SysTrayX.Messaging.filters = await getFilters();
-
-  // Get the count type
-  SysTrayX.Messaging.countType = await getCountType();
+  getDefaultIcon();
+  getIcon();
 
   //  Setup the link first
   SysTrayX.Link.init();
