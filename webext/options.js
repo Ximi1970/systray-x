@@ -305,8 +305,8 @@ SysTrayX.SaveOptions = {
       addonprefchanged: true,
     });
 
-//    const inUse = await browser.storage.sync.getBytesInUse();
-//    console.log("Storage in use: " + inUse);
+    //    const inUse = await browser.storage.sync.getBytesInUse();
+    //    console.log("Storage in use: " + inUse);
   },
 };
 
@@ -1187,7 +1187,7 @@ async function start() {
   SysTrayX.Info.version = browser.runtime.getManifest().version;
 
   //  Get storage type
-  SysTrayX.Info.storageType = "local"
+  SysTrayX.Info.storageType = "local";
   /*
   SysTrayX.Info.storageType = await browser.storage.sync
     .get("storageType")
@@ -1227,6 +1227,12 @@ async function start() {
     .addEventListener("submit", SysTrayX.StorageReset.reset);
 
   browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+      browser.storage.onChanged.removeListener(SysTrayX.StorageChanged.changed);
+    }
+  });
 }
 
 start();
