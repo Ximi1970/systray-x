@@ -1,18 +1,14 @@
 //
 //  Get the prefered storage
 //
-function storage() {
-  return browser.storage.local;
-
-  /*
-  if (SysTrayX.Info.storageType === "sync") {
+function storage(store) {
+  if (SysTrayX.Info.browserInfo.majorVersion < 91 || store === "sync") {
     console.log("Using sync storage");
     return browser.storage.sync;
   } else {
     console.log("Using local storage");
     return browser.storage.local;
   }
-  */
 }
 
 //
@@ -426,7 +422,13 @@ function checkFilters(filters) {
         }
       }
     }
-  } else if (filters.length > 0) {
+  } else {
+    const convertTo91Filters =
+      SysTrayX.Info.browserInfo.majorVersion >= 91 &&
+      filters[0].unread !== undefined;
+
+    console.debug("Convert filter: " + convertTo91Filters);
+
     //  Check the filters
     newFilters = filters;
 
@@ -598,4 +600,25 @@ async function addFolderToFilters(newFolder) {
   await storage().set({
     filters: newFilters,
   });
+}
+
+//
+//  Storage move
+//
+async function storageMove() {
+  const src = "sync";
+  const dst = "local";
+
+  //
+  //  Debug state
+  //
+  await storage(src)
+    .get("debug")
+    .then(
+      async (result) =>
+        result.debug &&
+        (await storage(dst).set({
+          debug: `${result.debug}`,
+        }))
+    );
 }

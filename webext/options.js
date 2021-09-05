@@ -2,17 +2,13 @@
 //  Get the prefered storage
 //
 function storage() {
-  return browser.storage.local;
-
-  /*
-  if (SysTrayX.Info.storageType === "sync") {
+  if (SysTrayX.Info.browserInfo.majorVersion < 91 || store === "sync") {
     console.log("Using sync storage");
     return browser.storage.sync;
   } else {
     console.log("Using local storage");
     return browser.storage.local;
   }
-  */
 }
 
 SysTrayX.SaveOptions = {
@@ -1260,8 +1256,8 @@ async function start() {
 
   // Enable reset button
   document
-    .querySelector('[name="resetform"]')
-    .addEventListener("submit", SysTrayX.StorageReset.reset);
+    .querySelector('[name="resetbutton"]')
+    .addEventListener("click", SysTrayX.StorageReset.reset);
 
   browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
 

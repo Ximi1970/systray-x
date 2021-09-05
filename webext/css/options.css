@@ -189,3 +189,43 @@ ul,
 .custom-icon-container > div {
   margin: 10px;
 }
+
+button[name="savebutton"] {
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button[name="savebutton"]:hover {
+  color: #000;
+  background-color: #ccc;
+}
+
+button[name="resetbutton"] {
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+}
+
+button[name="resetbutton"]:hover {
+  color: #000;
+  background-color: #ccc;
+}
