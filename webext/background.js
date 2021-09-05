@@ -12,13 +12,10 @@ SysTrayX.Info = {
   platformInfo: {},
   browserInfo: {},
 
-  storageType: "",
-
   displayInfo: function () {
     console.debug("Info Addon version: " + this.version);
     console.debug("Info Platform: " + JSON.stringify(this.platformInfo));
     console.debug("Info Browser: " + JSON.stringify(this.browserInfo));
-    //    console.debug("Info Storage: " + this.storageType);
   },
 };
 
@@ -256,10 +253,6 @@ SysTrayX.Messaging = {
   storageChanged: async function (changes, area) {
     //  Get the new preferences
 
-    if ("storageType" in changes && changes["storageType"].newValue) {
-      SysTrayX.Info.storageType = changes["storageType"].newValue;
-    }
-
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
 
@@ -453,7 +446,6 @@ SysTrayX.Messaging = {
     await storage()
       .get([
         "debug",
-        "storageType",
         "minimizeType",
         "closeType",
         "startMinimized",
@@ -482,7 +474,6 @@ SysTrayX.Messaging = {
 
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
-    const storageType = result.storageType || "local";
     const minimizeType = result.minimizeType || "1";
     const closeType = result.closeType || "1";
     const startMinimized = result.startMinimized || "false";
@@ -518,7 +509,6 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
         debug,
-        storageType,
         minimizeType,
         closeType,
         startMinimized,
@@ -778,16 +768,6 @@ async function start() {
   SysTrayX.Info.version = browser.runtime.getManifest().version;
 
   SysTrayX.Info.displayInfo();
-
-  //
-  //  Get storage type
-  //
-  SysTrayX.Info.storageType = "local";
-  /*
-  SysTrayX.Info.storageType = await browser.storage.sync
-    .get("storageType")
-    .then((result) => result.storageType || "local");
-*/
 
   //  Get the prefered start state
   const state = await getStartupState();

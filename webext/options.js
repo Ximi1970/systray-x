@@ -1,7 +1,7 @@
 //
 //  Get the prefered storage
 //
-function storage() {
+function storage(store) {
   if (SysTrayX.Info.browserInfo.majorVersion < 91 || store === "sync") {
     console.log("Using sync storage");
     return browser.storage.sync;
@@ -14,23 +14,6 @@ function storage() {
 SysTrayX.SaveOptions = {
   start: async function (e) {
     e.preventDefault();
-
-    /*
-    //
-    //  Save storage type preferences
-    //  Always in sync space
-    //
-    const storageType = document.querySelector(
-      'input[name="storageType"]:checked'
-    ).value;
-
-    SysTrayX.Info.storageType = storageType === "0" ? "sync" : "local";
-
-    //  Store storage type preferences
-    await browser.storage.sync.set({
-      storageType: SysTrayX.Info.storageType,
-    });
-*/
 
     //
     // Save accounts and filters
@@ -319,13 +302,6 @@ SysTrayX.SaveOptions = {
 SysTrayX.RestoreOptions = {
   start: async function () {
     //
-    //  Restore storage type
-    //
-    SysTrayX.RestoreOptions.setStorageType({
-      storageType: SysTrayX.Info.storageType,
-    });
-
-    //
     //  Restore debug state
     //
     await storage()
@@ -514,23 +490,6 @@ SysTrayX.RestoreOptions = {
         SysTrayX.RestoreOptions.setTheme,
         SysTrayX.RestoreOptions.onThemeError
       );
-  },
-
-  //
-  //  Restore storage type callbacks
-  //
-  setStorageType: function (result) {
-    const storageType = result.storageType || "local";
-
-    if (storageType === "sync") {
-      document.querySelector(
-        `input[name="storageType"][value="0"]`
-      ).checked = true;
-    } else {
-      document.querySelector(
-        `input[name="storageType"][value="1"]`
-      ).checked = true;
-    }
   },
 
   //
@@ -1167,12 +1126,6 @@ SysTrayX.StorageChanged = {
         });
       }
 
-      if (item === "storageType") {
-        SysTrayX.RestoreOptions.setStorageType({
-          storageType: changes[item].newValue,
-        });
-      }
-
       if (item === "debug") {
         SysTrayX.RestoreOptions.setDebug({
           debug: changes[item].newValue,
@@ -1192,7 +1145,6 @@ SysTrayX.StorageChanged = {
     //  Update element
     //
     document.getElementById("debugselect").className = "active";
-    document.getElementById("storageselect").className = "active";
     document.getElementById("defaulticonselect").className = "active";
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
@@ -1219,13 +1171,6 @@ async function start() {
   //  Get addon version
   SysTrayX.Info.version = browser.runtime.getManifest().version;
 
-  //  Get storage type
-  SysTrayX.Info.storageType = "local";
-  /*
-  SysTrayX.Info.storageType = await browser.storage.sync
-    .get("storageType")
-    .then((result) => result.storageType || "local");
-*/
   SysTrayX.Info.displayInfo();
 
   // Set link in options pageF
@@ -1237,8 +1182,6 @@ async function start() {
   if (SysTrayX.Info.browserInfo.majorVersion > 89) {
     document.getElementById("counttype").style.display = "none";
   }
-  // Disable debug/test items
-  document.getElementById("storageselect").style.display = "none";
 
   // Setup account tree
   const accountsInitPromise = () =>

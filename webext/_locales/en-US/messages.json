@@ -297,21 +297,6 @@
     "description": "Display the debug window"
   },
 
-  "system_storage": {
-    "message": "Storage",
-    "description": "Thunderbird storage type"
-  },
-
-  "system_storage_sync": {
-    "message": "Sync",
-    "description": "Sync storage"
-  },
-
-  "system_storage_local": {
-    "message": "Local",
-    "description": "Local storage"
-  },
-
   "save_preferences": {
     "message": "Save preferences",
     "description": "Save preferences"
