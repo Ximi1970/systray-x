@@ -18,7 +18,7 @@ SysTrayX.Info = {
     console.debug("Info Addon version: " + this.version);
     console.debug("Info Platform: " + JSON.stringify(this.platformInfo));
     console.debug("Info Browser: " + JSON.stringify(this.browserInfo));
-    console.debug("Info Storage: " + this.storageType);
+//    console.debug("Info Storage: " + this.storageType);
   },
 };
 
@@ -141,40 +141,10 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.listenerFolderDeleted
       );
 
-      for (const filter of SysTrayX.Messaging.filters) {
-        for (const path of filter.folders) {
-          const folder = {
-            accountId: filter.accountId,
-            path: path,
-          };
-
-          let mailFolderInfo = {};
-          try {
-            mailFolderInfo = await browser.folders.getFolderInfo(folder);
-          } catch (err) {
-            console.debug("Filter error: " + err);
-            console.debug("Filter error: " + JSON.stringify(folder));
-          }
-
-          if (mailFolderInfo.unreadMessageCount !== undefined) {
-            if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
-              SysTrayX.Messaging.unread[folder.accountId] = {};
-            }
-
-            SysTrayX.Messaging.unread[folder.accountId][folder.path] =
-              mailFolderInfo.unreadMessageCount;
-          }
-        }
-      }
-
-      let count = 0;
-      Object.keys(SysTrayX.Messaging.unread).forEach((key) =>
-        Object.keys(SysTrayX.Messaging.unread[key]).forEach(
-          (path) => (count = count + SysTrayX.Messaging.unread[key][path])
-        )
-      );
-
-      SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+      // Get the unread count
+      const getcountUnreadPromise = () =>
+        new Promise((res) => res(SysTrayX.Messaging.countUnread()));
+      await getcountUnreadPromise();
 
       //  Set count listener
       browser.folders.onFolderInfoChanged.addListener(
@@ -231,6 +201,43 @@ SysTrayX.Messaging = {
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
+  countUnread: async function () {
+    for (const filter of SysTrayX.Messaging.filters) {
+      for (const path of filter.folders) {
+        const folder = {
+          accountId: filter.accountId,
+          path: path,
+        };
+
+        let mailFolderInfo = {};
+        try {
+          mailFolderInfo = await browser.folders.getFolderInfo(folder);
+        } catch (err) {
+          console.debug("Filter error: " + err);
+          console.debug("Filter error: " + JSON.stringify(folder));
+        }
+
+        if (mailFolderInfo.unreadMessageCount !== undefined) {
+          if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
+            SysTrayX.Messaging.unread[folder.accountId] = {};
+          }
+
+          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+            mailFolderInfo.unreadMessageCount;
+        }
+      }
+    }
+
+    let count = 0;
+    Object.keys(SysTrayX.Messaging.unread).forEach((key) =>
+      Object.keys(SysTrayX.Messaging.unread[key]).forEach(
+        (path) => (count = count + SysTrayX.Messaging.unread[key][path])
+      )
+    );
+
+    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  },
+
   onCloseButton: function () {
     SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
     /*
@@ -248,8 +255,6 @@ SysTrayX.Messaging = {
 
     if ("storageType" in changes && changes["storageType"].newValue) {
       SysTrayX.Info.storageType = changes["storageType"].newValue;
-
-      console.debug("StorageType chnaged: " + SysTrayX.Info.storageType);
     }
 
     if ("filters" in changes && changes["filters"].newValue) {
@@ -257,6 +262,11 @@ SysTrayX.Messaging = {
 
       if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setFilters(SysTrayX.Messaging.filters);
+      } else {
+        // Update unread count
+        const getcountUnreadPromise = () =>
+          new Promise((res) => res(SysTrayX.Messaging.countUnread()));
+        await getcountUnreadPromise();
       }
     }
 
@@ -437,9 +447,10 @@ SysTrayX.Messaging = {
   },
 
   sendPreferences: async function () {
-    const getter = await storage()
+    await storage()
       .get([
         "debug",
+        "storageType",
         "minimizeType",
         "closeType",
         "startMinimized",
@@ -467,6 +478,7 @@ SysTrayX.Messaging = {
 
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
+    const storageType = result.storageType || "local";
     const minimizeType = result.minimizeType || "1";
     const closeType = result.closeType || "1";
     const startMinimized = result.startMinimized || "false";
@@ -500,25 +512,26 @@ SysTrayX.Messaging = {
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
-        debug: debug,
-        minimizeType: minimizeType,
-        closeType: closeType,
-        startMinimized: startMinimized,
-        restorePositions: restorePositions,
-        defaultIconType: defaultIconType,
-        defaultIconMime: defaultIconMime,
-        defaultIcon: defaultIcon,
-        hideDefaultIcon: hideDefaultIcon,
-        iconType: iconType,
-        iconMime: iconMime,
-        icon: icon,
-        showNumber: showNumber,
-        numberColor: numberColor,
-        numberSize: numberSize,
-        numberAlignment: numberAlignment,
-        numberMargins: numberMargins,
-        countType: countType,
-        theme: theme,
+        debug,
+        storageType,
+        minimizeType,
+        closeType,
+        startMinimized,
+        restorePositions,
+        defaultIconType,
+        defaultIconMime,
+        defaultIcon,
+        hideDefaultIcon,
+        iconType,
+        iconMime,
+        icon,
+        showNumber,
+        numberColor,
+        numberSize,
+        numberAlignment,
+        numberMargins,
+        countType,
+        theme,
       },
     });
 
@@ -737,9 +750,12 @@ async function start() {
   //
   //  Get storage type
   //
+  SysTrayX.Info.storageType = "local";
+  /*
   SysTrayX.Info.storageType = await browser.storage.sync
     .get("storageType")
-    .then((result) => result.storageType || "sync");
+    .then((result) => result.storageType || "local");
+*/
 
   //  Get the prefered start state
   const state = await getStartupState();
@@ -790,8 +806,8 @@ async function start() {
   SysTrayX.Info.displayInfo();
 
   //   Used sync storage
-  const inUse = await browser.storage.sync.getBytesInUse();
-  console.log("Storage in use: " + inUse);
+  //  const inUse = await browser.storage.sync.getBytesInUse();
+  //  console.log("Storage in use: " + inUse);
 
   //  Init defaults before everything
 
@@ -800,8 +816,13 @@ async function start() {
     kdeIntegration: true,
   });
 
-  getDefaultIcon();
-  getIcon();
+  // Get the default icons
+  const getDefaultIconPromise = () =>
+    new Promise((res) => res(getDefaultIcon()));
+  await getDefaultIconPromise();
+
+  const getIconPromise = () => new Promise((res) => res(getIcon()));
+  await getIconPromise();
 
   //  Setup the link first
   SysTrayX.Link.init();

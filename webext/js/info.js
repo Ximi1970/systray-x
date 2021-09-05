@@ -11,6 +11,6 @@ SysTrayX.Info = {
       "Info Platform: " + JSON.stringify(SysTrayX.Info.platformInfo)
     );
     console.debug("Info Browser: " + JSON.stringify(SysTrayX.Info.browserInfo));
-    console.debug("Info Storage: " + SysTrayX.Info.storageType);
+    //    console.debug("Info Storage: " + SysTrayX.Info.storageType);
   },
 };

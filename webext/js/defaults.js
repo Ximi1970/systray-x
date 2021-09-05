@@ -2,6 +2,9 @@
 //  Get the prefered storage
 //
 function storage() {
+  return browser.storage.local;
+
+  /*
   if (SysTrayX.Info.storageType === "sync") {
     console.log("Using sync storage");
     return browser.storage.sync;
@@ -9,6 +12,7 @@ function storage() {
     console.log("Using local storage");
     return browser.storage.local;
   }
+  */
 }
 
 //
@@ -96,18 +100,20 @@ async function getHideDefaultIcon() {
 //
 async function getDefaultIcon() {
   function resolve(result) {
-    return result.defaultIconMime && result.defaultIcon;
+    const defaultIconMime = result.defaultIconMime || "";
+    const defaultIcon = result.defaultIcon || "";
+    return { defaultIconMime, defaultIcon };
   }
 
   function reject() {
-    return false;
+    return "";
   }
 
-  const defaultIconStored = await storage()
+  const { defaultIconMime, defaultIcon } = await storage()
     .get(["defaultIconMime", "defaultIcon"])
     .then(resolve, reject);
 
-  if (!defaultIconStored) {
+  if (defaultIconMime === "" || defaultIcon === "") {
     const toDataURL = (url) =>
       fetch(url)
         .then((response) => response.blob())
@@ -122,26 +128,26 @@ async function getDefaultIcon() {
         );
 
     //  Convert image to storage param
-    let { defaultIconMime, defaultIconBase64 } = await toDataURL(
+    const { defaultIconMimeUrl, defaultIconBase64Url } = await toDataURL(
       "icons/Thunderbird.png"
     ).then((dataUrl) => {
       const data = dataUrl.split(":").pop().split(",");
       return {
-        defaultIconMime: data[0].split(";")[0],
-        defaultIconBase64: data[1],
+        defaultIconMimeUrl: data[0].split(";")[0],
+        defaultIconBase64Url: data[1],
       };
     });
 
     //  Store default icon (base64)
     await storage().set({
-      defaultIconMime: defaultIconMime,
-      defaultIcon: defaultIconBase64,
+      defaultIconMime: defaultIconMimeUrl,
+      defaultIcon: defaultIconBase64Url,
     });
 
     //  Store in HTML
     const defaultIconDiv = document.getElementById("defaultIcon");
-    defaultIconDiv.setAttribute("data-default-icon-mime", defaultIconMime);
-    defaultIconDiv.setAttribute("data-default-icon", defaultIconBase64);
+    defaultIconDiv.setAttribute("data-default-icon-mime", defaultIconMimeUrl);
+    defaultIconDiv.setAttribute("data-default-icon", defaultIconBase64Url);
   }
 }
 
@@ -151,18 +157,20 @@ async function getDefaultIcon() {
 //
 async function getIcon() {
   function resolve(result) {
-    return result.iconMime && result.icon;
+    const iconMime = result.iconMime || "";
+    const icon = result.icon || "";
+    return { iconMime, icon };
   }
 
   function reject() {
-    return false;
+    return "";
   }
 
-  const iconStored = await storage()
+  const { iconMime, icon } = await storage()
     .get(["iconMime", "icon"])
     .then(resolve, reject);
 
-  if (!iconStored) {
+  if (iconMime === "" || icon === "") {
     const toDataURL = (url) =>
       fetch(url)
         .then((response) => response.blob())
@@ -177,23 +185,23 @@ async function getIcon() {
         );
 
     //  Convert image to storage param
-    let { iconMime, iconBase64 } = await toDataURL("icons/blank-icon.png").then(
-      (dataUrl) => {
-        const data = dataUrl.split(":").pop().split(",");
-        return { iconMime: data[0].split(";")[0], iconBase64: data[1] };
-      }
-    );
+    const { iconMimeUrl, iconBase64Url } = await toDataURL(
+      "icons/blank-icon.png"
+    ).then((dataUrl) => {
+      const data = dataUrl.split(":").pop().split(",");
+      return { iconMimeUrl: data[0].split(";")[0], iconBase64Url: data[1] };
+    });
 
     //  Store default icon (base64)
     await storage().set({
-      iconMime: iconMime,
-      icon: iconBase64,
+      iconMime: iconMimeUrl,
+      icon: iconBase64Url,
     });
 
     //  Store in HTML
     const iconDiv = document.getElementById("icon");
-    iconDiv.setAttribute("data-icon-mime", iconMime);
-    iconDiv.setAttribute("data-icon", iconBase64);
+    iconDiv.setAttribute("data-icon-mime", iconMimeUrl);
+    iconDiv.setAttribute("data-icon", iconBase64Url);
   }
 }
 

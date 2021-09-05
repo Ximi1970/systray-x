@@ -2,21 +2,24 @@
 //  Get the prefered storage
 //
 function storage() {
+  return browser.storage.local;
+
+  /*
   if (SysTrayX.Info.storageType === "sync") {
     console.log("Using sync storage");
-
     return browser.storage.sync;
   } else {
     console.log("Using local storage");
-
     return browser.storage.local;
   }
+  */
 }
 
 SysTrayX.SaveOptions = {
   start: async function (e) {
     e.preventDefault();
 
+    /*
     //
     //  Save storage type preferences
     //  Always in sync space
@@ -28,9 +31,10 @@ SysTrayX.SaveOptions = {
     SysTrayX.Info.storageType = storageType === "0" ? "sync" : "local";
 
     //  Store storage type preferences
-    browser.storage.sync.set({
+    await browser.storage.sync.set({
       storageType: SysTrayX.Info.storageType,
     });
+*/
 
     //
     // Save accounts and filters
@@ -301,8 +305,8 @@ SysTrayX.SaveOptions = {
       addonprefchanged: true,
     });
 
-    const inUse = await browser.storage.sync.getBytesInUse();
-    console.log("Storage in use: " + inUse);
+//    const inUse = await browser.storage.sync.getBytesInUse();
+//    console.log("Storage in use: " + inUse);
   },
 };
 
@@ -500,7 +504,7 @@ SysTrayX.RestoreOptions = {
   //  Restore storage type callbacks
   //
   setStorageType: function (result) {
-    const storageType = result.storageType || "sync";
+    const storageType = result.storageType || "local";
 
     if (storageType === "sync") {
       document.querySelector(
@@ -1183,10 +1187,12 @@ async function start() {
   SysTrayX.Info.version = browser.runtime.getManifest().version;
 
   //  Get storage type
+  SysTrayX.Info.storageType = "local"
+  /*
   SysTrayX.Info.storageType = await browser.storage.sync
     .get("storageType")
-    .then((result) => result.storageType || "sync");
-
+    .then((result) => result.storageType || "local");
+*/
   SysTrayX.Info.displayInfo();
 
   // Set link in options pageF
@@ -1198,6 +1204,8 @@ async function start() {
   if (SysTrayX.Info.browserInfo.majorVersion > 89) {
     document.getElementById("counttype").style.display = "none";
   }
+  // Disable debug/test items
+  document.getElementById("storageselect").style.display = "none";
 
   // Setup account tree
   const accountsInitPromise = () =>
