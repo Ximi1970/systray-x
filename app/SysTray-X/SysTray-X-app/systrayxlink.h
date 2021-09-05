@@ -324,6 +324,11 @@ class SysTrayXLink : public QObject
         void    slotCountTypeChange();
 
         /**
+         * @brief slotStartupDelayChange. Handle a change in startup delay.
+         */
+        void    slotStartupDelayChange();
+
+        /**
          * @brief slotPositions. Slot for handling a window positions change.
          */
         void    slotPositions( QList< QPoint > positions );

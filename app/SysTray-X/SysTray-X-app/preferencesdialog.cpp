@@ -114,6 +114,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setNumberSize( m_pref->getNumberSize() );
 
     /*
+     *  Set startup delay
+     */
+    setStartupDelay( m_pref->getStartupDelay() );
+
+    /*
      *  Set theme button Ids
      */
     m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT);
@@ -352,6 +357,15 @@ void    PreferencesDialog::setCountType( Preferences::CountType count_type )
 
 
 /*
+ *  Set the startup delay
+ */
+void    PreferencesDialog::setStartupDelay( int delay )
+{
+    m_ui->startupDelaySpinBox->setValue( delay );
+}
+
+
+/*
  *  Set the theme
  */
 void    PreferencesDialog::setTheme( Preferences::Theme theme )
@@ -390,6 +404,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
+    m_pref->setStartupDelay( m_ui->startupDelaySpinBox->value() );
 
     m_pref->setNumberAlignment( m_ui->numberAlignmentComboBox->currentIndex() );
     m_pref->setNumberMargins( QMargins( m_ui->numberMarginLeftSpinBox->value(),  m_ui->numberMarginTopSpinBox->value(),
@@ -457,6 +472,7 @@ void    PreferencesDialog::slotReject()
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
     setCountType( m_pref->getCountType() );
+    setStartupDelay( m_pref->getStartupDelay());
     setNumberAlignment( m_pref->getNumberAlignment() );
     setNumberMargins( m_pref->getNumberMargins() );
     setTheme( m_pref->getTheme() );
@@ -680,6 +696,15 @@ void    PreferencesDialog::slotNumberSizeChange()
 void    PreferencesDialog::slotCountTypeChange()
 {
     setCountType( m_pref->getCountType() );
+}
+
+
+/*
+ *  Handle the startup delay change
+ */
+void    PreferencesDialog::slotStartupDelayChange()
+{
+    setStartupDelay( m_pref->getStartupDelay() );
 }
 
 

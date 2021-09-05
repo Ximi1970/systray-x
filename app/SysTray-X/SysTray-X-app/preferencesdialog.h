@@ -180,6 +180,13 @@ class PreferencesDialog : public QDialog
         void    setCountType( Preferences::CountType count_type );
 
         /**
+         * @brief setStartupDelay. Set the startup delay.
+         *
+         *  @param delay    The delay.
+         */
+        void    setStartupDelay( int size );
+
+        /**
          * @brief setTheme. Set the theme.
          *
          * @param theme     The theme.
@@ -286,6 +293,11 @@ class PreferencesDialog : public QDialog
          * @brief slotCountTypeChange. Slot for handling count type change.
          */
         void    slotCountTypeChange();
+
+        /**
+         * @brief slotStartupDelayChange. Slot for handling startup delay change.
+         */
+        void    slotStartupDelayChange();
 
         /**
          * @brief slotThemeChange. Slot for handling theme change.

@@ -59,6 +59,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_number_color = "#000000";
     m_number_size = 10;
     m_count_type = PREF_COUNT_UNREAD;
+    m_startup_delay = 5;
     m_number_alignment = 4;
     m_number_margins = QMargins();
 
@@ -500,6 +501,32 @@ void    Preferences::setCountType( CountType count_type )
          *  Tell the world the new preference
          */
         emit signalCountTypeChange();
+    }
+}
+
+
+/*
+ *  Get the startup delay.
+ */
+int Preferences::getStartupDelay() const
+{
+    return m_startup_delay;
+}
+
+
+/*
+ *  Set the startup delay.
+ */
+void    Preferences::setStartupDelay( int delay )
+{
+    if( m_startup_delay != delay )
+    {
+        m_startup_delay = delay;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartupDelayChange();
     }
 }
 

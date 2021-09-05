@@ -300,6 +300,16 @@ SysTrayX.SaveOptions = {
       countType: countType,
     });
 
+    //
+    //  Save startup delay
+    //
+    const startupDelay = document.querySelector(
+      'input[name="startupDelay"]'
+    ).value;
+    await storage().set({
+      startupDelay: startupDelay,
+    });
+
     //  Mark add-on preferences changed
     await storage().set({
       addonprefchanged: true,
@@ -487,6 +497,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setCountType,
         SysTrayX.RestoreOptions.onCountTypeError
+      );
+
+    //
+    //  Restore startup delay
+    //
+    await storage()
+      .get("startupDelay")
+      .then(
+        SysTrayX.RestoreOptions.setStartupDelay,
+        SysTrayX.RestoreOptions.ontartupDelayError
       );
 
     //
@@ -870,6 +890,20 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore startup delay
+  //
+  setStartupDelay: function (result) {
+    const startupDelay = result.startupDelay || "5";
+
+    const input = document.querySelector(`input[name="startupDelay"]`);
+    input.value = startupDelay;
+  },
+
+  onStartupDelayError: function (error) {
+    console.log(`StartupDelay Error: ${error}`);
+  },
+
+  //
   //  Restore theme callbacks
   //
   setTheme: function (result) {
@@ -1100,6 +1134,11 @@ SysTrayX.StorageChanged = {
           countType: changes[item].newValue,
         });
       }
+      if (item === "startupDelay") {
+        SysTrayX.RestoreOptions.setStartupDelay({
+          startupDelay: changes[item].newValue,
+        });
+      }
       if (item === "minimizeType") {
         SysTrayX.RestoreOptions.setMinimizeType({
           minimizeType: changes[item].newValue,
@@ -1127,8 +1166,6 @@ SysTrayX.StorageChanged = {
       }
 
       if (item === "filters") {
-        console.debug("Filter changed");
-
         SysTrayX.RestoreOptions.setFilters({
           filters: changes[item].newValue,
         });

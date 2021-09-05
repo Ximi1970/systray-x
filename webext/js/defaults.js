@@ -476,7 +476,6 @@ async function getFilters() {
     const filters = result.filters || undefined;
 
     if (filters !== undefined) {
-      console.debug("Stored filters length: " + JSON.stringify(filters).length);
       console.debug("Stored filters: " + JSON.stringify(filters));
     } else {
       console.debug("Stored filters: undefined");

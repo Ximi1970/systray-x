@@ -182,7 +182,7 @@ class Preferences : public QObject
         /**
          * @brief setDefaultIconType. Set the default icon type.
          *
-         * @param      The icon type.
+         * @param icon_type     The icon type.
          */
         void setDefaultIconType( DefaultIconType icon_type );
 
@@ -196,7 +196,7 @@ class Preferences : public QObject
         /**
          * @brief setDefaultIconMime. Set the default icon mime.
          *
-         * @param      The icon mime.
+         * @param icon_mime     The icon mime.
          */
         void setDefaultIconMime( const QString& icon_mime );
 
@@ -210,7 +210,7 @@ class Preferences : public QObject
         /**
          * @brief setDefaultIconData. Set the default icon data.
          *
-         * @param      The icon data.
+         * @param icon_data     The icon data.
          */
         void setDefaultIconData( const QByteArray& icon_data );
 
@@ -224,7 +224,7 @@ class Preferences : public QObject
         /**
          * @brief setHideDefaultIcon. Set the hide default icon state.
          *
-         * @param      The state.
+         * @param hide  The state.
          */
         void setHideDefaultIcon( bool hide );
 
@@ -238,7 +238,7 @@ class Preferences : public QObject
         /**
          * @brief setIconType. Set the icon type.
          *
-         * @param      The icon type.
+         * @param icon_type     The icon type.
          */
         void setIconType( IconType icon_type );
 
@@ -252,7 +252,7 @@ class Preferences : public QObject
         /**
          * @brief setIconMime. Set the icon mime.
          *
-         * @param      The icon mime.
+         * @param icon_mime     The icon mime.
          */
         void setIconMime( const QString& icon_mime );
 
@@ -266,7 +266,7 @@ class Preferences : public QObject
         /**
          * @brief setIconData. Set the icon data.
          *
-         * @param      The icon data.
+         * @param icon_data     The icon data.
          */
         void setIconData( const QByteArray& icon_data );
 
@@ -280,7 +280,7 @@ class Preferences : public QObject
         /**
          * @brief setShowNumber. Set the show number state.
          *
-         * @param      The state.
+         * @param state     The state.
          */
         void setShowNumber( bool state );
 
@@ -294,7 +294,7 @@ class Preferences : public QObject
         /**
          * @brief setNumberColor. Set the number color.
          *
-         * @param      The color.
+         * @param color     The color.
          */
         void setNumberColor( QString color );
 
@@ -308,7 +308,7 @@ class Preferences : public QObject
         /**
          * @brief setNumberSize. Set the number size.
          *
-         * @param      The size.
+         * @param size      The size.
          */
         void setNumberSize( int size );
 
@@ -322,7 +322,7 @@ class Preferences : public QObject
         /**
          * @brief setumberAlignment. Set the number alignment.
          *
-         * @param      The alignment.
+         * @param alignment     The alignment.
          */
         void setNumberAlignment( int alignment );
 
@@ -336,7 +336,7 @@ class Preferences : public QObject
         /**
          * @brief setNumberMargins. Set the number margins.
          *
-         * @param      The margins.
+         * @param margins   The margins.
          */
         void setNumberMargins( QMargins margins );
 
@@ -350,9 +350,23 @@ class Preferences : public QObject
         /**
          * @brief setCountType. Set the count type.
          *
-         * @param      The count type.
+         * @param count_type    The count type.
          */
         void setCountType( CountType count_type );
+
+        /**
+         * @brief getStartupDelay. Get the startup delay.
+         *
+         * @return      The delay.
+         */
+        int getStartupDelay() const;
+
+        /**
+         * @brief setStartupDelay. Set the startup delay.
+         *
+         * @param delay     The size.
+         */
+        void setStartupDelay( int delay );
 
         /**
          * @brief getMinimizeType. Get the minimize type.
@@ -364,7 +378,7 @@ class Preferences : public QObject
         /**
          * @brief setMinimizeType. Set the minimize type.
          *
-         * @param      The minimize type.
+         * @param icon_type     The minimize type.
          */
         void setMinimizeType( MinimizeType icon_type );
 
@@ -378,7 +392,7 @@ class Preferences : public QObject
         /**
          * @brief setStartMinimized. Set the start minimized state.
          *
-         * @param      The state.
+         * @param state     The state.
          */
         void setStartMinimized( bool state );
 
@@ -392,7 +406,7 @@ class Preferences : public QObject
         /**
          * @brief setRestoreWindowPositions. Set the restore window positions state.
          *
-         * @param      The state.
+         * @param state     The state.
          */
         void setRestoreWindowPositions( bool state );
 
@@ -406,7 +420,7 @@ class Preferences : public QObject
         /**
          * @brief setCloseType. Set the close type.
          *
-         * @param      The close type.
+         * @param close_type    The close type.
          */
         void setCloseType( CloseType close_type );
 
@@ -420,7 +434,7 @@ class Preferences : public QObject
         /**
          * @brief setTheme. Set the theme state.
          *
-         * @param      The state.
+         * @param theme     The state.
          */
         void setTheme( Theme theme );
 
@@ -434,7 +448,7 @@ class Preferences : public QObject
         /**
          * @brief setDebug. Set the debug windows state.
          *
-         * @param      The state.
+         * @param state     The state.
          */
         void setDebug( bool state );
 
@@ -534,6 +548,11 @@ class Preferences : public QObject
          * @brief signalCountTypeChange. Signal a count type change.
          */
         void signalCountTypeChange();
+
+        /**
+         * @brief signalStartupDelayChange. Signal a startup delay change.
+         */
+        void signalStartupDelayChange();
 
         /**
          * @brief signalMinimizeTypeChange. Signal a minimize type change.
@@ -651,6 +670,11 @@ class Preferences : public QObject
          * @brief m_count_type. Selected count type.
          */
         CountType m_count_type;
+
+        /**
+         * @brief m_startup_delay. The startup delay.
+         */
+        int m_startup_delay;
 
         /**
          * @brief m_minimize_type. Selected minimize type.

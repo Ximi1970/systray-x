@@ -18,7 +18,7 @@ SysTrayX.Info = {
     console.debug("Info Addon version: " + this.version);
     console.debug("Info Platform: " + JSON.stringify(this.platformInfo));
     console.debug("Info Browser: " + JSON.stringify(this.browserInfo));
-//    console.debug("Info Storage: " + this.storageType);
+    //    console.debug("Info Storage: " + this.storageType);
   },
 };
 
@@ -64,6 +64,13 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
+    //  Let us wait until TB is ready, needed for TB91 and higher?
+    const startupDelay = await storage()
+      .get("startupDelay")
+      .then((result) => result.startupDelay || "5");
+    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+    await delay(startupDelay);
+
     //  Get all accounts
     if (SysTrayX.Info.browserInfo.majorVersion < 91) {
       SysTrayX.Messaging.accounts = await browser.accounts.list();
@@ -74,10 +81,6 @@ SysTrayX.Messaging = {
         SysTrayX.Info.browserInfo
       );
     } else {
-      //  Let us wait until TB is ready, needed for TB91 and higher?
-      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-      await delay(5000);
-
       SysTrayX.Messaging.accounts = await browser.accounts.list(false);
 
       // Fill the sub folders using the folders API, they are not same...
@@ -468,6 +471,7 @@ SysTrayX.Messaging = {
         "numberAlignment",
         "numberMargins",
         "countType",
+        "startupDelay",
         "theme",
       ])
       .then(
@@ -501,6 +505,7 @@ SysTrayX.Messaging = {
       bottom: 0,
     };
     const countType = result.countType || "0";
+    const startupDelay = result.startupDelay || "5";
     const theme = result.theme || "0";
 
     if (theme == "0" && numberColor == "#ffffff") {
@@ -531,6 +536,7 @@ SysTrayX.Messaging = {
         numberAlignment,
         numberMargins,
         countType,
+        startupDelay,
         theme,
       },
     });
@@ -690,6 +696,13 @@ SysTrayX.Link = {
       if (countType) {
         await storage().set({
           countType: countType,
+        });
+      }
+
+      const startupDelay = response["preferences"].startupDelay;
+      if (startupDelay) {
+        await storage().set({
+          startupDelay: startupDelay,
         });
       }
 

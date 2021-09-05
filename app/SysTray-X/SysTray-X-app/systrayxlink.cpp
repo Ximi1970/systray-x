@@ -632,6 +632,7 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          */
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
+
     if( pref.contains( "showNumber" ) && pref[ "showNumber" ].isString() )
     {
         bool show_number = pref[ "showNumber" ].toString() == "true";
@@ -690,6 +691,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          *  Store the new count type
          */
         m_pref->setCountType( count_type );
+    }
+
+    if( pref.contains( "startupDelay" ) && pref[ "startupDelay" ].isString() )
+    {
+        int startup_delay = pref[ "startupDelay" ].toString().toInt();
+
+        /*
+         *  Store the new startup delay
+         */
+        m_pref->setStartupDelay( startup_delay );
     }
 
     if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
@@ -818,6 +829,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
 
     prefObject.insert("numberMargins", marginsObject );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
+    prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
     prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
 
     QJsonObject preferencesObject;
@@ -1035,6 +1047,18 @@ void    SysTrayXLink::slotNumberMarginsChange()
  *  Handle the count type change signal
  */
 void    SysTrayXLink::slotCountTypeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a startup delay change signal
+ */
+void    SysTrayXLink::slotStartupDelayChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
