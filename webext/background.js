@@ -69,7 +69,7 @@ SysTrayX.Messaging = {
       .get("startupDelay")
       .then((result) => result.startupDelay || "5");
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-    await delay(startupDelay);
+    await delay(startupDelay * 1000);
 
     //  Get all accounts
     if (SysTrayX.Info.browserInfo.majorVersion < 91) {
@@ -760,6 +760,25 @@ SysTrayX.Window = {
 };
 
 async function start() {
+  //  Set platform
+  SysTrayX.Info.platformInfo = await browser.runtime
+    .getPlatformInfo()
+    .then((info) => info);
+
+  //  Set browser
+  SysTrayX.Info.browserInfo = await browser.runtime
+    .getBrowserInfo()
+    .then((info) => info);
+
+  const version = SysTrayX.Info.browserInfo.version.split(".");
+  SysTrayX.Info.browserInfo.majorVersion = version[0];
+  SysTrayX.Info.browserInfo.minorVersion = version[1];
+
+  //  Get addon version
+  SysTrayX.Info.version = browser.runtime.getManifest().version;
+
+  SysTrayX.Info.displayInfo();
+
   //
   //  Get storage type
   //
@@ -798,25 +817,6 @@ async function start() {
   //  Hide the default icon
   const hideDefaultIcon = await getHideDefaultIcon();
   SysTrayX.hideDefaultIcon = hideDefaultIcon;
-
-  //  Set platform
-  SysTrayX.Info.platformInfo = await browser.runtime
-    .getPlatformInfo()
-    .then((info) => info);
-
-  //  Set browser
-  SysTrayX.Info.browserInfo = await browser.runtime
-    .getBrowserInfo()
-    .then((info) => info);
-
-  const version = SysTrayX.Info.browserInfo.version.split(".");
-  SysTrayX.Info.browserInfo.majorVersion = version[0];
-  SysTrayX.Info.browserInfo.minorVersion = version[1];
-
-  //  Get addon version
-  SysTrayX.Info.version = browser.runtime.getManifest().version;
-
-  SysTrayX.Info.displayInfo();
 
   //   Used sync storage
   //  const inUse = await browser.storage.sync.getBytesInUse();
