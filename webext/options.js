@@ -76,7 +76,6 @@ SysTrayX.SaveOptions = {
 
     //  Store extended query filters
 
-    console.debug("Saving filters length: " + JSON.stringify(filters).length);
     console.debug("Saving filters: " + JSON.stringify(filters));
 
     await storage().set({
