@@ -30,6 +30,9 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
 
 ## Known issues
 
+- SysTray-X preferences will be lost when moving from an old Thunderbird version to Thunderbird version 91 or higher due to the storage type change. As of SysTray version 0.8 the add-on will use the local storage type instead of the sync type.
+Please press the reset button in the TB SysTray-X add-on preferences page to clear the old storage before setting your preferences again.
+
 - Preferences menu not working in TB 86.x throught TB 87.0b1 (beta releases)
 
 
