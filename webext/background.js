@@ -177,6 +177,8 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: function (folder, folderInfo) {
+    //    console.debug("FolderInfoChanged: " + JSON.stringify(folderInfo));
+
     if (folderInfo.unreadMessageCount !== undefined) {
       if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
         SysTrayX.Messaging.unread[folder.accountId] = {};
@@ -583,7 +585,7 @@ SysTrayX.Link = {
     }
 
     const kdeIntegration = response["kdeIntegration"];
-    if (kdeIntegration) {
+    if (kdeIntegration !== undefined) {
       await storage().set({
         kdeIntegration: kdeIntegration,
       });

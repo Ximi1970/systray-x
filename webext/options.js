@@ -1182,6 +1182,10 @@ async function start() {
     document.getElementById("counttype").style.display = "none";
   }
 
+  if (SysTrayX.Info.platformInfo.os !== "linux") {
+    document.getElementById("kdeintegration").style.display = "none";
+  }
+
   // Setup account tree
   const accountsInitPromise = () =>
     new Promise((res) => res(SysTrayX.Accounts.init()));
