@@ -67,34 +67,25 @@ rename ..\dist\%WIN%\SysTray_X.json.template SysTray_X.json
 C:\Qt\%QT_VER%\%SPEC%\bin\windeployqt.exe ..\dist\%WIN%\SysTray-X.exe
 
 if "%WIN%" == "win64" (
-  if "%QT_VER%"=="5.14.2" (
-    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
-    xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
-  ) else (
-    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
-    xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
-  )
+  xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
 )
 
 if "%WIN%" == "win32" (
   if exist %SYSTEMROOT%\SysWOW64\ (
-    if "%QT_VER%"=="5.14.2" (
-      xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140.dll ..\dist\%WIN%\
-      xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
-    ) else (
-      xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_1.dll ..\dist\%WIN%\
-      xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140_1.dll ..\dist\%WIN%\
-    )
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140_1.dll ..\dist\%WIN%\
   )
 
   if not exist %SYSTEMROOT%\SysWOW64\ (
-    if "%QT_VER%"=="5.14.2" (
-      xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
-      xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
-    ) else (
-      xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
-      xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
-    )
+    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
   )
 )
 
