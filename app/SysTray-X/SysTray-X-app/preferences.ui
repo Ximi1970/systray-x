@@ -10,6 +10,12 @@
     <height>812</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>SysTray-X Preferences</string>
   </property>
@@ -444,6 +450,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox">
+              <property name="text">
+               <string>CheckBox</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -741,11 +754,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
   <buttongroup name="themeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
  </buttongroups>
 </ui>
