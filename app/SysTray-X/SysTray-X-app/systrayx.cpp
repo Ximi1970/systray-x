@@ -72,6 +72,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Setup preferences dialog
      */
     m_pref_dialog = new PreferencesDialog( m_link, m_preferences );
+    m_pref_dialog->setFixedHeight( m_pref_dialog->sizeHint().height() );
 
     /*
      *  Setup debug window
