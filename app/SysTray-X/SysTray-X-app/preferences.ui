@@ -444,13 +444,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox">
-              <property name="text">
-               <string>CheckBox</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
@@ -748,11 +741,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="themeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="themeGroup"/>
  </buttongroups>
 </ui>
