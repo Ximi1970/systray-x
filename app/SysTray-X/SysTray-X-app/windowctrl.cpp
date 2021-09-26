@@ -220,6 +220,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
      */
     if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
     {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( QString( "Minimize all" ) );
+#endif
+
         QList< quint64 > win_ids = getWinIds();
 
         if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
@@ -276,6 +280,12 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
          */
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
+#ifdef DEBUG_DISPLAY_ACTIONS
+            emit signalConsole( QString( "Window state: %1, %2" )
+                            .arg( win_ids.at( i ) )
+                            .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
+#endif
+
             minimizeWindow( win_ids.at( i ), getMinimizeType() );
         }
     }
@@ -354,7 +364,6 @@ void    WindowCtrl::slotShowHide()
      *  Get the window ids
      */
     QList< quint64 > win_ids = getWinIds();
-    QList< Preferences::WindowState >    win_states = getWindowStates();
 
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
@@ -364,7 +373,7 @@ void    WindowCtrl::slotShowHide()
                             .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-        if( win_states.at( i ) == Preferences::STATE_MINIMIZED )
+        if( getWindowState( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED )
         {
             normalizeWindow( win_ids.at( i ) );
         }

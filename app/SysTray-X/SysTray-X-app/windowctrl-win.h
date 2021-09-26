@@ -23,6 +23,7 @@
  *  Qt includes
  */
 #include <QObject>
+#include <QMap>
 
 /*
  *  Forward declarations
@@ -63,20 +64,6 @@ class WindowCtrlWin : public QObject
          * @brief ~WindowCtrlWin. Destructor.
          */
         ~WindowCtrlWin();
-
-        /**
-         * @brief setWindowState. Set the window state.
-         *
-         *  @param state    The state.
-         */
-        void    setWindowState( int state );
-
-        /**
-         * @brief getWindowState. Get the window state.
-         *
-         *  @return     The state.
-         */
-        int getWindowState() const;
 
         /**
          * @brief setMinimizeType
@@ -134,11 +121,13 @@ class WindowCtrlWin : public QObject
         void    findWindows( qint64 pid );
 
         /**
-         * @brief getWindowStates. Get the states of the TB windows.
+         * @brief getWindowState. Get the state of a TB windows.
          *
-         *  @return     The list of window states.
+         *  @param  window  Window ID.
+         *
+         *  @return     The window state.
          */
-        const QList< Preferences::WindowState >&    getWindowStates() const;
+        const Preferences::WindowState&    getWindowState( const quint64 window );
 
         /**
          * @brief displayWindowElements. Display window elements.
@@ -153,13 +142,6 @@ class WindowCtrlWin : public QObject
          *  @param title    The window id.
          */
         void    displayWindowElements( quint64 window );
-
-        /**
-         * @brief getWinId. Get the Thunderbird window ID.
-         *
-         *  @return     The TB window ID.
-         */
-        quint64 getWinId();
 
         /**
          * @brief getWinIds. Get the Thunderbird window IDs.
@@ -302,11 +284,6 @@ class WindowCtrlWin : public QObject
     private:
 
         /**
-         * @brief m_tb_window. The Thunderbird window.
-         */
-        quint64  m_tb_window;
-
-        /**
          * @brief m_tb_window. The Thunderbird windows.
          */
         QList< quint64 >  m_tb_windows;
@@ -314,17 +291,12 @@ class WindowCtrlWin : public QObject
         /**
          * @brief m_tb_window_states. The Thunderbird window states.
          */
-        QList< Preferences::WindowState >    m_tb_window_states;
+        QMap< quint64, Preferences::WindowState >    m_tb_window_states;
 
         /**
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
-
-        /**
-         * @brief m_window_state. State of the TB window.
-         */
-        int m_window_state;
 
         /**
          * @brief m_hook

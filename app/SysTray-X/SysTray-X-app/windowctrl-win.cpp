@@ -35,11 +35,8 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
     /*
      *  Initialize
      */
-    m_tb_window = 0;
-    m_window_state = Preferences::STATE_UNKNOWN;
-
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states = QList< Preferences::WindowState >();
+    m_tb_window_states = QMap< quint64, Preferences::WindowState >();
 
     /*
      * Setup the minimize intercept
@@ -62,22 +59,11 @@ WindowCtrlWin::~WindowCtrlWin()
 
 
 /*
- * Set the window state.
+ *  Get the states of the TB windows.
  */
-void    WindowCtrlWin::setWindowState( int state )
+const Preferences::WindowState&    WindowCtrlWin::getWindowState( const quint64 window )
 {
-    m_window_state = state;
-}
-
-
-/**
- * @brief getWindowState. Get the window state.
- *
- *  @return     The state.
- */
-int WindowCtrlWin::getWindowState() const
-{
-    return m_window_state;
+    return m_tb_window_states[ window ];
 }
 
 
@@ -195,7 +181,7 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
 void    WindowCtrlWin::findWindows( qint64 pid )
 {
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states = QList< Preferences::WindowState >();
+    m_tb_window_states = QMap< quint64, Preferences::WindowState >();
 
     EnumWindowsPidProcData data{ *this, pid };
     EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
@@ -243,23 +229,14 @@ BOOL CALLBACK   WindowCtrlWin::enumWindowsPidProc( HWND hWnd, LPARAM lParam )
         /*
          * Window is minimized
          */
-        data.window_ctrl.m_tb_window_states.append( Preferences::STATE_MINIMIZED );
+        data.window_ctrl.m_tb_window_states[ (quint64)hWnd ] = Preferences::STATE_MINIMIZED;
     }
     else
     {
-        data.window_ctrl.m_tb_window_states.append( Preferences::STATE_NORMAL );
+        data.window_ctrl.m_tb_window_states[ (quint64)hWnd ] = Preferences::STATE_NORMAL;
     }
 
     return TRUE;
-}
-
-
-/*
- *  Get the states of the TB windows.
- */
-const QList< Preferences::WindowState >&    WindowCtrlWin::getWindowStates() const
-{
-    return m_tb_window_states;
 }
 
 
@@ -292,15 +269,6 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 void    WindowCtrlWin::displayWindowElements( quint64 window )
 {
     emit signalConsole( QString( "Found: XID %1" ).arg( window ) );
-}
-
-
-/*
- *  Get the Thunderbird window ID
- */
-quint64 WindowCtrlWin::getWinId()
-{
-    return m_tb_window;
 }
 
 

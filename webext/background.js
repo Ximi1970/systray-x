@@ -36,7 +36,7 @@ SysTrayX.Messaging = {
     }
 
     // Minimize on startup handled by Companion app as backup
-    if (SysTrayX.startupState == "minimized") {
+    if (SysTrayX.startupState === "minimized") {
       SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
     }
 
