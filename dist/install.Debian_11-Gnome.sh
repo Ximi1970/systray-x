@@ -3,19 +3,7 @@ enableGnomeExtension() {
     PACKAGE="gnome-shell-extension-appindicator"
     ENABLE_CMD="/usr/bin/gnome-shell-extension-tool"
     ENABLE_CMD_OPTIONS="-e ${EXTENSION}"
-    
-    if [ ! -x /usr/bin/gnome-shell-extension-tool ] ; then
-      echo
-      echo "Please install the package gnome-shell-devel:"
-      echo
-      echo "sudo zypper install gnome-shell-devel"
-      echo
-      echo "And run after the installer is finished:"
-      echo
-      echo $ENABLE_CMD $ENABLE_CMD_OPTIONS
-      echo
-    fi
-    
+
     #
     #   Is the extension installed?
     #
@@ -37,7 +25,7 @@ enableGnomeExtension() {
 }
 
 #
-#   Check for Gnome
+#   Enable the gnome shell extension for the local user
 #
 if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     enableGnomeExtension
@@ -45,13 +33,13 @@ if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     #
     # Check for Qt
     #
-    rpm -qa | grep -q libQt5Widgets5
+    dpkg -l | grep -q libqt5widgets5
     if [ "$?" == "1" ] ; then
-        echo
-        echo "Please install the package libqt5widgets5"
-        echo
-        echo "sudo zypper install libQt5Widgets5"
-        echo
+    echo
+    echo "Please install the package libqt5widgets5"
+    echo
+    echo "sudo apt install libqt5widgets5"
+    echo
     fi
 else
     #

@@ -1,22 +1,29 @@
 enableGnomeExtension() {
     EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
     PACKAGE="gnome-shell-extension-appindicator"
-    ENABLE_CMD="/usr/bin/gnome-extensions"
-    ENABLE_CMD_OPTIONS="enable ${EXTENSION}"
-    
+    ENABLE_CMD="gnome-shell-extension-tool -e ${EXTENSION}"
+
+    if [ ! -x /usr/bin/gnome-shell-extension-tool ] ; then
+      echo
+      echo "Please install the package gnome-shell-devel:"
+      echo
+      echo "sudo zypper install gnome-shell-devel"
+      echo
+      echo "And run after the installer is finished:"
+      echo
+      echo $ENABLE_CMD
+      echo
+    fi
+
     #
     #   Is the extension installed?
     #
     if [ -d /usr/share/gnome-shell/extensions/${EXTENSION} ] || [ -d ~/.local/share/gnome-shell/extensions/${EXTENSION} ] ; then
-        if [ -x $ENABLE_CMD ] ; then
-            $ENABLE_CMD $ENABLE_CMD_OPTIONS
-        fi
+        $ENABLE_CMD
     else
         mkdir -p ~/.local/share/gnome-shell/extensions
         tar -C ~/.local/share/gnome-shell/extensions -xJf ${DESTINATION}/gnome-shell-extension.tar.xz
-        if [ -x $ENABLE_CMD ] ; then
-            $ENABLE_CMD $ENABLE_CMD_OPTIONS
-        fi
+        $ENABLE_CMD
     fi
     
     echo
@@ -25,7 +32,7 @@ enableGnomeExtension() {
 }
 
 #
-#   Enable the gnome shell extension for the local user
+#   Check for Gnome
 #
 if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     enableGnomeExtension
@@ -33,12 +40,12 @@ if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
     #
     # Check for Qt
     #
-    dnf list installed "qt5-qtbase*" | grep -q qt5-qtbase-gui
+    rpm -qa | grep -q libQt5Widgets5
     if [ "$?" == "1" ] ; then
         echo
-        echo "Please install the package qt5-qtbase-gui"
+        echo "Please install the package libqt5widgets5"
         echo
-        echo "sudo dnf install qt5-qtbase-gui"
+        echo "sudo zypper install libQt5Widgets5"
         echo
     fi
 else
@@ -57,4 +64,3 @@ else
         echo
     fi
 fi
-
