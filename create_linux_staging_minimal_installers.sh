@@ -13,8 +13,6 @@ ENABLE_PAC=true
 
 OBS_RPM_ARCHS=""
 OBS_RPM_PKS=""
-OBS_RPM_ARCHS+="openSUSE_Leap_15.1/x86_64 "
-OBS_RPM_PKS+="_ "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.2/x86_64 "
 OBS_RPM_PKS+="_ "
 OBS_RPM_ARCHS+="openSUSE_Leap_15.3/x86_64 "
@@ -23,16 +21,14 @@ OBS_RPM_ARCHS+="openSUSE_Tumbleweed/i586 "
 OBS_RPM_PKS+="tmblwd "
 OBS_RPM_ARCHS+="openSUSE_Tumbleweed/x86_64 "
 OBS_RPM_PKS+="tmblwd "
-OBS_RPM_ARCHS+="SLE_15_SP1/x86_64 "
-OBS_RPM_PKS+="sle151 "
 OBS_RPM_ARCHS+="SLE_15_SP2/x86_64 "
 OBS_RPM_PKS+="sle152 "
 OBS_RPM_ARCHS+="SLE_15_SP3/x86_64 "
 OBS_RPM_PKS+="sle153 "
-OBS_RPM_ARCHS+="Fedora_32/x86_64 "
-OBS_RPM_PKS+="fed32 "
 OBS_RPM_ARCHS+="Fedora_33/x86_64 "
 OBS_RPM_PKS+="fed33 "
+OBS_RPM_ARCHS+="Fedora_34/x86_64 "
+OBS_RPM_PKS+="fed34 "
 OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
 OBS_RPM_PKS+="fedraw "
 OBS_RPM_ARCHS+="CentOS_7/x86_64 "
@@ -49,6 +45,10 @@ OBS_DEB_ARCHS+="Debian_10/i386 "
 OBS_DEB_PKS+="deb10 "
 OBS_DEB_ARCHS+="Debian_10/amd64 "
 OBS_DEB_PKS+="deb10 "
+OBS_DEB_ARCHS+="Debian_11/i386 "
+OBS_DEB_PKS+="deb11 "
+OBS_DEB_ARCHS+="Debian_11/amd64 "
+OBS_DEB_PKS+="deb11 "
 OBS_DEB_ARCHS+="Debian_Unstable/amd64 "
 OBS_DEB_PKS+="debunstable "
 OBS_DEB_ARCHS+="Debian_Testing/amd64 "
@@ -63,8 +63,8 @@ OBS_DEB_ARCHS+="xUbuntu_18.04/amd64 "
 OBS_DEB_PKS+="bionic1804 "
 OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
-OBS_DEB_ARCHS+="xUbuntu_20.10/amd64 "
-OBS_DEB_PKS+="groovy2010 "
+OBS_DEB_ARCHS+="xUbuntu_21.04/amd64 "
+OBS_DEB_PKS+="hirsute2021 "
 
 
 OBS_PAC_ARCHS=""
@@ -156,7 +156,7 @@ create_rpm_tar() {
         if [ -d ./usr/share/doc/${OBS_PACKAGE} ] ; then
           cp -f ./usr/share/doc/${OBS_PACKAGE}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
         else
-          cp -f ./usr/share/doc/${OBS_PACKAGE}-${FOUND_VERSION}/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
+          cp -f ./usr/share/doc/${OBS_PACKAGE}*/systray-x@Ximi1970.xpi ./${TAR_DIR}/systray-x@Ximi1970.xpi
         fi
       fi
       ;;
@@ -301,7 +301,7 @@ create_pac_tar() {
   #
   # Find rpm
   #
-  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^d].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
+  local PAC_FILE=$(grep ">${OBS_PACKAGE}-[^d].*${VERSION}.*\.zst<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*zst\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${PAC_FILE}
