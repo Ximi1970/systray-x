@@ -61,7 +61,7 @@ Installing the repository:
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 ```
 
-###### Leap 15.3 (not tested)
+###### Leap 15.3
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.3/ SysTray-X
@@ -71,12 +71,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.2/ SysTray-X
-```
-
-###### Leap 15.1
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.1/ SysTray-X
 ```
 
 ###### SLE 15 SP3 (not tested)
@@ -89,12 +83,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP2/ SysTray-X
-```
-
-###### SLE 15 SP1 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP1/ SysTray-X
 ```
 
 #### Package
@@ -132,15 +120,6 @@ Installing the repository:
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_21.04/Release.key
 sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_21.04 ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-```
-
-###### 20.10
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_20.10/Release.key
-sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_20.10 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
@@ -222,6 +201,15 @@ sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi197
 sudo apt update
 ```
 
+###### 11
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_11/Release.key
+sudo apt-key add Release.key
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_11 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 10
 
 ```bash
@@ -278,13 +266,6 @@ sudo dnf update --refresh
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_33/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
-
-###### 32
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_32/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
@@ -526,7 +507,7 @@ make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
 
-Build (GNOME):
+Build (GNOME,XFCE,others):
 ```bash
 cd systray-x
 make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"

@@ -1,3 +1,9 @@
+systray-x (0.8.0-0) unstable; urgency=low
+
+  * Update to 0.8.0
+  
+    - Refactor for TB 91
+
 systray-x (0.5.0-0) unstable; urgency=low
 
   * Update to 0.5.0
