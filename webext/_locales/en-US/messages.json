@@ -259,13 +259,10 @@
     "description": "Count new mails"
   },
 
-
   "icons_startup_delay": {
     "message": "Startup delay",
     "description": "Startup delay"
   },
-
-
 
   "icons_theme": {
     "message": "Theme",

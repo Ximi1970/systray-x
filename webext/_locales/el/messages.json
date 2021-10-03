@@ -259,6 +259,11 @@
     "description": "Count new mails"
   },
 
+  "icons_startup_delay": {
+    "message": "Καθυστέρηση έναρξης",
+    "description": "Startup delay"
+  },
+
   "icons_theme": {
     "message": "θέμα",
     "description": "The theme"
@@ -297,6 +302,16 @@
   "save_preferences_button": {
     "message": "Αποθήκευση",
     "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Επαναφορά προτιμήσεων",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Επαναφορά",
+    "description": "Reset preferences button"
   },
 
   "about_title": {

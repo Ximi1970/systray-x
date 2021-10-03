@@ -55,7 +55,7 @@
     <message>
         <location filename="../debugwidget.ui" line="14"/>
         <source>SysTray-X Debug</source>
-        <translation>SysTray-X Отладка</translation>
+        <translation>Отладка SysTray-X</translation>
     </message>
     <message>
         <location filename="../debugwidget.ui" line="76"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../preferences.ui" line="14"/>
         <source>SysTray-X Preferences</source>
-        <translation>SysTray-X Настройки</translation>
+        <translation>Настройки SysTray-X</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="187"/>

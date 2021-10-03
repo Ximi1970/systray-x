@@ -15,7 +15,7 @@
   },
 
   "preferences": {
-    "message": "SysTray-X предпочтения",
+    "message": "Настройки SysTray-X",
     "description": "Title of preferences page"
   },
 
@@ -110,7 +110,7 @@
   },
 
   "icons_default_options": {
-    "message": "Обычная иконка",
+    "message": "Иконка по умолчанию",
     "description": "Caption for Default Icon options"
   },
 
@@ -120,7 +120,7 @@
   },
 
   "icons_default_lookthrough": {
-    "message": "Невидимая иконка",
+    "message": "Прозрачная иконка",
     "description": "Default icon option 2"
   },
 
@@ -145,7 +145,7 @@
   },
 
   "icons_unread_blank": {
-    "message": "Пустая иконка (квадрат)",
+    "message": "Пустая иконка",
     "description": "Unread Icon option 1"
   },
 
@@ -180,12 +180,12 @@
   },
 
   "icons_number_color": {
-    "message": "Цвет шрифта:",
+    "message": "Цвет числа:",
     "description": "Color of the number"
   },
 
   "icons_number_size": {
-    "message": "Размер шрифта:",
+    "message": "Размер числа:",
     "description": "Size of the number"
   },
 
@@ -200,12 +200,12 @@
   },
 
   "icons_number_top_center": {
-    "message": "Верхний центр",
+    "message": "Верхний центральный",
     "description": "Number alignment top center"
   },
 
   "icons_number_top_right": {
-    "message": "Верхний правильно",
+    "message": "Верхний правый",
     "description": "Number alignment top right"
   },
 
@@ -215,7 +215,7 @@
   },
 
   "icons_number_middle_center": {
-    "message": "Средний центр",
+    "message": "Средний центральный",
     "description": "Number alignment middle center"
   },
 
@@ -230,7 +230,7 @@
   },
 
   "icons_number_bottom_center": {
-    "message": "Нижний центр",
+    "message": "Нижний центральный",
     "description": "Number alignment bottom center"
   },
 
@@ -240,23 +240,28 @@
   },
 
   "icons_number_margins": {
-    "message": "Маржа (левый, Верхний, правый, Нижний)",
+    "message": "Отступ (левый, Верхний, правый, Нижний)",
     "description": "Number margins (left, top, right, bottom)"
   },
 
   "icons_number_count_type": {
-    "message": "Вариант подсчета:",
+    "message": "Алгоритм подсчета:",
     "description": "Count type options"
   },
 
   "icons_number_count_unread": {
     "message": "Непрочитанные",
-    "description": "SCount unread mails"
+    "description": "Count unread mails"
   },
 
   "icons_number_count_new": {
     "message": "Новые",
     "description": "Count new mails"
+  },
+
+  "icons_startup_delay": {
+    "message": "Задержка запуска",
+    "description": "Startup delay"
   },
 
   "icons_theme": {
@@ -265,12 +270,12 @@
   },
 
   "icons_theme_light": {
-    "message": "светлая",
+    "message": "Светлая",
     "description": "The light theme"
   },
 
   "icons_theme_dark": {
-    "message": "темная",
+    "message": "Темная",
     "description": "The dark theme"
   },
 
@@ -285,7 +290,7 @@
   },
 
   "debug_display": {
-    "message": "Показать окно отладки",
+    "message": "Показывать окно отладки",
     "description": "Display the debug window"
   },
 
@@ -297,6 +302,16 @@
   "save_preferences_button": {
     "message": "Сохранить",
     "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Сбросить настройки",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Сброс настроек",
+    "description": "Reset preferences button"
   },
 
   "about_title": {

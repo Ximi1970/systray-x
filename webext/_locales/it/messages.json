@@ -259,6 +259,11 @@
     "description": "Count new mails"
   },
 
+  "icons_startup_delay": {
+    "message": "Ritardo all'avvio",
+    "description": "Startup delay"
+  },
+
   "icons_theme": {
     "message": "Tema",
     "description": "The theme"
@@ -297,6 +302,16 @@
   "save_preferences_button": {
     "message": "Salva",
     "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Resetta le preferenze",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Ripristina",
+    "description": "Reset preferences button"
   },
 
   "about_title": {
