@@ -58,27 +58,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../debugwidget.ui" line="59"/>
+        <location filename="../debugwidget.ui" line="76"/>
         <source>Test 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../debugwidget.ui" line="69"/>
+        <location filename="../debugwidget.ui" line="90"/>
+        <source>Test 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../debugwidget.ui" line="24"/>
         <source>Unread mail:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../debugwidget.ui" line="76"/>
+        <location filename="../debugwidget.ui" line="69"/>
         <source>Test 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../debugwidget.ui" line="83"/>
+        <location filename="../debugwidget.ui" line="31"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../debugwidget.ui" line="90"/>
+        <location filename="../debugwidget.ui" line="83"/>
         <source>Test 3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -91,246 +96,268 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="26"/>
+        <location filename="../preferences.ui" line="187"/>
         <source>Default icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="32"/>
+        <location filename="../preferences.ui" line="181"/>
+        <location filename="../preferences.ui" line="193"/>
         <source>Icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="40"/>
+        <location filename="../preferences.ui" line="201"/>
+        <location filename="../preferences.ui" line="695"/>
         <source>Default Thunderbird</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="53"/>
+        <location filename="../preferences.ui" line="214"/>
         <source>Lookthrough icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="65"/>
-        <location filename="../preferences.ui" line="188"/>
+        <location filename="../preferences.ui" line="226"/>
+        <location filename="../preferences.ui" line="637"/>
         <source>Custom icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="82"/>
-        <location filename="../preferences.ui" line="205"/>
+        <location filename="../preferences.ui" line="243"/>
+        <location filename="../preferences.ui" line="654"/>
         <source>Choose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="99"/>
+        <location filename="../preferences.ui" line="260"/>
         <source>KDE integration (Hide)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="112"/>
+        <location filename="../preferences.ui" line="563"/>
         <source>Mail notification icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="125"/>
+        <location filename="../preferences.ui" line="574"/>
         <source>Blank icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="158"/>
+        <location filename="../preferences.ui" line="607"/>
         <source>New mail icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="219"/>
+        <location filename="../preferences.ui" line="668"/>
         <source>No icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="249"/>
+        <location filename="../preferences.ui" line="522"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="257"/>
+        <location filename="../preferences.ui" line="530"/>
         <source>Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="270"/>
+        <location filename="../preferences.ui" line="543"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="305"/>
+        <location filename="../preferences.ui" line="28"/>
         <source>Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="313"/>
+        <location filename="../preferences.ui" line="36"/>
         <source>Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="362"/>
+        <location filename="../preferences.ui" line="85"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="321"/>
+        <location filename="../preferences.ui" line="44"/>
         <source>Default minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="347"/>
+        <location filename="../preferences.ui" line="70"/>
         <source>Minimize to tray, method 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="370"/>
+        <location filename="../preferences.ui" line="93"/>
         <source>Default close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="380"/>
+        <location filename="../preferences.ui" line="103"/>
         <source>Minimize main, close children</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="393"/>
+        <location filename="../preferences.ui" line="116"/>
         <source>Minimize all windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="413"/>
+        <location filename="../preferences.ui" line="136"/>
         <source>Start application minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="420"/>
+        <location filename="../preferences.ui" line="143"/>
         <source>Restore startup positions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="434"/>
+        <location filename="../preferences.ui" line="275"/>
         <source>Number properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="442"/>
+        <location filename="../preferences.ui" line="281"/>
         <source>Display unread message count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="454"/>
+        <location filename="../preferences.ui" line="295"/>
         <source>Number color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="475"/>
+        <location filename="../preferences.ui" line="316"/>
         <source>Number size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="499"/>
+        <location filename="../preferences.ui" line="340"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="510"/>
+        <location filename="../preferences.ui" line="351"/>
         <source>Top left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="515"/>
+        <location filename="../preferences.ui" line="356"/>
         <source>Top centre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="520"/>
+        <location filename="../preferences.ui" line="361"/>
         <source>Top right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="525"/>
+        <location filename="../preferences.ui" line="366"/>
         <source>Middle left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="530"/>
+        <location filename="../preferences.ui" line="371"/>
         <source>Middle centre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="535"/>
+        <location filename="../preferences.ui" line="376"/>
         <source>Middle right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="540"/>
+        <location filename="../preferences.ui" line="381"/>
         <source>Bottom left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="545"/>
+        <location filename="../preferences.ui" line="386"/>
         <source>Bottom centre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="550"/>
+        <location filename="../preferences.ui" line="391"/>
         <source>Bottom right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="560"/>
+        <location filename="../preferences.ui" line="405"/>
         <source>Margins (left, top, right, bottom):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="599"/>
+        <location filename="../preferences.ui" line="448"/>
+        <source>Startup delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="473"/>
         <source>Count type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="607"/>
+        <location filename="../preferences.ui" line="481"/>
         <source>Unread</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="620"/>
+        <location filename="../preferences.ui" line="494"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="657"/>
+        <location filename="../preferences.ui" line="750"/>
+        <source>Mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="756"/>
+        <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="793"/>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="799"/>
         <source>Display debug window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="334"/>
+        <location filename="../preferences.ui" line="57"/>
         <source>Minimize to tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="677"/>
+        <location filename="../preferences.ui" line="860"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="684"/>
+        <location filename="../preferences.ui" line="853"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="479"/>
-        <location filename="../preferencesdialog.cpp" line="503"/>
+        <location filename="../preferencesdialog.cpp" line="489"/>
+        <location filename="../preferencesdialog.cpp" line="513"/>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="479"/>
-        <location filename="../preferencesdialog.cpp" line="503"/>
+        <location filename="../preferencesdialog.cpp" line="489"/>
+        <location filename="../preferencesdialog.cpp" line="513"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -338,27 +365,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="212"/>
+        <location filename="../systrayx.cpp" line="216"/>
         <source>&amp;Show/Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="216"/>
+        <location filename="../systrayx.cpp" line="220"/>
         <source>&amp;Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="220"/>
+        <location filename="../systrayx.cpp" line="224"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="224"/>
+        <location filename="../systrayx.cpp" line="228"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="634"/>
+        <location filename="../systrayx.cpp" line="638"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
