@@ -20,12 +20,7 @@
 
   "default_locale": "en_US",
 
-  "permissions": [
-    "accountsRead",
-    "storage",
-    "nativeMessaging",
-    "tabs"
-  ],
+  "permissions": ["accountsRead", "storage", "nativeMessaging"],
 
   "background": {
     "page": "background.html"
