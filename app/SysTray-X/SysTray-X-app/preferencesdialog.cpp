@@ -31,6 +31,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_pref = pref;
 
     /*
+     *  Always start with the first tab
+     */
+    m_ui->tabWidget->setCurrentIndex(0);
+
+    /*
      *  Set close type button Ids
      */
     m_ui->closeTypeGroup->setId( m_ui->defaultCloseWindowsRadioButton, Preferences::PREF_DEFAULT_CLOSE_WINDOWS);
