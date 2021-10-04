@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
+#include <time.h>
 
 /*
  *  X11 includes
@@ -410,22 +411,40 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
     *bottom = 0;
 
     /*
-     *   Get the frame extentions
+     *   Get the frame extensions
      */
     Atom type;
     int format;
     unsigned long remain;
     unsigned long len;
     unsigned char* list = NULL;
-    XEvent event;
+    bool ok;
 
-    while( XGetWindowProperty( dsp, window, prop, 0, 4, False, AnyPropertyType,
-                &type, &format, &len, &remain, &list ) != Success || len != 4 || remain != 0 )
+    const struct timespec ts = {
+        .tv_sec = 0,
+        .tv_nsec = 50000000,
+    };
+
+    for( int i = 0; i < 5; i++ )
     {
-        XNextEvent( dsp, &event );
+        ok = XGetWindowProperty( dsp, window, prop, 0, 4, False, AnyPropertyType,
+                                 &type, &format, &len, &remain, &list ) == Success && len == 4 && remain == 0;
+
+        if( ok )
+        {
+            break;
+        }
+
+        if( list )
+        {
+            XFree( list );
+            list = NULL;
+        }
+
+        clock_nanosleep( CLOCK_MONOTONIC, 0, &ts, NULL );
     }
 
-    if( list && len == 4 )
+    if( ok && list )
     {
         long* extents = (long*)list;
         *left = extents[ 0 ];
