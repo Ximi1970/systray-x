@@ -461,6 +461,257 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 #endif
 }
 
+/*
+ *  Find a window by PID
+ */
+void    WindowCtrlUnix::findWindows2( qint64 pid )
+{
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Find windows" );
+#endif
+
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
+
+    QList< QPoint > old_positions = m_tb_window_positions;
+
+//    m_tb_windows = QList< quint64 >();
+//    m_tb_window_states_x11 = QList< Preferences::WindowState >();
+//    m_tb_window_positions = QList< QPoint >();
+    for( int i = 0 ; i < windows.length() ; ++i )
+    {
+        WindowItem win = windows.at( i );
+
+        qint32 n_propPID;
+        void* propPID = GetWindowProperty( m_display, win.window, "_NET_WM_PID", &n_propPID );
+
+        if( propPID != nullptr )
+        {
+            if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
+            {
+                qint32 n_str;
+                void* str_ptr = GetWindowProperty( m_display, win.window, "WM_WINDOW_ROLE", &n_str );
+
+                if( str_ptr != nullptr )
+                {
+                    emit signalConsole( QString( "Role found: %1" ).arg( (char*)str_ptr ) );
+
+                    if( strcmp( (char*)str_ptr, "3pane") == 0 )
+                    {
+                        emit signalConsole( QString( "Pane found" ) );
+
+#ifdef FF_NEET
+                        m_tb_windows.append( win.window );
+
+                        if( !m_tb_window_states.contains( win.window ) )
+                        {
+                            /*
+                             *  Set the startup state
+                             */
+                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
+                        }
+
+                        QPoint point;
+                        if( m_tb_windows.length() <= old_positions.length() )
+                        {
+                            point = old_positions.at( m_tb_windows.length() - 1 );
+                        }
+
+                        m_tb_window_positions.append( point );
+#endif
+
+                        qint32 n_wm_state;
+                        void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+
+                        if( wm_state_ptr != nullptr )
+                        {
+                            emit signalConsole( QString( "WM_STATE" ) );
+
+                            int state = *reinterpret_cast<long *>( wm_state_ptr );
+
+                            switch( state )
+                            {
+                                case 0:
+                                {
+                                    emit signalConsole( QString( "Docked" ) );
+                                    break;
+                                }
+
+                                case 3:
+                                {
+                                    emit signalConsole( QString( "Minimized" ) );
+                                    break;
+                                }
+
+                                default:
+                                {
+                                    emit signalConsole( QString( "Normal" ) );
+                                    break;
+                                }
+                            }
+
+                            Free( wm_state_ptr );
+                        }
+
+                        qint32 n_net_wm_state;
+                        void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
+
+                        if( net_wm_state_ptr != nullptr )
+                        {
+                            emit signalConsole( QString( "_NET_WM_STATE" ) );
+
+                            /*
+                             *  Get the current state
+                             */
+                            QStringList atom_list;
+                            for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+                            {
+                                 char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
+
+                                 atom_list.append( atom_name );
+
+                                 emit signalConsole( QString( "Atom: %1").arg( atom_name ) );
+
+                                 if( atom_name )
+                                 {
+                                     Free( atom_name );
+                                 }
+                            }
+
+                            if( atom_list.length() == 0 || (atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+                            {
+                                emit signalConsole( QString( "Docked" ) );
+                            }
+                            else if( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+                            {
+                                emit signalConsole( QString( "Minimized" ) );
+                            }
+                            else
+                            {
+                                emit signalConsole( QString( "Normal" ) );
+                            }
+
+                            Free( net_wm_state_ptr );
+                        }
+                    }
+
+                    Free( str_ptr );
+                }
+
+#ifdef FF_NEET
+
+                if( types.contains( "_NET_WM_WINDOW_TYPE_NORMAL" ) )
+                {
+                    qint32 n_wm_state;
+                    void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+
+                    qint32 n_net_wm_state;
+                    void* net_wm_state_ptr = GetWindowProperty( m_display, win.window, "_NET_WM_STATE", &n_net_wm_state );
+
+                    if( ( wm_state_ptr != nullptr || net_wm_state_ptr != nullptr ) )
+                    {
+                        m_tb_windows.append( win.window );
+
+                        if( !m_tb_window_states.contains( win.window ) )
+                        {
+                            /*
+                             *  Set the startup state
+                             */
+                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
+                        }
+
+                        QPoint point;
+                        if( m_tb_windows.length() <= old_positions.length() )
+                        {
+                            point = old_positions.at( m_tb_windows.length() - 1 );
+                        }
+
+                        m_tb_window_positions.append( point );
+
+                        /*
+                         *  Get the current state
+                         */
+                        QStringList atom_list;
+                        if( net_wm_state_ptr != nullptr )
+                        {
+                            for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
+                            {
+                                 char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
+
+                                 atom_list.append( atom_name );
+
+                                 if( atom_name )
+                                 {
+                                     Free( atom_name );
+                                 }
+                            }
+                        }
+
+                        int state = -1;
+                        if( wm_state_ptr != nullptr )
+                        {
+                            state = *reinterpret_cast<long *>( wm_state_ptr );
+                        }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+                        emit signalConsole( QString( "WinID %1, state: %2").arg(win.window ).
+                                            arg( Preferences::WindowStateString.at( m_tb_window_states[ win.window ] ) ) );
+
+                        for( int j = 0 ; j < atom_list.length() ; ++j )
+                        {
+                            emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
+                        }
+
+                        emit signalConsole( QString( "State x11: %1").arg( state ) );
+#endif
+
+                        if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
+                        {
+                            /*
+                             *  Docked
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                        }
+                        else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
+                        {
+                            /*
+                             *  Minimized
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
+                        }
+                        else
+                        {
+                            /*
+                             *  Normal
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
+                        }
+
+                        if( wm_state_ptr != nullptr  )
+                        {
+                            Free( wm_state_ptr );
+                        }
+
+                        if( net_wm_state_ptr != nullptr  )
+                        {
+                            Free( net_wm_state_ptr );
+                        }
+                    }
+                }
+#endif
+            }
+
+            Free( propPID );
+        }
+    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
+#endif
+
+#ifdef DEBUG_DISPLAY_ACTIONS_END
+    emit signalConsole( "Find windows done" );
+#endif
+}
 
 /*
  *  Get the Thunderbird window IDs

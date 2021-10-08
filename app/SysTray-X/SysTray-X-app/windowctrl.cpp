@@ -83,7 +83,7 @@ void    WindowCtrl::slotWindowTest1()
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
 
-//    findWindows( m_ppid );
+    findWindows2( m_ppid );
 
 //#define MINIMIZE_TEST
 #ifdef  MINIMIZE_TEST
