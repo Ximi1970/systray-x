@@ -300,6 +300,136 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
 }
 
 
+#define FF_NEW
+#ifdef FF_NEW
+/*
+ *  Find a window by PID
+ */
+void    WindowCtrlUnix::findWindows( qint64 pid )
+{
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Find windows" );
+#endif
+
+    QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
+
+    QList< QPoint > old_positions = m_tb_window_positions;
+
+    m_tb_windows = QList< quint64 >();
+    m_tb_window_states_x11 = QList< Preferences::WindowState >();
+    m_tb_window_positions = QList< QPoint >();
+    for( int i = 0 ; i < windows.length() ; ++i )
+    {
+        WindowItem win = windows.at( i );
+
+        qint32 n_propPID;
+        void* propPID = GetWindowProperty( m_display, win.window, "_NET_WM_PID", &n_propPID );
+
+        if( propPID != nullptr )
+        {
+            if( pid == *((reinterpret_cast<qint64 *>( propPID ) ) ) )
+            {
+                qint32 n_str;
+                void* str_ptr = GetWindowProperty( m_display, win.window, "WM_WINDOW_ROLE", &n_str );
+
+                if( str_ptr != nullptr )
+                {
+                    if( strcmp( (char*)str_ptr, "3pane") == 0 )
+                    {
+                        m_tb_windows.append( win.window );
+
+                        if( !m_tb_window_states.contains( win.window ) )
+                        {
+                            /*
+                             *  Set the startup state
+                             */
+                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
+                        }
+
+                        QPoint point;
+                        if( m_tb_windows.length() <= old_positions.length() )
+                        {
+                            point = old_positions.at( m_tb_windows.length() - 1 );
+                        }
+
+                        m_tb_window_positions.append( point );
+
+                        qint32 n_wm_state;
+                        void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
+
+                        if( wm_state_ptr != nullptr )
+                        {
+                            int state = *reinterpret_cast<long *>( wm_state_ptr );
+
+                            switch( state )
+                            {
+                                case 0:
+                                {
+                                    /*
+                                     *  Docked
+                                     */
+                                    m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+
+                                    break;
+                                }
+
+                                case 1:
+                                {
+                                    /*
+                                     *  Normal
+                                     */
+                                    m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
+
+                                    break;
+                                }
+
+                                case 3:
+                                {
+                                    /*
+                                     *  Minimized
+                                     */
+                                    m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
+
+                                    break;
+                                }
+
+                                default:
+                                {
+                                    break;
+                                }
+                            }
+
+                            Free( wm_state_ptr );
+                        }
+                        else
+                        {
+                            /*
+                             *  Docked
+                             */
+                            m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                        }
+                    }
+
+                    Free( str_ptr );
+                }
+            }
+
+            Free( propPID );
+        }
+    }
+
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
+#endif
+
+#ifdef DEBUG_DISPLAY_ACTIONS_END
+    emit signalConsole( "Find windows done" );
+#endif
+}
+#endif
+
+//#define FF_OLD_1
+#ifdef FF_OLD_1
 /*
  *  Find a window by PID
  */
@@ -460,6 +590,8 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     emit signalConsole( "Find windows done" );
 #endif
 }
+#endif
+
 
 /*
  *  Find a window by PID
@@ -536,6 +668,12 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
                                     break;
                                 }
 
+                                case 1:
+                                {
+                                    emit signalConsole( QString( "Normal" ) );
+                                    break;
+                                }
+
                                 case 3:
                                 {
                                     emit signalConsole( QString( "Minimized" ) );
@@ -544,7 +682,7 @@ void    WindowCtrlUnix::findWindows2( qint64 pid )
 
                                 default:
                                 {
-                                    emit signalConsole( QString( "Normal" ) );
+                                    emit signalConsole( QString( "Unknown" ) );
                                     break;
                                 }
                             }
