@@ -83,8 +83,6 @@ void    WindowCtrl::slotWindowTest1()
 //    findWindow( 4313 );
 //    displayWindowElements( getWinId() );
 
-    findWindows2( m_ppid );
-
 //#define MINIMIZE_TEST
 #ifdef  MINIMIZE_TEST
     emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
