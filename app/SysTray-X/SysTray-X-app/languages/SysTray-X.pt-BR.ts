@@ -347,12 +347,12 @@
         <translation>Mostrar janela de depuração</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="161"/>
+        <location filename="../preferences.ui" line="860"/>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="162"/>
+        <location filename="../preferences.ui" line="853"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -362,14 +362,14 @@
         <translation>Minimizar para a tray</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="516"/>
-        <location filename="../preferencesdialog.cpp" line="540"/>
+        <location filename="../preferencesdialog.cpp" line="523"/>
+        <location filename="../preferencesdialog.cpp" line="547"/>
         <source>Open Image</source>
         <translation>Abrir imagem</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="516"/>
-        <location filename="../preferencesdialog.cpp" line="540"/>
+        <location filename="../preferencesdialog.cpp" line="523"/>
+        <location filename="../preferencesdialog.cpp" line="547"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Arquivo de imagem (*.png *.jpg *.bmp)</translation>
     </message>

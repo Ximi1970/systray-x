@@ -347,12 +347,12 @@
         <translation>Toon debug venster</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="161"/>
+        <location filename="../preferences.ui" line="860"/>
         <source>Save</source>
         <translation>Bewaren</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="162"/>
+        <location filename="../preferences.ui" line="853"/>
         <source>Cancel</source>
         <translation>Annnuleren</translation>
     </message>
@@ -362,14 +362,14 @@
         <translation>Minimaliseer naar systeemvak</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="516"/>
-        <location filename="../preferencesdialog.cpp" line="540"/>
+        <location filename="../preferencesdialog.cpp" line="523"/>
+        <location filename="../preferencesdialog.cpp" line="547"/>
         <source>Open Image</source>
         <translation>Open afbeelding</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="516"/>
-        <location filename="../preferencesdialog.cpp" line="540"/>
+        <location filename="../preferencesdialog.cpp" line="523"/>
+        <location filename="../preferencesdialog.cpp" line="547"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
     </message>
