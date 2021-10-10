@@ -44,7 +44,14 @@ class PreferencesDialog : public QDialog
          *
          *  @param event    The event
          */
-        void    changeEvent(QEvent* event);
+        void    changeEvent( QEvent* event );
+
+        /**
+         * @brief keyPressEvent. Catch the event.
+         *
+         *  @param event    The event
+         */
+        void    keyPressEvent( QKeyEvent *event );
 
     private:
 
