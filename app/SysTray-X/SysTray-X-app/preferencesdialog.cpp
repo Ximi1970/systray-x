@@ -11,6 +11,8 @@
  */
 #include <QColor>
 #include <QPixmap>
+#include <QEvent>
+#include <QKeyEvent>
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QMimeDatabase>

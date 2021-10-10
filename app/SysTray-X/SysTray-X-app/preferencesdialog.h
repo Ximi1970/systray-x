@@ -16,6 +16,8 @@
  *	Predefines
  */
 class SysTrayXLink;
+class QEvent;
+class QKeyEvent;
 
 /*
  *  Namespace
