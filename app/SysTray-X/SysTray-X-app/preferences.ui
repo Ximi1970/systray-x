@@ -21,7 +21,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabWindows">
       <attribute name="title">
@@ -846,11 +846,22 @@
       </spacer>
      </item>
      <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QPushButton" name="cancelPushButton">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="savePushButton">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -861,11 +872,11 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="themeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
  </buttongroups>
 </ui>

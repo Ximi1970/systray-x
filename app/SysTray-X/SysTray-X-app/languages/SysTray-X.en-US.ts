@@ -348,12 +348,12 @@
         <translation>Display debug window</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="145"/>
+        <location filename="../preferencesdialog.cpp" line="161"/>
         <source>Save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="146"/>
+        <location filename="../preferencesdialog.cpp" line="162"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
@@ -363,14 +363,14 @@
         <translation>Minimize to tray</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="505"/>
-        <location filename="../preferencesdialog.cpp" line="529"/>
+        <location filename="../preferencesdialog.cpp" line="516"/>
+        <location filename="../preferencesdialog.cpp" line="540"/>
         <source>Open Image</source>
         <translation>Open Image</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="505"/>
-        <location filename="../preferencesdialog.cpp" line="529"/>
+        <location filename="../preferencesdialog.cpp" line="516"/>
+        <location filename="../preferencesdialog.cpp" line="540"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Image Files (*.png *.jpg *.bmp)</translation>
     </message>
