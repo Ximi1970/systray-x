@@ -52,7 +52,7 @@ Use a number to indicate the number of new/unread mails.
 - Number size:        Change the size of the number.  
 - Number alignment:   Set the number alignment within the icon.  
 - Number margins:     Set the number margins from the icon border.  
-- Number count type:  Display the unread or new messages.  
+- Startup delay:      Set the startup delay. Delay checking of the accounts.  
 
 ### Theme
 
