@@ -344,24 +344,24 @@
         <translation>Ελαχιστοποίηση στην περιοχή ειδοποιήσεων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="860"/>
+        <location filename="../preferencesdialog.cpp" line="145"/>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="853"/>
+        <location filename="../preferencesdialog.cpp" line="146"/>
         <source>Cancel</source>
         <translation>Άκυρο</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Open Image</source>
         <translation>Άνοιγμα εικόνας</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Αρχεία εικόνας (*.png *.jpg *.bmp)</translation>
     </message>

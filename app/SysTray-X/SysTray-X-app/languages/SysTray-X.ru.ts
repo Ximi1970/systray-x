@@ -344,12 +344,12 @@
         <translation>Показывать окно отладки</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="860"/>
+        <location filename="../preferencesdialog.cpp" line="145"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="853"/>
+        <location filename="../preferencesdialog.cpp" line="146"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
@@ -359,14 +359,14 @@
         <translation>Свернуть в трей</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Файлы изображений (*.png *.jpg *.bmp)</translation>
     </message>

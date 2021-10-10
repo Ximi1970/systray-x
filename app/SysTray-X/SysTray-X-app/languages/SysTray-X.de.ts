@@ -343,12 +343,12 @@
         <translation>Debug-Fenster anzeigen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="860"/>
+        <location filename="../preferencesdialog.cpp" line="145"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="853"/>
+        <location filename="../preferencesdialog.cpp" line="146"/>
         <source>Cancel</source>
         <translation>Annullieren</translation>
     </message>
@@ -358,14 +358,14 @@
         <translation>Hauptfenster minimieren</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Open Image</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="489"/>
-        <location filename="../preferencesdialog.cpp" line="513"/>
+        <location filename="../preferencesdialog.cpp" line="505"/>
+        <location filename="../preferencesdialog.cpp" line="529"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Bilddateien (*.png *.jpg *.bmp)</translation>
     </message>

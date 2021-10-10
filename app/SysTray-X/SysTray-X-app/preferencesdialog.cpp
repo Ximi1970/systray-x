@@ -140,6 +140,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setNumberMargins( m_pref->getNumberMargins() );
 
     /*
+     *  Translate buttons
+     */
+    m_ui->buttonBox->button( QDialogButtonBox::Save )->setText( tr( "Save" ) );
+    m_ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
+
+    /*
      *  Dialog on top
      */
     setWindowFlag( Qt::WindowStaysOnTopHint );
