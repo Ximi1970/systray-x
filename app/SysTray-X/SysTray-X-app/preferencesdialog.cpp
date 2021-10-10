@@ -144,7 +144,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Dialog on top
      */
-    setWindowFlag( Qt::WindowStaysOnTopHint );
+    Qt::WindowFlags flags = windowFlags();
+    flags |= Qt::WindowStaysOnTopHint;
+#ifdef Q_OS_UNIX
+    flags |= Qt::X11BypassWindowManagerHint;
+#endif
+    setWindowFlags( flags );
 }
 
 
