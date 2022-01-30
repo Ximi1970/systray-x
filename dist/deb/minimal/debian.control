@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 4.1.16), zip, g++, libx11-dev, qt5-qmake, qtbase5-d
 
 Package: systray-x-minimal
 Architecture: any
-Depends: ${shlibs:Depends}, thunderbird (>= 1:68), thunderbird (< 1:95)
+Depends: ${shlibs:Depends}, thunderbird (>= 1:68), thunderbird (< 1:98)
 Description: SysTray-X is a system tray extension for Thunderbird 68+ (non-GNOME,non-KDE).
  This version is for non-KDE and non-GNOME desktops.
  The add-on uses the WebExtension API's to control an external system

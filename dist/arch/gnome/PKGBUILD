@@ -12,7 +12,7 @@ depends=(
   'qt5-base'
   'gnome-shell-extension-appindicator'
   'thunderbird>=68'
-  'thunderbird<95'
+  'thunderbird<98'
 )
 makedepends=(
   'git'
