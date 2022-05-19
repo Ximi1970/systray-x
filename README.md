@@ -116,6 +116,15 @@ sudo zypper in systray-x-minimal
 
 Installing the repository:
 
+###### 22.04
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_22.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_22.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 21.04
 
 ```bash
@@ -254,6 +263,20 @@ Installing the repository:
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 36
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_36/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 35
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_35/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
