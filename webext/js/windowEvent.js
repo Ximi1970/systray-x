@@ -104,6 +104,7 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
               windowListener.onCloseButton,
               true
             );
+            console.log("Close listener added");
           }
         },
       });
@@ -127,6 +128,7 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
             windowListener.onCloseButton,
             true
           );
+          console.log("Close listener removed");
         }
       }
       ExtensionSupport.unregisterWindowListener("closeButtonListener");
