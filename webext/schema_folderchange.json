@@ -6,6 +6,7 @@
         "name": "setVersion",
         "type": "function",
         "description": "Set the TB version.",
+        "async": true,
         "parameters": [
           {
             "type": "integer",
@@ -19,6 +20,7 @@
         "name": "setCountType",
         "type": "function",
         "description": "Set the count type.",
+        "async": true,
         "parameters": [
           {
             "type": "integer",
@@ -32,6 +34,7 @@
         "name": "setFilters",
         "type": "function",
         "description": "Set the account filters.",
+        "async": true,
         "parameters": [
           {
             "name": "filters",

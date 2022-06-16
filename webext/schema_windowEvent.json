@@ -6,6 +6,7 @@
         "name": "setCloseType",
         "type": "function",
         "description": "Set the close type.",
+        "async": true,
         "parameters": [
           {
             "type": "integer",

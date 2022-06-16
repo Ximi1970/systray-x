@@ -56,15 +56,15 @@ var folderChange = class extends ExtensionCommon.ExtensionAPI {
     return {
       // Again, this key must have the same name.
       folderChange: {
-        setVersion: function (version) {
+        setVersion: async function (version) {
           SysTrayX.setVersion(version);
         },
 
-        setCountType: function (type) {
+        setCountType: async function (type) {
           SysTrayX.setCountType(type);
         },
 
-        setFilters: function (filters) {
+        setFilters: async function (filters) {
           SysTrayX.setFilters(filters);
         },
 
