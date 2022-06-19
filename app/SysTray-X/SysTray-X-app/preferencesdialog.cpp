@@ -602,7 +602,7 @@ void    PreferencesDialog::slotBrowserVersion()
 {
     QString version = m_pref->getBrowserVersion();
 
-    if( version.section( '.', 0, 0 ).toInt() > 89 && version.section( '.', 0, 0 ).toInt() < 102)
+    if( version.section( '.', 0, 0 ).toInt() > 89 && version.section( '.', 0, 0 ).toInt() < 91)
     {
         /*
          *  Hide the count type for TB90 and up, not supported

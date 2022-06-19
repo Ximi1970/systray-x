@@ -1178,7 +1178,7 @@ async function start() {
     SysTrayX.Info.version;
 
   // Disable incompatible items
-  if (SysTrayX.Info.browserInfo.majorVersion > 89 && SysTrayX.Info.browserInfo.majorVersion < 102) {
+  if (SysTrayX.Info.browserInfo.majorVersion > 89 && SysTrayX.Info.browserInfo.majorVersion < 91) {
     document.getElementById("counttype").style.display = "none";
   }
 
