@@ -363,3 +363,38 @@ async function addFolderToFilters(newFolder) {
     });
   }
 }
+
+//  Count the unread mail
+const getUnreadMailCount = () => {
+  let count = 0;
+  SysTrayX.Messaging.filters.forEach((filter) => {
+    const accountId = filter.accountId;
+    filter.folders.forEach((path) => {
+      if (SysTrayX.Messaging.unread[accountId] !== undefined) {
+        if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
+          count = count + SysTrayX.Messaging.unread[accountId][path];
+        }
+      }
+    });
+  });
+
+  SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+}
+
+//  Count the new mail
+const getNewMailCount = () => {
+  let count = 0;
+  SysTrayX.Messaging.filters.forEach((filter) => {
+    const accountId = filter.accountId;
+    filter.folders.forEach((path) => {
+      if (SysTrayX.Messaging.new[accountId] !== undefined) {
+        if (SysTrayX.Messaging.new[accountId][path] !== undefined) {
+          count = count + SysTrayX.Messaging.new[accountId][path].length;
+        }
+      }
+    });
+  });
+
+  SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+}
+

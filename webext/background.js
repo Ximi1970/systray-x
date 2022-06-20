@@ -27,6 +27,7 @@ SysTrayX.Messaging = {
   filters: undefined,
   unread: {},
   new: {},
+  displayedFolder: undefined,
 
   init: async function () {
     // Send the startup positions?
@@ -198,20 +199,8 @@ SysTrayX.Messaging = {
     }
 
     if (SysTrayX.Messaging.countType === "1") {
-      let count = 0;
-      SysTrayX.Messaging.filters.forEach((filter) => {
-        const accountId = filter.accountId;
-        filter.folders.forEach((path) => {
-          if (SysTrayX.Messaging.new[accountId] !== undefined) {
-            if (SysTrayX.Messaging.new[accountId][path] !== undefined) {
-              count = count + SysTrayX.Messaging.new[accountId][path].length;
-            }
-          }
-        });
-      });
-
+      getNewMailCount();
       //      console.debug("listenerNewMail: New count");
-      SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
     }
   },
 
@@ -256,20 +245,8 @@ SysTrayX.Messaging = {
         folderInfo.unreadMessageCount;
 
       if (SysTrayX.Messaging.countType === "0") {
-        let count = 0;
-        SysTrayX.Messaging.filters.forEach((filter) => {
-          const accountId = filter.accountId;
-          filter.folders.forEach((path) => {
-            if (SysTrayX.Messaging.unread[accountId] !== undefined) {
-              if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
-                count = count + SysTrayX.Messaging.unread[accountId][path];
-              }
-            }
-          });
-        });
-
+        getUnreadMailCount();
         //        console.debug("listenerFolderInfoChanged: Unread count");
-        SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
       } else {
         // Check if the new mails have been read, remove from new storage
         const messages = SysTrayX.Messaging.new[folder.accountId][folder.path];
@@ -291,21 +268,8 @@ SysTrayX.Messaging = {
             ...newMessages,
           ];
 
-          let count = 0;
-          SysTrayX.Messaging.filters.forEach((filter) => {
-            const accountId = filter.accountId;
-            filter.folders.forEach((path) => {
-              if (SysTrayX.Messaging.new[accountId] !== undefined) {
-                if (SysTrayX.Messaging.new[accountId][path] !== undefined) {
-                  count =
-                    count + SysTrayX.Messaging.new[accountId][path].length;
-                }
-              }
-            });
-          });
-
+          getNewMailCount();
           //          console.debug("listenerFolderInfoChanged: New count");
-          SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
         }
       }
     }
@@ -912,43 +876,27 @@ SysTrayX.Window = {
   },
 
   folderChanged: function (tab, displayedFolder) {
-/*
+    /*
     console.debug("Folder changed tab: " + JSON.stringify(tab));
     console.debug(
-      "Folder changed displayFolder: " + JSON.stringify(displayedFolder)
+      "Folder changed displayedFolder: " + JSON.stringify(displayedFolder)
     );
 */
-//    console.debug("New storage: " + JSON.stringify(SysTrayX.Messaging.new));
-
-    //  Clear all other new items except this one for this account
-    //  to emulate TBs new handling
-    //
-    Object.keys(SysTrayX.Messaging.new).forEach((accountId) => {
-      console.debug("Testing: " + accountId);
-      if (accountId !== displayedFolder.accountId) {
-        SysTrayX.Messaging.new[accountId] = undefined;
-        console.debug("Removed: " + accountId);
+    const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
+    if (oldDisplayedFolder !== undefined) {
+      if (oldDisplayedFolder.accountId === displayedFolder.accountId) {
+        SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
+          oldDisplayedFolder.path
+        ] = [];
       }
-    });
 
-//    console.debug("New storage cleaned: " + JSON.stringify(SysTrayX.Messaging.new));
-
-    if (SysTrayX.Messaging.countType === "1") {
-      let count = 0;
-      SysTrayX.Messaging.filters.forEach((filter) => {
-        const accountId = filter.accountId;
-        filter.folders.forEach((path) => {
-          if (SysTrayX.Messaging.new[accountId] !== undefined) {
-            if (SysTrayX.Messaging.new[accountId][path] !== undefined) {
-              count = count + SysTrayX.Messaging.new[accountId][path].length;
-            }
-          }
-        });
-      });
-
-      //      console.debug("listenerNewMail: New count");
-      SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+      if (SysTrayX.Messaging.countType === "1") {
+        getNewMailCount();
+        //      console.debug("listenerNewMail: New count");
+      }
     }
+
+    SysTrayX.Messaging.displayedFolder = displayedFolder;
   },
 };
 
