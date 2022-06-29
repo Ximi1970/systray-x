@@ -175,8 +175,8 @@ SysTrayX.Messaging = {
   },
 
   listenerNewMail: function (folder, messages) {
-    console.debug("New mail in: " + folder.accountId + ", " + folder.path);
-    console.debug("New messages: " + JSON.stringify(messages));
+//    console.debug("New mail in: " + folder.accountId + ", " + folder.path);
+//    console.debug("New messages: " + JSON.stringify(messages));
 
     if (messages.messages.length > 0) {
       if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
@@ -192,10 +192,10 @@ SysTrayX.Messaging = {
           messages.messages
         );
 
-      console.debug(
-        "Messages: " +
-          JSON.stringify(SysTrayX.Messaging.new[folder.accountId][folder.path])
-      );
+//      console.debug(
+//        "Messages: " +
+//          JSON.stringify(SysTrayX.Messaging.new[folder.accountId][folder.path])
+//      );
     }
 
     if (SysTrayX.Messaging.countType === "1") {
