@@ -69,8 +69,8 @@ OBS_DEB_ARCHS+="xUbuntu_20.04/amd64 "
 OBS_DEB_PKS+="focal2004 "
 OBS_DEB_ARCHS+="xUbuntu_21.04/amd64 "
 OBS_DEB_PKS+="hirsute2021 "
-OBS_DEB_ARCHS+="xUbuntu_22.04/amd64 "
-OBS_DEB_PKS+="jammy2022 "
+#OBS_DEB_ARCHS+="xUbuntu_22.04/amd64 "
+#OBS_DEB_PKS+="jammy2022 "
 
 
 OBS_PAC_ARCHS=""
