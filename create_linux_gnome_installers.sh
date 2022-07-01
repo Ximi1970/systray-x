@@ -99,9 +99,9 @@ OBS_DEB_GNOME_EXT+="0 "
 OBS_DEB_ARCHS+="xUbuntu_21.04/amd64 "
 OBS_DEB_PKS+="hirsute2021 "
 OBS_DEB_GNOME_EXT+="0 "
-#OBS_DEB_ARCHS+="xUbuntu_22.04/amd64 "
-#OBS_DEB_PKS+="jammy2022 "
-#OBS_DEB_GNOME_EXT+="0 "
+OBS_DEB_ARCHS+="xUbuntu_22.04/amd64 "
+OBS_DEB_PKS+="jammy2022 "
+OBS_DEB_GNOME_EXT+="0 "
 
 
 OBS_PAC_ARCHS=""
@@ -351,10 +351,10 @@ create_deb_tar() {
   #
   # Extract 
   #
-  dpkg --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/bin/SysTray-X > ./${TAR_DIR}/SysTray-X
+  dpkg-deb --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/bin/SysTray-X > ./${TAR_DIR}/SysTray-X
   chmod 755 ./${TAR_DIR}/SysTray-X
 
-  dpkg --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi > ./${TAR_DIR}/systray-x@Ximi1970.xpi
+  dpkg-deb --fsys-tarfile ${DEB_FILE} | tar xOf - ./usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi > ./${TAR_DIR}/systray-x@Ximi1970.xpi
 
   if [ ! -f systray-x@Ximi1970.xpi ] ; then
     cp -f ./${TAR_DIR}/systray-x@Ximi1970.xpi .
