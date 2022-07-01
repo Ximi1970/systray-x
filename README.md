@@ -175,7 +175,7 @@ sudo apt install systray-x
 
 ###### GNOME
 
-Please select the `Ubuntu on Xorg` session when loging in on 21.04. The `Ubuntu` (Wayland) session will not work.
+Please select the `Ubuntu on Xorg` session when loging in on 21.04 and up. The `Ubuntu` (Wayland) session will not work.
 
 ```bash
 sudo apt install systray-x-gnome
@@ -577,7 +577,7 @@ en_US   :
 it      :   lgbaldoni  
 nl      :  
 pt_BR   :   fabianski7  
-ru_RU   :   agvantibo, PutinVladimir  
+ru_RU   :   agvantibo  
 
 
 ### Remarks
