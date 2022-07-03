@@ -879,23 +879,43 @@ SysTrayX.Window = {
   },
 
   folderChanged: function (tab, displayedFolder) {
-    /*
     console.debug("Folder changed tab: " + JSON.stringify(tab));
     console.debug(
       "Folder changed displayedFolder: " + JSON.stringify(displayedFolder)
     );
-*/
+
     const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
     if (oldDisplayedFolder !== undefined) {
-      if (oldDisplayedFolder.accountId === displayedFolder.accountId) {
-        SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
-          oldDisplayedFolder.path
-        ] = [];
-      }
+ //     if (oldDisplayedFolder.accountId === displayedFolder.accountId) {
+        console.debug(
+          "FolderChange clear: " +
+            oldDisplayedFolder.accountId +
+            ", " +
+            oldDisplayedFolder.path
+        );
+
+        if (
+          SysTrayX.Messaging.new[oldDisplayedFolder.accountId] !== undefined &&
+          SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
+            oldDisplayedFolder.path
+          ] !== undefined
+        ) {
+          SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
+            oldDisplayedFolder.path
+          ] = [];
+        }
+//      }
+
+      console.debug(
+        "folderChanged countType: " +
+          SysTrayX.Messaging.countType +
+          ", " +
+          typeof SysTrayX.Messaging.countType
+      );
 
       if (SysTrayX.Messaging.countType === "1") {
+        console.debug("folderChanged: New count");
         getNewMailCount();
-        //      console.debug("listenerNewMail: New count");
       }
     }
 
