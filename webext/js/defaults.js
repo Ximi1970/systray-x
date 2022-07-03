@@ -378,7 +378,7 @@ const getUnreadMailCount = () => {
     });
   });
 
-  console.debug("getUnreadMailCount: " + count);
+  //console.debug("getUnreadMailCount: " + count);
   SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
 };
 
@@ -396,9 +396,9 @@ const getNewMailCount = () => {
     });
   });
 
-  console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
-  console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
+  //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
+  //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-  console.debug("getNewMailCount: " + count);
+  //console.debug("getNewMailCount: " + count);
   SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
 };

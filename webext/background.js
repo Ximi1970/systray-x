@@ -175,8 +175,10 @@ SysTrayX.Messaging = {
   },
 
   listenerNewMail: function (folder, messages) {
+    /*
     console.debug("New mail in: " + folder.accountId + ", " + folder.path);
     console.debug("New messages: " + JSON.stringify(messages));
+    */
 
     if (messages.messages.length > 0) {
       if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
@@ -225,8 +227,10 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
+    /*
     console.debug("FolderInfoChanged: " + JSON.stringify(folder));
     console.debug("FolderInfoChanged: " + JSON.stringify(folderInfo));
+    */
 
     if (folderInfo.unreadMessageCount !== undefined) {
       if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
@@ -309,7 +313,7 @@ SysTrayX.Messaging = {
       )
     );
 
-    console.debug("countUnread: " + count);
+    //console.debug("countUnread: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -353,7 +357,7 @@ SysTrayX.Messaging = {
       )
     );
 
-    console.debug("countNew: " + count);
+    //console.debug("countNew: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -433,7 +437,7 @@ SysTrayX.Messaging = {
   //  Callback for unReadMessages
   //
   unreadCb: function (count) {
-    console.debug("unreadCb: " + count);
+    //console.debug("unreadCb: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -698,8 +702,7 @@ SysTrayX.Link = {
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
 
-    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
-
+    //console.debug("postSysTrayXMessage: " + JSON.stringify(object));
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
@@ -879,42 +882,27 @@ SysTrayX.Window = {
   },
 
   folderChanged: function (tab, displayedFolder) {
+    /*
     console.debug("Folder changed tab: " + JSON.stringify(tab));
     console.debug(
       "Folder changed displayedFolder: " + JSON.stringify(displayedFolder)
     );
+    */
 
     const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
     if (oldDisplayedFolder !== undefined) {
- //     if (oldDisplayedFolder.accountId === displayedFolder.accountId) {
-        console.debug(
-          "FolderChange clear: " +
-            oldDisplayedFolder.accountId +
-            ", " +
-            oldDisplayedFolder.path
-        );
-
-        if (
-          SysTrayX.Messaging.new[oldDisplayedFolder.accountId] !== undefined &&
-          SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
-            oldDisplayedFolder.path
-          ] !== undefined
-        ) {
-          SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
-            oldDisplayedFolder.path
-          ] = [];
-        }
-//      }
-
-      console.debug(
-        "folderChanged countType: " +
-          SysTrayX.Messaging.countType +
-          ", " +
-          typeof SysTrayX.Messaging.countType
-      );
+      if (
+        SysTrayX.Messaging.new[oldDisplayedFolder.accountId] !== undefined &&
+        SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
+          oldDisplayedFolder.path
+        ] !== undefined
+      ) {
+        SysTrayX.Messaging.new[oldDisplayedFolder.accountId][
+          oldDisplayedFolder.path
+        ] = [];
+      }
 
       if (SysTrayX.Messaging.countType === "1") {
-        console.debug("folderChanged: New count");
         getNewMailCount();
       }
     }
