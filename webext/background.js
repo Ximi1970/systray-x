@@ -175,8 +175,8 @@ SysTrayX.Messaging = {
   },
 
   listenerNewMail: function (folder, messages) {
-//    console.debug("New mail in: " + folder.accountId + ", " + folder.path);
-//    console.debug("New messages: " + JSON.stringify(messages));
+    console.debug("New mail in: " + folder.accountId + ", " + folder.path);
+    console.debug("New messages: " + JSON.stringify(messages));
 
     if (messages.messages.length > 0) {
       if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
@@ -192,10 +192,10 @@ SysTrayX.Messaging = {
           messages.messages
         );
 
-//      console.debug(
-//        "Messages: " +
-//          JSON.stringify(SysTrayX.Messaging.new[folder.accountId][folder.path])
-//      );
+      //      console.debug(
+      //        "Messages: " +
+      //          JSON.stringify(SysTrayX.Messaging.new[folder.accountId][folder.path])
+      //      );
     }
 
     if (SysTrayX.Messaging.countType === "1") {
@@ -225,8 +225,8 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
-    //    console.debug("FolderInfoChanged: " + JSON.stringify(folder));
-    //    console.debug("FolderInfoChanged: " + JSON.stringify(folderInfo));
+    console.debug("FolderInfoChanged: " + JSON.stringify(folder));
+    console.debug("FolderInfoChanged: " + JSON.stringify(folderInfo));
 
     if (folderInfo.unreadMessageCount !== undefined) {
       if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
@@ -309,7 +309,7 @@ SysTrayX.Messaging = {
       )
     );
 
-    //    console.debug("countUnread: Unread count");
+    console.debug("countUnread: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -353,7 +353,7 @@ SysTrayX.Messaging = {
       )
     );
 
-    //    console.debug("countNew: New count");
+    console.debug("countNew: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -379,15 +379,9 @@ SysTrayX.Messaging = {
         browser.folderChange.setFilters(SysTrayX.Messaging.filters);
       } else {
         if (SysTrayX.Messaging.countType === "0") {
-          // Update unread count
-          const getCountUnreadPromise = () =>
-            new Promise((res) => res(SysTrayX.Messaging.countUnread()));
-          await getCountUnreadPromise();
+          getUnreadMailCount();
         } else {
-          // Update new count
-          const getCountNewPromise = () =>
-            new Promise((res) => res(SysTrayX.Messaging.countNew()));
-          await getCountNewPromise();
+          getNewMailCount();
         }
       }
     }
@@ -413,6 +407,12 @@ SysTrayX.Messaging = {
 
       if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
+      } else {
+        if (SysTrayX.Messaging.countType === "0") {
+          getUnreadMailCount();
+        } else {
+          getNewMailCount();
+        }
       }
     }
 
@@ -433,7 +433,7 @@ SysTrayX.Messaging = {
   //  Callback for unReadMessages
   //
   unreadCb: function (count) {
-    //    console.debug("unreadCb: Unread/New count");
+    console.debug("unreadCb: " + count);
     SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
   },
 
@@ -697,6 +697,9 @@ SysTrayX.Link = {
 
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
+
+    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
+
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
