@@ -73,6 +73,18 @@ Installing the repository:
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 ```
 
+###### 15.4
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.4/ SysTray-X
+```
+
+###### Leap 15.4
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.4/ SysTray-X
+```
+
 ###### Leap 15.3
 
 ```bash
@@ -89,12 +101,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP3/ SysTray-X
-```
-
-###### SLE 15 SP2 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP2/ SysTray-X
 ```
 
 #### Package
