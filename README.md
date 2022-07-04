@@ -30,6 +30,16 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
 
 ## Known issues
 
+- Upgrading a Windows version:
+    - Quit Thunderbird
+    - Install the new version of Systray-X (SysTray-X-setupxx-0.x.0.exe from the release assets)
+    - Start Thunderbird again
+    - Goto Tools -> Add-ons and Themes
+    - Click on the "gear" button / menu
+    - Click the "Install Add-on From File" menu item
+    - Browse to "C:\Program Files\Systray-X
+    - Select "systray-x@Ximi1970.xpi"
+    
 - SysTray does not work  when the Thunderbird title bar is disabled.  
 
 - SysTray-X preferences will be lost when moving from an old Thunderbird version to Thunderbird version 91 or higher due to the storage type change. As of SysTray-X version 0.8.0 the add-on will use the local storage type instead of the sync type.  
