@@ -38,7 +38,7 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
     - Click on the "gear" button / menu
     - Click the "Install Add-on From File" menu item
     - Browse to "C:\Program Files\Systray-X
-    - Select "systray-x@Ximi1970.xpi
+    - Select "systray-x@Ximi1970.xpi"
     
 - SysTray does not work  when the Thunderbird title bar is disabled.  
 
