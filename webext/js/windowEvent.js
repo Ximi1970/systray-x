@@ -104,6 +104,7 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
               windowListener.onCloseButton,
               true
             );
+            windowListener.hijackTitlebarCloseButton(window);
             console.log("Close listener added");
           }
         },
@@ -138,6 +139,60 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
   onCloseButton(event) {
     windowListener.emit("close-clicked");
     if (event) event.preventDefault();
+    return true;
+  }
+
+  hijackTitlebarCloseButton(window) {
+    if (
+      windowListener.replaceCommand(window, "titlebar-close", function () {
+        return windowListener.onCloseButton(null);
+      })
+    ) {
+      console.log("replaced command= " + "titlebar-close");
+    }
+  }
+
+  replaceCommand(window, eltId, gotHidden) {
+    let elt = window.document.getElementById(eltId);
+    if (!elt) {
+      console.log("Element '" + eltId + "' not found. Command not replaced.");
+      return false;
+    }
+
+    let prevent = null;
+    if (elt.command) {
+      prevent = {
+        event: "click",
+        func: function (e) {
+          e.preventDefault();
+        },
+      };
+    } else if (elt.getAttribute("oncommand")) {
+      prevent = {
+        event: "command",
+        func: function (e) {
+          e.stopPropagation();
+        },
+      };
+    } else {
+      console.warn("Could not replace oncommand on " + eltId);
+      return false;
+    }
+
+    let callback = function (event) {
+      if (event.target.id === eltId) {
+        console.debug(prevent.event + " on " + eltId);
+        if (gotHidden()) prevent.func(event);
+      }
+    };
+
+    /* We put listeners on the "titlebar" parent node, because:
+     - we can hardly short-circuit command/oncommand (probably because they are
+       registered first)
+     - we'd have otherwise to alter "oncommand"/"command" attribute and use
+       Function(), which do not pass review nowadays. */
+    elt.parentNode.addEventListener(prevent.event, callback, true);
+
     return true;
   }
 })();
