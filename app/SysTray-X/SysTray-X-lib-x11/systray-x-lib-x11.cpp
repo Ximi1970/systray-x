@@ -417,22 +417,18 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
     unsigned long remain;
     unsigned long len;
     unsigned char* list = NULL;
-    XEvent event;
 
-    while( XGetWindowProperty( dsp, window, prop, 0, 4, False, AnyPropertyType,
-                &type, &format, &len, &remain, &list ) != Success || len != 4 || remain != 0 ||
-           XPending( dsp ) > 0 )
+    if( XGetWindowProperty( dsp, window, prop, 0, 4, False, AnyPropertyType,
+                &type, &format, &len, &remain, &list ) == Success )
     {
-        XNextEvent( dsp, &event );
-    }
-
-    if( list && len == 4 )
-    {
-        long* extents = (long*)list;
-        *left = extents[ 0 ];
-        *right = extents[ 1 ];
-        *top = extents[ 2 ];
-        *bottom = extents[ 3 ];
+        if( list && len == 4 )
+        {
+            long* extents = (long*)list;
+            *left = extents[ 0 ];
+            *right = extents[ 1 ];
+            *top = extents[ 2 ];
+            *bottom = extents[ 3 ];
+        }
     }
 
     if( list )

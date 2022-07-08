@@ -23,6 +23,9 @@
 #include <QApplication>
 #include <QTime>
 #include <QTimer>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+#include <QElapsedTimer>
+#endif
 #include <QFileInfo>
 
 
@@ -827,8 +830,13 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     /*
      *  Let us wait a bit, maybe this helps...
      */
+#if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
     QTime state_wait;
+#else
+    QElapsedTimer state_wait;
+#endif
     state_wait.start();
+
     bool win_normal = false;
     while( state_wait.elapsed() < 1000 && !win_normal )
     {

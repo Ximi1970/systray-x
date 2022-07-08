@@ -362,6 +362,8 @@ SysTrayX.Messaging = {
   },
 
   onCloseButton: function () {
+    console.debug("Minimize all")
+
     SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
     /*
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
