@@ -105,6 +105,10 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
               true
             );
             windowListener.hijackTitlebarCloseButton(window);
+
+            windowListener.oldClose = window.close;
+            window.close = () => windowListener.onCloseButton(null);
+
             console.log("Close listener added");
           }
         },
@@ -129,6 +133,8 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
             windowListener.onCloseButton,
             true
           );
+          window.close = windowListener.oldClose;
+
           console.log("Close listener removed");
         }
       }
@@ -137,8 +143,8 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
   }
 
   onCloseButton(event) {
-    windowListener.emit("close-clicked");
     if (event) event.preventDefault();
+    windowListener.emit("close-clicked");
     return true;
   }
 
