@@ -362,7 +362,7 @@ SysTrayX.Messaging = {
   },
 
   onCloseButton: function () {
-    console.debug("Minimize all")
+    //console.debug("Minimize all")
 
     SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
     /*
