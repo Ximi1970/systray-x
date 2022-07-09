@@ -107,7 +107,7 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
             windowListener.hijackTitlebarCloseButton(window);
 
             windowListener.oldClose = window.close;
-            window.close = () => windowListener.onCloseButton3(null);
+            window.close = () => windowListener.onCloseButton(null);
 
             console.log("Close listener added");
           }
@@ -143,24 +143,6 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
   }
 
   onCloseButton(event) {
-    console.log("Close clicked, event");
-
-    if (event) event.preventDefault();
-    windowListener.emit("close-clicked");
-    return true;
-  }
-
-  onCloseButton2(event) {
-    console.log("Close clicked, hijack");
-
-    if (event) event.preventDefault();
-    windowListener.emit("close-clicked");
-    return true;
-  }
-
-  onCloseButton3(event) {
-    console.log("Close clicked, close func");
- 
     if (event) event.preventDefault();
     windowListener.emit("close-clicked");
     return true;
@@ -169,7 +151,7 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
   hijackTitlebarCloseButton(window) {
     if (
       windowListener.replaceCommand(window, "titlebar-close", function () {
-        return windowListener.onCloseButton2(null);
+        return windowListener.onCloseButton(null);
       })
     ) {
       console.log("replaced command= " + "titlebar-close");
