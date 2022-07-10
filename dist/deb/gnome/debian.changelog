@@ -1,7 +1,20 @@
+systray-x-gnome (0.9.1-0) unstable; urgency=low
+
+  * Update to 0.9.1
+
+    - Bug fixes
+
+systray-x-gnome (0.9.0-0) unstable; urgency=low
+
+  * Update to 0.9.0
+
+    - Update for TB 102
+    - Bug fixes
+
 systray-x-gnome (0.8.0-0) unstable; urgency=low
 
   * Update to 0.8.0
-  
+
     - Refactor for TB 91
 
 systray-x-gnome (0.5.0-0) unstable; urgency=low

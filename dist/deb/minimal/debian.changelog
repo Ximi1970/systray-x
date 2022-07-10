@@ -1,3 +1,16 @@
+systray-x-minimal (0.9.1-0) unstable; urgency=low
+
+  * Update to 0.9.1
+
+    - Bug fixes
+
+systray-x-minimal (0.9.0-0) unstable; urgency=low
+
+  * Update to 0.9.0
+
+    - Update for TB 102
+    - Bug fixes
+
 systray-x-minimal (0.8.0-0) unstable; urgency=low
 
   * Update to 0.8.0
