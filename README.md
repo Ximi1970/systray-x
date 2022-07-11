@@ -39,8 +39,6 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
     - Click the "Install Add-on From File" menu item
     - Browse to "C:\Program Files\Systray-X
     - Select "systray-x@Ximi1970.xpi"
-    
-- SysTray does not work  when the Thunderbird title bar is disabled.  
 
 - SysTray-X preferences will be lost when moving from an old Thunderbird version to Thunderbird version 91 or higher due to the storage type change. As of SysTray-X version 0.8.0 the add-on will use the local storage type instead of the sync type.  
 Please press the reset button in the TB SysTray-X add-on preferences page to clear the old storage before setting your preferences again.
