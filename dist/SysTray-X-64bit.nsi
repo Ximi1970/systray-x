@@ -81,6 +81,9 @@ Section "Install"
   ${MyStrRep} $0 $0 "\" "\\" 
   WriteRegStr SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
 
+  AccessControl::GrantOnFile "$INSTDIR\SysTray_X.json" "(S-1-5-32-545)" "GenericRead"
+  Pop $0
+
   ${If} $MultiUser.InstallMode == "CurrentUser"
     ;
     ;	Find all profiles
