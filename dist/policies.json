@@ -1,0 +1,10 @@
+ {
+	"policies": {
+		"ExtensionSettings": {
+			"systray-x@Ximi1970": {
+				"installation_mode": "normal_installed",
+				"install_url": "file:///C:/Program Files/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi"
+			}
+		}
+	}
+}

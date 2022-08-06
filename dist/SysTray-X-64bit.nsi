@@ -118,11 +118,25 @@ Section "Install"
     ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\*.*`
       SetOutPath "$PROGRAMFILES32\Mozilla Thunderbird\distribution\extensions"
       File "..\systray-x@Ximi1970.xpi"
+
+      SetOutPath "$PROGRAMFILES32\Mozilla Thunderbird\distribution"
+      ${If} ${FileExists} `$PROGRAMFILES32\Mozilla Thunderbird\distribution\policies.json`
+        File "policies.json"
+      ${Else}
+        File "policies.json"
+      ${EndIf}
     ${EndIf}
     
     ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
       SetOutPath "$PROGRAMFILES64\Mozilla Thunderbird\distribution\extensions"
       File "..\systray-x@Ximi1970.xpi"
+
+      SetOutPath "$PROGRAMFILES64\Mozilla Thunderbird\distribution"
+      ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\distribution\policies.json`
+        File "policies.json"
+      ${Else}
+        File "policies.json"
+      ${EndIf}
     ${EndIf}
 
   ${EndIf}

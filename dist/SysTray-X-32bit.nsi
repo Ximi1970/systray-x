@@ -113,12 +113,18 @@ Section "Install"
       FileClose $0
     end:
   ${Else}
-  
-	${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
-	  SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions"
-	  File "..\systray-x@Ximi1970.xpi"
-	${EndIf}
 
+    ${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
+      SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions"
+      File "..\systray-x@Ximi1970.xpi"
+
+      SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution"
+      ${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json`
+        File "policies.json"
+      ${Else}
+        File "policies.json"
+      ${EndIf}
+    ${EndIf}
   ${EndIf}
 
   ;
