@@ -1,4 +1,8 @@
 !define Name "SysTray-X"
+!define VERSIONMAJOR 0
+!define VERSIONMINOR 9
+!define VERSIONBUILD 2
+
 Name "${Name}"
 Outfile "${Name}-setup64.exe"
 
@@ -67,6 +71,9 @@ Section "Install"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayName" "$(^Name)"
+  WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "$\"${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}$\""
+  WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
+  WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMinor" ${VERSIONMINOR}
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
 
   File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
