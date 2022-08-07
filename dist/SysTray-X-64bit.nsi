@@ -71,7 +71,7 @@ Section "Install"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayName" "$(^Name)"
-  WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "$\"${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}$\""
+  WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMinor" ${VERSIONMINOR}
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
