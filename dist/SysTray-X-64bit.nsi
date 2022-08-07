@@ -135,6 +135,9 @@ Section "Install"
       ${Else}
         nsJSON::Set `policies` /value `{ "ExtensionSettings" : { "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES32/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } } }`
       ${EndIf}
+
+      nsJSON::Serialize /format /file $PROGRAMFILES32\Mozilla Thunderbird\distribution\policies.json
+
     ${EndIf}
     
     ${If} ${FileExists} `$PROGRAMFILES64\Mozilla Thunderbird\*.*`
@@ -157,6 +160,9 @@ Section "Install"
       ${Else}
         nsJSON::Set `policies` /value `{ "ExtensionSettings" : { "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES64/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } } }`
       ${EndIf}
+
+      nsJSON::Serialize /format /file $PROGRAMFILES64\Mozilla Thunderbird\distribution\policies.json
+
     ${EndIf}
   ${EndIf}
 
