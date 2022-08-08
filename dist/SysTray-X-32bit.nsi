@@ -70,7 +70,7 @@ Section "Install"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayName" "$(^Name)"
-    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "$\"${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}$\""
+    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMinor" ${VERSIONMINOR}
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
@@ -118,12 +118,25 @@ Section "Install"
       SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions"
       File "..\systray-x@Ximi1970.xpi"
 
-      SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution"
-      ${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json`
-        File "policies.json"
+      nsJSON::Set /file "$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json"
+      ClearErrors
+      nsJSON::Get `policies` /end
+      ${IfNot} ${Errors}
+        Pop $R0
+        ClearErrors
+        nsJSON::Get `policies` `ExtensionSettings` /end
+        ${IfNot} ${Errors}
+          Pop $R0
+          nsJSON::Set `policies` `ExtensionSettings` `systray-x@Ximi1970` /value `{ "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" }`
+        ${Else}
+          nsJSON::Set `policies` `ExtensionSettings` /value `{ "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } }`
+        ${EndIf}
       ${Else}
-        File "policies.json"
+        nsJSON::Set `policies` /value `{ "ExtensionSettings" : { "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } } }`
       ${EndIf}
+
+      nsJSON::Serialize /format /file "$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json"
+
     ${EndIf}
   ${EndIf}
 
