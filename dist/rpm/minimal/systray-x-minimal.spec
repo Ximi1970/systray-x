@@ -32,10 +32,10 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version} || 0%{?centos_version}
 Requires:       thunderbird >= 68
-Requires:       thunderbird < 106
+Requires:       thunderbird < 114
 %else
 Requires:       MozillaThunderbird >= 68
-Requires:       MozillaThunderbird < 106
+Requires:       MozillaThunderbird < 114
 %endif
 
 %description
