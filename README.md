@@ -336,7 +336,7 @@ This is a split package that will offer you to either install the [systray-x-com
 sudo pacman -S systray-x
 ```
 
-Of course, you can directly install the `systray-x-common` or the `systray-x-kde` package if they already know the one they want to install.  
+Of course, you can directly install the `systray-x-common` or the `systray-x-kde` package if you already know the one you want to install.  
 Alternatively, there's a [systray-x-git](https://aur.archlinux.org/packages/systray-x-git) package available in the AUR.
 
 ### CentOS
