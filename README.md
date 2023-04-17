@@ -327,49 +327,17 @@ sudo dnf install systray-x-minimal
 
 ### Arch
 
-#### AUR
-A `git` package is available in the user repository (KDE Plasma version). To install it, just use some AUR helper, like yay:
-
-`yay -S systray-x-git`
-
-#### Repository
-
-Installing the repository:
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/home_Ximi1970_Mozilla_Add-ons_Arch_Arch.key
-sudo pacman-key --add home_Ximi1970_Mozilla_Add-ons_Arch_Arch.key
-sudo pacman-key --lsign-key BEEF5C3607D86FE9
-sudo echo -e "\n[home_Ximi1970_Mozilla_Add-ons_Arch_Arch]\nSigLevel = PackageOptional\nServer = https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64" | sudo tee -a /etc/pacman.conf 
-sudo pacman -Syyu
-```
-
 #### Package
 
-Installing the SysTray-X addon and companion app package:
-
-###### KDE
+Install the `systray-x` package from the [community] Arch repository.  
+This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/community/x86_64/systray-x-common/) package which is suitable for any DE/WM but KDE (Gnome users need to install and activate the `gnome-shell-extension-appindicator` for a proper integration) or the [systray-x-kde](https://archlinux.org/packages/community/x86_64/systray-x-kde/) package which includes the KDE specific build option and dependencies.  
 
 ```bash
 sudo pacman -S systray-x
 ```
 
-###### GNOME
-
-```bash
-sudo pacman -S systray-x-gnome
-sudo pacman -S gnome-tweaks
-```
-Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
-
-
-
-###### XFCE / Others (non-KDE, non-GNOME)
-
-```bash
-sudo pacman -S systray-x-minimal
-```
-
+Of course, you can directly install the `systray-x-common` or the `systray-x-kde` package if they already know the one they want to install.  
+Alternatively, there's a [systray-x-git](https://aur.archlinux.org/packages/systray-x-git) package available in the AUR.
 
 ### CentOS
 
