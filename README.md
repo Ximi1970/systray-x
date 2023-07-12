@@ -330,7 +330,7 @@ sudo dnf install systray-x-minimal
 #### Package
 
 Install the `systray-x` package from the Arch repo.  
-This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/extra/x86_64/systray-x-common/) package which is suitable for any DE/WM but KDE (Gnome users need to install and enable the `gnome-shell-extension-appindicator` for a proper integration with Gnome) or the [systray-x-kde](https://archlinux.org/packages/extra/x86_64/systray-x-kde/) package which includes specific options and dependencies for a proper integration with KDE.  
+This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/extra/x86_64/systray-x-common/) package which is suitable for any DE/WM except KDE (Gnome users need to install and enable the `gnome-shell-extension-appindicator` for a proper integration with Gnome) or the [systray-x-kde](https://archlinux.org/packages/extra/x86_64/systray-x-kde/) package which includes specific options and dependencies for a proper integration with KDE.  
 
 ```bash
 sudo pacman -S systray-x
