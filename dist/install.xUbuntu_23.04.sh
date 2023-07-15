@@ -1,7 +1,7 @@
 #
 #   Check for Gnome
 #
-if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ] ; then
+if [ "$XDG_CURRENT_DESKTOP" == "ubuntu:GNOME" ] ; then
       echo
       echo "Please use the __GNOME_INSTALLER__ installer."
       echo "This setup will not work."
@@ -19,12 +19,12 @@ else
         #
         # Check for Qt
         #
-    dnf list installed "qt5-qtbase*" | grep -q qt5-qtbase-gui
+        dpkg -l | grep -q libqt5widgets5
         if [ "$?" == "1" ] ; then
             echo
-            echo "Please install the package qt5-qtbase-gui"
+            echo "Please install the package libqt5widgets5"
             echo
-            echo "sudo dnf install qt5-qtbase-gui"
+            echo "sudo apt install libqt5widgets5"
             echo
         fi
     fi
