@@ -71,6 +71,12 @@ Installing the repository:
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 ```
 
+###### 15.5
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.5/ SysTray-X
+```
+
 ###### 15.4
 
 ```bash
@@ -81,18 +87,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.4/ SysTray-X
-```
-
-###### Leap 15.3
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.3/ SysTray-X
-```
-
-###### SLE 15 SP3 (not tested)
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_SLE_15_SP3/ SysTray-X
 ```
 
 #### Package
@@ -123,6 +117,15 @@ sudo zypper in systray-x-minimal
 #### Repository
 
 Installing the repository:
+
+###### 23.04
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_23.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_23.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
 
 ###### 22.04
 
@@ -274,31 +277,24 @@ sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/ho
 sudo dnf update --refresh
 ```
 
+###### 38
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_38/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 37
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_37/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
 ###### 36
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_36/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
-
-###### 35
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_35/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
-
-###### 34
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_34/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
-
-###### 33
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_33/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
@@ -369,6 +365,18 @@ Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/a
 ```bash
 sudo pacman -S systray-x-minimal
 ```
+
+#### AUR alternative install (by Antiz96)
+
+Install the `systray-x` package from the Arch repo.
+This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/extra/x86_64/systray-x-common/) package which is suitable for any DE/WM except KDE (Gnome users need to install and enable the `gnome-shell-extension-appindicator` for a proper integration with Gnome) or the [systray-x-kde](https://archlinux.org/packages/extra/x86_64/systray-x-kde/) package which includes specific options and dependencies for a proper integration with KDE.
+
+```bash
+sudo pacman -S systray-x
+```
+
+You can directly install the `systray-x-common` or the `systray-x-kde` package instead, if you already know the one you want to install.
+Alternatively, there's a [systray-x-git](https://aur.archlinux.org/packages/systray-x-git) package available in the AUR.
 
 
 ### CentOS
