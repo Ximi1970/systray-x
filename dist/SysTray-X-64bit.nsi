@@ -1,7 +1,7 @@
 !define Name "SysTray-X"
 !define VERSIONMAJOR 0
 !define VERSIONMINOR 9
-!define VERSIONBUILD 2
+!define VERSIONBUILD 3
 
 Name "${Name}"
 Outfile "${Name}-setup64.exe"
