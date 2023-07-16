@@ -29,8 +29,8 @@ OBS_RPM_ARCHS+="Fedora_37/x86_64 "
 OBS_RPM_PKS+="fed37 "
 OBS_RPM_ARCHS+="Fedora_38/x86_64 "
 OBS_RPM_PKS+="fed38 "
-OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
-OBS_RPM_PKS+="fedraw "
+#OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
+#OBS_RPM_PKS+="fedraw "
 OBS_RPM_ARCHS+="CentOS_7/x86_64 "
 OBS_RPM_PKS+="el7 "
 OBS_RPM_ARCHS+="CentOS_8/x86_64 "
@@ -99,7 +99,7 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-${VERSION}.*rpm<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
@@ -511,6 +511,63 @@ if [ "$ENABLE_DEB" = true ] ; then
     #
     INDEX=$((INDEX+1))
     done 
+fi
+
+if [ "$ENABLE_PAC" = true ] ; then
+    #
+    # Create bash installers for PAC based distributions
+    #
+    INDEX=1
+    for pacdir in $OBS_PAC_ARCHS ; do
+
+    echo
+    echo
+    echo "Generating installer: "${pacdir}
+    echo
+
+    #
+    # Get base of the repo
+    #
+    REPO_DISTR=$(echo ${pacdir} | cut -d'/' -f1)
+    REPO_ARCH=$(echo ${pacdir} | cut -d'/' -f2)
+
+    PAC_NAME_EXT=$(echo ${OBS_PAC_PKS} | cut -d' ' -f${INDEX})
+
+    #
+    # Generate the SysTray-X tar file
+    #
+    create_pac_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${PAC_NAME_EXT}
+
+    #
+    # Create installer
+    #
+    INSTALLER=SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-KDE-install.sh
+    cp -f ../dist/install.sh ${INSTALLER}
+
+    #
+    # Insert Kde setup
+    #
+    sed -i -e "/__XXXX_SETUP__/r../dist/install.${REPO_DISTR}-Kde.sh" ${INSTALLER}
+    sed -i -e "s/__GNOME_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-GNOME-install.sh/" ${INSTALLER}
+    sed -i -e "s/__MINIMAL_INSTALLER__/SysTray-X-${FOUND_VERSION}-${REPO_DISTR}-${REPO_ARCH}-Minimal-install.sh/" ${INSTALLER}
+    sed -i -e "s/__XXXX_SETUP__//" ${INSTALLER}
+
+    #
+    # Insert install tar
+    #
+    cat SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz >> ${INSTALLER}
+    chmod 755 ${INSTALLER}
+
+    #
+    # Cleanup
+    #
+    rm -f SysTray-X-${FOUND_VERSION}-${REPO_DISTR}.tar.xz
+
+    #
+    # Update index
+    #
+    INDEX=$((INDEX+1))
+    done
 fi
 
 #

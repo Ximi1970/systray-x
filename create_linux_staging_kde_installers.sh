@@ -29,8 +29,8 @@ OBS_RPM_ARCHS+="Fedora_37/x86_64 "
 OBS_RPM_PKS+="fed37 "
 OBS_RPM_ARCHS+="Fedora_38/x86_64 "
 OBS_RPM_PKS+="fed38 "
-OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
-OBS_RPM_PKS+="fedraw "
+#OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
+#OBS_RPM_PKS+="fedraw "
 OBS_RPM_ARCHS+="CentOS_7/x86_64 "
 OBS_RPM_PKS+="el7 "
 OBS_RPM_ARCHS+="CentOS_8/x86_64 "
@@ -99,7 +99,7 @@ create_rpm_tar() {
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^dgm].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-${VERSION}.*rpm<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}

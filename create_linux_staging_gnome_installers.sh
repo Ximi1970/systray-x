@@ -40,9 +40,9 @@ OBS_RPM_GNOME_EXT+="master "
 OBS_RPM_ARCHS+="Fedora_38/x86_64 "
 OBS_RPM_PKS+="fed38 "
 OBS_RPM_GNOME_EXT+="master "
-OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
-OBS_RPM_PKS+="fedraw "
-OBS_RPM_GNOME_EXT+="master "
+#OBS_RPM_ARCHS+="Fedora_Rawhide/x86_64 "
+#OBS_RPM_PKS+="fedraw "
+#OBS_RPM_GNOME_EXT+="master "
 OBS_RPM_ARCHS+="CentOS_7/x86_64 "
 OBS_RPM_PKS+="el7 "
 OBS_RPM_GNOME_EXT+="v26 "
@@ -167,11 +167,11 @@ create_rpm_tar() {
   #
   rm -f index.html
   wget -q "${REPO_BASE}/${REPO_DISTR}/${REPO_ARCH}/"
-  
+
   #
   # Find rpm
   #
-  local RPM_FILE=$(grep ">${OBS_PACKAGE}-[^d].*${VERSION}.*<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}-[^d].*rpm\)<.*/\1/")
+  local RPM_FILE=$(grep ">${OBS_PACKAGE}-${VERSION}.*rpm<" index.html | sed -e "s/.*>\(${OBS_PACKAGE}.*rpm\)<.*/\1/")
   rm -f index.html
 
   echo "Found: "${RPM_FILE}
@@ -537,7 +537,7 @@ if [ "$ENABLE_RPM" = true ] ; then
     # Generate the SysTray-X tar file
     #
     create_rpm_tar ${OBS_REPO_BASE} ${REPO_DISTR} ${REPO_ARCH} ${RPM_NAME_EXT} ${GNOME_EXT}
-    
+
     #
     # Create installer
     #
