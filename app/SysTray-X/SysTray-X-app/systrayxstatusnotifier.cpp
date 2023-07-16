@@ -47,7 +47,17 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
      */
     setCategory( KStatusNotifierItem::ApplicationStatus );
 
-    setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird.png") ) );
+    QString version = m_pref->getBrowserVersion();
+
+    if( version.section( '.', 0, 0 ).toInt() < 115 )
+    {
+        setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird.png") ) );
+    }
+    else
+    {
+        setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird115.png") ) );
+    }
+
     setTitle("SysTray-X");
 
     setStatus( KStatusNotifierItem::ItemStatus::Passive );
@@ -377,7 +387,16 @@ void    SysTrayXStatusNotifier::renderIcon()
 
             case Preferences::PREF_TB_ICON:
             {
-                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                QString version = m_pref->getBrowserVersion();
+
+                if( version.section( '.', 0, 0 ).toInt() < 115 )
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                }
+                else
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
+                }
                 break;
             }
         }
@@ -388,7 +407,16 @@ void    SysTrayXStatusNotifier::renderIcon()
         {
             case Preferences::PREF_DEFAULT_ICON_DEFAULT:
             {
-                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                QString version = m_pref->getBrowserVersion();
+
+                if( version.section( '.', 0, 0 ).toInt() < 115 )
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                }
+                else
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
+                }
                 break;
             }
 

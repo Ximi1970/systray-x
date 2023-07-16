@@ -20,7 +20,7 @@
  *	Constructor
  */
 SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* parent )
-    : QSystemTrayIcon( QIcon( ":/files/icons/Thunderbird.png" ), parent )
+    : QSystemTrayIcon( parent )
 {
     /*
      *  Initialize
@@ -343,7 +343,16 @@ void    SysTrayXIcon::renderIcon()
 
             case Preferences::PREF_TB_ICON:
             {
-                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                QString version = m_pref->getBrowserVersion();
+
+                if( version.section( '.', 0, 0 ).toInt() < 115 )
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                }
+                else
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
+                }
                 break;
             }
         }
@@ -354,7 +363,16 @@ void    SysTrayXIcon::renderIcon()
         {
             case Preferences::PREF_DEFAULT_ICON_DEFAULT:
             {
-                pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                QString version = m_pref->getBrowserVersion();
+
+                if( version.section( '.', 0, 0 ).toInt() < 115 )
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
+                }
+                else
+                {
+                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
+                }
                 break;
             }
 
