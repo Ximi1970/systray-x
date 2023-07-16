@@ -1182,6 +1182,13 @@ async function start() {
     document.getElementById("counttype").style.display = "none";
   }
 
+  // Set the right default icon
+  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    document.getElementById("defaultCustomIconImage").setAttribute("src","icons/Thunderbird.png");
+  } else {
+    document.getElementById("defaultCustomIconImage").setAttribute("src","icons/Thunderbird115.png");
+  }
+
   if (SysTrayX.Info.platformInfo.os !== "linux") {
     document.getElementById("kdeintegration").style.display = "none";
   }

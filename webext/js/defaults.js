@@ -124,8 +124,15 @@ async function getDefaultIcon() {
         );
 
     //  Convert image to storage param
+    var defaultIconPath;
+    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+      defaultIconPath = "icons/Thunderbird.png";
+    } else {
+      defaultIconPath = "icons/Thunderbird115.png";
+    }
+
     const { defaultIconMimeUrl, defaultIconBase64Url } = await toDataURL(
-      "icons/Thunderbird.png"
+      defaultIconPath
     ).then((dataUrl) => {
       const data = dataUrl.split(":").pop().split(",");
       return {
