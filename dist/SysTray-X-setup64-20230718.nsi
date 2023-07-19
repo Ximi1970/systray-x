@@ -5,66 +5,50 @@
 ; -------------------------------
 ; Start
  
-  !define Name "SysTray-X"
-  !define PRODUCT_ID "systray-x@Ximi1970"
-  !define VERSIONMAJOR 0
-  !define VERSIONMINOR 9
-  !define VERSIONBUILD 3
-  !define VERSION "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
-  CRCCheck On
+!define Name "SysTray-X"
+!define PRODUCT_ID "systray-x@Ximi1970"
+!define VERSIONMAJOR 0
+!define VERSIONMINOR 9
+!define VERSIONBUILD 3
+!define VERSION "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
+CRCCheck On
  
-  ; We should test if we must use an absolute path 
-  !include "${NSISDIR}\Contrib\Modern UI\System.nsh"
- 
+; We should test if we must use an absolute path 
+!include "${NSISDIR}\Contrib\Modern UI\System.nsh"
  
 ;---------------------------------
 ;General
  
-  OutFile  "${Name}-setup64.exe"
-  ShowInstDetails "nevershow"
-  ShowUninstDetails "nevershow"
-  ;SetCompressor "bzip2"
+OutFile  "${Name}-setup64.exe"
+ShowInstDetails "nevershow"
+ShowUninstDetails "nevershow"
+;SetCompressor "bzip2"
  
-  !define MUI_ICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
-  !define MUI_UNICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
-;  !define MUI_SPECIALBITMAP "Bitmap.bmp"
+!define MUI_ICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
+!define MUI_UNICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
  
-  !include x64.nsh
+!include x64.nsh
  
 ;--------------------------------
 ;Folder selection page
  
-  InstallDir "$PROGRAMFILES64\${Name}"
- 
- 
-;--------------------------------
-;Modern UI Configuration
- 
-  !define MUI_WELCOMEPAGE  
-  !define MUI_LICENSEPAGE
-  !define MUI_DIRECTORYPAGE
-  !define MUI_ABORTWARNING
-  !define MUI_UNINSTALLER
-  !define MUI_UNCONFIRMPAGE
-  !define MUI_FINISHPAGE  
- 
- 
-;--------------------------------
-;Language
- 
-  !insertmacro MUI_LANGUAGE "English"
- 
+InstallDir "$PROGRAMFILES64\${Name}"
  
 ;-------------------------------- 
 ;Modern UI System
+
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES 
+
+;--------------------------------
+;Language
  
-;  !insertmacro MUI_SYSTEM 
- 
- 
+!insertmacro MUI_LANGUAGE "English" 
+
 ;--------------------------------
 ;Data
  
-  LicenseData "..\LICENSE"
+LicenseData "..\LICENSE"
  
 ;--------------------------------
 ;Macros
@@ -110,9 +94,12 @@
 	
 ;-------------------------------- 
 ;Installer Sections     
+
+!define ROAMING_FOLDER_ROOT "$APPDATA\Thunderbird"
+
 Section "install"
  
-;Add files
+  ;Add files
   SetOutPath "$INSTDIR"
 
   File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
@@ -125,10 +112,32 @@ Section "install"
 
   StrCpy $0 "$INSTDIR\SysTray_X.json"
   ${MyStrRep} $0 $0 "\" "\\" 
-  WriteRegStr SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
+  WriteRegStr HKLM "SOFTWARE\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
 
   AccessControl::GrantOnFile "$INSTDIR\SysTray_X.json" "(S-1-5-32-545)" "GenericRead"
   Pop $0
+
+  ;
+  ;	Find all profiles and install the addon
+  ;
+  ClearErrors
+  FileOpen $0 "$APPDATA\Thunderbird\profiles.ini" r
+  IfErrors end
+  loop:
+    FileRead $0 $1
+    IfErrors close
+    ${TrimNewLines} "$1" $1
+    ${MyStrStr} $2 $1 "Path="
+    StrCmp $2 "" loop 0
+
+    ${MyStrRep} $2 $2 "/" "\" 
+    SetOutPath "$APPDATA\Thunderbird\$2\extensions"
+    File "..\systray-x@Ximi1970.xpi"
+
+    goto loop
+  close:
+    FileClose $0
+  end:
  
   ;
   ; Menu item
@@ -139,11 +148,11 @@ Section "install"
   ;
   ; Write uninstall information to the registry
   ;
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayName" "${Name}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayVersion" "${VERSION}"
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMajor" ${VERSIONMAJOR}
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMinor" ${VERSIONMINOR}
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "UninstallString" "$INSTDIR\Uninstall.exe"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayName" "${Name}"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayVersion" "${VERSION}"
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMajor" ${VERSIONMAJOR}
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMinor" ${VERSIONMINOR}
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "UninstallString" "$INSTDIR\Uninstall.exe"
  
   WriteUninstaller "$INSTDIR\Uninstall.exe"
  
@@ -161,7 +170,7 @@ Section "Uninstall"
   RMDir "$INSTDIR"
  
 ;Delete Uninstaller And Unistall Registry Entries
-  DeleteRegKey SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X"
+  DeleteRegKey HKLM "SOFTWARE\Mozilla\NativeMessagingHosts\SysTray_X"
   DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}"  
  
 SectionEnd
