@@ -157,7 +157,21 @@ SectionEnd
 ;Uninstaller Section  
 Section "Uninstall"
   ;
-  ; Kill Thunderbird
+  ; Kill SysTray.exe
+  ;
+  StrCpy $1 "SysTray-X.exe"
+
+  nsProcess::_FindProcess "$1"
+  Pop $R0
+  ${If} $R0 = 0
+    nsProcess::_KillProcess "$1"
+    Pop $R0
+
+    Sleep 500
+  ${EndIf}
+
+  ;
+  ; Kill thunderbird,exe
   ;
   StrCpy $1 "thunderbird.exe"
  
