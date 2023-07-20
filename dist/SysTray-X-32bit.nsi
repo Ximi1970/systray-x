@@ -1,31 +1,56 @@
+;
+;	Derived from https://nsis.sourceforge.io/Sample_installation_script_for_an_application
+;
+ 
+; -------------------------------
+; Start
+ 
 !define Name "SysTray-X"
+!define PRODUCT_ID "systray-x@Ximi1970"
 !define VERSIONMAJOR 0
 !define VERSIONMINOR 9
 !define VERSIONBUILD 3
-
-Name "${Name}"
-Outfile "${Name}-setup32.exe"
-
-; MUI Settings
+!define VERSION "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
+CRCCheck On
+ 
+; We should test if we must use an absolute path 
+!include "${NSISDIR}\Contrib\Modern UI\System.nsh"
+ 
+;---------------------------------
+;General
+ 
+OutFile  "${Name}-setup32.exe"
+ShowInstDetails "nevershow"
+ShowUninstDetails "nevershow"
+;SetCompressor "bzip2"
+ 
 !define MUI_ICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
 !define MUI_UNICON "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
 
-;https://nsis.sourceforge.io/Docs/MultiUser/Readme.html
+;--------------------------------
+;Folder selection page
+ 
+InstallDir "$PROGRAMFILES\${Name}"
+ 
+;-------------------------------- 
+;Modern UI System
 
-!define MULTIUSER_USE_PROGRAMFILES
-!define MULTIUSER_INSTALLMODE_INSTDIR "$(^Name)"
-!define MULTIUSER_EXECUTIONLEVEL Highest
-!define MULTIUSER_MUI
-!define MULTIUSER_INSTALLMODE_COMMANDLINE
-!include MultiUser.nsh
-!include MUI2.nsh
-
-!insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES 
 
-!insertmacro MUI_LANGUAGE English
+;--------------------------------
+;Language
+ 
+!insertmacro MUI_LANGUAGE "English" 
 
+;--------------------------------
+;Data
+ 
+LicenseData "..\LICENSE"
+ 
+;--------------------------------
+;Macros
+ 
 !include "TextFunc.nsh"
 !insertmacro TrimNewLines
 !define MyStrStr "!insertmacro MyStrStr"
@@ -58,25 +83,19 @@ Outfile "${Name}-setup32.exe"
   Push `${SOURCE_FILE}`
   Push `${SEARCH_TEXT}`
   Push `${REPLACEMENT}`
-  !ifdef __UNINSTALL__
-    Call un.RIF
-  !else
-    Call RIF
-  !endif
+  Call RIF
 !macroend
-	 
-Section "Install"
-  SetOutPath "$INSTDIR"
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
+	
+;-------------------------------- 
+;Installer Sections     
 
-  WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayName" "$(^Name)"
-    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
-  WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
-  WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMinor" ${VERSIONMINOR}
-  WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970" "UninstallString" "$INSTDIR\Uninstall.exe"
+Section "install"
+ 
+  ;Add files
+  SetOutPath "$INSTDIR"
 
   File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
-  File /r "..\app\dist\win32\*"
+  File /r "..\app\dist\win64\*"
   File "..\systray-x@Ximi1970.xpi"
 
   StrCpy $0 "$INSTDIR\SysTray-X.exe"
@@ -85,61 +104,33 @@ Section "Install"
 
   StrCpy $0 "$INSTDIR\SysTray_X.json"
   ${MyStrRep} $0 $0 "\" "\\" 
-  WriteRegStr SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
+  WriteRegStr HKLM "SOFTWARE\Mozilla\NativeMessagingHosts\SysTray_X" "" "$0"
 
   AccessControl::GrantOnFile "$INSTDIR\SysTray_X.json" "(S-1-5-32-545)" "GenericRead"
   Pop $0
 
-  ${If} $MultiUser.InstallMode == "CurrentUser"
-    ;
-    ;	Find all profiles
-    ;
-    ClearErrors
-    FileOpen $0 "$INSTDIR\..\..\Roaming\Thunderbird\profiles.ini" r
-    IfErrors end
-    loop:
-      FileRead $0 $1
-      IfErrors close
-      ${TrimNewLines} "$1" $1
-      ${MyStrStr} $2 $1 "Path="
-      StrCmp $2 "" loop 0
+  ;
+  ;	Find all profiles and install the addon
+  ;
+  ClearErrors
+  FileOpen $0 "$APPDATA\Thunderbird\profiles.ini" r
+  IfErrors end
+  loop:
+    FileRead $0 $1
+    IfErrors close
+    ${TrimNewLines} "$1" $1
+    ${MyStrStr} $2 $1 "Path="
+    StrCmp $2 "" loop 0
 
-      ${MyStrRep} $2 $2 "/" "\" 
-      SetOutPath "$INSTDIR\..\..\Roaming\Thunderbird\$2\extensions"
-      File "..\systray-x@Ximi1970.xpi"
+    ${MyStrRep} $2 $2 "/" "\" 
+    SetOutPath "$APPDATA\Thunderbird\$2\extensions"
+    File "..\systray-x@Ximi1970.xpi"
 
-      goto loop
-    close:
-      FileClose $0
-    end:
-  ${Else}
-
-    ${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
-      SetOutPath "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions"
-      File "..\systray-x@Ximi1970.xpi"
-
-      nsJSON::Set /file "$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json"
-      ClearErrors
-      nsJSON::Get `policies` /end
-      ${IfNot} ${Errors}
-        Pop $R0
-        ClearErrors
-        nsJSON::Get `policies` `ExtensionSettings` /end
-        ${IfNot} ${Errors}
-          Pop $R0
-          nsJSON::Set `policies` `ExtensionSettings` `systray-x@Ximi1970` /value `{ "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" }`
-        ${Else}
-          nsJSON::Set `policies` `ExtensionSettings` /value `{ "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } }`
-        ${EndIf}
-      ${Else}
-        nsJSON::Set `policies` /value `{ "ExtensionSettings" : { "systray-x@Ximi1970" : { "installation_mode": "normal_installed", "install_url": "file:///$PROGRAMFILES/Mozilla Thunderbird/distribution/extensions/systray-x@Ximi1970.xpi" } } }`
-      ${EndIf}
-
-      nsJSON::Serialize /format /file "$PROGRAMFILES\Mozilla Thunderbird\distribution\policies.json"
-
-    ${EndIf}
-  ${EndIf}
-
+    goto loop
+  close:
+    FileClose $0
+  end:
+ 
   ;
   ; Menu item
   ;
@@ -147,66 +138,73 @@ Section "Install"
   CreateShortCut "$SMPROGRAMS\${Name}\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "SysTray-X Uninstall" "$INSTDIR\SysTray-X.ico"
 
   ;
-  ;	Install Visual Studio Redist
+  ; Write uninstall information to the registry
   ;
-  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X86" "Installed"
-  StrCmp $1 1 installed
-
-	;not installed, so run the installer
-;  ExecWait '$INSTDIR\vc_redist.x86.exe /passive /quiet /norestart'
-	
-  installed:
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayName" "${Name}"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "DisplayVersion" "${VERSION}"
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMajor" ${VERSIONMAJOR}
+  WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "VersionMinor" ${VERSIONMINOR}
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}" "UninstallString" "$INSTDIR\Uninstall.exe"
+ 
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+ 
 SectionEnd
-
+ 
+ 
+;--------------------------------    
+;Uninstaller Section  
 Section "Uninstall"
-  # Remove Menu
-  Delete "$SMPROGRAMS\${Name}\Uninstall.lnk"
-  # Try to remove the Menu folder
-  RmDir "$SMPROGRAMS\${Name}"
-  ${If} $MultiUser.InstallMode == "CurrentUser"
-    ;
-    ;	Clean all profiles
-    ;
-    ClearErrors
-    FileOpen $0 "$INSTDIR\..\..\Roaming\Thunderbird\profiles.ini" r
-    IfErrors end
-    loop:
-      FileRead $0 $1
-      IfErrors close
-      ${TrimNewLines} "$1" $1
-      ${MyStrStr} $2 $1 "Path="
-      StrCmp $2 "" loop 0
-
-      ${MyStrRep} $2 $2 "/" "\" 
-      Delete "$INSTDIR\..\..\Roaming\Thunderbird\$2\extensions\systray-x@Ximi1970.xpi"
-
-      goto loop
-    close:
-      FileClose $0
-    end:
-  ${Else}
-  
-	${If} ${FileExists} `$PROGRAMFILES\Mozilla Thunderbird\*.*`
-	  Delete "$PROGRAMFILES\Mozilla Thunderbird\distribution\extensions\systray-x@Ximi1970.xpi"
-	${EndIf}
-
+  ;
+  ; Kill Thunderbird
+  ;
+  StrCpy $1 "thunderbird.exe"
+ 
+  nsProcess::_FindProcess "$1"
+  Pop $R0
+  ${If} $R0 = 0
+    nsProcess::_KillProcess "$1"
+    Pop $R0
+ 
+    Sleep 500
   ${EndIf}
+
   ;
-  ;	Clean default
+  ;	Find all profiles and delete the addon
   ;
-  RmDir /r "$INSTDIR"
-  DeleteRegKey SHCTX "Software\Mozilla\NativeMessagingHosts\SysTray_X"
-  DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\systray-x@Ximi1970"
+  ClearErrors
+  FileOpen $0 "$APPDATA\Thunderbird\profiles.ini" r
+  IfErrors end
+  loop:
+    FileRead $0 $1
+    IfErrors close
+    ${TrimNewLines} "$1" $1
+    ${MyStrStr} $2 $1 "Path="
+    StrCmp $2 "" loop 0
+
+    ${MyStrRep} $2 $2 "/" "\" 
+
+    Delete "$APPDATA\Thunderbird\$2\extensions\systray-x@Ximi1970.xpi"
+
+    goto loop
+  close:
+    FileClose $0
+  end:
+ 
+  ;Delete Files 
+  RMDir /r "$INSTDIR\*.*"    
+ 
+  ;Remove the installation directory
+  RMDir "$INSTDIR"
+ 
+  ;Delete Uninstaller And Unistall Registry Entries
+  DeleteRegKey HKLM "SOFTWARE\Mozilla\NativeMessagingHosts\SysTray_X"
+  DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}"  
+ 
 SectionEnd
-
-Function .onInit
-  !insertmacro MULTIUSER_INIT
-FunctionEnd
-
-Function un.onInit
-  !insertmacro MULTIUSER_UNINIT
-FunctionEnd
-
+ 
+;--------------------------------
+;Macros
+ 
 ;
 ;	Modified StrStr function
 ;
@@ -327,8 +325,8 @@ FunctionEnd
 !insertmacro Func_MyStrRep ""
 !insertmacro Func_MyStrRep "un."
 
-!macro Func_RIF un
-  Function ${un}RIF
+!macro Func_RIF
+  Function RIF
     
     ClearErrors  ; want to be a newborn
     
@@ -394,6 +392,6 @@ FunctionEnd
  
   FunctionEnd
 !macroend
-!insertmacro Func_RIF ""
-!insertmacro Func_RIF "un."
- 
+!insertmacro Func_RIF
+
+;eof
