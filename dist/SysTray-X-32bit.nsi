@@ -85,13 +85,28 @@ LicenseData "..\LICENSE"
   Push `${REPLACEMENT}`
   Call RIF
 !macroend
-	
+
+!define KillProcs "!insertmacro KillProcs"
+!macro KillProcs
+  !ifdef __UNINSTALL__
+    Call un.KillProcs
+  !else
+    Call KillProcs
+  !endif
+!macroend
+
 ;-------------------------------- 
 ;Installer Sections     
 
 Section "install"
- 
-  ;Add files
+  ;
+  ;	Kill Thunderbird and SysTray-X before install
+  ;
+  ${KillProcs}
+
+  ;
+  ; Add files
+  ;
   SetOutPath "$INSTDIR"
 
   File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
@@ -155,32 +170,9 @@ SectionEnd
 ;Uninstaller Section  
 Section "Uninstall"
   ;
-  ; Kill SysTray.exe
+  ;	Kill Thunderbird and SysTray-X before uninstall
   ;
-  StrCpy $1 "SysTray-X.exe"
-
-  nsProcess::_FindProcess "$1"
-  Pop $R0
-  ${If} $R0 = 0
-    nsProcess::_KillProcess "$1"
-    Pop $R0
-
-    Sleep 500
-  ${EndIf}
-
-  ;
-  ; Kill thunderbird.exe
-  ;
-  StrCpy $1 "thunderbird.exe"
- 
-  nsProcess::_FindProcess "$1"
-  Pop $R0
-  ${If} $R0 = 0
-    nsProcess::_KillProcess "$1"
-    Pop $R0
- 
-    Sleep 500
-  ${EndIf}
+  ${KillProcs}
 
   ;
   ;	Find all profiles and delete the addon
@@ -218,7 +210,41 @@ SectionEnd
  
 ;--------------------------------
 ;Macros
- 
+
+!macro Func_KillProcs un
+  Function ${un}KillProcs
+    ;
+    ; Kill SysTray.exe
+    ;
+    StrCpy $1 "SysTray-X.exe"
+
+    nsProcess::_FindProcess "$1"
+    Pop $R0
+    ${If} $R0 = 0
+      nsProcess::_KillProcess "$1"
+      Pop $R0
+
+      Sleep 500
+    ${EndIf}
+
+    ;
+    ; Kill thunderbird,exe
+    ;
+    StrCpy $1 "thunderbird.exe"
+
+    nsProcess::_FindProcess "$1"
+    Pop $R0
+    ${If} $R0 = 0
+      nsProcess::_KillProcess "$1"
+      Pop $R0
+
+      Sleep 500
+    ${EndIf}
+  FunctionEnd
+!macroend
+!insertmacro Func_KillProcs ""
+!insertmacro Func_KillProcs "un."
+
 ;
 ;	Modified StrStr function
 ;
