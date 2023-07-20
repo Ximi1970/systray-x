@@ -95,7 +95,7 @@ Section "install"
   SetOutPath "$INSTDIR"
 
   File "..\app\SysTray-X\SysTray-X-app\files\icons\SysTray-X.ico"
-  File /r "..\app\dist\win64\*"
+  File /r "..\app\dist\win32\*"
   File "..\systray-x@Ximi1970.xpi"
 
   StrCpy $0 "$INSTDIR\SysTray-X.exe"
