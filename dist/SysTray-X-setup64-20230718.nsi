@@ -85,17 +85,11 @@ LicenseData "..\LICENSE"
   Push `${SOURCE_FILE}`
   Push `${SEARCH_TEXT}`
   Push `${REPLACEMENT}`
-  !ifdef __UNINSTALL__
-    Call un.RIF
-  !else
-    Call RIF
-  !endif
+  Call RIF
 !macroend
 	
 ;-------------------------------- 
 ;Installer Sections     
-
-!define ROAMING_FOLDER_ROOT "$APPDATA\Thunderbird"
 
 Section "install"
  
@@ -162,19 +156,61 @@ SectionEnd
 ;--------------------------------    
 ;Uninstaller Section  
 Section "Uninstall"
+  ;
+  ; Kill Thunderbird
+  ;
+  StrCpy $1 "thunderbird.exe"
  
-;Delete Files 
+  nsProcess::_FindProcess "$1"
+  Pop $R0
+  ${If} $R0 = 0
+    nsProcess::_KillProcess "$1"
+    Pop $R0
+ 
+    Sleep 500
+  ${EndIf}
+
+  ;
+  ;	Find all profiles and delete the addon
+  ;
+  ClearErrors
+  FileOpen $0 "$APPDATA\Thunderbird\profiles.ini" r
+  IfErrors end
+  loop:
+    FileRead $0 $1
+    IfErrors close
+    ${TrimNewLines} "$1" $1
+    ${MyStrStr} $2 $1 "Path="
+    StrCmp $2 "" loop 0
+
+    ${MyStrRep} $2 $2 "/" "\" 
+
+    Delete "$APPDATA\Thunderbird\$2\extensions\systray-x@Ximi1970.xpi"
+
+    goto loop
+  close:
+    FileClose $0
+  end:
+ 
+  ;Delete Files 
   RMDir /r "$INSTDIR\*.*"    
  
-;Remove the installation directory
+  ;Remove the installation directory
   RMDir "$INSTDIR"
  
-;Delete Uninstaller And Unistall Registry Entries
+  ;Delete Uninstaller And Unistall Registry Entries
   DeleteRegKey HKLM "SOFTWARE\Mozilla\NativeMessagingHosts\SysTray_X"
   DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_ID}"  
  
 SectionEnd
- 
+
+Function .onInit
+  ${IfNot} ${RunningX64}
+    MessageBox MB_OK|MB_ICONSTOP 'This is the 64 bit installer$\r$\nPlease download the 32 bit version $\r$\nClick Ok to quit Setup.'
+    Quit
+  ${EndIf}
+FunctionEnd
+
 ;--------------------------------
 ;Macros
  
@@ -298,8 +334,8 @@ SectionEnd
 !insertmacro Func_MyStrRep ""
 !insertmacro Func_MyStrRep "un."
 
-!macro Func_RIF un
-  Function ${un}RIF
+!macro Func_RIF
+  Function RIF
     
     ClearErrors  ; want to be a newborn
     
@@ -365,7 +401,6 @@ SectionEnd
  
   FunctionEnd
 !macroend
-!insertmacro Func_RIF ""
-!insertmacro Func_RIF "un."
+!insertmacro Func_RIF
 
 ;eof
