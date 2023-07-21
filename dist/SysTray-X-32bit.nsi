@@ -6,6 +6,8 @@
 ; Start
  
 !define Name "SysTray-X"
+Name "${Name}"
+
 !define PRODUCT_ID "systray-x@Ximi1970"
 !define VERSIONMAJOR 0
 !define VERSIONMINOR 9
@@ -35,8 +37,23 @@ InstallDir "$PROGRAMFILES\${Name}"
 ;-------------------------------- 
 ;Modern UI System
 
+!define MUI_WELCOMEPAGE_TITLE "SysTray-X install"
+!define MUI_WELCOMEPAGE_TEXT "WARNING:\n\nPlease exit all Thunderbird instances before continuing,\nthe installer will try to terminate them automatically."
+
+!define MUI_FINISHPAGE_TITLE "SysTray-X install"
+!define MUI_FINISHPAGE_TEXT "Please enable the addon in the Thunderbird Add-ons and Themes dialog, Extensions."
+
+!insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES 
+!insertmacro MUI_PAGE_FINISH
+
+
+!define MUI_WELCOMEPAGE_TITLE "SysTray-X uninstall"
+!define MUI_WELCOMEPAGE_TEXT "WARNING:\n\nPlease exit all Thunderbird instances before continuing,\nthe uninstaller will try to terminate them automatically."
+
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_INSTFILES
 
 ;--------------------------------
 ;Language
