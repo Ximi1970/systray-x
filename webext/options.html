@@ -80,9 +80,25 @@
               >
             </td>
           </tr>
-          <tr id="minimizemainclosechildrenwindows">
+          <tr id="minimizemaintrayclosechildrenwindows">
             <td>
               <input type="radio" name="closeType" id="closeMeth1" value="1" />
+              <label for="closeMeth3" id="minimizemaintrayclosechildrenwindowslabel"
+                >__MSG_windows_close_tray_1__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizealltraywindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth2" value="2" />
+              <label for="closeMeth4" id="minimizealltraywindowslabel"
+                >__MSG_windows_close_tray_2__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizemainclosechildrenwindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth3" value="3" />
               <label for="closeMeth1" id="minimizemainclosechildrenwindowslabel"
                 >__MSG_windows_close_1__</label
               >
@@ -90,9 +106,36 @@
           </tr>
           <tr id="minimizeallwindows">
             <td>
-              <input type="radio" name="closeType" id="closeMeth2" value="2" />
+              <input type="radio" name="closeType" id="closeMeth4" value="4" />
               <label for="closeMeth2" id="minimizeallwindowslabel"
                 >__MSG_windows_close_2__</label
+              >
+            </td>
+          </tr>
+        </table>
+
+        <table id="minimizeiconselect">
+          <caption>
+            __MSG_windows_min_icon_options__
+          </caption>
+          <tr id="minimizedefaulticon">
+            <td>
+              <input
+                type="radio"
+                name="minimizeIconType"
+                id="minDefaultIcon"
+                value="0"
+              />
+              <label for="minDefaultIcon" id="minimizedefaulticonlabel"
+                >__MSG_windows_min_default_icon__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizetrayicon">
+            <td>
+              <input type="radio" name="minimizeIconType" id="minTrayIcon" value="1" />
+              <label for="minTrayIcon" id="minimizetrayiconlabel"
+                >__MSG_windows_min_to_tray_icon__</label
               >
             </td>
           </tr>

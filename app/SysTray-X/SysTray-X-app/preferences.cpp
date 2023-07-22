@@ -558,6 +558,32 @@ void    Preferences::setMinimizeType( MinimizeType minimize_type )
 
 
 /*
+ *  Get the minimize type
+ */
+Preferences::MinimizeIconType Preferences::getMinimizeIconType() const
+{
+    return m_minimize_icon_type;
+}
+
+
+/*
+ *  Set the minimize type.
+ */
+void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
+{
+    if( m_minimize_icon_type != minimize_icon_type)
+    {
+        m_minimize_icon_type = minimize_icon_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeIconTypeChange();
+    }
+}
+
+
+/*
  *  Get the start minmized pref.
  */
 bool    Preferences::getStartMinimized() const

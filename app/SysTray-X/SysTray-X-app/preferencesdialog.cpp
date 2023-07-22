@@ -43,6 +43,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->closeTypeGroup->setId( m_ui->defaultCloseWindowsRadioButton, Preferences::PREF_DEFAULT_CLOSE_WINDOWS);
     m_ui->closeTypeGroup->setId( m_ui->minimizeMainCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS );
     m_ui->closeTypeGroup->setId( m_ui->minimizeAllWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeMainTrayCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeAllTrayWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS_TRAY );
 
     /*
      *  Set minimize type button Ids
@@ -52,6 +54,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeTypeGroup->setId( m_ui->minimizeMethod2RadioButton, Preferences::PREF_MINIMIZE_METHOD_2 );
 
     m_ui->minimizeMethod2RadioButton->hide();
+
+    /*
+     *  Set minimize type button Ids
+     */
+    m_ui->minimizeIconTypeGroup->setId( m_ui->defaultMinimizeIconRadioButton, Preferences::PREF_DEFAULT_MINIMIZE_ICON);
+    m_ui->minimizeIconTypeGroup->setId( m_ui->minimizeTrayIconRadioButton, Preferences::PREF_MINIMIZE_TRAY_ICON );
 
 #ifdef Q_OS_WIN
 
@@ -144,12 +152,14 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     /*
      *  Dialog on top
      */
+/*
     Qt::WindowFlags flags = windowFlags();
     flags |= Qt::WindowStaysOnTopHint;
 #ifdef Q_OS_UNIX
     flags |= Qt::X11BypassWindowManagerHint;
 #endif
     setWindowFlags( flags );
+*/
 }
 
 
@@ -190,7 +200,6 @@ void PreferencesDialog::keyPressEvent( QKeyEvent *event )
 }
 
 
-
 /*
  *  Set the debug state
  */
@@ -206,6 +215,15 @@ void    PreferencesDialog::setDebug( bool state )
 void    PreferencesDialog::setMinimizeType( Preferences::MinimizeType minimize_type )
 {
    ( m_ui->minimizeTypeGroup->button( minimize_type ) )->setChecked( true );
+}
+
+
+/*
+ *  Set the minimize icon type
+ */
+void    PreferencesDialog::setMinimizeIconType( Preferences::MinimizeIconType minimize_icon_type )
+{
+   ( m_ui->minimizeIconTypeGroup->button( minimize_icon_type ) )->setChecked( true );
 }
 
 
@@ -438,6 +456,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setIconData( m_tmp_icon_data );
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
+    m_pref->setMinimizeIconType( static_cast< Preferences::MinimizeIconType >( m_ui->minimizeIconTypeGroup->checkedId() ) );
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
     m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
@@ -505,6 +524,7 @@ void    PreferencesDialog::slotReject()
     slotIconDataChange();
 
     setMinimizeType( m_pref->getMinimizeType() );
+    setMinimizeIconType( m_pref->getMinimizeIconType() );
     setStartMinimized( m_pref->getStartMinimized() );
     setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
@@ -618,6 +638,15 @@ void    PreferencesDialog::slotBrowserVersion()
 void    PreferencesDialog::slotMinimizeTypeChange()
 {
     setMinimizeType( m_pref->getMinimizeType() );
+}
+
+
+/*
+ *  Handle the minimize icon type change signal
+ */
+void    PreferencesDialog::slotMinimizeIconTypeChange()
+{
+    setMinimizeIconType( m_pref->getMinimizeIconType() );
 }
 
 

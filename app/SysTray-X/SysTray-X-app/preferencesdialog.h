@@ -72,6 +72,13 @@ class PreferencesDialog : public QDialog
         void    setMinimizeType( Preferences::MinimizeType minimize_type );
 
         /**
+         * @brief setMinimizeIconType. Set the minimize icon type.
+         *
+         *  @param minimize_icon_type    The minimize icon type.
+         */
+        void    setMinimizeIconType( Preferences::MinimizeIconType minimize_icon_type );
+
+        /**
          * @brief setStartMinimized. Set the start minimized state.
          *
          *  @param state    The state.
@@ -232,6 +239,11 @@ class PreferencesDialog : public QDialog
          * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
          */
         void    slotMinimizeTypeChange();
+
+        /**
+         * @brief slotMinimizeIconTypeChange. Slot for handling minimize icon type change signals.
+         */
+        void    slotMinimizeIconTypeChange();
 
         /**
          * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.

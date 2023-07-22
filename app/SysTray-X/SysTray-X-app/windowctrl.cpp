@@ -38,6 +38,8 @@ WindowCtrl::WindowCtrl( Preferences* pref, QObject *parent )
      *  Initialize
      */
     setMinimizeType( m_pref->getMinimizeType() );
+    setMinimizeIconType( m_pref->getMinimizeIconType() );
+    setCloseType( m_pref->getCloseType() );
     m_show_hide_active = false;
 
     /*
@@ -179,6 +181,22 @@ void    WindowCtrl::slotMinimizeTypeChange()
     setMinimizeType( m_pref->getMinimizeType() );
 }
 
+/*
+ *  Handle change in minimize icon type change
+ */
+void    WindowCtrl::slotMinimizeIconTypeChange()
+{
+    setMinimizeIconType( m_pref->getMinimizeIconType() );
+}
+
+/*
+ *  Handle change in close type change
+ */
+void    WindowCtrl::slotCloseTypeChange()
+{
+    setCloseType( m_pref->getCloseType() );
+}
+
 
 /*
  *  Handle change in start minimized state
@@ -224,9 +242,22 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
 
         QList< quint64 > win_ids = getWinIds();
 
-        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_MINIMIZED_ALL )
+        /*
+         *  Minimize on startup always to the tray
+         */
+        TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+        if( state == Preferences::STATE_MINIMIZED_ALL )
         {
             updatePositions();
+
+            /*
+             *  Minimize target on close depends on preference
+             */
+            Preferences::CloseType closeType = getCloseType();
+            if( closeType == Preferences::PREF_MINIMIZE_ALL_WINDOWS || closeType == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
+            {
+                targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+            }
         }
 
         /*
@@ -240,11 +271,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                                 .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-            if( ( getWindowState( win_ids.at( i ) ) != Preferences::STATE_MINIMIZED && getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE ) ||
-                ( getWindowState( win_ids.at( i ) ) != Preferences::STATE_DOCKED && getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE ) )
-            {
-                minimizeWindow( win_ids.at( i ) );
-            }
+            minimizeWindow( win_ids.at( i ), targetType );
         }
     }
     else
@@ -322,6 +349,12 @@ void    WindowCtrl::slotShowHide()
      */
     updatePositions();
 
+    TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+    if( getMinimizeIconType() == Preferences::PREF_DEFAULT_MINIMIZE_ICON )
+    {
+        targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+    }
+
     /*
      *  Get the window ids
      */
@@ -342,7 +375,7 @@ void    WindowCtrl::slotShowHide()
         }
         else
         {
-            minimizeWindow( win_ids.at( i ) );
+            minimizeWindow( win_ids.at( i ), targetType );
         }
     }
 

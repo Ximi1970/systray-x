@@ -28,6 +28,8 @@ class Preferences : public QObject
          */
         enum CloseType {
             PREF_DEFAULT_CLOSE_WINDOWS = 0,
+            PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS,
+            PREF_MINIMIZE_ALL_WINDOWS_TRAY,
             PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS,
             PREF_MINIMIZE_ALL_WINDOWS
         };
@@ -39,6 +41,14 @@ class Preferences : public QObject
             PREF_DEFAULT_MINIMIZE = 0,
             PREF_MINIMIZE_METHOD_1,
             PREF_MINIMIZE_METHOD_2
+        };
+
+        /*
+         *  Minimize icon types
+         */
+        enum MinimizeIconType {
+            PREF_DEFAULT_MINIMIZE_ICON = 0,
+            PREF_MINIMIZE_TRAY_ICON
         };
 
         enum DefaultIconType {
@@ -378,9 +388,23 @@ class Preferences : public QObject
         /**
          * @brief setMinimizeType. Set the minimize type.
          *
-         * @param icon_type     The minimize type.
+         * @param minimize_type     The minimize type.
          */
-        void setMinimizeType( MinimizeType icon_type );
+        void setMinimizeType( MinimizeType minimize_type );
+
+        /**
+         * @brief getMinimizeIconType. Get the minimize icon type.
+         *
+         * @return      The minimize icon type.
+         */
+        MinimizeIconType getMinimizeIconType() const;
+
+        /**
+         * @brief setMinimizeType. Set the minimize icon type.
+         *
+         * @param minimize_icon_type     The minimize icon type.
+         */
+        void setMinimizeIconType( MinimizeIconType minimize_icon_type );
 
         /**
          * @brief getStartMinimized. Get the start minimized state.
@@ -560,6 +584,11 @@ class Preferences : public QObject
         void signalMinimizeTypeChange();
 
         /**
+         * @brief signalMinimizeIconTypeChange. Signal a minimize icon type change.
+         */
+        void signalMinimizeIconTypeChange();
+
+        /**
          * @brief signalStartMinimizedChange. Signal a start minimized state change.
          */
         void signalStartMinimizedChange();
@@ -680,6 +709,11 @@ class Preferences : public QObject
          * @brief m_minimize_type. Selected minimize type.
          */
         MinimizeType m_minimize_type;
+
+        /**
+         * @brief m_minimize_icon_type. Selected minimize icon type.
+         */
+        MinimizeIconType m_minimize_icon_type;
 
         /**
          * @brief m_start_minimized. Start TB minimized.

@@ -82,6 +82,16 @@ class WindowCtrl : public QObject
         void    slotMinimizeTypeChange();
 
         /**
+         * @brief slotMinimizeIconTypeChange. Handle the minimize icon type signal.
+         */
+        void    slotMinimizeIconTypeChange();
+
+        /**
+         * @brief slotCloseTypeChange. Handle the close type signal.
+         */
+        void    slotCloseTypeChange();
+
+        /**
          * @brief slotStartMinimizedChange. Handle the start minimized signal.
          */
         void    slotStartMinimizedChange();

@@ -64,6 +64,21 @@
     "description": "Minimize option"
   },
 
+  "windows_min_icon_options": {
+    "message": "Pictogrammen",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Standaard minimalisatie",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Minimaliseer naar systeemvak",
+    "description": "Minimize option"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Minimaliseer naar systeemvak, methode 1",
     "description": "Minimize option 1"
@@ -85,13 +100,23 @@
   },
 
   "windows_close_1": {
-    "message": "Minimaliseer hoofdvenster, sluit kindvensters",
+    "message": "Minimaliseer hoofdvenster naar systeemvak, sluit kindvensters",
     "description": "Close option 1"
   },
 
   "windows_close_2": {
-    "message": "Minimaliseer alle vensters",
+    "message": "Minimaliseer alle vensters naar systeemvak",
     "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Minimaliseer hoofdvenster, sluit kindvensters",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Minimaliseer alle vensters",
+    "description": "Close option 4"
   },
 
   "windows_start_min": {

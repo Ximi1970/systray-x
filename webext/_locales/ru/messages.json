@@ -64,6 +64,21 @@
     "description": "Minimize"
   },
 
+  "windows_min_icon_options": {
+    "message": "Иконка",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Свернуть окно",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Свернуть в трей",
+    "description": "Minimize"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Свернуть в трей, вариант 1",
     "description": "Minimize option 1"
@@ -91,6 +106,16 @@
 
   "windows_close_2": {
     "message": "Свернуть все окна",
+    "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Свернуть главное окно в трей, закрыть остальные",
+    "description": "Close option 1"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Свернуть все окна в трей",
     "description": "Close option 2"
   },
 

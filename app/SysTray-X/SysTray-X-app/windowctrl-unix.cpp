@@ -236,6 +236,42 @@ Preferences::MinimizeType    WindowCtrlUnix::getMinimizeType() const
 
 
 /*
+ *  Set the minimize icon type
+ */
+void    WindowCtrlUnix::setMinimizeIconType( Preferences::MinimizeIconType type )
+{
+    m_minimize_icon_type = type;
+}
+
+
+/*
+ *  Get the minimize icon type
+ */
+Preferences::MinimizeIconType    WindowCtrlUnix::getMinimizeIconType() const
+{
+    return m_minimize_icon_type;
+}
+
+
+/*
+ *  Set the minimize type
+ */
+void    WindowCtrlUnix::setCloseType( Preferences::CloseType type )
+{
+    m_close_type = type;
+}
+
+
+/*
+ *  Get the close type
+ */
+Preferences::CloseType    WindowCtrlUnix::getCloseType() const
+{
+    return m_close_type;
+}
+
+
+/*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
 qint64  WindowCtrlUnix::getPpid() const
@@ -702,6 +738,73 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
     Sync( m_display );
 
     if( getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE )
+    {
+#ifdef DEBUG_DISPLAY_ACTIONS
+        emit signalConsole( "Withdraw window" );
+#endif
+
+        /*
+         *  Set the flags (GNOME, Wayland?)
+         */
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
+        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
+
+        Flush( m_display );
+
+        /*
+         *  Remove from taskbar and task switchers
+         */
+        WithdrawWindow( m_display, window );
+
+        /*
+         *  Store the window state
+         */
+        m_tb_window_states[ window ] = Preferences::STATE_DOCKED;
+    }
+    else
+    {
+        /*
+         *  Store the window state
+         */
+        m_tb_window_states[ window ] = Preferences::STATE_MINIMIZED;
+    }
+
+    /*
+     *  Flush the pipes
+     */
+    Sync( m_display );
+
+#ifdef DEBUG_DISPLAY_ACTIONS_END
+    emit signalConsole( "Minimize done" );
+#endif
+}
+
+
+/*
+ *  Minimize a window
+ */
+void    WindowCtrlUnix::minimizeWindow( quint64 window, TargetType targetType )
+{
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Minimize" );
+#endif
+
+    /*
+     *  Save the hints
+     */
+    GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
+
+    /*
+     *  Minimize the window
+     */
+    IconifyWindow( m_display, window );
+
+    /*
+     *  Sync the events
+     */
+    Sync( m_display );
+
+    if( targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY )
     {
 #ifdef DEBUG_DISPLAY_ACTIONS
         emit signalConsole( "Withdraw window" );

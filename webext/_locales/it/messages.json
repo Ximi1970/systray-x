@@ -64,6 +64,21 @@
     "description": "Minimize to tray"
   },
 
+  "windows_min_icon_options": {
+    "message": "Icona",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Minimizzazione predefinita",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Minimizza nel vassoio",
+    "description": "Minimize to tray"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Minimizza nel vassoio, metodo 1",
     "description": "Minimize option 1"
@@ -92,6 +107,16 @@
   "windows_close_2": {
     "message": "Minimizza tutte le finestre",
     "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Minimizza principale nel vassoio, chiudi sottofinestre",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Minimizza tutte le finestre nel vassoio",
+    "description": "Close option 4"
   },
 
   "windows_start_min": {

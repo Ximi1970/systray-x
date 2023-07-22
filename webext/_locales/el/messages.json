@@ -64,6 +64,21 @@
     "description": "Minimize to tray"
   },
 
+  "windows_min_icon_options": {
+    "message": "Εικονίδιο",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Προεπιλεγμένη ελαχιστοποίηση",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Ελαχιστοποίηση στην περιοχή ειδοποιήσεων",
+    "description": "Minimize to tray"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Μέθοδος 1",
     "description": "Minimize option 1"
@@ -92,6 +107,16 @@
   "windows_close_2": {
     "message": "Ελαχιστοποίηση όλων των παραθύρων",
     "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Ελαχιστοποίηση κυρίως παραθύρου στην περιοχή ειδοποιήσεων, κλείσιμο θυγατρικών",
+    "description": "Close option 3"
+  },
+
+  "windows_tray_2": {
+    "message": "Ελαχιστοποίηση όλων των παραθύρων στην περιοχή ειδοποιήσεων",
+    "description": "Close option 4"
   },
 
   "windows_start_min": {

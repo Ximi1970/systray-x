@@ -103,13 +103,25 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save minimize icon preferences
+    //
+    const minimizeIconType = document.querySelector(
+      'input[name="minimizeIconType"]:checked'
+    ).value;
+
+    //  Store minimize icon preferences
+    await storage().set({
+      minimizeIconType: minimizeIconType,
+    });
+
+    //
     // Save close preferences
     //
     const closeType = document.querySelector(
       'input[name="closeType"]:checked'
     ).value;
 
-    //  Store minimize preferences
+    //  Store close preferences
     await storage().set({
       closeType: closeType,
     });
@@ -205,7 +217,7 @@ SysTrayX.SaveOptions = {
     //
     const theme = document.querySelector('input[name="theme"]:checked').value;
 
-    //  Store minimize preferences
+    //  Store theme preferences
     await storage().set({
       theme: theme,
     });
@@ -318,6 +330,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setMinimizeType,
         SysTrayX.RestoreOptions.onMinimizeTypeError
+      );
+
+    //
+    //  Restore minimize icon type
+    //
+    await storage()
+      .get("minimizeIconType")
+      .then(
+        SysTrayX.RestoreOptions.setMinimizeIconType,
+        SysTrayX.RestoreOptions.onMinimizeIconTypeError
       );
 
     //
@@ -532,6 +554,22 @@ SysTrayX.RestoreOptions = {
 
   onMinimizeTypeError: function (error) {
     console.log(`Minimize type Error: ${error}`);
+  },
+
+  //
+  //  Restore minimize type callbacks
+  //
+  setMinimizeIconType: function (result) {
+    const minimizeIconType = result.minimizeIconType || "1";
+
+    const radioButton = document.querySelector(
+      `input[name="minimizeIconType"][value="${minimizeIconType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onMinimizeIconTypeError: function (error) {
+    console.log(`Minimize icon type Error: ${error}`);
   },
 
   //
@@ -1098,6 +1136,11 @@ SysTrayX.StorageChanged = {
           minimizeType: changes[item].newValue,
         });
       }
+      if (item === "minimizeIconType") {
+        SysTrayX.RestoreOptions.setMinimizeIconType({
+          minimizeIconType: changes[item].newValue,
+        });
+      }
       if (item === "closeType") {
         SysTrayX.RestoreOptions.setCloseType({
           closeType: changes[item].newValue,
@@ -1147,6 +1190,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("defaulticonselect").className = "active";
     document.getElementById("iconselect").className = "active";
     document.getElementById("minimizeselect").className = "active";
+    document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
     document.getElementById("themeselect").className = "active";
   },

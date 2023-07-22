@@ -64,6 +64,21 @@
     "description": "Minimize option 1"
   },
 
+  "windows_min_icon_options": {
+    "message": "Symbol",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Standard Minimieren",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "In Systemleiste verbergen",
+    "description": "Minimize option 1"
+  },
+
   "windows_min_to_tray_1": {
     "message": "In Systemleiste verbergen, Methode 1",
     "description": "Minimize option 1"
@@ -92,6 +107,16 @@
   "windows_close_2": {
     "message": "Alle Fenster minimieren",
     "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Hauptfenster in Systemleiste verbergen, Kinderfenster schließen",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Alle Fenster in Systemleiste verbergen",
+    "description": "Close option 4"
   },
 
   "windows_start_min": {

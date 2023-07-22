@@ -41,6 +41,15 @@ class WindowCtrlUnix : public QObject
     public:
 
         /*
+         *  Target types
+        */
+        enum TargetType
+        {
+            TYPE_WINDOW_TO_TASKBAR = 0,
+            TYPE_WINDOW_TO_SYSTEMTRAY
+        };
+
+        /*
          *  Window types
          */
         enum WindowType
@@ -153,6 +162,34 @@ class WindowCtrlUnix : public QObject
         Preferences::MinimizeType    getMinimizeType() const;
 
         /**
+         * @brief setMinimizeIconType
+         *
+         *  @param type     Set the minimize icon type.
+         */
+        void    setMinimizeIconType( Preferences::MinimizeIconType type );
+
+        /**
+         * @brief getMinimizeIconType
+         *
+         *  @return     The minimize icon type.
+         */
+        Preferences::MinimizeIconType    getMinimizeIconType() const;
+
+        /**
+         * @brief setCloseType
+         *
+         *  @param type     Set the close type.
+         */
+        void    setCloseType( Preferences::CloseType type );
+
+        /**
+         * @brief getCloseType
+         *
+         *  @return     The close type.
+         */
+        Preferences::CloseType    getCloseType() const;
+
+        /**
          * @brief getPpid. Get the parent process id.
          *
          *  @return     The ppid
@@ -243,6 +280,14 @@ class WindowCtrlUnix : public QObject
          *  @param window   The window.
          */
         void    minimizeWindow( quint64 window );
+
+        /**
+         * @brief minimizeWindow. Minimize window.
+         *
+         *  @param window       The window.
+         *  @param targetType   Where to minimize.
+         */
+        void    minimizeWindow( quint64 window, TargetType targetType );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -345,6 +390,16 @@ class WindowCtrlUnix : public QObject
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
+
+        /**
+         * @brief m_minimize_icon_type. Minimize icon type.
+         */
+        Preferences::MinimizeIconType   m_minimize_icon_type;
+
+        /**
+         * @brief m_close_type. Close type.
+         */
+        Preferences::CloseType   m_close_type;
 };
 
 #endif // WINDOWCTRLUNIX_H

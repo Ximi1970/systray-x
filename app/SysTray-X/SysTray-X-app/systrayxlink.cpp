@@ -713,6 +713,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setMinimizeType( minimize_type );
     }
 
+    if( pref.contains( "minimizeIconType" ) && pref[ "minimizeIconType" ].isString() )
+    {
+        Preferences::MinimizeIconType minimize_icon_type = static_cast< Preferences::MinimizeIconType >( pref[ "minimizeIconType" ].toString().toInt() );
+
+        /*
+         *  Store the new minimize type
+         */
+        m_pref->setMinimizeIconType( minimize_icon_type );
+    }
+
     if( pref.contains( "startMinimized" ) && pref[ "startMinimized" ].isString() )
     {
         bool start_minimized = pref[ "startMinimized" ].toString() == "true";
@@ -806,6 +816,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     QJsonObject prefObject;
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
+    prefObject.insert("minimizeIconType", QJsonValue::fromVariant( QString::number( pref.getMinimizeIconType() ) ) );
     prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
     prefObject.insert("restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
     prefObject.insert("closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
@@ -879,6 +890,18 @@ void    SysTrayXLink::slotDebugChange()
  *  Handle the minimize type change signal
  */
 void    SysTrayXLink::slotMinimizeTypeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the minimize icon type change signal
+ */
+void    SysTrayXLink::slotMinimizeIconTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

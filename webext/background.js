@@ -580,6 +580,7 @@ SysTrayX.Messaging = {
       .get([
         "debug",
         "minimizeType",
+        "minimizeIconType",
         "closeType",
         "startMinimized",
         "restorePositions",
@@ -608,6 +609,7 @@ SysTrayX.Messaging = {
   sendPreferencesStorage: function (result) {
     const debug = result.debug || "false";
     const minimizeType = result.minimizeType || "1";
+    const minimizeIconType = result.minimizeIconType || "1";
     const closeType = result.closeType || "1";
     const startMinimized = result.startMinimized || "false";
     const restorePositions = result.restorePositions || "false";
@@ -643,6 +645,7 @@ SysTrayX.Messaging = {
       preferences: {
         debug,
         minimizeType,
+        minimizeIconType,
         closeType,
         startMinimized,
         restorePositions,
@@ -835,6 +838,13 @@ SysTrayX.Link = {
       if (minimizeType) {
         await storage().set({
           minimizeType: minimizeType,
+        });
+      }
+
+      const minimizeIconType = response["preferences"].minimizeIconType;
+      if (minimizeIconType) {
+        await storage().set({
+          minimizeIconType: minimizeIconType,
         });
       }
 

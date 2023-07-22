@@ -109,6 +109,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Connect preferences signals
      */
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
+    connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeIconTypeChange );
+    connect( m_preferences, &Preferences::signalCloseTypeChange, m_win_ctrl, &WindowCtrl::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
     connect( m_preferences, &Preferences::signalBrowserVersion, m_pref_dialog, &PreferencesDialog::slotBrowserVersion );
@@ -125,6 +127,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalCountTypeChange, m_pref_dialog, &PreferencesDialog::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotStartupDelayChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
+    connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeIconTypeChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
@@ -143,6 +146,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalNumberMarginsChange, m_link, &SysTrayXLink::slotNumberMarginsChange );
     connect( m_preferences, &Preferences::signalCountTypeChange, m_link, &SysTrayXLink::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
+    connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_link, &SysTrayXLink::slotMinimizeIconTypeChange );
     connect( m_preferences, &Preferences::signalStartupDelayChange, m_link, &SysTrayXLink::slotStartupDelayChange );
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
@@ -609,6 +613,8 @@ void    SysTrayX::slotShutdown()
 
         case Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS:
         case Preferences::PREF_MINIMIZE_ALL_WINDOWS:
+        case Preferences::PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS:
+        case Preferences::PREF_MINIMIZE_ALL_WINDOWS_TRAY:
         {
             m_link->sendShutdown();
             break;

@@ -64,6 +64,21 @@
     "description": "Minimize"
   },
 
+  "windows_min_icon_options": {
+    "message": "Ícone",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Comportamento padrão",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Minimizar para a tray",
+    "description": "Minimize"
+  },
+
   "windows_min_to_tray_1": {
     "message": "Minimizar para a tray, método 1",
     "description": "Minimize option 1"
@@ -92,6 +107,16 @@
   "windows_close_2": {
     "message": "Minimize todas as janelas",
     "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Minimize o pai para a bandeja, feche os filhos",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Minimize todas as janelas para a tray",
+    "description": "Close option 4"
   },
 
   "windows_start_min": {
