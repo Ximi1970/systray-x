@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sun Jul 23 00:52:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.4
+
+    - Separate minimize, close and icon action
+    - Use new icon for new TB version
+
+-------------------------------------------------------------------
 Sat Jul 15 21:39:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
 
 - Update to 0.9.3

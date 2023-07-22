@@ -1,3 +1,10 @@
+systray-x-gnome (0.9.4-0) unstable; urgency=low
+
+  * Update to 0.9.4
+
+    - Separate minimize, close and icon action
+    - Use new icon for new TB version
+
 systray-x (0.9.3-0) unstable; urgency=low
 
   * Update to 0.9.3
