@@ -86,6 +86,24 @@ Preferences::MinimizeType    WindowCtrlWin::getMinimizeType() const
 
 
 /*
+ *  Set the minimize icon type
+ */
+void    WindowCtrlWin::setMinimizeIconType( Preferences::MinimizeIconType type )
+{
+    m_minimize_icon_type = type;
+}
+
+
+/*
+ *  Get the minimize icon type
+ */
+Preferences::MinimizeIconType    WindowCtrlWin::getMinimizeIconType() const
+{
+    return m_minimize_icon_type;
+}
+
+
+/*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
 qint64  WindowCtrlWin::getPpid() const

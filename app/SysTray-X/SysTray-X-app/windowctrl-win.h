@@ -80,6 +80,20 @@ class WindowCtrlWin : public QObject
         Preferences::MinimizeType    getMinimizeType() const;
 
         /**
+         * @brief setMinimizeIconType
+         *
+         *  @param type     Set the minimize icon type.
+         */
+        void    setMinimizeIconType( Preferences::MinimizeIconType type );
+
+        /**
+         * @brief getMinimizeIconType
+         *
+         *  @return     The minimize icon type.
+         */
+        Preferences::MinimizeIconType    getMinimizeIconType() const;
+
+        /**
          * @brief getPpid. Get the parent process id.
          *
          *  @return     The ppid
@@ -297,6 +311,11 @@ class WindowCtrlWin : public QObject
          * @brief m_minimize_type. Minimize type.
          */
         Preferences::MinimizeType   m_minimize_type;
+
+        /**
+         * @brief m_minimize_icon_type. Minimize icon type.
+         */
+        Preferences::MinimizeIconType   m_minimize_icon_type;
 
         /**
          * @brief m_hook
