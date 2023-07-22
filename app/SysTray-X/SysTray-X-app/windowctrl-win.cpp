@@ -106,7 +106,7 @@ Preferences::MinimizeIconType    WindowCtrlWin::getMinimizeIconType() const
 /*
  *  Set the minimize type
  */
-void    WindowCtrlUnix::setCloseType( Preferences::CloseType type )
+void    WindowCtrlWin::setCloseType( Preferences::CloseType type )
 {
     m_close_type = type;
 }
@@ -115,7 +115,7 @@ void    WindowCtrlUnix::setCloseType( Preferences::CloseType type )
 /*
  *  Get the close type
  */
-Preferences::CloseType    WindowCtrlUnix::getCloseType() const
+Preferences::CloseType    WindowCtrlWin::getCloseType() const
 {
     return m_close_type;
 }
