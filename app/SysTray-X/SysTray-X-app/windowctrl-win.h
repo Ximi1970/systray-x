@@ -37,6 +37,17 @@ class WindowCtrlWin : public QObject
 {
     Q_OBJECT
 
+    public:
+
+        /*
+         *  Target types
+         */
+        enum TargetType
+        {
+            TYPE_WINDOW_TO_TASKBAR = 0,
+            TYPE_WINDOW_TO_SYSTEMTRAY
+        };
+
     private:
 
         struct EnumWindowsPidProcData

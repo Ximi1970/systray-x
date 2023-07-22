@@ -42,7 +42,7 @@ class WindowCtrlUnix : public QObject
 
         /*
          *  Target types
-        */
+         */
         enum TargetType
         {
             TYPE_WINDOW_TO_TASKBAR = 0,
