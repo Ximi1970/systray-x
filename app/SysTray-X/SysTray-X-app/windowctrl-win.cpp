@@ -104,6 +104,24 @@ Preferences::MinimizeIconType    WindowCtrlWin::getMinimizeIconType() const
 
 
 /*
+ *  Set the minimize type
+ */
+void    WindowCtrlUnix::setCloseType( Preferences::CloseType type )
+{
+    m_close_type = type;
+}
+
+
+/*
+ *  Get the close type
+ */
+Preferences::CloseType    WindowCtrlUnix::getCloseType() const
+{
+    return m_close_type;
+}
+
+
+/*
  *  Get the parent pid of SysTray-X, TB hopefully
  */
 qint64  WindowCtrlWin::getPpid() const

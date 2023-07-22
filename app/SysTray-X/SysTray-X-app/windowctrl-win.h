@@ -318,6 +318,11 @@ class WindowCtrlWin : public QObject
         Preferences::MinimizeIconType   m_minimize_icon_type;
 
         /**
+         * @brief m_close_type. Close type.
+         */
+        Preferences::CloseType   m_close_type;
+
+        /**
          * @brief m_hook
          */
         HWINEVENTHOOK m_hook;
