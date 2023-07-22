@@ -94,6 +94,20 @@ class WindowCtrlWin : public QObject
         Preferences::MinimizeIconType    getMinimizeIconType() const;
 
         /**
+         * @brief setCloseType
+         *
+         *  @param type     Set the close type.
+         */
+        void    setCloseType( Preferences::CloseType type );
+
+        /**
+         * @brief getCloseType
+         *
+         *  @return     The close type.
+         */
+        Preferences::CloseType    getCloseType() const;
+
+        /**
          * @brief getPpid. Get the parent process id.
          *
          *  @return     The ppid
