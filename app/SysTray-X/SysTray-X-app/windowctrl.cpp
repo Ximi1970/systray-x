@@ -327,7 +327,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                             .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_TASKBAR );
+            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY );
         }
     }
 
@@ -432,7 +432,7 @@ void    WindowCtrl::slotShowHide()
         }
         else
         {
-            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_TASKBAR );
+            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY );
         }
     }
 
