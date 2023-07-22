@@ -301,6 +301,22 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
         QList< quint64 > win_ids = getWinIds();
 
         /*
+         *  Minimize on startup always to the tray
+         */
+        TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+        if( state == Preferences::STATE_MINIMIZED_ALL )
+        {
+            /*
+             *  Minimize target on close depends on preference
+             */
+            Preferences::CloseType closeType = getCloseType();
+            if( closeType == Preferences::PREF_MINIMIZE_ALL_WINDOWS || closeType == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
+            {
+                targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+            }
+        }
+
+        /*
          *   Close pressed on one of the windows, minimize them all
          */
         for( int i = 0 ; i < win_ids.length() ; ++i )
@@ -311,7 +327,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                             .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+            minimizeWindow( win_ids.at( i ), targetType );
         }
     }
 
@@ -396,6 +412,12 @@ void    WindowCtrl::slotShowHide()
      */
     QList< quint64 > win_ids = getWinIds();
 
+    TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+    if( getMinimizeIconType() == Preferences::PREF_DEFAULT_MINIMIZE_ICON )
+    {
+        targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+    }
+
     for( int i = 0 ; i < win_ids.length() ; ++i )
     {
 #ifdef DEBUG_DISPLAY_ACTIONS
@@ -410,7 +432,7 @@ void    WindowCtrl::slotShowHide()
         }
         else
         {
-            minimizeWindow( win_ids.at( i ), getMinimizeType() );
+            minimizeWindow( win_ids.at( i ), targetType );
         }
     }
 
