@@ -192,6 +192,26 @@ Please select the `Ubuntu on Xorg` session when loging in on 21.04 and up. The `
 sudo apt install systray-x-gnome
 ```
 
+Disabling wayland:
+
+```bash
+sudo nano /etc/gdm3/custom.conf
+
+```
+
+and change (and remove the leading '#' when needed)
+
+```
+WaylandEnable=true
+```
+
+into
+
+```
+WaylandEnable=false
+```
+
+
 ###### Unity / XFCE / Others (non-KDE, non-GNOME)
 
 ```bash
