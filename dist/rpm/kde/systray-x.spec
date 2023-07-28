@@ -83,7 +83,7 @@ install -Dm0644 SysTray_X.json %{buildroot}%{_libdir}/mozilla/native-messaging-h
 #unzip -d $_systx_dir systray-x@Ximi1970.xpi
 _systx_dir=%{buildroot}%{_libdir}/mozilla/extensions/\{3550f703-e582-4d05-9a08-453d09bdfdc6\}
 mkdir -pv $_systx_dir
-install -m 644 systray-x@Ximi1970.xpi %{buildroot}/$_systx_dir
+install -m 644 systray-x@Ximi1970.xpi $_systx_dir
 
 %files
 %license LICENSE 
