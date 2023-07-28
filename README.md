@@ -373,9 +373,6 @@ sudo dnf install systray-x-minimal
 ### Arch
 
 #### AUR
-A `git` package is available in the user repository (KDE Plasma version). To install it, just use some AUR helper, like yay:
-
-`yay -S systray-x-git`
 
 #### Repository
 
