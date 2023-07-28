@@ -132,6 +132,7 @@ create_gnome_extension_tar() {
   
   if [ ${GNOME_EXT} != "v26" ] &&
     [ ${GNOME_EXT} != "v34" ] &&
+    [ ${GNOME_EXT} != "v46" ] &&
     [ ${GNOME_EXT} != "master" ] ; then
     return
   fi
@@ -202,6 +203,9 @@ create_rpm_tar() {
   fi
   if [ "${GNOME_EXT}" == "v34" ] && [ -f gnome-shell-extension-v34.tar.xz ] ; then
     cp -f gnome-shell-extension-v34.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  fi
+  if [ "${GNOME_EXT}" == "v46" ] && [ -f gnome-shell-extension-v46.tar.xz ] ; then
+    cp -f gnome-shell-extension-v46.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   if [ "${GNOME_EXT}" == "master" ] && [ -f gnome-shell-extension-master.tar.xz ] ; then
     cp -f gnome-shell-extension-master.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
@@ -340,6 +344,9 @@ create_deb_tar() {
   if [ "${GNOME_EXT}" == "v34" ] && [ -f gnome-shell-extension-v34.tar.xz ] ; then
     cp -f gnome-shell-extension-v34.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
+  if [ "${GNOME_EXT}" == "v46" ] && [ -f gnome-shell-extension-v46.tar.xz ] ; then
+    cp -f gnome-shell-extension-v46.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  fi
   if [ "${GNOME_EXT}" == "master" ] && [ -f gnome-shell-extension-master.tar.xz ] ; then
     cp -f gnome-shell-extension-master.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
@@ -436,6 +443,9 @@ create_pac_tar() {
   fi
   if [ "${GNOME_EXT}" == "v34" ] && [ -f gnome-shell-extension-v34.tar.xz ] ; then
     cp -f gnome-shell-extension-v34.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
+  fi
+  if [ "${GNOME_EXT}" == "v46" ] && [ -f gnome-shell-extension-v46.tar.xz ] ; then
+    cp -f gnome-shell-extension-v46.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
   fi
   if [ "${GNOME_EXT}" == "master" ] && [ -f gnome-shell-extension-master.tar.xz ] ; then
     cp -f gnome-shell-extension-master.tar.xz ${TAR_DIR}/gnome-shell-extension.tar.xz
