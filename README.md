@@ -229,7 +229,7 @@ Installing the repository:
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing/Release.key
-sudo apt-key add Release.key
+sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
@@ -238,8 +238,17 @@ sudo apt update
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable/Release.key
-sudo apt-key add Release.key
+sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
+###### 12
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_12/Release.key
+sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_12 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
@@ -276,6 +285,26 @@ sudo apt install systray-x
 ```bash
 sudo apt install systray-x-gnome
 ```
+
+Disabling wayland:
+
+```bash
+sudo nano /etc/gdm3/daemon.conf
+
+```
+
+and change (and remove the leading '#' when needed)
+
+```
+WaylandEnable=true
+```
+
+into
+
+```
+WaylandEnable=false
+```
+
 
 ###### XFCE / Others (non-KDE, non-GNOME)
 
