@@ -206,7 +206,14 @@ void    WindowCtrlUnix::updateX11WindowStates( CheckType check_type )
             emit signalConsole( QString( "State x11: %1").arg( state ) );
 #endif
 
-            minimizeWindow( m_tb_windows.at( i ) );
+            if( getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE )
+            {
+                minimizeWindowToTaskbar( m_tb_windows.at( i ) );
+            }
+            else
+            {
+                minimizeWindowToTray( m_tb_windows.at( i ) );
+            }
         }
         else if( ( check_type & CHECK_NORMALIZE ) &&
                  ( current_state == Preferences::STATE_NORMAL && current_state != getWindowState( m_tb_windows.at( i ) ) ) )
@@ -712,6 +719,7 @@ void    WindowCtrlUnix::updatePositions()
 #endif
 }
 
+#ifdef FF_NEET
 
 /*
  *  Minimize a window
@@ -778,12 +786,12 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window )
     emit signalConsole( "Minimize done" );
 #endif
 }
-
+#endif
 
 /*
  *  Minimize a window
  */
-void    WindowCtrlUnix::minimizeWindow( quint64 window, TargetType targetType )
+void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 {
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Minimize" );
@@ -804,37 +812,10 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, TargetType targetType )
      */
     Sync( m_display );
 
-    if( targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY )
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( "Withdraw window" );
-#endif
-
-        /*
-         *  Set the flags (GNOME, Wayland?)
-         */
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
-
-        Flush( m_display );
-
-        /*
-         *  Remove from taskbar and task switchers
-         */
-        WithdrawWindow( m_display, window );
-
-        /*
-         *  Store the window state
-         */
-        m_tb_window_states[ window ] = Preferences::STATE_DOCKED;
-    }
-    else
-    {
-        /*
-         *  Store the window state
-         */
-        m_tb_window_states[ window ] = Preferences::STATE_MINIMIZED;
-    }
+    /*
+     *  Store the window state
+     */
+    m_tb_window_states[ window ] = Preferences::STATE_MINIMIZED;
 
     /*
      *  Flush the pipes
@@ -843,6 +824,49 @@ void    WindowCtrlUnix::minimizeWindow( quint64 window, TargetType targetType )
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
     emit signalConsole( "Minimize done" );
+#endif
+}
+
+
+/*
+ *  Minimize window to tray
+ */
+void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
+{
+#ifdef DEBUG_DISPLAY_ACTIONS
+    emit signalConsole( "Close" );
+#endif
+
+    /*
+     *  Save the hints
+     */
+    GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
+
+    /*
+     *  Set the flags (GNOME, Wayland?)
+     */
+    SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
+    SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
+
+    Flush( m_display );
+
+    /*
+     *  Remove from taskbar and task switchers
+     */
+    WithdrawWindow( m_display, window );
+
+    /*
+     *  Store the window state
+     */
+    m_tb_window_states[ window ] = Preferences::STATE_DOCKED;
+
+    /*
+     *  Flush the pipes
+     */
+    Sync( m_display );
+
+#ifdef DEBUG_DISPLAY_ACTIONS_END
+    emit signalConsole( "Close done" );
 #endif
 }
 
