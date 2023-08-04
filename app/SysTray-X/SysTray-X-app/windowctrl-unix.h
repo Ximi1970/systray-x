@@ -275,22 +275,14 @@ class WindowCtrlUnix : public QObject
         void    updatePositions();
 
         /**
-         * @brief minimizeWindow. Minimize window.
-         *
-         *  @param window   The window.
-         */
-        void    minimizeWindow( quint64 window );
-
-        /**
-         * @brief minimizeWindowToTaskbar. Minimize window to taskbar.
+         * @brief minimizeWindowToTaskbar. Minimize window to the taskbar.
          *
          *  @param window       The window.
-         *  @param targetType   Where to minimize.
          */
         void    minimizeWindowToTaskbar( quint64 window );
 
         /**
-         * @brief minimizeWindowToTray. Minimize window to tray.
+         * @brief minimizeWindowToTray. Minimize window to the tray.
          *
          *  @param window       The window.
          */

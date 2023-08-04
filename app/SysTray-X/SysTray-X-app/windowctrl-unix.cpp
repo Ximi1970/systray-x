@@ -719,77 +719,9 @@ void    WindowCtrlUnix::updatePositions()
 #endif
 }
 
-#ifdef FF_NEET
 
 /*
- *  Minimize a window
- */
-void    WindowCtrlUnix::minimizeWindow( quint64 window )
-{
-#ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( "Minimize" );
-#endif
-
-    /*
-     *  Save the hints
-     */
-    GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
-
-    /*
-     *  Minimize the window
-     */
-    IconifyWindow( m_display, window );
-
-    /*
-     *  Sync the events
-     */
-    Sync( m_display );
-
-    if( getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE )
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( "Withdraw window" );
-#endif
-
-        /*
-         *  Set the flags (GNOME, Wayland?)
-         */
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_TASKBAR );
-        SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_SKIP_PAGER );
-
-        Flush( m_display );
-
-        /*
-         *  Remove from taskbar and task switchers
-         */
-        WithdrawWindow( m_display, window );
-
-        /*
-         *  Store the window state
-         */
-        m_tb_window_states[ window ] = Preferences::STATE_DOCKED;
-    }
-    else
-    {
-        /*
-         *  Store the window state
-         */
-        m_tb_window_states[ window ] = Preferences::STATE_MINIMIZED;
-    }
-
-    /*
-     *  Flush the pipes
-     */
-    Sync( m_display );
-
-#ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( "Minimize done" );
-#endif
-}
-#endif
-
-/*
- *  Minimize a window
+ *  Minimize a window to the taskbar
  */
 void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 {
@@ -829,7 +761,7 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 
 
 /*
- *  Minimize window to tray
+ *  Minimize window to the tray
  */
 void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
 {
@@ -881,9 +813,9 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
 #endif
 
     /*
-     *  Show window on taskbar an in switcher
+     *  Show window on taskbar and in the switcher
      */
-    if( getMinimizeType() != Preferences::PREF_DEFAULT_MINIMIZE )
+    if( m_tb_window_states[ window ] == Preferences::STATE_DOCKED )
     {
         MapWindow( m_display, window );
 
