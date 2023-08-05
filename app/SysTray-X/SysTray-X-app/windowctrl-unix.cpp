@@ -726,7 +726,7 @@ void    WindowCtrlUnix::updatePositions()
 void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 {
 #ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( "Minimize" );
+    emit signalConsole( "Minimize to taskbar" );
 #endif
 
     /*
@@ -755,7 +755,7 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
     Sync( m_display );
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( "Minimize done" );
+    emit signalConsole( "Minimize to taskbar done" );
 #endif
 }
 
@@ -766,7 +766,7 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
 {
 #ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( "Close" );
+    emit signalConsole( "Minimize to system tray" );
 #endif
 
     /*
@@ -798,7 +798,7 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
     Sync( m_display );
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END
-    emit signalConsole( "Close done" );
+    emit signalConsole( "Minimize to system tray done" );
 #endif
 }
 
