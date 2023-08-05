@@ -59,6 +59,9 @@ Root credentials are required.
 Make shure you removed / uninstalled any SysTray-X package installed with a script installer.  
 You can verify this by checking the `~/.mozilla/native-messaging-hosts` directory. There should be NO SysTray-X packages or links in there. Remove them and remove the add-on from the Thunderbird add-ons page.
 
+
+## Linux distributions
+
 ### openSuSE
 
 #### Repository
