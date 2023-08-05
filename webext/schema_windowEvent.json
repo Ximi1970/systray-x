@@ -12,7 +12,7 @@
             "type": "integer",
             "name": "type",
             "minimum": 0,
-            "maximum": 2
+            "maximum": 4
           }
         ]
       }

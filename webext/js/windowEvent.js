@@ -62,6 +62,8 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
     this.MESSAGE_CLOSE_TYPE_DEFAULT = 0;
     this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN = 1;
     this.MESSAGE_CLOSE_TYPE_MIN_ALL = 2;
+    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN = 3;
+    this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY = 4;
 
     this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
   }
@@ -73,6 +75,10 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
       this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
     } else if (closeType === 2) {
       this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
+    } else if (closeType === 3) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN;
+    } else if (closeType === 4) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY;
     } else console.log("Unknown close type: " + closeType);
   }
 
@@ -91,7 +97,9 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
           if (
             windowListener.callbackOnLoadWindowCount === 1 ||
             windowListener.closeType ===
-              windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL
+              windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL ||
+            windowListener.closeType ===
+              windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY
           ) {
             window.addEventListener(
               "close",
