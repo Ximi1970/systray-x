@@ -400,11 +400,9 @@ sudo pacman -S systray-x
 
 ```bash
 sudo pacman -S systray-x-gnome
-sudo pacman -S gnome-tweaks
 ```
-Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
 
-
+Please use `gnome-extensions` to enable the gnome shell extension `appindicatorsupport@rgcjonas.gmail.com`. Reboot or relogin is probably also needed.
 
 ###### XFCE / Others (non-KDE, non-GNOME)
 
@@ -471,9 +469,9 @@ sudo yum install systray-x
 
 ```bash
 sudo yum install systray-x-gnome
-sudo yum install gnome-tweaks
 ```
-Please use `Tweaks` to activate the gnome shell extension `Kstatusnotifieritem/appindicator support` or reboot the system.
+
+Please use `gnome-extensions` to enable the gnome shell extension `appindicatorsupport@rgcjonas.gmail.com`. Reboot or relogin is probably also needed.
 
 
 ### MX (not tested)
