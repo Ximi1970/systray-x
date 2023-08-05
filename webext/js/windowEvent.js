@@ -72,13 +72,13 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
     if (closeType === 0) {
       this.closeType = this.MESSAGE_CLOSE_TYPE_DEFAULT;
     } else if (closeType === 1) {
-      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
-    } else if (closeType === 2) {
-      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
-    } else if (closeType === 3) {
       this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN;
-    } else if (closeType === 4) {
+    } else if (closeType === 2) {
       this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY;
+    } else if (closeType === 3) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
+    } else if (closeType === 4) {
+      this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
     } else console.log("Unknown close type: " + closeType);
   }
 
