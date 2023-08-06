@@ -33,10 +33,10 @@ BuildRequires:  pkgconfig(x11)
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version} || 0%{?centos_version}
 Requires:       thunderbird >= 68
-Requires:       thunderbird < 117
+Requires:       thunderbird < 118
 %else
 Requires:       MozillaThunderbird >= 68
-Requires:       MozillaThunderbird < 117
+Requires:       MozillaThunderbird < 118
 %endif
 
 %description
