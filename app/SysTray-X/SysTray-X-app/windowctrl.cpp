@@ -224,8 +224,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     emit signalConsole( QString( "State change to: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
 #endif
 
-#ifdef Q_OS_UNIX
-
     /*
      *  Update the TB windows and states
      */
@@ -248,7 +246,15 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
         TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
         if( state == Preferences::STATE_MINIMIZED_ALL )
         {
+
+#ifdef Q_OS_UNIX
+
+            /*
+             * Update window positions
+             */
             updatePositions();
+
+#endif
 
             /*
              *  Minimize target on close depends on preference
@@ -281,62 +287,13 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             }
         }
     }
-    else
-    {
-        /*
-         *  Update the TB windows
-         */
-        updateX11WindowStates( CHECK_NORMALIZE );
-    }
 
-#else
+#ifdef Q_OS_UNIX
 
     /*
-     *  Update the TB windows and states
+     *  Update the TB windows
      */
-    findWindows( m_ppid );
-
-    /*
-     *  Minimize all?
-     */
-    if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( QString( "Minimize all" ) );
-#endif
-
-        QList< quint64 > win_ids = getWinIds();
-
-        /*
-         *  Minimize on startup always to the tray
-         */
-        TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
-        if( state == Preferences::STATE_MINIMIZED_ALL )
-        {
-            /*
-             *  Minimize target on close depends on preference
-             */
-            Preferences::CloseType closeType = getCloseType();
-            if( closeType == Preferences::PREF_MINIMIZE_ALL_WINDOWS || closeType == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
-            {
-                targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
-            }
-        }
-
-        /*
-         *   Close pressed on one of the windows, minimize them all
-         */
-        for( int i = 0 ; i < win_ids.length() ; ++i )
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS
-            emit signalConsole( QString( "Window state: %1, %2" )
-                            .arg( win_ids.at( i ) )
-                            .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
-#endif
-
-            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY );
-        }
-    }
+//    updateX11WindowStates( CHECK_NORMALIZE );
 
 #endif
 
@@ -360,17 +317,19 @@ void    WindowCtrl::slotShowHide()
      */
     m_show_hide_active = true;
 
-#ifdef Q_OS_UNIX
-
     /*
      *  Update the TB windows
      */
     findWindows( m_ppid );
 
+#ifdef Q_OS_UNIX
+
     /*
      *  Update the positions
      */
     updatePositions();
+
+#endif
 
     TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
     if( getMinimizeIconType() == Preferences::PREF_DEFAULT_MINIMIZE_ICON )
@@ -409,46 +368,12 @@ void    WindowCtrl::slotShowHide()
         }
     }
 
-    /*
-     *  Update the TB windows
-     */
-    updateX11WindowStates( CHECK_MINIMIZE );
-
-#else
+#ifdef Q_OS_UNIX
 
     /*
      *  Update the TB windows
      */
-    findWindows( m_ppid );
-
-    /*
-     *  Get the window ids
-     */
-    QList< quint64 > win_ids = getWinIds();
-
-    TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
-    if( getMinimizeIconType() == Preferences::PREF_DEFAULT_MINIMIZE_ICON )
-    {
-        targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
-    }
-
-    for( int i = 0 ; i < win_ids.length() ; ++i )
-    {
-#ifdef DEBUG_DISPLAY_ACTIONS
-        emit signalConsole( QString( "Window state: %1, %2" )
-                            .arg( win_ids.at( i ) )
-                            .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
-#endif
-
-        if( getWindowState( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED )
-        {
-            normalizeWindow( win_ids.at( i ) );
-        }
-        else
-        {
-            minimizeWindow( win_ids.at( i ), targetType == TargetType::TYPE_WINDOW_TO_SYSTEMTRAY );
-        }
-    }
+//    updateX11WindowStates( CHECK_MINIMIZE );
 
 #endif
 

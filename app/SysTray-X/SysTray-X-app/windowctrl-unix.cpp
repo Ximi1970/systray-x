@@ -56,9 +56,12 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     /*
      *  State monitor
      */
+
+/*
     m_x11_window_states_monitor = new QTimer( this );
     connect( m_x11_window_states_monitor, &QTimer::timeout, this, &WindowCtrlUnix::x11WindowStatesMonitor );
     m_x11_window_states_monitor->start( STATES_MONITOR_TIMEOUT );
+*/
 }
 
 
