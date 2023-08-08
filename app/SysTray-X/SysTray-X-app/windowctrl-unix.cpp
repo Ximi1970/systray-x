@@ -38,8 +38,8 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states_x11 = QList< Preferences::WindowState >();
-    m_tb_window_positions = QList< QPoint >();
+    m_tb_window_states_x11 = QMap< quint64, Preferences::WindowState >();
+    m_tb_window_positions = QMap< quint64, QPoint >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
@@ -52,16 +52,6 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Get the base display and window
      */
     m_display = OpenDisplay();
-
-    /*
-     *  State monitor
-     */
-
-/*
-    m_x11_window_states_monitor = new QTimer( this );
-    connect( m_x11_window_states_monitor, &QTimer::timeout, this, &WindowCtrlUnix::x11WindowStatesMonitor );
-    m_x11_window_states_monitor->start( STATES_MONITOR_TIMEOUT );
-*/
 }
 
 
@@ -71,159 +61,6 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
 void    WindowCtrlUnix::disableX11ErrorHandler()
 {
     UnSetErrorHandler();
-}
-
-
-/*
- *  Thunderbird x11 window states monitor
- */
-void    WindowCtrlUnix::x11WindowStatesMonitor()
-{
-    /*
-     *  Stop the timer
-     */
-    m_x11_window_states_monitor->stop();
-
-    /*
-     *  Update the states
-     */
-    updateX11WindowStates( CHECK_MINIMIZE );
-
-    /*
-     *  Start the timer
-     */
-    m_x11_window_states_monitor->start( STATES_MONITOR_TIMEOUT );
-}
-
-
-/*
- *  Update the Thunderbird x11 window states
- */
-void    WindowCtrlUnix::updateX11WindowStates( CheckType check_type )
-{
-    /*
-     *  Get the x11 window states
-     */
-    for( int i = 0 ; i < m_tb_windows.length() ; ++i )
-    {
-        /*
-         *  Get the WM_STATE
-         */
-        qint32 n_wm_state;
-        void* wm_state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "WM_STATE", &n_wm_state );
-
-        if( Error() )
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "Updatex11: Removing WinID %1").arg( m_tb_windows.at( i ) ) );
-#endif
-
-            /*
-             *  Window does not exist
-             */
-            m_tb_windows.removeAt( i );
-            m_tb_window_positions.removeAt( i );
-            m_tb_window_states_x11.removeAt( i );
-
-            continue;
-        }
-
-        /*
-         *  Get the state
-         */
-        int state = -1;
-        if( wm_state_ptr != nullptr )
-        {
-            state = *reinterpret_cast<long *>( wm_state_ptr );
-
-            Free( wm_state_ptr );
-        }
-
-        /*
-         *  Get the _NET_WM_STATE
-         */
-        qint32 n_net_wm_state;
-        void* net_wm_state_ptr = GetWindowProperty( m_display, m_tb_windows.at( i ), "_NET_WM_STATE", &n_net_wm_state );
-
-        /*
-         *  Get the atoms
-         */
-        QStringList atom_list;
-        if( net_wm_state_ptr != nullptr )
-        {
-            for( qint32 j = 0 ; j < n_net_wm_state ; ++j )
-            {
-                 char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ j ] );
-
-                 atom_list.append( atom_name );
-
-                 if( atom_name )
-                 {
-                     Free( atom_name );
-                 }
-            }
-
-            Free( net_wm_state_ptr );
-        }
-
-        /*
-         *  Determine the state of the window
-         */
-        Preferences::WindowState    current_state;
-        if( state == -1 || state == 0 || ( atom_list.contains( "_NET_WM_STATE_HIDDEN" ) && atom_list.contains( "_NET_WM_STATE_SKIP_TASKBAR" ) ) )
-        {
-            /*
-             *  Docked
-             */
-            current_state = Preferences::STATE_DOCKED;
-        }
-        else if( state == 3 || atom_list.contains( "_NET_WM_STATE_HIDDEN" ) )
-        {
-            /*
-             *  Minimized
-             */
-            current_state = Preferences::STATE_MINIMIZED;
-        }
-        else
-        {
-            /*
-             *  Normal
-             */
-            current_state = Preferences::STATE_NORMAL;
-        }
-
-        m_tb_window_states_x11[ i ] = current_state;
-
-        if( ( check_type & CHECK_MINIMIZE ) &&
-                ( current_state == Preferences::STATE_MINIMIZED || current_state == Preferences::STATE_DOCKED ) && current_state != getWindowState( m_tb_windows.at( i ) ) )
-        {
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "Updatex11: WinID %1, state: %2").arg( m_tb_windows.at( i ) ).
-                                arg( Preferences::WindowStateString.at( m_tb_window_states[ m_tb_windows.at( i ) ] ) ) );
-
-            for( int j = 0 ; j < atom_list.length() ; ++j )
-            {
-                emit signalConsole( QString( "Atom: %1").arg( atom_list.at( j ) ) );
-            }
-
-            emit signalConsole( QString( "State x11: %1").arg( state ) );
-#endif
-
-            if( getMinimizeType() == Preferences::PREF_DEFAULT_MINIMIZE )
-            {
-                minimizeWindowToTaskbar( m_tb_windows.at( i ) );
-            }
-            else
-            {
-                minimizeWindowToTray( m_tb_windows.at( i ) );
-            }
-        }
-        else if( ( check_type & CHECK_NORMALIZE ) &&
-                 ( current_state == Preferences::STATE_NORMAL && current_state != getWindowState( m_tb_windows.at( i ) ) ) )
-        {
-            normalizeWindow( m_tb_windows.at( i ) );
-        }
-    }
 }
 
 
@@ -319,7 +156,7 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
     QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
     m_tb_windows = QList< quint64 >();
-    m_tb_window_positions = QList< QPoint >();
+    m_tb_window_positions = QMap< quint64, QPoint >();
     for( int i = 0 ; i < windows.length() ; ++i )
     {
         WindowItem win = windows.at( i );
@@ -335,7 +172,7 @@ bool    WindowCtrlUnix::findWindow( const QString& title )
                  *  Store the XID
                  */
                 m_tb_windows.append( win.window );
-                m_tb_window_positions.append( QPoint() );
+                m_tb_window_positions[ win.window ] = QPoint();
             }
         }
     }
@@ -360,11 +197,11 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 
     QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
-    QList< QPoint > old_positions = m_tb_window_positions;
+    QMap< quint64, QPoint > old_positions = m_tb_window_positions;
 
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states_x11 = QList< Preferences::WindowState >();
-    m_tb_window_positions = QList< QPoint >();
+    m_tb_window_states_x11 = QMap< quint64, Preferences::WindowState >();
+    m_tb_window_positions = QMap< quint64, QPoint >();
     for( int i = 0 ; i < windows.length() ; ++i )
     {
         WindowItem win = windows.at( i );
@@ -394,16 +231,18 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         }
 
                         QPoint point;
-                        if( m_tb_windows.length() <= old_positions.length() )
+                        if( old_positions.contains( win.window ) )
                         {
-                            point = old_positions.at( m_tb_windows.length() - 1 );
+                            point = old_positions[ win.window ];
                         }
 
-                        m_tb_window_positions.append( point );
+                        m_tb_window_positions[ win.window ] = point;
 
                         qint32 n_wm_state;
                         void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
+                        Preferences::WindowState state_x11 = Preferences::STATE_DOCKED;
+                        bool add_new_state = true;
                         if( wm_state_ptr != nullptr )
                         {
                             int state = *reinterpret_cast<long *>( wm_state_ptr );
@@ -415,7 +254,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Docked
                                      */
-                                    m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                                    state_x11 = Preferences::STATE_DOCKED;
 
                                     break;
                                 }
@@ -425,7 +264,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Normal
                                      */
-                                    m_tb_window_states_x11.append( Preferences::STATE_NORMAL );
+                                    state_x11 = Preferences::STATE_NORMAL;
 
                                     break;
                                 }
@@ -435,25 +274,25 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Minimized
                                      */
-                                    m_tb_window_states_x11.append( Preferences::STATE_MINIMIZED );
+                                    state_x11 = Preferences::STATE_MINIMIZED;
 
                                     break;
                                 }
 
                                 default:
                                 {
+                                    add_new_state = false;
+
                                     break;
                                 }
                             }
 
                             Free( wm_state_ptr );
                         }
-                        else
+
+                        if( add_new_state )
                         {
-                            /*
-                             *  Docked
-                             */
-                            m_tb_window_states_x11.append( Preferences::STATE_DOCKED );
+                            m_tb_window_states_x11[ win.window ] = state_x11;
                         }
                     }
 
@@ -494,11 +333,11 @@ const Preferences::WindowState&    WindowCtrlUnix::getWindowState( const quint64
 
 
 /*
- *  Get the x11 states of the TB windows.
+ *  Get the states of the TB windows.
  */
-const Preferences::WindowState&    WindowCtrlUnix::getWindowStateX11( int index )
+const Preferences::WindowState&    WindowCtrlUnix::getWindowStateX11( const quint64 window )
 {
-    return m_tb_window_states_x11[ index ];
+    return m_tb_window_states_x11[ window ];
 }
 
 
@@ -696,9 +535,9 @@ void    WindowCtrlUnix::updatePositions()
              */
             QPoint point = QPoint( x - left, y - top );
 
-            if( m_tb_window_positions[ i ] != point )
+            if( m_tb_window_positions[ window ] != point )
             {
-                m_tb_window_positions[ i ] = point;
+                m_tb_window_positions[ window ] = point;
 
                 /*
                  *  Mar the list changed

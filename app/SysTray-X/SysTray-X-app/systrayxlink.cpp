@@ -269,10 +269,11 @@ void    SysTrayXLink::sendDisableKdeIntegration()
 /*
  *  Send the window positions to the add-on
  */
-void    SysTrayXLink::sendPositions( QList< QPoint > positions )
+void    SysTrayXLink::sendPositions( QMap< quint64, QPoint > positionsMap )
 {
     QJsonArray positionsArray;
 
+    QList<QPoint> positions = positionsMap.values();
     for( int i = 0; i < positions.length(); ++i )
     {
         QJsonObject positionObject;
@@ -1093,7 +1094,7 @@ void    SysTrayXLink::slotStartupDelayChange()
 /*
  *  Handle a positions change signal
  */
-void    SysTrayXLink::slotPositions( QList< QPoint > positions )
+void    SysTrayXLink::slotPositions( QMap< quint64, QPoint > positions )
 {
    sendPositions( positions );
 }

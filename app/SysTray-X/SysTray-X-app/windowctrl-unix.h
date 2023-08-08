@@ -247,13 +247,13 @@ class WindowCtrlUnix : public QObject
         const Preferences::WindowState&    getWindowState( const quint64 window );
 
         /**
-         * @brief getWindowStateX11. Get the X11 state of a TB windows.
+         * @brief getWindowState. Get the state of a TB windows.
          *
-         *  @param index    Index in the window list
+         *  @param  window  Window ID.
          *
          *  @return     The window state.
          */
-        const Preferences::WindowState&    getWindowStateX11( int index );
+        const Preferences::WindowState&    getWindowStateX11( const quint64 window );
 
         /**
          * @brief displayWindowElements. Display window elements (atoms).
@@ -346,14 +346,9 @@ class WindowCtrlUnix : public QObject
          *
          * @param positions
          */
-        void    signalPositions( QList< QPoint > positions );
+        void    signalPositions( QMap< quint64, QPoint > positions );
 
    private:
-
-        /**
-         * @brief m_x11_window_states_monitor. Timer to monitor the Thunderbird window states.
-         */
-        QTimer*  m_x11_window_states_monitor;
 
         /**
          * @brief m_display. Pointer to the main display.
@@ -368,12 +363,12 @@ class WindowCtrlUnix : public QObject
         /**
          * @brief m_tb_window_states_x11. The Thunderbird window states.
          */
-        QList< Preferences::WindowState >    m_tb_window_states_x11;
+        QMap< quint64, Preferences::WindowState >    m_tb_window_states_x11;
 
         /**
          * @brief m_tb_window_positions. The Thunderbird window positions.
          */
-        QList< QPoint >    m_tb_window_positions;
+        QMap< quint64, QPoint >    m_tb_window_positions;
 
         /**
          * @brief m_tb_window_states. The Thunderbird window states.

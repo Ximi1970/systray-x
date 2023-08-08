@@ -126,7 +126,7 @@ class SysTrayXLink : public QObject
          *
          * @param positions     List of the positions of the TB windows
          */
-        void    sendPositions( QList< QPoint > positions );
+        void    sendPositions( QMap< quint64, QPoint > positions );
 
     private:
 
@@ -336,7 +336,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief slotPositions. Slot for handling a window positions change.
          */
-        void    slotPositions( QList< QPoint > positions );
+        void    slotPositions( QMap< quint64,  QPoint > positions );
 
         /**
          * @brief slotThemeChange. Slot for handling theme change signals.

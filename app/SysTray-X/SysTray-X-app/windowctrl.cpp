@@ -287,15 +287,28 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             }
         }
     }
+    else
+    {        
+        if( state == Preferences::STATE_MINIMIZED )
+        {
+            Preferences::MinimizeType minimizeType = getMinimizeType();
+            if( minimizeType != Preferences::PREF_DEFAULT_MINIMIZE )
+            {
+                QList< quint64 > win_ids = getWinIds();
+               for( int i = 0 ; i < win_ids.length() ; ++i )
+                {                   
+                   /*
+                    *  Hide the window
+                    */
+                    if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+                    {
+                        minimizeWindowToTray( win_ids.at( i ) );
+                    }
+               }
+            }
+        }
 
-#ifdef Q_OS_UNIX
-
-    /*
-     *  Update the TB windows
-     */
-//    updateX11WindowStates( CHECK_NORMALIZE );
-
-#endif
+    }
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "State change done" );
@@ -353,7 +366,6 @@ void    WindowCtrl::slotShowHide()
         if( getWindowState( win_ids.at( i ) ) == Preferences::STATE_MINIMIZED || getWindowState( win_ids.at( i ) ) == Preferences::STATE_DOCKED )
         {
             normalizeWindow( win_ids.at( i ) );
-            normalizeWindow( win_ids.at( i ) );     // Just for Ubuntu 16.04
         }
         else
         {
@@ -367,15 +379,6 @@ void    WindowCtrl::slotShowHide()
             }
         }
     }
-
-#ifdef Q_OS_UNIX
-
-    /*
-     *  Update the TB windows
-     */
-//    updateX11WindowStates( CHECK_MINIMIZE );
-
-#endif
 
     /*
      *  Mark action
