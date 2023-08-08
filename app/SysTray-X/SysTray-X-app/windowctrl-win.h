@@ -190,12 +190,18 @@ class WindowCtrlWin : public QObject
         QList< quint64 >   getWinIds();
 
         /**
-         * @brief minimizeWindow. Minimize window.
+         * @brief minimizeWindowToTaskbar. Minimize window to the taskbar.
          *
-         *  @param window   The window.
-         *  @param hide     Hide from taskbar
+         *  @param window       The window.
          */
-        void    minimizeWindow( quint64 window, int hide );
+        void    minimizeWindowToTaskbar( quint64 window );
+
+        /**
+         * @brief minimizeWindowToTray. Minimize window to the tray.
+         *
+         *  @param window       The window.
+         */
+        void    minimizeWindowToTray( quint64 window );
 
         /**
          * @brief normalizeWindow. Normalize window.
@@ -203,14 +209,6 @@ class WindowCtrlWin : public QObject
          *  @param window   The window.
          */
         void    normalizeWindow( quint64 window );
-
-        /**
-         * @brief WindowCtrlWin::hideWindow
-         *
-         *  @param window   The window.
-         *  @param state    Hide from taskbar.
-         */
-        void    hideWindow( quint64 window , bool state );
 
         /**
          * @brief deleteWindow. Delete window.

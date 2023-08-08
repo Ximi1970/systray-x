@@ -292,9 +292,10 @@ void    WindowCtrlWin::displayWindowElements( const QString& title )
 {
     findWindow( title );
 
-    for( quint64 win_id: getWinIds() )
+    QList< quint64 > winIds = getWinIds();
+    for( int i = 0 ; i < winIds.length() ; i++ )
     {
-        emit signalConsole( QString( "Found: XID %1" ).arg( win_id ) );
+        emit signalConsole( QString( "Found: XID %1" ).arg( winIds[ i ] ) );
     }
 }
 
@@ -389,21 +390,22 @@ void    WindowCtrlWin::hookAction( HWND hWnd )
 
 
 /*
- *  Minimize a window
+ *  Minimize a window to the taskbar
  */
-void    WindowCtrlWin::minimizeWindow( quint64 window, int hide )
+void    WindowCtrlWin::minimizeWindowToTaskbar( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
+    ShowWindow( (HWND)window, SW_MINIMIZE );
+}
 
+
+/*
+ *  Minimize window to the tray
+ */
+void    WindowCtrlWin::minimizeWindowToTray( quint64 window )
+{
     ShowWindow( (HWND)window, SW_MINIMIZE );
 
-    if( hide )
-    {
-        hideWindow( (HWND)window );
-    }
+    hideWindow( (HWND)window );
 }
 
 
@@ -426,23 +428,6 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
 
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
-}
-
-
-/*
- *  Hide a window
- */
-void    WindowCtrlWin::hideWindow( quint64 window, bool state )
-{
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
-    if( state )
-    {
-        hideWindow( (HWND)window );
-    }
 }
 
 

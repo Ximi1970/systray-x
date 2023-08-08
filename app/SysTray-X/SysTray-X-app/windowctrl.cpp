@@ -287,15 +287,16 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             }
         }
     }
+#ifdef Q_OS_UNIX
     else
-    {        
+    {
         if( state == Preferences::STATE_MINIMIZED )
         {
             Preferences::MinimizeType minimizeType = getMinimizeType();
             if( minimizeType != Preferences::PREF_DEFAULT_MINIMIZE )
             {
                 QList< quint64 > win_ids = getWinIds();
-               for( int i = 0 ; i < win_ids.length() ; ++i )
+                for( int i = 0 ; i < win_ids.length() ; ++i )
                 {                   
                    /*
                     *  Hide the window
@@ -307,8 +308,8 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                }
             }
         }
-
     }
+#endif
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "State change done" );
