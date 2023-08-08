@@ -76,7 +76,7 @@ unix:!macx: {
 #    QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
     #
-    #   Add local ncludes
+    #   Add local includes
     #
     QMAKE_CFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
     QMAKE_CXXFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
