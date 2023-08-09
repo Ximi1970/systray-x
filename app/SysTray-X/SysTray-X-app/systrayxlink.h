@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QJsonDocument>
 #include <QList>
+#include <QMap>
 #include <QPoint>
 
 /*
