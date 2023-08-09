@@ -14,7 +14,6 @@
 #include <QObject>
 #include <QJsonDocument>
 #include <QList>
-#include <QMap>
 #include <QPoint>
 
 /*
@@ -127,7 +126,7 @@ class SysTrayXLink : public QObject
          *
          * @param positions     List of the positions of the TB windows
          */
-        void    sendPositions( QMap< quint64, QPoint > positions );
+        void    sendPositions( QList< QPoint > positions );
 
     private:
 
@@ -337,7 +336,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief slotPositions. Slot for handling a window positions change.
          */
-        void    slotPositions( QMap< quint64,  QPoint > positions );
+        void    slotPositions( QList< QPoint > positions );
 
         /**
          * @brief slotThemeChange. Slot for handling theme change signals.

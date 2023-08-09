@@ -553,7 +553,7 @@ void    WindowCtrlUnix::updatePositions()
 
     if( changed )
     {
-        emit signalPositions( m_tb_window_positions );
+        emit signalPositions( m_tb_window_positions.values() );
     }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_END

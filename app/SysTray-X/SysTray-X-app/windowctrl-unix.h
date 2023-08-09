@@ -18,6 +18,7 @@
  *	Qt includes
  */
 #include <QObject>
+#include <QList>
 #include <QMap>
 #include <QPoint>
 
@@ -346,7 +347,7 @@ class WindowCtrlUnix : public QObject
          *
          * @param positions
          */
-        void    signalPositions( QMap< quint64, QPoint > positions );
+        void    signalPositions( QList< QPoint > positions );
 
    private:
 
