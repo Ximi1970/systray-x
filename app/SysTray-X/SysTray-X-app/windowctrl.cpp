@@ -336,6 +336,15 @@ void    WindowCtrl::slotShowHide()
      */
     findWindows( m_ppid );
 
+#ifdef Q_OS_WIN
+
+    /*
+     *  Restore hidden windows ( not found by findWindws() )
+     */
+    normalizeWindowsHidden();
+
+#endif
+
 #ifdef Q_OS_UNIX
 
     /*
@@ -380,12 +389,6 @@ void    WindowCtrl::slotShowHide()
             }
         }
     }
-
-#ifdef Q_OS_WIN
-
-    normalizeWindowsHidden();
-
-#endif
 
     /*
      *  Mark action
