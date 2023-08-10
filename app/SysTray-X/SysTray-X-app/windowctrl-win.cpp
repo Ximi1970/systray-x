@@ -36,6 +36,7 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
+    m_tb_windows_hidden = QList< quint64 >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
 
     /*
@@ -403,9 +404,15 @@ void    WindowCtrlWin::minimizeWindowToTaskbar( quint64 window )
  */
 void    WindowCtrlWin::minimizeWindowToTray( quint64 window )
 {
+    ShowWindow( (HWND)window, SW_HIDE );
+
+    m_tb_windows_hidden.append( window );
+
+/*
     ShowWindow( (HWND)window, SW_MINIMIZE );
 
     hideWindow( (HWND)window );
+*/
 }
 
 
@@ -428,6 +435,25 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
 
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
+}
+
+
+/*
+ *  Normalize a window
+ */
+void    WindowCtrlWin::normalizeWindowsHidden()
+{
+    for( int i ; i < m_tb_windows_hidden.length ; ++i )
+    {
+        ShowWindow( (HWND)m_tb_windows_hidden.hidden.at( i ), SW_SHOW);
+    }
+
+    if( m_tb_windows_hidden.length > 0 )
+    {
+        SetForegroundWindow( (HWND)m_tb_windows_hidden.at( 0 ) );
+    }
+
+    m_tb_windows_hidden.clear();
 }
 
 

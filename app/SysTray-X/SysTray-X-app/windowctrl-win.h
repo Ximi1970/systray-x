@@ -326,6 +326,11 @@ class WindowCtrlWin : public QObject
         QList< quint64 >  m_tb_windows;
 
         /**
+         * @brief m_tb_windows_hidden. The Thunderbird hidden windows.
+         */
+        QList< quint64 >  m_tb_windows_hidden;
+
+        /**
          * @brief m_tb_window_states. The Thunderbird window states.
          */
         QMap< quint64, Preferences::WindowState >    m_tb_window_states;

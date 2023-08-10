@@ -381,6 +381,12 @@ void    WindowCtrl::slotShowHide()
         }
     }
 
+#ifdef Q_OS_WIN
+
+    normalizeWindowsHidden();
+
+#endif
+
     /*
      *  Mark action
      */
