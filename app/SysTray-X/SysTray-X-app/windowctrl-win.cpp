@@ -443,12 +443,12 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
  */
 void    WindowCtrlWin::normalizeWindowsHidden()
 {
-    for( int i ; i < m_tb_windows_hidden.length ; ++i )
+    for( int i = 0 ; i < m_tb_windows_hidden.length() ; ++i )
     {
-        ShowWindow( (HWND)m_tb_windows_hidden.at( i ), SW_SHOW);
+        ShowWindow( (HWND)m_tb_windows_hidden.at( i ), SW_SHOW );
     }
 
-    if( m_tb_windows_hidden.length > 0 )
+    if( m_tb_windows_hidden.length() > 0 )
     {
         SetForegroundWindow( (HWND)m_tb_windows_hidden.at( 0 ) );
     }
