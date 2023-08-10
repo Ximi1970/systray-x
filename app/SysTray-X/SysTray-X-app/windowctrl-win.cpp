@@ -439,13 +439,13 @@ void    WindowCtrlWin::normalizeWindow( quint64 window )
 
 
 /*
- *  Normalize a window
+ *  Normalize hidden windows
  */
 void    WindowCtrlWin::normalizeWindowsHidden()
 {
     for( int i ; i < m_tb_windows_hidden.length ; ++i )
     {
-        ShowWindow( (HWND)m_tb_windows_hidden.hidden.at( i ), SW_SHOW);
+        ShowWindow( (HWND)m_tb_windows_hidden.at( i ), SW_SHOW);
     }
 
     if( m_tb_windows_hidden.length > 0 )

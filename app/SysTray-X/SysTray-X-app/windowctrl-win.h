@@ -211,6 +211,11 @@ class WindowCtrlWin : public QObject
         void    normalizeWindow( quint64 window );
 
         /**
+         * @brief normalizeWindowsHidden. Normalize hidden windows.
+         */
+        void    normalizeWindowsHidden();
+
+        /**
          * @brief deleteWindow. Delete window.
          *
          *  @param window   The window.
