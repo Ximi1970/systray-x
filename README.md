@@ -232,7 +232,7 @@ Installing the repository:
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing/Release.key
-sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
+sudo cp -f Release.key /etc/apt/trusted.gpg.d/SysTray-X.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
@@ -241,7 +241,7 @@ sudo apt update
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable/Release.key
-sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
+sudo cp -f Release.key /etc/apt/trusted.gpg.d/SysTray-X.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
@@ -250,7 +250,7 @@ sudo apt update
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_12/Release.key
-sudo cp -f Release.key /etc/apt/trusted.d.gpg.d/SysTray-X.asc
+sudo cp -f Release.key /etc/apt/trusted.gpg.d/SysTray-X.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_12 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
