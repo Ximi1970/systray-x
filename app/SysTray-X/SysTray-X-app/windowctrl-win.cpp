@@ -22,12 +22,6 @@
 
 
 /*
- *  Initialize statics
- */
-WindowCtrlWin*  WindowCtrlWin::m_ctrl_parent = nullptr;
-
-
-/*
  *  Constructor
  */
 WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
@@ -38,12 +32,6 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
     m_tb_windows = QList< quint64 >();
     m_tb_windows_hidden = QList< quint64 >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
-
-    /*
-     * Setup the minimize intercept
-     */
-    m_ctrl_parent = this;
-    interceptMinimizeWindow();
 }
 
 
@@ -52,10 +40,6 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
  */
 WindowCtrlWin::~WindowCtrlWin()
 {
-    /*
-     * Remove the intercept hook
-     */
-    stopInterceptMinimizeWindow();
 }
 
 
@@ -316,77 +300,6 @@ void    WindowCtrlWin::displayWindowElements( quint64 window )
 QList< quint64 >   WindowCtrlWin::getWinIds()
 {
     return m_tb_windows;
-}
-
-
-/*
- * Intercept the minimize event
- */
-void    WindowCtrlWin::interceptMinimizeWindow()
-{
-    m_hook = SetWinEventHook(
-                (DWORD)EVENT_OBJECT_LOCATIONCHANGE, (DWORD)EVENT_OBJECT_LOCATIONCHANGE,
-                (HMODULE)NULL,
-                (WINEVENTPROC)handleWinEvent,
-                (DWORD)getPpid(), (DWORD)0,
-                (DWORD)WINEVENT_OUTOFCONTEXT );
-}
-
-
-/*
- * Remove the intercept hook
- */
-void    WindowCtrlWin::stopInterceptMinimizeWindow()
-{
-    UnhookWinEvent( m_hook );
-}
-
-
-/*
- * Hook callback
- */
-void CALLBACK   WindowCtrlWin::handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hWnd,
-                         LONG idObject, LONG idChild,
-                         DWORD dwEventThread, DWORD dwmsEventTime )
-{
-    Q_UNUSED( hook );
-    Q_UNUSED( idObject );
-    Q_UNUSED( idChild );
-    Q_UNUSED( dwEventThread );
-    Q_UNUSED( dwmsEventTime );
-
-    if( EVENT_OBJECT_LOCATIONCHANGE == event )
-    {
-        WINDOWPLACEMENT wp;
-        wp.length = sizeof( WINDOWPLACEMENT );
-        GetWindowPlacement( hWnd, &wp );
-
-        if( SW_SHOWMINIMIZED == wp.showCmd )
-        {
-            /*
-             * Window is minimized
-             */
-            if( m_ctrl_parent )
-            {
-                m_ctrl_parent->hookAction( hWnd );
-            }
-        }
-    }
-}
-
-
-/*
- * Non-static method to use by the hook callback
- */
-void    WindowCtrlWin::hookAction( HWND hWnd )
-{
-    if( getMinimizeType() > 0 )
-    {
-        /*
-         * Hide to tray
-         */
-        hideWindow( hWnd );
-    }
 }
 
 

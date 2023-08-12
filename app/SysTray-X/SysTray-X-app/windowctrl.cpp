@@ -287,7 +287,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             }
         }
     }
-#ifdef Q_OS_UNIX
     else
     {
         if( state == Preferences::STATE_MINIMIZED )
@@ -301,15 +300,15 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                    /*
                     *  Hide the window
                     */
-                    if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+                    //                   if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+                    if( getWindowState( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
                     {
                         minimizeWindowToTray( win_ids.at( i ) );
                     }
-               }
+                }
             }
         }
     }
-#endif
 
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "State change done" );

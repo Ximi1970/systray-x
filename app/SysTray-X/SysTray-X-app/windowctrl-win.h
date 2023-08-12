@@ -316,13 +316,6 @@ class WindowCtrlWin : public QObject
          */
         void    signalConsole( QString message );
 
-    protected:
-
-        /**
-         * @brief m_intercept
-         */
-        static WindowCtrlWin*  m_ctrl_parent;
-
     private:
 
         /**
