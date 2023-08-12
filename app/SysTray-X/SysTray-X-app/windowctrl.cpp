@@ -300,8 +300,11 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                    /*
                     *  Hide the window
                     */
-                    //                   if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+#ifdef Q_OS_UNIX
+                    if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+#else
                     if( getWindowState( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+#endif
                     {
                         minimizeWindowToTray( win_ids.at( i ) );
                     }
