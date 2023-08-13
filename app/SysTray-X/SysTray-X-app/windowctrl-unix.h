@@ -216,15 +216,6 @@ class WindowCtrlUnix : public QObject
         QString getProcessName( qint64 pid ) const;
 
         /**
-         * @brief findWindow. Find window by (sub)title.
-         *
-         *  @param title    The title to find.
-         *
-         *  @return     State of the find.
-         */
-        bool    findWindow( const QString& title );
-
-        /**
          * @brief findWindows. Find all windows of a process.
          *
          *  @param pid      The process id.
@@ -255,20 +246,6 @@ class WindowCtrlUnix : public QObject
          *  @return     The window state.
          */
         const Preferences::WindowState&    getWindowStateX11( const quint64 window );
-
-        /**
-         * @brief displayWindowElements. Display window elements (atoms).
-         *
-         *  @param title    The window title to find.
-         */
-        void    displayWindowElements( const QString& title );
-
-        /**
-         * @brief displayWindowElements. Display window elements (atoms).
-         *
-         *  @param window    The window.
-         */
-        void    displayWindowElements( quint64 window );
 
         /**
          * @brief updatePositions. Update the window positions.
