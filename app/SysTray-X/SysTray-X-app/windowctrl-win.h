@@ -144,15 +144,6 @@ class WindowCtrlWin : public QObject
         QString getProcessName( qint64 pid ) const;
 
         /**
-         * @brief findWindow. Find window by title.
-         *
-         *  @param title    The (part)title to find.
-         *
-         *  @return     State of the find.
-         */
-        bool    findWindow( const QString& title );
-
-        /**
          * @brief findWindow. Find window by pid.
          *
          *  @param pid  The pid to find.
@@ -167,20 +158,6 @@ class WindowCtrlWin : public QObject
          *  @return     The window state.
          */
         const Preferences::WindowState&    getWindowState( const quint64 window );
-
-        /**
-         * @brief displayWindowElements. Display window elements.
-         *
-         *  @param title    The title to find.
-         */
-        void    displayWindowElements( const QString& title );
-
-        /**
-         * @brief displayWindowElements. Display window elements.
-         *
-         *  @param title    The window id.
-         */
-        void    displayWindowElements( quint64 window );
 
         /**
          * @brief getWinIds. Get the Thunderbird window IDs.
@@ -225,23 +202,6 @@ class WindowCtrlWin : public QObject
     private:
 
         /**
-         * @brief hideWindow. Hide window.
-         *
-         *  @param hwnd     The window.
-         */
-        void    hideWindow( HWND hwnd );
-
-        /**
-         * @brief EnumWindowsTitleProc. Callback for window enumaration by title.
-         *
-         *  @param hwnd         Handle of window.
-         *  @param lParam       Argument passed by EnumWindows.
-         *
-         *  @return     State of callback. (TRUE = continue / FALSE = stop)
-         */
-        static BOOL CALLBACK  enumWindowsTitleProc( HWND hwnd, LPARAM lParam );
-
-        /**
          * @brief EnumWindowsPidProc. Callback for window enumaration by pid.
          *
          *  @param hwnd         Handle of window.
@@ -259,36 +219,6 @@ class WindowCtrlWin : public QObject
          *  @return     Result of the check.
          */
         static BOOL isMainWindow( HWND hwnd );
-
-        /**
-         * @brief interceptMinimizeWindow. Intercept minimize event of the TB window.
-         */
-        void    interceptMinimizeWindow();
-
-        /**
-         * @brief stopInterceptMinimizeWindow. Remove the intercept hook.
-         */
-        void    stopInterceptMinimizeWindow();
-
-        /**
-         * @brief handleWinEvent. Callback for the hook.
-         *
-         *  @param hook
-         *  @param event
-         *  @param hwnd
-         *  @param idObject
-         *  @param idChild
-         *  @param dwEventThread
-         *  @param dwmsEventTime
-         */
-        static void CALLBACK    handleWinEvent( HWINEVENTHOOK hook, DWORD event, HWND hwnd,
-                                                    LONG idObject, LONG idChild,
-                                                    DWORD dwEventThread, DWORD dwmsEventTime);
-
-        /**
-         * @brief hookAction. Non-static function to be used by the hook callback.
-         */
-        void    hookAction( HWND hWnd );
 
     signals:
 

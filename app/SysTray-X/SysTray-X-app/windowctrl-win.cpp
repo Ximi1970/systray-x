@@ -7,12 +7,11 @@
  */
 #include <TlHelp32.h>
 #include <Psapi.h>
-#include <CommCtrl.h>
 
 /*
  * Standard library includes
  */
-#include <array>
+//#include <array>
 
 /*
  * Qt includes
@@ -40,15 +39,6 @@ WindowCtrlWin::WindowCtrlWin( QObject *parent) : QObject( parent )
  */
 WindowCtrlWin::~WindowCtrlWin()
 {
-}
-
-
-/*
- *  Get the states of the TB windows.
- */
-const Preferences::WindowState&    WindowCtrlWin::getWindowState( const quint64 window )
-{
-    return m_tb_window_states[ window ];
 }
 
 
@@ -160,43 +150,6 @@ QString WindowCtrlWin::getProcessName( qint64 pid ) const
 
 
 /*
- *  Find the window by title
- */
-bool    WindowCtrlWin::findWindow( const QString& title )
-{
-    m_tb_windows = QList< quint64 >();
-
-    EnumWindowsTitleProcData data{ *this, title.toStdString() };
-
-    EnumWindows( &enumWindowsTitleProc, reinterpret_cast<LPARAM>(&data) );
-
-    if( m_tb_windows.length() == 0 )
-    {
-        return false;
-    }
-
-    return true;
-}
-
-
-/*
- *  Callback for the window enumaration title find.
- */
-BOOL CALLBACK   WindowCtrlWin::enumWindowsTitleProc( HWND hwnd, LPARAM lParam )
-{
-    auto& data = *reinterpret_cast<EnumWindowsTitleProcData*>(lParam);
-    std::array<char, 128> buffer;
-    int written = GetWindowTextA( hwnd, buffer.data(), int(buffer.size()) );
-    if( written && strstr( buffer.data(), data.title.c_str() ) != nullptr )
-    {
-        data.window_ctrl.m_tb_windows.append( (quint64)hwnd );
-    }
-
-    return TRUE;
-}
-
-
-/*
  *  Find the window by pid
  */
 void    WindowCtrlWin::findWindows( qint64 pid )
@@ -206,15 +159,6 @@ void    WindowCtrlWin::findWindows( qint64 pid )
 
     EnumWindowsPidProcData data{ *this, pid };
     EnumWindows( &enumWindowsPidProc, reinterpret_cast<LPARAM>(&data) );
-
- /*
-    emit signalConsole( QString( "Number of windows found: %1" ).arg( m_tb_windows.length() ) );
-
-    for( int i = 0 ; i< m_tb_windows.length() ; ++i )
-    {
-        emit signalConsole( QString( "WinID %1, State %2" ).arg( m_tb_windows.at( i ) ).arg( m_tb_window_states.at( i ) ) );
-    }
- */
 }
 
 
@@ -271,26 +215,11 @@ BOOL    WindowCtrlWin::isMainWindow( HWND hwnd )
 
 
 /*
- *  Display the window elements
+ *  Get the states of the TB windows.
  */
-void    WindowCtrlWin::displayWindowElements( const QString& title )
+const Preferences::WindowState&    WindowCtrlWin::getWindowState( const quint64 window )
 {
-    findWindow( title );
-
-    QList< quint64 > winIds = getWinIds();
-    for( int i = 0 ; i < winIds.length() ; i++ )
-    {
-        emit signalConsole( QString( "Found: XID %1" ).arg( winIds[ i ] ) );
-    }
-}
-
-
-/*
- *  Display the window elements
- */
-void    WindowCtrlWin::displayWindowElements( quint64 window )
-{
-    emit signalConsole( QString( "Found: XID %1" ).arg( window ) );
+    return m_tb_window_states[ window ];
 }
 
 
@@ -320,12 +249,6 @@ void    WindowCtrlWin::minimizeWindowToTray( quint64 window )
     ShowWindow( (HWND)window, SW_HIDE );
 
     m_tb_windows_hidden.append( window );
-
-/*
-    ShowWindow( (HWND)window, SW_MINIMIZE );
-
-    hideWindow( (HWND)window );
-*/
 }
 
 
@@ -334,18 +257,6 @@ void    WindowCtrlWin::minimizeWindowToTray( quint64 window )
  */
 void    WindowCtrlWin::normalizeWindow( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
-    long style = GetWindowLong( (HWND)window, GWL_STYLE );
-
-    style &= ~(WS_EX_TOOLWINDOW);
-    style |= WS_EX_APPWINDOW;
-
-    SetWindowLong( (HWND)window, GWL_STYLE, style );
-
     ShowWindow( (HWND)window, SW_RESTORE );
     SetForegroundWindow( (HWND)window );
 }
@@ -371,30 +282,10 @@ void    WindowCtrlWin::normalizeWindowsHidden()
 
 
 /*
- *  Hide a window
- */
-void    WindowCtrlWin::hideWindow( HWND hwnd )
-{
-    long style = GetWindowLong( hwnd, GWL_STYLE );
-
-    style &= ~(WS_VISIBLE);
-    style |= WS_EX_TOOLWINDOW;
-    style &= ~(WS_EX_APPWINDOW);
-
-    SetWindowLong( hwnd, GWL_STYLE, style );
-}
-
-
-/*
  *  Delete / Close a window
  */
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
-    if( !isThunderbird( getPpid() ) )
-    {
-        return;
-    }
-
     SendMessageA(  (HWND)window, WM_CLOSE, 0, 0 );
 }
 
