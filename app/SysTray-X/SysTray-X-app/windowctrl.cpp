@@ -73,30 +73,6 @@ void    WindowCtrl::slotWindowTest1()
 
     // Do something.
 
-//    signalHideDefaultIconChange( true );
-
-//    emit signalShow();
-
-//    emit signalConsole( QString( "Found Ppid: %1" ).arg( getPpid() ) );
-//    emit signalConsole( QString( "Found XID: %1" ).arg( getWinId() ) );
-
-//    findWindow( "- Mozilla Thunderbird" );
-//    displayWindowElements( "- Mozilla Thunderbird" );
-//    findWindow( 4313 );
-//    displayWindowElements( getWinId() );
-
-//#define MINIMIZE_TEST
-#ifdef  MINIMIZE_TEST
-    emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
-    findWindows( m_ppid );
-
-    QList< quint64 > win_ids = getWinIds();
-
-    emit signalConsole( QString( "Number of ids: %1" ).arg( win_ids.length() ) );
-
-    minimizeWindow( win_ids.at( 0 ) );
-#endif
-
     emit signalConsole("Test 1 done");
 }
 
@@ -110,24 +86,6 @@ void    WindowCtrl::slotWindowTest2()
 
     // Do something.
 
-//    signalHideDefaultIconChange( false );
-
-//    emit signalHide();
-
-//    hideWindow( getWinId(), true );
-
-//#define NORMALIZE_TEST
-#ifdef  NORMALIZE_TEST
-    emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
-    findWindows( m_ppid );
-
-    QList< quint64 > win_ids = getWinIds();
-
-    emit signalConsole( QString( "Number of ids: %1" ).arg( win_ids.length() ) );
-
-    normalizeWindow( win_ids.at( 0 ) );
-#endif
-
     emit signalConsole("Test 2 done");
 }
 
@@ -140,16 +98,6 @@ void    WindowCtrl::slotWindowTest3()
     emit signalConsole("Test 3 started");
 
     // Do something.
-//    hideWindow( getWinId(), false );
-
-//    emit signalConsole( QString( "Pid %1" ).arg( m_pid ) );
-//    emit signalConsole( QString( "Ppid %1" ).arg( m_ppid ) );
-
-//#define FINDWINDOW_TEST
-#ifdef  FINDWINDOW_TEST
-    emit signalConsole( QString( "Pid: %1").arg( m_ppid ) );
-    findWindows( m_ppid );
-#endif
 
     emit signalConsole("Test 3 done");
 }
@@ -163,12 +111,6 @@ void    WindowCtrl::slotWindowTest4()
     emit signalConsole("Test 4 started");
 
     // Do something.
-
-#ifdef Q_OS_UNIX
-
-    disableX11ErrorHandler();
-
-#endif
 
     emit signalConsole("Test 4 done");
 }
@@ -300,11 +242,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                    /*
                     *  Hide the window
                     */
-#ifdef Q_OS_UNIX
-                    if( getWindowStateX11( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
-#else
                     if( getWindowState( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
-#endif
                     {
                         minimizeWindowToTray( win_ids.at( i ) );
                     }

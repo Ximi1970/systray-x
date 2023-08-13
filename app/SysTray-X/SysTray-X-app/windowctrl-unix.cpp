@@ -38,7 +38,6 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states_x11 = QMap< quint64, Preferences::WindowState >();
     m_tb_window_positions = QMap< quint64, QPoint >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
@@ -162,7 +161,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
     QMap< quint64, QPoint > old_positions = m_tb_window_positions;
 
     m_tb_windows = QList< quint64 >();
-    m_tb_window_states_x11 = QMap< quint64, Preferences::WindowState >();
     m_tb_window_positions = QMap< quint64, QPoint >();
     for( int i = 0 ; i < windows.length() ; ++i )
     {
@@ -184,14 +182,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                     {
                         m_tb_windows.append( win.window );
 
-                        if( !m_tb_window_states.contains( win.window ) )
-                        {
-                            /*
-                             *  Set the startup state
-                             */
-                            m_tb_window_states[ win.window ] = Preferences::STATE_NORMAL;
-                        }
-
                         QPoint point;
                         if( old_positions.contains( win.window ) )
                         {
@@ -203,7 +193,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         qint32 n_wm_state;
                         void* wm_state_ptr = GetWindowProperty( m_display, win.window, "WM_STATE", &n_wm_state );
 
-                        Preferences::WindowState state_x11 = Preferences::STATE_DOCKED;
+                        Preferences::WindowState win_state = Preferences::STATE_DOCKED;
                         bool add_new_state = true;
                         if( wm_state_ptr != nullptr )
                         {
@@ -216,7 +206,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Docked
                                      */
-                                    state_x11 = Preferences::STATE_DOCKED;
+                                    win_state = Preferences::STATE_DOCKED;
 
                                     break;
                                 }
@@ -226,7 +216,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Normal
                                      */
-                                    state_x11 = Preferences::STATE_NORMAL;
+                                    win_state = Preferences::STATE_NORMAL;
 
                                     break;
                                 }
@@ -236,7 +226,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                                     /*
                                      *  Minimized
                                      */
-                                    state_x11 = Preferences::STATE_MINIMIZED;
+                                    win_state = Preferences::STATE_MINIMIZED;
 
                                     break;
                                 }
@@ -254,7 +244,7 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 
                         if( add_new_state )
                         {
-                            m_tb_window_states_x11[ win.window ] = state_x11;
+                            m_tb_window_states[ win.window ] = win_state;
                         }
                     }
 
@@ -291,15 +281,6 @@ QList< quint64 >   WindowCtrlUnix::getWinIds()
 const Preferences::WindowState&    WindowCtrlUnix::getWindowState( const quint64 window )
 {
     return m_tb_window_states[ window ];
-}
-
-
-/*
- *  Get the states of the TB windows.
- */
-const Preferences::WindowState&    WindowCtrlUnix::getWindowStateX11( const quint64 window )
-{
-    return m_tb_window_states_x11[ window ];
 }
 
 

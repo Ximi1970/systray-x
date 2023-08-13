@@ -339,11 +339,6 @@ class WindowCtrlUnix : public QObject
         QList< quint64 >    m_tb_windows;
 
         /**
-         * @brief m_tb_window_states_x11. The Thunderbird window states.
-         */
-        QMap< quint64, Preferences::WindowState >    m_tb_window_states_x11;
-
-        /**
          * @brief m_tb_window_positions. The Thunderbird window positions.
          */
         QMap< quint64, QPoint >    m_tb_window_positions;
