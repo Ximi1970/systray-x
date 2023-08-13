@@ -60,10 +60,10 @@ var windowListener = new (class extends ExtensionCommon.EventEmitter {
     this.callbackOnLoadWindowCount = 0;
 
     this.MESSAGE_CLOSE_TYPE_DEFAULT = 0;
-    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN = 1;
-    this.MESSAGE_CLOSE_TYPE_MIN_ALL = 2;
-    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN = 3;
-    this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY = 4;
+    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN = 1;
+    this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY = 2;
+    this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN = 3;
+    this.MESSAGE_CLOSE_TYPE_MIN_ALL = 4;
 
     this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
   }
