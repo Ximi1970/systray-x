@@ -9,11 +9,6 @@
 #include <Psapi.h>
 
 /*
- * Standard library includes
- */
-//#include <array>
-
-/*
  * Qt includes
  */
 #include <QCoreApplication>
