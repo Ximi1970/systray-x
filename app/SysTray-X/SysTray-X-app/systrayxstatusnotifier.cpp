@@ -58,7 +58,10 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
         setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird115.png") ) );
     }
 
-    setTitle("SysTray-X");
+    setTitle( "SysTray-X" );
+
+    setToolTipTitle( "SysTray-X" );
+    setToolTipSubTitle( tr( "Thunderbird add-on companion app" ) );
 
     setStatus( KStatusNotifierItem::ItemStatus::Passive );
     m_hide_default_icon = true;

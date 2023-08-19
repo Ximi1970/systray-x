@@ -37,6 +37,8 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
     setNumberAlignment( m_pref->getNumberAlignment() );
     m_number_margins = m_pref->getNumberMargins();
 
+    setToolTip( tr( "SysTray-X: Thunderbird add-on companion app" ) );
+
     connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
 
