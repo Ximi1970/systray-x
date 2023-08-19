@@ -13,21 +13,11 @@
         <file>files/icons/help-about.png</file>
         <file>files/icons/dialog-warning.png</file>
         <file>languages/SysTray-X.nl.qm</file>
-        <file>languages/SysTray-X.bg.qm</file>
         <file>languages/SysTray-X.de.qm</file>
-        <file>languages/SysTray-X.fr.qm</file>
-        <file>languages/SysTray-X.hr.qm</file>
         <file>languages/SysTray-X.it.qm</file>
-        <file>languages/SysTray-X.pl.qm</file>
-        <file>languages/SysTray-X.sk.qm</file>
-        <file>languages/SysTray-X.uk.qm</file>
         <file>languages/SysTray-X.ru.qm</file>
         <file>languages/SysTray-X.en-US.qm</file>
-        <file>languages/SysTray-X.es-AR.qm</file>
         <file>languages/SysTray-X.pt-BR.qm</file>
-        <file>languages/SysTray-X.pt-BR.ts</file>
-        <file>languages/SysTray-X.zh-CN.qm</file>
-        <file>languages/SysTray-X.zh-TW.qm</file>
         <file>files/icons/blank-icon-dark.png</file>
         <file>files/icons/Thunderbird115.png</file>
     </qresource>
