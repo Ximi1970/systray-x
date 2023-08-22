@@ -331,22 +331,44 @@
         <translation>Νέα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="829"/>
+        <location filename="../preferences.ui" line="837"/>
+        <source>Close application</source>
+        <translation>Κλείσιμο αίτησης</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="850"/>
+        <location filename="../preferences.ui" line="891"/>
+        <source>Browse...</source>
+        <translation>ξεφυλλίζω...</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="861"/>
+        <location filename="../preferences.ui" line="902"/>
+        <source>Arguments:</source>
+        <translation>Επιχειρήματα:</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="878"/>
+        <source>Startup application</source>
+        <translation>Εφαρμογή εκκίνησης</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="935"/>
         <source>Mail</source>
         <translation>Αλληλογραφία</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="835"/>
+        <location filename="../preferences.ui" line="941"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Χρησιμοποιήστε το παράθυρο διαλόγου Προτιμήσεις Thunderbird για να επιλέξετε λογαριασμούς και φακέλους</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="872"/>
+        <location filename="../preferences.ui" line="978"/>
         <source>Debug</source>
         <translation>Αποσφαλμάτωση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="878"/>
+        <location filename="../preferences.ui" line="984"/>
         <source>Display debug window</source>
         <translation>Προβολή παραθύρου αποσφαλμάτωσης</translation>
     </message>
@@ -357,52 +379,63 @@
         <translation>Ελαχιστοποίηση στην περιοχή ειδοποιήσεων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="939"/>
+        <location filename="../preferences.ui" line="829"/>
+        <source>Apps</source>
+        <translation>Εφαρμογές</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1045"/>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="932"/>
+        <location filename="../preferences.ui" line="1038"/>
         <source>Cancel</source>
         <translation>Άκυρο</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Open Image</source>
         <translation>Άνοιγμα εικόνας</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Αρχεία εικόνας (*.png *.jpg *.bmp)</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="673"/>
+        <location filename="../preferencesdialog.cpp" line="687"/>
+        <source>Select application</source>
+        <translation>επιλέξτε εφαρμογή</translation>
     </message>
 </context>
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="220"/>
+        <location filename="../systrayx.cpp" line="235"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Εμφάνιση/Απόκρυψη</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="224"/>
+        <location filename="../systrayx.cpp" line="239"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="228"/>
+        <location filename="../systrayx.cpp" line="243"/>
         <source>&amp;About</source>
         <translation>&amp;Σχετικά</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="232"/>
+        <location filename="../systrayx.cpp" line="247"/>
         <source>&amp;Quit</source>
         <translation>&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="644"/>
+        <location filename="../systrayx.cpp" line="664"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>

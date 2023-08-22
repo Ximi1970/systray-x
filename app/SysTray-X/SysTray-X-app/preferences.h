@@ -463,6 +463,62 @@ class Preferences : public QObject
         void setTheme( Theme theme );
 
         /**
+         * @brief getStartupApplication. Get the startup application.
+         *
+         * @return      The app.
+         */
+        QString getStartupApplication() const;
+
+        /**
+         * @brief setStartupApplication. Set the startup application.
+         *
+         * @param app     The app.
+         */
+        void setStartupApplication( QString app );
+
+        /**
+         * @brief getStartupApplicationArgs. Get the startup application arguments.
+         *
+         * @return      The arg.
+         */
+        QString getStartupApplicationArgs() const;
+
+        /**
+         * @brief setStartupApplicationArgs. Set the startup application arguments.
+         *
+         * @param app     The args.
+         */
+        void setStartupApplicationArgs( QString args );
+
+        /**
+         * @brief getCloseApplication. Get the close application.
+         *
+         * @return      The app.
+         */
+        QString getCloseApplication() const;
+
+        /**
+         * @brief setCloseApplication. Set the close application.
+         *
+         * @param app     The app.
+         */
+        void setCloseApplication( QString app );
+
+        /**
+         * @brief getCloseApplicationArgs. Get the close application arguments.
+         *
+         * @return      The args.
+         */
+        QString getCloseApplicationArgs() const;
+
+        /**
+         * @brief setCloseApplicationArgs. Set the close application arguments.
+         *
+         * @param args     The args.
+         */
+        void setCloseApplicationArgs( QString args );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -612,6 +668,26 @@ class Preferences : public QObject
          * @brief signalThemeChange. Signal a theme state change.
          */
         void signalThemeChange();
+
+        /**
+         * @brief signalStartupAppChange. Signal a startup application change.
+         */
+        void signalStartupAppChange();
+
+        /**
+         * @brief signalStartupAppArgsChange. Signal a startup application arguments change.
+         */
+        void signalStartupAppArgsChange();
+
+        /**
+         * @brief signalCloseAppChange. Signal a close application change.
+         */
+        void signalCloseAppChange();
+
+        /**
+         * @brief signalCloseAppArgsChange. Signal a close application arguments change.
+         */
+        void signalCloseAppArgsChange();
 
     private:
 
@@ -769,6 +845,26 @@ class Preferences : public QObject
          * @brief m_theme. The theme.
          */
         Theme m_theme;
+
+        /**
+         * @brief m_startup_app
+         */
+        QString m_startup_app;
+
+        /**
+         * @brief m_startup_app_args
+         */
+        QString m_startup_app_args;
+
+        /**
+         * @brief m_close_app
+         */
+        QString m_close_app;
+
+        /**
+         * @brief m_close_app_args
+         */
+        QString m_close_app_args;
 };
 
 #endif // PREFERENCES_H

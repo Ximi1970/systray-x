@@ -138,6 +138,22 @@ body {
   padding: 10px 10px 10px 10px;
 }
 
+#startupapplicationselect {
+  width: 25em;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+#closeapplicationselect {
+  width: 25em;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
 ul,
 #accountsTree {
   list-style-type: none;
@@ -196,6 +212,23 @@ ul,
 
 .custom-icon-container > div {
   margin: 10px;
+}
+
+label[id="fileDefaultIconTypeLabel"],
+label[id="fileIconTypeLabel"]
+{
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 button[name="savebutton"] {

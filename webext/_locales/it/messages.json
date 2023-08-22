@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_apps": {
+    "message": "Applicazioni",
+    "description": "Tab for Apps options"
+  },
+
   "tab_mail": {
     "message": "Posta",
     "description": "Tab for Mail options"
@@ -302,6 +307,41 @@
   "icons_theme_dark": {
     "message": "Scuro",
     "description": "The dark theme"
+  },
+
+  "apps": {
+    "message": "Applicazioni",
+    "description": "Title for Apps options"
+  },
+
+  "startup_application": {
+    "message": "Applicazione di avvio",
+    "description": "The startup application parameters"
+  },
+
+  "startup_app": {
+    "message": "Applicazione: ",
+    "description": "The startup application"
+  },
+
+  "startup_app_args": {
+    "message": "Argomenti: ",
+    "description": "Arguments for a startup application"
+  },
+
+  "close_application": {
+    "message": "Applicazione alla chiusura",
+    "description": "The close application parameters"
+  },
+
+  "close_app": {
+    "message": "Applicazione: ",
+    "description": "The close application"
+  },
+
+  "close_app_args": {
+    "message": "Argomenti: ",
+    "description": "Arguments for a close application"
   },
 
   "accounts": {

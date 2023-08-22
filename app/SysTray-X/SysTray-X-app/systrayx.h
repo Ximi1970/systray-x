@@ -138,6 +138,16 @@ class SysTrayX : public QObject
          */
         void    slotLoadLanguage( QString locale );
 
+        /**
+         * @brief slotStartupApp. Handle a startup app launch request.
+         */
+        void    slotStartupApp();
+
+        /**
+         * @brief slotCloseApp. Handle a close app launch request.
+         */
+        void    slotCloseApp();
+
     private slots:
 
         /**

@@ -80,6 +80,11 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_branch = QLatin1String( APP_GITBRANCH );
 
     m_theme = PREF_THEME_LIGHT;
+
+    m_startup_app = "";
+    m_startup_app_args = "";
+    m_close_app = "";
+    m_close_app_args = "";
 }
 
 
@@ -683,6 +688,114 @@ void    Preferences::setTheme( Theme theme )
          *  Tell the world the new preference
          */
         emit signalThemeChange();
+    }
+}
+
+
+/*
+ *  Get the startup application.
+ */
+QString    Preferences::getStartupApplication() const
+{
+
+    return m_startup_app;
+}
+
+
+/*
+ *  Set the startup application.
+ */
+void    Preferences::setStartupApplication( QString app )
+{
+    if( m_startup_app != app )
+    {
+        m_startup_app = app;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartupAppChange();
+    }
+}
+
+
+/*
+ *  Get the startup application arguments.
+ */
+QString    Preferences::getStartupApplicationArgs() const
+{
+
+    return m_startup_app_args;
+}
+
+
+/*
+ *  Set the startup application arguments.
+ */
+void    Preferences::setStartupApplicationArgs( QString args )
+{
+    if( m_startup_app_args != args )
+    {
+        m_startup_app_args = args;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartupAppArgsChange();
+    }
+}
+
+
+/*
+ *  Get the close application.
+ */
+QString    Preferences::getCloseApplication() const
+{
+
+    return m_close_app;
+}
+
+
+/*
+ *  Set the close application.
+ */
+void    Preferences::setCloseApplication( QString app )
+{
+    if( m_close_app != app )
+    {
+        m_close_app = app;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCloseAppChange();
+    }
+}
+
+
+/*
+ *  Get the close application arguments.
+ */
+QString    Preferences::getCloseApplicationArgs() const
+{
+
+    return m_close_app_args;
+}
+
+
+/*
+ *  Set the close application arguments.
+ */
+void    Preferences::setCloseApplicationArgs( QString args )
+{
+    if( m_close_app_args != args )
+    {
+        m_close_app_args = args;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCloseAppArgsChange();
     }
 }
 

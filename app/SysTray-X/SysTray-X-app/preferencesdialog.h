@@ -209,6 +209,35 @@ class PreferencesDialog : public QDialog
          */
         void    setTheme( Preferences::Theme theme );
 
+        /**
+         * @brief setStartupApplication. Set the startup application.
+         *
+         * @param app     The application.
+         */
+        void    setStartupApplication( QString app );
+
+        /**
+         * @brief setStartupApplicationArgs. Set the startup application arguments.
+         *
+         * @param args     The application arguments.
+         */
+        void    setStartupApplicationArgs( QString args );
+
+        /**
+         * @brief setCloseApplication. Set the close application.
+         *
+         * @param app     The application.
+         */
+        void    setCloseApplication( QString app );
+
+        /**
+         * @brief setCloseApplicationArgs. Set the close application arguments.
+         *
+         * @param args     The application arguments.
+         */
+        void    setCloseApplicationArgs( QString args );
+
+
     signals:
 
         /**
@@ -325,6 +354,26 @@ class PreferencesDialog : public QDialog
          */
         void    slotThemeChange();
 
+        /**
+         * @brief slotStartupAppChange. Slot for handling startup application change.
+         */
+        void    slotStartupAppChange();
+
+        /**
+         * @brief slotStartupAppArgsChange. Slot for handling startup application arguments change.
+         */
+        void    slotStartupAppArgsChange();
+
+        /**
+         * @brief slotCloseAppChange. Slot for handling close application change.
+         */
+        void    slotCloseAppChange();
+
+        /**
+         * @brief slotCloseAppArgsChange. Slot for handling close application arguments change.
+         */
+        void    slotCloseAppArgsChange();
+
     private slots:
 
         /**
@@ -351,6 +400,16 @@ class PreferencesDialog : public QDialog
          * @brief slotColorSelect. Handle the choose color button click.
          */
         void    slotColorSelect();
+
+        /**
+         * @brief slotStartupApplicationSelect. Handle the startup application button click.
+         */
+        void    slotStartupApplicationSelect();
+
+        /**
+         * @brief slotCloseApplicationSelect. Handle the close application button click.
+         */
+        void    slotCloseApplicationSelect();
 
     private:
 

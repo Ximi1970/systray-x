@@ -300,6 +300,27 @@ SysTrayX.SaveOptions = {
       startupDelay: startupDelay,
     });
 
+    //
+    //  Save launch parameters
+    //
+    const startupAppInput = document.getElementById("startupAppInput");
+    const startupApp = startupAppInput.value;
+    const startupAppArgsInput = document.getElementById("startupAppArgsInput");
+    const startupAppArgs = startupAppArgsInput.value;
+
+    const closeAppInput = document.getElementById("closeAppInput");
+    const closeApp = closeAppInput.value;
+    const closeAppArgsInput = document.getElementById("closeAppArgsInput");
+    const closeAppArgs = closeAppArgsInput.value;
+
+    //  Store launch parameters
+    await storage().set({
+      startupApp: startupApp,
+      startupAppArgs: startupAppArgs,
+      closeApp: closeApp,
+      closeAppArgs: closeAppArgs,
+    });
+
     //  Mark add-on preferences changed
     await storage().set({
       addonprefchanged: true,
@@ -510,6 +531,37 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setTheme,
         SysTrayX.RestoreOptions.onThemeError
+      );
+
+    //
+    //  Restore launch parameters
+    //
+    await storage()
+      .get("startupApp")
+      .then(
+        SysTrayX.RestoreOptions.setStartupApp,
+        SysTrayX.RestoreOptions.onStartupAppError
+      );
+
+      await storage()
+      .get("startupAppArgs")
+      .then(
+        SysTrayX.RestoreOptions.setStartupAppArgs,
+        SysTrayX.RestoreOptions.onStartupAppArgsError
+      );
+
+      await storage()
+      .get("closeApp")
+      .then(
+        SysTrayX.RestoreOptions.setCloseApp,
+        SysTrayX.RestoreOptions.onCloseAppError
+      );
+
+      await storage()
+      .get("closeAppArgs")
+      .then(
+        SysTrayX.RestoreOptions.setCloseAppArgs,
+        SysTrayX.RestoreOptions.onCloseAppArgsError
       );
   },
 
@@ -912,6 +964,62 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore startup app callbacks
+  //
+  setStartupApp: function (result) {
+    const startupApp = result.startupApp || "";
+
+    const startupAppInput = document.getElementById("startupAppInput");
+    startupAppInput.value = startupApp;
+  },
+
+  onStartupAppError: function (error) {
+    console.log(`StartupApp Error: ${error}`);
+  },
+
+  //
+  //  Restore startup app args callbacks
+  //
+  setStartupAppArgs: function (result) {
+    const startupAppArgs = result.startupAppArgs || "";
+
+    const startupAppArgsInput = document.getElementById("startupAppArgsInput");
+    startupAppArgsInput.value = startupAppArgs;
+  },
+
+  onStartupAppArgsError: function (error) {
+    console.log(`StartupAppArgs Error: ${error}`);
+  },
+
+  //
+  //  Restore close app callbacks
+  //
+  setCloseApp: function (result) {
+    const closeApp = result.closeApp || "";
+
+    const closeAppInput = document.getElementById("closeAppInput");
+    closeAppInput.value = closeApp;
+  },
+
+  onCloseAppError: function (error) {
+    console.log(`CloseApp Error: ${error}`);
+  },
+
+  //
+  //  Restore close app args callbacks
+  //
+  setCloseAppArgs: function (result) {
+    const closeAppArgs = result.closeAppArgs || "";
+
+    const closeAppArgsInput = document.getElementById("closeAppArgsInput");
+    closeAppArgsInput.value = closeAppArgs;
+  },
+
+  onCloseAppArgsError: function (error) {
+    console.log(`CloseAppArgs Error: ${error}`);
+  },
+
+  //
   //  Restore filters callbacks
   //
   setFilters: function (result) {
@@ -1161,6 +1269,26 @@ SysTrayX.StorageChanged = {
           theme: changes[item].newValue,
         });
       }
+      if (item === "startupApp") {
+        SysTrayX.RestoreOptions.setStartupApp({
+          startupApp: changes[item].newValue,
+        });
+      }
+      if (item === "startupAppArgs") {
+        SysTrayX.RestoreOptions.setStartupAppArgs({
+          startupAppArgs: changes[item].newValue,
+        });
+      }
+      if (item === "closeApp") {
+        SysTrayX.RestoreOptions.setCloseApp({
+          closeApp: changes[item].newValue,
+        });
+      }
+      if (item === "closeAppArgs") {
+        SysTrayX.RestoreOptions.setCloseAppArgs({
+          closeAppArgs: changes[item].newValue,
+        });
+      }
 
       if (item === "filters") {
         SysTrayX.RestoreOptions.setFilters({
@@ -1193,6 +1321,8 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
     document.getElementById("themeselect").className = "active";
+    document.getElementById("startupapplicationselect").className = "active";
+    document.getElementById("closeapplicationselect").className = "active";
   },
 };
 
