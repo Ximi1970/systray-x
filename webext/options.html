@@ -29,6 +29,7 @@
     <div class="tab">
       <button class="tablinks active" id="Windows">__MSG_tab_windows__</button>
       <button class="tablinks" id="Icon">__MSG_tab_icon__</button>
+      <button class="tablinks" id="Apps">__MSG_tab_apps__</button>
       <button class="tablinks" id="Mail">__MSG_tab_mail__</button>
       <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
     </div>
@@ -219,8 +220,7 @@
             <td>
               <label
                 for="selectedFileDefaultIconType"
-                style="-moz-appearance: button"
-                }
+                id="fileDefaultIconTypeLabel"
                 >__MSG_icons_default_custom_choose__</label
               >
               <input
@@ -299,8 +299,7 @@
             <td>
               <label
                 for="selectedFileIconType"
-                style="-moz-appearance: button"
-                }
+                id="fileIconTypeLabel"
                 >__MSG_icons_unread_custom_choose__</label
               >
               <input
@@ -512,6 +511,68 @@
       <div id="icon" data-icon-mime="" data-icon=""></div>
 
       <script src="js/options_iconform.js"></script>
+    </div>
+
+    <div id="AppsContent" class="tabcontent">
+      <form name="appsform">
+        <h3>__MSG_apps__</h3>
+
+        <table id="startappselect">
+          <caption>
+            __MSG_start_application__
+          </caption>
+          <tr id="startApp">
+            <td>
+              <label>__MSG_start_app__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="startAppInput"
+              />
+            </td>
+          </tr>
+          <tr id="startAppArgs">
+            <td>
+              <label>__MSG_start_app_args__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="startAppArgsInput"
+              />
+            </td>
+          </tr>
+        </table>
+
+        <table id="closeappselect">
+          <caption>
+            __MSG_close_application__
+          </caption>
+          <tr id="closeApp">
+            <td>
+              <label>__MSG_close_app__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="closeAppInput"
+              />
+            </td>
+          </tr>
+          <tr id="closeAppArgs">
+            <td>
+              <label>__MSG_close_app_args__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="closeAppArgsInput"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
     </div>
 
     <div id="MailContent" class="tabcontent">

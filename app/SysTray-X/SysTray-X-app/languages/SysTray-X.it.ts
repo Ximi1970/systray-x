@@ -193,10 +193,6 @@
         <translation>Minimizzazione predefinita</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Minimizza nel vassoio, metodo 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimizza nel vassoio, metodo 2</translation>
@@ -332,22 +328,39 @@
         <translation>Nuovi</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="829"/>
+        <location filename="../preferences.ui" line="837"/>
+        <source>Close application</source>
+        <translation>Applicazione alla chiusura</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="850"/>
+        <location filename="../preferences.ui" line="891"/>
+        <source>Browse...</source>
+        <translation>Sfogliare...</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="861"/>
+        <location filename="../preferences.ui" line="902"/>
+        <source>Arguments:</source>
+        <translation>Argomenti:</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="935"/>
         <source>Mail</source>
         <translation>Messaggi</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="835"/>
+        <location filename="../preferences.ui" line="941"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Usa la finestra di dialogo delle preferenze in Thunderbird per selezionare account e cartelle</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="872"/>
+        <location filename="../preferences.ui" line="978"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="878"/>
+        <location filename="../preferences.ui" line="984"/>
         <source>Display debug window</source>
         <translation>Mostra finestra di debug</translation>
     </message>
@@ -358,52 +371,68 @@
         <translation>Minimizza nel vassoio</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="939"/>
+        <location filename="../preferences.ui" line="829"/>
+        <source>Apps</source>
+        <translation>Applicazioni</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="878"/>
+        <source>Start application</source>
+        <translation>Applicazione di avvio</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1045"/>
         <source>Save</source>
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="932"/>
+        <location filename="../preferences.ui" line="1038"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Open Image</source>
         <translation>Apri immagine</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>File immagine (*.png *.jpg *.bmp)</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="673"/>
+        <location filename="../preferencesdialog.cpp" line="687"/>
+        <source>Select application</source>
+        <translation>Selezionare l&apos;applicazione</translation>
     </message>
 </context>
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="220"/>
+        <location filename="../systrayx.cpp" line="235"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Mostra/Nascondi</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="224"/>
+        <location filename="../systrayx.cpp" line="239"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferenze</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="228"/>
+        <location filename="../systrayx.cpp" line="243"/>
         <source>&amp;About</source>
         <translation>&amp;Informazioni</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="232"/>
+        <location filename="../systrayx.cpp" line="247"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="644"/>
+        <location filename="../systrayx.cpp" line="664"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>

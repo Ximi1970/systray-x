@@ -5,6 +5,9 @@ var SysTrayX = {
   startupWindowPositions: [],
 
   hideDefaultIcon: false,
+
+  startApp: "",
+  startAppArgs: "",
 };
 
 SysTrayX.Info = {
@@ -62,6 +65,9 @@ SysTrayX.Messaging = {
 
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
+
+    //  Send start app trigger
+    SysTrayX.Messaging.sendStartApp();
 
     //  Let us wait until TB is ready, needed for TB91 and higher?
     const startupDelay = await storage()
@@ -525,6 +531,19 @@ SysTrayX.Messaging = {
     });
   },
 
+  sendStartApp: function () {
+    SysTrayX.Link.postSysTrayXMessage({
+      startApp: SysTrayX.startApp,
+      startAppArgs: SysTrayX.startAppArgs,
+    });
+  },
+
+  sendCloseApp: function () {
+    SysTrayX.Link.postSysTrayXMessage({
+      closeApp: "closeApp",
+    });
+  },
+
   sendPreferences: async function () {
     await storage()
       .get([
@@ -549,6 +568,10 @@ SysTrayX.Messaging = {
         "countType",
         "startupDelay",
         "theme",
+        "startApp",
+        "startAppArgs",
+        "closeApp",
+        "closeAppArgs",
       ])
       .then(
         SysTrayX.Messaging.sendPreferencesStorage,
@@ -583,6 +606,10 @@ SysTrayX.Messaging = {
     const countType = result.countType || "0";
     const startupDelay = result.startupDelay || "5";
     const theme = result.theme || "0";
+    const startApp = result.startApp || "";
+    const startAppArgs = result.startAppArgs || "";
+    const closeApp = result.closeApp || "";
+    const closeAppArgs = result.closeAppArgs || "";
 
     if (theme == "0" && numberColor == "#ffffff") {
       numberColor = "#000000";
@@ -614,6 +641,10 @@ SysTrayX.Messaging = {
         countType,
         startupDelay,
         theme,
+        startApp,
+        startAppArgs,
+        closeApp,
+        closeAppArgs,
       },
     });
 
@@ -657,7 +688,7 @@ SysTrayX.Link = {
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
 
-    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
+    //    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
@@ -826,6 +857,34 @@ SysTrayX.Link = {
         });
       }
 
+      const startApp = response["preferences"].startApp;
+      if (startApp !== undefined) {
+        await storage().set({
+          startApp: startApp,
+        });
+      }
+
+      const startAppArgs = response["preferences"].startAppArgs;
+      if (startAppArgs !== undefined) {
+        await storage().set({
+          startAppArgs: startAppArgs,
+        });
+      }
+
+      const closeApp = response["preferences"]. closeApp;
+      if (closeApp !== undefined) {
+        await storage().set({
+          closeApp: closeApp,
+        });
+      }
+
+      const closeAppArgs = response["preferences"].closeAppArgs;
+      if (closeAppArgs !== undefined) {
+        await storage().set({
+          closeAppArgs: closeAppArgs,
+        });
+      }
+
       const debug = response["preferences"].debug;
       if (debug) {
         await storage().set({
@@ -919,6 +978,11 @@ async function start() {
   //  Hide the default icon
   const hideDefaultIcon = await getHideDefaultIcon();
   SysTrayX.hideDefaultIcon = hideDefaultIcon;
+
+  //  Get start app launch parameters
+  const {startApp, startAppArgs} = await getStartAppParam();
+  SysTrayX.startApp = startApp;
+  SysTrayX.startAppArgs = startAppArgs;
 
   //   Used sync storage
   //  const inUse = await browser.storage.sync.getBytesInUse();

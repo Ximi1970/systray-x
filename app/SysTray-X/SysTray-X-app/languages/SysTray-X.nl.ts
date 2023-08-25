@@ -211,10 +211,6 @@
         <translation>Standaard minimalisatie</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Minimaliseer naar systeemvak, methode 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimaliseer naar systeemvak, methode 2</translation>
@@ -238,10 +234,6 @@
         <location filename="../preferences.ui" line="229"/>
         <source>Start application minimized</source>
         <translation>Start programma geminimaliseerd</translation>
-    </message>
-    <message>
-        <source>Minimize on close</source>
-        <translation type="vanished">Minimaliseren bij sluiten</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
@@ -340,31 +332,58 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="829"/>
+        <source>Apps</source>
+        <translation>Apps</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="837"/>
+        <source>Close application</source>
+        <translation>Stop programma</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="850"/>
+        <location filename="../preferences.ui" line="891"/>
+        <source>Browse...</source>
+        <translation>Bestand zoeken...</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="861"/>
+        <location filename="../preferences.ui" line="902"/>
+        <source>Arguments:</source>
+        <translation>Argumenten:</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="878"/>
+        <source>Start application</source>
+        <translation>Start programma</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="935"/>
         <source>Mail</source>
         <translation>Berichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="835"/>
+        <location filename="../preferences.ui" line="941"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Gebruik het voorkeurenvenster in Thunderbird om de accounts en mappen te selecteren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="872"/>
+        <location filename="../preferences.ui" line="978"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="878"/>
+        <location filename="../preferences.ui" line="984"/>
         <source>Display debug window</source>
         <translation>Toon debug venster</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="939"/>
+        <location filename="../preferences.ui" line="1045"/>
         <source>Save</source>
         <translation>Bewaren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="932"/>
+        <location filename="../preferences.ui" line="1038"/>
         <source>Cancel</source>
         <translation>Annnuleren</translation>
     </message>
@@ -375,42 +394,48 @@
         <translation>Minimaliseer naar systeemvak</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Open Image</source>
         <translation>Open afbeelding</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="550"/>
-        <location filename="../preferencesdialog.cpp" line="574"/>
+        <location filename="../preferencesdialog.cpp" line="609"/>
+        <location filename="../preferencesdialog.cpp" line="633"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="673"/>
+        <location filename="../preferencesdialog.cpp" line="687"/>
+        <source>Select application</source>
+        <translation>Selecteer programma</translation>
     </message>
 </context>
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="220"/>
+        <location filename="../systrayx.cpp" line="235"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Tonen/Verbergen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="224"/>
+        <location filename="../systrayx.cpp" line="239"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Opties</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="228"/>
+        <location filename="../systrayx.cpp" line="243"/>
         <source>&amp;About</source>
         <translation>O&amp;ver</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="232"/>
+        <location filename="../systrayx.cpp" line="247"/>
         <source>&amp;Quit</source>
         <translation>&amp;Afsluiten</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="644"/>
+        <location filename="../systrayx.cpp" line="664"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>

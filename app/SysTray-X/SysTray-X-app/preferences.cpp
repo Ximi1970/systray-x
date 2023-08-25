@@ -80,6 +80,11 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_branch = QLatin1String( APP_GITBRANCH );
 
     m_theme = PREF_THEME_LIGHT;
+
+    m_start_app = "";
+    m_start_app_args = "";
+    m_close_app = "";
+    m_close_app_args = "";
 }
 
 
@@ -683,6 +688,114 @@ void    Preferences::setTheme( Theme theme )
          *  Tell the world the new preference
          */
         emit signalThemeChange();
+    }
+}
+
+
+/*
+ *  Get the start application.
+ */
+QString    Preferences::getStartApp() const
+{
+
+    return m_start_app;
+}
+
+
+/*
+ *  Set the start application.
+ */
+void    Preferences::setStartApp( QString app )
+{
+    if( m_start_app != app )
+    {
+        m_start_app = app;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartAppChange();
+    }
+}
+
+
+/*
+ *  Get the start application arguments.
+ */
+QString    Preferences::getStartAppArgs() const
+{
+
+    return m_start_app_args;
+}
+
+
+/*
+ *  Set the start application arguments.
+ */
+void    Preferences::setStartAppArgs( QString args )
+{
+    if( m_start_app_args != args )
+    {
+        m_start_app_args = args;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartAppArgsChange();
+    }
+}
+
+
+/*
+ *  Get the close application.
+ */
+QString    Preferences::getCloseApp() const
+{
+
+    return m_close_app;
+}
+
+
+/*
+ *  Set the close application.
+ */
+void    Preferences::setCloseApp( QString app )
+{
+    if( m_close_app != app )
+    {
+        m_close_app = app;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCloseAppChange();
+    }
+}
+
+
+/*
+ *  Get the close application arguments.
+ */
+QString    Preferences::getCloseAppArgs() const
+{
+
+    return m_close_app_args;
+}
+
+
+/*
+ *  Set the close application arguments.
+ */
+void    Preferences::setCloseAppArgs( QString args )
+{
+    if( m_close_app_args != args )
+    {
+        m_close_app_args = args;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCloseAppArgsChange();
     }
 }
 

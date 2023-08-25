@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_apps": {
+    "message": "Εφαρμογές",
+    "description": "Tab for Apps options"
+  },
+
   "tab_mail": {
     "message": "Αλληλογραφία",
     "description": "Tab for Mail options"
@@ -302,6 +307,41 @@
   "icons_theme_dark": {
     "message": "σκοτάδι",
     "description": "The dark theme"
+  },
+
+  "apps": {
+    "message": "Εφαρμογές",
+    "description": "Title for Apps options"
+  },
+
+  "start_application": {
+    "message": "Εφαρμογή εκκίνησης",
+    "description": "The start application parameters"
+  },
+
+  "start_app": {
+    "message": "Εφαρμογή: ",
+    "description": "The start application"
+  },
+
+  "start_app_args": {
+    "message": "Επιχειρήματα: ",
+    "description": "Arguments for a start application"
+  },
+
+  "close_application": {
+    "message": "Κλείσιμο αίτησης",
+    "description": "The close application parameters"
+  },
+
+  "close_app": {
+    "message": "Εφαρμογή: ",
+    "description": "The close application"
+  },
+
+  "close_app_args": {
+    "message": "Επιχειρήματα: ",
+    "description": "Arguments for a close application"
   },
 
   "accounts": {

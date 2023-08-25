@@ -118,6 +118,9 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     connect( m_ui->savePushButton, &QPushButton::clicked, this, &PreferencesDialog::slotAccept);
     connect( m_ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotReject);
 
+    connect( m_ui->startBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotStartAppSelect );
+    connect( m_ui->closeBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotCloseAppSelect );
+
     /*
      *  Set number color
      */
@@ -148,6 +151,14 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set number margins
      */
     setNumberMargins( m_pref->getNumberMargins() );
+
+    /*
+     *  Set the start and close application parameters
+     */
+    setStartApp( m_pref->getStartApp() );
+    setStartAppArgs( m_pref->getStartAppArgs() );
+    setCloseApp( m_pref->getCloseApp() );
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 
     /*
      *  Dialog on top
@@ -434,6 +445,41 @@ void    PreferencesDialog::setTheme( Preferences::Theme theme )
 
 
 /*
+ *  Set start application
+ */
+void    PreferencesDialog::setStartApp( QString app )
+{
+   m_ui->startAppLineEdit->setText( app );
+}
+
+
+/*
+ *  Set start application arguments
+ */
+void    PreferencesDialog::setStartAppArgs( QString args )
+{
+   m_ui->startAppArgsLineEdit->setText( args );
+}
+
+/*
+ *  Set close application
+ */
+void    PreferencesDialog::setCloseApp( QString app )
+{
+   m_ui->closeAppLineEdit->setText( app );
+}
+
+
+/*
+ *  Set close application arguments
+ */
+void    PreferencesDialog::setCloseAppArgs( QString args )
+{
+   m_ui->closeAppArgsLineEdit->setText( args );
+}
+
+
+/*
  *  Handle the accept signal
  */
 void    PreferencesDialog::slotAccept()
@@ -472,6 +518,15 @@ void    PreferencesDialog::slotAccept()
 
     Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
     m_pref->setTheme( theme );
+
+    QString startApp = m_ui->startAppLineEdit->text();
+    m_pref->setStartApp( startApp );
+    QString startAppArgs= m_ui->startAppArgsLineEdit->text();
+    m_pref->setStartAppArgs( startAppArgs );
+    QString closeApp = m_ui->closeAppLineEdit->text();
+    m_pref->setCloseApp( closeApp );
+    QString closeAppArgs= m_ui->closeAppArgsLineEdit->text();
+    m_pref->setCloseAppArgs( closeAppArgs );
 
     /*
      *  Force different color?
@@ -537,6 +592,10 @@ void    PreferencesDialog::slotReject()
     setNumberAlignment( m_pref->getNumberAlignment() );
     setNumberMargins( m_pref->getNumberMargins() );
     setTheme( m_pref->getTheme() );
+    setStartApp( m_pref->getStartApp() );
+    setStartAppArgs( m_pref->getStartAppArgs() );
+    setCloseApp( m_pref->getCloseApp() );
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 
     setDebug( m_pref->getDebug());
 }
@@ -602,6 +661,34 @@ void    PreferencesDialog::slotColorSelect()
     if( color_dialog.exec() )
     {
         setNumberColor( color_dialog.selectedColor().name() );
+    }
+}
+
+
+/*
+ *  Handle the start application button
+ */
+void    PreferencesDialog::slotStartAppSelect()
+{
+    QFileDialog file_dialog( this, tr( "Select application" ), "", "" );
+
+    if( file_dialog.exec() )
+    {
+        setStartApp( file_dialog.selectedFiles()[ 0 ] );
+    }
+}
+
+
+/*
+ *  Handle the close application button
+ */
+void    PreferencesDialog::slotCloseAppSelect()
+{
+    QFileDialog file_dialog( this, tr( "Select application" ), "", "" );
+
+    if( file_dialog.exec() )
+    {
+        setCloseApp( file_dialog.selectedFiles()[ 0 ] );
     }
 }
 
@@ -802,4 +889,40 @@ void    PreferencesDialog::slotNumberMarginsChange()
 void    PreferencesDialog::slotThemeChange()
 {
     setTheme( m_pref->getTheme() );
+}
+
+
+/*
+ *  Handle the start application change signal
+ */
+void    PreferencesDialog::slotStartAppChange()
+{
+    setStartApp( m_pref->getStartApp() );
+}
+
+
+/*
+ *  Handle the start application arguments change signal
+ */
+void    PreferencesDialog::slotStartAppArgsChange()
+{
+    setStartAppArgs( m_pref->getStartAppArgs() );
+}
+
+
+/*
+ *  Handle the close application change signal
+ */
+void    PreferencesDialog::slotCloseAppChange()
+{
+    setCloseApp( m_pref->getCloseApp() );
+}
+
+
+/*
+ *  Handle the close application arguments change signal
+ */
+void    PreferencesDialog::slotCloseAppArgsChange()
+{
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 }

@@ -351,6 +351,14 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
 
         if( jsonObject.contains( "shutdown" ) && jsonObject[ "shutdown" ].isString() )
         {
+            /*
+             *  Launch close appplication
+             */
+            emit signalCloseApp();
+
+            /*
+             *  Shutdown the addon
+             */
             emit signalAddOnShutdown();
         }
 
@@ -445,6 +453,26 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "preferences" ) && jsonObject[ "preferences" ].isObject() )
         {
             DecodePreferences( jsonObject[ "preferences" ].toObject() );
+        }
+
+        if( jsonObject.contains( "startApp" ) && jsonObject[ "startApp" ].isString() &&
+            jsonObject.contains( "startAppArgs" ) && jsonObject[ "startAppArgs" ].isString() )
+        {
+            QString app = jsonObject[ "startApp" ].toString();
+            QString args = jsonObject[ "startAppArgs" ].toString();
+
+            /*
+             *  Store the new start application parameters
+             */
+            m_pref->setStartApp( app );
+            m_pref->setStartAppArgs( args );
+
+            emit signalStartApp();
+        }
+
+        if( jsonObject.contains( "closeApp" ) && jsonObject[ "closeApp" ].isString() )
+        {
+            emit signalCloseApp();
         }
     }
 }
@@ -783,6 +811,46 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setTheme( theme );
     }
 
+    if( pref.contains( "startApp" ) && pref[ "startApp" ].isString() )
+    {
+        QString app = pref[ "startApp" ].toString();
+
+        /*
+         *  Store the new start application
+         */
+        m_pref->setStartApp( app );
+    }
+
+    if( pref.contains( "startAppArgs" ) && pref[ "startAppArgs" ].isString() )
+    {
+        QString args = pref[ "startAppArgs" ].toString();
+
+        /*
+         *  Store the new start application arguments
+         */
+        m_pref->setStartAppArgs( args );
+    }
+
+    if( pref.contains( "closeApp" ) && pref[ "closeApp" ].isString() )
+    {
+        QString app = pref[ "closeApp" ].toString();
+
+        /*
+         *  Store the new close application
+         */
+        m_pref->setCloseApp( app );
+    }
+
+    if( pref.contains( "closeAppArgs" ) && pref[ "closeAppArgs" ].isString() )
+    {
+        QString args = pref[ "closeAppArgs" ].toString();
+
+        /*
+         *  Store the new close application arguments
+         */
+        m_pref->setCloseAppArgs( args );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -862,6 +930,11 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
     prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
+
+    prefObject.insert("startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
+    prefObject.insert("startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
+    prefObject.insert("closeApp", QJsonValue::fromVariant( pref.getCloseApp() ) );
+    prefObject.insert("closeAppArgs", QJsonValue::fromVariant( pref.getCloseAppArgs() ) );
 
     QJsonObject preferencesObject;
     preferencesObject.insert("preferences", prefObject );
@@ -1123,6 +1196,54 @@ void    SysTrayXLink::slotPositions( QList< QPoint > positions )
  *  Handle a theme change signal
  */
 void    SysTrayXLink::slotThemeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a start application change signal
+ */
+void    SysTrayXLink::slotStartAppChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a start application arguments change signal
+ */
+void    SysTrayXLink::slotStartAppArgsChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a close application change signal
+ */
+void    SysTrayXLink::slotCloseAppChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a close application arguments change signal
+ */
+void    SysTrayXLink::slotCloseAppArgsChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

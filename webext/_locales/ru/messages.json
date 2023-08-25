@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_apps": {
+    "message": "Программы",
+    "description": "Tab for Apps options"
+  },
+
   "tab_mail": {
     "message": "Письма",
     "description": "Tab for Mail options"
@@ -302,6 +307,41 @@
   "icons_theme_dark": {
     "message": "Темная",
     "description": "The dark theme"
+  },
+
+  "apps": {
+    "message": "Программы",
+    "description": "Title for Apps options"
+  },
+
+  "start_application": {
+    "message": "Приложение при запуске",
+    "description": "The start application parameters"
+  },
+
+  "start_app": {
+    "message": "Приложение: ",
+    "description": "The start application"
+  },
+
+  "start_app_args": {
+    "message": "аргументы: ",
+    "description": "Arguments for a start application"
+  },
+
+  "close_application": {
+    "message": "Заявление о закрытии",
+    "description": "The close application parameters"
+  },
+
+  "close_app": {
+    "message": "Приложение: ",
+    "description": "The close application"
+  },
+
+  "close_app_args": {
+    "message": "аргументы: ",
+    "description": "Arguments for a close application"
   },
 
   "accounts": {

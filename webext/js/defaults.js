@@ -286,6 +286,25 @@ async function getCountType() {
   return await storage().get("countType").then(resolve, reject);
 }
 
+//
+//  Get start app parameters
+//
+async function getStartAppParam() {
+  function resolve(result) {
+    const startApp = result.startApp || "";
+    const startAppArgs = result.startAppArgs || "";
+    return { startApp, startAppArgs };
+  }
+
+  function reject() {
+    return { startApp: "", startAppArgs: "" };
+  }
+
+  return await storage()
+    .get(["startApp", "startAppArgs"])
+    .then(resolve, reject);
+}
+
 //  Helper funcs for TB91 and later folder handling
 
 async function getMailFolderInfo(folder) {
