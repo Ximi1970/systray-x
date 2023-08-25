@@ -39,6 +39,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     m_tray_icon_menu = nullptr;
 
     m_unread_mail = 0;
+    m_new_mail = 0;
     m_locale = QString();
 
     /*
@@ -84,7 +85,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     /*
      *  Connect debug link signals
      */
-    connect( m_link, &SysTrayXLink::signalUnreadMail, m_debug, &DebugWidget::slotUnreadMail );
+    connect( m_link, &SysTrayXLink::signalMailCount, m_debug, &DebugWidget::slotMailCount );
 
     connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
     connect( m_preferences, &Preferences::signalConsole, m_debug, &DebugWidget::slotConsole );
@@ -163,7 +164,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalErrorAddOnShutdown, this, &SysTrayX::slotErrorAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
-    connect( m_link, &SysTrayXLink::signalUnreadMail, this, &SysTrayX::slotSetUnreadMail );
+    connect( m_link, &SysTrayXLink::signalMailCount, this, &SysTrayX::slotMailCount );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
     connect( m_link, &SysTrayXLink::signalLocale, this, &SysTrayX::slotLoadLanguage );
@@ -194,7 +195,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     //slotLoadLanguage( "ru" );
     slotSelectIconObject( false );
 
-    slotSetUnreadMail( 10 );
+    slotMailCount( 10, 1 );
 */
 }
 
@@ -308,16 +309,16 @@ void    SysTrayX::showTrayIcon()
         connect( m_preferences, &Preferences::signalNumberMarginsChange, m_tray_icon, &SysTrayXIcon::slotNumberMarginsChange );
         connect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
 
-        connect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+        connect( m_link, &SysTrayXLink::signalMailCount, m_tray_icon, &SysTrayXIcon::slotMailCount );
 
-        connect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+        connect( this, &SysTrayX::signalMailCount, m_tray_icon, &SysTrayXIcon::slotMailCount );
 
         /*
          *  Show it
          */
         m_tray_icon->show();
 
-        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
+        QTimer::singleShot(500, this, &SysTrayX::resendMailCount);
     }
 }
 
@@ -345,9 +346,9 @@ void    SysTrayX::hideTrayIcon()
         disconnect( m_preferences, &Preferences::signalNumberMarginsChange, m_tray_icon, &SysTrayXIcon::slotNumberMarginsChange );
         disconnect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
 
-        disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+        disconnect( m_link, &SysTrayXLink::signalMailCount, m_tray_icon, &SysTrayXIcon::slotMailCount );
 
-        disconnect( this, &SysTrayX::signalUnreadMail, m_tray_icon, &SysTrayXIcon::slotSetUnreadMail );
+        disconnect( this, &SysTrayX::signalMailCount, m_tray_icon, &SysTrayXIcon::slotMailCount );
 
         /*
          *  Hide the icon  first to prevent "ghosts"
@@ -420,14 +421,14 @@ void    SysTrayX::showKdeTrayIcon()
         connect( m_preferences, &Preferences::signalNumberMarginsChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberMarginsChange );
         connect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
 
-        connect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+        connect( m_link, &SysTrayXLink::signalMailCount, m_kde_tray_icon, &SysTrayXStatusNotifier::slotMailCount );
 
-        connect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+        connect( this, &SysTrayX::signalMailCount, m_kde_tray_icon, &SysTrayXStatusNotifier::slotMailCount );
 
         /*
          *  Show
          */
-        QTimer::singleShot(500, this, &SysTrayX::resendUnreadMail);
+        QTimer::singleShot(500, this, &SysTrayX::resendMailCount);
     }
 }
 
@@ -456,9 +457,9 @@ void    SysTrayX::hideKdeTrayIcon()
         disconnect( m_preferences, &Preferences::signalNumberMarginsChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberMarginsChange );
         disconnect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
 
-        disconnect( m_link, &SysTrayXLink::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+        disconnect( m_link, &SysTrayXLink::signalMailCount, m_kde_tray_icon, &SysTrayXStatusNotifier::slotMailCount );
 
-        disconnect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
+        disconnect( this, &SysTrayX::signalMailCount, m_kde_tray_icon, &SysTrayXStatusNotifier::slotMailCount );
 
         /*
          *  Remove the notifier icon
@@ -526,11 +527,11 @@ void    SysTrayX::slotSelectIconObject( bool state )
 
 
 /*
- *  Resend unread mail
+ *  Resend unread/new mail
  */
-void    SysTrayX::resendUnreadMail()
+void    SysTrayX::resendMailCount()
 {
-    emit signalUnreadMail( m_unread_mail );
+    emit signalMailCount( m_unread_mail, m_new_mail );
 }
 
 
@@ -674,11 +675,12 @@ void    SysTrayX::slotVersion( QString version )
 
 
 /*
- *  Handle unread mail signal
+ *  Handle mail count signal
  */
-void    SysTrayX::slotSetUnreadMail( int unread )
+void    SysTrayX::slotMailCount( int unread_mail, int new_mail )
 {
-    m_unread_mail = unread;
+    m_unread_mail = unread_mail;
+    m_new_mail = new_mail;
 }
 
 

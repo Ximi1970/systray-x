@@ -78,9 +78,9 @@ class SysTrayXLinkReader : public QObject
         QTimer* m_timer;
 
         /**
-         * @brief m_doWork. Status of the worker thread.
+         * @brief m_do_work. Status of the worker thread.
          */
-        bool	m_doWork;
+        bool	m_do_work;
 };
 
 
@@ -228,11 +228,12 @@ class SysTrayXLink : public QObject
         void    signalLocale( QString locale );
 
         /**
-         * @brief signalUnreadMail. Signal numder of unread mails.
+         * @brief signalMailCount. Signal numder of unread/new mails.
          *
-         * @param unreadMail    The number of unread mails.
+         * @param unread_mail   The number of unread mails.
+         * @param new_mail      The number of new mails.
          */
-        void    signalUnreadMail( int unread_mail );
+        void    signalMailCount( int unread_mail, int new_mail );
 
         /**
          * @brief signalWindowPositions. Signal the startup positions.

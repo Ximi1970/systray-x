@@ -52,11 +52,12 @@ void    DebugWidget::changeEvent( QEvent* event )
 
 
 /*
- *  Set the number of unread mail
+ *  Set the number of unread/new mails
  */
-void    DebugWidget::setUnreadMail( int unread )
+void    DebugWidget::setMailCount( int unread_mail, int new_mail )
 {
-    m_ui->unreadMailLabel->setText( QString::number( unread ) );
+    m_ui->unreadMailLabel->setText( QString::number( unread_mail ) );
+    m_ui->newMailLabel->setText( QString::number( new_mail ) );
 }
 
 
@@ -72,9 +73,9 @@ void    DebugWidget::slotDebugChange()
 /*
  *  Handle unread mail signal
  */
-void    DebugWidget::slotUnreadMail( int unread_mail )
+void    DebugWidget::slotMailCount( int unread_mail, int new_mail )
 {
-    setUnreadMail( unread_mail );
+    setMailCount( unread_mail, new_mail );
 }
 
 

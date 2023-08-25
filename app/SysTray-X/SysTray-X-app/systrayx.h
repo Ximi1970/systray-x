@@ -90,18 +90,19 @@ class SysTrayX : public QObject
 #endif
 
         /**
-         * @brief resendUnreadMail. Send another unread mail signal to the icon.
+         * @brief resendMailCount. Send another unread/new mail signal to the icon.
          */
-        void    resendUnreadMail();
+        void    resendMailCount();
 
     signals:
 
         /**
-         * @brief signalUnreadMail. Signal numder of unread mails.
+         * @brief signalMailCount. Signal numder of unread/new mails.
          *
-         * @param unreadMail    The number of unread mails.
+         * @param unread_mail   The number of unread mails.
+         * @param new_mail      The number of new mails.
          */
-        void    signalUnreadMail( int unread_mail );
+        void    signalMailCount( int unread_mail, int new_mail );
 
         /**
          * @brief signalWriteMessage
@@ -125,11 +126,12 @@ class SysTrayX : public QObject
     public slots:
 
         /**
-         * @brief slotSetUnreadMail. Handle the unred mail signal.
+         * @brief slotMailCount. Handle the mail count signal.
          *
-         *  @param unread   Number of unread mail.
+         *  @param unread_mail  Number of unread mail.
+         *  @param new_mail     Number of new mail.
          */
-        void    slotSetUnreadMail( int unread );
+        void    slotMailCount( int unread_mail, int new_mail );
 
         /**
          * @brief slotLoadLanguage. Handle locale change signal.
@@ -227,6 +229,11 @@ class SysTrayX : public QObject
          * @brief m_unread_mail. Number of unread mails
          */
         int m_unread_mail;
+
+        /**
+         * @brief m_new_mail. Number of new mails
+         */
+        int m_new_mail;
 
         /**
          * @brief m_translator. The translator object.

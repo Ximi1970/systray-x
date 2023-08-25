@@ -34,6 +34,7 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
     m_pref = pref;
 
     m_unread_mail = 0;
+    m_new_mail = 0;
 
     m_show_number = m_pref->getShowNumber();
     m_number_color = m_pref->getNumberColor();
@@ -322,16 +323,17 @@ void    SysTrayXStatusNotifier::setNumberMargins( QMargins margins )
 
 
 /*
- *  Set the number of unread mails
+ *  Set the number of unread/new mails
  */
-void    SysTrayXStatusNotifier::setUnreadMail( int unread_mail )
+void    SysTrayXStatusNotifier::setMailCount( int unread_mail, int new_mail )
 {
-    if( m_unread_mail != unread_mail )
+    if( m_unread_mail != unread_mail || m_new_mail != new_mail )
     {
         /*
          *  Store the new value
          */
         m_unread_mail = unread_mail;
+        m_new_mail = new_mail;
 
         /*
          *  Render and set a new icon in the tray
@@ -348,7 +350,7 @@ void    SysTrayXStatusNotifier::renderIcon()
 {
     QPixmap pixmap;
 
-    if( m_unread_mail > 0 )
+    if( m_unread_mail > 0 || m_new_mail > 0 )
     {
         switch( m_icon_type )
         {
@@ -437,7 +439,7 @@ void    SysTrayXStatusNotifier::renderIcon()
         }
     }
 
-    if( m_show_number && ( m_unread_mail > 0 ) )
+    if( m_show_number && ( m_unread_mail > 0 || m_new_mail > 0 ) )
     {
         /*
          *  Paint the number
@@ -460,6 +462,7 @@ void    SysTrayXStatusNotifier::renderIcon()
         QRect bounding = pixmap.rect().adjusted( m_number_margins.left(), m_number_margins.top(),
                                                  -m_number_margins.right(), -m_number_margins.bottom());
 
+//  TODO pref to get the type
         painter.drawText( bounding, m_number_alignment, QString::number( m_unread_mail ) );
     }
 
@@ -471,7 +474,7 @@ void    SysTrayXStatusNotifier::renderIcon()
     /*
      *  Hide the icon?
      */
-    if( m_hide_default_icon && m_unread_mail == 0 )
+    if( m_hide_default_icon && m_unread_mail == 0 && m_new_mail == 0 )
     {
         setStatus( KStatusNotifierItem::ItemStatus::Passive );
     }
@@ -484,7 +487,7 @@ void    SysTrayXStatusNotifier::renderIcon()
 
 void    SysTrayXStatusNotifier::showIcon()
 {
-    if( !m_hide_default_icon || m_unread_mail > 0 )
+    if( !m_hide_default_icon || m_unread_mail > 0 || m_new_mail > 0 )
     {
         setStatus( KStatusNotifierItem::ItemStatus::Active );
     }
@@ -492,11 +495,11 @@ void    SysTrayXStatusNotifier::showIcon()
 
 
 /*
- *  Handle unread mail signal
+ *  Handle mail count signal
  */
-void    SysTrayXStatusNotifier::slotSetUnreadMail( int unread_mail )
+void    SysTrayXStatusNotifier::slotMailCount( int unread_mail, int new_mail )
 {
-    setUnreadMail( unread_mail );
+    setMailCount( unread_mail, new_mail );
 }
 
 

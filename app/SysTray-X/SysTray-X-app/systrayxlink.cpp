@@ -79,7 +79,7 @@ void    SysTrayXLinkReader::startThread()
     /*
      *	Start the work
      */
-    m_doWork = true;
+    m_do_work = true;
 
     /*
      *	Start the worker
@@ -96,7 +96,7 @@ void    SysTrayXLinkReader::stopThread()
     /*
      *	Stop working
      */
-    m_doWork = false;
+    m_do_work = false;
 }
 
 
@@ -107,7 +107,7 @@ void    SysTrayXLinkReader::slotWorker()
 {
     int error_count = 0;
 
-    while( m_doWork )
+    while( m_do_work )
     {
         qint32 data_len;
         std::cin.read( reinterpret_cast< char* >( &data_len ), sizeof( qint32 ) );
@@ -317,10 +317,30 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         }
 */
 
-        if( jsonObject.contains( "unreadMail" ) && jsonObject[ "unreadMail" ].isDouble() )
+        if( jsonObject.contains( "mailCount" ) && jsonObject[ "mailCount" ].isObject() )
         {
-            int unreadMail = jsonObject[ "unreadMail" ].toInt();
-            emit signalUnreadMail( unreadMail );
+            QJsonObject mailCount = jsonObject[ "mailCount" ].toObject();
+
+            /*
+             *  Check the received object
+             */
+            int unreadMail = 0;
+            int newMail = 0;
+            if( mailCount.contains( "unread" ) && mailCount[ "unread" ].isDouble() )
+            {
+                unreadMail = mailCount[ "unread" ].toInt();
+
+                emit signalConsole( QString("Unread %1").arg( unreadMail ) );
+            }
+
+            if( mailCount.contains( "new" ) && mailCount[ "new" ].isDouble() )
+            {
+                newMail = mailCount[ "new" ].toInt();
+
+                emit signalConsole( QString("New %1").arg( newMail ) );
+            }
+
+            emit signalMailCount( unreadMail, newMail );
         }
 
         if( jsonObject.contains( "version" ) && jsonObject[ "version" ].isString() )

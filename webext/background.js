@@ -147,17 +147,10 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.listenerFolderDeleted
       );
 
-      if (SysTrayX.Messaging.countType === "0") {
-        // Get the unread count
-        const getCountUnreadPromise = () =>
-          new Promise((res) => res(SysTrayX.Messaging.countUnread()));
-        await getCountUnreadPromise();
-      } else {
-        // Update new count
-        const getCountNewPromise = () =>
-          new Promise((res) => res(SysTrayX.Messaging.countNew()));
-        await getCountNewPromise();
-      }
+      // Get the mail count
+      const getCountPromise = () =>
+        new Promise((res) => res(SysTrayX.Messaging.countMail()));
+      await getCountPromise();
 
       //  Set count listener
       browser.folders.onFolderInfoChanged.addListener(
@@ -200,10 +193,7 @@ SysTrayX.Messaging = {
       //      );
     }
 
-    if (SysTrayX.Messaging.countType === "1") {
-      getNewMailCount();
-      //      console.debug("listenerNewMail: New count");
-    }
+    getMailCount();
   },
 
   listenerFolderCreated: function (createdFolder) {
@@ -248,38 +238,32 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.unread[folder.accountId][folder.path] =
         folderInfo.unreadMessageCount;
 
-      if (SysTrayX.Messaging.countType === "0") {
-        getUnreadMailCount();
-        //        console.debug("listenerFolderInfoChanged: Unread count");
-      } else {
-        // Check if the new mails have been read, remove from new storage
-        const messages = SysTrayX.Messaging.new[folder.accountId][folder.path];
+      // Check if the new mails have been read, remove from new storage
+      const messages = SysTrayX.Messaging.new[folder.accountId][folder.path];
 
-        if (messages.length > 0) {
-          const newMessages = [];
-          for (let i = 0; i < messages.length; ++i) {
-            const message = messages[i];
+      if (messages.length > 0) {
+        const newMessages = [];
+        for (let i = 0; i < messages.length; ++i) {
+          const message = messages[i];
 
-            const getHeaderPromise = (messageId) =>
-              new Promise((res) => res(messenger.messages.get(messageId)));
-            const header = await getHeaderPromise(message.id);
+          const getHeaderPromise = (messageId) =>
+            new Promise((res) => res(messenger.messages.get(messageId)));
+          const header = await getHeaderPromise(message.id);
 
-            if (!header.read) {
-              newMessages.push(message);
-            }
+          if (!header.read) {
+            newMessages.push(message);
           }
-          SysTrayX.Messaging.new[folder.accountId][folder.path] = [
-            ...newMessages,
-          ];
-
-          getNewMailCount();
-          //          console.debug("listenerFolderInfoChanged: New count");
         }
+        SysTrayX.Messaging.new[folder.accountId][folder.path] = [
+          ...newMessages,
+        ];
       }
+
+      getMailCount();
     }
   },
 
-  countUnread: async function () {
+  countMail: async function () {
     for (const filter of SysTrayX.Messaging.filters) {
       for (const path of filter.folders) {
         const folder = {
@@ -300,40 +284,6 @@ SysTrayX.Messaging = {
             SysTrayX.Messaging.unread[folder.accountId] = {};
           }
 
-          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
-            mailFolderInfo.unreadMessageCount;
-        }
-      }
-    }
-
-    let count = 0;
-    Object.keys(SysTrayX.Messaging.unread).forEach((key) =>
-      Object.keys(SysTrayX.Messaging.unread[key]).forEach(
-        (path) => (count = count + SysTrayX.Messaging.unread[key][path])
-      )
-    );
-
-    //console.debug("countUnread: " + count);
-    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
-  },
-
-  countNew: async function () {
-    for (const filter of SysTrayX.Messaging.filters) {
-      for (const path of filter.folders) {
-        const folder = {
-          accountId: filter.accountId,
-          path: path,
-        };
-
-        let mailFolderInfo = {};
-        try {
-          mailFolderInfo = await browser.folders.getFolderInfo(folder);
-        } catch (err) {
-          console.debug("Filter error: " + err);
-          console.debug("Filter error: " + JSON.stringify(folder));
-        }
-
-        if (mailFolderInfo.unreadMessageCount !== undefined) {
           if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
             SysTrayX.Messaging.new[folder.accountId] = {};
           }
@@ -344,21 +294,29 @@ SysTrayX.Messaging = {
             SysTrayX.Messaging.new[folder.accountId][folder.path] = [];
           }
 
-          //          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
-          //            mailFolderInfo.unreadMessageCount;
+          SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+            mailFolderInfo.unreadMessageCount;
+
         }
       }
     }
 
-    let count = 0;
-    Object.keys(SysTrayX.Messaging.new).forEach((key) =>
-      Object.keys(SysTrayX.Messaging.new[key]).forEach(
-        (path) => (count = count + SysTrayX.Messaging.new[key][path].length)
+    let unreadCount = 0;
+    Object.keys(SysTrayX.Messaging.unread).forEach((key) =>
+      Object.keys(SysTrayX.Messaging.unread[key]).forEach(
+        (path) => (unreadCount = unreadCount + SysTrayX.Messaging.unread[key][path])
       )
     );
 
-    //console.debug("countNew: " + count);
-    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+    let newCount = 0;
+    Object.keys(SysTrayX.Messaging.new).forEach((key) =>
+      Object.keys(SysTrayX.Messaging.new[key]).forEach(
+        (path) => (newCount = newCount + SysTrayX.Messaging.new[key][path].length)
+      )
+    );
+
+    //console.debug("countMail: " + unreadCount + ", " + newCount);
+    SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
   },
 
   onCloseButton: function () {
@@ -384,11 +342,7 @@ SysTrayX.Messaging = {
       if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setFilters(SysTrayX.Messaging.filters);
       } else {
-        if (SysTrayX.Messaging.countType === "0") {
-          getUnreadMailCount();
-        } else {
-          getNewMailCount();
-        }
+        getMailCount();
       }
     }
 
@@ -414,11 +368,7 @@ SysTrayX.Messaging = {
       if (SysTrayX.Info.browserInfo.majorVersion < 91) {
         browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
       } else {
-        if (SysTrayX.Messaging.countType === "0") {
-          getUnreadMailCount();
-        } else {
-          getNewMailCount();
-        }
+        getMailCount();
       }
     }
 
@@ -440,7 +390,7 @@ SysTrayX.Messaging = {
   //
   unreadCb: function (count) {
     //console.debug("unreadCb: " + count);
-    SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+    SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: count, new: 0 } } );
   },
 
   //
@@ -707,7 +657,7 @@ SysTrayX.Link = {
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
 
-    //console.debug("postSysTrayXMessage: " + JSON.stringify(object));
+    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
@@ -914,9 +864,7 @@ SysTrayX.Window = {
         ] = [];
       }
 
-      if (SysTrayX.Messaging.countType === "1") {
-        getNewMailCount();
-      }
+      getMailCount();
     }
 
     SysTrayX.Messaging.displayedFolder = displayedFolder;

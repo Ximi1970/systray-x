@@ -29,6 +29,7 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
     m_pref = pref;
 
     m_unread_mail = 0;
+    m_new_mail = 0;
 
     m_show_number = m_pref->getShowNumber();
     m_number_color = m_pref->getNumberColor();
@@ -276,16 +277,17 @@ void    SysTrayXIcon::setNumberMargins( QMargins margins )
 
 
 /*
- *  Set the number of unread mails
+ *  Set the number of unread/new mails
  */
-void    SysTrayXIcon::setUnreadMail( int unread_mail )
+void    SysTrayXIcon::setMailCount( int unread_mail, int new_mail )
 {
-    if( m_unread_mail != unread_mail )
+    if( m_unread_mail != unread_mail || m_new_mail != new_mail )
     {
         /*
          *  Store the new value
          */
         m_unread_mail = unread_mail;
+        m_new_mail = new_mail;
 
         /*
          *  Render and set a new icon in the tray
@@ -302,7 +304,7 @@ void    SysTrayXIcon::renderIcon()
 {
     QPixmap pixmap;
 
-    if( m_unread_mail > 0 )
+    if( m_unread_mail > 0 || m_new_mail > 0 )
     {
         switch( m_icon_type )
         {
@@ -392,7 +394,7 @@ void    SysTrayXIcon::renderIcon()
         }
     }
 
-    if( m_show_number && ( m_unread_mail > 0 ) )
+    if( m_show_number && ( m_unread_mail > 0 || m_new_mail > 0 ) )
     {
         /*
          *  Paint the number
@@ -415,6 +417,8 @@ void    SysTrayXIcon::renderIcon()
         QRect bounding = pixmap.rect().adjusted( m_number_margins.left(), m_number_margins.top(),
                                                  -m_number_margins.right(), -m_number_margins.bottom());
 
+
+// TODO: check pref for type
         painter.drawText( bounding, m_number_alignment, QString::number( m_unread_mail ) );
     }
 
@@ -426,11 +430,11 @@ void    SysTrayXIcon::renderIcon()
 
 
 /*
- *  Handle unread mail signal
+ *  Handle mail count signal
  */
-void    SysTrayXIcon::slotSetUnreadMail( int unread_mail )
+void    SysTrayXIcon::slotMailCount( int unread_mail, int new_mail )
 {
-    setUnreadMail( unread_mail );
+    setMailCount( unread_mail, new_mail );
 }
 
 

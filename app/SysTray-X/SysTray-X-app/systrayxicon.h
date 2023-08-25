@@ -111,11 +111,12 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    setNumberMargins( QMargins margins );
 
         /**
-         * @brief setUnreadMail. Set the number of unread mails.
+         * @brief setMailCount. Set the number of unread/new mails.
          *
          *  @param unread_mail  The number of unread mails.
+         *  @param new_mail  The number of new mails.
          */
-        void    setUnreadMail( int unread_mail );
+        void    setMailCount( int unread_mail, int new_mail );
 
     private:
 
@@ -134,11 +135,12 @@ class SysTrayXIcon : public QSystemTrayIcon
    public slots:
 
         /**
-         * @brief slotSetUnreadMail. Slot for handling unread mail signals.
+         * @brief slotMailCount. Slot for handling unread/new mail signals.
          *
          *  @param unread_mail  The number of unread mails.
+         *  @param new_mail     The number of new mails.
          */
-        void    slotSetUnreadMail( int unread_mail );
+        void    slotMailCount( int unread_mail, int new_mail );
 
         /**
          * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
@@ -242,17 +244,17 @@ class SysTrayXIcon : public QSystemTrayIcon
         QByteArray  m_icon_data;
 
         /**
-         * @brief m_show_number. Show the unread mail count.
+         * @brief m_show_number. Show the unread/new mail count.
          */
         bool m_show_number;
 
         /**
-         * @brief m_number_color. Color of the unread mail number.
+         * @brief m_number_color. Color of the unread/new mail number.
          */
         QString m_number_color;
 
         /**
-         * @brief m_number_size. Size of the unread mail number.
+         * @brief m_number_size. Size of the unread/new mail number.
          */
         int m_number_size;
 
@@ -270,6 +272,11 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_unread_mail. Storage for the number of unread mails.
          */
         int m_unread_mail;
+
+        /**
+         * @brief m_new_mail. Storage for the number of new mails.
+         */
+        int m_new_mail;
 };
 
 #endif // SYSTRAYXICON_H

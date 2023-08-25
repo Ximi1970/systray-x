@@ -46,11 +46,12 @@ class DebugWidget : public QWidget
         void    changeEvent( QEvent *event );
 
         /**
-         * @brief setUnreadMail. Set the number of unread mails.
+         * @brief setMailCount. Set the number of unread/new mails.
          *
-         *  @param unread    The number of unread mails.
+         *  @param unread_mail   The number of unread mails.
+         *  @param new_mail      The number of new mails.
          */
-        void    setUnreadMail( int unread );
+        void    setMailCount( int unread_mail, int new_mail );
 
     signals:
 
@@ -82,11 +83,12 @@ class DebugWidget : public QWidget
         void    slotDebugChange();
 
         /**
-         * @brief slotSetUnreadMail. Slot for handling unread mail signals.
+         * @brief slotMailCount. Slot for handling unread/new mail signals.
          *
-         *  @param unread_mail  The number of unread mails.
+         *  @param unread_mail   The number of unread mails.
+         *  @param new_mail      The number of new mails.
          */
-        void    slotUnreadMail( int unread_mail );
+        void    slotMailCount( int unread_mail, int new_mail );
 
         /**
          * @brief slotHandleTest1Button. Handle a click on the test 1 button.

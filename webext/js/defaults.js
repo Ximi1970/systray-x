@@ -371,33 +371,22 @@ async function addFolderToFilters(newFolder) {
   }
 }
 
-//  Count the unread mail
-const getUnreadMailCount = () => {
-  let count = 0;
+//  Count the unread and new mails
+const getMailCount = () => {
+  let unreadCount = 0;
+  let newCount = 0;
   SysTrayX.Messaging.filters.forEach((filter) => {
     const accountId = filter.accountId;
     filter.folders.forEach((path) => {
       if (SysTrayX.Messaging.unread[accountId] !== undefined) {
         if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
-          count = count + SysTrayX.Messaging.unread[accountId][path];
+          unreadCount = unreadCount + SysTrayX.Messaging.unread[accountId][path];
         }
       }
-    });
-  });
 
-  //console.debug("getUnreadMailCount: " + count);
-  SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
-};
-
-//  Count the new mail
-const getNewMailCount = () => {
-  let count = 0;
-  SysTrayX.Messaging.filters.forEach((filter) => {
-    const accountId = filter.accountId;
-    filter.folders.forEach((path) => {
       if (SysTrayX.Messaging.new[accountId] !== undefined) {
         if (SysTrayX.Messaging.new[accountId][path] !== undefined) {
-          count = count + SysTrayX.Messaging.new[accountId][path].length;
+          newCount = newCount + SysTrayX.Messaging.new[accountId][path].length;
         }
       }
     });
@@ -406,6 +395,6 @@ const getNewMailCount = () => {
   //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
   //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-  //console.debug("getNewMailCount: " + count);
-  SysTrayX.Link.postSysTrayXMessage({ unreadMail: count });
+  //console.debug("getMailCount: " + unreadCount + ", " + newCount);
+  SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
 };
