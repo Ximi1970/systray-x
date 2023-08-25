@@ -732,7 +732,11 @@ void    SysTrayX::slotStartApp()
 {
     QString app = m_preferences->getStartApp();
     QString args = m_preferences->getStartAppArgs();
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
     QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
+#else
+    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
+#endif
 
     if( !app.isEmpty() )
     {
@@ -748,7 +752,11 @@ void    SysTrayX::slotCloseApp()
 {
     QString app = m_preferences->getCloseApp();
     QString args = m_preferences->getCloseAppArgs();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
+#else
+    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
+#endif
 
     if( !app.isEmpty() )
     {
