@@ -476,7 +476,12 @@ void    SysTrayX::hideKdeTrayIcon()
         disconnect( this, &SysTrayX::signalUnreadMail, m_kde_tray_icon, &SysTrayXStatusNotifier::slotSetUnreadMail );
 
         /*
-         *  Remove the notifier icon
+         *  Remove the notifier icon#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
+#else
+    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
+#endif
+
          */
         delete m_kde_tray_icon;
         m_kde_tray_icon = nullptr;
@@ -732,7 +737,7 @@ void    SysTrayX::slotStartApp()
 {
     QString app = m_preferences->getStartApp();
     QString args = m_preferences->getStartAppArgs();
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
 #else
     QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
