@@ -287,7 +287,7 @@ async function getCountType() {
 }
 
 //
-//  Get startup app parameters
+//  Get start app parameters
 //
 async function getStartAppParam() {
   function resolve(result) {

@@ -964,7 +964,7 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore startup app callbacks
+  //  Restore start app callbacks
   //
   setStartApp: function (result) {
     const startApp = result.startApp || "";
@@ -978,7 +978,7 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore startup app args callbacks
+  //  Restore start app args callbacks
   //
   setStartAppArgs: function (result) {
     const startAppArgs = result.startAppArgs || "";
@@ -1321,8 +1321,8 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
     document.getElementById("themeselect").className = "active";
-    document.getElementById("startapplicationselect").className = "active";
-    document.getElementById("closeapplicationselect").className = "active";
+    document.getElementById("startappselect").className = "active";
+    document.getElementById("closeappselect").className = "active";
   },
 };
 

@@ -738,7 +738,7 @@ SysTrayX.Link = {
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
 
-    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
+    //    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
@@ -1031,7 +1031,7 @@ async function start() {
   const hideDefaultIcon = await getHideDefaultIcon();
   SysTrayX.hideDefaultIcon = hideDefaultIcon;
 
-  //  Get startup app launch parameters
+  //  Get start app launch parameters
   const {startApp, startAppArgs} = await getStartAppParam();
   SysTrayX.startApp = startApp;
   SysTrayX.startAppArgs = startAppArgs;

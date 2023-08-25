@@ -207,8 +207,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     slotSetUnreadMail( 10 );
 
-    m_preferences->setStartupApplication( "/home/maxime/test.sh" );
-    m_preferences->setStartupApplicationArgs( "/home/maxime/startup.txt StartupString" );
+    m_preferences->setStartApp( "/home/maxime/test.sh" );
+    m_preferences->setStartAppArgs( "/home/maxime/startup.txt StartupString" );
     slotStartApp();
 */
 }
