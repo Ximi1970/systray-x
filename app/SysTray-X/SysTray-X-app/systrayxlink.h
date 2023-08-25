@@ -242,9 +242,9 @@ class SysTrayXLink : public QObject
         void    signalWindowPositions( QList< QPoint > window_positions );
 
         /**
-         * @brief signalStartupApp. Signal the startup app launch request.
+         * @brief signalStartApp. Signal the start app launch request.
          */
-        void    signalStartupApp();
+        void    signalStartApp();
 
         /**
          * @brief signalCloseApp. Signal the close app launch request.
@@ -354,14 +354,14 @@ class SysTrayXLink : public QObject
         void    slotThemeChange();
 
         /**
-         * @brief slotStartupAppChange. Slot for handling startup application change signals.
+         * @brief slotStartAppChange. Slot for handling start application change signals.
          */
-        void    slotStartupAppChange();
+        void    slotStartAppChange();
 
         /**
-         * @brief slotStartupAppArgsChange. Slot for handling startup application arguments change signals.
+         * @brief slotStartAppArgsChange. Slot for handling start application arguments change signals.
          */
-        void    slotStartupAppArgsChange();
+        void    slotStartAppArgsChange();
 
         /**
          * @brief slotCloseAppChange. Slot for handling close application change signals.

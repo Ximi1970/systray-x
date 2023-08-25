@@ -193,10 +193,6 @@
         <translation>Minimizzazione predefinita</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Minimizza nel vassoio, metodo 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimizza nel vassoio, metodo 2</translation>
@@ -349,11 +345,6 @@
         <translation>Argomenti:</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
-        <translation>Applicazione di avvio</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="935"/>
         <source>Mail</source>
         <translation>Messaggi</translation>
@@ -383,6 +374,11 @@
         <location filename="../preferences.ui" line="829"/>
         <source>Apps</source>
         <translation>Applicazioni</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="878"/>
+        <source>Start application</source>
+        <translation>Applicazione di avvio</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="1045"/>

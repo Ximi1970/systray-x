@@ -314,19 +314,19 @@
     "description": "Title for Apps options"
   },
 
-  "startup_application": {
-    "message": "Startup application",
-    "description": "The startup application parameters"
+  "start_application": {
+    "message": "Start application",
+    "description": "The start application parameters"
   },
 
-  "startup_app": {
+  "start_app": {
     "message": "Application: ",
-    "description": "The startup application"
+    "description": "The start application"
   },
 
-  "startup_app_args": {
+  "start_app_args": {
     "message": "Arguments: ",
-    "description": "Arguments for a startup application"
+    "description": "Arguments for a start application"
   },
 
   "close_application": {

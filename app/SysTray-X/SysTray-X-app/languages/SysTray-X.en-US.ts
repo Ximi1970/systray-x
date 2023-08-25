@@ -212,10 +212,6 @@
         <translation>Default minimize</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Minimize to tray, method 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimize to tray, method 2</translation>
@@ -239,10 +235,6 @@
         <location filename="../preferences.ui" line="229"/>
         <source>Start application minimized</source>
         <translation>Start application minimized</translation>
-    </message>
-    <message>
-        <source>Minimize on close</source>
-        <translation type="vanished">Minimize on close</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
@@ -363,12 +355,8 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
-        <translation>Startup application</translation>
-    </message>
-    <message>
-        <source>Arguments: </source>
-        <translation type="vanished">Arguments:</translation>
+        <source>Start application</source>
+        <translation>Start application</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="935"/>

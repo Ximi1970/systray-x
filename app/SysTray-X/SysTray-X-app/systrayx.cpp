@@ -133,8 +133,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalThemeChange, m_pref_dialog, &PreferencesDialog::slotThemeChange );
-    connect( m_preferences, &Preferences::signalStartupAppChange, m_pref_dialog, &PreferencesDialog::slotStartupAppChange );
-    connect( m_preferences, &Preferences::signalStartupAppArgsChange, m_pref_dialog, &PreferencesDialog::slotStartupAppArgsChange );
+    connect( m_preferences, &Preferences::signalStartAppChange, m_pref_dialog, &PreferencesDialog::slotStartAppChange );
+    connect( m_preferences, &Preferences::signalStartAppArgsChange, m_pref_dialog, &PreferencesDialog::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_pref_dialog, &PreferencesDialog::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_pref_dialog, &PreferencesDialog::slotCloseAppArgsChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
@@ -157,8 +157,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalThemeChange, m_link, &SysTrayXLink::slotThemeChange );
-    connect( m_preferences, &Preferences::signalStartupAppChange, m_link, &SysTrayXLink::slotStartupAppChange );
-    connect( m_preferences, &Preferences::signalStartupAppArgsChange, m_link, &SysTrayXLink::slotStartupAppArgsChange );
+    connect( m_preferences, &Preferences::signalStartAppChange, m_link, &SysTrayXLink::slotStartAppChange );
+    connect( m_preferences, &Preferences::signalStartAppArgsChange, m_link, &SysTrayXLink::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_link, &SysTrayXLink::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_link, &SysTrayXLink::slotCloseAppArgsChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
@@ -176,7 +176,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
     connect( m_link, &SysTrayXLink::signalLocale, this, &SysTrayX::slotLoadLanguage );
-    connect( m_link, &SysTrayXLink::signalStartupApp, this, &SysTrayX::slotStartupApp );
+    connect( m_link, &SysTrayXLink::signalStartApp, this, &SysTrayX::slotStartApp );
     connect( m_link, &SysTrayXLink::signalCloseApp, this, &SysTrayX::slotCloseApp );
 
 #ifdef Q_OS_UNIX
@@ -209,7 +209,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     m_preferences->setStartupApplication( "/home/maxime/test.sh" );
     m_preferences->setStartupApplicationArgs( "/home/maxime/startup.txt StartupString" );
-    slotStartupApp();
+    slotStartApp();
 */
 }
 
@@ -728,10 +728,10 @@ void    SysTrayX::slotLoadLanguage( QString locale )
 /*
  *  Handle a startup app launch request
  */
-void    SysTrayX::slotStartupApp()
+void    SysTrayX::slotStartApp()
 {
-    QString app = m_preferences->getStartupApplication();
-    QString args = m_preferences->getStartupApplicationArgs();
+    QString app = m_preferences->getStartApp();
+    QString args = m_preferences->getStartAppArgs();
     QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
 
     if( !app.isEmpty() )
@@ -746,8 +746,8 @@ void    SysTrayX::slotStartupApp()
  */
 void    SysTrayX::slotCloseApp()
 {
-    QString app = m_preferences->getCloseApplication();
-    QString args = m_preferences->getCloseApplicationArgs();
+    QString app = m_preferences->getCloseApp();
+    QString args = m_preferences->getCloseAppArgs();
     QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
 
     if( !app.isEmpty() )

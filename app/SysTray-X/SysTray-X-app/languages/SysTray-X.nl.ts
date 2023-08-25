@@ -211,10 +211,6 @@
         <translation>Standaard minimalisatie</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Minimaliseer naar systeemvak, methode 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimaliseer naar systeemvak, methode 2</translation>
@@ -238,10 +234,6 @@
         <location filename="../preferences.ui" line="229"/>
         <source>Start application minimized</source>
         <translation>Start programma geminimaliseerd</translation>
-    </message>
-    <message>
-        <source>Minimize on close</source>
-        <translation type="vanished">Minimaliseren bij sluiten</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
@@ -362,7 +354,7 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
+        <source>Start application</source>
         <translation>Start programma</translation>
     </message>
     <message>

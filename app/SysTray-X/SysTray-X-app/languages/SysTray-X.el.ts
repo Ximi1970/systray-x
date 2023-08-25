@@ -187,10 +187,6 @@
         <translation>Προεπιλεγμένη ελαχιστοποίηση</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">Μέθοδος 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>Μέθοδος 2</translation>
@@ -348,11 +344,6 @@
         <translation>Επιχειρήματα:</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
-        <translation>Εφαρμογή εκκίνησης</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="935"/>
         <source>Mail</source>
         <translation>Αλληλογραφία</translation>
@@ -382,6 +373,11 @@
         <location filename="../preferences.ui" line="829"/>
         <source>Apps</source>
         <translation>Εφαρμογές</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="878"/>
+        <source>Start application</source>
+        <translation>Εφαρμογή εκκίνησης</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="1045"/>

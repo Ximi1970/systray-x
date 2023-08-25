@@ -463,60 +463,60 @@ class Preferences : public QObject
         void setTheme( Theme theme );
 
         /**
-         * @brief getStartupApplication. Get the startup application.
+         * @brief getStartApp. Get the start application.
          *
          * @return      The app.
          */
-        QString getStartupApplication() const;
+        QString getStartApp() const;
 
         /**
-         * @brief setStartupApplication. Set the startup application.
+         * @brief setStartApp. Set the start application.
          *
          * @param app     The app.
          */
-        void setStartupApplication( QString app );
+        void setStartApp( QString app );
 
         /**
-         * @brief getStartupApplicationArgs. Get the startup application arguments.
+         * @brief getStartAppArgs. Get the start application arguments.
          *
          * @return      The arg.
          */
-        QString getStartupApplicationArgs() const;
+        QString getStartAppArgs() const;
 
         /**
-         * @brief setStartupApplicationArgs. Set the startup application arguments.
+         * @brief setStartAppArgs. Set the start application arguments.
          *
          * @param app     The args.
          */
-        void setStartupApplicationArgs( QString args );
+        void setStartAppArgs( QString args );
 
         /**
-         * @brief getCloseApplication. Get the close application.
+         * @brief getCloseApp. Get the close application.
          *
          * @return      The app.
          */
-        QString getCloseApplication() const;
+        QString getCloseApp() const;
 
         /**
-         * @brief setCloseApplication. Set the close application.
+         * @brief setCloseApp. Set the close application.
          *
          * @param app     The app.
          */
-        void setCloseApplication( QString app );
+        void setCloseApp( QString app );
 
         /**
-         * @brief getCloseApplicationArgs. Get the close application arguments.
+         * @brief getCloseAppArgs. Get the close application arguments.
          *
          * @return      The args.
          */
-        QString getCloseApplicationArgs() const;
+        QString getCloseAppArgs() const;
 
         /**
-         * @brief setCloseApplicationArgs. Set the close application arguments.
+         * @brief setCloseAppArgs. Set the close application arguments.
          *
          * @param args     The args.
          */
-        void setCloseApplicationArgs( QString args );
+        void setCloseAppArgs( QString args );
 
         /**
          * @brief getDebug. Get the debug windows state.
@@ -670,14 +670,14 @@ class Preferences : public QObject
         void signalThemeChange();
 
         /**
-         * @brief signalStartupAppChange. Signal a startup application change.
+         * @brief signalStartAppChange. Signal a start application change.
          */
-        void signalStartupAppChange();
+        void signalStartAppChange();
 
         /**
-         * @brief signalStartupAppArgsChange. Signal a startup application arguments change.
+         * @brief signalStartAppArgsChange. Signal a start application arguments change.
          */
-        void signalStartupAppArgsChange();
+        void signalStartAppArgsChange();
 
         /**
          * @brief signalCloseAppChange. Signal a close application change.
@@ -847,14 +847,14 @@ class Preferences : public QObject
         Theme m_theme;
 
         /**
-         * @brief m_startup_app
+         * @brief m_start_app
          */
-        QString m_startup_app;
+        QString m_start_app;
 
         /**
-         * @brief m_startup_app_args
+         * @brief m_start_app_args
          */
-        QString m_startup_app_args;
+        QString m_start_app_args;
 
         /**
          * @brief m_close_app

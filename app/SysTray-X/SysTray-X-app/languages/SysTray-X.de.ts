@@ -207,10 +207,6 @@
         <translation>Standard Minimieren</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translation type="vanished">In Systemleiste verbergen, Methode 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translation>In Systemleiste verbergen, Methode 2</translation>
@@ -234,10 +230,6 @@
         <location filename="../preferences.ui" line="229"/>
         <source>Start application minimized</source>
         <translation>Anwendung minimiert starten</translation>
-    </message>
-    <message>
-        <source>Minimize on close</source>
-        <translation type="vanished">Beim Fensterschließen, Minimieren</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
@@ -358,7 +350,7 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
+        <source>Start application</source>
         <translation>Startanwendung</translation>
     </message>
     <message>

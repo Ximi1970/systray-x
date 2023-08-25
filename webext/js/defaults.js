@@ -289,19 +289,19 @@ async function getCountType() {
 //
 //  Get startup app parameters
 //
-async function getStartupAppParam() {
+async function getStartAppParam() {
   function resolve(result) {
-    const startupApp = result.startupApp || "";
-    const startupAppArgs = result.startupAppArgs || "";
-    return { startupApp, startupAppArgs };
+    const startApp = result.startApp || "";
+    const startAppArgs = result.startAppArgs || "";
+    return { startApp, startAppArgs };
   }
 
   function reject() {
-    return { startupApp: "", startupAppArgs: "" };
+    return { startApp: "", startAppArgs: "" };
   }
 
   return await storage()
-    .get(["startupApp", "startupAppArgs"])
+    .get(["startApp", "startAppArgs"])
     .then(resolve, reject);
 }
 

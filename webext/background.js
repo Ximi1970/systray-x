@@ -6,8 +6,8 @@ var SysTrayX = {
 
   hideDefaultIcon: false,
 
-  startupApp: "",
-  startupAppArgs: "",
+  startApp: "",
+  startAppArgs: "",
 };
 
 SysTrayX.Info = {
@@ -66,8 +66,8 @@ SysTrayX.Messaging = {
     //  Send preferences to app
     SysTrayX.Messaging.sendPreferences();
 
-    //  Send startup app trigger
-    SysTrayX.Messaging.sendStartupApp();
+    //  Send start app trigger
+    SysTrayX.Messaging.sendStartApp();
 
     //  Let us wait until TB is ready, needed for TB91 and higher?
     const startupDelay = await storage()
@@ -581,10 +581,10 @@ SysTrayX.Messaging = {
     });
   },
 
-  sendStartupApp: function () {
+  sendStartApp: function () {
     SysTrayX.Link.postSysTrayXMessage({
-      startupApp: SysTrayX.startupApp,
-      startupAppArgs: SysTrayX.startupAppArgs,
+      startApp: SysTrayX.startApp,
+      startAppArgs: SysTrayX.startAppArgs,
     });
   },
 
@@ -618,8 +618,8 @@ SysTrayX.Messaging = {
         "countType",
         "startupDelay",
         "theme",
-        "startupApp",
-        "startupAppArgs",
+        "startApp",
+        "startAppArgs",
         "closeApp",
         "closeAppArgs",
       ])
@@ -656,8 +656,8 @@ SysTrayX.Messaging = {
     const countType = result.countType || "0";
     const startupDelay = result.startupDelay || "5";
     const theme = result.theme || "0";
-    const startupApp = result.startupApp || "";
-    const startupAppArgs = result.startupAppArgs || "";
+    const startApp = result.startApp || "";
+    const startAppArgs = result.startAppArgs || "";
     const closeApp = result.closeApp || "";
     const closeAppArgs = result.closeAppArgs || "";
 
@@ -691,8 +691,8 @@ SysTrayX.Messaging = {
         countType,
         startupDelay,
         theme,
-        startupApp,
-        startupAppArgs,
+        startApp,
+        startAppArgs,
         closeApp,
         closeAppArgs,
       },
@@ -907,17 +907,17 @@ SysTrayX.Link = {
         });
       }
 
-      const startupApp = response["preferences"].startupApp;
-      if (startupApp !== undefined) {
+      const startApp = response["preferences"].startApp;
+      if (startApp !== undefined) {
         await storage().set({
-          startupApp: startupApp,
+          startApp: startApp,
         });
       }
 
-      const startupAppArgs = response["preferences"].startupAppArgs;
-      if (startupAppArgs !== undefined) {
+      const startAppArgs = response["preferences"].startAppArgs;
+      if (startAppArgs !== undefined) {
         await storage().set({
-          startupAppArgs: startupAppArgs,
+          startAppArgs: startAppArgs,
         });
       }
 
@@ -1032,9 +1032,9 @@ async function start() {
   SysTrayX.hideDefaultIcon = hideDefaultIcon;
 
   //  Get startup app launch parameters
-  const {startupApp, startupAppArgs} = await getStartupAppParam();
-  SysTrayX.startupApp = startupApp;
-  SysTrayX.startupAppArgs = startupAppArgs;
+  const {startApp, startAppArgs} = await getStartAppParam();
+  SysTrayX.startApp = startApp;
+  SysTrayX.startAppArgs = startAppArgs;
 
   //   Used sync storage
   //  const inUse = await browser.storage.sync.getBytesInUse();

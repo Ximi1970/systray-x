@@ -209,11 +209,6 @@
         <translation>Comportamento padrão</translation>
     </message>
     <message>
-        <source>Minimize to tray, method 1</source>
-        <translatorcomment>Minimizar para à área de notificações? (muito grande)</translatorcomment>
-        <translation type="vanished">Minimizar para a tray, método 1</translation>
-    </message>
-    <message>
         <location filename="../preferences.ui" line="83"/>
         <source>Minimize to tray, method 2</source>
         <translatorcomment>Minimizar para à área de notificações? (muito grande)</translatorcomment>
@@ -238,10 +233,6 @@
         <location filename="../preferences.ui" line="229"/>
         <source>Start application minimized</source>
         <translation>Iniciar aplicação minimizada</translation>
-    </message>
-    <message>
-        <source>Minimize on close</source>
-        <translation type="vanished">Minimizar ao fechar</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="354"/>
@@ -362,7 +353,7 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="878"/>
-        <source>Startup application</source>
+        <source>Start application</source>
         <translation>Aplicativo de inicialização</translation>
     </message>
     <message>

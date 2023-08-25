@@ -842,7 +842,7 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_12">
                   <item>
-                   <widget class="QLineEdit" name="closeApplicationLineEdit"/>
+                   <widget class="QLineEdit" name="closeAppLineEdit"/>
                   </item>
                   <item>
                    <widget class="QPushButton" name="closeBrowseButton">
@@ -863,7 +863,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="closeApplicationArgsLineEdit"/>
+                   <widget class="QLineEdit" name="closeAppArgsLineEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -875,7 +875,7 @@
            <item row="0" column="0">
             <widget class="QGroupBox" name="groupBox">
              <property name="title">
-              <string>Startup application</string>
+              <string>Start application</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="0" column="0">
@@ -883,10 +883,10 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_14">
                   <item>
-                   <widget class="QLineEdit" name="startupApplicationLineEdit"/>
+                   <widget class="QLineEdit" name="startAppLineEdit"/>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="startupBrowseButton">
+                   <widget class="QPushButton" name="startBrowseButton">
                     <property name="text">
                      <string>Browse...</string>
                     </property>
@@ -904,7 +904,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="startupApplicationArgsLineEdit"/>
+                   <widget class="QLineEdit" name="startAppArgsLineEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -1059,12 +1059,12 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="themeGroup"/>
-  <buttongroup name="minimizeIconTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
   <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="themeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeIconTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>

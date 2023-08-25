@@ -118,8 +118,8 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     connect( m_ui->savePushButton, &QPushButton::clicked, this, &PreferencesDialog::slotAccept);
     connect( m_ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotReject);
 
-    connect( m_ui->startupBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotStartupApplicationSelect );
-    connect( m_ui->closeBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotCloseApplicationSelect );
+    connect( m_ui->startBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotStartAppSelect );
+    connect( m_ui->closeBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotCloseAppSelect );
 
     /*
      *  Set number color
@@ -153,12 +153,12 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setNumberMargins( m_pref->getNumberMargins() );
 
     /*
-     *  Set the startup and close application parameters
+     *  Set the start and close application parameters
      */
-    setStartupApplication( m_pref->getStartupApplication() );
-    setStartupApplicationArgs( m_pref->getStartupApplicationArgs() );
-    setCloseApplication( m_pref->getCloseApplication() );
-    setCloseApplicationArgs( m_pref->getCloseApplicationArgs() );
+    setStartApp( m_pref->getStartApp() );
+    setStartAppArgs( m_pref->getStartAppArgs() );
+    setCloseApp( m_pref->getCloseApp() );
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 
     /*
      *  Dialog on top
@@ -445,37 +445,37 @@ void    PreferencesDialog::setTheme( Preferences::Theme theme )
 
 
 /*
- *  Set startup application
+ *  Set start application
  */
-void    PreferencesDialog::setStartupApplication( QString app )
+void    PreferencesDialog::setStartApp( QString app )
 {
-   m_ui->startupApplicationLineEdit->setText( app );
+   m_ui->startAppLineEdit->setText( app );
 }
 
 
 /*
- *  Set startup application arguments
+ *  Set start application arguments
  */
-void    PreferencesDialog::setStartupApplicationArgs( QString args )
+void    PreferencesDialog::setStartAppArgs( QString args )
 {
-   m_ui->startupApplicationArgsLineEdit->setText( args );
+   m_ui->startAppArgsLineEdit->setText( args );
 }
 
 /*
  *  Set close application
  */
-void    PreferencesDialog::setCloseApplication( QString app )
+void    PreferencesDialog::setCloseApp( QString app )
 {
-   m_ui->closeApplicationLineEdit->setText( app );
+   m_ui->closeAppLineEdit->setText( app );
 }
 
 
 /*
  *  Set close application arguments
  */
-void    PreferencesDialog::setCloseApplicationArgs( QString args )
+void    PreferencesDialog::setCloseAppArgs( QString args )
 {
-   m_ui->closeApplicationArgsLineEdit->setText( args );
+   m_ui->closeAppArgsLineEdit->setText( args );
 }
 
 
@@ -519,14 +519,14 @@ void    PreferencesDialog::slotAccept()
     Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
     m_pref->setTheme( theme );
 
-    QString startupApp = m_ui->startupApplicationLineEdit->text();
-    m_pref->setStartupApplication( startupApp );
-    QString startupAppArgs= m_ui->startupApplicationArgsLineEdit->text();
-    m_pref->setStartupApplicationArgs( startupAppArgs );
-    QString closeApp = m_ui->closeApplicationLineEdit->text();
-    m_pref->setCloseApplication( closeApp );
-    QString closeAppArgs= m_ui->closeApplicationArgsLineEdit->text();
-    m_pref->setCloseApplicationArgs( closeAppArgs );
+    QString startApp = m_ui->startAppLineEdit->text();
+    m_pref->setStartApp( startApp );
+    QString startAppArgs= m_ui->startAppArgsLineEdit->text();
+    m_pref->setStartAppArgs( startAppArgs );
+    QString closeApp = m_ui->closeAppLineEdit->text();
+    m_pref->setCloseApp( closeApp );
+    QString closeAppArgs= m_ui->closeAppArgsLineEdit->text();
+    m_pref->setCloseAppArgs( closeAppArgs );
 
     /*
      *  Force different color?
@@ -592,10 +592,10 @@ void    PreferencesDialog::slotReject()
     setNumberAlignment( m_pref->getNumberAlignment() );
     setNumberMargins( m_pref->getNumberMargins() );
     setTheme( m_pref->getTheme() );
-    setStartupApplication( m_pref->getStartupApplication() );
-    setStartupApplicationArgs( m_pref->getStartupApplicationArgs() );
-    setCloseApplication( m_pref->getCloseApplication() );
-    setCloseApplicationArgs( m_pref->getCloseApplicationArgs() );
+    setStartApp( m_pref->getStartApp() );
+    setStartAppArgs( m_pref->getStartAppArgs() );
+    setCloseApp( m_pref->getCloseApp() );
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 
     setDebug( m_pref->getDebug());
 }
@@ -666,15 +666,15 @@ void    PreferencesDialog::slotColorSelect()
 
 
 /*
- *  Handle the startup application button
+ *  Handle the start application button
  */
-void    PreferencesDialog::slotStartupApplicationSelect()
+void    PreferencesDialog::slotStartAppSelect()
 {
     QFileDialog file_dialog( this, tr( "Select application" ), "", "" );
 
     if( file_dialog.exec() )
     {
-        setStartupApplication( file_dialog.selectedFiles()[ 0 ] );
+        setStartApp( file_dialog.selectedFiles()[ 0 ] );
     }
 }
 
@@ -682,13 +682,13 @@ void    PreferencesDialog::slotStartupApplicationSelect()
 /*
  *  Handle the close application button
  */
-void    PreferencesDialog::slotCloseApplicationSelect()
+void    PreferencesDialog::slotCloseAppSelect()
 {
     QFileDialog file_dialog( this, tr( "Select application" ), "", "" );
 
     if( file_dialog.exec() )
     {
-        setCloseApplication( file_dialog.selectedFiles()[ 0 ] );
+        setCloseApp( file_dialog.selectedFiles()[ 0 ] );
     }
 }
 
@@ -893,20 +893,20 @@ void    PreferencesDialog::slotThemeChange()
 
 
 /*
- *  Handle the startup application change signal
+ *  Handle the start application change signal
  */
-void    PreferencesDialog::slotStartupAppChange()
+void    PreferencesDialog::slotStartAppChange()
 {
-    setStartupApplication( m_pref->getStartupApplication() );
+    setStartApp( m_pref->getStartApp() );
 }
 
 
 /*
- *  Handle the startup application arguments change signal
+ *  Handle the start application arguments change signal
  */
-void    PreferencesDialog::slotStartupAppArgsChange()
+void    PreferencesDialog::slotStartAppArgsChange()
 {
-    setStartupApplicationArgs( m_pref->getStartupApplicationArgs() );
+    setStartAppArgs( m_pref->getStartAppArgs() );
 }
 
 
@@ -915,7 +915,7 @@ void    PreferencesDialog::slotStartupAppArgsChange()
  */
 void    PreferencesDialog::slotCloseAppChange()
 {
-    setCloseApplication( m_pref->getCloseApplication() );
+    setCloseApp( m_pref->getCloseApp() );
 }
 
 
@@ -924,5 +924,5 @@ void    PreferencesDialog::slotCloseAppChange()
  */
 void    PreferencesDialog::slotCloseAppArgsChange()
 {
-    setCloseApplicationArgs( m_pref->getCloseApplicationArgs() );
+    setCloseAppArgs( m_pref->getCloseAppArgs() );
 }

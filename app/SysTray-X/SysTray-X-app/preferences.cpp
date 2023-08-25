@@ -81,8 +81,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 
     m_theme = PREF_THEME_LIGHT;
 
-    m_startup_app = "";
-    m_startup_app_args = "";
+    m_start_app = "";
+    m_start_app_args = "";
     m_close_app = "";
     m_close_app_args = "";
 }
@@ -693,55 +693,55 @@ void    Preferences::setTheme( Theme theme )
 
 
 /*
- *  Get the startup application.
+ *  Get the start application.
  */
-QString    Preferences::getStartupApplication() const
+QString    Preferences::getStartApp() const
 {
 
-    return m_startup_app;
+    return m_start_app;
 }
 
 
 /*
- *  Set the startup application.
+ *  Set the start application.
  */
-void    Preferences::setStartupApplication( QString app )
+void    Preferences::setStartApp( QString app )
 {
-    if( m_startup_app != app )
+    if( m_start_app != app )
     {
-        m_startup_app = app;
+        m_start_app = app;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalStartupAppChange();
+        emit signalStartAppChange();
     }
 }
 
 
 /*
- *  Get the startup application arguments.
+ *  Get the start application arguments.
  */
-QString    Preferences::getStartupApplicationArgs() const
+QString    Preferences::getStartAppArgs() const
 {
 
-    return m_startup_app_args;
+    return m_start_app_args;
 }
 
 
 /*
- *  Set the startup application arguments.
+ *  Set the start application arguments.
  */
-void    Preferences::setStartupApplicationArgs( QString args )
+void    Preferences::setStartAppArgs( QString args )
 {
-    if( m_startup_app_args != args )
+    if( m_start_app_args != args )
     {
-        m_startup_app_args = args;
+        m_start_app_args = args;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalStartupAppArgsChange();
+        emit signalStartAppArgsChange();
     }
 }
 
@@ -749,7 +749,7 @@ void    Preferences::setStartupApplicationArgs( QString args )
 /*
  *  Get the close application.
  */
-QString    Preferences::getCloseApplication() const
+QString    Preferences::getCloseApp() const
 {
 
     return m_close_app;
@@ -759,7 +759,7 @@ QString    Preferences::getCloseApplication() const
 /*
  *  Set the close application.
  */
-void    Preferences::setCloseApplication( QString app )
+void    Preferences::setCloseApp( QString app )
 {
     if( m_close_app != app )
     {
@@ -776,7 +776,7 @@ void    Preferences::setCloseApplication( QString app )
 /*
  *  Get the close application arguments.
  */
-QString    Preferences::getCloseApplicationArgs() const
+QString    Preferences::getCloseAppArgs() const
 {
 
     return m_close_app_args;
@@ -786,7 +786,7 @@ QString    Preferences::getCloseApplicationArgs() const
 /*
  *  Set the close application arguments.
  */
-void    Preferences::setCloseApplicationArgs( QString args )
+void    Preferences::setCloseAppArgs( QString args )
 {
     if( m_close_app_args != args )
     {

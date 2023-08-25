@@ -210,32 +210,32 @@ class PreferencesDialog : public QDialog
         void    setTheme( Preferences::Theme theme );
 
         /**
-         * @brief setStartupApplication. Set the startup application.
+         * @brief setStartApp. Set the start application.
          *
          * @param app     The application.
          */
-        void    setStartupApplication( QString app );
+        void    setStartApp( QString app );
 
         /**
-         * @brief setStartupApplicationArgs. Set the startup application arguments.
+         * @brief setStartAppArgs. Set the start application arguments.
          *
          * @param args     The application arguments.
          */
-        void    setStartupApplicationArgs( QString args );
+        void    setStartAppArgs( QString args );
 
         /**
-         * @brief setCloseApplication. Set the close application.
+         * @brief setCloseApp. Set the close application.
          *
          * @param app     The application.
          */
-        void    setCloseApplication( QString app );
+        void    setCloseApp( QString app );
 
         /**
-         * @brief setCloseApplicationArgs. Set the close application arguments.
+         * @brief setCloseAppArgs. Set the close application arguments.
          *
          * @param args     The application arguments.
          */
-        void    setCloseApplicationArgs( QString args );
+        void    setCloseAppArgs( QString args );
 
 
     signals:
@@ -355,14 +355,14 @@ class PreferencesDialog : public QDialog
         void    slotThemeChange();
 
         /**
-         * @brief slotStartupAppChange. Slot for handling startup application change.
+         * @brief slotStartAppChange. Slot for handling start application change.
          */
-        void    slotStartupAppChange();
+        void    slotStartAppChange();
 
         /**
-         * @brief slotStartupAppArgsChange. Slot for handling startup application arguments change.
+         * @brief slotStartAppArgsChange. Slot for handling start application arguments change.
          */
-        void    slotStartupAppArgsChange();
+        void    slotStartAppArgsChange();
 
         /**
          * @brief slotCloseAppChange. Slot for handling close application change.
@@ -402,14 +402,14 @@ class PreferencesDialog : public QDialog
         void    slotColorSelect();
 
         /**
-         * @brief slotStartupApplicationSelect. Handle the startup application button click.
+         * @brief slotStartAppSelect. Handle the start application button click.
          */
-        void    slotStartupApplicationSelect();
+        void    slotStartAppSelect();
 
         /**
-         * @brief slotCloseApplicationSelect. Handle the close application button click.
+         * @brief slotCloseAppSelect. Handle the close application button click.
          */
-        void    slotCloseApplicationSelect();
+        void    slotCloseAppSelect();
 
     private:
 

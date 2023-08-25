@@ -303,10 +303,10 @@ SysTrayX.SaveOptions = {
     //
     //  Save launch parameters
     //
-    const startupAppInput = document.getElementById("startupAppInput");
-    const startupApp = startupAppInput.value;
-    const startupAppArgsInput = document.getElementById("startupAppArgsInput");
-    const startupAppArgs = startupAppArgsInput.value;
+    const startAppInput = document.getElementById("startAppInput");
+    const startApp = startAppInput.value;
+    const startAppArgsInput = document.getElementById("startAppArgsInput");
+    const startAppArgs = startAppArgsInput.value;
 
     const closeAppInput = document.getElementById("closeAppInput");
     const closeApp = closeAppInput.value;
@@ -315,8 +315,8 @@ SysTrayX.SaveOptions = {
 
     //  Store launch parameters
     await storage().set({
-      startupApp: startupApp,
-      startupAppArgs: startupAppArgs,
+      startApp: startApp,
+      startAppArgs: startAppArgs,
       closeApp: closeApp,
       closeAppArgs: closeAppArgs,
     });
@@ -537,17 +537,17 @@ SysTrayX.RestoreOptions = {
     //  Restore launch parameters
     //
     await storage()
-      .get("startupApp")
+      .get("startApp")
       .then(
-        SysTrayX.RestoreOptions.setStartupApp,
-        SysTrayX.RestoreOptions.onStartupAppError
+        SysTrayX.RestoreOptions.setStartApp,
+        SysTrayX.RestoreOptions.onStartAppError
       );
 
       await storage()
-      .get("startupAppArgs")
+      .get("startAppArgs")
       .then(
-        SysTrayX.RestoreOptions.setStartupAppArgs,
-        SysTrayX.RestoreOptions.onStartupAppArgsError
+        SysTrayX.RestoreOptions.setStartAppArgs,
+        SysTrayX.RestoreOptions.onStartAppArgsError
       );
 
       await storage()
@@ -966,29 +966,29 @@ SysTrayX.RestoreOptions = {
   //
   //  Restore startup app callbacks
   //
-  setStartupApp: function (result) {
-    const startupApp = result.startupApp || "";
+  setStartApp: function (result) {
+    const startApp = result.startApp || "";
 
-    const startupAppInput = document.getElementById("startupAppInput");
-    startupAppInput.value = startupApp;
+    const startAppInput = document.getElementById("startAppInput");
+    startAppInput.value = startApp;
   },
 
-  onStartupAppError: function (error) {
-    console.log(`StartupApp Error: ${error}`);
+  onStartAppError: function (error) {
+    console.log(`StartApp Error: ${error}`);
   },
 
   //
   //  Restore startup app args callbacks
   //
-  setStartupAppArgs: function (result) {
-    const startupAppArgs = result.startupAppArgs || "";
+  setStartAppArgs: function (result) {
+    const startAppArgs = result.startAppArgs || "";
 
-    const startupAppArgsInput = document.getElementById("startupAppArgsInput");
-    startupAppArgsInput.value = startupAppArgs;
+    const startAppArgsInput = document.getElementById("startAppArgsInput");
+    startAppArgsInput.value = startAppArgs;
   },
 
-  onStartupAppArgsError: function (error) {
-    console.log(`StartupAppArgs Error: ${error}`);
+  onStartAppArgsError: function (error) {
+    console.log(`StartAppArgs Error: ${error}`);
   },
 
   //
@@ -1269,14 +1269,14 @@ SysTrayX.StorageChanged = {
           theme: changes[item].newValue,
         });
       }
-      if (item === "startupApp") {
-        SysTrayX.RestoreOptions.setStartupApp({
-          startupApp: changes[item].newValue,
+      if (item === "startApp") {
+        SysTrayX.RestoreOptions.setStartApp({
+          startApp: changes[item].newValue,
         });
       }
-      if (item === "startupAppArgs") {
-        SysTrayX.RestoreOptions.setStartupAppArgs({
-          startupAppArgs: changes[item].newValue,
+      if (item === "startAppArgs") {
+        SysTrayX.RestoreOptions.setStartAppArgs({
+          startAppArgs: changes[item].newValue,
         });
       }
       if (item === "closeApp") {
@@ -1321,7 +1321,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
     document.getElementById("themeselect").className = "active";
-    document.getElementById("startupapplicationselect").className = "active";
+    document.getElementById("startapplicationselect").className = "active";
     document.getElementById("closeapplicationselect").className = "active";
   },
 };
