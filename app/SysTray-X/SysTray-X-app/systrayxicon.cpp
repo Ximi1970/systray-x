@@ -303,8 +303,18 @@ void    SysTrayXIcon::setMailCount( int unread_mail, int new_mail )
 void    SysTrayXIcon::renderIcon()
 {
     QPixmap pixmap;
+    int count;
 
-    if( m_unread_mail > 0 || m_new_mail > 0 )
+    if( m_pref->getCountType() == Preferences::PREF_COUNT_UNREAD )
+    {
+        count = m_unread_mail;
+    }
+    else
+    {
+        count = m_new_mail;
+    }
+
+    if( count > 0 )
     {
         switch( m_icon_type )
         {
@@ -394,7 +404,7 @@ void    SysTrayXIcon::renderIcon()
         }
     }
 
-    if( m_show_number && ( m_unread_mail > 0 || m_new_mail > 0 ) )
+    if( m_show_number && count > 0 )
     {
         /*
          *  Paint the number
@@ -417,9 +427,7 @@ void    SysTrayXIcon::renderIcon()
         QRect bounding = pixmap.rect().adjusted( m_number_margins.left(), m_number_margins.top(),
                                                  -m_number_margins.right(), -m_number_margins.bottom());
 
-
-// TODO: check pref for type
-        painter.drawText( bounding, m_number_alignment, QString::number( m_unread_mail ) );
+        painter.drawText( bounding, m_number_alignment, QString::number( count ) );
     }
 
     /*
