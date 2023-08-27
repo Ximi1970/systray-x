@@ -83,6 +83,13 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    showNumber( bool state );
 
         /**
+         * @brief showNewIndicator. Set the show new indicator state.
+         *
+         *  @param state    Show / hide.
+         */
+        void    showNewIndicator( bool state );
+
+        /**
          * @brief setNumberColor. Set the number color.
          *
          *  @param color    The color.
@@ -111,6 +118,20 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    setNumberMargins( QMargins margins );
 
         /**
+         * @brief setNewShadeColor. Set the new shade color.
+         *
+         *  @param color    The color.
+         */
+        void    setNewShadeColor( const QString& color );
+
+        /**
+         * @brief setNewIndicatorType. Set the new indicator type.
+         *
+         *  @param new_indicator_type    The new indicator type
+         */
+        void    setNewIndicatorType( Preferences::NewIndicatorType new_indicator_type );
+
+        /**
          * @brief setMailCount. Set the number of unread/new mails.
          *
          *  @param unread_mail  The number of unread mails.
@@ -121,7 +142,26 @@ class SysTrayXIcon : public QSystemTrayIcon
     private:
 
         /**
-         * @brief setIcon. Set a new rendered icon.
+         * @brief renderBase. Set the base pixmaps for the icon.
+         */
+        void    renderBase();
+
+        /**
+         * @brief shade. Shade the icon.
+         *
+         *  @param pixmap   Pixmap to shade.
+         */
+        void    shade( QPixmap& pixmap );
+
+        /**
+         * @brief indicator. Set the new mail indicator.
+         *
+         *  @param pixmap   Pixmap to put the indicator on.
+         */
+        void    indicator( QPixmap& pixmap );
+
+        /**
+         * @brief renderIcon. Render the icon.
          */
         void    renderIcon();
 
@@ -163,9 +203,19 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    slotIconDataChange();
 
         /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
+        /**
          * @brief slotShowNumberChange. Slot for handling show number change signals.
          */
         void    slotShowNumberChange();
+
+        /**
+         * @brief slotShowNewIndicatorChange. Slot for handling show new indicator change signals.
+         */
+        void    slotShowNewIndicatorChange();
 
         /**
          * @brief slotNumberColorChange. Slot for handling number color change signals.
@@ -188,9 +238,14 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    slotNumberMarginsChange();
 
         /**
-         * @brief slotThemeChange. Slot for handling theme change signals.
+         * @brief slotNewIndicatorTypeChange. Slot for handling new indicator type change signals.
          */
-        void    slotThemeChange();
+        void    slotNewIndicatorTypeChange();
+
+        /**
+         * @brief slotNewShadeColorChange. Slot for handling new shade color change signals.
+         */
+        void    slotNewShadeColorChange();
 
     private slots:
 
@@ -212,6 +267,21 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_pref    Pointer to the preferences storage.
          */
         Preferences*    m_pref;
+
+        /**
+         * @brief m_pixmap_count    Pixmap to be used when counting.
+         */
+        QPixmap m_pixmap_count;
+
+        /**
+         * @brief m_pixmap_clean    Pixmap to be used when there is no new mail.
+         */
+        QPixmap m_pixmap_clean;
+
+        /**
+         * @brief m_image_indicator    Image to be used as new mail indicator.
+         */
+        QImage m_image_indicator;
 
         /**
          * @brief m_default_icon_type. Storage for the default icon type.
@@ -249,6 +319,11 @@ class SysTrayXIcon : public QSystemTrayIcon
         bool m_show_number;
 
         /**
+         * @brief m_show_new_indicator. Show the new indicator.
+         */
+        bool m_show_new_indicator;
+
+        /**
          * @brief m_number_color. Color of the unread/new mail number.
          */
         QString m_number_color;
@@ -267,6 +342,17 @@ class SysTrayXIcon : public QSystemTrayIcon
          * @brief m_margins. The number margins.
          */
         QMargins m_number_margins;
+
+        /**
+         * @brief m_new_indicator_type. Storage for the new indicator type.
+         */
+        Preferences::NewIndicatorType   m_new_indicator_type;
+
+
+        /**
+         * @brief m_new_shade_color. Color of the new shade.
+         */
+        QString m_new_shade_color;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

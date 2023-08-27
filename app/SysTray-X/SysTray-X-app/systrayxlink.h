@@ -260,6 +260,16 @@ class SysTrayXLink : public QObject
         void    slotDebugChange();
 
         /**
+         * @brief slotPositions. Slot for handling a window positions change.
+         */
+        void    slotPositions( QList< QPoint > positions );
+
+        /**
+         * @brief slotRestoreWindowPositionsChange. Handle a change in restore window positions state.
+         */
+        void    slotRestoreWindowPositionsChange();
+
+        /**
          * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
          */
         void    slotMinimizeTypeChange();
@@ -273,11 +283,6 @@ class SysTrayXLink : public QObject
          * @brief slotStartMinimizedChange. Handle a change in start minimized state.
          */
         void    slotStartMinimizedChange();
-
-        /**
-         * @brief slotRestoreWindowPositionsChange. Handle a change in restore window positions state.
-         */
-        void    slotRestoreWindowPositionsChange();
 
         /**
          * @brief slotCloseTypeChange. Slot for handling close type change signals.
@@ -310,9 +315,29 @@ class SysTrayXLink : public QObject
         void    slotIconDataChange();
 
         /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
+        /**
          * @brief slotShowNumberChange. Handle a change in show number state.
          */
         void    slotShowNumberChange();
+
+        /**
+         * @brief slotShowNewIndicatorChange. Handle a change in show new indicator state.
+         */
+        void    slotShowNewIndicatorChange();
+
+        /**
+         * @brief slotCountTypeChange. Slot for handling count type change signals.
+         */
+        void    slotCountTypeChange();
+
+        /**
+         * @brief slotStartupDelayChange. Handle a change in startup delay.
+         */
+        void    slotStartupDelayChange();
 
         /**
          * @brief slotNumberColorChange. Handle a change in number color.
@@ -335,24 +360,14 @@ class SysTrayXLink : public QObject
         void    slotNumberMarginsChange();
 
         /**
-         * @brief slotCountTypeChange. Slot for handling count type change signals.
+         * @brief slotNewIndicatorTypeChange. Slot for handling new indicator type change signals.
          */
-        void    slotCountTypeChange();
+        void    slotNewIndicatorTypeChange();
 
         /**
-         * @brief slotStartupDelayChange. Handle a change in startup delay.
+         * @brief slotNewShadeColorChange. Handle a change in new shade color.
          */
-        void    slotStartupDelayChange();
-
-        /**
-         * @brief slotPositions. Slot for handling a window positions change.
-         */
-        void    slotPositions( QList< QPoint > positions );
-
-        /**
-         * @brief slotThemeChange. Slot for handling theme change signals.
-         */
-        void    slotThemeChange();
+        void    slotNewShadeColorChange();
 
         /**
          * @brief slotStartAppChange. Slot for handling start application change signals.

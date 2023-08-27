@@ -14,6 +14,8 @@
  *	Qt includes
  */
 #include <KStatusNotifierItem>
+#include <QImage>
+#include <QPixmap>
 
 /*
  *	Predefines
@@ -94,6 +96,13 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    showNumber( bool state );
 
         /**
+         * @brief showNewIndicator. Set the show new indicator state.
+         *
+         *  @param state    Show / hide.
+         */
+        void    showNewIndicator( bool state );
+
+        /**
          * @brief setNumberColor. Set the number color.
          *
          *  @param color    The color.
@@ -122,6 +131,20 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    setNumberMargins( QMargins margins );
 
         /**
+         * @brief setNewIndicatorType. Set the new indicator type.
+         *
+         *  @param new_indicator_type   The new indicator type.
+         */
+        void    setNewIndicatorType( Preferences::NewIndicatorType new_indicator_type );
+
+        /**
+         * @brief setNewShadeColor. Set the new shade color.
+         *
+         *  @param color    The color.
+         */
+        void    setNewShadeColor( const QString& color );
+
+        /**
          * @brief setMailCount. Set the number of unread/new mails.
          *
          *  @param unread_mail  The number of unread mails.
@@ -130,6 +153,25 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    setMailCount( int unread_mail, int new_mail );
 
     private:
+
+        /**
+         * @brief renderBase. Set the base pixmaps for the icon.
+         */
+        void    renderBase();
+
+        /**
+         * @brief shade. Shade a pixmap
+         *
+         *  @param pixmap   Pixmap to shade.
+         */
+        void    shade( QPixmap& pixmap );
+
+        /**
+         * @brief indicator. Add a new indicator to the icon.
+         *
+         *  @param pixmap   Pixmap to alter.
+         */
+        void    indicator( QPixmap& pixmap );
 
         /**
          * @brief setIcon. Set a new rendered icon.
@@ -184,9 +226,19 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    slotIconDataChange();
 
         /**
+         * @brief slotThemeChange. Slot for handling theme change signals.
+         */
+        void    slotThemeChange();
+
+        /**
          * @brief slotShowNumberChange. Slot for handling show number change signals.
          */
         void    slotShowNumberChange();
+
+        /**
+         * @brief slotShowNewIndicatorChange. Slot for handling show new indicator change signals.
+         */
+        void    slotShowNewIndicatorChange();
 
         /**
          * @brief slotNumberColorChange. Slot for handling number color change signals.
@@ -209,9 +261,14 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         void    slotNumberMarginsChange();
 
         /**
-         * @brief slotThemeChange. Slot for handling theme change signals.
+         * @brief slotNewIndicatorTypeChange. Slot for handling new indicator type change signals.
          */
-        void    slotThemeChange();
+        void    slotNewIndicatorTypeChange();
+
+        /**
+         * @brief slotNewShadeColorChange. Slot for handling new shade color change signals.
+         */
+        void    slotNewShadeColorChange();
 
     private slots:
 
@@ -241,6 +298,21 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
          * @brief m_pref    Pointer to the preferences storage.
          */
         Preferences*    m_pref;
+
+        /**
+         * @brief m_pixmap_count    Pixmap to be used when counting.
+         */
+        QPixmap m_pixmap_count;
+
+        /**
+         * @brief m_pixmap_clean    Pixmap to be used when there is no new mail.
+         */
+        QPixmap m_pixmap_clean;
+
+        /**
+         * @brief m_image_indicator    Image to be used as new mail indicator.
+         */
+        QImage m_image_indicator;
 
         /**
          * @brief m_default_icon_type. Storage for the default icon type.
@@ -283,6 +355,11 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
         bool m_show_number;
 
         /**
+         * @brief m_show_new_indicator. Show the new indicator.
+         */
+        bool m_show_new_indicator;
+
+        /**
          * @brief m_number_color. Color of the unread/new mail number.
          */
         QString m_number_color;
@@ -301,6 +378,16 @@ class SysTrayXStatusNotifier : public KStatusNotifierItem
          * @brief m_margins. The number margins.
          */
         QMargins m_number_margins;
+
+        /**
+         * @brief m_new_indicator_type. The new indicator type.
+         */
+        Preferences::NewIndicatorType   m_new_indicator_type;
+
+        /**
+         * @brief m_new_shade_color. Color of the new shade.
+         */
+        QString m_new_shade_color;
 
         /**
          * @brief m_unread_mail. Storage for the number of unread mails.

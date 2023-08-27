@@ -561,6 +561,7 @@ SysTrayX.Messaging = {
         "iconMime",
         "icon",
         "showNumber",
+        "showNewIndicator",
         "numberColor",
         "numberSize",
         "numberAlignment",
@@ -594,6 +595,7 @@ SysTrayX.Messaging = {
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
     const showNumber = result.showNumber || "true";
+    const showNewIndicator = result.showNewIndicator || "true";
     let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
     const numberAlignment = result.numberAlignment || "4";
@@ -634,6 +636,7 @@ SysTrayX.Messaging = {
         iconMime,
         icon,
         showNumber,
+        showNewIndicator,
         numberColor,
         numberSize,
         numberAlignment,
@@ -770,6 +773,13 @@ SysTrayX.Link = {
       if (showNumber) {
         await storage().set({
           showNumber: showNumber,
+        });
+      }
+
+      const showNewIndicator = response["preferences"].showNewIndicator;
+      if (showNewIndicator) {
+        await storage().set({
+          showNewIndicator: showNewIndicator,
         });
       }
 

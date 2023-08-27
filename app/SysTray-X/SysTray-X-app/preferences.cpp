@@ -46,6 +46,13 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
      */
     m_app_pref_changed = false;
 
+    m_minimize_type = PREF_MINIMIZE_METHOD_1;
+    m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
+    m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
+
+    m_start_minimized = false;
+    m_restore_window_positions = false;
+
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
     m_default_icon_mime = "image/png";
     m_default_icon_data = QByteArray();
@@ -55,6 +62,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
 
+    m_theme = PREF_THEME_LIGHT;
+
     m_show_number = true;
     m_number_color = "#000000";
     m_number_size = 10;
@@ -62,12 +71,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_startup_delay = 5;
     m_number_alignment = 4;
     m_number_margins = QMargins();
-
-    m_minimize_type = PREF_MINIMIZE_METHOD_1;
-    m_start_minimized = false;
-    m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
-
-    m_restore_window_positions = false;
+    m_new_indicator_type = PREF_NEW_INDICATOR_SHADE;
+    m_new_shade_color = "#80ff8000";
 
     m_debug = false;
 
@@ -78,8 +83,6 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_build = QLatin1String( APP_BUILD );
     m_version_hash = QLatin1String( APP_GITHASH );
     m_version_branch = QLatin1String( APP_GITBRANCH );
-
-    m_theme = PREF_THEME_LIGHT;
 
     m_start_app = "";
     m_start_app_args = "";
@@ -183,6 +186,172 @@ void    Preferences::setBrowserVersion( const QString version )
 void    Preferences::setBrowserBuildID( const QString buildID )
 {
     m_browser_buildID = buildID;
+}
+
+
+/*
+ *  Get the software version.
+ */
+QString    Preferences::getVersion() const
+{
+    return m_version_major + "." + m_version_minor + "." + m_version_patch;
+}
+
+
+/*
+ *  Get the number of commits.
+ */
+QString    Preferences::getBuild() const
+{
+    return m_version_build;
+}
+
+
+/*
+ *  Get the git hash.
+ */
+QString    Preferences::getHash() const
+{
+    return m_version_hash;
+}
+
+
+/*
+ *  Get the software version.
+ */
+QString    Preferences::getBranch() const
+{
+    return m_version_branch;
+}
+
+
+/*
+ *  Get the minimize type
+ */
+Preferences::MinimizeType Preferences::getMinimizeType() const
+{
+    return m_minimize_type;
+}
+
+
+/*
+ *  Set the minimize type.
+ */
+void    Preferences::setMinimizeType( MinimizeType minimize_type )
+{
+    if( m_minimize_type != minimize_type)
+    {
+        m_minimize_type = minimize_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeTypeChange();
+    }
+}
+
+
+/*
+ *  Get the close type pref.
+ */
+Preferences::CloseType    Preferences::getCloseType() const
+{
+    return m_close_type;
+}
+
+
+/*
+ *  Set the close type pref.
+ */
+void    Preferences::setCloseType( CloseType close_type )
+{
+    if( m_close_type != close_type )
+    {
+        m_close_type = close_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCloseTypeChange();
+    }
+}
+
+
+/*
+ *  Get the minimize type
+ */
+Preferences::MinimizeIconType Preferences::getMinimizeIconType() const
+{
+    return m_minimize_icon_type;
+}
+
+
+/*
+ *  Set the minimize type.
+ */
+void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
+{
+    if( m_minimize_icon_type != minimize_icon_type)
+    {
+        m_minimize_icon_type = minimize_icon_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalMinimizeIconTypeChange();
+    }
+}
+
+
+/*
+ *  Get the start minmized pref.
+ */
+bool    Preferences::getStartMinimized() const
+{
+    return m_start_minimized;
+}
+
+
+/*
+ *  Set the start minimized pref.
+ */
+void    Preferences::setStartMinimized( bool state )
+{
+    if( m_start_minimized != state )
+    {
+        m_start_minimized = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartMinimizedChange();
+    }
+}
+
+
+/*
+ *  Get the start minmized pref.
+ */
+bool    Preferences::getRestoreWindowPositions() const
+{
+    return m_restore_window_positions;
+}
+
+
+/*
+ *  Set the start minimized pref.
+ */
+void    Preferences::setRestoreWindowPositions( bool state )
+{
+    if( m_restore_window_positions != state )
+    {
+        m_restore_window_positions = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalRestoreWindowPositionsChange();
+    }
 }
 
 
@@ -355,6 +524,32 @@ void    Preferences::setIconData( const QByteArray& icon_data )
 
 
 /*
+ *  Get the theme pref.
+ */
+Preferences::Theme    Preferences::getTheme() const
+{
+    return m_theme;
+}
+
+
+/*
+ *  Set the theme pref.
+ */
+void    Preferences::setTheme( Theme theme )
+{
+    if( m_theme != theme )
+    {
+        m_theme = theme;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalThemeChange();
+    }
+}
+
+
+/*
  *  Get the enable number state.
  */
 bool    Preferences::getShowNumber() const
@@ -381,6 +576,84 @@ void    Preferences::setShowNumber( bool state )
 
 
 /*
+ *  Get the show new indicator state.
+ */
+bool    Preferences::getShowNewIndicator() const
+{
+    return m_show_new_indicator;
+}
+
+
+/*
+ *  Set the show new indicator state.
+ */
+void    Preferences::setShowNewIndicator( bool state )
+{
+    if( m_show_new_indicator != state )
+    {
+        m_show_new_indicator = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalShowNewIndicatorChange();
+    }
+}
+
+
+/*
+ *  Get the count type.
+ */
+Preferences::CountType Preferences::getCountType() const
+{
+    return m_count_type;
+}
+
+
+/*
+ *  Set the count type.
+ */
+void    Preferences::setCountType( CountType count_type )
+{
+    if( m_count_type != count_type)
+    {
+        m_count_type = count_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalCountTypeChange();
+    }
+}
+
+
+/*
+ *  Get the startup delay.
+ */
+int Preferences::getStartupDelay() const
+{
+    return m_startup_delay;
+}
+
+
+/*
+ *  Set the startup delay.
+ */
+void    Preferences::setStartupDelay( int delay )
+{
+    if( m_startup_delay != delay )
+    {
+        m_startup_delay = delay;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartupDelayChange();
+    }
+}
+
+
+/*
  *  Get the number color.
  */
 QString    Preferences::getNumberColor() const
@@ -390,7 +663,7 @@ QString    Preferences::getNumberColor() const
 
 
 /*
- *  Set the enable number state.
+ *  Set the number color.
  */
 void    Preferences::setNumberColor( QString color )
 {
@@ -416,7 +689,7 @@ int Preferences::getNumberSize() const
 
 
 /*
- *  Set the enable number state.
+ *  Set the number size.
  */
 void    Preferences::setNumberSize( int size )
 {
@@ -485,209 +758,53 @@ void    Preferences::setNumberMargins( QMargins margins )
 
 
 /*
- *  Get the count type.
+ *  Get the new indicator type.
  */
-Preferences::CountType Preferences::getCountType() const
+Preferences::NewIndicatorType Preferences::getNewIndicatorType() const
 {
-    return m_count_type;
+    return m_new_indicator_type;
 }
 
 
 /*
- *  Set the count type.
+ *  Set the new indicator type.
  */
-void    Preferences::setCountType( CountType count_type )
+void    Preferences::setNewIndicatorType( NewIndicatorType new_indicator_type )
 {
-    if( m_count_type != count_type)
+    if( m_new_indicator_type != new_indicator_type)
     {
-        m_count_type = count_type;
+        m_new_indicator_type = new_indicator_type;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalCountTypeChange();
+        emit signalNewIndicatorTypeChange();
     }
 }
 
 
 /*
- *  Get the startup delay.
+ *  Get the new shade color.
  */
-int Preferences::getStartupDelay() const
+QString    Preferences::getNewShadeColor() const
 {
-    return m_startup_delay;
+    return m_new_shade_color;
 }
 
 
 /*
- *  Set the startup delay.
+ *  Set the new shade color.
  */
-void    Preferences::setStartupDelay( int delay )
+void    Preferences::setNewShadeColor( QString color )
 {
-    if( m_startup_delay != delay )
+    if( m_new_shade_color != color )
     {
-        m_startup_delay = delay;
+        m_new_shade_color = color;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalStartupDelayChange();
-    }
-}
-
-
-/*
- *  Get the minimize type
- */
-Preferences::MinimizeType Preferences::getMinimizeType() const
-{
-    return m_minimize_type;
-}
-
-
-/*
- *  Set the minimize type.
- */
-void    Preferences::setMinimizeType( MinimizeType minimize_type )
-{
-    if( m_minimize_type != minimize_type)
-    {
-        m_minimize_type = minimize_type;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalMinimizeTypeChange();
-    }
-}
-
-
-/*
- *  Get the minimize type
- */
-Preferences::MinimizeIconType Preferences::getMinimizeIconType() const
-{
-    return m_minimize_icon_type;
-}
-
-
-/*
- *  Set the minimize type.
- */
-void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
-{
-    if( m_minimize_icon_type != minimize_icon_type)
-    {
-        m_minimize_icon_type = minimize_icon_type;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalMinimizeIconTypeChange();
-    }
-}
-
-
-/*
- *  Get the start minmized pref.
- */
-bool    Preferences::getStartMinimized() const
-{
-    return m_start_minimized;
-}
-
-
-/*
- *  Set the start minimized pref.
- */
-void    Preferences::setStartMinimized( bool state )
-{
-    if( m_start_minimized != state )
-    {
-        m_start_minimized = state;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalStartMinimizedChange();
-    }
-}
-
-
-/*
- *  Get the start minmized pref.
- */
-bool    Preferences::getRestoreWindowPositions() const
-{
-    return m_restore_window_positions;
-}
-
-
-/*
- *  Set the start minimized pref.
- */
-void    Preferences::setRestoreWindowPositions( bool state )
-{
-    if( m_restore_window_positions != state )
-    {
-        m_restore_window_positions = state;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalRestoreWindowPositionsChange();
-    }
-}
-
-
-/*
- *  Get the close type pref.
- */
-Preferences::CloseType    Preferences::getCloseType() const
-{
-    return m_close_type;
-}
-
-
-/*
- *  Set the close type pref.
- */
-void    Preferences::setCloseType( CloseType close_type )
-{
-    if( m_close_type != close_type )
-    {
-        m_close_type = close_type;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalCloseTypeChange();
-    }
-}
-
-
-/*
- *  Get the theme pref.
- */
-Preferences::Theme    Preferences::getTheme() const
-{
-    return m_theme;
-}
-
-
-/*
- *  Set the theme pref.
- */
-void    Preferences::setTheme( Theme theme )
-{
-    if( m_theme != theme )
-    {
-        m_theme = theme;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalThemeChange();
+        emit signalNewShadeColorChange();
     }
 }
 
@@ -823,40 +940,4 @@ void    Preferences::setDebug( bool state )
          */
         emit signalDebugChange();
     }
-}
-
-
-/*
- *  Get the software version.
- */
-QString    Preferences::getVersion() const
-{
-    return m_version_major + "." + m_version_minor + "." + m_version_patch;
-}
-
-
-/*
- *  Get the number of commits.
- */
-QString    Preferences::getBuild() const
-{
-    return m_version_build;
-}
-
-
-/*
- *  Get the git hash.
- */
-QString    Preferences::getHash() const
-{
-    return m_version_hash;
-}
-
-
-/*
- *  Get the software version.
- */
-QString    Preferences::getBranch() const
-{
-    return m_version_branch;
 }

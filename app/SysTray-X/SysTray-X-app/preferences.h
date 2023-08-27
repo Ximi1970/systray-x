@@ -68,6 +68,11 @@ class Preferences : public QObject
             PREF_TB_ICON
         };
 
+        enum Theme {
+            PREF_THEME_LIGHT = 0,
+            PREF_THEME_DARK
+        };
+
         /*
          *  Count types
          */
@@ -76,9 +81,13 @@ class Preferences : public QObject
             PREF_COUNT_NEW
         };
 
-        enum Theme {
-            PREF_THEME_LIGHT = 0,
-            PREF_THEME_DARK
+        /*
+         *  Indicator types
+         */
+        enum NewIndicatorType {
+            PREF_NEW_INDICATOR_ROUND = 0,
+            PREF_NEW_INDICATOR_STAR,
+            PREF_NEW_INDICATOR_SHADE
         };
 
         /*
@@ -183,6 +192,76 @@ class Preferences : public QObject
         void setBrowserBuildID( const QString buildID );
 
         /**
+         * @brief getStartMinimized. Get the start minimized state.
+         *
+         * @return      The state.
+         */
+        bool getStartMinimized() const;
+
+        /**
+         * @brief setStartMinimized. Set the start minimized state.
+         *
+         * @param state     The state.
+         */
+        void setStartMinimized( bool state );
+
+        /**
+         * @brief getRestoreWindowPositions. Get the restore window positions state.
+         *
+         * @return      The state.
+         */
+        bool getRestoreWindowPositions() const;
+
+        /**
+         * @brief setRestoreWindowPositions. Set the restore window positions state.
+         *
+         * @param state     The state.
+         */
+        void setRestoreWindowPositions( bool state );
+
+        /**
+         * @brief getMinimizeType. Get the minimize type.
+         *
+         * @return      The minimize type.
+         */
+        MinimizeType getMinimizeType() const;
+
+        /**
+         * @brief setMinimizeType. Set the minimize type.
+         *
+         * @param minimize_type     The minimize type.
+         */
+        void setMinimizeType( MinimizeType minimize_type );
+
+        /**
+         * @brief getCloseType. Get the close type.
+         *
+         * @return      The state.
+         */
+        CloseType   getCloseType() const;
+
+        /**
+         * @brief setCloseType. Set the close type.
+         *
+         * @param close_type    The close type.
+         */
+        void setCloseType( CloseType close_type );
+
+        /**
+         * @brief getMinimizeIconType. Get the minimize icon type.
+         *
+         * @return      The minimize icon type.
+         */
+        MinimizeIconType getMinimizeIconType() const;
+
+        /**
+         * @brief setMinimizeType. Set the minimize icon type.
+         *
+         * @param minimize_icon_type     The minimize icon type.
+         */
+        void setMinimizeIconType( MinimizeIconType minimize_icon_type );
+
+        /**
          * @brief getDefaultIconType. Get the default icon type.
          *
          * @return      The icon type.
@@ -281,6 +360,20 @@ class Preferences : public QObject
         void setIconData( const QByteArray& icon_data );
 
         /**
+         * @brief getTheme. Get the theme state.
+         *
+         * @return      The state.
+         */
+        Theme getTheme() const;
+
+        /**
+         * @brief setTheme. Set the theme state.
+         *
+         * @param theme     The state.
+         */
+        void setTheme( Theme theme );
+
+        /**
          * @brief getShowNumber. Get the show number state.
          *
          * @return      The state.
@@ -293,6 +386,48 @@ class Preferences : public QObject
          * @param state     The state.
          */
         void setShowNumber( bool state );
+
+        /**
+         * @brief getShowNewIndicator. Get the show new indicator state.
+         *
+         * @return      The state.
+         */
+        bool getShowNewIndicator() const;
+
+        /**
+         * @brief setShowNewIndicator. Set the show new indicator state.
+         *
+         * @param state     The state.
+         */
+        void setShowNewIndicator( bool state );
+
+        /**
+         * @brief getCountType. Get the count type.
+         *
+         * @return      The count type.
+         */
+        CountType getCountType() const;
+
+        /**
+         * @brief setCountType. Set the count type.
+         *
+         * @param count_type    The count type.
+         */
+        void setCountType( CountType count_type );
+
+        /**
+         * @brief getStartupDelay. Get the startup delay.
+         *
+         * @return      The delay.
+         */
+        int getStartupDelay() const;
+
+        /**
+         * @brief setStartupDelay. Set the startup delay.
+         *
+         * @param delay     The size.
+         */
+        void setStartupDelay( int delay );
 
         /**
          * @brief getNumberColor. Get the number color.
@@ -351,116 +486,32 @@ class Preferences : public QObject
         void setNumberMargins( QMargins margins );
 
         /**
-         * @brief getCountType. Get the count type.
+         * @brief getNewIndicatorType. Get the new indicator type.
          *
-         * @return      The count type.
+         * @return      The new indicator type.
          */
-        CountType getCountType() const;
+        NewIndicatorType getNewIndicatorType() const;
 
         /**
-         * @brief setCountType. Set the count type.
+         * @brief setNewIndicatorType. Set the new indicator type.
          *
-         * @param count_type    The count type.
+         * @param type     The indicator type.
          */
-        void setCountType( CountType count_type );
+        void setNewIndicatorType( NewIndicatorType type );
 
         /**
-         * @brief getStartupDelay. Get the startup delay.
+         * @brief getNewShadeColor. Get the new shade color.
          *
-         * @return      The delay.
+         * @return      The color.
          */
-        int getStartupDelay() const;
+        QString getNewShadeColor() const;
 
         /**
-         * @brief setStartupDelay. Set the startup delay.
+         * @brief setNewShadeColor. Set the new shade color.
          *
-         * @param delay     The size.
+         * @param color     The color.
          */
-        void setStartupDelay( int delay );
-
-        /**
-         * @brief getMinimizeType. Get the minimize type.
-         *
-         * @return      The minimize type.
-         */
-        MinimizeType getMinimizeType() const;
-
-        /**
-         * @brief setMinimizeType. Set the minimize type.
-         *
-         * @param minimize_type     The minimize type.
-         */
-        void setMinimizeType( MinimizeType minimize_type );
-
-        /**
-         * @brief getMinimizeIconType. Get the minimize icon type.
-         *
-         * @return      The minimize icon type.
-         */
-        MinimizeIconType getMinimizeIconType() const;
-
-        /**
-         * @brief setMinimizeType. Set the minimize icon type.
-         *
-         * @param minimize_icon_type     The minimize icon type.
-         */
-        void setMinimizeIconType( MinimizeIconType minimize_icon_type );
-
-        /**
-         * @brief getStartMinimized. Get the start minimized state.
-         *
-         * @return      The state.
-         */
-        bool getStartMinimized() const;
-
-        /**
-         * @brief setStartMinimized. Set the start minimized state.
-         *
-         * @param state     The state.
-         */
-        void setStartMinimized( bool state );
-
-        /**
-         * @brief getRestoreWindowPositions. Get the restore window positions state.
-         *
-         * @return      The state.
-         */
-        bool getRestoreWindowPositions() const;
-
-        /**
-         * @brief setRestoreWindowPositions. Set the restore window positions state.
-         *
-         * @param state     The state.
-         */
-        void setRestoreWindowPositions( bool state );
-
-        /**
-         * @brief getCloseType. Get the close type.
-         *
-         * @return      The state.
-         */
-        CloseType   getCloseType() const;
-
-        /**
-         * @brief setCloseType. Set the close type.
-         *
-         * @param close_type    The close type.
-         */
-        void setCloseType( CloseType close_type );
-
-        /**
-         * @brief getTheme. Get the theme state.
-         *
-         * @return      The state.
-         */
-        Theme getTheme() const;
-
-        /**
-         * @brief setTheme. Set the theme state.
-         *
-         * @param theme     The state.
-         */
-        void setTheme( Theme theme );
+        void setNewShadeColor( QString color );
 
         /**
          * @brief getStartApp. Get the start application.
@@ -575,6 +626,31 @@ class Preferences : public QObject
         void signalBrowserVersion();
 
         /**
+         * @brief signalMinimizeTypeChange. Signal a minimize type change.
+         */
+        void signalMinimizeTypeChange();
+
+        /**
+         * @brief signalCloseTypeChange. Signal a close type change.
+         */
+        void signalCloseTypeChange();
+
+        /**
+         * @brief signalMinimizeIconTypeChange. Signal a minimize icon type change.
+         */
+        void signalMinimizeIconTypeChange();
+
+        /**
+         * @brief signalStartMinimizedChange. Signal a start minimized state change.
+         */
+        void signalStartMinimizedChange();
+
+        /**
+         * @brief signalRestoreWindowPositionsChange. Signal a restore window positions state change.
+         */
+        void signalRestoreWindowPositionsChange();
+
+        /**
          * @brief signalDefaultIconTypeChange. Signal a default icon type change.
          */
         void signalDefaultIconTypeChange();
@@ -600,9 +676,29 @@ class Preferences : public QObject
         void signalIconDataChange();
 
         /**
+         * @brief signalThemeChange. Signal a theme state change.
+         */
+        void signalThemeChange();
+
+        /**
          * @brief signalShowNumberChange. Signal a show number state change.
          */
         void signalShowNumberChange();
+
+        /**
+         * @brief signalShowNewIndicatorChange. Signal a show new indicator state change.
+         */
+        void signalShowNewIndicatorChange();
+
+        /**
+         * @brief signalCountTypeChange. Signal a count type change.
+         */
+        void signalCountTypeChange();
+
+        /**
+         * @brief signalStartupDelayChange. Signal a startup delay change.
+         */
+        void signalStartupDelayChange();
 
         /**
          * @brief signalNumberColorChange. Signal a number color change.
@@ -625,49 +721,19 @@ class Preferences : public QObject
         void signalNumberMarginsChange();
 
         /**
-         * @brief signalCountTypeChange. Signal a count type change.
+         * @brief signalNewIndicatorTypeChange. Signal a new indicator type change.
          */
-        void signalCountTypeChange();
+        void signalNewIndicatorTypeChange();
 
         /**
-         * @brief signalStartupDelayChange. Signal a startup delay change.
+         * @brief signalNewShadeColorChange. Signal a new shade color change.
          */
-        void signalStartupDelayChange();
-
-        /**
-         * @brief signalMinimizeTypeChange. Signal a minimize type change.
-         */
-        void signalMinimizeTypeChange();
-
-        /**
-         * @brief signalMinimizeIconTypeChange. Signal a minimize icon type change.
-         */
-        void signalMinimizeIconTypeChange();
-
-        /**
-         * @brief signalStartMinimizedChange. Signal a start minimized state change.
-         */
-        void signalStartMinimizedChange();
-
-        /**
-         * @brief signalRestoreWindowPositionsChange. Signal a restore window positions state change.
-         */
-        void signalRestoreWindowPositionsChange();
-
-        /**
-         * @brief signalCloseTypeChange. Signal a close type change.
-         */
-        void signalCloseTypeChange();
+        void signalNewShadeColorChange();
 
         /**
          * @brief signalDebugChange. Signal a debug state change.
          */
         void signalDebugChange();
-
-        /**
-         * @brief signalThemeChange. Signal a theme state change.
-         */
-        void signalThemeChange();
 
         /**
          * @brief signalStartAppChange. Signal a start application change.
@@ -712,6 +778,60 @@ class Preferences : public QObject
         QString m_browser_buildID;
 
         /**
+         * @brief m_version_major. Major version number.
+         */
+        QString m_version_major;
+
+        /**
+         * @brief m_version_minor. Minor version number.
+         */
+        QString m_version_minor;
+
+        /**
+         * @brief m_version_patch. patch version number.
+         */
+        QString m_version_patch;
+
+        /**
+         * @brief m_version_build. Git commits count.
+         */
+        QString m_version_build;
+
+        /**
+         * @brief m_version_build. Git hash.
+         */
+        QString m_version_hash;
+
+        /**
+         * @brief m_version_build. Git branch.
+         */
+        QString m_version_branch;
+        /**
+         * @brief m_minimize_type. Selected minimize type.
+         */
+        MinimizeType m_minimize_type;
+
+        /**
+         * @brief m_close_type. Closing type for TB.
+         */
+        CloseType m_close_type;
+
+        /**
+         * @brief m_minimize_icon_type. Selected minimize icon type.
+         */
+        MinimizeIconType m_minimize_icon_type;
+
+        /**
+         * @brief m_start_minimized. Start TB minimized.
+         */
+        bool m_start_minimized;
+
+        /**
+         * @brief m_restore_window_positions. Force the same window positions on startup as recorded on the last hide.
+         */
+        bool m_restore_window_positions;
+
+        /**
          * @brief m_default_icon_type. Selected icon type.
          */
         DefaultIconType m_default_icon_type;
@@ -747,9 +867,29 @@ class Preferences : public QObject
         QByteArray m_icon_data;
 
         /**
+         * @brief m_theme. The theme.
+         */
+        Theme m_theme;
+
+        /**
          * @brief m_show_number. Show number in systray icon.
          */
         bool m_show_number;
+
+        /**
+         * @brief m_show_number. Show number in systray icon.
+         */
+        bool m_show_new_indicator;
+
+        /**
+         * @brief m_count_type. Selected count type.
+         */
+        CountType m_count_type;
+
+        /**
+         * @brief m_startup_delay. The startup delay.
+         */
+        int m_startup_delay;
 
         /**
          * @brief m_number_color. The color of the number in systray icon.
@@ -772,79 +912,14 @@ class Preferences : public QObject
         QMargins m_number_margins;
 
         /**
-         * @brief m_count_type. Selected count type.
+         * @brief m_new_indicator_type. Selected new indicator type.
          */
-        CountType m_count_type;
+        NewIndicatorType m_new_indicator_type;
 
         /**
-         * @brief m_startup_delay. The startup delay.
+         * @brief m_new_shade_color. The color of the new shade in systray icon.
          */
-        int m_startup_delay;
-
-        /**
-         * @brief m_minimize_type. Selected minimize type.
-         */
-        MinimizeType m_minimize_type;
-
-        /**
-         * @brief m_minimize_icon_type. Selected minimize icon type.
-         */
-        MinimizeIconType m_minimize_icon_type;
-
-        /**
-         * @brief m_start_minimized. Start TB minimized.
-         */
-        bool m_start_minimized;
-
-        /**
-         * @brief m_restore_window_positions. Force the same window positions on startup as recorded on the last hide.
-         */
-        bool m_restore_window_positions;
-
-        /**
-         * @brief m_close_type. Closing type for TB.
-         */
-        CloseType m_close_type;
-
-        /**
-         * @brief m_debug. Display debug window.
-         */
-        bool m_debug;
-
-        /**
-         * @brief m_version_major. Major version number.
-         */
-        QString m_version_major;
-
-        /**
-         * @brief m_version_minor. Minor version number.
-         */
-        QString m_version_minor;
-
-        /**
-         * @brief m_version_patch. patch version number.
-         */
-        QString m_version_patch;
-
-        /**
-         * @brief m_version_build. Git commits count.
-         */
-        QString m_version_build;
-
-        /**
-         * @brief m_version_build. Git hash.
-         */
-        QString m_version_hash;
-
-        /**
-         * @brief m_version_build. Git branch.
-         */
-        QString m_version_branch;
-
-        /**
-         * @brief m_theme. The theme.
-         */
-        Theme m_theme;
+        QString m_new_shade_color;
 
         /**
          * @brief m_start_app
@@ -865,6 +940,11 @@ class Preferences : public QObject
          * @brief m_close_app_args
          */
         QString m_close_app_args;
+
+        /**
+         * @brief m_debug. Display debug window.
+         */
+        bool m_debug;
 };
 
 #endif // PREFERENCES_H

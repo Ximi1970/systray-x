@@ -691,6 +691,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setShowNumber( show_number );
     }
 
+    if( pref.contains( "showNewIndicator" ) && pref[ "showNewIndicator" ].isString() )
+    {
+        bool show_new_indicator = pref[ "showNewIndicator" ].toString() == "true";
+
+        /*
+         *  Store the new show new indicator state
+         */
+        m_pref->setShowNewIndicator( show_new_indicator );
+    }
+
     if( pref.contains( "numberColor" ) && pref[ "numberColor" ].isString() )
     {
         QString number_color = pref[ "numberColor" ].toString();
@@ -915,7 +925,9 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
+    prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
+    prefObject.insert("showNewIndicator", QJsonValue::fromVariant( QString( pref.getShowNewIndicator() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
     prefObject.insert("numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
     prefObject.insert("numberAlignment", QJsonValue::fromVariant( QString::number( pref.getNumberAlignment() ) ) );
@@ -929,7 +941,6 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("numberMargins", marginsObject );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
-    prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
 
     prefObject.insert("startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
     prefObject.insert("startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
@@ -968,9 +979,18 @@ void    SysTrayXLink::slotLinkRead( QByteArray message )
 
 
 /*
- *  Handle a debug state change signal
+ *  Handle a positions change signal
  */
-void    SysTrayXLink::slotDebugChange()
+void    SysTrayXLink::slotPositions( QList< QPoint > positions )
+{
+   sendPositions( positions );
+}
+
+
+/*
+ *  Handle a restore window positions state change signal
+ */
+void    SysTrayXLink::slotRestoreWindowPositionsChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -1007,18 +1027,6 @@ void    SysTrayXLink::slotMinimizeIconTypeChange()
  *  Handle a start minimized state change signal
  */
 void    SysTrayXLink::slotStartMinimizedChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a restore window positions state change signal
- */
-void    SysTrayXLink::slotRestoreWindowPositionsChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -1100,9 +1108,57 @@ void    SysTrayXLink::slotIconDataChange()
 
 
 /*
+ *  Handle a theme change signal
+ */
+void    SysTrayXLink::slotThemeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
  *  Handle a show number state change signal
  */
 void    SysTrayXLink::slotShowNumberChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a show new indicator state change signal
+ */
+void    SysTrayXLink::slotShowNewIndicatorChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle the count type change signal
+ */
+void    SysTrayXLink::slotCountTypeChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a startup delay change signal
+ */
+void    SysTrayXLink::slotStartupDelayChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -1160,9 +1216,9 @@ void    SysTrayXLink::slotNumberMarginsChange()
 
 
 /*
- *  Handle the count type change signal
+ *  Handle the new indicator type change signal
  */
-void    SysTrayXLink::slotCountTypeChange()
+void    SysTrayXLink::slotNewIndicatorTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -1172,30 +1228,9 @@ void    SysTrayXLink::slotCountTypeChange()
 
 
 /*
- *  Handle a startup delay change signal
+ *  Handle the new shade color change signal
  */
-void    SysTrayXLink::slotStartupDelayChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a positions change signal
- */
-void    SysTrayXLink::slotPositions( QList< QPoint > positions )
-{
-   sendPositions( positions );
-}
-
-
-/*
- *  Handle a theme change signal
- */
-void    SysTrayXLink::slotThemeChange()
+void    SysTrayXLink::slotNewShadeColorChange()
 {
     if( m_pref->getAppPrefChanged() )
     {
@@ -1244,6 +1279,18 @@ void    SysTrayXLink::slotCloseAppChange()
  *  Handle a close application arguments change signal
  */
 void    SysTrayXLink::slotCloseAppArgsChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
+
+
+/*
+ *  Handle a debug state change signal
+ */
+void    SysTrayXLink::slotDebugChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

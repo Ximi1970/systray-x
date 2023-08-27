@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_count": {
+    "message": "Count",
+    "description": "Tab for Count options"
+  },
+
   "tab_apps": {
     "message": "Apps",
     "description": "Tab for Apps options"
@@ -204,11 +209,6 @@
     "description": "Caption for Number options"
   },
 
-  "icons_number_display": {
-    "message": "Display unread message count",
-    "description": "Display the number"
-  },
-
   "icons_number_color": {
     "message": "Number color:",
     "description": "Color of the number"
@@ -274,21 +274,6 @@
     "description": "Number margins (left, top, right, bottom)"
   },
 
-  "icons_number_count_type": {
-    "message": "Message count type:",
-    "description": "Count type options"
-  },
-
-  "icons_number_count_unread": {
-    "message": "Unread",
-    "description": "Count unread mails"
-  },
-
-  "icons_number_count_new": {
-    "message": "New",
-    "description": "Count new mails"
-  },
-
   "icons_startup_delay": {
     "message": "Startup delay",
     "description": "Startup delay"
@@ -308,6 +293,40 @@
     "message": "Dark",
     "description": "The dark theme"
   },
+
+  "count": {
+    "message": "Count",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Show unread message count",
+    "description": "Show the new message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Show new indicator",
+    "description": "Show the new message indicator"
+  },
+
+
+
+  "count_number_count_type": {
+    "message": "Message count type:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Unread",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "New",
+    "description": "Count new mails"
+  },
+
+
 
   "apps": {
     "message": "Apps",

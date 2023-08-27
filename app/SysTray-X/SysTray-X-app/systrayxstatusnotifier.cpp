@@ -36,12 +36,18 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
     m_unread_mail = 0;
     m_new_mail = 0;
 
+    m_pixmap_clean = QPixmap();
+    m_pixmap_count = QPixmap();
+    m_image_indicator = QImage();
+
     m_show_number = m_pref->getShowNumber();
+    m_show_new_indicator = m_pref->getShowNewIndicator();
     m_number_color = m_pref->getNumberColor();
     m_number_size = m_pref->getNumberSize();
     m_number_alignment = Qt::AlignHCenter | Qt::AlignVCenter;
     setNumberAlignment( m_pref->getNumberAlignment() );
     m_number_margins = m_pref->getNumberMargins();
+    m_new_shade_color = m_pref->getNewShadeColor();
 
     /*
      * Setup notifier
@@ -88,6 +94,11 @@ void    SysTrayXStatusNotifier::setDefaultIconType( Preferences::DefaultIconType
         m_default_icon_type = icon_type;
 
         /*
+         *  Set base params
+         */
+        renderBase();
+
+        /*
          *  Render and set a new icon in the tray
          */
         renderIcon();
@@ -121,6 +132,11 @@ void    SysTrayXStatusNotifier::setDefaultIconData( const QByteArray& icon_data 
          *  Store the new value
          */
         m_default_icon_data = icon_data;
+
+        /*
+         *  Set base params
+         */
+        renderBase();
 
         /*
          *  Render and set a new icon in the tray
@@ -158,6 +174,11 @@ void    SysTrayXStatusNotifier::setIconType( Preferences::IconType icon_type )
         m_icon_type = icon_type;
 
         /*
+         *  Set base params
+         */
+        renderBase();
+
+        /*
          *  Render and set a new icon in the tray
          */
         renderIcon();
@@ -193,6 +214,11 @@ void    SysTrayXStatusNotifier::setIconData( const QByteArray& icon_data )
         m_icon_data = icon_data;
 
         /*
+         *  Set base params
+         */
+        renderBase();
+
+        /*
          *  Render and set a new icon in the tray
          */
         renderIcon();
@@ -211,6 +237,26 @@ void    SysTrayXStatusNotifier::showNumber( bool state )
          *  Store the new value
          */
         m_show_number = state;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Enable/disable new indicator
+ */
+void    SysTrayXStatusNotifier::showNewIndicator( bool state )
+{
+    if( m_show_new_indicator != state )
+    {
+        /*
+         *  Store the new value
+         */
+        m_show_new_indicator = state;
 
         /*
          *  Render and set a new icon in the tray
@@ -323,6 +369,51 @@ void    SysTrayXStatusNotifier::setNumberMargins( QMargins margins )
 
 
 /*
+ *  Set the new indicator type
+ */
+void    SysTrayXStatusNotifier::setNewIndicatorType( Preferences::NewIndicatorType new_indicator_type )
+{
+    if( m_new_indicator_type != new_indicator_type )
+    {
+        /*
+         *  Store the new value
+         */
+        m_new_indicator_type = new_indicator_type;
+
+        /*
+         *  Set base params
+         */
+        renderBase();
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
+ *  Set new shade color
+ */
+void    SysTrayXStatusNotifier::setNewShadeColor( const QString& color )
+{
+    if( m_new_shade_color != color )
+    {
+        /*
+         *  Store the new value
+         */
+        m_new_shade_color = color;
+
+        /*
+         *  Render and set a new icon in the tray
+         */
+        renderIcon();
+    }
+}
+
+
+/*
  *  Set the number of unread/new mails
  */
 void    SysTrayXStatusNotifier::setMailCount( int unread_mail, int new_mail )
@@ -340,6 +431,154 @@ void    SysTrayXStatusNotifier::setMailCount( int unread_mail, int new_mail )
          */
         renderIcon();
     }
+}
+
+
+/*
+ *  Set the base for rendering
+ */
+void    SysTrayXStatusNotifier::renderBase()
+{
+    /*
+     * Set the clean icon
+     */
+    switch( m_default_icon_type )
+    {
+        case Preferences::PREF_DEFAULT_ICON_DEFAULT:
+        {
+            QString version = m_pref->getBrowserVersion();
+
+            if( version.section( '.', 0, 0 ).toInt() < 115 )
+            {
+                m_pixmap_clean = QPixmap( ":/files/icons/Thunderbird.png" );
+            }
+            else
+            {
+                m_pixmap_clean = QPixmap( ":/files/icons/Thunderbird115.png" );
+            }
+            break;
+        }
+
+        case Preferences::PREF_DEFAULT_ICON_HIDE:
+        {
+            m_pixmap_clean = QPixmap();
+            break;
+        }
+
+        case Preferences::PREF_DEFAULT_ICON_CUSTOM:
+        {
+            m_pixmap_clean.loadFromData( m_default_icon_data );
+            break;
+        }
+    }
+
+    /*
+     * Set the count icon
+     */
+    switch( m_icon_type )
+    {
+        case Preferences::PREF_BLANK_ICON:
+        {
+            Preferences::Theme theme = m_pref->getTheme();
+
+            if( theme == Preferences::PREF_THEME_LIGHT )
+            {
+                m_pixmap_count = QPixmap( ":/files/icons/blank-icon.png" );
+            }
+            else
+            {
+                m_pixmap_count = QPixmap( ":/files/icons/blank-icon-dark.png" );
+            }
+            break;
+        }
+
+        case Preferences::PREF_NEWMAIL_ICON:
+        {
+            QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/mail-unread.png"));
+            m_pixmap_count = new_mail.pixmap( 256, 256 );
+            break;
+        }
+
+        case Preferences::PREF_CUSTOM_ICON:
+        {
+            m_pixmap_count.loadFromData( m_icon_data );
+            break;
+        }
+
+        case Preferences::PREF_NO_ICON:
+        {
+            QPixmap lookthrough( 256, 256 );
+            lookthrough.fill( Qt::transparent );
+            m_pixmap_count = lookthrough;
+            break;
+        }
+
+        case Preferences::PREF_TB_ICON:
+        {
+            QString version = m_pref->getBrowserVersion();
+
+            if( version.section( '.', 0, 0 ).toInt() < 115 )
+            {
+                m_pixmap_count = QPixmap( ":/files/icons/Thunderbird.png" );
+            }
+            else
+            {
+                m_pixmap_count = QPixmap( ":/files/icons/Thunderbird115.png" );
+            }
+            break;
+        }
+    }
+
+    /*
+     *  Set the new indicator
+     */
+    switch( m_new_indicator_type )
+    {
+        case Preferences::PREF_NEW_INDICATOR_ROUND:
+        {
+            m_image_indicator = QImage( ":/files/icons/new-indicator-round.png" );
+            break;
+        }
+
+        case Preferences::PREF_NEW_INDICATOR_STAR:
+        {
+            m_image_indicator = QImage( ":/files/icons/new-indicator-star-close.png" );
+            break;
+        }
+
+        default:
+        {
+            m_image_indicator = QImage();
+            break;
+        }
+    }
+}
+
+
+/*
+ *  Shade the pixmap
+ */
+void    SysTrayXStatusNotifier::shade( QPixmap& pixmap )
+{
+    QPainter painter( &pixmap );
+    painter.setCompositionMode( painter.CompositionMode_Overlay );
+    painter.fillRect( pixmap.rect(), QColor( m_new_shade_color ) );
+    painter.end();
+}
+
+
+/*
+ *  Indicator on the pixmap
+ */
+void    SysTrayXStatusNotifier::indicator( QPixmap& pixmap )
+{
+    int size_x = pixmap.width() / 2;
+    int size_y = pixmap.width() / 2;
+    QRect topRight( size_x, 0, size_x, size_y );
+
+    QPainter painter( &pixmap );
+    painter.drawImage( topRight, m_image_indicator );
+    painter.end();
 }
 
 
@@ -362,90 +601,22 @@ void    SysTrayXStatusNotifier::renderIcon()
 
     if( count > 0 )
     {
-        switch( m_icon_type )
-        {
-            case Preferences::PREF_BLANK_ICON:
-            {
-                Preferences::Theme theme = m_pref->getTheme();
-
-                if( theme == Preferences::PREF_THEME_LIGHT )
-                {
-                    pixmap = QPixmap( ":/files/icons/blank-icon.png" );
-                }
-                else
-                {
-                    pixmap = QPixmap( ":/files/icons/blank-icon-dark.png" );
-                }
-                break;
-            }
-
-            case Preferences::PREF_NEWMAIL_ICON:
-            {
-                QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/mail-unread.png"));
-                pixmap = new_mail.pixmap( 256, 256 );
-                break;
-            }
-
-            case Preferences::PREF_CUSTOM_ICON:
-            {
-                pixmap.loadFromData( m_icon_data );
-                break;
-            }
-
-            case Preferences::PREF_NO_ICON:
-            {
-                QPixmap lookthrough( 256, 256 );
-                lookthrough.fill( Qt::transparent );
-                pixmap = lookthrough;
-                break;
-            }
-
-            case Preferences::PREF_TB_ICON:
-            {
-                QString version = m_pref->getBrowserVersion();
-
-                if( version.section( '.', 0, 0 ).toInt() < 115 )
-                {
-                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
-                }
-                else
-                {
-                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
-                }
-                break;
-            }
-        }
+        pixmap = m_pixmap_count;
     }
     else
     {
-        switch( m_default_icon_type )
+        pixmap = m_pixmap_clean;
+    }
+
+    if( m_show_new_indicator && m_new_mail > 0 )
+    {
+        if( m_pref->getNewIndicatorType() == Preferences::PREF_NEW_INDICATOR_SHADE )
         {
-            case Preferences::PREF_DEFAULT_ICON_DEFAULT:
-            {
-                QString version = m_pref->getBrowserVersion();
-
-                if( version.section( '.', 0, 0 ).toInt() < 115 )
-                {
-                    pixmap = QPixmap( ":/files/icons/Thunderbird.png" );
-                }
-                else
-                {
-                    pixmap = QPixmap( ":/files/icons/Thunderbird115.png" );
-                }
-                break;
-            }
-
-            case Preferences::PREF_DEFAULT_ICON_HIDE:
-            {
-                pixmap = QPixmap();
-                break;
-            }
-
-            case Preferences::PREF_DEFAULT_ICON_CUSTOM:
-            {
-                pixmap.loadFromData( m_default_icon_data );
-                break;
-            }
+            shade( pixmap );
+        }
+        else
+        {
+            indicator( pixmap );
         }
     }
 
@@ -560,11 +731,29 @@ void    SysTrayXStatusNotifier::slotIconDataChange()
 
 
 /*
- *  Handle the enable number state change signal
+ *  Handle the theme change signal
+ */
+void    SysTrayXStatusNotifier::slotThemeChange()
+{
+    renderIcon();
+}
+
+
+/*
+ *  Handle the show number state change signal
  */
 void    SysTrayXStatusNotifier::slotShowNumberChange()
 {
     showNumber( m_pref->getShowNumber() );
+}
+
+
+/*
+ *  Handle the show new indicator state change signal
+ */
+void    SysTrayXStatusNotifier::slotShowNewIndicatorChange()
+{
+    showNewIndicator( m_pref->getShowNewIndicator() );
 }
 
 
@@ -605,11 +794,20 @@ void    SysTrayXStatusNotifier::slotNumberMarginsChange()
 
 
 /*
- *  Handle the theme change signal
+ *  Handle the new indicator type change signal
  */
-void    SysTrayXStatusNotifier::slotThemeChange()
+void    SysTrayXStatusNotifier::slotNewIndicatorTypeChange()
 {
-    renderIcon();
+    setNewIndicatorType( m_pref->getNewIndicatorType() );
+}
+
+
+/*
+ *  Handle the new shade color change signal
+ */
+void    SysTrayXStatusNotifier::slotNewShadeColorChange()
+{
+    setNewShadeColor( m_pref->getNewShadeColor() );
 }
 
 

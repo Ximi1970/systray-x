@@ -29,6 +29,7 @@
     <div class="tab">
       <button class="tablinks active" id="Windows">__MSG_tab_windows__</button>
       <button class="tablinks" id="Icon">__MSG_tab_icon__</button>
+      <button class="tablinks" id="Count">__MSG_tab_count__</button>
       <button class="tablinks" id="Apps">__MSG_tab_apps__</button>
       <button class="tablinks" id="Mail">__MSG_tab_mail__</button>
       <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
@@ -339,19 +340,6 @@
           </caption>
           <tr>
             <td>
-              <div id="inputcheck">
-                <input type="checkbox" name="showNumber" id="showNo" value="" />
-                <label for="showNo" id="showNumberLabel"
-                  >__MSG_icons_number_display__</label
-                >
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>&emsp;</td>
-          </tr>
-          <tr>
-            <td>
               <label for="numberColor">__MSG_icons_number_color__</label>
               <input
                 type="color"
@@ -443,22 +431,6 @@
               />
             </td>
           </tr>
-          <tr id="counttype">
-            <td>
-              <label for="countType">__MSG_icons_number_count_type__</label>
-              <input
-                type="radio"
-                name="countType"
-                id="numberUnread"
-                value="0"
-              />
-              <label for="numberUnread"
-                >__MSG_icons_number_count_unread__</label
-              >
-              <input type="radio" name="countType" id="numberNew" value="1" />
-              <label for="numberNew">__MSG_icons_number_count_new__</label>
-            </td>
-          </tr>
           <tr>
             <td>&emsp;</td>
           </tr>
@@ -511,6 +483,56 @@
       <div id="icon" data-icon-mime="" data-icon=""></div>
 
       <script src="js/options_iconform.js"></script>
+    </div>
+
+    <div id="CountContent" class="tabcontent">
+      <form name="countform">
+        <h3>__MSG_count__</h3>
+
+        <tr>
+          <td>
+            <div id="inputcheck">
+              <input type="checkbox" name="showNumber" id="showNo" value="" />
+              <label for="showNo" id="showNumberLabel"
+                >__MSG_count_number_display__</label
+              >
+            </div>
+          </td>
+          <td>
+            <div id="inputcheck">
+              <input type="checkbox" name="showNewIndicator" id="showNew" value="" />
+              <label for="showNew" id="showNewIndicatorLabel"
+                >__MSG_count_new_indicator_display__</label
+              >
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&emsp;</td>
+        </tr>
+
+        <tr id="counttype">
+          <td>
+            <label for="countType">__MSG_count_number_count_type__</label>
+            <input
+              type="radio"
+              name="countType"
+              id="numberUnread"
+              value="0"
+            />
+            <label for="numberUnread"
+              >__MSG_count_number_count_unread__</label
+            >
+            <input type="radio" name="countType" id="numberNew" value="1" />
+            <label for="numberNew">__MSG_count_number_count_new__</label>
+          </td>
+        </tr>
+
+
+
+
+
+      </form>
     </div>
 
     <div id="AppsContent" class="tabcontent">

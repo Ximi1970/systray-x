@@ -147,11 +147,39 @@ class PreferencesDialog : public QDialog
         void    setHideDefaultIcon( bool hide );
 
         /**
+         * @brief setTheme. Set the theme.
+         *
+         * @param theme     The theme.
+         */
+        void    setTheme( Preferences::Theme theme );
+
+        /**
          * @brief setShowNumber. Set the show number state.
          *
          *  @param state    The state.
          */
         void    setShowNumber( bool state );
+
+        /**
+         * @brief setShowNewIndicator. Set the show new indicator state.
+         *
+         *  @param state    The state.
+         */
+        void    setShowNewIndicator( bool state );
+
+        /**
+         * @brief setCountType. Set the count type.
+         *
+         *  @param count_type    The count type.
+         */
+        void    setCountType( Preferences::CountType count_type );
+
+        /**
+         * @brief setStartupDelay. Set the startup delay.
+         *
+         *  @param delay    The delay.
+         */
+        void    setStartupDelay( int size );
 
         /**
          * @brief setNumberColor. Set the number color.
@@ -189,25 +217,18 @@ class PreferencesDialog : public QDialog
         QMargins    getNumberMargins() const;
 
         /**
-         * @brief setCountType. Set the count type.
+         * @brief setNewIndicatorType. Set the count type.
          *
-         *  @param count_type    The count type.
+         *  @param new_indicator_type    The new indicator type.
          */
-        void    setCountType( Preferences::CountType count_type );
+        void    setNewIndicatorType( Preferences::NewIndicatorType new_indicator_type );
 
         /**
-         * @brief setStartupDelay. Set the startup delay.
+         * @brief setNewShadeColor. Set the new shade color.
          *
-         *  @param delay    The delay.
+         *  @param color    The color.
          */
-        void    setStartupDelay( int size );
-
-        /**
-         * @brief setTheme. Set the theme.
-         *
-         * @param theme     The theme.
-         */
-        void    setTheme( Preferences::Theme theme );
+        void    setNewShadeColor( QString color );
 
         /**
          * @brief setStartApp. Set the start application.
@@ -315,9 +336,29 @@ class PreferencesDialog : public QDialog
         void    slotDefaultIconDataChange();
 
         /**
+         * @brief slotThemeChange. Slot for handling theme change.
+         */
+        void    slotThemeChange();
+
+        /**
+         * @brief slotCountTypeChange. Slot for handling count type change.
+         */
+        void    slotCountTypeChange();
+
+        /**
+         * @brief slotStartupDelayChange. Slot for handling startup delay change.
+         */
+        void    slotStartupDelayChange();
+
+        /**
          * @brief slotShowNumberChange. Slot for handling show number state change.
          */
         void    slotShowNumberChange();
+
+        /**
+         * @brief slotShowNewIndicatorChange. Slot for handling show new indicator state change.
+         */
+        void    slotShowNewIndicatorChange();
 
         /**
          * @brief slotNumberColorChange. Slot for handling number color change.
@@ -340,19 +381,14 @@ class PreferencesDialog : public QDialog
         void    slotNumberMarginsChange();
 
         /**
-         * @brief slotCountTypeChange. Slot for handling count type change.
+         * @brief slotNewIndicatorTypeChange. Slot for handling new indicator type change.
          */
-        void    slotCountTypeChange();
+        void    slotNewIndicatorTypeChange();
 
         /**
-         * @brief slotStartupDelayChange. Slot for handling startup delay change.
+         * @brief slotNewShadeColorChange. Slot for handling new shade color change.
          */
-        void    slotStartupDelayChange();
-
-        /**
-         * @brief slotThemeChange. Slot for handling theme change.
-         */
-        void    slotThemeChange();
+        void    slotNewShadeColorChange();
 
         /**
          * @brief slotStartAppChange. Slot for handling start application change.
@@ -400,6 +436,11 @@ class PreferencesDialog : public QDialog
          * @brief slotColorSelect. Handle the choose color button click.
          */
         void    slotColorSelect();
+
+        /**
+         * @brief slotNewShadeColorSelect. Handle the choose new shade color button click.
+         */
+        void    slotNewShadeColorSelect();
 
         /**
          * @brief slotStartAppSelect. Handle the start application button click.
@@ -452,6 +493,11 @@ class PreferencesDialog : public QDialog
          * @brief m_number_color. Temporary storage for the number color.
          */
         QString m_number_color;
+
+        /**
+         * @brief m_new_shade_color. Temporary storage for the new shade color.
+         */
+        QString m_new_shade_color;
 };
 
 #endif // PREFERENCESDIALOG_H

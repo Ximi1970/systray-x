@@ -109,11 +109,26 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_tmp_default_icon_mime = QString();
 
     /*
+     *  Set theme button Ids
+     */
+    m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT );
+    m_ui->themeGroup->setId( m_ui->darkRadioButton, Preferences::PREF_THEME_DARK );
+
+    /*
+     *  Set new indicator button Ids
+     */
+    m_ui->newIndicatorTypeGroup->setId( m_ui->newIconRoundRadioButton, Preferences::PREF_NEW_INDICATOR_ROUND );
+    m_ui->newIndicatorTypeGroup->setId( m_ui->newIconStarRadioButton, Preferences::PREF_NEW_INDICATOR_STAR );
+    m_ui->newIndicatorTypeGroup->setId( m_ui->newShadeRadioButton, Preferences::PREF_NEW_INDICATOR_SHADE);
+
+    /*
      *  Signals and slots
      */
     connect( m_ui->chooseCustomDefaultIconButton, &QPushButton::clicked, this, &PreferencesDialog::slotDefaultFileSelect );
     connect( m_ui->chooseCustomButton, &QPushButton::clicked, this, &PreferencesDialog::slotFileSelect );
     connect( m_ui->numberColorPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotColorSelect );
+
+    connect( m_ui->newShadeColorPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotNewShadeColorSelect );
 
     connect( m_ui->savePushButton, &QPushButton::clicked, this, &PreferencesDialog::slotAccept);
     connect( m_ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotReject);
@@ -137,12 +152,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setStartupDelay( m_pref->getStartupDelay() );
 
     /*
-     *  Set theme button Ids
-     */
-    m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT);
-    m_ui->themeGroup->setId( m_ui->darkRadioButton, Preferences::PREF_THEME_DARK );
-
-    /*
      *  Set number alignment
      */
     setNumberAlignment( m_pref->getNumberAlignment() );
@@ -151,6 +160,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set number margins
      */
     setNumberMargins( m_pref->getNumberMargins() );
+
+    /*
+     *  Set new shade color
+     */
+    setNewShadeColor( m_pref->getNewShadeColor() );
 
     /*
      *  Set the start and close application parameters
@@ -365,11 +379,47 @@ void    PreferencesDialog::setHideDefaultIcon( bool hide )
 
 
 /*
- *  Set the enable number state
+ *  Set the theme
+ */
+void    PreferencesDialog::setTheme( Preferences::Theme theme )
+{
+   ( m_ui->themeGroup->button( theme ) )->setChecked( true );
+}
+
+
+/*
+ *  Set the show number state
  */
 void    PreferencesDialog::setShowNumber( bool state )
 {
    m_ui->showNumberCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the show new indicator state
+ */
+void    PreferencesDialog::setShowNewIndicator( bool state )
+{
+   m_ui->showNewCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the startup delay
+ */
+void    PreferencesDialog::setStartupDelay( int delay )
+{
+    m_ui->startupDelaySpinBox->setValue( delay );
+}
+
+
+/*
+ *  Set the count type
+ */
+void    PreferencesDialog::setCountType( Preferences::CountType count_type )
+{
+   ( m_ui->countTypeGroup->button( count_type ) )->setChecked( true );
 }
 
 
@@ -418,29 +468,25 @@ void    PreferencesDialog::setNumberMargins( QMargins margins )
 
 
 /*
- *  Set the count type
+ *  Set the new indicator type
  */
-void    PreferencesDialog::setCountType( Preferences::CountType count_type )
+void    PreferencesDialog::setNewIndicatorType( Preferences::NewIndicatorType new_indicator_type )
 {
-   ( m_ui->countTypeGroup->button( count_type ) )->setChecked( true );
+   ( m_ui->newIndicatorTypeGroup->button( new_indicator_type ) )->setChecked( true );
 }
 
 
 /*
- *  Set the startup delay
+ *  Set the new shade color
  */
-void    PreferencesDialog::setStartupDelay( int delay )
+void    PreferencesDialog::setNewShadeColor( QString color )
 {
-    m_ui->startupDelaySpinBox->setValue( delay );
-}
+    m_new_shade_color = color;
 
+    QPixmap pixmap( 256, 256 );
+    pixmap.fill( QColor( color ) );
 
-/*
- *  Set the theme
- */
-void    PreferencesDialog::setTheme( Preferences::Theme theme )
-{
-   ( m_ui->themeGroup->button( theme ) )->setChecked( true );
+    m_ui->newShadeColorPushButton->setIcon( QIcon( pixmap ) );
 }
 
 
@@ -506,18 +552,20 @@ void    PreferencesDialog::slotAccept()
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
     m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
+    Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
+    m_pref->setTheme( theme );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
-    m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
-    m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
+    m_pref->setShowNewIndicator( m_ui->showNewCheckBox->isChecked() );
     m_pref->setStartupDelay( m_ui->startupDelaySpinBox->value() );
+    m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
+    m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
 
     m_pref->setNumberAlignment( m_ui->numberAlignmentComboBox->currentIndex() );
     m_pref->setNumberMargins( QMargins( m_ui->numberMarginLeftSpinBox->value(),  m_ui->numberMarginTopSpinBox->value(),
                    m_ui->numberMarginRightSpinBox->value(),  m_ui->numberMarginBottomSpinBox->value() ) );
-
-    Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
-    m_pref->setTheme( theme );
+    m_pref->setNewIndicatorType( static_cast< Preferences::NewIndicatorType >( m_ui->newIndicatorTypeGroup->checkedId() ) );
+    m_pref->setNewShadeColor( m_new_shade_color );
 
     QString startApp = m_ui->startAppLineEdit->text();
     m_pref->setStartApp( startApp );
@@ -583,15 +631,19 @@ void    PreferencesDialog::slotReject()
     setStartMinimized( m_pref->getStartMinimized() );
     setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
+    setTheme( m_pref->getTheme() );
 
     setShowNumber( m_pref->getShowNumber() );
+    setShowNewIndicator( m_pref->getShowNewIndicator() );
+    setStartupDelay( m_pref->getStartupDelay());
+    setCountType( m_pref->getCountType() );
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
-    setCountType( m_pref->getCountType() );
-    setStartupDelay( m_pref->getStartupDelay());
     setNumberAlignment( m_pref->getNumberAlignment() );
     setNumberMargins( m_pref->getNumberMargins() );
-    setTheme( m_pref->getTheme() );
+    setNewIndicatorType( m_pref->getNewIndicatorType() );
+    setNewShadeColor( m_pref->getNewShadeColor() );
+
     setStartApp( m_pref->getStartApp() );
     setStartAppArgs( m_pref->getStartAppArgs() );
     setCloseApp( m_pref->getCloseApp() );
@@ -651,7 +703,7 @@ void    PreferencesDialog::slotDefaultFileSelect()
 
 
 /*
- *  Handle the colro select button
+ *  Handle the color select button
  */
 void    PreferencesDialog::slotColorSelect()
 {
@@ -661,6 +713,21 @@ void    PreferencesDialog::slotColorSelect()
     if( color_dialog.exec() )
     {
         setNumberColor( color_dialog.selectedColor().name() );
+    }
+}
+
+
+/*
+ *  Handle the new shade color select button
+ */
+void    PreferencesDialog::slotNewShadeColorSelect()
+{
+    QColor color( m_new_shade_color );
+    QColorDialog color_dialog( color );
+
+    if( color_dialog.exec() )
+    {
+        setNewShadeColor( color_dialog.selectedColor().name() );
     }
 }
 
@@ -720,6 +787,24 @@ void    PreferencesDialog::slotBrowserVersion()
 
 
 /*
+ *  Handle the start minimized change signal
+ */
+void    PreferencesDialog::slotStartMinimizedChange()
+{
+    setStartMinimized( m_pref->getStartMinimized() );
+}
+
+
+/*
+ *  Handle the restore window positions change signal
+ */
+void    PreferencesDialog::slotRestoreWindowPositionsChange()
+{
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
+}
+
+
+/*
  *  Handle the minimize type change signal
  */
 void    PreferencesDialog::slotMinimizeTypeChange()
@@ -736,23 +821,6 @@ void    PreferencesDialog::slotMinimizeIconTypeChange()
     setMinimizeIconType( m_pref->getMinimizeIconType() );
 }
 
-
-/*
- *  Handle the start minimized change signal
- */
-void    PreferencesDialog::slotStartMinimizedChange()
-{
-    setStartMinimized( m_pref->getStartMinimized() );
-}
-
-
-/*
- *  Handle the restore window positions change signal
- */
-void    PreferencesDialog::slotRestoreWindowPositionsChange()
-{
-    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
-}
 
 /*
  *  Handle the minimize on close change signal
@@ -821,11 +889,29 @@ void    PreferencesDialog::slotHideDefaultIconChange()
 
 
 /*
- *  Handle the enable number state change
+ *  Handle the theme change signal
+ */
+void    PreferencesDialog::slotThemeChange()
+{
+    setTheme( m_pref->getTheme() );
+}
+
+
+/*
+ *  Handle the show number state change
  */
 void    PreferencesDialog::slotShowNumberChange()
 {
     setShowNumber( m_pref->getShowNumber() );
+}
+
+
+/*
+ *  Handle the show new indicator state change
+ */
+void    PreferencesDialog::slotShowNewIndicatorChange()
+{
+    setShowNewIndicator( m_pref->getShowNewIndicator() );
 }
 
 
@@ -884,11 +970,20 @@ void    PreferencesDialog::slotNumberMarginsChange()
 
 
 /*
- *  Handle the theme change signal
+ *  Handle the new indicator type change
  */
-void    PreferencesDialog::slotThemeChange()
+void    PreferencesDialog::slotNewIndicatorTypeChange()
 {
-    setTheme( m_pref->getTheme() );
+    setNewIndicatorType( m_pref->getNewIndicatorType() );
+}
+
+
+/*
+ *  Handle the new shade color change
+ */
+void    PreferencesDialog::slotNewShadeColorChange()
+{
+    setNewShadeColor( m_pref->getNewShadeColor() );
 }
 
 

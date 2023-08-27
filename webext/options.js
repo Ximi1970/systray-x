@@ -203,13 +203,23 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    //  Save enable number state
+    //  Save show number state
     //
     const showNumber = document.querySelector(
       'input[name="showNumber"]'
     ).checked;
     await storage().set({
       showNumber: `${showNumber}`,
+    });
+
+    //
+    //  Save show new indicator state
+    //
+    const showNewIndicator = document.querySelector(
+      'input[name="showNewIndicator"]'
+    ).checked;
+    await storage().set({
+      showNewIndicator: `${showNewIndicator}`,
     });
 
     //
@@ -454,13 +464,23 @@ SysTrayX.RestoreOptions = {
       );
 
     //
-    //  Restore enable number state
+    //  Restore show number state
     //
     await storage()
       .get("showNumber")
       .then(
         SysTrayX.RestoreOptions.setShowNumber,
         SysTrayX.RestoreOptions.onShowNumberError
+      );
+
+    //
+    //  Restore show new indicator state
+    //
+    await storage()
+      .get("showNewIndicator")
+      .then(
+        SysTrayX.RestoreOptions.setShowNewIndicator,
+        SysTrayX.RestoreOptions.onShowNewIndicatorError
       );
 
     //
@@ -830,7 +850,7 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore enable number state
+  //  Restore show number state
   //
   setShowNumber: function (result) {
     const showNumber = result.showNumber || "true";
@@ -841,6 +861,20 @@ SysTrayX.RestoreOptions = {
 
   onShowNumberError: function (error) {
     console.log(`showNumber Error: ${error}`);
+  },
+
+  //
+  //  Restore show new indicator state
+  //
+  setShowNewIndicator: function (result) {
+    const showNewIndicator = result.showNewIndicator || "true";
+
+    const checkbox = document.querySelector(`input[name="showNewIndicator"]`);
+    checkbox.checked = showNewIndicator === "true";
+  },
+
+  onShowNewIndicatorError: function (error) {
+    console.log(`showNewIndicator Error: ${error}`);
   },
 
   //
@@ -1207,6 +1241,11 @@ SysTrayX.StorageChanged = {
       if (item === "showNumber") {
         SysTrayX.RestoreOptions.setShowNumber({
           showNumber: changes[item].newValue,
+        });
+      }
+      if (item === "showNewIndicator") {
+        SysTrayX.RestoreOptions.setShowNewIndicator({
+          showNewIndicator: changes[item].newValue,
         });
       }
       if (item === "numberColor") {

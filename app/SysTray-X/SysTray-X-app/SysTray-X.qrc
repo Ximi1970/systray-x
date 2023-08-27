@@ -20,5 +20,8 @@
         <file>languages/SysTray-X.pt-BR.qm</file>
         <file>files/icons/blank-icon-dark.png</file>
         <file>files/icons/Thunderbird115.png</file>
+        <file>files/icons/new-indicator-round.png</file>
+        <file>files/icons/new-indicator-star-close.png</file>
+        <file>files/icons/new-indicator-star-open.png</file>
     </qresource>
 </RCC>
