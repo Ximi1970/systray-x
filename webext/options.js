@@ -203,6 +203,16 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    // Save theme preferences
+    //
+    const theme = document.querySelector('input[name="theme"]:checked').value;
+
+    //  Store theme preferences
+    await storage().set({
+      theme: theme,
+    });
+
+    //
     //  Save show number state
     //
     const showNumber = document.querySelector(
@@ -223,13 +233,23 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    // Save theme preferences
+    // Save count type preferences
     //
-    const theme = document.querySelector('input[name="theme"]:checked').value;
-
-    //  Store theme preferences
+    const countType = document.querySelector(
+      'input[name="countType"]:checked'
+    ).value;
     await storage().set({
-      theme: theme,
+      countType: countType,
+    });
+
+    //
+    //  Save startup delay
+    //
+    const startupDelay = document.querySelector(
+      'input[name="startupDelay"]'
+    ).value;
+    await storage().set({
+      startupDelay: startupDelay,
     });
 
     //
@@ -291,23 +311,24 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    // Save count type preferences
+    // Save new indicator type
     //
-    const countType = document.querySelector(
-      'input[name="countType"]:checked'
+    const newIndicatorType = document.querySelector(
+      'input[name="newIndicatorType"]:checked'
     ).value;
+
+    //  Store neew indicator type
     await storage().set({
-      countType: countType,
+      newIndicatorType: newIndicatorType,
     });
 
     //
-    //  Save startup delay
+    //  Save new shade color
     //
-    const startupDelay = document.querySelector(
-      'input[name="startupDelay"]'
-    ).value;
+    let newShadeColor = document.querySelector('input[name="newShadeColor"]').value;
+
     await storage().set({
-      startupDelay: startupDelay,
+      newShadeColor: `${newShadeColor}`,
     });
 
     //
@@ -351,6 +372,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setDebug,
         SysTrayX.RestoreOptions.onDebugError
+      );
+
+    //
+    //  Restore filters
+    //
+    await storage()
+      .get("filters")
+      .then(
+        SysTrayX.RestoreOptions.setFilters,
+        SysTrayX.RestoreOptions.onFiltersError
       );
 
     //
@@ -454,13 +485,13 @@ SysTrayX.RestoreOptions = {
       );
 
     //
-    //  Restore filters
+    //  Restore theme
     //
     await storage()
-      .get("filters")
+      .get("theme")
       .then(
-        SysTrayX.RestoreOptions.setFilters,
-        SysTrayX.RestoreOptions.onFiltersError
+        SysTrayX.RestoreOptions.setTheme,
+        SysTrayX.RestoreOptions.onThemeError
       );
 
     //
@@ -481,6 +512,26 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setShowNewIndicator,
         SysTrayX.RestoreOptions.onShowNewIndicatorError
+      );
+
+    //
+    //  Restore count type
+    //
+    await storage()
+      .get("countType")
+      .then(
+        SysTrayX.RestoreOptions.setCountType,
+        SysTrayX.RestoreOptions.onCountTypeError
+      );
+
+    //
+    //  Restore startup delay
+    //
+    await storage()
+      .get("startupDelay")
+      .then(
+        SysTrayX.RestoreOptions.setStartupDelay,
+        SysTrayX.RestoreOptions.ontartupDelayError
       );
 
     //
@@ -524,33 +575,23 @@ SysTrayX.RestoreOptions = {
       );
 
     //
-    //  Restore count type
+    //  Restore new indicator type
     //
     await storage()
-      .get("countType")
+      .get("newIndicatorType")
       .then(
-        SysTrayX.RestoreOptions.setCountType,
-        SysTrayX.RestoreOptions.onCountTypeError
+        SysTrayX.RestoreOptions.setNewIndicatorType,
+        SysTrayX.RestoreOptions.onNewIndicatorTypeError
       );
 
     //
-    //  Restore startup delay
+    //  Restore new shade color
     //
     await storage()
-      .get("startupDelay")
+      .get("newShadeColor")
       .then(
-        SysTrayX.RestoreOptions.setStartupDelay,
-        SysTrayX.RestoreOptions.ontartupDelayError
-      );
-
-    //
-    //  Restore theme
-    //
-    await storage()
-      .get("theme")
-      .then(
-        SysTrayX.RestoreOptions.setTheme,
-        SysTrayX.RestoreOptions.onThemeError
+        SysTrayX.RestoreOptions.setNewShadeColor,
+        SysTrayX.RestoreOptions.onNewShadeColorError
       );
 
     //
@@ -850,6 +891,22 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore theme callbacks
+  //
+  setTheme: function (result) {
+    const theme = result.theme || "0";
+
+    const radioButton = document.querySelector(
+      `input[name="theme"][value="${theme}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onThemeError: function (error) {
+    console.log(`Theme Error: ${error}`);
+  },
+
+  //
   //  Restore show number state
   //
   setShowNumber: function (result) {
@@ -875,6 +932,36 @@ SysTrayX.RestoreOptions = {
 
   onShowNewIndicatorError: function (error) {
     console.log(`showNewIndicator Error: ${error}`);
+  },
+
+  //
+  //  Restore count type
+  //
+  setCountType: function (result) {
+    const countType = result.countType || "0";
+
+    const radioButton = document.querySelector(
+      `input[name="countType"][value="${countType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onCountTypeError: function (error) {
+    console.log(`countType Error: ${error}`);
+  },
+
+  //
+  //  Restore startup delay
+  //
+  setStartupDelay: function (result) {
+    const startupDelay = result.startupDelay || "5";
+
+    const input = document.querySelector(`input[name="startupDelay"]`);
+    input.value = startupDelay;
+  },
+
+  onStartupDelayError: function (error) {
+    console.log(`StartupDelay Error: ${error}`);
   },
 
   //
@@ -952,49 +1039,33 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore count type
+  //  Restore new indicator type
   //
-  setCountType: function (result) {
-    const countType = result.countType || "0";
+  setNewIndicatorType: function (result) {
+    const newIndicatorType = result.newIndicatorType || "2";
 
     const radioButton = document.querySelector(
-      `input[name="countType"][value="${countType}"]`
+      `input[name="newIndicatorType"][value="${newIndicatorType}"]`
     );
     radioButton.checked = true;
   },
 
-  onCountTypeError: function (error) {
-    console.log(`countType Error: ${error}`);
+  onNewIndicatorTypeError: function (error) {
+    console.log(`newIndicatorType Error: ${error}`);
   },
 
   //
-  //  Restore startup delay
+  //  Restore number color
   //
-  setStartupDelay: function (result) {
-    const startupDelay = result.startupDelay || "5";
+  setNewShadeColor: function (result) {
+    const newShadeColor = result.newShadeColor || "#ff8000";
 
-    const input = document.querySelector(`input[name="startupDelay"]`);
-    input.value = startupDelay;
+    const input = document.querySelector(`input[name="newShadeColor"]`);
+    input.value = newShadeColor;
   },
 
-  onStartupDelayError: function (error) {
-    console.log(`StartupDelay Error: ${error}`);
-  },
-
-  //
-  //  Restore theme callbacks
-  //
-  setTheme: function (result) {
-    const theme = result.theme || "0";
-
-    const radioButton = document.querySelector(
-      `input[name="theme"][value="${theme}"]`
-    );
-    radioButton.checked = true;
-  },
-
-  onThemeError: function (error) {
-    console.log(`Theme Error: ${error}`);
+  onNewShadeColorError: function (error) {
+    console.log(`newShadeColor Error: ${error}`);
   },
 
   //
@@ -1201,6 +1272,31 @@ SysTrayX.StorageChanged = {
     let changed_icon = false;
     let changed_default_icon = false;
     for (let item of changedItems) {
+      if (item === "minimizeType") {
+        SysTrayX.RestoreOptions.setMinimizeType({
+          minimizeType: changes[item].newValue,
+        });
+      }
+      if (item === "minimizeIconType") {
+        SysTrayX.RestoreOptions.setMinimizeIconType({
+          minimizeIconType: changes[item].newValue,
+        });
+      }
+      if (item === "closeType") {
+        SysTrayX.RestoreOptions.setCloseType({
+          closeType: changes[item].newValue,
+        });
+      }
+      if (item === "startMinimized") {
+        SysTrayX.RestoreOptions.setStartMinimized({
+          startMinimized: changes[item].newValue,
+        });
+      }
+      if (item === "restorePositions") {
+        SysTrayX.RestoreOptions.setRestorePositions({
+          restorePositions: changes[item].newValue,
+        });
+      }
       if (item === "iconMime") {
         SysTrayX.RestoreOptions.setIconMime({
           iconMime: changes[item].newValue,
@@ -1238,6 +1334,11 @@ SysTrayX.StorageChanged = {
           hideDefaultIcon: changes[item].newValue,
         });
       }
+      if (item === "theme") {
+        SysTrayX.RestoreOptions.setTheme({
+          theme: changes[item].newValue,
+        });
+      }
       if (item === "showNumber") {
         SysTrayX.RestoreOptions.setShowNumber({
           showNumber: changes[item].newValue,
@@ -1246,6 +1347,16 @@ SysTrayX.StorageChanged = {
       if (item === "showNewIndicator") {
         SysTrayX.RestoreOptions.setShowNewIndicator({
           showNewIndicator: changes[item].newValue,
+        });
+      }
+      if (item === "countType") {
+        SysTrayX.RestoreOptions.setCountType({
+          countType: changes[item].newValue,
+        });
+      }
+      if (item === "startupDelay") {
+        SysTrayX.RestoreOptions.setStartupDelay({
+          startupDelay: changes[item].newValue,
         });
       }
       if (item === "numberColor") {
@@ -1268,44 +1379,14 @@ SysTrayX.StorageChanged = {
           numberMargins: changes[item].newValue,
         });
       }
-      if (item === "countType") {
-        SysTrayX.RestoreOptions.setCountType({
-          countType: changes[item].newValue,
+      if (item === "newIndicatorType") {
+        SysTrayX.RestoreOptions.setIndicatorType({
+          newIndicatorType: changes[item].newValue,
         });
       }
-      if (item === "startupDelay") {
-        SysTrayX.RestoreOptions.setStartupDelay({
-          startupDelay: changes[item].newValue,
-        });
-      }
-      if (item === "minimizeType") {
-        SysTrayX.RestoreOptions.setMinimizeType({
-          minimizeType: changes[item].newValue,
-        });
-      }
-      if (item === "minimizeIconType") {
-        SysTrayX.RestoreOptions.setMinimizeIconType({
-          minimizeIconType: changes[item].newValue,
-        });
-      }
-      if (item === "closeType") {
-        SysTrayX.RestoreOptions.setCloseType({
-          closeType: changes[item].newValue,
-        });
-      }
-      if (item === "startMinimized") {
-        SysTrayX.RestoreOptions.setStartMinimized({
-          startMinimized: changes[item].newValue,
-        });
-      }
-      if (item === "restorePositions") {
-        SysTrayX.RestoreOptions.setRestorePositions({
-          restorePositions: changes[item].newValue,
-        });
-      }
-      if (item === "theme") {
-        SysTrayX.RestoreOptions.setTheme({
-          theme: changes[item].newValue,
+      if (item === "newShadeColor") {
+        SysTrayX.RestoreOptions.setNewShadeColor({
+          newShadeColor: changes[item].newValue,
         });
       }
       if (item === "startApp") {
@@ -1360,6 +1441,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
     document.getElementById("themeselect").className = "active";
+    document.getElementById("newindicatorselect").className = "active";
     document.getElementById("startappselect").className = "active";
     document.getElementById("closeappselect").className = "active";
   },

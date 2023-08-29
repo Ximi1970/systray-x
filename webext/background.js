@@ -560,15 +560,17 @@ SysTrayX.Messaging = {
         "iconType",
         "iconMime",
         "icon",
+        "theme",
         "showNumber",
         "showNewIndicator",
+        "countType",
+        "startupDelay",
         "numberColor",
         "numberSize",
         "numberAlignment",
         "numberMargins",
-        "countType",
-        "startupDelay",
-        "theme",
+        "newIndicatorType",
+        "newShadeColor",
         "startApp",
         "startAppArgs",
         "closeApp",
@@ -594,8 +596,11 @@ SysTrayX.Messaging = {
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
+    const theme = result.theme || "0";
     const showNumber = result.showNumber || "true";
     const showNewIndicator = result.showNewIndicator || "true";
+    const countType = result.countType || "0";
+    const startupDelay = result.startupDelay || "5";
     let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
     const numberAlignment = result.numberAlignment || "4";
@@ -605,9 +610,8 @@ SysTrayX.Messaging = {
       right: 0,
       bottom: 0,
     };
-    const countType = result.countType || "0";
-    const startupDelay = result.startupDelay || "5";
-    const theme = result.theme || "0";
+    const newIndicatorType = result.newIndicatorType || "2";
+    const newShadeColor = result.newShadeColor || "#ff8000";
     const startApp = result.startApp || "";
     const startAppArgs = result.startAppArgs || "";
     const closeApp = result.closeApp || "";
@@ -635,15 +639,17 @@ SysTrayX.Messaging = {
         iconType,
         iconMime,
         icon,
+        theme,
         showNumber,
         showNewIndicator,
+        countType,
+        startupDelay,
         numberColor,
         numberSize,
         numberAlignment,
         numberMargins,
-        countType,
-        startupDelay,
-        theme,
+        newIndicatorType,
+        newShadeColor,
         startApp,
         startAppArgs,
         closeApp,
@@ -720,6 +726,41 @@ SysTrayX.Link = {
 
     if (response["preferences"]) {
       //  Store the preferences from the app
+      const minimizeType = response["preferences"].minimizeType;
+      if (minimizeType) {
+        await storage().set({
+          minimizeType: minimizeType,
+        });
+      }
+
+      const minimizeIconType = response["preferences"].minimizeIconType;
+      if (minimizeIconType) {
+        await storage().set({
+          minimizeIconType: minimizeIconType,
+        });
+      }
+
+      const closeType = response["preferences"].closeType;
+      if (closeType) {
+        await storage().set({
+          closeType: closeType,
+        });
+      }
+
+      const startMinimized = response["preferences"].startMinimized;
+      if (startMinimized) {
+        await storage().set({
+          startMinimized: startMinimized,
+        });
+      }
+
+      const restorePositions = response["preferences"].restorePositions;
+      if (restorePositions) {
+        await storage().set({
+          restorePositions: restorePositions,
+        });
+      }
+
       const defaultIconMime = response["preferences"].defaultIconMime;
       if (defaultIconMime) {
         await storage().set({
@@ -769,6 +810,13 @@ SysTrayX.Link = {
         });
       }
 
+      const theme = response["preferences"].theme;
+      if (theme) {
+        await storage().set({
+          theme: theme,
+        });
+      }
+
       const showNumber = response["preferences"].showNumber;
       if (showNumber) {
         await storage().set({
@@ -780,6 +828,20 @@ SysTrayX.Link = {
       if (showNewIndicator) {
         await storage().set({
           showNewIndicator: showNewIndicator,
+        });
+      }
+
+      const countType = response["preferences"].countType;
+      if (countType) {
+        await storage().set({
+          countType: countType,
+        });
+      }
+
+      const startupDelay = response["preferences"].startupDelay;
+      if (startupDelay) {
+        await storage().set({
+          startupDelay: startupDelay,
         });
       }
 
@@ -811,59 +873,17 @@ SysTrayX.Link = {
         });
       }
 
-      const countType = response["preferences"].countType;
-      if (countType) {
+      const newIndicatorType = response["preferences"].newIndicatorType;
+      if (newIndicatorType) {
         await storage().set({
-          countType: countType,
+          newIndicatorType: newIndicatorType,
         });
       }
 
-      const startupDelay = response["preferences"].startupDelay;
-      if (startupDelay) {
+      const newShadeColor = response["preferences"].newShadeColor;
+      if (newShadeColor) {
         await storage().set({
-          startupDelay: startupDelay,
-        });
-      }
-
-      const minimizeType = response["preferences"].minimizeType;
-      if (minimizeType) {
-        await storage().set({
-          minimizeType: minimizeType,
-        });
-      }
-
-      const minimizeIconType = response["preferences"].minimizeIconType;
-      if (minimizeIconType) {
-        await storage().set({
-          minimizeIconType: minimizeIconType,
-        });
-      }
-
-      const closeType = response["preferences"].closeType;
-      if (closeType) {
-        await storage().set({
-          closeType: closeType,
-        });
-      }
-
-      const startMinimized = response["preferences"].startMinimized;
-      if (startMinimized) {
-        await storage().set({
-          startMinimized: startMinimized,
-        });
-      }
-
-      const restorePositions = response["preferences"].restorePositions;
-      if (restorePositions) {
-        await storage().set({
-          restorePositions: restorePositions,
-        });
-      }
-
-      const theme = response["preferences"].theme;
-      if (theme) {
-        await storage().set({
-          theme: theme,
+          newShadeColor: newShadeColor,
         });
       }
 

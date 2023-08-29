@@ -333,124 +333,7 @@
             </td>
           </tr>
         </table>
-
-        <table id="numberprops">
-          <caption>
-            __MSG_icons_number_options__
-          </caption>
-          <tr>
-            <td>
-              <label for="numberColor">__MSG_icons_number_color__</label>
-              <input
-                type="color"
-                id="numberColor"
-                name="numberColor"
-                value=""
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="numberSize">__MSG_icons_number_size__</label>
-              <input
-                type="number"
-                id="numberSize"
-                name="numberSize"
-                value="0"
-                min="1"
-                max="999"
-                step="1"
-                size="3"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="numberAlignment"
-                >__MSG_icons_number_alignment__</label
-              >
-              <select name="numberAlignment" id="numberAlignment">
-                <option value="0">__MSG_icons_number_top_left__</option>
-                <option value="1">__MSG_icons_number_top_center__</option>
-                <option value="2">__MSG_icons_number_top_right__</option>
-                <option value="3">__MSG_icons_number_middle_left__</option>
-                <option value="4">__MSG_icons_number_middle_center__</option>
-                <option value="5">__MSG_icons_number_middle_right__</option>
-                <option value="6">__MSG_icons_number_bottom_left__</option>
-                <option value="7">__MSG_icons_number_bottom_center__</option>
-                <option value="8">__MSG_icons_number_bottom_right__</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>__MSG_icons_number_margins__</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                type="number"
-                id="numberMarginLeft"
-                name="numberMarginLeft"
-                value="0"
-                min="0"
-                max="999"
-                step="1"
-                size="3"
-              />
-              <input
-                type="number"
-                id="numberMarginTop"
-                name="numberMarginTop"
-                value="0"
-                min="0"
-                max="999"
-                step="1"
-                size="3"
-              />
-              <input
-                type="number"
-                id="numberMarginRight"
-                name="numberMarginRight"
-                value="0"
-                min="0"
-                max="999"
-                step="1"
-                size="3"
-              />
-              <input
-                type="number"
-                id="numberMarginBottom"
-                name="numberMarginBottom"
-                value="0"
-                min="0"
-                max="999"
-                step="1"
-                size="3"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>&emsp;</td>
-          </tr>
-          <tr>
-            <td>
-              <label for="startupDelay">__MSG_icons_startup_delay__</label>
-              <input
-                type="number"
-                id="startupDelay"
-                name="startupDelay"
-                value="5"
-                min="0"
-                max="99"
-                step="1"
-                size="2"
-              />
-            </td>
-          </tr>
-        </table>
-
+        
         <table id="themeselect">
           <caption>
             __MSG_icons_theme__
@@ -508,29 +391,166 @@
           </td>
         </tr>
         <tr>
+          <td>
+            <label for="startupDelay">__MSG_count_startup_delay__</label>
+            <input
+              type="number"
+              id="startupDelay"
+              name="startupDelay"
+              value="5"
+              min="0"
+              max="99"
+              step="1"
+              size="2"
+            />
+          </td>
+        </tr>
+        <tr>
           <td>&emsp;</td>
         </tr>
 
-        <tr id="counttype">
-          <td>
-            <label for="countType">__MSG_count_number_count_type__</label>
-            <input
-              type="radio"
-              name="countType"
-              id="numberUnread"
-              value="0"
-            />
-            <label for="numberUnread"
-              >__MSG_count_number_count_unread__</label
-            >
-            <input type="radio" name="countType" id="numberNew" value="1" />
-            <label for="numberNew">__MSG_count_number_count_new__</label>
-          </td>
-        </tr>
+        <table id="counttypeselect">
+          <caption>
+            __MSG_count_number_count_type__
+          </caption>
+          <tr id="unreadtype">
+            <td>
+              <input type="radio" name="countType" id="numberUnread" value="0" />
+              <label for="numberUnread">__MSG_count_number_count_unread__</label>
+            </td>
+          </tr>
+          <tr id="newtype">
+            <td>
+              <input type="radio" name="countType" id="numberNew" value="1" />
+              <label for="numberNew">__MSG_count_number_count_new__</label>
+            </td>
+          </tr>
+        </table>
 
+        <table id="numberprops">
+          <caption>
+            __MSG_count_number_options__
+          </caption>
+          <tr>
+            <td>
+              <label for="numberColor">__MSG_count_number_color__</label>
+              <input
+                type="color"
+                id="numberColor"
+                name="numberColor"
+                value=""
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="numberSize">__MSG_count_number_size__</label>
+              <input
+                type="number"
+                id="numberSize"
+                name="numberSize"
+                value="0"
+                min="1"
+                max="999"
+                step="1"
+                size="3"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="numberAlignment"
+                >__MSG_count_number_alignment__</label
+              >
+              <select name="numberAlignment" id="numberAlignment">
+                <option value="0">__MSG_count_number_top_left__</option>
+                <option value="1">__MSG_count_number_top_center__</option>
+                <option value="2">__MSG_count_number_top_right__</option>
+                <option value="3">__MSG_count_number_middle_left__</option>
+                <option value="4">__MSG_count_number_middle_center__</option>
+                <option value="5">__MSG_count_number_middle_right__</option>
+                <option value="6">__MSG_count_number_bottom_left__</option>
+                <option value="7">__MSG_count_number_bottom_center__</option>
+                <option value="8">__MSG_count_number_bottom_right__</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>__MSG_count_number_margins__</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                id="numberMarginLeft"
+                name="numberMarginLeft"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginTop"
+                name="numberMarginTop"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginRight"
+                name="numberMarginRight"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginBottom"
+                name="numberMarginBottom"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+            </td>
+          </tr>
+        </table>
 
+        <table id="newindicatorselect">
+          <caption>
+            __MSG_count_new_indicator__
+          </caption>
 
-
+          <tr id="newindicatorround">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newIndicatorRound" value="0" />
+              <label for="newIndicatorRound">__MSG_count_new_indicator_round__</label>
+            </td>
+          </tr>
+          <tr id="newindicatorstar">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newIndicatorStar" value="1" />
+              <label for="newIndicatorStar">__MSG_count_new_indicator_star__</label>
+            </td>
+          </tr>
+          <tr id="newshade">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newShade" value="2" />
+              <label for="newShade">__MSG_count_new_shade_color__</label>
+              <input type="color" name="newShadeColor" id="newShadeColor" value="" />
+            </td>
+          </tr>
+        </table>
 
       </form>
     </div>
