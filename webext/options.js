@@ -924,7 +924,7 @@ SysTrayX.RestoreOptions = {
   //  Restore show new indicator state
   //
   setShowNewIndicator: function (result) {
-    const showNewIndicator = result.showNewIndicator || "true";
+    const showNewIndicator = result.showNewIndicator || "false";
 
     const checkbox = document.querySelector(`input[name="showNewIndicator"]`);
     checkbox.checked = showNewIndicator === "true";

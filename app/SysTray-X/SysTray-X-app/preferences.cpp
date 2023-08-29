@@ -65,6 +65,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_theme = PREF_THEME_LIGHT;
 
     m_show_number = true;
+    m_show_new_indicator = false;
     m_number_color = "#000000";
     m_number_size = 10;
     m_count_type = PREF_COUNT_UNREAD;
