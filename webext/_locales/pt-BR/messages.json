@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_count": {
+    "message": "Contador",
+    "description": "Tab for Count options"
+  },
+
   "tab_apps": {
     "message": "Aplicativos",
     "description": "Tab for Apps options"
@@ -199,101 +204,6 @@
     "description": "Unread Icon option 4"
   },
 
-  "icons_number_options": {
-    "message": "Número",
-    "description": "Caption for Number options"
-  },
-
-  "icons_number_display": {
-    "message": "Exibir contador de mensagens não lidas",
-    "description": "Display the number"
-  },
-
-  "icons_number_color": {
-    "message": "Cor do número:",
-    "description": "Color of the number"
-  },
-
-  "icons_number_size": {
-    "message": "Tamanho do número:",
-    "description": "Size of the number"
-  },
-
-  "icons_number_alignment": {
-    "message": "Alinhamento:",
-    "description": "Number alignment"
-  },
-
-  "icons_number_top_left": {
-    "message": "Canto superior esquerdo",
-    "description": "Number alignment top left"
-  },
-
-  "icons_number_top_center": {
-    "message": "Centro superior",
-    "description": "Number alignment top center"
-  },
-
-  "icons_number_top_right": {
-    "message": "Canto superior direito",
-    "description": "Number alignment top right"
-  },
-
-  "icons_number_middle_left": {
-    "message": "Meio esquerdo",
-    "description": "Number alignment middle left"
-  },
-
-  "icons_number_middle_center": {
-    "message": "Centro médio",
-    "description": "Number alignment middle center"
-  },
-
-  "icons_number_middle_right": {
-    "message": "Meio à direita",
-    "description": "Number alignment middle right"
-  },
-
-  "icons_number_bottom_left": {
-    "message": "Canto inferior esquerdo",
-    "description": "Number alignment bottom left"
-  },
-
-  "icons_number_bottom_center": {
-    "message": "Centro inferior",
-    "description": "Number alignment bottom center"
-  },
-
-  "icons_number_bottom_right": {
-    "message": "Canto inferior direito",
-    "description": "Number alignment bottom right"
-  },
-
-  "icons_number_margins": {
-    "message": "Margens (esquerdo, superior, direito, inferior)",
-    "description": "Number margins (left, top, right, bottom)"
-  },
-
-  "icons_number_count_type": {
-    "message": "Tipo do contador de mensagens:",
-    "description": "Count type options"
-  },
-
-  "icons_number_count_unread": {
-    "message": "Não lidos",
-    "description": "SCount unread mails"
-  },
-
-  "icons_number_count_new": {
-    "message": "Novos",
-    "description": "Count new mails"
-  },
-
-  "icons_startup_delay": {
-    "message": "Atraso de inicialização",
-    "description": "Startup delay"
-  },
-
   "icons_theme": {
     "message": "Tema",
     "description": "The theme"
@@ -307,6 +217,131 @@
   "icons_theme_dark": {
     "message": "Escuro",
     "description": "The dark theme"
+  },
+
+  "count": {
+    "message": "Contador",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Exibir contador de mensagens",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Mostrar novo indicador",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "Atraso de inicialização",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "Tipo do contador de mensagens:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Não lidos",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "Novos",
+    "description": "Count new mails"
+  },
+
+  "count_number_options": {
+    "message": "Número",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "Cor do número:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Tamanho do número:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Alinhamento:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "Canto superior esquerdo",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "Centro superior",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "Canto superior direito",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Meio esquerdo",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Centro médio",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Meio à direita",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "Canto inferior esquerdo",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "Centro inferior",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "Canto inferior direito",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Margens (esquerdo, superior, direito, inferior)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "Novo indicador",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Ícone redondo",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Ícone de estrela",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Matiz:",
+    "description": "Shade the icon"
   },
 
   "apps": {

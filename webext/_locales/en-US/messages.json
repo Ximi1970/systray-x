@@ -204,81 +204,6 @@
     "description": "Unread Icon option 4"
   },
 
-  "icons_number_options": {
-    "message": "Number",
-    "description": "Caption for Number options"
-  },
-
-  "icons_number_color": {
-    "message": "Number color:",
-    "description": "Color of the number"
-  },
-
-  "icons_number_size": {
-    "message": "Number size:",
-    "description": "Size of the number"
-  },
-
-  "icons_number_alignment": {
-    "message": "Alignment:",
-    "description": "Number alignment"
-  },
-
-  "icons_number_top_left": {
-    "message": "Top left",
-    "description": "Number alignment top left"
-  },
-
-  "icons_number_top_center": {
-    "message": "Top center",
-    "description": "Number alignment top center"
-  },
-
-  "icons_number_top_right": {
-    "message": "Top right",
-    "description": "Number alignment top right"
-  },
-
-  "icons_number_middle_left": {
-    "message": "Middle left",
-    "description": "Number alignment middle left"
-  },
-
-  "icons_number_middle_center": {
-    "message": "Middle center",
-    "description": "Number alignment middle center"
-  },
-
-  "icons_number_middle_right": {
-    "message": "Middle right",
-    "description": "Number alignment middle right"
-  },
-
-  "icons_number_bottom_left": {
-    "message": "Bottom left",
-    "description": "Number alignment bottom left"
-  },
-
-  "icons_number_bottom_center": {
-    "message": "Bottom center",
-    "description": "Number alignment bottom center"
-  },
-
-  "icons_number_bottom_right": {
-    "message": "Bottom right",
-    "description": "Number alignment bottom right"
-  },
-
-  "icons_number_margins": {
-    "message": "Margins (left, top, right, bottom)",
-    "description": "Number margins (left, top, right, bottom)"
-  },
-
-  "icons_startup_delay": {
-    "message": "Startup delay",
-    "description": "Startup delay"
-  },
-
   "icons_theme": {
     "message": "Theme",
     "description": "The theme"
@@ -300,8 +225,8 @@
   },
 
   "count_number_display": {
-    "message": "Show unread message count",
-    "description": "Show the new message count"
+    "message": "Show message count",
+    "description": "Show message count"
   },
 
   "count_new_indicator_display": {
@@ -309,7 +234,10 @@
     "description": "Show the new message indicator"
   },
 
-
+  "count_startup_delay": {
+    "message": "Startup delay",
+    "description": "Startup delay"
+  },
 
   "count_number_count_type": {
     "message": "Message count type:",
@@ -326,7 +254,95 @@
     "description": "Count new mails"
   },
 
+  "count_number_options": {
+    "message": "Number",
+    "description": "Caption for Number options"
+  },
 
+  "count_number_color": {
+    "message": "Number color:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Number size:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Alignment:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "Top left",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "Top center",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "Top right",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Middle left",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Middle center",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Middle right",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "Bottom left",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "Bottom center",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "Bottom right",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Margins (left, top, right, bottom)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "New indicator",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Icon round",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Icon star",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Shade:",
+    "description": "Shade the icon"
+  },
 
   "apps": {
     "message": "Apps",

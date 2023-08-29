@@ -34,6 +34,11 @@
     "description": "Tab for Icon options"
   },
 
+  "tab_count": {
+    "message": "счетчик",
+    "description": "Tab for Count options"
+  },
+
   "tab_apps": {
     "message": "Программы",
     "description": "Tab for Apps options"
@@ -199,101 +204,6 @@
     "description": "Unread Icon option 4"
   },
 
-  "icons_number_options": {
-    "message": "Настройки индикатора кол-ва",
-    "description": "Caption for Number options"
-  },
-
-  "icons_number_display": {
-    "message": "Показывать кол-во непрочитанных писем",
-    "description": "Display the number"
-  },
-
-  "icons_number_color": {
-    "message": "Цвет числа:",
-    "description": "Color of the number"
-  },
-
-  "icons_number_size": {
-    "message": "Размер числа:",
-    "description": "Size of the number"
-  },
-
-  "icons_number_alignment": {
-    "message": "Выравнивание:",
-    "description": "Number alignment"
-  },
-
-  "icons_number_top_left": {
-    "message": "Верхний левый",
-    "description": "Number alignment top left"
-  },
-
-  "icons_number_top_center": {
-    "message": "Верхний центральный",
-    "description": "Number alignment top center"
-  },
-
-  "icons_number_top_right": {
-    "message": "Верхний правый",
-    "description": "Number alignment top right"
-  },
-
-  "icons_number_middle_left": {
-    "message": "Средний левый",
-    "description": "Number alignment middle left"
-  },
-
-  "icons_number_middle_center": {
-    "message": "Средний центральный",
-    "description": "Number alignment middle center"
-  },
-
-  "icons_number_middle_right": {
-    "message": "Средний правый",
-    "description": "Number alignment middle right"
-  },
-
-  "icons_number_bottom_left": {
-    "message": "Нижний левый",
-    "description": "Number alignment bottom left"
-  },
-
-  "icons_number_bottom_center": {
-    "message": "Нижний центральный",
-    "description": "Number alignment bottom center"
-  },
-
-  "icons_number_bottom_right": {
-    "message": "Нижний правый",
-    "description": "Number alignment bottom right"
-  },
-
-  "icons_number_margins": {
-    "message": "Отступ (левый, Верхний, правый, Нижний)",
-    "description": "Number margins (left, top, right, bottom)"
-  },
-
-  "icons_number_count_type": {
-    "message": "Алгоритм подсчета:",
-    "description": "Count type options"
-  },
-
-  "icons_number_count_unread": {
-    "message": "Непрочитанные",
-    "description": "Count unread mails"
-  },
-
-  "icons_number_count_new": {
-    "message": "Новые",
-    "description": "Count new mails"
-  },
-
-  "icons_startup_delay": {
-    "message": "Задержка запуска",
-    "description": "Startup delay"
-  },
-
   "icons_theme": {
     "message": "Tема",
     "description": "The theme"
@@ -307,6 +217,131 @@
   "icons_theme_dark": {
     "message": "Темная",
     "description": "The dark theme"
+  },
+
+  "count": {
+    "message": "счетчик",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Показать количество писем",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Показать новый индикатор",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "Задержка запуска",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "Алгоритм подсчета:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Непрочитанные",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "Новые",
+    "description": "Count new mails"
+  },
+
+  "count_number_options": {
+    "message": "Настройки индикатора кол-ва",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "Цвет числа:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Размер числа:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Выравнивание:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "Верхний левый",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "Верхний центральный",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "Верхний правый",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Средний левый",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Средний центральный",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Средний правый",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "Нижний левый",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "Нижний центральный",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "Нижний правый",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Отступ (левый, Верхний, правый, Нижний)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "Новый индикатор",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Круглый значок",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Значок звезды",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Оттенок:",
+    "description": "Shade the icon"
   },
 
   "apps": {
