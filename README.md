@@ -373,7 +373,7 @@ sudo dnf install systray-x-minimal
 ```
 
 
-### Arch
+### Manjaro, Arch
 
 #### AUR
 
