@@ -314,32 +314,32 @@
     "description": "Title for Apps options"
   },
 
-  "start_application": {
+  "apps_start_application": {
     "message": "Applicazione di avvio",
     "description": "The start application parameters"
   },
 
-  "start_app": {
+  "apps_start_app": {
     "message": "Applicazione: ",
     "description": "The start application"
   },
 
-  "start_app_args": {
+  "apps_start_app_args": {
     "message": "Argomenti: ",
     "description": "Arguments for a start application"
   },
 
-  "close_application": {
+  "apps_close_application": {
     "message": "Applicazione alla chiusura",
     "description": "The close application parameters"
   },
 
-  "close_app": {
+  "apps_close_app": {
     "message": "Applicazione: ",
     "description": "The close application"
   },
 
-  "close_app_args": {
+  "apps_close_app_args": {
     "message": "Argomenti: ",
     "description": "Arguments for a close application"
   },

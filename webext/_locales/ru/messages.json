@@ -314,32 +314,32 @@
     "description": "Title for Apps options"
   },
 
-  "start_application": {
+  "apps_start_application": {
     "message": "Приложение при запуске",
     "description": "The start application parameters"
   },
 
-  "start_app": {
+  "apps_start_app": {
     "message": "Приложение: ",
     "description": "The start application"
   },
 
-  "start_app_args": {
+  "apps_start_app_args": {
     "message": "аргументы: ",
     "description": "Arguments for a start application"
   },
 
-  "close_application": {
+  "apps_lose_application": {
     "message": "Заявление о закрытии",
     "description": "The close application parameters"
   },
 
-  "close_app": {
+  "apps_close_app": {
     "message": "Приложение: ",
     "description": "The close application"
   },
 
-  "close_app_args": {
+  "apps_close_app_args": {
     "message": "аргументы: ",
     "description": "Arguments for a close application"
   },
