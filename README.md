@@ -6,6 +6,8 @@ The addon and system tray application can do:
 
 - custom new mail icon
 - display number of unread / new mails
+- optional new mail indicator (icon or shading)
+- run app on start or close
 - show / hide Thunderbird (minimize)
 - minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
@@ -30,7 +32,7 @@ Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service
 
 ## Known issues
 
-- Upgrading a Windows version:
+- Upgrading a Windows version (pre 0.9.4):
     - Quit Thunderbird
     - Install the new version of Systray-X (SysTray-X-setupxx-0.x.0.exe from the release assets)
     - Start Thunderbird again
@@ -136,15 +138,6 @@ sudo apt update
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_22.04/Release.key
 sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_22.04 ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-```
-
-###### 21.04
-
-```bash
-wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_21.04/Release.key
-sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
-sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_21.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
