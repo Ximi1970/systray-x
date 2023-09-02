@@ -526,6 +526,16 @@ void    PreferencesDialog::setCloseAppArgs( QString args )
 
 
 /*
+ *  Handle show dialog signal
+ */
+void PreferencesDialog::slotShowDialog()
+{
+    showNormal();
+    activateWindow();
+}
+
+
+/*
  *  Handle the accept signal
  */
 void    PreferencesDialog::slotAccept()

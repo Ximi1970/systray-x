@@ -245,7 +245,7 @@ void    SysTrayX::createMenu()
 
     m_pref_action = new QAction(tr("&Preferences"), this);
     m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
-    connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::showNormal );
+    connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::slotShowDialog );
 
     m_about_action = new QAction(tr("&About"), this);
     m_about_action->setIcon( QIcon( ":/files/icons/help-about.png" ) );

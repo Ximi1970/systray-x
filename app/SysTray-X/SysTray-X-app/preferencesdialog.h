@@ -276,6 +276,11 @@ class PreferencesDialog : public QDialog
     public slots:
 
         /**
+         * @brief slotShowDialog. Slot for handling the show the dialog.
+         */
+        void    slotShowDialog();
+
+        /**
          * @brief slotDebugChange. Slot for handling debug change signals.
          */
         void    slotDebugChange();
