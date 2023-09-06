@@ -621,11 +621,6 @@ class Preferences : public QObject
         void    signalConsole( QString message );
 
         /**
-         * @brief signalBrowserVersion. Signal the browser version.
-         */
-        void signalBrowserVersion();
-
-        /**
          * @brief signalMinimizeTypeChange. Signal a minimize type change.
          */
         void signalMinimizeTypeChange();

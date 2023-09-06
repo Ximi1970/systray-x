@@ -1,6 +1,6 @@
 # SysTray-X
 
-SysTray-X is a system tray extension for Thunderbird 68+. The addon uses the WebExtension API's to control an external system dependent system tray application.  
+SysTray-X is a system tray extension for Thunderbird. The addon uses the WebExtension API's to control an external system dependent system tray application.
 
 The addon and system tray application can do:
 

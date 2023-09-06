@@ -9,7 +9,7 @@
   "applications": {
     "gecko": {
       "id": "systray-x@Ximi1970",
-      "strict_min_version": "68.0",
+      "strict_min_version": "91.0",
       "strict_max_version": "117.*"
     }
   },
@@ -32,14 +32,6 @@
   },
 
   "experiment_apis": {
-    "folderChange": {
-      "schema": "schema_folderchange.json",
-      "parent": {
-        "scopes": ["addon_parent"],
-        "paths": [["folderChange"]],
-        "script": "js/folderChange.js"
-      }
-    },
     "windowEvent": {
       "schema": "schema_windowEvent.json",
       "parent": {

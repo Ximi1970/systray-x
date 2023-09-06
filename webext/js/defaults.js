@@ -1,14 +1,9 @@
 //
 //  Get the prefered storage
 //
-function storage(store) {
-  if (SysTrayX.Info.browserInfo.majorVersion < 91 || store === "sync") {
-    console.log("Using sync storage");
-    return browser.storage.sync;
-  } else {
+function storage() {
     console.log("Using local storage");
     return browser.storage.local;
-  }
 }
 
 //
@@ -229,30 +224,14 @@ async function getFilters() {
 
         if (inbox.length > 0) {
           let folder = {};
-          if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-            //          console.debug("Folder pre 91: " + JSON.stringify(inbox[0]));
 
-            folder = {
-              ...inbox[0],
-              accountName: account.name,
-              path: "/" + inbox[0].name,
-              version: SysTrayX.Info.version,
-            };
-            delete folder.subFolders;
+          //          console.debug("Folder 91+: " + JSON.stringify(inbox[0]));
 
-            filters.push({
-              unread: true,
-              folder: folder,
-            });
-          } else {
-            //          console.debug("Folder 91+: " + JSON.stringify(inbox[0]));
-
-            filters.push({
-              accountId: inbox[0].accountId,
-              version: SysTrayX.Info.version,
-              folders: [inbox[0].path],
-            });
-          }
+          filters.push({
+            accountId: inbox[0].accountId,
+            version: SysTrayX.Info.version,
+            folders: [inbox[0].path],
+          });
         }
       }
 
