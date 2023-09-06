@@ -417,3 +417,52 @@ const getMailCount = () => {
   //console.debug("getMailCount: " + unreadCount + ", " + newCount);
   SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
 };
+
+//  Count the unread and new mails
+const getMailCount2 = async () => {
+    // New only works for >=TB106 
+
+  let unreadCount = 0;
+  let newCount = 0;
+
+  for (const filter of SysTrayX.Messaging.filters) {
+    for (const path of filter.folders) {
+      const folder = {
+        accountId: filter.accountId,
+        path: path,
+      };
+
+      async function* listMessages(folder) {
+        let page = await messenger.messages.list(folder);
+        for (let message of page.messages) {
+          yield message;
+        }
+      
+        while (page.id) {
+          page = await messenger.messages.continueList(page.id);
+          for (let message of page.messages) {
+            yield message;
+          }
+        }
+      }
+      
+      let messages = listMessages(folder);
+      for await (let message of messages) {
+        if( message.new )
+        {
+          newCount = newCount + 1;
+        }
+
+        if( !message.read )
+        {
+          unreadCount = unreadCount + 1;
+        }
+      }
+    }
+  }
+
+  console.debug("getMailCount2 Unread: " + unreadCount);
+  console.debug("getMailCount2 New: " + newCount);
+  
+  //SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
+};

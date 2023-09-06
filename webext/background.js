@@ -69,13 +69,20 @@ SysTrayX.Messaging = {
     //  Send start app trigger
     SysTrayX.Messaging.sendStartApp();
 
+/*
+    browser.messages.onNewMailReceived.addListener(
+      SysTrayX.Messaging.listenerNewMail2
+    );
+*/
+
+
     //  Let us wait until TB is ready, needed for TB91 and higher?
-    const startupDelay = await storage()
+/*    const startupDelay = await storage()
       .get("startupDelay")
       .then((result) => result.startupDelay || "5");
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     await delay(startupDelay * 1000);
-
+*/
     //  Get all accounts
     if (SysTrayX.Info.browserInfo.majorVersion < 91) {
       SysTrayX.Messaging.accounts = await browser.accounts.list();
@@ -158,6 +165,11 @@ SysTrayX.Messaging = {
         new Promise((res) => res(SysTrayX.Messaging.countMail()));
       await getCountPromise();
 
+      // Get the mail count
+      const getCount2Promise = () =>
+        new Promise((res) => res(getMailCount2()));
+      await getCount2Promise();
+
       //  Set count listener
       browser.folders.onFolderInfoChanged.addListener(
         SysTrayX.Messaging.listenerFolderInfoChanged
@@ -173,11 +185,17 @@ SysTrayX.Messaging = {
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
 
+  listenerNewMail2: function (folder, messages) {
+    
+    console.debug("listenerNewMail2: New mail in: " + folder.accountId + ", " + folder.path);
+    console.debug("listenerNewMail2: New messages: " + JSON.stringify(messages));
+  },
+
   listenerNewMail: function (folder, messages) {
-    /*
+    
     console.debug("New mail in: " + folder.accountId + ", " + folder.path);
     console.debug("New messages: " + JSON.stringify(messages));
-    */
+    
 
     if (messages.messages.length > 0) {
       if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
@@ -200,6 +218,7 @@ SysTrayX.Messaging = {
     }
 
     getMailCount();
+    getMailCount2();
   },
 
   listenerFolderCreated: function (createdFolder) {
@@ -223,10 +242,9 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
-    /*
+    
     console.debug("FolderInfoChanged: " + JSON.stringify(folder));
     console.debug("FolderInfoChanged: " + JSON.stringify(folderInfo));
-    */
 
     if (folderInfo.unreadMessageCount !== undefined) {
       if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
@@ -248,6 +266,8 @@ SysTrayX.Messaging = {
       const messages = SysTrayX.Messaging.new[folder.accountId][folder.path];
 
       if (messages.length > 0) {
+        console.debug("FolderInfoChanged: Clear");
+
         const newMessages = [];
         for (let i = 0; i < messages.length; ++i) {
           const message = messages[i];
@@ -260,13 +280,22 @@ SysTrayX.Messaging = {
             newMessages.push(message);
           }
         }
+
+        console.debug("FolderInfoChanged: Old: " + JSON.stringify(SysTrayX.Messaging.new[folder.accountId][folder.path]));
+        console.debug("FolderInfoChanged: New: " + JSON.stringify(newMessages));
+
         SysTrayX.Messaging.new[folder.accountId][folder.path] = [
           ...newMessages,
         ];
       }
 
       getMailCount();
+      getMailCount2();
     }
+  },
+
+  countMail2: async function () {
+    getMailCount2();
   },
 
   countMail: async function () {
@@ -349,6 +378,7 @@ SysTrayX.Messaging = {
         browser.folderChange.setFilters(SysTrayX.Messaging.filters);
       } else {
         getMailCount();
+        getMailCount2();
       }
     }
 
@@ -375,6 +405,7 @@ SysTrayX.Messaging = {
         browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
       } else {
         getMailCount();
+        getMailCount2();
       }
     }
 
@@ -954,6 +985,7 @@ SysTrayX.Window = {
       }
 
       getMailCount();
+      getMailCount2();
     }
 
     SysTrayX.Messaging.displayedFolder = displayedFolder;
