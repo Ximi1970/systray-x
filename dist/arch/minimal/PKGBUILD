@@ -4,13 +4,13 @@ pkgname=systray-x-minimal
 pkgver=0
 pkgrel=0
 epoch=1
-pkgdesc='A system tray extension for Thunderbird 68+ (Unity/XFCE/other)'
+pkgdesc='A system tray extension for Thunderbird (Unity/XFCE/other)'
 arch=(x86_64)
 url=https://github.com/Ximi1970/systray-x
 license=(MPL-2.0)
 depends=(
   'qt5-base'
-  'thunderbird>=68'
+  'thunderbird>=91'
   'thunderbird<118'
 )
 makedepends=(

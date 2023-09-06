@@ -173,11 +173,6 @@ const QString&    Preferences::getBrowserVersion() const
 void    Preferences::setBrowserVersion( const QString version )
 {
     m_browser_version = version;
-
-    /*
-     *  Tell the world the new preference
-     */
-    emit signalBrowserVersion();
 }
 
 

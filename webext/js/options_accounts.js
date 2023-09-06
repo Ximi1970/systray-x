@@ -10,19 +10,15 @@ SysTrayX.Accounts = {
   getAccounts: async function () {
     let accounts;
 
-    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-      accounts = await browser.accounts.list();
-    } else {
-      accounts = await browser.accounts.list(false);
+    accounts = await browser.accounts.list(false);
 
-      // Fill the sub folders using the folders API, they are not same...
-      for (let i = 0; i < accounts.length; ++i) {
-        const subFolders = await browser.folders.getSubFolders(
-          accounts[i],
-          true
-        );
-        accounts[i].folders = subFolders;
-      }
+    // Fill the sub folders using the folders API, they are not same...
+    for (let i = 0; i < accounts.length; ++i) {
+      const subFolders = await browser.folders.getSubFolders(
+        accounts[i],
+        true
+      );
+      accounts[i].folders = subFolders;
     }
 
     return accounts;
@@ -173,25 +169,11 @@ SysTrayX.Accounts = {
 
           //  Create a usable folder tree
           let folders = [];
-          if (SysTrayX.Info.browserInfo.majorVersion < 74) {
-            //  Pre TB74 accounts API
-            folders = createFolderTreePre74(
-              accounts[prop][i].name,
-              accounts[prop][i].folders
-            );
-          } else if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-            //  TB74 - TB90? accounts API, (this shit never ends...)
-            folders = createFolderTreePre91(
-              accounts[prop][i].name,
-              accounts[prop][i].folders
-            );
-          } else {
-            //  TB91+ accounts API, (this shit never ends...)
-            folders = createFolderTree(
-              accounts[prop][i].name,
-              accounts[prop][i].folders
-            );
-          }
+
+          folders = createFolderTree(
+            accounts[prop][i].name,
+            accounts[prop][i].folders
+          );
 
           //  Recursive list creator
           function createListLevel(level, parent) {
@@ -226,10 +208,7 @@ SysTrayX.Accounts = {
                   accountId: element.accountId,
                   type: element.type != undefined ? element.type : "",
                   path: element.path,
-                  name:
-                    SysTrayX.Info.browserInfo.majorVersion < 91
-                      ? element.path.split("/").pop()
-                      : element.originalName
+                  name: element.originalName
                       ? element.originalName
                       : element.name,
                   version: SysTrayX.Info.version,

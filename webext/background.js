@@ -77,28 +77,18 @@ SysTrayX.Messaging = {
     await delay(startupDelay * 1000);
 
     //  Get all accounts
-    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-      SysTrayX.Messaging.accounts = await browser.accounts.list();
+    SysTrayX.Messaging.accounts = await browser.accounts.list(false);
 
-      //  Get folder tree
-      SysTrayX.Messaging.folderTree = getFolderTree(
-        SysTrayX.Messaging.accounts,
-        SysTrayX.Info.browserInfo
+    // Fill the sub folders using the folders API, they are not same...
+    for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
+      const subFolders = await browser.folders.getSubFolders(
+        SysTrayX.Messaging.accounts[i],
+        true
       );
-    } else {
-      SysTrayX.Messaging.accounts = await browser.accounts.list(false);
-
-      // Fill the sub folders using the folders API, they are not same...
-      for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
-        const subFolders = await browser.folders.getSubFolders(
-          SysTrayX.Messaging.accounts[i],
-          true
-        );
-        SysTrayX.Messaging.accounts[i].folders = subFolders;
-      }
-
-      console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
+      SysTrayX.Messaging.accounts[i].folders = subFolders;
     }
+
+    console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
 
     // Get the filters (needs the accounts)
     const getFiltersPromise = () => new Promise((res) => res(getFilters()));
@@ -108,61 +98,29 @@ SysTrayX.Messaging = {
     const getCountTypePromise = () => new Promise((res) => res(getCountType()));
     SysTrayX.Messaging.countType = await getCountTypePromise();
 
-    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-      //  Set TB versionn
-      browser.folderChange.setVersion(
-        Number(SysTrayX.Info.browserInfo.majorVersion)
-      );
+    browser.messages.onNewMailReceived.addListener(
+      SysTrayX.Messaging.listenerNewMail
+    );
 
-      //  Catch the unread / new mails
-      browser.folderChange.onUnreadMailChange.addListener(function (unread) {
-        SysTrayX.Messaging.unreadCb(unread);
-      });
+    browser.folders.onCreated.addListener(
+      SysTrayX.Messaging.listenerFolderCreated
+    );
+    browser.folders.onRenamed.addListener(
+      SysTrayX.Messaging.listenerFolderRenamed
+    );
+    browser.folders.onDeleted.addListener(
+      SysTrayX.Messaging.listenerFolderDeleted
+    );
 
-      browser.folderChange.onFolderChange.addListener(function (
-        rootFolder,
-        parentFolder,
-        folder,
-        added
-      ) {
-        SysTrayX.Messaging.updateFilters(
-          rootFolder,
-          parentFolder,
-          folder,
-          added
-        );
-      });
+    // Get the mail count
+    const getCountPromise = () =>
+      new Promise((res) => res(SysTrayX.Messaging.countMail()));
+    await getCountPromise();
 
-      //  Set the count type in the folderChange listener
-      browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
-
-      //  Set the filters in the folderChange listener
-      browser.folderChange.setFilters(SysTrayX.Messaging.filters);
-    } else {
-      browser.messages.onNewMailReceived.addListener(
-        SysTrayX.Messaging.listenerNewMail
-      );
-
-      browser.folders.onCreated.addListener(
-        SysTrayX.Messaging.listenerFolderCreated
-      );
-      browser.folders.onRenamed.addListener(
-        SysTrayX.Messaging.listenerFolderRenamed
-      );
-      browser.folders.onDeleted.addListener(
-        SysTrayX.Messaging.listenerFolderDeleted
-      );
-
-      // Get the mail count
-      const getCountPromise = () =>
-        new Promise((res) => res(SysTrayX.Messaging.countMail()));
-      await getCountPromise();
-
-      //  Set count listener
-      browser.folders.onFolderInfoChanged.addListener(
-        SysTrayX.Messaging.listenerFolderInfoChanged
-      );
-    }
+    //  Set count listener
+    browser.folders.onFolderInfoChanged.addListener(
+      SysTrayX.Messaging.listenerFolderInfoChanged
+    );
 
     //  Catch a folder change to reset the new counter
     browser.mailTabs.onDisplayedFolderChanged.addListener(
@@ -344,12 +302,8 @@ SysTrayX.Messaging = {
 
     if ("filters" in changes && changes["filters"].newValue) {
       SysTrayX.Messaging.filters = changes["filters"].newValue;
-
-      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-        browser.folderChange.setFilters(SysTrayX.Messaging.filters);
-      } else {
-        getMailCount();
-      }
+      
+      getMailCount();
     }
 
     if ("closeType" in changes && changes["closeType"].newValue) {
@@ -371,11 +325,7 @@ SysTrayX.Messaging = {
     if ("countType" in changes && changes["countType"].newValue) {
       SysTrayX.Messaging.countType = changes["countType"].newValue;
 
-      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-        browser.folderChange.setCountType(Number(SysTrayX.Messaging.countType));
-      } else {
-        getMailCount();
-      }
+      getMailCount();
     }
 
     if ("addonprefchanged" in changes && changes["addonprefchanged"].newValue) {

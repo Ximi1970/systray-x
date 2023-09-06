@@ -1,14 +1,9 @@
 //
 //  Get the prefered storage
 //
-function storage(store) {
-  if (SysTrayX.Info.browserInfo.majorVersion < 91 || store === "sync") {
-    console.log("Using sync storage");
-    return browser.storage.sync;
-  } else {
-    console.log("Using local storage");
-    return browser.storage.local;
-  }
+function storage() {
+  console.log("Using local storage");
+  return browser.storage.local;
 }
 
 SysTrayX.SaveOptions = {
@@ -24,55 +19,30 @@ SysTrayX.SaveOptions = {
     );
 
     let filters = [];
-    if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-      let checkedFolders = [];
-      accounts.forEach((account) => {
-        if (account.checked || account.indeterminate) {
-          //  Find all selected folders
-          const folders = Array.from(
-            account.parentNode.querySelectorAll(
-              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-            )
-          ).filter((folder) => folder.checked);
+    accounts.forEach((account) => {
+      if (account.checked || account.indeterminate) {
+        //  Find all selected folders
+        const folders = Array.from(
+          account.parentNode.querySelectorAll(
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+          )
+        ).filter((folder) => folder.checked);
 
-          checkedFolders = checkedFolders.concat(folders);
+        if (folders.length > 0) {
+          const mailFolderExt = JSON.parse(folders[0].value);
+          filters.push({
+            accountId: mailFolderExt.accountId,
+            version: mailFolderExt.version,
+            folders: [],
+          });
+
+          folders.forEach((folder) => {
+            const mailFolderExt = JSON.parse(folder.value);
+            filters[filters.length - 1].folders.push(mailFolderExt.path);
+          });
         }
-      });
-
-      checkedFolders.forEach((folder) => {
-        const mailFolderExt = JSON.parse(folder.value);
-
-        filters.push({
-          unread: true,
-          folder: mailFolderExt,
-        });
-      });
-    } else {
-      accounts.forEach((account) => {
-        if (account.checked || account.indeterminate) {
-          //  Find all selected folders
-          const folders = Array.from(
-            account.parentNode.querySelectorAll(
-              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-            )
-          ).filter((folder) => folder.checked);
-
-          if (folders.length > 0) {
-            const mailFolderExt = JSON.parse(folders[0].value);
-            filters.push({
-              accountId: mailFolderExt.accountId,
-              version: mailFolderExt.version,
-              folders: [],
-            });
-
-            folders.forEach((folder) => {
-              const mailFolderExt = JSON.parse(folder.value);
-              filters[filters.length - 1].folders.push(mailFolderExt.path);
-            });
-          }
-        }
-      });
-    }
+      }
+    });
 
     //  Store extended query filters
 
@@ -1157,25 +1127,10 @@ SysTrayX.RestoreOptions = {
 
         if (inbox.length > 0) {
           let folder = {};
-          if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-            folder = {
-              ...inbox[0],
-              accountName: account.name,
-              path: "/" + inbox[0].name,
-            };
-            delete folder.type;
-            delete folder.subFolders;
-
-            filters.push({
-              unread: true,
-              folder: folder,
-            });
-          } else {
-            filters.push({
-              accountId: inbox[0].accountId,
-              folders: [inbox[0].path],
-            });
-          }
+          filters.push({
+            accountId: inbox[0].accountId,
+            folders: [inbox[0].path],
+          });
         }
       });
     }
@@ -1183,22 +1138,20 @@ SysTrayX.RestoreOptions = {
     if (filters) {
       const treeBase = document.getElementById("accountsTree");
 
-      if (SysTrayX.Info.browserInfo.majorVersion < 91) {
-        filters.forEach((filter) => {
-          const folder = filter.folder;
+      filters.forEach((filter) => {
+        const account = treeBase.querySelector(
+          `input[name=${filter.accountId}]`
+        );
+        const checkboxes = Array.from(
+          account.parentNode.querySelectorAll(
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+          )
+        );
 
-          const account = treeBase.querySelector(
-            `input[name=${folder.accountId}]`
-          );
-          const checkboxes = Array.from(
-            account.parentNode.querySelectorAll(
-              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-            )
-          );
-
+        filter.folders.forEach((path) => {
           checkboxes.forEach((checkbox) => {
             const value = JSON.parse(checkbox.value);
-            if (value.path === folder.path) {
+            if (value.path === path) {
               checkbox.checked = true;
 
               const event = document.createEvent("HTMLEvents");
@@ -1207,31 +1160,7 @@ SysTrayX.RestoreOptions = {
             }
           });
         });
-      } else {
-        filters.forEach((filter) => {
-          const account = treeBase.querySelector(
-            `input[name=${filter.accountId}]`
-          );
-          const checkboxes = Array.from(
-            account.parentNode.querySelectorAll(
-              'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
-            )
-          );
-
-          filter.folders.forEach((path) => {
-            checkboxes.forEach((checkbox) => {
-              const value = JSON.parse(checkbox.value);
-              if (value.path === path) {
-                checkbox.checked = true;
-
-                const event = document.createEvent("HTMLEvents");
-                event.initEvent("change", false, true);
-                checkbox.dispatchEvent(event);
-              }
-            });
-          });
-        });
-      }
+      });
     }
   },
 
@@ -1471,11 +1400,6 @@ async function start() {
   document.getElementById("VersioHomeLink").href =
     "https://github.com/Ximi1970/systray-x/releases/tag/" +
     SysTrayX.Info.version;
-
-  // Disable incompatible items
-  if (SysTrayX.Info.browserInfo.majorVersion > 89 && SysTrayX.Info.browserInfo.majorVersion < 91) {
-    document.getElementById("counttype").style.display = "none";
-  }
 
   // Set the right default icon
   if (SysTrayX.Info.browserInfo.majorVersion < 115) {

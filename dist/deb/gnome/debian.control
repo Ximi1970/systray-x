@@ -6,14 +6,16 @@ Build-Depends: debhelper (>= 4.1.16), zip, g++, libx11-dev, qt5-qmake, qtbase5-d
 
 Package: systray-x-gnome
 Architecture: any
-Depends: ${shlibs:Depends}, gnome-shell-extension-appindicator, thunderbird (>= 1:68), thunderbird (< 1:118)
-Description: SysTray-X is a system tray extension for Thunderbird 68+ (GNOME).
+Depends: ${shlibs:Depends}, gnome-shell-extension-appindicator, thunderbird (>= 1:91), thunderbird (< 1:118)
+Description: SysTray-X is a system tray extension for Thunderbird (GNOME).
  This version is optimized for the GNOME desktop.
  The add-on uses the WebExtension API's to control an external system
  dependent system tray application.
  The add-on and system tray application can do:
   * custom new mail icon
-  * display number of unread mails
+  * display number of unread /new mails
+  * optional new mail indicator (icon or shading)
+  * run app on start or close
   * show / hide Thunderbird (minimize)
   * minimizing hides to tray
   * minimize on startup

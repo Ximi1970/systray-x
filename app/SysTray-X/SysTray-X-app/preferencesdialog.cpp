@@ -780,23 +780,6 @@ void    PreferencesDialog::slotDebugChange()
 
 
 /*
- *  Handle the browser version signal
- */
-void    PreferencesDialog::slotBrowserVersion()
-{
-    QString version = m_pref->getBrowserVersion();
-
-    if( version.section( '.', 0, 0 ).toInt() > 89 && version.section( '.', 0, 0 ).toInt() < 91)
-    {
-        /*
-         *  Hide the count type for TB90 and up, not supported
-         */
-        m_ui->countTypeGroupBox->setVisible( false );
-    }
-}
-
-
-/*
  *  Handle the start minimized change signal
  */
 void    PreferencesDialog::slotStartMinimizedChange()
