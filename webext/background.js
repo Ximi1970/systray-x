@@ -76,8 +76,9 @@ SysTrayX.Messaging = {
 */
 
 
-    //  Let us wait until TB is ready, needed for TB91 and higher?
-/*    const startupDelay = await storage()
+    //  Let us wait until TB is ready, needed for TB91 (no accounts found, cannot create filters) and higher?
+/*    
+    const startupDelay = await storage()
       .get("startupDelay")
       .then((result) => result.startupDelay || "5");
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
