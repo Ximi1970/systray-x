@@ -393,7 +393,9 @@ const getMailCount = () => {
   //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
   //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-  //console.debug("getMailCount: " + unreadCount + ", " + newCount);
+  console.debug("getMailCount Unread: " + unreadCount);
+  console.debug("getMailCount New: " + newCount);
+
   SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
 };
 
