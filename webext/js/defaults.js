@@ -369,8 +369,52 @@ async function addFolderToFilters(newFolder) {
   }
 }
 
-//  Count the unread and new mails
-const getMailCount = () => {
+// Collect unread mail
+const collectUnreadMail = async () => {
+  for (const filter of SysTrayX.Messaging.filters) {
+    for (const path of filter.folders) {
+      const folder = {
+        accountId: filter.accountId,
+        path: path,
+      };
+
+      let mailFolderInfo = {};
+      try {
+        mailFolderInfo = await browser.folders.getFolderInfo(folder);
+      } catch (err) {
+        console.debug("Filter error: " + err);
+        console.debug("Filter error: " + JSON.stringify(folder));
+      }
+
+      if (mailFolderInfo.unreadMessageCount !== undefined) {
+        if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
+          SysTrayX.Messaging.unread[folder.accountId] = {};
+        }
+
+        if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
+          SysTrayX.Messaging.new[folder.accountId] = {};
+        }
+
+        if (
+          SysTrayX.Messaging.new[folder.accountId][folder.path] === undefined
+        ) {
+          SysTrayX.Messaging.new[folder.accountId][folder.path] = [];
+        }
+
+        SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+          mailFolderInfo.unreadMessageCount;
+      }
+    }
+  }
+};
+
+//  Count and send the unread and new mails
+const sendMailCount = () => {
+
+  // Collect the unread mail
+  collectUnreadMail();
+
+  // Count the collected mail
   let unreadCount = 0;
   let newCount = 0;
   SysTrayX.Messaging.filters.forEach((filter) => {
@@ -393,14 +437,14 @@ const getMailCount = () => {
   //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
   //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-  console.debug("getMailCount Unread: " + unreadCount);
-  console.debug("getMailCount New: " + newCount);
+  console.debug("sendMailCount Unread: " + unreadCount);
+  console.debug("sendMailCount New: " + newCount);
 
   SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
 };
 
-//  Count the unread and new mails
-const getMailCount2 = async () => {
+//  Count and send the unread and new mails (>TB115)
+const sendMailCount2 = async () => {
     // New only works for >=TB106 
 
   let unreadCount = 0;
