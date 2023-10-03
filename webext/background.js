@@ -143,9 +143,9 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.newMailCache.push({ folder, messages });
     }
 
-    console.debug("listenerNewMailCache: New mail in: " + JSON.stringify(folder));
-    console.debug("listenerNewMailCache: New messages: " + JSON.stringify(messages));
-    console.debug("listenerNewMailCache: Cache: " + SysTrayX.Messaging.newMailCache.length );
+    //console.debug("listenerNewMailCache: New mail in: " + JSON.stringify(folder));
+    //console.debug("listenerNewMailCache: New messages: " + JSON.stringify(messages));
+    //console.debug("listenerNewMailCache: Cache: " + SysTrayX.Messaging.newMailCache.length );
 
     if (SysTrayX.Messaging.startupDelayFinished)
     {
@@ -182,9 +182,9 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.folderInfoChangeCache.push({ folder, folderInfo });
       }
 
-      console.debug("folderInfoChanged: " + JSON.stringify(folder));
-      console.debug("folderInfoChanged: " + JSON.stringify(folderInfo));
-      console.debug("folderInfoChanged: Cache: " + SysTrayX.Messaging.folderInfoChangeCache.length );
+      //console.debug("folderInfoChanged: " + JSON.stringify(folder));
+      //console.debug("folderInfoChanged: " + JSON.stringify(folderInfo));
+      //console.debug("folderInfoChanged: Cache: " + SysTrayX.Messaging.folderInfoChangeCache.length );
 
       if (SysTrayX.Messaging.startupDelayFinished)
       {
@@ -225,9 +225,9 @@ SysTrayX.Messaging = {
                   }
                 }
 
-                console.debug("FolderInfoChanged: Clear");
-                console.debug("FolderInfoChanged: Old: " + JSON.stringify(SysTrayX.Messaging.new[cache.folder.accountId][cache.folder.path]));
-                console.debug("FolderInfoChanged: New: " + JSON.stringify(newMessages));
+                //console.debug("FolderInfoChanged: Clear");
+                //console.debug("FolderInfoChanged: Old: " + JSON.stringify(SysTrayX.Messaging.new[cache.folder.accountId][cache.folder.path]));
+                //console.debug("FolderInfoChanged: New: " + JSON.stringify(newMessages));
 
                 SysTrayX.Messaging.new[cache.folder.accountId][cache.folder.path] = [
                   ...newMessages,
@@ -652,7 +652,7 @@ SysTrayX.Link = {
   postSysTrayXMessage: function (object) {
     //  Send object (will be stringified by postMessage)
 
-    //    console.debug("postSysTrayXMessage: " + JSON.stringify(object));
+    //console.debug("postSysTrayXMessage: " + JSON.stringify(object));
     SysTrayX.Link.portSysTrayX.postMessage(object);
   },
 
@@ -889,10 +889,8 @@ SysTrayX.Window = {
 
   folderChanged: function (tab, displayedFolder) {
     
-    console.debug("Folder changed tab: " + JSON.stringify(tab));
-    console.debug(
-      "Folder changed displayedFolder: " + JSON.stringify(displayedFolder)
-    );
+    //console.debug("Folder changed tab: " + JSON.stringify(tab));
+    //console.debug("Folder changed displayedFolder: " + JSON.stringify(displayedFolder));
 
     if (SysTrayX.Info.browserInfo.majorVersion < 115) {
       const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
