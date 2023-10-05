@@ -193,6 +193,11 @@ class WindowCtrlWin : public QObject
         void    normalizeWindowsHidden();
 
         /**
+         * @brief deleteHiddenWindows. Delete all hidden windows.
+         */
+        void    deleteHiddenWindows();
+
+        /**
          * @brief deleteWindow. Delete window.
          *
          *  @param window   The window.

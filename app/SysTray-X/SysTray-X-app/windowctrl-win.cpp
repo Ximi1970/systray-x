@@ -279,6 +279,18 @@ void    WindowCtrlWin::normalizeWindowsHidden()
 /*
  *  Delete / Close a window
  */
+void    WindowCtrlWin::deleteHiddenWindows()
+{
+    for( int i = 0 ; i < m_tb_windows_hidden.length() ; ++i )
+    {
+        SendMessageA(  (HWND)m_tb_windows_hidden.at( i ), WM_CLOSE, 0, 0 );
+    }
+}
+
+
+/*
+ *  Delete / Close a window
+ */
 void    WindowCtrlWin::deleteWindow( quint64 window )
 {
     SendMessageA(  (HWND)window, WM_CLOSE, 0, 0 );

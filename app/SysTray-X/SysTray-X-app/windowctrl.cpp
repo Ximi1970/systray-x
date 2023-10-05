@@ -350,6 +350,15 @@ void    WindowCtrl::slotClose()
     emit signalConsole( "Close" );
 #endif
 
+#ifdef Q_OS_WIN
+
+    /*
+     *  Delete all hidden windws ( not found by findWindows() )
+     */
+    deleteHiddenWindows();
+
+#endif
+
     /*
      *  Update the TB windows
      */
