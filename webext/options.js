@@ -1309,7 +1309,7 @@ SysTrayX.StorageChanged = {
         });
       }
       if (item === "newIndicatorType") {
-        SysTrayX.RestoreOptions.setIndicatorType({
+        SysTrayX.RestoreOptions.setNewIndicatorType({
           newIndicatorType: changes[item].newValue,
         });
       }
