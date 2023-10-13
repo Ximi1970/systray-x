@@ -72,18 +72,6 @@ SysTrayX.Messaging = {
     //  Send start app trigger
     SysTrayX.Messaging.sendStartApp();
 
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
-      // Catch the new incomming mail
-      browser.messages.onNewMailReceived.addListener(
-        SysTrayX.Messaging.listenerNewMail
-      );
-    }
-
-    //  Set catch folder changes
-    browser.folders.onFolderInfoChanged.addListener(
-      SysTrayX.Messaging.listenerFolderInfoChanged
-    );
-
     //  Let us wait until TB is ready, needed for TB91 (no accounts found, cannot create filters) and higher?
     const startupDelay = await storage()
       .get("startupDelay")
@@ -939,6 +927,19 @@ async function start() {
   SysTrayX.Info.version = browser.runtime.getManifest().version;
 
   SysTrayX.Info.displayInfo();
+
+  // Try to catch the mails
+  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    // Catch the new incomming mail
+    browser.messages.onNewMailReceived.addListener(
+      SysTrayX.Messaging.listenerNewMail
+    );
+  }
+
+  //  Set catch folder changes
+  browser.folders.onFolderInfoChanged.addListener(
+    SysTrayX.Messaging.listenerFolderInfoChanged
+  );
 
   //  Catch a folder change to reset the new counter
   browser.mailTabs.onDisplayedFolderChanged.addListener(
