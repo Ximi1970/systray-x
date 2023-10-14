@@ -5,6 +5,7 @@ systray-x (0.9.6-0) unstable; urgency=low
     - Added option to show a new mail indicator or icon shading
     - Added option to launch an app on start and close
     - Refactored windows state handling
+    - Refactored mail counting
     - Bugfixes
 
 systray-x (0.9.5-0) unstable; urgency=low

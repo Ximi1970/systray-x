@@ -123,6 +123,15 @@ sudo zypper in systray-x-minimal
 
 Installing the repository:
 
+###### 23.10
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_23.10/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_23.10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 23.04
 
 ```bash
@@ -132,7 +141,7 @@ sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi197
 sudo apt update
 ```
 
-###### 22.04
+###### 22.04 LTS
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_22.04/Release.key
@@ -319,6 +328,13 @@ Installing the repository:
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 39
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_39/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
