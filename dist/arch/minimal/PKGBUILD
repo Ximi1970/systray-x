@@ -11,7 +11,7 @@ license=(MPL-2.0)
 depends=(
   'qt5-base'
   'thunderbird>=91'
-  'thunderbird<118'
+  'thunderbird<120'
 )
 makedepends=(
   'git'
