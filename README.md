@@ -16,6 +16,7 @@ The addon and system tray application can do:
 Warning:
 
 This add-on and companion app will NOT work with FULL Wayland desktops. No interaction between window clients is possible in Wayland.
+Nor will it currently work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
 
 
 ## Donations
@@ -51,6 +52,7 @@ Please press the reset button in the TB SysTray-X add-on preferences page to cle
 ## Limitations
 
 This add-on / companion app will not work with FULL Wayland desktops due to the design choices made in Wayland. 
+Nor will it currently work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
 
 
 ## Binaries (System)
