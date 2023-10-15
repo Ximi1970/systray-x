@@ -437,57 +437,6 @@ You can directly install the `systray-x-common` or the `systray-x-kde` package i
 Alternatively, there's a [systray-x-git](https://aur.archlinux.org/packages/systray-x-git) package available in the AUR.
 
 
-### CentOS
-
-#### Repository
-
-Installing the repository:
-
-###### 8 Stream (not tested)
-
-```bash
-sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8_Stream/home:Ximi1970:Mozilla:Add-ons.repo
-sudo yum update
-```
-
-###### 8
-
-```bash
-sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_8/home:Ximi1970:Mozilla:Add-ons.repo
-sudo yum update
-```
-
-###### 7
-
-```bash
-sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_7/home:Ximi1970:Mozilla:Add-ons.repo
-sudo yum update
-```
-
-#### Package
-
-Installing the SysTray-X addon and companion app package:
-
-###### KDE
-
-```bash
-sudo yum install systray-x-minimal
-```
-or
-```bash
-sudo yum install epel-release
-sudo yum install systray-x
-```
-
-###### GNOME
-
-```bash
-sudo yum install systray-x-gnome
-```
-
-Please use `gnome-extensions` to enable the gnome shell extension `appindicatorsupport@rgcjonas.gmail.com`. Reboot or relogin is probably also needed.
-
-
 ### MX (not tested)
 
 First install the Debian latest Thunderbird version. Replace the xx.x.x with the correct version.
@@ -536,72 +485,68 @@ You can find add-on file in the install directory called `systray-x@Ximi1970.xpi
 
 ### Linux
 
+Requirements:
+  - OpenSuSE Leap 15.5:
+
+    ```bash
+    sudo zypper install zip git gcc-c++ make libQt5Core-devel libQt5Widgets-devel libQt5DBus-devel knotifications-devel
+    ```
+
+  - OpenSuSE Leap 15.5 GNOME:
+
+    ```bash
+    sudo zypper install zip git gcc-c++ make libQt5Core-devel libQt5Widgets-devel libQt5DBus-devel
+    sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.5/ SysTray-X
+    sudo zypper install gnome-shell-extension-appindicator
+    ```
+
+  - Fedora 38:
+
+    ```bash
+    sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator
+    ```
+
+    Logout and login to enable the gnome extension.
+
+    ```bash
+    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+    ```
+
+  - Fedora 38 Mate:
+
+    ```bash
+    sudo dnf install qt5-qtbase-devel kf5-knotifications-devel
+    ```
+
+  - Ubuntu 23.04 LTS:
+
+    ```bash
+    sudo apt install zip git g++ make qt5-qmake qtbase5-dev qdbus-qt5
+    gnome-extensions enable ubuntu-appindicator@ubuntu.com
+    ```
+
+  - Debian 12:
+
+    ```bash
+    sudo apt install zip git g++ make qt5-qmake qtbase5-dev qdbus-qt5 gnome-shell-extension-appindicator
+    gnome-extension enable ubuntu-appindicator@ubuntu.com
+    ```
+
 Clone the repository:
 ```bash
 git clone https://github.com/Ximi1970/systray-x.git
 ```
 
-Requirements:
-  - OpenSuSE:
-
-    ```bash
-    sudo zypper install zip git gcc-c++ make qt5-qtbase-devel knotifications-devel
-    ```
-
-  - Fedora/RHEL:
-
-    ```bash
-    sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator kf5-knotifications-devel
-    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-    ```
-
-  - CentOS:
-
-    ```bash
-    sudo yum install epel-release
-    sudo yum install kf5-knotifications-devel
-    sudo yum install qt5-qtbase-devel
-    ```
-    If you want to use systray-x under Gnome you also need to add the SysTray-X repository for your CentOS version (replace the XX with your version):
-    ```bash
-    sudo yum-config-manager --add-repo=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/CentOS_XX/home:Ximi1970:Mozilla:Add-ons.repo
-    sudo yum update
-    sudo yum install gnome-shell-extension-appindicator
-    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-    ```
-    
-    
-  - Ubuntu:
-
-      20.04 LTS
-
-    ```bash
-    sudo apt install zip git g++ make qt5-default
-    gnome-extensions enable ubuntu-appindicator@ubuntu.com
-    ```
-
-      16.04 LTS / 18.04 LTS
-
-    ```bash
-    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
-    gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
-    ```
-
-  - Debian:
-
-    ```bash
-    sudo apt install zip git g++ make qt5-default gnome-shell-extension-appindicator
-    gnome-shell-extension-tool -e ubuntu-appindicator@ubuntu.com
-    ```
-
 Build (KDE):
 ```bash
 cd systray-x
+make clean
 make
 ```
 or if `knotifications` is not available:
 ```bash
 cd systray-x
+make clean
 make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
@@ -609,6 +554,7 @@ make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 Build (GNOME,XFCE,others):
 ```bash
 cd systray-x
+make clean
 make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
@@ -616,16 +562,16 @@ Install and run SysTray-X from the build directory in the repository:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
 cp -f app/config/linux/SysTray_X.json ~/.mozilla/native-messaging-hosts/
-cp -f systray-x@Ximi1970.xpi ~/.thunderbird/*.default-release/extensions/
 ```
 
-User install:
+Copy the add-on into the Thunderbird profile directory:
+```bash
+cp -f systray-x@Ximi1970.xpi ~/.thunderbird/<profile-code>.default-release/extensions/
+```
 
-...
+Start Thunderbird and enable and configure the add-on in the "Menu -> Add-ons and themes -> Extensions" dialog.
 
-System install:
-
-...
+or install the add-on by going to the "Add-ons and themes -> Extensions" dialog, click on the gear icon and use the "Install add-on from file" item. Select the "systray-x@Ximi1970.xpi" file.
 
 
 ### Windows
