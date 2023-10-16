@@ -449,7 +449,7 @@ const sendMailCountPre115 = () => {
 const sendMailCount = async () => {
   if (SysTrayX.Info.browserInfo.majorVersion >= 115) {
 
-      // New only works for >=TB106 
+    // New only works for >=TB106 
 
     let unreadCount = 0;
     let newCount = 0;

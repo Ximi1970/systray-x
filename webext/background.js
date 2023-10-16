@@ -79,6 +79,12 @@ SysTrayX.Messaging = {
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     await delay(startupDelay * 1000);
 
+    //  Keep trace of account changes
+    if (SysTrayX.Info.browserInfo.majorVersion >= 98) {
+      browser.accounts.onCreated.addListener(SysTrayX.Messaging.accountAdded);
+      browser.accounts.onDeleted.addListener(SysTrayX.Messaging.accountDeleted);
+    }
+
     //  Get all accounts
     SysTrayX.Messaging.accounts = await browser.accounts.list(false);
 
@@ -101,6 +107,9 @@ SysTrayX.Messaging = {
     const getCountTypePromise = () => new Promise((res) => res(getCountType()));
     SysTrayX.Messaging.countType = await getCountTypePromise();
 
+    // Check the filters for the accounts
+    SysTrayX.Messaging.accountFilterCheck();
+
     // Handle cached mail changes on startup
     SysTrayX.Messaging.startupDelayFinished = true;
     if (SysTrayX.Info.browserInfo.majorVersion < 115) {
@@ -121,6 +130,64 @@ SysTrayX.Messaging = {
 
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
+  },
+
+  accountAdded: function (id, account) {
+    //console.debug("accountAdded: Id: " + id);
+    //console.debug("accountAdded: Account: " + JSON.stringify(account));
+  },
+
+  accountDeleted: function (id) {
+    for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
+      if (SysTrayX.Messaging.accounts[i].id === id) {
+        SysTrayX.Messaging.accounts.splice(i,1);
+        break;
+      }
+    }
+
+    SysTrayX.Messaging.accountFilterCheck();
+  },
+
+  accountFilterCheck: async function () {
+    let ids = [];
+    for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
+      ids.push(SysTrayX.Messaging.accounts[i].id);
+    }
+
+    let newFilters = [];
+    let filtersChanged = false;
+    for (let i = 0; i < SysTrayX.Messaging.filters.length; ++i) {
+      const id = SysTrayX.Messaging.filters[i].accountId;
+
+      if (ids.includes(id)) {
+        newFilters.push(SysTrayX.Messaging.filters[i]);
+      } else {
+        if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+          if (SysTrayX.Messaging.new[id] != undefined) {
+            delete SysTrayX.Messaging.new[id];
+          }
+          if (SysTrayX.Messaging.unread[id] != undefined) {
+            delete SysTrayX.Messaging.unread[id];
+          }
+        }
+
+        filtersChanged = true;
+      }
+    }
+
+    //console.debug("checkFilters: Old: " + JSON.stringify(SysTrayX.Messaging.filters));
+    //console.debug("checkFilters: New: " + JSON.stringify(newFilters));
+
+    //console.debug("checkFilters: MesNew: " + JSON.stringify(SysTrayX.Messaging.new));
+    //console.debug("checkFilters: MesUnread: " + JSON.stringify(SysTrayX.Messaging.unread));
+
+    if (filtersChanged) {
+      SysTrayX.Messaging.filters = [...newFilters];
+
+      await storage().set({
+        filters: SysTrayX.Messaging.filters,
+      });
+    }
   },
 
   listenerNewMail: function (folder, messages) {
