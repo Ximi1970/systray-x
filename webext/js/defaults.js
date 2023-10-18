@@ -382,8 +382,14 @@ const collectUnreadMail = async () => {
       try {
         mailFolderInfo = await browser.folders.getFolderInfo(folder);
       } catch (err) {
-        console.debug("Filter error: " + err);
-        console.debug("Filter error: " + JSON.stringify(folder));
+        //console.debug("Filter error: " + err);
+        //console.debug("Filter error: " + JSON.stringify(folder));
+
+        //  Get all accounts
+        SysTrayX.Messaging.accounts = await browser.accounts.list(false);
+
+        // Check the filters for the accounts
+        SysTrayX.Messaging.accountFilterCheck();
       }
 
       if (mailFolderInfo.unreadMessageCount !== undefined) {
