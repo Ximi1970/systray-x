@@ -127,7 +127,8 @@ qint64  WindowCtrlWin::getPpid() const
  */
 bool    WindowCtrlWin::isThunderbird( qint64 pid ) const
 {
-    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive );
+    return getProcessName( pid ).contains( "thunderbird", Qt::CaseInsensitive ) ||
+            getProcessName( pid ).contains( "betterbird", Qt::CaseInsensitive );
 }
 
 
