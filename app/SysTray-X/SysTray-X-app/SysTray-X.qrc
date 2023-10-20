@@ -23,5 +23,6 @@
         <file>files/icons/new-indicator-round.png</file>
         <file>files/icons/new-indicator-star-close.png</file>
         <file>files/icons/new-indicator-star-open.png</file>
+        <file>languages/SysTray-X.el.qm</file>
     </qresource>
 </RCC>
