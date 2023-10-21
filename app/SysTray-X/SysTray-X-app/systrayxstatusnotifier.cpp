@@ -54,17 +54,6 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
      */
     setCategory( KStatusNotifierItem::ApplicationStatus );
 
-    QString version = m_pref->getBrowserVersion();
-
-    if( version.section( '.', 0, 0 ).toInt() < 115 )
-    {
-        setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird.png") ) );
-    }
-    else
-    {
-        setIconByPixmap( QIcon( QPixmap( ":/files/icons/Thunderbird115.png") ) );
-    }
-
     setTitle( "SysTray-X" );
 
     setToolTipTitle( "SysTray-X" );
@@ -75,6 +64,8 @@ SysTrayXStatusNotifier::SysTrayXStatusNotifier( SysTrayXLink* link, Preferences*
 
 //  setStatus(KStatusNotifierItem::ItemStatus::Active);
 //  setStatus(KStatusNotifierItem::ItemStatus::NeedsAttention);
+
+    renderBase();
 
     connect( this, &KStatusNotifierItem::activateRequested, this, &SysTrayXStatusNotifier::slotActivateRequested );
     connect( this, &KStatusNotifierItem::secondaryActivateRequested, this, &SysTrayXStatusNotifier::slotSecondaryActivateRequested );

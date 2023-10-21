@@ -46,6 +46,8 @@ SysTrayXIcon::SysTrayXIcon( SysTrayXLink* link, Preferences* pref, QObject* pare
 
     setToolTip( tr( "SysTray-X: Thunderbird add-on companion app" ) );
 
+    renderBase();
+
     connect( this, &QSystemTrayIcon::activated, this, &SysTrayXIcon::slotIconActivated );
 }
 
