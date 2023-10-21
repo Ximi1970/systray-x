@@ -25,62 +25,6 @@ SysTrayX.Accounts = {
   },
 
   buildTree: function (mailAccount) {
-    function createFolderTreePre74(accountName, folders) {
-      let result = [];
-      let level = { result };
-
-      folders.forEach((folder) => {
-        folder.path
-          .slice(1)
-          .split("/")
-          .reduce((r, name, i, a) => {
-            if (!r[name]) {
-              r[name] = { result: [] };
-              r.result.push({
-                accountId: folder.accountId,
-                name: folder.name,
-                type: folder.type,
-                subFolders: r[name].result,
-              });
-            }
-
-            return r[name];
-          }, level);
-      });
-
-      function traverse(path, folders) {
-        if (!folders) {
-          return;
-        }
-        for (let f of folders) {
-          f.accountName = accountName;
-          f.path = path + "/" + f.name;
-          traverse(path + "/" + f.name, f.subFolders);
-        }
-      }
-
-      traverse("", result);
-
-      return result;
-    }
-
-    function createFolderTreePre91(accountName, folders) {
-      function traverse(path, folders) {
-        if (!folders) {
-          return;
-        }
-        for (let f of folders) {
-          f.accountName = accountName;
-          f.path = path + "/" + f.name;
-          traverse(path + "/" + f.name, f.subFolders);
-        }
-      }
-
-      traverse("", folders);
-
-      return folders;
-    }
-
     function createFolderTree(accountName, folders) {
       function traverse(folders) {
         if (!folders) {

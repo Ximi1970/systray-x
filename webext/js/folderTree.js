@@ -13,32 +13,6 @@ function getFolderTree(mailAccounts, browserInfo) {
     }
   }
 
-  function createFolderTreePre74(accountName, folders) {
-    let result = [];
-    let level = { result };
-
-    folders.forEach((folder) => {
-      folder.path
-        .slice(1)
-        .split("/")
-        .reduce((r, name, i, a) => {
-          if (!r[name]) {
-            r[name] = { result: [] };
-            r.result.push({
-              accountId: folder.accountId,
-              name: folder.name,
-              subFolders: r[name].result,
-            });
-          }
-
-          return r[name];
-        }, level);
-    });
-
-    traverse(accountName, "", result);
-    return result;
-  }
-
   function createFolderTree(accountName, folders) {
     traverse(accountName, "", folders);
     return folders;
@@ -82,20 +56,10 @@ function getFolderTree(mailAccounts, browserInfo) {
     if (accounts[prop]) {
       for (let i = 0; i < accounts[prop].length; ++i) {
         //  Create a usable folder tree
-        let folders = [];
-        if (browserInfo.version.split(".")[0] < 74) {
-          //  Pre TB74 accounts API
-          folders = createFolderTreePre74(
-            accounts[prop][i].name,
-            accounts[prop][i].folders
-          );
-        } else {
-          //  TB74+ accounts API, (this shit never ends...)
-          folders = createFolderTree(
-            accounts[prop][i].name,
-            accounts[prop][i].folders
-          );
-        }
+        const folders = createFolderTree(
+          accounts[prop][i].name,
+          accounts[prop][i].folders
+        );
 
         //  Store the tree
         folderTree[accounts[prop][i].name] = folders;
