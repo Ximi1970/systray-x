@@ -3,7 +3,7 @@
 #
 QT       -= core gui
 
-TARGET = SysTray-X-x11
+TARGET = SysTray-X-wayland
 TEMPLATE = lib
 
 CONFIG += staticlib
@@ -18,6 +18,6 @@ QMAKE_INCDIR_QT =
 QMAKE_LIBDIR_QT =
 
 
-SOURCES += systray-x-lib-x11.cpp
+SOURCES += systray-x-lib-wayland.cpp
 
-HEADERS += systray-x-lib-x11.h
+HEADERS += systray-x-lib-wayland.h

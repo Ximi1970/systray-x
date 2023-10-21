@@ -11,6 +11,7 @@ include( SysTray-X.pri )
 #
 unix: {
 SUBDIRS +=  SysTray-X-lib-x11
+SUBDIRS +=  SysTray-X-lib-wayland
 }
 #SUBDIRS +=  SysTray-X-lib-win
 SUBDIRS +=  SysTray-X-app
