@@ -58,7 +58,7 @@ You need to use a workaround for Wayland. In some distributions this is already 
 These packages will install the Thunderbird addon and companion app system wide.  
 Root credentials are required.
 
-Make shure you removed / uninstalled any SysTray-X package installed with a script installer.  
+Make sure you removed / uninstalled any SysTray-X package installed with a script installer.  
 You can verify this by checking the `~/.mozilla/native-messaging-hosts` directory. There should be NO SysTray-X packages or links in there. Remove them and remove the add-on from the Thunderbird add-ons page.
 
 
@@ -441,18 +441,6 @@ Download the installer here (click on the assets dropdown list):
 
 Please keep in mind that using the script will override the SysTray-X packages installed with a repository.
 Use the `-u` option with the script installer to uninstall.
-
-
-### Windows 10, 11
-
-Get the `SysTray-X-setup32-x.x.x.exe` or `SysTray-X-setup64-x.x.x.exe` depending on the Thunderbird version (32bit or 64bit) you are using.  
-Run the installer.  
-If you want to change the install directory, please make sure to select an empty / unused directory.  
-ALL files in the selected install directory will be removed when uninstalling !!
-Please remove the Systray-X add-on from Thunderbird before uninstalling.
-
-When reinstalling you need to add the add-on manually to Thunderbird again by using the `Installl Add-On From File` option in the `Add-ons manager`.
-You can find add-on file in the install directory called `systray-x@Ximi1970.xpi`
 
 
 ## Building
