@@ -140,6 +140,7 @@ win32: {
     JSON_JSON_PATH = $$system(powershell -Command "('$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray_X.json)').replace('\\','\\\\')")
 
     QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-User.reg.template)\' ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-User.reg)\'\" &
+    QMAKE_POST_LINK += powershell -Command \"(Get-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-System.reg.template)\' ).replace(\'SYSTRAY_X_JSON_PATH\',\'$$JSON_JSON_PATH\') | Set-Content \'$$shell_path($${_PRO_FILE_PWD_}/../../config/win32/SysTray-X-System.reg)\'\" &
 }
 
 #
