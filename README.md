@@ -49,8 +49,8 @@ Please press the reset button in the TB SysTray-X add-on preferences page to cle
 
 ## Limitations
 
-his add-on / companion app will not work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
-You need to use a workaround for Wayland. In some distributions this is already applied.
+This add-on / companion app will not work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.__
+You need to use a workaround for Wayland. In some distributions this is already applied.__
 
 
 ## Binaries (System)
@@ -71,7 +71,7 @@ Starting from a shell:
 env GDK_BACKEND=x11 thunderbird
 ```
 
-or find the .desktop file for Thunderbird:
+and/or find the .desktop file for Thunderbird:
 ```
 /usr/share/applications/thunderbird.desktop
 ```
@@ -561,7 +561,7 @@ Install these packages:
 - [PuTTY](https://www.putty.org/)
 - [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2)
 - [7z](https://www.7-zip.org/download.html)
-- [Cygwin](https://www.cygwin.com/) (gcc, make, zip)
+- (optional)[Cygwin](https://www.cygwin.com/) (gcc, make, zip)
 
 Clone the repository using TortoiseGit.
 
