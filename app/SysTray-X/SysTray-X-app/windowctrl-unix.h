@@ -9,7 +9,6 @@
  */
 #include "preferences.h"
 #include "systray-x-lib-x11.h"
-#include "systray-x-lib-wayland.h"
 
 /*
  *  System includes

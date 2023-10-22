@@ -72,14 +72,10 @@ unix:!macx: {
     QMAKE_CFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
     QMAKE_CXXFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-x11
 
-    QMAKE_CFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-wayland
-    QMAKE_CXXFLAGS += -I$${_PRO_FILE_PWD_}/../SysTray-X-lib-wayland
-
     #
     #   Add local libs
     #
     LIBS += -L../SysTray-X-lib-x11 -lSysTray-X-x11
-    LIBS += -L../SysTray-X-lib-wayland -lSysTray-X-wayland
 
     #
     #   Add system libs
