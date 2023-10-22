@@ -15,9 +15,7 @@ The addon and system tray application can do:
 
 Warning:
 
-This add-on and companion app will NOT work with FULL Wayland desktops. No interaction between window clients is possible in Wayland.  
-Nor will it currently work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
-
+This add-on and companion app will NOT work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
 
 ## Donations
 To support this project, you can make a donation to its current maintainer:  
@@ -29,7 +27,7 @@ To support this project, you can make a donation to its current maintainer:
 ## Contributers
 
 Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
-
+ouztheone <github> : Nice workaround without disabling Wayland completely
 
 ## Known issues
 
@@ -51,8 +49,8 @@ Please press the reset button in the TB SysTray-X add-on preferences page to cle
 
 ## Limitations
 
-This add-on / companion app will not work with FULL Wayland desktops due to the design choices made in Wayland.  
-Nor will it currently work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
+his add-on / companion app will not work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.
+You need to use a workaround for Wayland. In some distributions this is already applied.
 
 
 ## Binaries (System)
@@ -62,6 +60,25 @@ Root credentials are required.
 
 Make shure you removed / uninstalled any SysTray-X package installed with a script installer.  
 You can verify this by checking the `~/.mozilla/native-messaging-hosts` directory. There should be NO SysTray-X packages or links in there. Remove them and remove the add-on from the Thunderbird add-ons page.
+
+
+## Using the addon with Wayland
+
+You need to force Thunderbird to use X11.
+
+Starting from a shell:
+```bash
+env GDK_BACKEND=x11 thunderbird
+```
+
+or find the .desktop file for Thunderbird:
+```
+/usr/share/applications/thunderbird.desktop
+```
+and change the `Exec` line into this:
+```
+Exec=env GDK_BACKEND=x11 thunderbird %u
+```
 
 
 ## Linux distributions
@@ -112,7 +129,7 @@ sudo zypper in systray-x
 sudo zypper in systray-x-gnome
 ```
 
-###### XFCE / Others (non-KDE, non-GNOME)
+###### XFCE / Others
 
 ```bash
 sudo zypper in systray-x-minimal
@@ -185,41 +202,17 @@ Installing the SysTray-X addon and companion app package:
 
 ###### KDE
 
-Please select the `Plasma (X11)` session when loging in on 21.04. The `Plasma (Wayland)` session will not work.
-
 ```bash
 sudo apt install systray-x
 ```
 
 ###### GNOME
 
-Please select the `Ubuntu on Xorg` session when loging in on 21.04 and up. The `Ubuntu` (Wayland) session will not work.
-
 ```bash
 sudo apt install systray-x-gnome
 ```
 
-Disabling wayland:
-
-```bash
-sudo nano /etc/gdm3/custom.conf
-
-```
-
-and change (and remove the leading '#' when needed)
-
-```
-WaylandEnable=true
-```
-
-into
-
-```
-WaylandEnable=false
-```
-
-
-###### Unity / XFCE / Others (non-KDE, non-GNOME)
+###### Unity / XFCE / Others
 
 ```bash
 sudo apt install systray-x-minimal
@@ -232,7 +225,7 @@ sudo apt install systray-x-minimal
 
 Installing the repository:
 
-###### Testing (not tested)
+###### Testing
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Testing/Release.key
@@ -241,7 +234,7 @@ sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi197
 sudo apt update
 ```
 
-###### Unstable (not tested)
+###### Unstable
 
 ```bash
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_Unstable/Release.key
@@ -293,27 +286,7 @@ sudo apt install systray-x
 sudo apt install systray-x-gnome
 ```
 
-Disabling wayland:
-
-```bash
-sudo nano /etc/gdm3/daemon.conf
-
-```
-
-and change (and remove the leading '#' when needed)
-
-```
-WaylandEnable=true
-```
-
-into
-
-```
-WaylandEnable=false
-```
-
-
-###### XFCE / Others (non-KDE, non-GNOME)
+###### XFCE / Others
 
 ```bash
 sudo apt install systray-x-minimal
@@ -326,7 +299,7 @@ sudo apt install systray-x-minimal
 
 Installing the repository:
 
-###### Rawhide (not tested)
+###### Rawhide
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
@@ -377,7 +350,7 @@ sudo dnf install systray-x
 sudo dnf install systray-x-gnome
 ```
 
-###### XFCE / Others (non-KDE, non-GNOME)
+###### XFCE / Others
 
 ```bash
 sudo dnf install systray-x-minimal
@@ -418,7 +391,7 @@ sudo pacman -S systray-x-gnome
 
 Please use `gnome-extensions` to enable the gnome shell extension `appindicatorsupport@rgcjonas.gmail.com`. Reboot or relogin is probably also needed.
 
-###### XFCE / Others (non-KDE, non-GNOME)
+###### XFCE / Others
 
 ```bash
 sudo pacman -S systray-x-minimal
@@ -437,7 +410,7 @@ You can directly install the `systray-x-common` or the `systray-x-kde` package i
 Alternatively, there's a [systray-x-git](https://aur.archlinux.org/packages/systray-x-git) package available in the AUR.
 
 
-### MX (not tested)
+### MX
 
 First install the Debian latest Thunderbird version. Replace the xx.x.x with the correct version.
 ```bash
@@ -455,7 +428,8 @@ sudo apt update
 sudo apt install systray-x-minimal
 ```
 
-## Binaries (User)
+
+## Binaries (User) (not recommended)
 
 User installable package.  
 No root credentials required.  
@@ -469,7 +443,7 @@ Please keep in mind that using the script will override the SysTray-X packages i
 Use the `-u` option with the script installer to uninstall.
 
 
-### Windows
+### Windows 10, 11
 
 Get the `SysTray-X-setup32-x.x.x.exe` or `SysTray-X-setup64-x.x.x.exe` depending on the Thunderbird version (32bit or 64bit) you are using.  
 Run the installer.  
@@ -504,13 +478,10 @@ Requirements:
 
     ```bash
     sudo dnf install qt5-qtbase-devel gnome-shell-extension-appindicator
+    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
     ```
 
     Logout and login to enable the gnome extension.
-
-    ```bash
-    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-    ```
 
   - Fedora 38 Mate:
 
@@ -525,12 +496,17 @@ Requirements:
     gnome-extensions enable ubuntu-appindicator@ubuntu.com
     ```
 
+    Logout and login to enable the gnome extension.
+
   - Debian 12:
 
     ```bash
     sudo apt install zip git g++ make qt5-qmake qtbase5-dev qdbus-qt5 gnome-shell-extension-appindicator
     gnome-extension enable ubuntu-appindicator@ubuntu.com
     ```
+
+    Logout and login to enable the gnome extension.
+
 
 Clone the repository:
 ```bash
@@ -558,7 +534,8 @@ make clean
 make OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 ```
 
-Install and run SysTray-X from the build directory in the repository:
+
+Install and use SysTray-X from the build directory in the repository:
 ```bash
 mkdir -p ~/.mozilla/native-messaging-hosts
 cp -f app/config/linux/SysTray_X.json ~/.mozilla/native-messaging-hosts/
@@ -571,22 +548,47 @@ cp -f systray-x@Ximi1970.xpi ~/.thunderbird/<profile-code>.default-release/exten
 
 Start Thunderbird and enable and configure the add-on in the "Menu -> Add-ons and themes -> Extensions" dialog.
 
-or install the add-on by going to the "Add-ons and themes -> Extensions" dialog, click on the gear icon and use the "Install add-on from file" item. Select the "systray-x@Ximi1970.xpi" file.
+Or install the add-on by going to the "Add-ons and themes -> Extensions" dialog, click on the gear icon and use the "Install add-on from file" item. Select the "systray-x@Ximi1970.xpi" file.
 
 
-### Windows
+### Windows 10, 11
 
-Install:
-- [Visual Studio Express 2017](https://aka.ms/vs/15/release/vs_WDExpress.exe)
+Install these packages:
+- [Visual Studio Express 2019](https://visualstudio.microsoft.com/vs/older-downloads/)
 - [Visual Code Studio](https://code.visualstudio.com/)
 - [Git for Windows](https://gitforwindows.org/)
 - [TortoiseGit](https://tortoisegit.org/)
 - [PuTTY](https://www.putty.org/)
-- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en)
+- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2)
+- [7z](https://www.7-zip.org/download.html)
+- [Cygwin](https://www.cygwin.com/) (gcc, make, zip)
 
-Clone the repository using TortoiseGit:
+Clone the repository using TortoiseGit.
 
-...
+Start QtCreator and open the project file:
+```
+app/SysTray-X/SysTray-X.pro
+```
+
+Choose in the `Projects` the kit `Desktop Qt 5.12.2 MSVC2019 64bit`
+Set it to `Release` or `Debug` on what you need.
+Then `Build all projects`.
+
+Now create the `systray-x@Ximi1970.xpi`
+```bash
+cd webext
+"C:\Program Files\7-Zip\7z.exe" a ../systray-x@Ximi1970.xpi *
+```
+
+Install `app\config\win32\SysTray-X-User.reg` to activated the addon for only the current user.
+Please remove this registry entry if you ever consider to install the addon with the official installer.
+
+Install `app\config\win32\SysTray-X-System.reg` to activated the addon for every one.
+
+You can now install the addon in Thunderbird.
+```
+Menu -> Add-ons and Themes -> Click the gear symbol -> Install add-on from file... -> Select systray-x@Ximi1970.xpi
+```
 
 
 ### Translations
