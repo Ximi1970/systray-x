@@ -26,7 +26,7 @@ To support this project, you can make a donation to its current maintainer:
 
 ## Contributers
 
-Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.
+Luigi Baldoni \<aloisio@gmx.com\>		: Initial setup of the OpenSuSE Build Service rpm package.  
 ouztheone <github> : Nice workaround without disabling Wayland completely
 
 ## Known issues
