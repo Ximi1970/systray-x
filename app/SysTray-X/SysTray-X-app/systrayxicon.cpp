@@ -450,8 +450,21 @@ void    SysTrayXIcon::renderBase()
 
         case Preferences::PREF_NEWMAIL_ICON:
         {
+            Preferences::Theme theme = m_pref->getTheme();
+
             QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/mail-unread.png"));
-            m_pixmap_count = new_mail.pixmap( 256, 256 );
+
+            if( theme == Preferences::PREF_THEME_LIGHT )
+            {
+                m_pixmap_count = new_mail.pixmap( 256, 256 );
+            }
+            else
+            {
+                QImage new_mail_image = new_mail.pixmap( 256, 256 ).toImage();
+                new_mail_image.invertPixels();
+                m_pixmap_count = QPixmap::fromImage( new_mail_image );
+            }
+
             break;
         }
 

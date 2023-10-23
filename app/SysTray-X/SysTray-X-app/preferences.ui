@@ -413,7 +413,7 @@
                <enum>QLayout::SetFixedSize</enum>
               </property>
               <item>
-               <widget class="QRadioButton" name="blankRadioButton">
+               <widget class="QRadioButton" name="blankIconRadioButton">
                 <property name="text">
                  <string>Blank icon</string>
                 </property>
@@ -446,7 +446,7 @@
                <enum>QLayout::SetFixedSize</enum>
               </property>
               <item>
-               <widget class="QRadioButton" name="newMailButton">
+               <widget class="QRadioButton" name="newMailIconRadioButton">
                 <property name="text">
                  <string>New mail icon</string>
                 </property>
@@ -476,7 +476,7 @@
                <enum>QLayout::SetMaximumSize</enum>
               </property>
               <item>
-               <widget class="QRadioButton" name="customRadioButton">
+               <widget class="QRadioButton" name="customIconRadioButton">
                 <property name="text">
                  <string>Custom icon</string>
                 </property>
@@ -1185,13 +1185,13 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="countTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="newIndicatorTypeGroup"/>
-  <buttongroup name="themeGroup"/>
-  <buttongroup name="minimizeIconTypeGroup"/>
   <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="themeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="minimizeIconTypeGroup"/>
  </buttongroups>
 </ui>
