@@ -102,143 +102,146 @@
         <translation>Προτιμήσεις SysTray-X</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="265"/>
+        <location filename="../preferences.ui" line="263"/>
         <source>Default icon</source>
         <translation>Προεπιλεγμένο εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="208"/>
-        <location filename="../preferences.ui" line="259"/>
-        <location filename="../preferences.ui" line="271"/>
+        <location filename="../preferences.ui" line="206"/>
+        <location filename="../preferences.ui" line="257"/>
+        <location filename="../preferences.ui" line="269"/>
+        <location filename="../preferences.ui" line="355"/>
         <source>Icon</source>
         <translation>Εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="279"/>
-        <location filename="../preferences.ui" line="539"/>
+        <location filename="../preferences.ui" line="277"/>
+        <location filename="../preferences.ui" line="487"/>
         <source>Default Thunderbird</source>
         <translation>Προεπιλογή Thunderbird</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="292"/>
+        <location filename="../preferences.ui" line="290"/>
         <source>Lookthrough icon</source>
         <translation>Διαφανές εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="304"/>
-        <location filename="../preferences.ui" line="481"/>
+        <location filename="../preferences.ui" line="302"/>
+        <location filename="../preferences.ui" line="429"/>
         <source>Custom icon</source>
         <translation>Προσαρμοσμένο εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="321"/>
-        <location filename="../preferences.ui" line="498"/>
+        <location filename="../preferences.ui" line="319"/>
+        <location filename="../preferences.ui" line="446"/>
         <source>Choose</source>
         <translation>Επιλέξτε</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="338"/>
+        <location filename="../preferences.ui" line="336"/>
         <source>KDE integration (Hide)</source>
         <translation>Ενσωμάτωση στον KDE (Απόκρυψη)</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="407"/>
+        <location filename="../preferences.ui" line="349"/>
         <source>Mail notification icon</source>
         <translation>Εικονίδιο ειδοποίησης αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="418"/>
+        <location filename="../preferences.ui" line="366"/>
         <source>Blank icon</source>
         <translation>Κενό εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="451"/>
+        <location filename="../preferences.ui" line="399"/>
         <source>New mail icon</source>
         <translation>Εικονίδιο νέας αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="512"/>
+        <location filename="../preferences.ui" line="460"/>
         <source>No icon</source>
         <translation>Χωρίς εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="366"/>
         <source>Theme</source>
-        <translation>θέμα</translation>
+        <translation type="vanished">θέμα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="374"/>
         <source>Light</source>
-        <translation>φως</translation>
+        <translation type="vanished">φως</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="387"/>
         <source>Dark</source>
-        <translation>σκοτάδι</translation>
+        <translation type="vanished">σκοτάδι</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="36"/>
+        <location filename="../preferences.ui" line="34"/>
         <source>Windows</source>
         <translation>Παράθυρα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="163"/>
+        <location filename="../preferences.ui" line="161"/>
         <source>Minimize</source>
         <translation>Ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="169"/>
-        <location filename="../preferences.ui" line="214"/>
+        <location filename="../preferences.ui" line="167"/>
+        <location filename="../preferences.ui" line="212"/>
         <source>Default minimize</source>
         <translation>Προεπιλεγμένη ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="195"/>
+        <location filename="../preferences.ui" line="193"/>
         <source>Minimize to tray, method 2</source>
         <translation>Μέθοδος 2</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="44"/>
+        <location filename="../preferences.ui" line="42"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="50"/>
+        <location filename="../preferences.ui" line="48"/>
         <source>Default close</source>
         <translation>Προεπιλεγμένο κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="60"/>
+        <location filename="../preferences.ui" line="58"/>
         <source>Minimize main to tray, close children</source>
         <translation>Ελαχιστοποίηση κυρίως παραθύρου στην περιοχή ειδοποιήσεων, κλείσιμο θυγατρικών</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="73"/>
+        <location filename="../preferences.ui" line="71"/>
         <source>Minimize all windows to tray</source>
         <translation>Ελαχιστοποίηση όλων των παραθύρων στην περιοχή ειδοποιήσεων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="86"/>
+        <location filename="../preferences.ui" line="84"/>
         <source>Minimize main, close children</source>
         <translation>Ελαχιστοποίηση κυρίως παραθύρου, κλείσιμο θυγατρικών</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="99"/>
+        <location filename="../preferences.ui" line="97"/>
         <source>Minimize all windows</source>
         <translation>Ελαχιστοποίηση όλων των παραθύρων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="117"/>
+        <location filename="../preferences.ui" line="115"/>
         <source>Start application minimized</source>
         <translation>Ελαχιστοποιημένη εκκίνηση της εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="124"/>
+        <location filename="../preferences.ui" line="122"/>
         <source>Restore startup positions</source>
         <translation>Επαναφορά θέσεων παραθύρου κατά την εκκίνηση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="694"/>
+        <location filename="../preferences.ui" line="515"/>
+        <source>Invert icon</source>
+        <translation>Αντιστρέψτε εικονίδιο</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="665"/>
         <source>Number properties</source>
         <translation>Ιδιότητες αριθμών</translation>
     </message>
@@ -247,203 +250,203 @@
         <translation type="vanished">Προβολή μετρητή μη-αναγνωσμένης αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="747"/>
+        <location filename="../preferences.ui" line="718"/>
         <source>Number color</source>
         <translation>Χρώμα μετρητή</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="768"/>
+        <location filename="../preferences.ui" line="739"/>
         <source>Number size</source>
         <translation>Μέγεθος μετρητή</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="792"/>
+        <location filename="../preferences.ui" line="763"/>
         <source>Alignment</source>
         <translation>Ευθυγραμμία</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="803"/>
+        <location filename="../preferences.ui" line="774"/>
         <source>Top left</source>
         <translation>Κορυφαίο αριστερά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="808"/>
+        <location filename="../preferences.ui" line="779"/>
         <source>Top centre</source>
         <translation>Κορυφαίο κέντρο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="813"/>
+        <location filename="../preferences.ui" line="784"/>
         <source>Top right</source>
         <translation>Κορυφαίο δεξιά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="818"/>
+        <location filename="../preferences.ui" line="789"/>
         <source>Middle left</source>
         <translation>Μέση αριστερά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="823"/>
+        <location filename="../preferences.ui" line="794"/>
         <source>Middle centre</source>
         <translation>Μεσαίο κέντρο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="828"/>
+        <location filename="../preferences.ui" line="799"/>
         <source>Middle right</source>
         <translation>Μέση δεξιά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="833"/>
+        <location filename="../preferences.ui" line="804"/>
         <source>Bottom left</source>
         <translation>Κάτω αριστερά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="838"/>
+        <location filename="../preferences.ui" line="809"/>
         <source>Bottom centre</source>
         <translation>Κάτω κέντρο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="843"/>
+        <location filename="../preferences.ui" line="814"/>
         <source>Bottom right</source>
         <translation>Κάτω δεξιά</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="702"/>
+        <location filename="../preferences.ui" line="673"/>
         <source>Margins (left, top, right, bottom):</source>
         <translation>Περιθώρια (αριστερά, Κορυφαίο, δεξιά, Κάτω):</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="594"/>
+        <location filename="../preferences.ui" line="565"/>
         <source>Count</source>
         <translation>Μετρητής</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="602"/>
+        <location filename="../preferences.ui" line="573"/>
         <source>Show message count</source>
         <translation>Προβολή μετρητή αλληλογραφίας</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="612"/>
+        <location filename="../preferences.ui" line="583"/>
         <source>Show new indicator</source>
         <translation>Εμφάνιση νέας ένδειξης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="621"/>
+        <location filename="../preferences.ui" line="592"/>
         <source>Startup delay</source>
         <translation>Καθυστέρηση έναρξης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="645"/>
+        <location filename="../preferences.ui" line="616"/>
         <source>Count type</source>
         <translation>Τύπος μετρητή μηνυμάτων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="653"/>
+        <location filename="../preferences.ui" line="624"/>
         <source>Unread</source>
         <translation>Μη αναγνωσμένα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="666"/>
+        <location filename="../preferences.ui" line="637"/>
         <source>New</source>
         <translation>Νέα</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="858"/>
+        <location filename="../preferences.ui" line="829"/>
         <source>New indicator</source>
         <translation>Νέος δείκτης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="866"/>
+        <location filename="../preferences.ui" line="837"/>
         <source>Icon round</source>
         <translation>Στρογγυλό εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="876"/>
+        <location filename="../preferences.ui" line="847"/>
         <source>Icon star</source>
         <translation>Αστέρι εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="888"/>
+        <location filename="../preferences.ui" line="859"/>
         <source>Shade</source>
         <translation>Απόχρωση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="963"/>
+        <location filename="../preferences.ui" line="934"/>
         <source>Close application</source>
         <translation>Κλείσιμο αίτησης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="976"/>
-        <location filename="../preferences.ui" line="1017"/>
+        <location filename="../preferences.ui" line="947"/>
+        <location filename="../preferences.ui" line="988"/>
         <source>Browse...</source>
         <translation>ξεφυλλίζω...</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="987"/>
-        <location filename="../preferences.ui" line="1028"/>
+        <location filename="../preferences.ui" line="958"/>
+        <location filename="../preferences.ui" line="999"/>
         <source>Arguments:</source>
         <translation>Επιχειρήματα:</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1061"/>
+        <location filename="../preferences.ui" line="1032"/>
         <source>Mail</source>
         <translation>Αλληλογραφία</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1067"/>
+        <location filename="../preferences.ui" line="1038"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Χρησιμοποιήστε το παράθυρο διαλόγου Προτιμήσεις Thunderbird για να επιλέξετε λογαριασμούς και φακέλους</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1104"/>
+        <location filename="../preferences.ui" line="1075"/>
         <source>Debug</source>
         <translation>Αποσφαλμάτωση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1110"/>
+        <location filename="../preferences.ui" line="1081"/>
         <source>Display debug window</source>
         <translation>Προβολή παραθύρου αποσφαλμάτωσης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="182"/>
-        <location filename="../preferences.ui" line="227"/>
+        <location filename="../preferences.ui" line="180"/>
+        <location filename="../preferences.ui" line="225"/>
         <source>Minimize to tray</source>
         <translation>Ελαχιστοποίηση στην περιοχή ειδοποιήσεων</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="955"/>
+        <location filename="../preferences.ui" line="926"/>
         <source>Apps</source>
         <translation>Εφαρμογές</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1004"/>
+        <location filename="../preferences.ui" line="975"/>
         <source>Start application</source>
         <translation>Εφαρμογή εκκίνησης</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1171"/>
+        <location filename="../preferences.ui" line="1142"/>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1164"/>
+        <location filename="../preferences.ui" line="1135"/>
         <source>Cancel</source>
         <translation>Άκυρο</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="661"/>
-        <location filename="../preferencesdialog.cpp" line="685"/>
+        <location filename="../preferencesdialog.cpp" line="651"/>
+        <location filename="../preferencesdialog.cpp" line="675"/>
         <source>Open Image</source>
         <translation>Άνοιγμα εικόνας</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="661"/>
-        <location filename="../preferencesdialog.cpp" line="685"/>
+        <location filename="../preferencesdialog.cpp" line="651"/>
+        <location filename="../preferencesdialog.cpp" line="675"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Αρχεία εικόνας (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="740"/>
-        <location filename="../preferencesdialog.cpp" line="754"/>
+        <location filename="../preferencesdialog.cpp" line="730"/>
+        <location filename="../preferencesdialog.cpp" line="744"/>
         <source>Select application</source>
         <translation>επιλέξτε εφαρμογή</translation>
     </message>
@@ -451,27 +454,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="242"/>
+        <location filename="../systrayx.cpp" line="241"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Εμφάνιση/Απόκρυψη</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="246"/>
+        <location filename="../systrayx.cpp" line="245"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="250"/>
+        <location filename="../systrayx.cpp" line="249"/>
         <source>&amp;About</source>
         <translation>&amp;Σχετικά</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="254"/>
+        <location filename="../systrayx.cpp" line="253"/>
         <source>&amp;Quit</source>
         <translation>&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="688"/>
+        <location filename="../systrayx.cpp" line="687"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
@@ -487,7 +490,7 @@
 <context>
     <name>SysTrayXStatusNotifier</name>
     <message>
-        <location filename="../systrayxstatusnotifier.cpp" line="71"/>
+        <location filename="../systrayxstatusnotifier.cpp" line="60"/>
         <source>Thunderbird add-on companion app</source>
         <translation>Συνοδευτική εφαρμογή πρόσθετου Thunderbird</translation>
     </message>

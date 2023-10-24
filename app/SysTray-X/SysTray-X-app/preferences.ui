@@ -512,7 +512,7 @@
           <item>
            <widget class="QCheckBox" name="invertIconCheckBox">
             <property name="text">
-             <string>Invert</string>
+             <string>Invert icon</string>
             </property>
            </widget>
           </item>
@@ -1155,11 +1155,11 @@
  <connections/>
  <buttongroups>
   <buttongroup name="countTypeGroup"/>
-  <buttongroup name="newIndicatorTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="minimizeIconTypeGroup"/>
+  <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
  </buttongroups>
 </ui>
