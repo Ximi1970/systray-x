@@ -739,6 +739,7 @@ void    SysTrayXStatusNotifier::slotIconDataChange()
  */
 void    SysTrayXStatusNotifier::slotThemeChange()
 {
+    renderBase();
     renderIcon();
 }
 

@@ -674,6 +674,7 @@ void    SysTrayXIcon::slotIconDataChange()
  */
 void    SysTrayXIcon::slotThemeChange()
 {
+    renderBase();
     renderIcon();
 }
 
