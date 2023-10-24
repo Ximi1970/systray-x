@@ -125,7 +125,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
-    connect( m_preferences, &Preferences::signalThemeChange, m_pref_dialog, &PreferencesDialog::slotThemeChange );
+    connect( m_preferences, &Preferences::signalInvertIconChange, m_pref_dialog, &PreferencesDialog::slotInvertIconChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
     connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_pref_dialog, &PreferencesDialog::slotShowNewIndicatorChange );
     connect( m_preferences, &Preferences::signalStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotStartupDelayChange );
@@ -152,7 +152,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
-    connect( m_preferences, &Preferences::signalThemeChange, m_link, &SysTrayXLink::slotThemeChange );
+    connect( m_preferences, &Preferences::signalInvertIconChange, m_link, &SysTrayXLink::slotInvertIconChange );
     connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
     connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_link, &SysTrayXLink::slotShowNewIndicatorChange );
     connect( m_preferences, &Preferences::signalStartupDelayChange, m_link, &SysTrayXLink::slotStartupDelayChange );
@@ -322,7 +322,7 @@ void    SysTrayX::showTrayIcon()
         connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconDataChange );
         connect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
         connect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
-        connect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
+        connect( m_preferences, &Preferences::signalInvertIconChange, m_tray_icon, &SysTrayXIcon::slotInvertIconChange );
         connect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
         connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_tray_icon, &SysTrayXIcon::slotShowNewIndicatorChange );
         connect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
@@ -362,7 +362,7 @@ void    SysTrayX::hideTrayIcon()
         disconnect( m_preferences, &Preferences::signalDefaultIconDataChange, m_tray_icon, &SysTrayXIcon::slotDefaultIconDataChange );
         disconnect( m_preferences, &Preferences::signalIconTypeChange, m_tray_icon, &SysTrayXIcon::slotIconTypeChange );
         disconnect( m_preferences, &Preferences::signalIconDataChange, m_tray_icon, &SysTrayXIcon::slotIconDataChange );
-        disconnect( m_preferences, &Preferences::signalThemeChange, m_tray_icon, &SysTrayXIcon::slotThemeChange );
+        disconnect( m_preferences, &Preferences::signalInvertIconChange, m_tray_icon, &SysTrayXIcon::slotInvertIconChange );
         disconnect( m_preferences, &Preferences::signalShowNumberChange, m_tray_icon, &SysTrayXIcon::slotShowNumberChange );
         disconnect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_tray_icon, &SysTrayXIcon::slotShowNewIndicatorChange );
         disconnect( m_preferences, &Preferences::signalNumberColorChange, m_tray_icon, &SysTrayXIcon::slotNumberColorChange );
@@ -440,7 +440,7 @@ void    SysTrayX::showKdeTrayIcon()
         connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
         connect( m_preferences, &Preferences::signalIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconTypeChange );
         connect( m_preferences, &Preferences::signalIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconDataChange );
-        connect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
+        connect( m_preferences, &Preferences::signalInvertIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotInvertIconChange );
         connect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
         connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNewIndicatorChange );
         connect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );
@@ -479,7 +479,7 @@ void    SysTrayX::hideKdeTrayIcon()
         disconnect( m_preferences, &Preferences::signalHideDefaultIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotHideDefaultIconChange );
         disconnect( m_preferences, &Preferences::signalIconTypeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconTypeChange );
         disconnect( m_preferences, &Preferences::signalIconDataChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotIconDataChange );
-        disconnect( m_preferences, &Preferences::signalThemeChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotThemeChange );
+        disconnect( m_preferences, &Preferences::signalInvertIconChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotInvertIconChange );
         disconnect( m_preferences, &Preferences::signalShowNumberChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNumberChange );
         disconnect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotShowNewIndicatorChange );
         disconnect( m_preferences, &Preferences::signalNumberColorChange, m_kde_tray_icon, &SysTrayXStatusNotifier::slotNumberColorChange );

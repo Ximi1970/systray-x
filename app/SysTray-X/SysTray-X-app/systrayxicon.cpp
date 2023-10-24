@@ -430,47 +430,55 @@ void    SysTrayXIcon::renderBase()
     /*
      * Set the count icon
      */
+    bool invert_icon = m_pref->getInvertIcon();
     switch( m_icon_type )
     {
         case Preferences::PREF_BLANK_ICON:
         {
-            Preferences::Theme theme = m_pref->getTheme();
-
-            if( theme == Preferences::PREF_THEME_LIGHT )
-            {
-                m_pixmap_count = QPixmap( ":/files/icons/blank-icon.png" );
-            }
-            else
+            if( invert_icon )
             {
                 m_pixmap_count = QPixmap( ":/files/icons/blank-icon-dark.png" );
             }
-
+            else
+            {
+                m_pixmap_count = QPixmap( ":/files/icons/blank-icon.png" );
+            }
             break;
         }
 
         case Preferences::PREF_NEWMAIL_ICON:
         {
-            Preferences::Theme theme = m_pref->getTheme();
-
             QIcon new_mail = QIcon::fromTheme("mail-unread", QIcon(":/files/icons/mail-unread.png"));
 
-            if( theme == Preferences::PREF_THEME_LIGHT )
-            {
-                m_pixmap_count = new_mail.pixmap( 256, 256 );
-            }
-            else
+            if( invert_icon )
             {
                 QImage new_mail_image = new_mail.pixmap( 256, 256 ).toImage();
                 new_mail_image.invertPixels();
                 m_pixmap_count = QPixmap::fromImage( new_mail_image );
             }
-
+            else
+            {
+                m_pixmap_count = new_mail.pixmap( 256, 256 );
+            }
             break;
         }
 
         case Preferences::PREF_CUSTOM_ICON:
         {
-            m_pixmap_count.loadFromData( m_icon_data );
+            if( invert_icon )
+            {
+                QPixmap custom_pixmap;
+                custom_pixmap.loadFromData( m_icon_data );
+
+                QImage custom_image = custom_pixmap.toImage();
+                custom_image.invertPixels();
+
+                m_pixmap_count = QPixmap::fromImage( custom_image );
+            }
+            else
+            {
+                m_pixmap_count.loadFromData( m_icon_data );
+            }
             break;
         }
 
@@ -670,9 +678,9 @@ void    SysTrayXIcon::slotIconDataChange()
 
 
 /*
- *  Handle the theme change signal
+ *  Handle the invert icon change signal
  */
-void    SysTrayXIcon::slotThemeChange()
+void    SysTrayXIcon::slotInvertIconChange()
 {
     renderBase();
     renderIcon();

@@ -203,9 +203,9 @@ class SysTrayXIcon : public QSystemTrayIcon
         void    slotIconDataChange();
 
         /**
-         * @brief slotThemeChange. Slot for handling theme change signals.
+         * @brief slotInvertIconChange. Slot for handling invert icon change signals.
          */
-        void    slotThemeChange();
+        void    slotInvertIconChange();
 
         /**
          * @brief slotShowNumberChange. Slot for handling show number change signals.

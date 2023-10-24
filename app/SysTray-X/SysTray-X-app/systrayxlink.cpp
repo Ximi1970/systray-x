@@ -811,14 +811,14 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setCloseType( close_type );
     }
 
-    if( pref.contains( "theme" ) && pref[ "theme" ].isString() )
+    if( pref.contains( "invertIcon" ) && pref[ "invertIcon" ].isString() )
     {
-        Preferences::Theme theme = static_cast< Preferences::Theme >( pref[ "theme" ].toString().toInt() );
+        bool invert_icon = pref[ "invertIcon" ].toString() == "true";
 
         /*
-         *  Store the new theme
+         *  Store the new invert icon state
          */
-        m_pref->setTheme( theme );
+        m_pref->setInvertIcon( invert_icon );
     }
 
     if( pref.contains( "startApp" ) && pref[ "startApp" ].isString() )
@@ -925,7 +925,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
     prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
     prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
-    prefObject.insert("theme", QJsonValue::fromVariant( QString::number( pref.getTheme() ) ) );
+    prefObject.insert("invertIcon", QJsonValue::fromVariant( QString( pref.getInvertIcon() ? "true" : "false" ) ) );
     prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
     prefObject.insert("showNewIndicator", QJsonValue::fromVariant( QString( pref.getShowNewIndicator() ? "true" : "false" ) ) );
     prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
@@ -1108,9 +1108,9 @@ void    SysTrayXLink::slotIconDataChange()
 
 
 /*
- *  Handle a theme change signal
+ *  Handle a invert icon change signal
  */
-void    SysTrayXLink::slotThemeChange()
+void    SysTrayXLink::slotInvertIconChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

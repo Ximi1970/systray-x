@@ -109,12 +109,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_tmp_default_icon_mime = QString();
 
     /*
-     *  Set theme button Ids
-     */
-    m_ui->themeGroup->setId( m_ui->lightRadioButton, Preferences::PREF_THEME_LIGHT );
-    m_ui->themeGroup->setId( m_ui->darkRadioButton, Preferences::PREF_THEME_DARK );
-
-    /*
      *  Set new indicator button Ids
      */
     m_ui->newIndicatorTypeGroup->setId( m_ui->newIconRoundRadioButton, Preferences::PREF_NEW_INDICATOR_ROUND );
@@ -379,11 +373,11 @@ void    PreferencesDialog::setHideDefaultIcon( bool hide )
 
 
 /*
- *  Set the theme
+ *  Set the icon invert state
  */
-void    PreferencesDialog::setTheme( Preferences::Theme theme )
+void    PreferencesDialog::setInvertIcon( bool state )
 {
-   ( m_ui->themeGroup->button( theme ) )->setChecked( true );
+   m_ui->invertIconCheckBox->setChecked( state );
 }
 
 
@@ -562,8 +556,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
     m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
-    Preferences::Theme theme = static_cast< Preferences::Theme >( m_ui->themeGroup->checkedId() );
-    m_pref->setTheme( theme );
+    m_pref->setInvertIcon( m_ui->invertIconCheckBox->isChecked() );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setShowNewIndicator( m_ui->showNewCheckBox->isChecked() );
@@ -585,19 +578,6 @@ void    PreferencesDialog::slotAccept()
     m_pref->setCloseApp( closeApp );
     QString closeAppArgs= m_ui->closeAppArgsLineEdit->text();
     m_pref->setCloseAppArgs( closeAppArgs );
-
-    /*
-     *  Force different color?
-     */
-    if( theme == Preferences::PREF_THEME_LIGHT && m_number_color == "#ffffff" )
-    {
-        setNumberColor( "#000000" );
-    }
-    else
-    if( theme == Preferences::PREF_THEME_DARK && m_number_color == "#000000" )
-    {
-        setNumberColor( "#ffffff" );
-    }
     m_pref->setNumberColor( m_number_color );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
@@ -641,7 +621,7 @@ void    PreferencesDialog::slotReject()
     setStartMinimized( m_pref->getStartMinimized() );
     setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
-    setTheme( m_pref->getTheme() );
+    setInvertIcon( m_pref->getInvertIcon() );
 
     setShowNumber( m_pref->getShowNumber() );
     setShowNewIndicator( m_pref->getShowNewIndicator() );
@@ -882,11 +862,11 @@ void    PreferencesDialog::slotHideDefaultIconChange()
 
 
 /*
- *  Handle the theme change signal
+ *  Handle the invert icon change signal
  */
-void    PreferencesDialog::slotThemeChange()
+void    PreferencesDialog::slotInvertIconChange()
 {
-    setTheme( m_pref->getTheme() );
+    setInvertIcon( m_pref->getInvertIcon() );
 }
 
 

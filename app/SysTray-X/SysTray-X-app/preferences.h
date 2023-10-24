@@ -68,11 +68,6 @@ class Preferences : public QObject
             PREF_TB_ICON
         };
 
-        enum Theme {
-            PREF_THEME_LIGHT = 0,
-            PREF_THEME_DARK
-        };
-
         /*
          *  Count types
          */
@@ -360,18 +355,18 @@ class Preferences : public QObject
         void setIconData( const QByteArray& icon_data );
 
         /**
-         * @brief getTheme. Get the theme state.
+         * @brief getInvertIcon. Get the invert icon state.
          *
          * @return      The state.
          */
-        Theme getTheme() const;
+        bool getInvertIcon() const;
 
         /**
-         * @brief setTheme. Set the theme state.
+         * @brief setInvertIcon. Set the invert icon state.
          *
-         * @param theme     The state.
+         * @param state     The state.
          */
-        void setTheme( Theme theme );
+        void setInvertIcon( bool state );
 
         /**
          * @brief getShowNumber. Get the show number state.
@@ -671,9 +666,9 @@ class Preferences : public QObject
         void signalIconDataChange();
 
         /**
-         * @brief signalThemeChange. Signal a theme state change.
+         * @brief signalInvertIconChange. Signal an invert icon state change.
          */
-        void signalThemeChange();
+        void signalInvertIconChange();
 
         /**
          * @brief signalShowNumberChange. Signal a show number state change.
@@ -862,9 +857,9 @@ class Preferences : public QObject
         QByteArray m_icon_data;
 
         /**
-         * @brief m_theme. The theme.
+         * @brief m_invert_icon. The invert icon state.
          */
-        Theme m_theme;
+        bool m_invert_icon;
 
         /**
          * @brief m_show_number. Show number in systray icon.

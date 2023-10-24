@@ -62,7 +62,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_icon_mime = "image/png";
     m_icon_data = QByteArray();
 
-    m_theme = PREF_THEME_LIGHT;
+    m_invert_icon = false;
 
     m_show_number = true;
     m_show_new_indicator = false;
@@ -520,27 +520,27 @@ void    Preferences::setIconData( const QByteArray& icon_data )
 
 
 /*
- *  Get the theme pref.
+ *  Get the invert icon pref.
  */
-Preferences::Theme    Preferences::getTheme() const
+bool    Preferences::getInvertIcon() const
 {
-    return m_theme;
+    return m_invert_icon;
 }
 
 
 /*
- *  Set the theme pref.
+ *  Set the invert icon pref.
  */
-void    Preferences::setTheme( Theme theme )
+void    Preferences::setInvertIcon( bool state )
 {
-    if( m_theme != theme )
+    if( m_invert_icon != state )
     {
-        m_theme = theme;
+        m_invert_icon = state;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalThemeChange();
+        emit signalInvertIconChange();
     }
 }
 

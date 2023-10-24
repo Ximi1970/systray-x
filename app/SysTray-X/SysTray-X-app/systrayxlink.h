@@ -315,9 +315,9 @@ class SysTrayXLink : public QObject
         void    slotIconDataChange();
 
         /**
-         * @brief slotThemeChange. Slot for handling theme change signals.
+         * @brief slotInvertIconChange. Slot for handling invert icon change signals.
          */
-        void    slotThemeChange();
+        void    slotInvertIconChange();
 
         /**
          * @brief slotShowNumberChange. Handle a change in show number state.

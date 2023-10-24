@@ -147,11 +147,11 @@ class PreferencesDialog : public QDialog
         void    setHideDefaultIcon( bool hide );
 
         /**
-         * @brief setTheme. Set the theme.
+         * @brief setInvertIcon. Set the invert icon.
          *
-         * @param theme     The theme.
+         * @param state     The invert icon state.
          */
-        void    setTheme( Preferences::Theme theme );
+        void    setInvertIcon( bool state );
 
         /**
          * @brief setShowNumber. Set the show number state.
@@ -336,9 +336,9 @@ class PreferencesDialog : public QDialog
         void    slotDefaultIconDataChange();
 
         /**
-         * @brief slotThemeChange. Slot for handling theme change.
+         * @brief slotInvertIconChange. Slot for handling invert icon change.
          */
-        void    slotThemeChange();
+        void    slotInvertIconChange();
 
         /**
          * @brief slotCountTypeChange. Slot for handling count type change.
