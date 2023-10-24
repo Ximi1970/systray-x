@@ -10,7 +10,7 @@ url=https://github.com/Ximi1970/systray-x
 license=(MPL-2.0)
 depends=(
   'qt5-base'
-  'knotifications'
+  'knotifications5'
   'thunderbird>=91'
   'thunderbird<120'
 )
@@ -20,7 +20,7 @@ makedepends=(
   'zip'
   'libx11'
   'qt5-base'
-  'knotifications'
+  'knotifications5'
 )
 provides=(
   'systray-x'
