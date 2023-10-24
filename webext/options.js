@@ -173,13 +173,13 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    // Save theme preferences
+    // Save invert icon preferences
     //
-    const theme = document.querySelector('input[name="theme"]:checked').value;
+    const invertIcon = document.querySelector('input[name="invertIcon"]').checked;
 
-    //  Store theme preferences
+    //  Store invert icon preferences
     await storage().set({
-      theme: theme,
+      invertIcon: `${invertIcon}`,
     });
 
     //
@@ -226,14 +226,6 @@ SysTrayX.SaveOptions = {
     //  Save number color
     //
     let numberColor = document.querySelector('input[name="numberColor"]').value;
-
-    //  Force different color?
-    if (theme == "0" && numberColor == "#ffffff") {
-      numberColor = "#000000";
-    } else if (theme == "1" && numberColor == "#000000") {
-      numberColor = "#ffffff";
-    }
-
     await storage().set({
       numberColor: `${numberColor}`,
     });
@@ -455,13 +447,13 @@ SysTrayX.RestoreOptions = {
       );
 
     //
-    //  Restore theme
+    //  Restore invert icon
     //
     await storage()
-      .get("theme")
+      .get("invertIcon")
       .then(
-        SysTrayX.RestoreOptions.setTheme,
-        SysTrayX.RestoreOptions.onThemeError
+        SysTrayX.RestoreOptions.setInvertIcon,
+        SysTrayX.RestoreOptions.onInvertIconError
       );
 
     //
@@ -861,19 +853,17 @@ SysTrayX.RestoreOptions = {
   },
 
   //
-  //  Restore theme callbacks
+  //  Restore invert icon callbacks
   //
-  setTheme: function (result) {
-    const theme = result.theme || "0";
+  setInvertIcon: function (result) {
+    const invertIcon = result.invertIcon || "false";
 
-    const radioButton = document.querySelector(
-      `input[name="theme"][value="${theme}"]`
-    );
-    radioButton.checked = true;
+    const checkbox = document.querySelector(`input[name="invertIcon"]`);
+    checkbox.checked = invertIcon === "true";
   },
 
-  onThemeError: function (error) {
-    console.log(`Theme Error: ${error}`);
+  onInvertIconError: function (error) {
+    console.log(`invertIcon Error: ${error}`);
   },
 
   //
@@ -1263,9 +1253,9 @@ SysTrayX.StorageChanged = {
           hideDefaultIcon: changes[item].newValue,
         });
       }
-      if (item === "theme") {
-        SysTrayX.RestoreOptions.setTheme({
-          theme: changes[item].newValue,
+      if (item === "invertIcon") {
+        SysTrayX.RestoreOptions.setInvertIcon({
+          invertIcon: changes[item].newValue,
         });
       }
       if (item === "showNumber") {
@@ -1369,7 +1359,6 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeselect").className = "active";
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
-    document.getElementById("themeselect").className = "active";
     document.getElementById("newindicatorselect").className = "active";
     document.getElementById("startappselect").className = "active";
     document.getElementById("closeappselect").className = "active";

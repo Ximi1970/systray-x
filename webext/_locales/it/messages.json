@@ -204,19 +204,9 @@
     "description": "Unread Icon option 4"
   },
 
-  "icons_theme": {
-    "message": "Tema",
-    "description": "The theme"
-  },
-
-  "icons_theme_light": {
-    "message": "Leggero",
-    "description": "The light theme"
-  },
-
-  "icons_theme_dark": {
-    "message": "Scuro",
-    "description": "The dark theme"
+  "icons_invert_icon": {
+    "message": "Icona inverti",
+    "description": "Invert icon"
   },
 
   "count": {

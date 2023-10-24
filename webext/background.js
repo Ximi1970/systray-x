@@ -570,7 +570,7 @@ SysTrayX.Messaging = {
         "iconType",
         "iconMime",
         "icon",
-        "theme",
+        "invertIcon",
         "showNumber",
         "showNewIndicator",
         "countType",
@@ -606,7 +606,7 @@ SysTrayX.Messaging = {
     const iconType = result.iconType || "0";
     const iconMime = result.iconMime || "image/png";
     const icon = result.icon || [];
-    const theme = result.theme || "0";
+    const invertIcon = result.invertIcon || "false";
     const showNumber = result.showNumber || "true";
     const showNewIndicator = result.showNewIndicator || "false";
     const countType = result.countType || "0";
@@ -627,12 +627,6 @@ SysTrayX.Messaging = {
     const closeApp = result.closeApp || "";
     const closeAppArgs = result.closeAppArgs || "";
 
-    if (theme == "0" && numberColor == "#ffffff") {
-      numberColor = "#000000";
-    } else if (theme == "1" && numberColor == "#000000") {
-      numberColor = "#ffffff";
-    }
-
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
       preferences: {
@@ -649,7 +643,7 @@ SysTrayX.Messaging = {
         iconType,
         iconMime,
         icon,
-        theme,
+        invertIcon,
         showNumber,
         showNewIndicator,
         countType,
@@ -820,10 +814,10 @@ SysTrayX.Link = {
         });
       }
 
-      const theme = response["preferences"].theme;
-      if (theme) {
+      const invertIcon = response["preferences"].invertIcon;
+      if (invertIcon) {
         await storage().set({
-          theme: theme,
+          invertIcon: invertIcon,
         });
       }
 

@@ -204,19 +204,9 @@
     "description": "Unread Icon option 4"
   },
 
-  "icons_theme": {
-    "message": "Thema",
-    "description": "The theme"
-  },
-
-  "icons_theme_light": {
-    "message": "Licht",
-    "description": "The light theme"
-  },
-
-  "icons_theme_dark": {
-    "message": "Donker",
-    "description": "The dark theme"
+  "icons_invert_icon": {
+    "message": "Inverteer pictogram",
+    "description": "Invert icon"
   },
 
   "count": {
