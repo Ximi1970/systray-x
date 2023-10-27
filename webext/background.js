@@ -1,4 +1,5 @@
 var SysTrayX = {
+  mainWindowId: undefined,
   startupState: undefined,
 
   restorePositions: false,
@@ -349,10 +350,31 @@ SysTrayX.Messaging = {
     deleteFolderFromFilters(deletedFolder);
   },
 
-  onCloseButton: function () {
+
+  onNewWindow: async function () {
+    const window = await browser.windows.getCurrent();
+
+    console.debug("onNewWindow: " + JSON.stringify( window ) );
+  },
+
+  onCloseButton: async function () {
     //console.debug("Minimize all")
 
-    SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+    const window = await browser.windows.getCurrent();
+
+    console.debug("onCloseButton2 Window: " + JSON.stringify( window ) );
+
+    if( window.id === SysTrayX.mainWindowId ) {
+      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+    } else {
+//      browser.windows.remove( window.id );
+
+      browser.windows.update( window.id, {
+        state: "docked",
+//        state: "minimized",
+      });
+    }
+
     /*
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
       state: "minimized",
@@ -970,6 +992,9 @@ SysTrayX.Window = {
 };
 
 async function start() {
+  //  Setup the link first
+  SysTrayX.Link.init();
+
   //  Set platform
   SysTrayX.Info.platformInfo = await browser.runtime
     .getPlatformInfo()
@@ -1026,11 +1051,55 @@ async function start() {
   browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
   //  Intercept close button?
+  /*
   if (SysTrayX.Messaging.closeType !== "0") {
     browser.windowEvent.onCloseButtonClick.addListener(
       SysTrayX.Messaging.onCloseButton
     );
   }
+  */
+
+  // Get main window id
+  const window = await browser.windows.getCurrent();
+  SysTrayX.mainWindowId = window.id;
+
+  console.debug( "Main window ID: " + SysTrayX.mainWindowId );
+
+  // Get all window ids
+  const windows = await browser.windows.getAll();
+
+  console.debug( "All window IDs: " + JSON.stringify( windows.map( (win) => win.id ) ) );
+
+  // Sent it to the companion app
+  SysTrayX.Link.postSysTrayXMessage( {
+    windowList: {
+      main: SysTrayX.mainWindowId,
+      list: windows.map( (win) => win.id )
+    }
+  });
+
+
+
+  // Get the window id
+  const id = browser.windowHandler.getWindowId(SysTrayX.mainWindowId);
+
+  console.debug("Main window real ID: " + id);
+
+
+
+  // Get the close type
+  browser.windowEvent2.setCloseType( Number( SysTrayX.Messaging.closeType ) );
+
+  //  Intercept close button?
+  if (SysTrayX.Messaging.closeType !== "0") {
+    // Intercept new window
+    browser.windowEvent2.onNewWindow.addListener( SysTrayX.Messaging.onNewWindow );
+
+    browser.windowEvent2.onCloseButtonClick.addListener(
+      SysTrayX.Messaging.onCloseButton
+    );
+  }
+
 
   //  Hide the default icon
   const hideDefaultIcon = await getHideDefaultIcon();
@@ -1059,9 +1128,6 @@ async function start() {
 
   const getIconPromise = () => new Promise((res) => res(getIcon()));
   await getIconPromise();
-
-  //  Setup the link first
-  SysTrayX.Link.init();
 
   //  Main start
   SysTrayX.Messaging.init();

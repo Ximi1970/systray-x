@@ -1,0 +1,35 @@
+[
+  {
+    "namespace": "windowEvent2",
+    "functions": [
+      {
+        "name": "setCloseType",
+        "type": "function",
+        "description": "Set the close type.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type",
+            "minimum": 0,
+            "maximum": 4
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onNewWindow",
+        "type": "function",
+        "description": "Fires when the user opens a new window.",
+        "parameters": []
+      },
+      {
+        "name": "onCloseButtonClick",
+        "type": "function",
+        "description": "Fires when the user clicks on the close button of a window.",
+        "parameters": []
+      }
+    ]
+  }
+]

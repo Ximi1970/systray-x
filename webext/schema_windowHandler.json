@@ -1,0 +1,14 @@
+[
+  {
+    "namespace": "windowHandler",
+    "functions": [
+      {
+        "name": "getWindowId",
+        "type": "function",
+        "description": "Get the window Id",
+        "async": true,
+        "parameters": []
+      }
+    ]
+  }
+]
