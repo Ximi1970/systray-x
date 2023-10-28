@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extension_name__",
   "description": "__MSG_extension_description__",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "Maxime Rijnders",
   "homepage_url": "https://github.com/Ximi1970/systray-x",
 
@@ -10,7 +10,7 @@
     "gecko": {
       "id": "systray-x@Ximi1970",
       "strict_min_version": "91.0",
-      "strict_max_version": "119.*"
+      "strict_max_version": "120.*"
     }
   },
 

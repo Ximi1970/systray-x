@@ -2,8 +2,8 @@
   <service name="obs_scm">
     <param name="url">https://github.com/Ximi1970/systray-x.git</param>
     <param name="scm">git</param>
-    <param name="revision">0.9.5</param>
-    <param name="versionformat">0.9.5</param>    
+    <param name="revision">0.9.6</param>
+    <param name="versionformat">0.9.6</param>    
     <param name="extract">dist/rpm/kde/systray-x.changes</param>
     <param name="extract">dist/rpm/kde/systray-x.spec</param>
     <param name="extract">dist/rpm/VERSION</param>
