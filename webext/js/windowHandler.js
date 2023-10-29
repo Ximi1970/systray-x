@@ -67,6 +67,14 @@
             let windowObject = context.extension.windowManager.get(windowId);
             let realWindow = windowObject.window;
 
+            // Get all windows: (note this returns a Generator, not an array like the API)
+            let allWindowObjects = await context.extension.windowManager.getAll();
+
+            for( wo in allWindowObjects ) {
+              console.debug("Window: " + JSON.stringify( context.extension.windowManager.getWrapper(wo.window).id) );
+            }
+
+
             // Get a window ID from a real window:
             let id = context.extension.windowManager.getWrapper(realWindow).id;
 

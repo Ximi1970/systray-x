@@ -164,10 +164,10 @@ SysTrayX.Messaging = {
         newFilters.push(SysTrayX.Messaging.filters[i]);
       } else {
         if (SysTrayX.Info.browserInfo.majorVersion < 115) {
-          if (SysTrayX.Messaging.new[id] != undefined) {
+          if (SysTrayX.Messaging.new[id] !== undefined) {
             delete SysTrayX.Messaging.new[id];
           }
-          if (SysTrayX.Messaging.unread[id] != undefined) {
+          if (SysTrayX.Messaging.unread[id] !== undefined) {
             delete SysTrayX.Messaging.unread[id];
           }
         }
@@ -362,7 +362,7 @@ SysTrayX.Messaging = {
 
     const window = await browser.windows.getCurrent();
 
-    console.debug("onCloseButton2 Window: " + JSON.stringify( window ) );
+    console.debug("onCloseButton Window: " + JSON.stringify( window ) );
 
     if( window.id === SysTrayX.mainWindowId ) {
       SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
@@ -1081,14 +1081,17 @@ async function start() {
 
 
   // Get the window id
-  const id = browser.windowHandler.getWindowId(SysTrayX.mainWindowId);
+  const id = await browser.windowHandler.getWindowId( Number( SysTrayX.mainWindowId ) );
 
   console.debug("Main window real ID: " + id);
 
 
 
-  // Get the close type
+  // Set the close type
   browser.windowEvent2.setCloseType( Number( SysTrayX.Messaging.closeType ) );
+
+  // Set the main window id
+  browser.windowEvent2.setMainWindowId( Number( SysTrayX.mainWindowId ) );
 
   //  Intercept close button?
   if (SysTrayX.Messaging.closeType !== "0") {

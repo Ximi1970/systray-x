@@ -43,6 +43,7 @@
 
       this.closeType = this.MESSAGE_CLOSE_TYPE_DEFAULT;
       this.oldClose = undefined;
+      this.mainWindowId = 0;
     }
 
     get listenerIdNewWindow() {
@@ -65,6 +66,10 @@
       } else if (closeType === 4) {
         this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
       } else console.log("Unknown close type: " + closeType);
+    }
+
+    setMainWindowId(id) {
+      this.mainWindowId = id;
     }
  
     addOnNewWindow( callback ) {
@@ -110,6 +115,18 @@
     onCloseButton( event ) {
       if ( event ) event.preventDefault();
       windowListener.emit( "close-clicked" );
+ 
+      console.log("Close clicked");
+ 
+      return true;
+    }
+
+    onCloseMenu( event ) {
+      if ( event ) event.preventDefault();
+      windowListener.emit( "close-clicked" );
+ 
+      console.log("Close menu");
+ 
       return true;
     }
   
@@ -125,43 +142,25 @@
             "chrome://messenger/content/messenger.xul",
           ],
           onLoadWindow: function ( window ) {
+            if( this.closeType !==  )
+
+
             window.addEventListener(
               "close",
               windowListener.onCloseButton,
               true
             );
 
-            windowListener.oldClose = window.close;
-            window.close = () => windowListener.onCloseButton( null );
-
-//            console.debug("Window: " + JSON.stringify(window));
-
-/*
-console.debug( "Window id1: " + window.id );
-console.debug( "Window id1: " + window.windowId );
-
-            let windowId2 = getInnerWindowID(window);
-            console.debug( "Window id2: " + windowId2 );
-
-            // Get a real window from a window ID:
-            let windowObject = context.extension.windowManager.get(windowId2);
-//            let windowObject = context.extension.windowManager.get(windowId);
-            let realWindow = windowObject.window;
-
-            console.debug( "WinObj: " + JSON.stringify( windowObject ) );
+//            windowListener.oldClose = window.close;
+//            window.close = () => windowListener.onCloseMenu();
 
             // Get a window ID from a real window:
-            const id = context.extension.windowManager.getWrapper(realWindow).id;
+            let id = context.extension.windowManager.getWrapper(window).id;
 
-            console.debug( "WinObj Real: " + id );
-
-            // Get all windows: (note this returns a Generator, not an array like the API)
-//            context.extension.windowManager.getAll();
+            console.log( "Close listener mid:" + windowListener.mainWindowId);
+            console.log( "Close listener id:" + id);
 
 
-
-
-*/
             console.log( "Close listener added" );
           },
         });
@@ -185,7 +184,9 @@ console.debug( "Window id1: " + window.windowId );
               true
             );
 
-            window.close = windowListener.oldClose;
+            if ( windowListener.oldClose != undefined ) {
+              window.close = windowListener.oldClose;
+            }
 
             console.log( "Close listener removed" );
           }
@@ -216,6 +217,10 @@ console.debug( "Window id1: " + window.windowId );
         windowEvent2: {
           setCloseType: async function (type) {
             windowListener.setCloseType(type);
+          },
+
+          setMainWindowId: async function (id) {
+            windowListener.setMainWindowId(id);
           },
 
           // An event. Most of this is boilerplate you don't need to worry about, just copy it.

@@ -7,7 +7,12 @@
         "type": "function",
         "description": "Get the window Id",
         "async": true,
-        "parameters": []
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type"
+          }
+        ]
       }
     ]
   }

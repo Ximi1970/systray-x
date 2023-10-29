@@ -15,6 +15,18 @@
             "maximum": 4
           }
         ]
+      },
+      {
+        "name": "setMainWindowId",
+        "type": "function",
+        "description": "Set the main window id.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type"
+          }
+        ]
       }
     ],
     "events": [
