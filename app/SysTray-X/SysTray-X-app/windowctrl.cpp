@@ -231,7 +231,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
     else
     {
-        if( state == Preferences::STATE_MINIMIZED )
+        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_DOCKED )
         {
             Preferences::MinimizeType minimizeType = getMinimizeType();
             if( minimizeType != Preferences::PREF_DEFAULT_MINIMIZE )

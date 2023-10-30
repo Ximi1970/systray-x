@@ -364,6 +364,34 @@ SysTrayX.Messaging = {
 
     console.debug("onCloseButton Window: " + JSON.stringify( window ) );
 
+//    SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+
+    let state = undefined;
+    if (SysTrayX.Messaging.closeType === "1" || SysTrayX.Messaging.closeType === "2") {
+      // Minimize to tray
+      state = "docked";
+
+      console.debug("onCloseButton: " + state);
+
+    } else if (SysTrayX.Messaging.closeType === "3" || SysTrayX.Messaging.closeType === "4") {
+      // Minimize
+      state = "minimized";
+
+      console.debug("onCloseButton: " + state);
+
+    }
+
+    if (state !== undefined) {
+      browser.windows.update( window.id, {
+        state: state,
+      });
+
+      SysTrayX.Link.postSysTrayXMessage({ window: state });
+
+      console.debug("onCloseButton Send state: " + state);
+    }
+
+/*    
     if( window.id === SysTrayX.mainWindowId ) {
       SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
     } else {
@@ -374,7 +402,7 @@ SysTrayX.Messaging = {
 //        state: "minimized",
       });
     }
-
+*/
     /*
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
       state: "minimized",
@@ -953,7 +981,14 @@ SysTrayX.Link = {
 
 SysTrayX.Window = {
   focusChanged: function (windowId) {
+    // no focus change when docked
+
+    // windowId sometimes not defined
+    console.debug("focusChanged Id: " + windowId);
+
     browser.windows.getCurrent().then((win) => {
+      console.debug("focusChanged Id: " + win.id);
+      console.debug("focusChanged state: " + win.state);
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
     });
   },
@@ -1088,17 +1123,17 @@ async function start() {
 
 
   // Set the close type
-  browser.windowEvent2.setCloseType( Number( SysTrayX.Messaging.closeType ) );
+  browser.windowEvent.setCloseType( Number( SysTrayX.Messaging.closeType ) );
 
   // Set the main window id
-  browser.windowEvent2.setMainWindowId( Number( SysTrayX.mainWindowId ) );
+  browser.windowEvent.setMainWindowId( Number( SysTrayX.mainWindowId ) );
 
   //  Intercept close button?
   if (SysTrayX.Messaging.closeType !== "0") {
     // Intercept new window
-    browser.windowEvent2.onNewWindow.addListener( SysTrayX.Messaging.onNewWindow );
+    browser.windowEvent.onNewWindow.addListener( SysTrayX.Messaging.onNewWindow );
 
-    browser.windowEvent2.onCloseButtonClick.addListener(
+    browser.windowEvent.onCloseButtonClick.addListener(
       SysTrayX.Messaging.onCloseButton
     );
   }

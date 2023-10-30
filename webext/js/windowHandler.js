@@ -44,7 +44,7 @@
 
   // This is the important part. It implements the functions and events defined
   // in the schema.json. The name must match what you've been using so far,
-  // "windowEvent2" in this case.
+  // "windowHandler" in this case.
   class windowHandler extends ExtensionCommon.ExtensionAPI {
     // An alternative to defining a constructor here, is to use the onStartup
     // event. However, this causes the API to be instantiated directly after the
