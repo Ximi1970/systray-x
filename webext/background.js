@@ -982,13 +982,12 @@ SysTrayX.Link = {
 SysTrayX.Window = {
   focusChanged: function (windowId) {
     // no focus change when docked
-
     // windowId sometimes not defined
-    console.debug("focusChanged Id: " + windowId);
+//    console.debug("focusChanged Id: " + windowId);
 
     browser.windows.getCurrent().then((win) => {
-      console.debug("focusChanged Id: " + win.id);
-      console.debug("focusChanged state: " + win.state);
+//      console.debug("focusChanged Id: " + win.id);
+//      console.debug("focusChanged state: " + win.state);
       SysTrayX.Link.postSysTrayXMessage({ window: win.state });
     });
   },
@@ -1112,13 +1111,6 @@ async function start() {
       list: windows.map( (win) => win.id )
     }
   });
-
-
-
-  // Get the window id
-  const id = await browser.windowHandler.getWindowId( Number( SysTrayX.mainWindowId ) );
-
-  console.debug("Main window real ID: " + id);
 
 
 

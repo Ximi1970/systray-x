@@ -39,14 +39,6 @@
         "paths": [["windowEvent"]],
         "script": "js/windowEvent.js"
       }
-    },
-    "windowHandler": {
-      "schema": "schema_windowHandler.json",
-      "parent": {
-        "scopes": ["addon_parent"],
-        "paths": [["windowHandler"]],
-        "script": "js/windowHandler.js"
-      }
     }
   }
 }

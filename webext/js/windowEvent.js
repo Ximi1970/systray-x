@@ -84,14 +84,14 @@
       this.onNewWindowCallbackCount++;
 
       if (this.onNewWindowCallbackCount === 1) {
-        ExtensionSupport.registerWindowListener( this.listenerIdNewWindow, {
+        ExtensionSupport.registerWindowListener(this.listenerIdNewWindow, {
           chromeURLs: [
             "chrome://messenger/content/messenger.xhtml",
             "chrome://messenger/content/messenger.xul",
           ],
-          onLoadWindow: function ( window ) {
+          onLoadWindow: function (window) {
 
-            windowListener.emit( "new-window" );
+            windowListener.emit("new-window");
 
             console.log("New window added");
           },
@@ -106,10 +106,10 @@
 
       if (this.onNewWindowCallbackCount === 0) {
         for (let window of ExtensionSupport.openWindows) {
-          if ( [
+          if ([
             "chrome://messenger/content/messenger.xhtml",
             "chrome://messenger/content/messenger.xul",
-          ].includes( window.location.href ) ) {
+          ].includes(window.location.href)) {
             console.log( "New window listener removed" );
           }
         }
@@ -118,41 +118,43 @@
     }
 
 
-    onCloseButton( event ) {
+    onCloseButton(event) {
       if ( event ) event.preventDefault();
-      windowListener.emit( "close-clicked" );
+      windowListener.emit("close-clicked");
  
       console.log("Close clicked");
  
       return true;
     }
 
-    onCloseMenu( event ) {
-      if ( event ) event.preventDefault();
-      windowListener.emit( "close-clicked" );
+    onCloseMenu() {
+      windowListener.emit("close-clicked");
  
       console.log("Close menu");
  
       return true;
     }
   
-    addOnCloseButtonClick( callback, context ) {
+    addOnCloseButtonClick(callback, context) {
       // Registering the callback for "close-clicked".
       this.on( "close-clicked", callback );
       this.onCloseButtonClickCallbackCount++;
 
       if (this.onCloseButtonClickCallbackCount === 1) {
-        ExtensionSupport.registerWindowListener( this.listenerIdCloseButton, {
+        ExtensionSupport.registerWindowListener(this.listenerIdCloseButton, {
           context,
           chromeURLs: [
             "chrome://messenger/content/messenger.xhtml",
             "chrome://messenger/content/messenger.xul",
           ],
           onLoadWindow: function ( window ) {
+            // Get current window id
+            const id = context.extension.windowManager.getWrapper(window).id
+
             if (windowListener.closeType !== windowListener.MESSAGE_CLOSE_TYPE_DEFAULT) {
               if ((windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN) &&
-                  (context.extension.windowManager.getWrapper(window).id === windowListener.mainWindowId) ||
+                  (id === windowListener.mainWindowId) ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL) {
 
@@ -162,26 +164,16 @@
                   windowListener.onCloseButton,
                   true
                 );
+
+                // Intercept the close by menu
+//              windowListener.oldClose = window.close;
+//              window.close = () => windowListener.onCloseMenu();
+
+                console.log("Close listener main window: " + windowListener.mainWindowId);
+
+                console.log("Close listener added for: " + id);
               }
             }
-
-            // Get a window ID from a real window:
-            let id = context.extension.windowManager.getWrapper(window).id;
-
-            if (windowListener.closeType !== windowListener.MESSAGE_CLOSE_TYPE_DEFAULT) {
-              console.log( "Close listener trigger");
-            }
-
-            // Intercept the close by menu
-//            windowListener.oldClose = window.close;
-//            window.close = () => windowListener.onCloseMenu();
-
-            console.log( "Close listener mid:" + windowListener.mainWindowId);
-            console.log( "Close listener id:" + id);
-            console.log( "Close listener typeof mid:" + typeof windowListener.mainWindowId);
-            console.log( "Close listener typeof id:" + typeof id);
-
-            console.log( "Close listener added" );
           },
         });
       }
@@ -192,35 +184,39 @@
       this.off( "close-clicked", callback );
       this.onCloseButtonClickCallbackCount--;
 
-      if ( this.onCloseButtonClickCallbackCount === 0 ) {
-        for ( let window of ExtensionSupport.openWindows ) {
-          if ( [
+      if (this.onCloseButtonClickCallbackCount === 0) {
+        for (let window of ExtensionSupport.openWindows) {
+          if ([
             "chrome://messenger/content/messenger.xhtml",
             "chrome://messenger/content/messenger.xul",
-          ].includes( window.location.href ) ) {
+          ].includes(window.location.href)) {
+            // Get current window id
+            const id = context.extension.windowManager.getWrapper(window).id
+
             if (windowListener.closeType !== windowListener.MESSAGE_CLOSE_TYPE_DEFAULT) {
               if ((windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN) &&
-                  (context.extension.windowManager.getWrapper(window).id === windowListener.mainWindowId) ||
+                  (id === windowListener.mainWindowId) ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY ||
                   windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL) {
+ 
                 // Release the close event (triggered when clicking the close button)
                 window.removeEventListener(
                   "close",
                   windowListener.onCloseButton,
                   true
                 );
+
+                if ( windowListener.oldClose != undefined ) {
+                  window.close = windowListener.oldClose;
+                }
+
+                console.log("Close listener removed for: " + id);
               }
             }
-
-            if ( windowListener.oldClose != undefined ) {
-              window.close = windowListener.oldClose;
-            }
-
-            console.log( "Close listener removed" );
           }
         }
-        ExtensionSupport.unregisterWindowListener( this.listenerIdCloseButton );
+        ExtensionSupport.unregisterWindowListener(this.listenerIdCloseButton);
       }
     }
   };
@@ -289,7 +285,6 @@
               };
             },
           }).api(),
-
         },
       };
     }
