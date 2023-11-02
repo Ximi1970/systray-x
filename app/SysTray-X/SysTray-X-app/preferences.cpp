@@ -85,6 +85,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_hash = QLatin1String( APP_GITHASH );
     m_version_branch = QLatin1String( APP_GITBRANCH );
 
+    m_browser_version = "0.0.0";
+
     m_start_app = "";
     m_start_app_args = "";
     m_close_app = "";
