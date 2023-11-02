@@ -115,15 +115,6 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->newIndicatorTypeGroup->setId( m_ui->newIconStarRadioButton, Preferences::PREF_NEW_INDICATOR_STAR );
     m_ui->newIndicatorTypeGroup->setId( m_ui->newShadeRadioButton, Preferences::PREF_NEW_INDICATOR_SHADE);
 
-    if( m_pref->getBrowserVersion().split(".")[0].toInt() < 115 )
-    {
-          m_ui->specialOptionsGroupBox->setVisible( false );
-    }
-    else
-    {
-        setApiCountMethod( m_pref->getApiCountMethod() );
-    }
-
     /*
      *  Signals and slots
      */
@@ -153,6 +144,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set startup delay
      */
     setStartupDelay( m_pref->getStartupDelay() );
+
+    /*
+     *  Set API count method
+     */
+    setApiCountMethod( m_pref->getApiCountMethod() );
 
     /*
      *  Set number alignment
@@ -542,6 +538,16 @@ void    PreferencesDialog::setApiCountMethod( bool state )
  */
 void PreferencesDialog::slotShowDialog()
 {
+    QString version = m_pref->getBrowserVersion().split(".")[0];
+    if( version.toInt() < 115 )
+    {
+        m_ui->specialOptionsGroupBox->setVisible( false );
+    }
+    else
+    {
+        m_ui->specialOptionsGroupBox->setVisible( true );
+    }
+
     showNormal();
     activateWindow();
 }

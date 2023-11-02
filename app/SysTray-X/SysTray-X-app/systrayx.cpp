@@ -206,6 +206,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     getPreferences();
 
 /*
+    m_preferences->setBrowserVersion( "115.1.0" );
+//    m_preferences->setBrowserVersion( "102.2.3" );
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
     //slotLoadLanguage( "nl" );
