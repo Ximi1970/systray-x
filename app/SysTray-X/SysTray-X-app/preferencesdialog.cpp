@@ -115,6 +115,15 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->newIndicatorTypeGroup->setId( m_ui->newIconStarRadioButton, Preferences::PREF_NEW_INDICATOR_STAR );
     m_ui->newIndicatorTypeGroup->setId( m_ui->newShadeRadioButton, Preferences::PREF_NEW_INDICATOR_SHADE);
 
+    if( m_pref->getBrowserVersion().split(".")[0].toInt() < 115 )
+    {
+          m_ui->specialOptionsGroupBox->setVisible( false );
+    }
+    else
+    {
+        setApiCountMethod( m_pref->getApiCountMethod() );
+    }
+
     /*
      *  Signals and slots
      */
@@ -516,6 +525,15 @@ void    PreferencesDialog::setCloseApp( QString app )
 void    PreferencesDialog::setCloseAppArgs( QString args )
 {
    m_ui->closeAppArgsLineEdit->setText( args );
+}
+
+
+/*
+ *  Set the API count method state
+ */
+void    PreferencesDialog::setApiCountMethod( bool state )
+{
+   m_ui->apiCountMethod->setChecked( state );
 }
 
 
@@ -993,4 +1011,13 @@ void    PreferencesDialog::slotCloseAppChange()
 void    PreferencesDialog::slotCloseAppArgsChange()
 {
     setCloseAppArgs( m_pref->getCloseAppArgs() );
+}
+
+
+/*
+ *  Handle the API count method change signal
+ */
+void    PreferencesDialog::slotApiCountMethodChange()
+{
+    setApiCountMethod( m_pref->getApiCountMethod() );
 }

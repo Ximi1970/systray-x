@@ -389,6 +389,11 @@ class SysTrayXLink : public QObject
          */
         void    slotCloseAppArgsChange();
 
+        /**
+         * @brief slotApiCountMethodChange. Slot for handling the API count method change signals.
+         */
+        void    slotApiCountMethodChange();
+
     private slots:
 
         /**

@@ -140,6 +140,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartAppArgsChange, m_pref_dialog, &PreferencesDialog::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_pref_dialog, &PreferencesDialog::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_pref_dialog, &PreferencesDialog::slotCloseAppArgsChange );
+    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_pref_dialog, &PreferencesDialog::slotApiCountMethodChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
@@ -167,6 +168,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartAppArgsChange, m_link, &SysTrayXLink::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_link, &SysTrayXLink::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_link, &SysTrayXLink::slotCloseAppArgsChange );
+    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_link, &SysTrayXLink::slotApiCountMethodChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
