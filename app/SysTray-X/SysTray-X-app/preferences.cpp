@@ -914,6 +914,32 @@ void    Preferences::setCloseAppArgs( QString args )
 
 
 /*
+ *  Get the API count method state.
+ */
+bool    Preferences::getApiCountMethod() const
+{
+    return m_api_count_method;
+}
+
+
+/*
+ *  Set the API count method state.
+ */
+void    Preferences::setApiCountMethod( bool state )
+{
+    if( m_api_count_method != state )
+    {
+        m_api_count_method = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalApiCountMethodChange();
+    }
+}
+
+
+/*
  *  Get the debug state.
  */
 bool    Preferences::getDebug() const

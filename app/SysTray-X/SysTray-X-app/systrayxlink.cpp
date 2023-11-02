@@ -857,6 +857,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setCloseAppArgs( args );
     }
 
+    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
+    {
+        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
+
+        /*
+         *  Store the new API cont method state
+         */
+        m_pref->setApiCountMethod( api_count_method );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -937,6 +947,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("numberMargins", marginsObject );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
+    prefObject.insert("apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
 
     prefObject.insert("startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
     prefObject.insert("startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
@@ -1282,6 +1293,17 @@ void    SysTrayXLink::slotCloseAppArgsChange()
     }
 }
 
+
+/*
+ *  Handle a API count method change signal
+ */
+void    SysTrayXLink::slotApiCountMethodChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
 
 /*
  *  Handle a debug state change signal

@@ -565,6 +565,20 @@ class Preferences : public QObject
         void setCloseAppArgs( QString args );
 
         /**
+         * @brief getApiCountMethod. Get the API count method state.
+         *
+         * @return      The state.
+         */
+        bool getApiCountMethod() const;
+
+        /**
+         * @brief setApiCountMethod. Set the API count method state.
+         *
+         * @param state     The state.
+         */
+        void setApiCountMethod( bool state );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -744,6 +758,11 @@ class Preferences : public QObject
          * @brief signalCloseAppArgsChange. Signal a close application arguments change.
          */
         void signalCloseAppArgsChange();
+
+        /**
+         * @brief signalApiCountMethodChange
+         */
+        void signalApiCountMethodChange();
 
     private:
 
@@ -930,6 +949,11 @@ class Preferences : public QObject
          * @brief m_close_app_args
          */
         QString m_close_app_args;
+
+        /**
+         * @brief m_api_count_method. The API count method state.
+         */
+        bool m_api_count_method;
 
         /**
          * @brief m_debug. Display debug window.

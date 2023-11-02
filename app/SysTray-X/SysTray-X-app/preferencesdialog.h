@@ -258,6 +258,12 @@ class PreferencesDialog : public QDialog
          */
         void    setCloseAppArgs( QString args );
 
+        /**
+         * @brief setApiCountMethod. Set the API count method state.
+         *
+         * @param state     The state.
+         */
+        void    setApiCountMethod( bool state );
 
     signals:
 
@@ -409,6 +415,11 @@ class PreferencesDialog : public QDialog
          * @brief slotCloseAppArgsChange. Slot for handling close application arguments change.
          */
         void    slotCloseAppArgsChange();
+
+        /**
+         * @brief slotApiCountMethodChange. Slot for handling the API count methid change.
+         */
+        void    slotApiCountMethodChange();
 
     private slots:
 

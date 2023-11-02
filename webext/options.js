@@ -223,6 +223,14 @@ SysTrayX.SaveOptions = {
     });
 
     //
+    //  Save API count method state
+    //
+    const apiCountMethod = document.querySelector('input[name="apiCountMethod"]').checked;
+    await storage().set({
+      apiCountMethod: `${apiCountMethod}`,
+    });
+
+    //
     //  Save number color
     //
     let numberColor = document.querySelector('input[name="numberColor"]').value;
@@ -494,6 +502,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setStartupDelay,
         SysTrayX.RestoreOptions.ontartupDelayError
+      );
+
+    //
+    //  Restore API count method state
+    //
+    await storage()
+      .get("apiCountMethod")
+      .then(
+        SysTrayX.RestoreOptions.setApiCountMethod,
+        SysTrayX.RestoreOptions.onApiCountMethodError
       );
 
     //
@@ -925,6 +943,20 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore API count method state callbacks
+  //
+  setApiCountMethod: function (result) {
+    const apiCountMethod = result.apiCountMethod || "false";
+
+    const checkbox = document.querySelector(`input[name="apiCountMethod"]`);
+    checkbox.checked = apiCountMethod === "true";
+  },
+
+  onApiCountMethodError: function (error) {
+    console.log(`ApiCountMethod Error: ${error}`);
+  },
+
+  //
   //  Restore number color
   //
   setNumberColor: function (result) {
@@ -1278,6 +1310,11 @@ SysTrayX.StorageChanged = {
           startupDelay: changes[item].newValue,
         });
       }
+      if (item === "apiCountMethod") {
+        SysTrayX.RestoreOptions.setApiCountMethod({
+          apiCountMethod: changes[item].newValue,
+        });
+      }
       if (item === "numberColor") {
         SysTrayX.RestoreOptions.setNumberColor({
           numberColor: changes[item].newValue,
@@ -1399,6 +1436,10 @@ async function start() {
 
   if (SysTrayX.Info.platformInfo.os !== "linux") {
     document.getElementById("kdeintegration").style.display = "none";
+  }
+
+  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    document.getElementById("apicountmethod").style.display = "none";
   }
 
   // Setup account tree
