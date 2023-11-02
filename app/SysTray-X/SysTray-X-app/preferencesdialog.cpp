@@ -585,6 +585,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setShowNewIndicator( m_ui->showNewCheckBox->isChecked() );
     m_pref->setStartupDelay( m_ui->startupDelaySpinBox->value() );
+    m_pref->setApiCountMethod( m_ui->apiCountMethod->isChecked() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
     m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
 
@@ -649,7 +650,8 @@ void    PreferencesDialog::slotReject()
 
     setShowNumber( m_pref->getShowNumber() );
     setShowNewIndicator( m_pref->getShowNewIndicator() );
-    setStartupDelay( m_pref->getStartupDelay());
+    setStartupDelay( m_pref->getStartupDelay() );
+    setApiCountMethod( m_pref->getApiCountMethod() );
     setCountType( m_pref->getCountType() );
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
