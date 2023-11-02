@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabWindows">
       <attribute name="title">
@@ -89,13 +89,6 @@
               <attribute name="buttonGroup">
                <string notr="true">closeTypeGroup</string>
               </attribute>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1190,12 +1183,12 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="newIndicatorTypeGroup"/>
-  <buttongroup name="minimizeIconTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="minimizeIconTypeGroup"/>
  </buttongroups>
 </ui>
