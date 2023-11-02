@@ -575,6 +575,7 @@ SysTrayX.Messaging = {
         "showNewIndicator",
         "countType",
         "startupDelay",
+        "apiCountMethod",
         "numberColor",
         "numberSize",
         "numberAlignment",
@@ -611,6 +612,7 @@ SysTrayX.Messaging = {
     const showNewIndicator = result.showNewIndicator || "false";
     const countType = result.countType || "0";
     const startupDelay = result.startupDelay || "5";
+    const apiCountMethod = result.apiCountMethod || "false";
     let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
     const numberAlignment = result.numberAlignment || "4";
@@ -648,6 +650,7 @@ SysTrayX.Messaging = {
         showNewIndicator,
         countType,
         startupDelay,
+        apiCountMethod,
         numberColor,
         numberSize,
         numberAlignment,
@@ -849,6 +852,13 @@ SysTrayX.Link = {
         });
       }
 
+      const apiCountMethod = response["preferences"].apiCountMethod;
+      if (apiCountMethod !== undefined) {
+        await storage().set({
+          apiCountMethod: apiCountMethod,
+        });
+      }
+  
       const numberColor = response["preferences"].numberColor;
       if (numberColor) {
         await storage().set({
