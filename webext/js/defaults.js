@@ -7,6 +7,22 @@ function storage() {
 }
 
 //
+//  Get API count method preference
+//
+async function getApiCountMethod() {
+  function resolve(result) {
+    const apiCountMethod = result.apiCountMethod || "false";
+    return apiCountMethod;
+  }
+
+  function reject() {
+    return "false";
+  }
+
+  return await storage().get("apiCountMethod").then(resolve, reject);
+}
+
+//
 //  Get window startup state
 //
 async function getStartupState() {
@@ -416,7 +432,7 @@ const collectUnreadMail = async () => {
 
 //  Count and send the unread and new mails
 const sendMailCountPre115 = () => {
-  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+  if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
 
     // Collect the unread mail
     collectUnreadMail();
@@ -444,8 +460,8 @@ const sendMailCountPre115 = () => {
     //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
     //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-    //console.debug("sendMailCountPre115 Unread: " + unreadCount);
-    //console.debug("sendMailCountPre115 New: " + newCount);
+    console.debug("sendMailCountPre115 Unread: " + unreadCount);
+    console.debug("sendMailCountPre115 New: " + newCount);
 
     SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
   }
@@ -453,7 +469,7 @@ const sendMailCountPre115 = () => {
 
 //  Count and send the unread and new mails (>TB115)
 const sendMailCount = async () => {
-  if (SysTrayX.Info.browserInfo.majorVersion >= 115) {
+  if (SysTrayX.Info.browserInfo.majorVersion >= 115 && SysTrayX.Messaging.apiCountMethod === "true") {
 
     // New only works for >=TB106 
 
@@ -496,8 +512,8 @@ const sendMailCount = async () => {
       }
     }
 
-    //console.debug("sendMailCount Unread: " + unreadCount);
-    //console.debug("sendMailCount New: " + newCount);
+    console.debug("sendMailCount Unread: " + unreadCount);
+    console.debug("sendMailCount New: " + newCount);
     
     SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
   }
