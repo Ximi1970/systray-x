@@ -28,6 +28,7 @@ SysTrayX.Messaging = {
   folderTree: {},
   countType: "0",
   closeType: "1",
+  apiCountMethod: "false",
   filters: undefined,
   newMailCache: [],
   folderInfoChangeCache: [],
@@ -112,7 +113,7 @@ SysTrayX.Messaging = {
 
     // Handle cached mail changes on startup
     SysTrayX.Messaging.startupDelayFinished = true;
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false" ) {
       SysTrayX.Messaging.listenerNewMail();
     }
     SysTrayX.Messaging.listenerFolderInfoChanged();
@@ -162,7 +163,7 @@ SysTrayX.Messaging = {
       if (ids.includes(id)) {
         newFilters.push(SysTrayX.Messaging.filters[i]);
       } else {
-        if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+        if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
           if (SysTrayX.Messaging.new[id] != undefined) {
             delete SysTrayX.Messaging.new[id];
           }
@@ -229,7 +230,7 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
 
       // Cache the folder change
       if (folder)
@@ -860,6 +861,7 @@ SysTrayX.Link = {
         await storage().set({
           apiCountMethod: apiCountMethod,
         });
+        SysTrayX.Messaging.apiCountMethod = apiCountMethod;
       }
   
       const numberColor = response["preferences"].numberColor;
@@ -954,7 +956,7 @@ SysTrayX.Window = {
     //console.debug("Folder changed tab: " + JSON.stringify(tab));
     //console.debug("Folder changed displayedFolder: " + JSON.stringify(displayedFolder));
 
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
       const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
       if (oldDisplayedFolder !== undefined) {
         if (
@@ -1002,8 +1004,12 @@ async function start() {
 
   SysTrayX.Info.displayInfo();
 
+  //  Get the API count method preference
+  const apiCountMethod = await getApiCountMethod();
+  SysTrayX.Messaging.apiCountMethod = apiCountMethod;
+
   // Try to catch the mails
-  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+  if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
     // Catch the new incomming mail
     browser.messages.onNewMailReceived.addListener(
       SysTrayX.Messaging.listenerNewMail
