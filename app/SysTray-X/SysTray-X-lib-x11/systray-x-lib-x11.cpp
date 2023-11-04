@@ -352,6 +352,25 @@ void    SendEvent( void* display, quint64 window, const char* msg_type,
                 break;
             }
 
+            case _ATOM_MAXIMIZED_VERT:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_VERT", False );
+                break;
+            }
+
+            case _ATOM_MAXIMIZED_HORZ:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_HORZ", False );
+                break;
+            }
+
+            case _ATOM_MAXIMIZED:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_VERT", False );
+                event.xclient.data.l[2] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_HORZ", False );
+                break;
+            }
+
             default:
             {
                 return;
