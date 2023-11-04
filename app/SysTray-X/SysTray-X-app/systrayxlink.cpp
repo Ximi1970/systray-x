@@ -329,15 +329,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             if( mailCount.contains( "unread" ) && mailCount[ "unread" ].isDouble() )
             {
                 unreadMail = mailCount[ "unread" ].toInt();
-
-                emit signalConsole( QString("Unread %1").arg( unreadMail ) );
             }
 
             if( mailCount.contains( "new" ) && mailCount[ "new" ].isDouble() )
             {
                 newMail = mailCount[ "new" ].toInt();
-
-                emit signalConsole( QString("New %1").arg( newMail ) );
             }
 
             emit signalMailCount( unreadMail, newMail );

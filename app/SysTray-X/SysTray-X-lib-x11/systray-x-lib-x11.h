@@ -36,9 +36,11 @@ enum StateActions
 enum StateAtoms
 {
     _ATOM_SKIP_TASKBAR  = 0,
-    _ATOM_SKIP_PAGER
+    _ATOM_SKIP_PAGER,
+    _ATOM_MAXIMIZED_VERT,
+    _ATOM_MAXIMIZED_HORZ,
+    _ATOM_MAXIMIZED
 };
-
 
 /*
  *  Protocol atoms

@@ -368,6 +368,18 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
 
     /*
+     *  Get the X11 window state
+     */
+    QStringList atoms = getWindowStateX11( window );
+    if( atoms.contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) && atoms.contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
+    {
+        /*
+         *  Window is maximized
+         */
+         m_tb_window_hints[ window ].flags = -1;
+    }
+
+    /*
      *  Minimize the window
      */
     IconifyWindow( m_display, window );
@@ -406,6 +418,18 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
      *  Save the hints
      */
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
+
+    /*
+     *  Get the X11 window state
+     */
+    QStringList atoms = getWindowStateX11( window );
+    if( atoms.contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) && atoms.contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
+    {
+        /*
+         *  Window is maximized
+         */
+         m_tb_window_hints[ window ].flags = -1;
+    }
 
     /*
      *  Set the flags (GNOME, Wayland?)
@@ -452,13 +476,23 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     {
         MapWindow( m_display, window );
 
-        SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
-
         /*
          *  Reset the hide flags
          */
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
+
+        /*
+         *  Was the window maximized?
+         */
+        if( m_tb_window_hints[ window ].flags == -1 )
+        {
+            SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_MAXIMIZED );
+        }
+        else
+        {
+            SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
+        }
 
         Flush( m_display );
     }
@@ -620,6 +654,44 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( void* displa
     }
 
     return windows;
+}
+
+
+/*
+ *  Get the window state from X11
+ */
+QStringList WindowCtrlUnix::getWindowStateX11( quint64 window )
+{
+    qint32 n_net_wm_state;
+    void* net_wm_state_ptr = GetWindowProperty( m_display, window, "_NET_WM_STATE", &n_net_wm_state );
+
+    /*
+     *  Get the atoms
+     */
+    QStringList atom_list;
+    if( net_wm_state_ptr != nullptr )
+    {
+        for( qint32 i = 0 ; i < n_net_wm_state ; ++i )
+        {
+             char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ i ] );
+
+             atom_list.append( atom_name );
+
+             if( atom_name )
+             {
+                 Free( atom_name );
+             }
+        }
+
+        Free( net_wm_state_ptr );
+    }
+/*
+    for( int i = 0 ; i < atom_list.length() ; ++i )
+     {
+         emit signalConsole( QString( "Atom: %1").arg( atom_list.at( i ) ) );
+     }
+*/
+    return atom_list;
 }
 
 #endif // Q_OS_UNIX

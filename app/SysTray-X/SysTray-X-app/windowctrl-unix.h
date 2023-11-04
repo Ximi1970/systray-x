@@ -239,15 +239,6 @@ class WindowCtrlUnix : public QObject
         const Preferences::WindowState&    getWindowState( const quint64 window );
 
         /**
-         * @brief getWindowState. Get the state of a TB windows.
-         *
-         *  @param  window  Window ID.
-         *
-         *  @return     The window state.
-         */
-        const Preferences::WindowState&    getWindowStateX11( const quint64 window );
-
-        /**
          * @brief updatePositions. Update the window positions.
          */
         void    updatePositions();
@@ -287,11 +278,6 @@ class WindowCtrlUnix : public QObject
          */
         void    setPositions( QList< QPoint > window_positions );
 
-        /**
-         * @brief updateX11WindowStates. Update the x11 window states.
-         */
-        void    updateX11WindowStates( CheckType check_type );
-
     private:
 
         /**
@@ -309,6 +295,13 @@ class WindowCtrlUnix : public QObject
          *  @return     The windows list.
          */
         QList< WindowItem > listXWindows( void* display, quint64 window, int level = 0 );
+
+        /**
+         * @brief getWindowStateX11. Get the window state from X11
+         *
+         *  @param window   The window.
+         */
+        QStringList getWindowStateX11( quint64 window );
 
     signals:
 
