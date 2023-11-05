@@ -40,6 +40,7 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
     m_tb_windows = QList< quint64 >();
     m_tb_window_positions = QMap< quint64, QPoint >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
+    m_tb_window_states_x11 = QMap< quint64, QStringList >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
     /*
@@ -368,16 +369,9 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
 
     /*
-     *  Get the X11 window state
+     *  Get and store the X11 window state
      */
-    QStringList atoms = getWindowStateX11( window );
-    if( atoms.contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) && atoms.contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
-    {
-        /*
-         *  Window is maximized
-         */
-         m_tb_window_hints[ window ].flags = -1;
-    }
+    m_tb_window_states_x11[ window ] = getWindowStateX11( window );;
 
     /*
      *  Minimize the window
@@ -420,16 +414,9 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
 
     /*
-     *  Get the X11 window state
+     *  Get and store the X11 window state
      */
-    QStringList atoms = getWindowStateX11( window );
-    if( atoms.contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) && atoms.contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
-    {
-        /*
-         *  Window is maximized
-         */
-         m_tb_window_hints[ window ].flags = -1;
-    }
+    m_tb_window_states_x11[ window ] = getWindowStateX11( window );;
 
     /*
      *  Set the flags (GNOME, Wayland?)
@@ -485,14 +472,21 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
         /*
          *  Was the window maximized?
          */
-        if( m_tb_window_hints[ window ].flags == -1 )
+        if( m_tb_window_states_x11[ window ].contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) &&
+                m_tb_window_states_x11[ window ].contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
         {
             SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_MAXIMIZED );
         }
-        else
-        {
-            SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
-        }
+
+        /*
+         * Delete the X11 state
+         */
+        m_tb_window_states_x11.remove( window );
+
+        /*
+         *  Restore the size hints
+         */
+        SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
 
         Flush( m_display );
     }
