@@ -27,6 +27,7 @@ SysTrayX.Messaging = {
   accounts: [],
   folderTree: {},
   countType: "0",
+  showNewIndicator: "false",
   closeType: "1",
   apiCountMethod: "false",
   filters: undefined,
@@ -107,6 +108,10 @@ SysTrayX.Messaging = {
     // Get the count type
     const getCountTypePromise = () => new Promise((res) => res(getCountType()));
     SysTrayX.Messaging.countType = await getCountTypePromise();
+
+    // Get the show new indicator
+    const getShowNewIndicatorPromise = () => new Promise((res) => res(getShowNewIndicator()));
+    SysTrayX.Messaging.showNewIndicator = await getShowNewIndicatorPromise();
 
     // Check the filters for the accounts
     SysTrayX.Messaging.accountFilterCheck();
@@ -395,6 +400,13 @@ SysTrayX.Messaging = {
 
     if ("countType" in changes && changes["countType"].newValue) {
       SysTrayX.Messaging.countType = changes["countType"].newValue;
+
+      sendMailCountPre115();
+      sendMailCount();
+    }
+
+    if ("showNewIndicator" in changes && changes["showNewIndicator"].newValue) {
+      SysTrayX.Messaging.showNewIndicator = changes["showNewIndicator"].newValue;
 
       sendMailCountPre115();
       sendMailCount();

@@ -275,10 +275,25 @@ async function getCountType() {
   }
 
   function reject() {
-    return undefined;
+    return "0";
   }
 
   return await storage().get("countType").then(resolve, reject);
+}
+
+//
+//  Get show new indicator
+//
+async function getShowNewIndicator() {
+  function resolve(result) {
+    return result.showNewIndicator || "false";
+  }
+
+  function reject() {
+    return "false";
+  }
+
+  return await storage().get("showNewIndicator").then(resolve, reject);
 }
 
 //
@@ -476,37 +491,72 @@ const sendMailCount = async () => {
     let unreadCount = 0;
     let newCount = 0;
 
-    for (const filter of SysTrayX.Messaging.filters) {
-      for (const path of filter.folders) {
-        const folder = {
-          accountId: filter.accountId,
-          path: path,
-        };
+    if( SysTrayX.Messaging.countType === "1" || SysTrayX.Messaging.newIndicator === "true" ) {
 
-        async function* listMessages(folder) {
-          let page = await messenger.messages.list(folder);
-          for (let message of page.messages) {
-            yield message;
-          }
-        
-          while (page.id) {
-            page = await messenger.messages.continueList(page.id);
+      //  Get both unread and new message count
+
+      for (const filter of SysTrayX.Messaging.filters) {
+        for (const path of filter.folders) {
+          const folder = {
+            accountId: filter.accountId,
+            path: path,
+          };
+
+          async function* listMessages(folder) {
+            let page = await messenger.messages.list(folder);
             for (let message of page.messages) {
               yield message;
             }
+          
+            while (page.id) {
+              page = await messenger.messages.continueList(page.id);
+              for (let message of page.messages) {
+                yield message;
+              }
+            }
+          }
+          
+          let messages = listMessages(folder);
+          for await (let message of messages) {
+            if( message.new )
+            {
+              newCount = newCount + 1;
+            }
+
+            if( !message.read )
+            {
+              unreadCount = unreadCount + 1;
+            }
           }
         }
-        
-        let messages = listMessages(folder);
-        for await (let message of messages) {
-          if( message.new )
-          {
-            newCount = newCount + 1;
+      }
+    } else {
+
+      //  Only unread count
+
+      for (const filter of SysTrayX.Messaging.filters) {
+        for (const path of filter.folders) {
+          const folder = {
+            accountId: filter.accountId,
+            path: path,
+          };
+    
+          let mailFolderInfo = {};
+          try {
+            mailFolderInfo = await browser.folders.getFolderInfo(folder);
+          } catch (err) {
+            //console.debug("Filter error: " + err);
+            //console.debug("Filter error: " + JSON.stringify(folder));
+    
+            //  Get all accounts
+            SysTrayX.Messaging.accounts = await browser.accounts.list(false);
+    
+            // Check the filters for the accounts
+            SysTrayX.Messaging.accountFilterCheck();
           }
 
-          if( !message.read )
-          {
-            unreadCount = unreadCount + 1;
+          if (mailFolderInfo.unreadMessageCount !== undefined) {
+            unreadCount = unreadCount + mailFolderInfo.unreadMessageCount;
           }
         }
       }
