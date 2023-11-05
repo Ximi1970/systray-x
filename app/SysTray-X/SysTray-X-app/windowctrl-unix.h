@@ -21,6 +21,7 @@
 #include <QList>
 #include <QMap>
 #include <QPoint>
+#include <QStringList>
 
 /*
  *  Predefines
@@ -340,6 +341,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_window_states. The Thunderbird window states.
          */
         QMap< quint64, Preferences::WindowState >    m_tb_window_states;
+
+        /**
+         * @brief m_tb_window_states_x11. The Thunderbird window states X11.
+         */
+        QMap< quint64, QStringList >    m_tb_window_states_x11;
 
         /**
          * @brief m_tb_window_hints. The Thunderbird window hints.
