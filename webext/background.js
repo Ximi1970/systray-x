@@ -331,7 +331,10 @@ SysTrayX.Messaging = {
         sendMailCountPre115();
       }
     } else {
-      sendMailCount();
+      if (SysTrayX.Messaging.startupDelayFinished)
+      {
+        sendMailCount();
+      }
     }
   },
 
