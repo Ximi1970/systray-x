@@ -475,8 +475,8 @@ const sendMailCountPre115 = () => {
     //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
     //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
 
-    console.debug("sendMailCountPre115 Unread: " + unreadCount);
-    console.debug("sendMailCountPre115 New: " + newCount);
+    //console.debug("sendMailCountPre115 Unread: " + unreadCount);
+    //console.debug("sendMailCountPre115 New: " + newCount);
 
     SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
   }
@@ -562,8 +562,8 @@ const sendMailCount = async () => {
       }
     }
 
-    console.debug("sendMailCount Unread: " + unreadCount);
-    console.debug("sendMailCount New: " + newCount);
+    //console.debug("sendMailCount Unread: " + unreadCount);
+    //console.debug("sendMailCount New: " + newCount);
     
     SysTrayX.Link.postSysTrayXMessage( { mailCount: { unread: unreadCount, new: newCount } } );
   }
