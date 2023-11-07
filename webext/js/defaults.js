@@ -491,7 +491,7 @@ const sendMailCount = async () => {
     let unreadCount = 0;
     let newCount = 0;
 
-    if( SysTrayX.Messaging.countType === "1" || SysTrayX.Messaging.newIndicator === "true" ) {
+    if( SysTrayX.Messaging.countType === "1" || SysTrayX.Messaging.showNewIndicator === "true" ) {
 
       //  Get both unread and new message count
 
