@@ -162,10 +162,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
         return;
     }
 
-#ifdef DEBUG_DISPLAY_ACTIONS
+//#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( QString( "State: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
     emit signalConsole( QString( "Id: %1" ).arg( id ) );
-#endif
+//#endif
 
     /*
      *  Update the TB windows and states
