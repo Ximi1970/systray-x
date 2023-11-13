@@ -1,8 +1,15 @@
 #ifndef WINDOWCTRL_H
 #define WINDOWCTRL_H
 
+/*
+ *	Qt includes
+ */
 #include <QtGlobal>
 
+
+/*
+ *	Local includes
+ */
 #ifdef Q_OS_UNIX
 #include "windowctrl-unix.h"
 #endif // Q_OS_UNIX
@@ -99,9 +106,10 @@ class WindowCtrl : public QObject
         /**
          * @brief slotWindowState. Handle the window state change signal.
          *
-         * @param state     The new state.
+         *  @param state    The new state.
+         *  @param id       The TB window id.
          */
-        void    slotWindowState( Preferences::WindowState state );
+        void    slotWindowState( Preferences::WindowState state, int id);
 
         /**
          * @brief slotShowHide. Slot for handling of the show / hide window signal.
@@ -117,6 +125,21 @@ class WindowCtrl : public QObject
          * @brief slotPositions. Slot for handling of the startup window posiions.
          */
         void    slotPositions( QList< QPoint > window_positions );
+
+        /**
+         * @brief slotNewWindow. Slot for handling a new window.
+         *
+         *  @param id   The TB window id.
+         */
+        void    slotNewWindow( int id );
+
+        /**
+         * @brief slotCloseWindow. Slot for handling a close window.
+         *
+         *  @param id   The TB window id.
+         *  @param quit true if the window is really closed.
+         */
+        void    slotCloseWindow( int id, bool quit );
 
     private:
 

@@ -7,7 +7,6 @@
  */
 #include "preferences.h"
 
-
 /*
  *	Qt includes
  */
@@ -213,7 +212,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief signalWindowState. Signal a change in the window state.
          */
-        void    signalWindowState( Preferences::WindowState state );
+        void    signalWindowState( Preferences::WindowState state, int id );
 
         /**
          * @brief signalKdeIntegration. Signal KDE integration (and use the KStatusNotifierItem icon)
@@ -251,6 +250,21 @@ class SysTrayXLink : public QObject
          * @brief signalCloseApp. Signal the close app launch request.
          */
         void    signalCloseApp();
+
+        /**
+         * @brief signalNewWindow. Signal the new window id.
+         *
+         *  @param id   TB id of the window.
+         */
+        void    signalNewWindow( int id );
+
+        /**
+         * @brief signalCloseWindow. Signal the close window id.
+         *
+         *  @param id   TB id of the window.
+         *  @param quit true if the window is really closed.
+         */
+        void    signalCloseWindow( int id, bool quit );
 
     public slots:
 
@@ -388,6 +402,11 @@ class SysTrayXLink : public QObject
          * @brief slotCloseAppArgsChange. Slot for handling close application arguments change signals.
          */
         void    slotCloseAppArgsChange();
+
+        /**
+         * @brief slotApiCountMethodChange. Slot for handling the API count method change signals.
+         */
+        void    slotApiCountMethodChange();
 
     private slots:
 

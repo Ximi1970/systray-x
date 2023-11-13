@@ -15,13 +15,43 @@
             "maximum": 4
           }
         ]
+      },
+      {
+        "name": "setMainWindowId",
+        "type": "function",
+        "description": "Set the main window id.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type"
+          }
+        ]
+      },
+      {
+        "name": "forceClose",
+        "type": "function",
+        "description": "Really close the window.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "type"
+          }
+        ]
       }
     ],
     "events": [
       {
+        "name": "onNewWindow",
+        "type": "function",
+        "description": "Fires when the user opens a new window.",
+        "parameters": []
+      },
+      {
         "name": "onCloseButtonClick",
         "type": "function",
-        "description": "Fires when the user clicks on the close button of the main window.",
+        "description": "Fires when the user clicks on the close button of a window.",
         "parameters": []
       }
     ]

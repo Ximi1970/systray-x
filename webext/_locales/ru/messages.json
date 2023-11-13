@@ -244,6 +244,11 @@
     "description": "Count new mails"
   },
 
+  "count_api_count_method": {
+    "message": "Метод подсчета API",
+    "description": "API count method"
+  },
+
   "count_number_options": {
     "message": "Настройки индикатора кол-ва",
     "description": "Caption for Number options"

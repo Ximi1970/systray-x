@@ -1,4 +1,11 @@
 var SysTrayX = {
+  Info: {},
+  Window: {},
+  Messaging: {},
+
+  mainWindowId: undefined,
+  windows: undefined,
+
   startupState: undefined,
 
   restorePositions: false,
@@ -27,7 +34,9 @@ SysTrayX.Messaging = {
   accounts: [],
   folderTree: {},
   countType: "0",
+  showNewIndicator: "false",
   closeType: "1",
+  apiCountMethod: "false",
   filters: undefined,
   newMailCache: [],
   folderInfoChangeCache: [],
@@ -45,7 +54,7 @@ SysTrayX.Messaging = {
 
     // Minimize on startup handled by Companion app as backup
     if (SysTrayX.startupState === "minimized") {
-      SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all_startup" });
+      SysTrayX.Link.postSysTrayXMessage({ window: { state : "minimized_all_startup", id: 0 } });
     }
 
     // Lookout for storage changes
@@ -107,12 +116,16 @@ SysTrayX.Messaging = {
     const getCountTypePromise = () => new Promise((res) => res(getCountType()));
     SysTrayX.Messaging.countType = await getCountTypePromise();
 
+    // Get the show new indicator
+    const getShowNewIndicatorPromise = () => new Promise((res) => res(getShowNewIndicator()));
+    SysTrayX.Messaging.showNewIndicator = await getShowNewIndicatorPromise();
+
     // Check the filters for the accounts
     SysTrayX.Messaging.accountFilterCheck();
 
     // Handle cached mail changes on startup
     SysTrayX.Messaging.startupDelayFinished = true;
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false" ) {
       SysTrayX.Messaging.listenerNewMail();
     }
     SysTrayX.Messaging.listenerFolderInfoChanged();
@@ -162,11 +175,11 @@ SysTrayX.Messaging = {
       if (ids.includes(id)) {
         newFilters.push(SysTrayX.Messaging.filters[i]);
       } else {
-        if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+        if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
           if (SysTrayX.Messaging.new[id] != undefined) {
             delete SysTrayX.Messaging.new[id];
           }
-          if (SysTrayX.Messaging.unread[id] != undefined) {
+          if (SysTrayX.Messaging.unread[id] !== undefined) {
             delete SysTrayX.Messaging.unread[id];
           }
         }
@@ -229,7 +242,7 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
 
       // Cache the folder change
       if (folder)
@@ -325,7 +338,10 @@ SysTrayX.Messaging = {
         sendMailCountPre115();
       }
     } else {
-      sendMailCount();
+      if (SysTrayX.Messaging.startupDelayFinished)
+      {
+        sendMailCount();
+      }
     }
   },
 
@@ -349,15 +365,40 @@ SysTrayX.Messaging = {
     deleteFolderFromFilters(deletedFolder);
   },
 
-  onCloseButton: function () {
-    //console.debug("Minimize all")
+  onNewWindow: async function (id) {
+    if (SysTrayX.Messaging.closeType === "2" || SysTrayX.Messaging.closeType === "4") {
+      // Activate the extra close button when all to tray/taskbar is selected
+      browser.browserAction.setTitle({title: "Force close"});
+      browser.browserAction.setIcon({path: "icons/close.svg"});
+      browser.browserAction.enable();
+    } else {
+      browser.browserAction.setTitle({title: " "});
+      browser.browserAction.setIcon({path: "icons/dummy.png"});
+      browser.browserAction.disable();
+    }
 
-    SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
-    /*
-    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
-      state: "minimized",
-    });
-    */
+    SysTrayX.Link.postSysTrayXMessage({ newWindow: id });
+  },
+
+  onCloseButton: async function (id, quit) {
+    let state = undefined;
+    if (SysTrayX.Messaging.closeType === "1" || SysTrayX.Messaging.closeType === "2") {
+      // Minimize to tray
+      state = "docked";
+    } else if (SysTrayX.Messaging.closeType === "3" || SysTrayX.Messaging.closeType === "4") {
+      // Minimize
+      state = "minimized";
+    }
+
+    if (state !== undefined) {
+      if (!quit) {
+        // Block the next focus change event
+        SysTrayX.Window.blockFocusChange = id;
+      }
+
+      // Send new state to the companion
+      SysTrayX.Link.postSysTrayXMessage({ closeWindow: { id: id, quit: quit } });
+    }
   },
 
   //
@@ -378,12 +419,12 @@ SysTrayX.Messaging = {
 
       browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
+      browser.windowEvent.onCloseButtonClick.removeListener(
+        SysTrayX.Messaging.onCloseButton
+      );
+
       if (SysTrayX.Messaging.closeType !== "0") {
         browser.windowEvent.onCloseButtonClick.addListener(
-          SysTrayX.Messaging.onCloseButton
-        );
-      } else {
-        browser.windowEvent.onCloseButtonClick.removeListener(
           SysTrayX.Messaging.onCloseButton
         );
       }
@@ -391,6 +432,13 @@ SysTrayX.Messaging = {
 
     if ("countType" in changes && changes["countType"].newValue) {
       SysTrayX.Messaging.countType = changes["countType"].newValue;
+
+      sendMailCountPre115();
+      sendMailCount();
+    }
+
+    if ("showNewIndicator" in changes && changes["showNewIndicator"].newValue) {
+      SysTrayX.Messaging.showNewIndicator = changes["showNewIndicator"].newValue;
 
       sendMailCountPre115();
       sendMailCount();
@@ -575,6 +623,7 @@ SysTrayX.Messaging = {
         "showNewIndicator",
         "countType",
         "startupDelay",
+        "apiCountMethod",
         "numberColor",
         "numberSize",
         "numberAlignment",
@@ -611,6 +660,7 @@ SysTrayX.Messaging = {
     const showNewIndicator = result.showNewIndicator || "false";
     const countType = result.countType || "0";
     const startupDelay = result.startupDelay || "5";
+    const apiCountMethod = result.apiCountMethod || "false";
     let numberColor = result.numberColor || "#000000";
     const numberSize = result.numberSize || "10";
     const numberAlignment = result.numberAlignment || "4";
@@ -648,6 +698,7 @@ SysTrayX.Messaging = {
         showNewIndicator,
         countType,
         startupDelay,
+        apiCountMethod,
         numberColor,
         numberSize,
         numberAlignment,
@@ -665,7 +716,7 @@ SysTrayX.Messaging = {
       //  Send startup state after the prefs
       //  so the hide is handled conform the prefs
       if (SysTrayX.startupState === "minimized") {
-        SysTrayX.Link.postSysTrayXMessage({ window: "minimized_all" });
+        SysTrayX.Link.postSysTrayXMessage({ window: { state: "minimized_all", id: 0 } } );
         //SysTrayX.Link.postSysTrayXMessage({ window: SysTrayX.startupState });
       }
 
@@ -849,6 +900,14 @@ SysTrayX.Link = {
         });
       }
 
+      const apiCountMethod = response["preferences"].apiCountMethod;
+      if (apiCountMethod !== undefined) {
+        await storage().set({
+          apiCountMethod: apiCountMethod,
+        });
+        SysTrayX.Messaging.apiCountMethod = apiCountMethod;
+      }
+  
       const numberColor = response["preferences"].numberColor;
       if (numberColor) {
         await storage().set({
@@ -930,9 +989,21 @@ SysTrayX.Link = {
 };
 
 SysTrayX.Window = {
+  blockFocusChange: 0,
+
   focusChanged: function (windowId) {
     browser.windows.getCurrent().then((win) => {
-      SysTrayX.Link.postSysTrayXMessage({ window: win.state });
+      
+      //console.debug("focusChanged Id: " + win.id);
+      //console.debug("focusChanged state: " + win.state);
+      //console.debug("focusChanged block: " + SysTrayX.Window.blockFocusChange);
+
+      if( win.id !== SysTrayX.Window.blockFocusChange) {
+        SysTrayX.Link.postSysTrayXMessage({ window: { state: win.state, id: win.id } } );
+      } else {
+        // Reset block
+        SysTrayX.Window.blockFocusChange = 0;
+      }
     });
   },
 
@@ -941,7 +1012,7 @@ SysTrayX.Window = {
     //console.debug("Folder changed tab: " + JSON.stringify(tab));
     //console.debug("Folder changed displayedFolder: " + JSON.stringify(displayedFolder));
 
-    if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+    if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
       const oldDisplayedFolder = SysTrayX.Messaging.displayedFolder;
       if (oldDisplayedFolder !== undefined) {
         if (
@@ -970,6 +1041,20 @@ SysTrayX.Window = {
 };
 
 async function start() {
+  //  Setup the link first
+  SysTrayX.Link.init();
+
+  //  Force close a window using a toolbar button
+  browser.browserAction.disable();
+
+  browser.browserAction.onClicked.addListener(async () => {
+    const window = await browser.windows.getCurrent();
+    browser.windowEvent.forceClose(window.id);
+
+    // Send new state to the companion
+    SysTrayX.Link.postSysTrayXMessage({ closeWindow: { id: window.id, quit: true } });
+  });
+  
   //  Set platform
   SysTrayX.Info.platformInfo = await browser.runtime
     .getPlatformInfo()
@@ -989,8 +1074,12 @@ async function start() {
 
   SysTrayX.Info.displayInfo();
 
+  //  Get the API count method preference
+  const apiCountMethod = await getApiCountMethod();
+  SysTrayX.Messaging.apiCountMethod = apiCountMethod;
+
   // Try to catch the mails
-  if (SysTrayX.Info.browserInfo.majorVersion < 115) {
+  if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
     // Catch the new incomming mail
     browser.messages.onNewMailReceived.addListener(
       SysTrayX.Messaging.listenerNewMail
@@ -1021,12 +1110,31 @@ async function start() {
     SysTrayX.startupWindowPositions = await getStartupWindowPositions();
   }
 
-  // Get the close type
+  // Get main window id
+  const window = await browser.windows.getCurrent();
+  SysTrayX.mainWindowId = window.id;
+
+  //console.debug("Main window ID: " + SysTrayX.mainWindowId);
+
+  // Get all windows
+  const windows = await browser.windows.getAll();
+  SysTrayX.windows = windows;
+
+  //console.debug("All window IDs: " + JSON.stringify(windows.map((win) => win.id)));
+  //console.debug("Window: " + JSON.stringify(windows));
+
+  // Set the close type
   SysTrayX.Messaging.closeType = await getCloseType();
   browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
+  // Set the main window id
+  browser.windowEvent.setMainWindowId(Number(SysTrayX.mainWindowId));
+
   //  Intercept close button?
   if (SysTrayX.Messaging.closeType !== "0") {
+    browser.windowEvent.onNewWindow.addListener(
+      SysTrayX.Messaging.onNewWindow
+    );
     browser.windowEvent.onCloseButtonClick.addListener(
       SysTrayX.Messaging.onCloseButton
     );
@@ -1059,9 +1167,6 @@ async function start() {
 
   const getIconPromise = () => new Promise((res) => res(getIcon()));
   await getIconPromise();
-
-  //  Setup the link first
-  SysTrayX.Link.init();
 
   //  Main start
   SysTrayX.Messaging.init();

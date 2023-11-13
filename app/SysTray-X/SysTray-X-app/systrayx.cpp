@@ -140,6 +140,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartAppArgsChange, m_pref_dialog, &PreferencesDialog::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_pref_dialog, &PreferencesDialog::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_pref_dialog, &PreferencesDialog::slotCloseAppArgsChange );
+    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_pref_dialog, &PreferencesDialog::slotApiCountMethodChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
@@ -167,6 +168,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartAppArgsChange, m_link, &SysTrayXLink::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_link, &SysTrayXLink::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_link, &SysTrayXLink::slotCloseAppArgsChange );
+    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_link, &SysTrayXLink::slotApiCountMethodChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
 
@@ -178,6 +180,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_link, &SysTrayXLink::signalAddOnShutdown, this, &SysTrayX::slotAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalErrorAddOnShutdown, this, &SysTrayX::slotErrorAddOnShutdown );
     connect( m_link, &SysTrayXLink::signalWindowState, m_win_ctrl, &WindowCtrl::slotWindowState );
+    connect( m_link, &SysTrayXLink::signalNewWindow, m_win_ctrl, &WindowCtrl::slotNewWindow );
+    connect( m_link, &SysTrayXLink::signalCloseWindow, m_win_ctrl, &WindowCtrl::slotCloseWindow );
     connect( m_link, &SysTrayXLink::signalMailCount, this, &SysTrayX::slotMailCount );
     connect( m_link, &SysTrayXLink::signalVersion, this, &SysTrayX::slotVersion );
     connect( m_link, &SysTrayXLink::signalKdeIntegration, this, &SysTrayX::slotSelectIconObject );
@@ -204,6 +208,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     getPreferences();
 
 /*
+    m_preferences->setBrowserVersion( "115.1.0" );
+//    m_preferences->setBrowserVersion( "102.2.3" );
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
     //slotLoadLanguage( "nl" );

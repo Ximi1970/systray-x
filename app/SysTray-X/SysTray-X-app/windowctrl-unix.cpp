@@ -6,10 +6,6 @@
  *  Local includes
  */
 #include "debug.h"
-
-/*
- *  Local includes
- */
 #include "preferences.h"
 
 /*
@@ -38,8 +34,10 @@ WindowCtrlUnix::WindowCtrlUnix( QObject *parent ) : QObject( parent )
      *  Initialize
      */
     m_tb_windows = QList< quint64 >();
+    m_tb_window_refs = QMap< int, quint64 >();
     m_tb_window_positions = QMap< quint64, QPoint >();
     m_tb_window_states = QMap< quint64, Preferences::WindowState >();
+    m_tb_window_states_x11 = QMap< quint64, QStringList >();
     m_tb_window_hints = QMap< quint64, SizeHints >();
 
     /*
@@ -268,11 +266,73 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
 
 
 /*
+ *  Try to match the TB window id to a x11 window
+ */
+void    WindowCtrlUnix::identifyWindow( int id )
+{
+    /*
+     *  Get all the windows connected to TB
+     */
+    findWindows( getPpid() );
+
+    /*
+     *  Get the list
+     */
+    QList<quint64>  win_list = m_tb_windows;
+
+    /*
+     *  Remove known ids
+     */
+    QMapIterator<int, quint64> it(m_tb_window_refs);
+    while (it.hasNext()) {
+        it.next();
+
+        int found = win_list.indexOf( it.value() );
+        if( found != -1 )
+        {
+            win_list.removeAt( found );
+        }
+    }
+
+    /*
+     *  Should only one remain
+     */
+    if( win_list.length() > 0 )
+    {
+        m_tb_window_refs[ id ] = win_list[ 0 ];
+    }
+
+    if( win_list.length() != 1 )
+    {
+//        emit signalConsole( QString( "Unexpected Ids: %1" ).arg( win_list.length() ) );
+    }
+}
+
+
+/*
  *  Get the Thunderbird window IDs
  */
-QList< quint64 >   WindowCtrlUnix::getWinIds()
+const QList< quint64 >&   WindowCtrlUnix::getWinIds() const
 {
     return m_tb_windows;
+}
+
+
+/*
+ *  Get the reference IDs
+ */
+const QMap< int, quint64 >&   WindowCtrlUnix::getRefIds() const
+{
+    return m_tb_window_refs;
+}
+
+
+/*
+ *  Get the reference IDs
+ */
+void    WindowCtrlUnix::removeRefId( int id )
+{
+    m_tb_window_refs.remove( id );
 }
 
 
@@ -299,15 +359,25 @@ void    WindowCtrlUnix::updatePositions()
     {
         quint64 window = m_tb_windows.at( i );
 
+        QStringList x11_state = getWindowStateX11( window );
+        if( x11_state.contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) &&
+                x11_state.contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
+        {
+            /*
+             *  Maximized, skip position store
+             */
+            continue;
+        }
+
         if( m_tb_window_states[ window ] != Preferences::STATE_MINIMIZED && m_tb_window_states[ window ] != Preferences::STATE_DOCKED )
         {
             /*
              *  Get border / title bar sizes
              */
-            long left;
-            long top;
-            long right;
-            long bottom;
+            int left;
+            int top;
+            int right;
+            int bottom;
             GetWindowFrameExtensions( m_display, window, &left, &top, &right, &bottom );
 
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
@@ -317,8 +387,8 @@ void    WindowCtrlUnix::updatePositions()
             /*
              *  Get the position
              */
-            long x;
-            long y;
+            int x;
+            int y;
             GetWindowPosition( m_display, window, &x, &y );
 
             /*
@@ -368,6 +438,11 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
 
     /*
+     *  Get and store the X11 window state
+     */
+    m_tb_window_states_x11[ window ] = getWindowStateX11( window );
+
+    /*
      *  Minimize the window
      */
     IconifyWindow( m_display, window );
@@ -406,6 +481,11 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
      *  Save the hints
      */
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
+
+    /*
+     *  Get and store the X11 window state
+     */
+    m_tb_window_states_x11[ window ] = getWindowStateX11( window );;
 
     /*
      *  Set the flags (GNOME, Wayland?)
@@ -452,13 +532,30 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     {
         MapWindow( m_display, window );
 
-        SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
-
         /*
          *  Reset the hide flags
          */
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_TASKBAR );
         SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_REMOVE, _ATOM_SKIP_PAGER );
+
+        /*
+         *  Was the window maximized?
+         */
+        if( m_tb_window_states_x11[ window ].contains( "_NET_WM_STATE_MAXIMIZED_VERT" ) &&
+                m_tb_window_states_x11[ window ].contains( "_NET_WM_STATE_MAXIMIZED_HORZ" ) )
+        {
+            SendEvent( m_display, window, "_NET_WM_STATE", _NET_WM_STATE_ADD, _ATOM_MAXIMIZED );
+        }
+
+        /*
+         * Delete the X11 state
+         */
+        m_tb_window_states_x11.remove( window );
+
+        /*
+         *  Restore the size hints
+         */
+        SetWMNormalHints( m_display, window, m_tb_window_hints[ window ] );
 
         Flush( m_display );
     }
@@ -620,6 +717,44 @@ QList< WindowCtrlUnix::WindowItem >   WindowCtrlUnix::listXWindows( void* displa
     }
 
     return windows;
+}
+
+
+/*
+ *  Get the window state from X11
+ */
+QStringList WindowCtrlUnix::getWindowStateX11( quint64 window )
+{
+    qint32 n_net_wm_state;
+    void* net_wm_state_ptr = GetWindowProperty( m_display, window, "_NET_WM_STATE", &n_net_wm_state );
+
+    /*
+     *  Get the atoms
+     */
+    QStringList atom_list;
+    if( net_wm_state_ptr != nullptr )
+    {
+        for( qint32 i = 0 ; i < n_net_wm_state ; ++i )
+        {
+             char* atom_name = GetAtomName( m_display, reinterpret_cast<long *>( net_wm_state_ptr )[ i ] );
+
+             atom_list.append( atom_name );
+
+             if( atom_name )
+             {
+                 Free( atom_name );
+             }
+        }
+
+        Free( net_wm_state_ptr );
+    }
+/*
+    for( int i = 0 ; i < atom_list.length() ; ++i )
+     {
+         emit signalConsole( QString( "Atom: %1").arg( atom_list.at( i ) ) );
+     }
+*/
+    return atom_list;
 }
 
 #endif // Q_OS_UNIX

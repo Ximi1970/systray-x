@@ -85,6 +85,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_version_hash = QLatin1String( APP_GITHASH );
     m_version_branch = QLatin1String( APP_GITBRANCH );
 
+    m_browser_version = "0.0.0";
+
     m_start_app = "";
     m_start_app_args = "";
     m_close_app = "";
@@ -909,6 +911,32 @@ void    Preferences::setCloseAppArgs( QString args )
          *  Tell the world the new preference
          */
         emit signalCloseAppArgsChange();
+    }
+}
+
+
+/*
+ *  Get the API count method state.
+ */
+bool    Preferences::getApiCountMethod() const
+{
+    return m_api_count_method;
+}
+
+
+/*
+ *  Set the API count method state.
+ */
+void    Preferences::setApiCountMethod( bool state )
+{
+    if( m_api_count_method != state )
+    {
+        m_api_count_method = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalApiCountMethodChange();
     }
 }
 

@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sun Nov 12 11:12:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.7
+
+    - Added option for new TB115 mail counting
+      (slow with new mails enabled)
+    - Bugfixes
+
+-------------------------------------------------------------------
 Sun Oct 28 12:25:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.6

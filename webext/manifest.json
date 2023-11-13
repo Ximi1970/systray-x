@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extension_name__",
   "description": "__MSG_extension_description__",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "author": "Maxime Rijnders",
   "homepage_url": "https://github.com/Ximi1970/systray-x",
 
@@ -21,6 +21,12 @@
   "default_locale": "en_US",
 
   "permissions": ["accountsRead", "messagesRead", "storage", "nativeMessaging"],
+
+  "browser_action": {
+    "default_title": " ",
+    "default_icon": "icons/dummy.png",
+    "allowed_spaces": ["mail", "addressbook", "calendar", "tasks", "chat", "settings", "default" ]
+  },
 
   "background": {
     "page": "background.html"

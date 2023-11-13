@@ -21,6 +21,7 @@
 #include <QList>
 #include <QMap>
 #include <QPoint>
+#include <QStringList>
 
 /*
  *  Predefines
@@ -223,11 +224,32 @@ class WindowCtrlUnix : public QObject
         void    findWindows( qint64 pid );
 
         /**
+         * @brief identifyWindow. Try to connect th TB window id to a X11 window.
+         *
+         *  @param id   The TB windows id.
+         */
+        void    identifyWindow( int id );
+
+        /**
          * @brief getWinIds. Get the Thunderbird window IDs.
          *
          *  @return     The list of window ID.
          */
-        QList< quint64 >    getWinIds();
+        const QList< quint64 >&    getWinIds() const;
+
+        /**
+         * @brief removeRefId. Remove the TB window Id from the reference list.
+         *
+         *  @param id   The TB window id.
+         */
+        void    removeRefId( int id );
+
+        /**
+         * @brief getRefIds. Get the reference IDs.
+         *
+         *  @return     The list of reference IDs.
+         */
+        const QMap< int, quint64 >&    getRefIds() const;
 
         /**
          * @brief getWindowState. Get the state of a TB windows.
@@ -237,15 +259,6 @@ class WindowCtrlUnix : public QObject
          *  @return     The window state.
          */
         const Preferences::WindowState&    getWindowState( const quint64 window );
-
-        /**
-         * @brief getWindowState. Get the state of a TB windows.
-         *
-         *  @param  window  Window ID.
-         *
-         *  @return     The window state.
-         */
-        const Preferences::WindowState&    getWindowStateX11( const quint64 window );
 
         /**
          * @brief updatePositions. Update the window positions.
@@ -287,11 +300,6 @@ class WindowCtrlUnix : public QObject
          */
         void    setPositions( QList< QPoint > window_positions );
 
-        /**
-         * @brief updateX11WindowStates. Update the x11 window states.
-         */
-        void    updateX11WindowStates( CheckType check_type );
-
     private:
 
         /**
@@ -309,6 +317,13 @@ class WindowCtrlUnix : public QObject
          *  @return     The windows list.
          */
         QList< WindowItem > listXWindows( void* display, quint64 window, int level = 0 );
+
+        /**
+         * @brief getWindowStateX11. Get the window state from X11
+         *
+         *  @param window   The window.
+         */
+        QStringList getWindowStateX11( quint64 window );
 
     signals:
 
@@ -339,6 +354,11 @@ class WindowCtrlUnix : public QObject
         QList< quint64 >    m_tb_windows;
 
         /**
+         * @brief m_tb_window_refs. The Thunderbird window ids referenced to x11 windows.
+         */
+        QMap< int, quint64 >    m_tb_window_refs;
+
+        /**
          * @brief m_tb_window_positions. The Thunderbird window positions.
          */
         QMap< quint64, QPoint >    m_tb_window_positions;
@@ -347,6 +367,11 @@ class WindowCtrlUnix : public QObject
          * @brief m_tb_window_states. The Thunderbird window states.
          */
         QMap< quint64, Preferences::WindowState >    m_tb_window_states;
+
+        /**
+         * @brief m_tb_window_states_x11. The Thunderbird window states X11.
+         */
+        QMap< quint64, QStringList >    m_tb_window_states_x11;
 
         /**
          * @brief m_tb_window_hints. The Thunderbird window hints.

@@ -41,10 +41,10 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set close type button Ids
      */
     m_ui->closeTypeGroup->setId( m_ui->defaultCloseWindowsRadioButton, Preferences::PREF_DEFAULT_CLOSE_WINDOWS);
-    m_ui->closeTypeGroup->setId( m_ui->minimizeMainCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS );
-    m_ui->closeTypeGroup->setId( m_ui->minimizeAllWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS );
     m_ui->closeTypeGroup->setId( m_ui->minimizeMainTrayCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS );
     m_ui->closeTypeGroup->setId( m_ui->minimizeAllTrayWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS_TRAY );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeMainCloseChildrenWindowsRadioButton, Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS );
+    m_ui->closeTypeGroup->setId( m_ui->minimizeAllWindowsRadioButton, Preferences::PREF_MINIMIZE_ALL_WINDOWS );
 
     /*
      *  Set minimize type button Ids
@@ -144,6 +144,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
      *  Set startup delay
      */
     setStartupDelay( m_pref->getStartupDelay() );
+
+    /*
+     *  Set API count method
+     */
+    setApiCountMethod( m_pref->getApiCountMethod() );
 
     /*
      *  Set number alignment
@@ -520,10 +525,29 @@ void    PreferencesDialog::setCloseAppArgs( QString args )
 
 
 /*
+ *  Set the API count method state
+ */
+void    PreferencesDialog::setApiCountMethod( bool state )
+{
+   m_ui->apiCountMethod->setChecked( state );
+}
+
+
+/*
  *  Handle show dialog signal
  */
 void PreferencesDialog::slotShowDialog()
 {
+    QString version = m_pref->getBrowserVersion().split(".")[0];
+    if( version.toInt() < 115 )
+    {
+        m_ui->specialOptionsGroupBox->setVisible( false );
+    }
+    else
+    {
+        m_ui->specialOptionsGroupBox->setVisible( true );
+    }
+
     showNormal();
     activateWindow();
 }
@@ -561,6 +585,7 @@ void    PreferencesDialog::slotAccept()
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
     m_pref->setShowNewIndicator( m_ui->showNewCheckBox->isChecked() );
     m_pref->setStartupDelay( m_ui->startupDelaySpinBox->value() );
+    m_pref->setApiCountMethod( m_ui->apiCountMethod->isChecked() );
     m_pref->setCountType( static_cast< Preferences::CountType >( m_ui->countTypeGroup->checkedId() ) );
     m_pref->setNumberSize( m_ui->numberSizeSpinBox->value() );
 
@@ -625,7 +650,8 @@ void    PreferencesDialog::slotReject()
 
     setShowNumber( m_pref->getShowNumber() );
     setShowNewIndicator( m_pref->getShowNewIndicator() );
-    setStartupDelay( m_pref->getStartupDelay());
+    setStartupDelay( m_pref->getStartupDelay() );
+    setApiCountMethod( m_pref->getApiCountMethod() );
     setCountType( m_pref->getCountType() );
     setNumberColor( m_pref->getNumberColor() );
     setNumberSize( m_pref->getNumberSize());
@@ -993,4 +1019,13 @@ void    PreferencesDialog::slotCloseAppChange()
 void    PreferencesDialog::slotCloseAppArgsChange()
 {
     setCloseAppArgs( m_pref->getCloseAppArgs() );
+}
+
+
+/*
+ *  Handle the API count method change signal
+ */
+void    PreferencesDialog::slotApiCountMethodChange()
+{
+    setApiCountMethod( m_pref->getApiCountMethod() );
 }

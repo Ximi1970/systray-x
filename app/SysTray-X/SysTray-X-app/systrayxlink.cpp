@@ -329,15 +329,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             if( mailCount.contains( "unread" ) && mailCount[ "unread" ].isDouble() )
             {
                 unreadMail = mailCount[ "unread" ].toInt();
-
-                emit signalConsole( QString("Unread %1").arg( unreadMail ) );
             }
 
             if( mailCount.contains( "new" ) && mailCount[ "new" ].isDouble() )
             {
                 newMail = mailCount[ "new" ].toInt();
-
-                emit signalConsole( QString("New %1").arg( newMail ) );
             }
 
             emit signalMailCount( unreadMail, newMail );
@@ -362,9 +358,21 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalAddOnShutdown();
         }
 
-        if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isString() )
+        if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isObject() )
         {
-            QString window_state_str = jsonObject[ "window" ].toString();
+            QJsonObject window = jsonObject[ "window" ].toObject();
+
+            QString window_state_str;
+            if( window.contains( "state" ) && window[ "state" ].isString() )
+            {
+                window_state_str = window[ "state" ].toString();
+            }
+
+            int window_id = 0;
+            if( window.contains( "id" ) && window[ "id" ].isDouble() )
+            {
+                window_id = window[ "id" ].toInt();
+            }
 
             Preferences::WindowState window_state;
             if( window_state_str == Preferences::STATE_NORMAL_STR )
@@ -409,7 +417,7 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
                 window_state = Preferences::STATE_NORMAL;
             }
 
-            emit signalWindowState( window_state );
+            emit signalWindowState( window_state, window_id );
         }
 
         if( jsonObject.contains( "hideDefaultIcon" ) && jsonObject[ "hideDefaultIcon" ].isBool() )
@@ -473,6 +481,32 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
         if( jsonObject.contains( "closeApp" ) && jsonObject[ "closeApp" ].isString() )
         {
             emit signalCloseApp();
+        }
+
+        if( jsonObject.contains( "newWindow" ) && jsonObject[ "newWindow" ].isDouble() )
+        {
+            int new_window_id = jsonObject[ "newWindow" ].toInt();
+
+            emit signalNewWindow( new_window_id );
+        }
+
+        if( jsonObject.contains( "closeWindow" ) && jsonObject[ "closeWindow" ].isObject() )
+        {
+            QJsonObject close_window = jsonObject[ "closeWindow" ].toObject();
+
+            int close_window_id = 0;
+            if( close_window.contains( "id" ) && close_window[ "id" ].isDouble() )
+            {
+                close_window_id = close_window[ "id" ].toInt();
+            }
+
+            bool close_quit = false;
+            if( close_window.contains( "quit" ) && close_window[ "quit" ].isBool() )
+            {
+                close_quit = close_window[ "quit" ].toBool();
+            }
+
+            emit signalCloseWindow( close_window_id, close_quit );
         }
     }
 }
@@ -861,6 +895,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setCloseAppArgs( args );
     }
 
+    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
+    {
+        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
+
+        /*
+         *  Store the new API cont method state
+         */
+        m_pref->setApiCountMethod( api_count_method );
+    }
+
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
     {
         bool debug = pref[ "debug" ].toString() == "true";
@@ -876,27 +920,27 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 /*
  *  Decode preferences from JSON message
  */
-QMargins    SysTrayXLink::DecodeMargins( const QJsonObject& marginsJson )
+QMargins    SysTrayXLink::DecodeMargins( const QJsonObject& margins_json )
 {
     QMargins    margins;
-    if( marginsJson.contains( "left" ) && marginsJson[ "left" ].isString() )
+    if( margins_json.contains( "left" ) && margins_json[ "left" ].isString() )
     {
-        margins.setLeft( marginsJson[ "left" ].toString().toInt() );
+        margins.setLeft( margins_json[ "left" ].toString().toInt() );
     }
 
-    if( marginsJson.contains( "top" ) && marginsJson[ "top" ].isString() )
+    if( margins_json.contains( "top" ) && margins_json[ "top" ].isString() )
     {
-        margins.setTop( marginsJson[ "top" ].toString().toInt() );
+        margins.setTop( margins_json[ "top" ].toString().toInt() );
     }
 
-    if( marginsJson.contains( "right" ) && marginsJson[ "right" ].isString() )
+    if( margins_json.contains( "right" ) && margins_json[ "right" ].isString() )
     {
-        margins.setRight( marginsJson[ "right" ].toString().toInt() );
+        margins.setRight( margins_json[ "right" ].toString().toInt() );
     }
 
-    if( marginsJson.contains( "bottom" ) && marginsJson[ "bottom" ].isString() )
+    if( margins_json.contains( "bottom" ) && margins_json[ "bottom" ].isString() )
     {
-        margins.setBottom( marginsJson[ "bottom" ].toString().toInt() );
+        margins.setBottom( margins_json[ "bottom" ].toString().toInt() );
     }
 
     return margins;
@@ -941,6 +985,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("numberMargins", marginsObject );
     prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
+    prefObject.insert("apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
 
     prefObject.insert("startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
     prefObject.insert("startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
@@ -1286,6 +1331,17 @@ void    SysTrayXLink::slotCloseAppArgsChange()
     }
 }
 
+
+/*
+ *  Handle a API count method change signal
+ */
+void    SysTrayXLink::slotApiCountMethodChange()
+{
+    if( m_pref->getAppPrefChanged() )
+    {
+        sendPreferences();
+    }
+}
 
 /*
  *  Handle a debug state change signal

@@ -152,7 +152,7 @@ void    WindowCtrl::slotStartMinimizedChange()
 /*
  *  Handle change in window state
  */
-void    WindowCtrl::slotWindowState( Preferences::WindowState state )
+void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
 {
     if( m_show_hide_active )
     {
@@ -163,7 +163,8 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
 
 #ifdef DEBUG_DISPLAY_ACTIONS
-    emit signalConsole( QString( "State change to: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
+    emit signalConsole( QString( "State: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
+    emit signalConsole( QString( "Id: %1" ).arg( id ) );
 #endif
 
     /*
@@ -185,7 +186,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
         /*
          *  Minimize on startup always to the tray
          */
-        TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+        TargetType target_type = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
         if( state == Preferences::STATE_MINIMIZED_ALL )
         {
 
@@ -201,10 +202,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
             /*
              *  Minimize target on close depends on preference
              */
-            Preferences::CloseType closeType = getCloseType();
-            if( closeType == Preferences::PREF_MINIMIZE_ALL_WINDOWS || closeType == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
+            Preferences::CloseType close_type = getCloseType();
+            if( close_type == Preferences::PREF_MINIMIZE_ALL_WINDOWS || close_type == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
             {
-                targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+                target_type = TargetType::TYPE_WINDOW_TO_TASKBAR;
             }
         }
 
@@ -219,7 +220,7 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
                                 .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
 #endif
 
-            if( targetType == TargetType::TYPE_WINDOW_TO_TASKBAR )
+            if( target_type == TargetType::TYPE_WINDOW_TO_TASKBAR )
             {
                 minimizeWindowToTaskbar( win_ids.at( i ) );
             }
@@ -231,20 +232,21 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state )
     }
     else
     {
-        if( state == Preferences::STATE_MINIMIZED )
+        if( state == Preferences::STATE_MINIMIZED || state == Preferences::STATE_DOCKED )
         {
-            Preferences::MinimizeType minimizeType = getMinimizeType();
-            if( minimizeType != Preferences::PREF_DEFAULT_MINIMIZE )
+            Preferences::MinimizeType minimize_type = getMinimizeType();
+            if( minimize_type != Preferences::PREF_DEFAULT_MINIMIZE )
             {
-                QList< quint64 > win_ids = getWinIds();
-                for( int i = 0 ; i < win_ids.length() ; ++i )
-                {                   
-                   /*
-                    *  Hide the window
-                    */
-                    if( getWindowState( win_ids[ i ] ) == Preferences::STATE_MINIMIZED )
+                QMap< int, quint64 > ref_list = getRefIds();
+
+                if( ref_list.contains( id ) )
+                {
+                    /*
+                     *  Hide the window
+                     */
+                    if( getWindowState( ref_list[ id ] ) == Preferences::STATE_MINIMIZED )
                     {
-                        minimizeWindowToTray( win_ids.at( i ) );
+                        minimizeWindowToTray( ref_list[ id ] );
                     }
                 }
             }
@@ -294,10 +296,10 @@ void    WindowCtrl::slotShowHide()
 
 #endif
 
-    TargetType targetType = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
+    TargetType target_type = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
     if( getMinimizeIconType() == Preferences::PREF_DEFAULT_MINIMIZE_ICON )
     {
-        targetType = TargetType::TYPE_WINDOW_TO_TASKBAR;
+        target_type = TargetType::TYPE_WINDOW_TO_TASKBAR;
     }
 
     /*
@@ -319,7 +321,7 @@ void    WindowCtrl::slotShowHide()
         }
         else
         {
-            if( targetType == TargetType::TYPE_WINDOW_TO_TASKBAR )
+            if( target_type == TargetType::TYPE_WINDOW_TO_TASKBAR )
             {
                 minimizeWindowToTaskbar( win_ids.at( i ) );
             }
@@ -394,4 +396,52 @@ void    WindowCtrl::slotPositions( QList< QPoint > window_positions )
     setPositions( window_positions );
 
 #endif
+}
+
+
+/*
+ *  Handle the new window id.
+ */
+void    WindowCtrl::slotNewWindow( int id )
+{
+    /*
+     *  Get the windows
+     */
+    findWindows( m_ppid );
+
+    /*
+     *  Try to find a corresponding x11 window
+     */
+    identifyWindow( id );
+}
+
+
+/*
+ *  Handle the close window id.
+ */
+void    WindowCtrl::slotCloseWindow( int id, bool quit )
+{
+    if( quit )
+    {
+        /*
+         *  Window is closed by TB
+         */
+        removeRefId( id );
+        return;
+    }
+
+    QMap<int, quint64> ref_list = getRefIds();
+    if( ref_list.contains( id ) )
+    {
+        Preferences::CloseType close_type = getCloseType();
+        if( close_type == Preferences::PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS ||
+                close_type == Preferences::PREF_MINIMIZE_ALL_WINDOWS_TRAY )
+        {
+            minimizeWindowToTray( ref_list[ id ] );
+        }
+        else
+        {
+            minimizeWindowToTaskbar( ref_list[ id ] );
+        }
+    }
 }

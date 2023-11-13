@@ -36,9 +36,11 @@ enum StateActions
 enum StateAtoms
 {
     _ATOM_SKIP_TASKBAR  = 0,
-    _ATOM_SKIP_PAGER
+    _ATOM_SKIP_PAGER,
+    _ATOM_MAXIMIZED_VERT,
+    _ATOM_MAXIMIZED_HORZ,
+    _ATOM_MAXIMIZED
 };
-
 
 /*
  *  Protocol atoms
@@ -239,7 +241,7 @@ void    SendEvent( void* display, quint64 window, const char* msg_type,
  *  @param right     Storage for the right extension size
  *  @param bottom    Storage for the bottom extension size
  */
-void    GetWindowFrameExtensions( void *display, quint64 window, long* left, long* top, long* right, long* bottom );
+void    GetWindowFrameExtensions( void *display, quint64 window, int* left, int* top, int* right, int* bottom );
 
 /**
  * @brief GetWindowPosition. Get the window position.
@@ -249,7 +251,19 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
  *  @param pos_x     Storage for the x coordinate
  *  @param pos_y     Storage for the y coordinate
  */
-void    GetWindowPosition( void *display, quint64 window, long* pos_x, long* pos_y );
+void    GetWindowPosition( void *display, quint64 window, int* pos_x, int* pos_y );
+
+/**
+ * @brief GetWindowRectangle. Get the window rectangle.
+ *
+ *  @param display      The display
+ *  @param window       The window
+ *  @param win_x        The x coordinate
+ *  @param win_y        The y coordinete
+ *  @param win_width    The width
+ *  @param win_height   The height
+ */
+void    GetWindowRectangle( void* display, quint64 window, int* win_x, int* win_y, int* win_width, int* win_height );
 
 /**
  * @brief MoveWindow. Set the window position.

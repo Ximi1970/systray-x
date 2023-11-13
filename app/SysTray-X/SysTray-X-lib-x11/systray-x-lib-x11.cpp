@@ -352,6 +352,25 @@ void    SendEvent( void* display, quint64 window, const char* msg_type,
                 break;
             }
 
+            case _ATOM_MAXIMIZED_VERT:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_VERT", False );
+                break;
+            }
+
+            case _ATOM_MAXIMIZED_HORZ:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_HORZ", False );
+                break;
+            }
+
+            case _ATOM_MAXIMIZED:
+            {
+                event.xclient.data.l[1] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_VERT", False );
+                event.xclient.data.l[2] = XInternAtom( dsp, "_NET_WM_STATE_MAXIMIZED_HORZ", False );
+                break;
+            }
+
             default:
             {
                 return;
@@ -394,7 +413,7 @@ void    SendEvent( void* display, quint64 window, const char* msg_type,
 /*
  *  Get the frame extensions
  */
-void    GetWindowFrameExtensions( void *display, quint64 window, long* left, long* top, long* right, long* bottom )
+void    GetWindowFrameExtensions( void *display, quint64 window, int* left, int* top, int* right, int* bottom )
 {
     Display* dsp = (Display*)display;
 
@@ -424,10 +443,10 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
         if( list && len == 4 )
         {
             long* extents = (long*)list;
-            *left = extents[ 0 ];
-            *right = extents[ 1 ];
-            *top = extents[ 2 ];
-            *bottom = extents[ 3 ];
+            *left = (int)extents[ 0 ];
+            *right = (int)extents[ 1 ];
+            *top = (int)extents[ 2 ];
+            *bottom = (int)extents[ 3 ];
         }
     }
 
@@ -441,7 +460,7 @@ void    GetWindowFrameExtensions( void *display, quint64 window, long* left, lon
 /*
  *  Get the window position
  */
-void    GetWindowPosition( void* display, quint64 window, long* pos_x, long* pos_y )
+void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y )
 {
     Display* dsp = (Display*)display;
 
@@ -455,6 +474,37 @@ void    GetWindowPosition( void* display, quint64 window, long* pos_x, long* pos
     *pos_y = y - xwa.y;
 }
 
+
+/*
+ *  Get the window rect
+ */
+void    GetWindowRectangle( void* display, quint64 window, int* win_x, int* win_y, int* win_width, int* win_height )
+{
+    /*
+     *  Get border / title bar sizes
+     */
+    int left;
+    int top;
+    int right;
+    int bottom;
+    GetWindowFrameExtensions( display, window, &left, &top, &right, &bottom );
+
+    /*
+     *  Get position and attributes
+     */
+    Display* dsp = (Display*)display;
+
+    int x, y;
+    Window child;
+    XWindowAttributes xwa;
+    XTranslateCoordinates( dsp, window, XDefaultRootWindow( dsp ), 0, 0, &x, &y, &child );
+    XGetWindowAttributes( dsp, window, &xwa );
+
+    *win_x = x - xwa.x - left;
+    *win_y = y - xwa.y - top;
+    *win_width = xwa.width + left + right;
+    *win_height = xwa.height + top + bottom;
+}
 
 /*
  *  Set the window position

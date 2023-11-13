@@ -150,7 +150,7 @@ SysTrayX.Accounts = {
                 JSON.stringify({
                   accountName: element.accountName,
                   accountId: element.accountId,
-                  type: element.type != undefined ? element.type : "",
+                  type: element.type !== undefined ? element.type : "",
                   path: element.path,
                   name: element.originalName
                       ? element.originalName
@@ -210,7 +210,7 @@ SysTrayX.Accounts = {
               ':scope > input[type="checkbox"]'
             );
 
-            if (mainCb && mainCb != this) {
+            if (mainCb && mainCb !== this) {
               mainCb.checked = this.checked;
 
               const mainCbChildren = mainCb.parentNode.querySelectorAll(
