@@ -413,6 +413,8 @@ void    WindowCtrl::slotNewWindow( int id )
      *  Try to find a corresponding x11 window
      */
     identifyWindow( id );
+
+    displayRefs();
 }
 
 
@@ -427,6 +429,8 @@ void    WindowCtrl::slotCloseWindow( int id, bool quit )
          *  Window is closed by TB
          */
         removeRefId( id );
+
+        displayRefs();
         return;
     }
 
@@ -443,5 +447,19 @@ void    WindowCtrl::slotCloseWindow( int id, bool quit )
         {
             minimizeWindowToTaskbar( ref_list[ id ] );
         }
+    }
+
+    displayRefs();
+}
+
+void    WindowCtrl::displayRefs()
+{
+    QMap< int, quint64 >    ref_list = getRefIds();
+
+    QMapIterator<int, quint64> it( ref_list );
+    while (it.hasNext()) {
+        it.next();
+
+        emit signalConsole( QString( "Ref: %1, %2" ).arg( it.key() ).arg( it.value(), 16 ) );
     }
 }

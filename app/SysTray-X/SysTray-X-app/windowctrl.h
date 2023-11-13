@@ -141,6 +141,8 @@ class WindowCtrl : public QObject
          */
         void    slotCloseWindow( int id, bool quit );
 
+        void    displayRefs();
+
     private:
 
         /**

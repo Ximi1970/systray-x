@@ -220,11 +220,73 @@ const Preferences::WindowState&    WindowCtrlWin::getWindowState( const quint64 
 
 
 /*
+ *  Try to match the TB window id to a x11 window
+ */
+void    WindowCtrlWin::identifyWindow( int id )
+{
+    /*
+     *  Get all the windows connected to TB
+     */
+    findWindows( getPpid() );
+
+    /*
+     *  Get the list
+     */
+    QList<quint64>  win_list = m_tb_windows;
+
+    /*
+     *  Remove known ids
+     */
+    QMapIterator<int, quint64> it(m_tb_window_refs);
+    while (it.hasNext()) {
+        it.next();
+
+        int found = win_list.indexOf( it.value() );
+        if( found != -1 )
+        {
+            win_list.removeAt( found );
+        }
+    }
+
+    /*
+     *  Should only one remain
+     */
+    if( win_list.length() > 0 )
+    {
+        m_tb_window_refs[ id ] = win_list[ 0 ];
+    }
+
+    if( win_list.length() != 1 )
+    {
+        //        emit signalConsole( QString( "Unexpected Ids: %1" ).arg( win_list.length() ) );
+    }
+}
+
+
+/*
  *  Get the Thunderbird window IDs
  */
 QList< quint64 >   WindowCtrlWin::getWinIds()
 {
     return m_tb_windows;
+}
+
+
+/*
+ *  Get the reference IDs
+ */
+const QMap< int, quint64 >&   WindowCtrlWin::getRefIds() const
+{
+    return m_tb_window_refs;
+}
+
+
+/*
+ *  Get the reference IDs
+ */
+void    WindowCtrlWin::removeRefId( int id )
+{
+    m_tb_window_refs.remove( id );
 }
 
 

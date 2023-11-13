@@ -151,6 +151,13 @@ class WindowCtrlWin : public QObject
         void    findWindows( qint64 pid );
 
         /**
+         * @brief identifyWindow. Try to connect th TB window id to a X11 window.
+         *
+         *  @param id   The TB windows id.
+         */
+        void    identifyWindow( int id );
+
+        /**
          * @brief getWindowState. Get the state of a TB windows.
          *
          *  @param  window  Window ID.
@@ -165,6 +172,20 @@ class WindowCtrlWin : public QObject
          *  @return     The list of window IDs.
          */
         QList< quint64 >   getWinIds();
+
+        /**
+         * @brief getRefIds. Get the reference IDs.
+         *
+         *  @return     The list of reference IDs.
+         */
+        const QMap< int, quint64 >&    getRefIds() const;
+
+        /**
+         * @brief removeRefId. Remove the TB window Id from the reference list.
+         *
+         *  @param id   The TB window id.
+         */
+        void    removeRefId( int id );
 
         /**
          * @brief minimizeWindowToTaskbar. Minimize window to the taskbar.
@@ -262,6 +283,11 @@ class WindowCtrlWin : public QObject
          * @brief m_tb_windows_hidden. The Thunderbird hidden windows.
          */
         QList< quint64 >  m_tb_windows_hidden;
+
+        /**
+         * @brief m_tb_window_refs. The Thunderbird window ids referenced to x11 windows.
+         */
+        QMap< int, quint64 >    m_tb_window_refs;
 
         /**
          * @brief m_tb_window_states. The Thunderbird window states.

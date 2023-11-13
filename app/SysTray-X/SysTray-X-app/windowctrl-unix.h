@@ -238,18 +238,18 @@ class WindowCtrlUnix : public QObject
         const QList< quint64 >&    getWinIds() const;
 
         /**
-         * @brief removeRefId. Remove the TB window Id from the reference list.
-         *
-         *  @param id   The TB window id.
-         */
-        void    removeRefId( int id );
-
-        /**
          * @brief getRefIds. Get the reference IDs.
          *
          *  @return     The list of reference IDs.
          */
         const QMap< int, quint64 >&    getRefIds() const;
+
+        /**
+         * @brief removeRefId. Remove the TB window Id from the reference list.
+         *
+         *  @param id   The TB window id.
+         */
+        void    removeRefId( int id );
 
         /**
          * @brief getWindowState. Get the state of a TB windows.
