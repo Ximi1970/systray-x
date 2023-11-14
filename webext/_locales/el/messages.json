@@ -129,9 +129,24 @@
     "description": "Close option 4"
   },
 
-  "windows_start_min": {
-    "message": "Ελαχιστοποιημένη εκκίνηση της εφαρμογής",
-    "description": "Start minimized"
+  "windows_startup_options": {
+    "message": "Αρχή",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Προεπιλεγμένη εκκίνηση",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "Ελαχιστοποιήθηκε η εκκίνηση της εφαρμογής",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Εκκινήστε την εφαρμογή στο δίσκο συστήματος",
+    "description": "Start application in tray"
   },
 
   "restore_positions_on_startup": {

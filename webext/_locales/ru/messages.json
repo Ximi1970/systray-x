@@ -129,9 +129,24 @@
     "description": "Close option 2"
   },
 
-  "windows_start_min": {
+  "windows_startup_options": {
+    "message": "Запуск",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Запуск по умолчанию",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
     "message": "Запуск приложения свернутым",
-    "description": "Start minimized"
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Запустить приложение в трее",
+    "description": "Start application in tray"
   },
 
   "restore_positions_on_startup": {

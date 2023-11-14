@@ -22,8 +22,8 @@ const QString   Preferences::STATE_MINIMIZED_STR = "minimized";
 const QString   Preferences::STATE_MAXIMIZED_STR = "maximized";
 const QString   Preferences::STATE_FULLSCREEN_STR = "fullscreen";
 const QString   Preferences::STATE_DOCKED_STR = "docked";
-const QString   Preferences::STATE_MINIMIZED_ALL_STR = "minimized_all";
-const QString   Preferences::STATE_MINIMIZED_ALL_STARTUP_STR = "minimized_all_startup";
+const QString   Preferences::STATE_MINIMIZED_STARTUP_STR = "minimized_startup";
+const QString   Preferences::STATE_DOCKED_STARTUP_STR = "docked_startup";
 
 const QStringList   Preferences::WindowStateString = {
            "Unknown",
@@ -32,8 +32,8 @@ const QStringList   Preferences::WindowStateString = {
            STATE_MAXIMIZED_STR,
            STATE_FULLSCREEN_STR,
            STATE_DOCKED_STR,
-           STATE_MINIMIZED_ALL_STR,
-           STATE_MINIMIZED_ALL_STARTUP_STR
+           STATE_MINIMIZED_STARTUP_STR,
+           STATE_DOCKED_STARTUP_STR
        };
 
 /**
@@ -50,7 +50,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
 
-    m_start_minimized = false;
+    m_startup_type = PREF_START_DOCKED;
     m_restore_window_positions = false;
 
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
@@ -304,25 +304,25 @@ void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
 /*
  *  Get the start minmized pref.
  */
-bool    Preferences::getStartMinimized() const
+Preferences::StartupType    Preferences::getStartupType() const
 {
-    return m_start_minimized;
+    return m_startup_type;
 }
 
 
 /*
- *  Set the start minimized pref.
+ *  Set the startup type pref.
  */
-void    Preferences::setStartMinimized( bool state )
+void    Preferences::setStartupType( Preferences::StartupType startup_type )
 {
-    if( m_start_minimized != state )
+    if( m_startup_type != startup_type )
     {
-        m_start_minimized = state;
+        m_startup_type = startup_type;
 
         /*
          *  Tell the world the new preference
          */
-        emit signalStartMinimizedChange();
+        emit signalStartupTypeChange();
     }
 }
 

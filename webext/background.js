@@ -6,7 +6,7 @@ var SysTrayX = {
   mainWindowId: undefined,
   windows: undefined,
 
-  startupState: undefined,
+  startupType: undefined,
 
   restorePositions: false,
   startupWindowPositions: [],
@@ -52,9 +52,12 @@ SysTrayX.Messaging = {
       });
     }
 
-    // Minimize on startup handled by Companion app as backup
-    if (SysTrayX.startupState === "minimized") {
-      SysTrayX.Link.postSysTrayXMessage({ window: { state : "minimized_all_startup", id: 0 } });
+    // Minimize on startup handled by Companion app
+    if (SysTrayX.startupType === "1") {
+        SysTrayX.Link.postSysTrayXMessage({ startup: "minimized" });
+    }
+    if (SysTrayX.startupType === "2") {
+        SysTrayX.Link.postSysTrayXMessage({ startup: "docked" });
     }
 
     // Lookout for storage changes
@@ -391,11 +394,6 @@ SysTrayX.Messaging = {
     }
 
     if (state !== undefined) {
-      if (!quit) {
-        // Block the next focus change event
-        SysTrayX.Window.blockFocusChange = id;
-      }
-
       // Send new state to the companion
       SysTrayX.Link.postSysTrayXMessage({ closeWindow: { id: id, quit: quit } });
     }
@@ -609,7 +607,7 @@ SysTrayX.Messaging = {
         "minimizeType",
         "minimizeIconType",
         "closeType",
-        "startMinimized",
+        "startupType",
         "restorePositions",
         "defaultIconType",
         "defaultIconMime",
@@ -646,7 +644,7 @@ SysTrayX.Messaging = {
     const minimizeType = result.minimizeType || "1";
     const minimizeIconType = result.minimizeIconType || "1";
     const closeType = result.closeType || "1";
-    const startMinimized = result.startMinimized || "false";
+    const startupType = result.startupType || "2";
     const restorePositions = result.restorePositions || "false";
     const defaultIconType = result.defaultIconType || "0";
     const defaultIconMime = result.defaultIconMime || "image/png";
@@ -684,7 +682,7 @@ SysTrayX.Messaging = {
         minimizeType,
         minimizeIconType,
         closeType,
-        startMinimized,
+        startupType,
         restorePositions,
         defaultIconType,
         defaultIconMime,
@@ -711,17 +709,6 @@ SysTrayX.Messaging = {
         closeAppArgs,
       },
     });
-
-    if (SysTrayX.startupState) {
-      //  Send startup state after the prefs
-      //  so the hide is handled conform the prefs
-      if (SysTrayX.startupState === "minimized") {
-        SysTrayX.Link.postSysTrayXMessage({ window: { state: "minimized_all", id: 0 } } );
-        //SysTrayX.Link.postSysTrayXMessage({ window: SysTrayX.startupState });
-      }
-
-      SysTrayX.startupState = undefined;
-    }
   },
 
   onSendIconStorageError: function (error) {
@@ -802,10 +789,10 @@ SysTrayX.Link = {
         });
       }
 
-      const startMinimized = response["preferences"].startMinimized;
-      if (startMinimized) {
+      const startupType = response["preferences"].startupType;
+      if (startupType) {
         await storage().set({
-          startMinimized: startMinimized,
+          startupType: startupType,
         });
       }
 
@@ -989,22 +976,15 @@ SysTrayX.Link = {
 };
 
 SysTrayX.Window = {
-  blockFocusChange: 0,
+  focusChanged: async function (windowId) {
 
-  focusChanged: function (windowId) {
-    browser.windows.getCurrent().then((win) => {
-      
-      //console.debug("focusChanged Id: " + win.id);
-      //console.debug("focusChanged state: " + win.state);
-      //console.debug("focusChanged block: " + SysTrayX.Window.blockFocusChange);
+    const windows_all = await browser.windows.getAll();
+    //console.debug("focusChanged windows: " + JSON.stringify(windows_all));
 
-      if( win.id !== SysTrayX.Window.blockFocusChange) {
-        SysTrayX.Link.postSysTrayXMessage({ window: { state: win.state, id: win.id } } );
-      } else {
-        // Reset block
-        SysTrayX.Window.blockFocusChange = 0;
-      }
-    });
+    const windows = windows_all.map( (win) => { return {id: win.id, state: win.state} });
+    //console.debug("focusChanged windows: " + JSON.stringify(windows));
+
+    SysTrayX.Link.postSysTrayXMessage({ windows: windows } );
   },
 
   folderChanged: function (tab, displayedFolder) {
@@ -1096,9 +1076,9 @@ async function start() {
     SysTrayX.Window.folderChanged
   );
 
-  //  Get the prefered start state
-  const state = await getStartupState();
-  SysTrayX.startupState = state;
+  //  Get the prefered startup type
+  const startupType = await getStartupType();
+  SysTrayX.startupType = startupType;
 
   //  Restore window positions
   const restorePositions = await getRestorePositionsState();

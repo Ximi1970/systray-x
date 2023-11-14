@@ -141,15 +141,6 @@ void    WindowCtrl::slotCloseTypeChange()
 
 
 /*
- *  Handle change in start minimized state
- */
-void    WindowCtrl::slotStartMinimizedChange()
-{
-    m_start_minimized = m_pref->getStartMinimized();
-}
-
-
-/*
  *  Handle change in window state
  */
 void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
@@ -162,10 +153,10 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
         return;
     }
 
-//#ifdef DEBUG_DISPLAY_ACTIONS
+#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( QString( "State: %1" ).arg( Preferences::WindowStateString.at( state ) ) );
     emit signalConsole( QString( "Id: %1" ).arg( id ) );
-//#endif
+#endif
 
     /*
      *  Update the TB windows and states
@@ -173,9 +164,9 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
     findWindows( m_ppid );
 
     /*
-     *  Minimize all?
+     *  Minimize/dock all?
      */
-    if( state == Preferences::STATE_MINIMIZED_ALL || state == Preferences::STATE_MINIMIZED_ALL_STARTUP )
+    if( state == Preferences::STATE_MINIMIZED_STARTUP || state == Preferences::STATE_DOCKED_STARTUP )
     {
 #ifdef DEBUG_DISPLAY_ACTIONS
         emit signalConsole( QString( "Minimize all" ) );
@@ -183,44 +174,21 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
 
         QList< quint64 > win_ids = getWinIds();
 
-        /*
-         *  Minimize on startup always to the tray
-         */
-        TargetType target_type = TargetType::TYPE_WINDOW_TO_SYSTEMTRAY;
-        if( state == Preferences::STATE_MINIMIZED_ALL )
-        {
-
 #ifdef Q_OS_UNIX
 
-            /*
-             * Update window positions
-             */
-            updatePositions();
+        /*
+         * Update window positions
+         */
+        updatePositions();
 
 #endif
 
-            /*
-             *  Minimize target on close depends on preference
-             */
-            Preferences::CloseType close_type = getCloseType();
-            if( close_type == Preferences::PREF_MINIMIZE_ALL_WINDOWS || close_type == Preferences::PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS )
-            {
-                target_type = TargetType::TYPE_WINDOW_TO_TASKBAR;
-            }
-        }
-
         /*
-         *   Close pressed on one of the windows, minimize them all
+         *   Minimize/dock all
          */
         for( int i = 0 ; i < win_ids.length() ; ++i )
         {
-#ifdef DEBUG_DISPLAY_ACTIONS
-            emit signalConsole( QString( "Window state: %1, %2" )
-                                .arg( win_ids.at( i ) )
-                                .arg( Preferences::WindowStateString.at( getWindowState( win_ids.at( i ) ) ) ) );
-#endif
-
-            if( target_type == TargetType::TYPE_WINDOW_TO_TASKBAR )
+            if( state == Preferences::STATE_MINIMIZED_STARTUP )
             {
                 minimizeWindowToTaskbar( win_ids.at( i ) );
             }
@@ -413,8 +381,6 @@ void    WindowCtrl::slotNewWindow( int id )
      *  Try to find a corresponding x11 window
      */
     identifyWindow( id );
-
-    displayRefs();
 }
 
 
@@ -429,8 +395,6 @@ void    WindowCtrl::slotCloseWindow( int id, bool quit )
          *  Window is closed by TB
          */
         removeRefId( id );
-
-        displayRefs();
         return;
     }
 
@@ -447,19 +411,5 @@ void    WindowCtrl::slotCloseWindow( int id, bool quit )
         {
             minimizeWindowToTaskbar( ref_list[ id ] );
         }
-    }
-
-    displayRefs();
-}
-
-void    WindowCtrl::displayRefs()
-{
-    QMap< int, quint64 >    ref_list = getRefIds();
-
-    QMapIterator<int, quint64> it( ref_list );
-    while (it.hasNext()) {
-        it.next();
-
-        emit signalConsole( QString( "Ref: %1, %2" ).arg( it.key() ).arg( it.value(), 16 ) );
     }
 }

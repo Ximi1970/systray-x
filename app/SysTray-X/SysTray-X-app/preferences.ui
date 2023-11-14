@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>556</width>
-    <height>424</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWindows">
       <attribute name="title">
@@ -35,7 +35,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_13">
        <item row="0" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_16">
+        <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
           <widget class="QGroupBox" name="groupBox_6">
            <property name="title">
@@ -108,22 +108,66 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_10">
-           <item>
-            <widget class="QCheckBox" name="startMinimizedCheckBox">
-             <property name="text">
-              <string>Start application minimized</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="restorePositionscheckBox">
-             <property name="text">
-              <string>Restore startup positions</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QGroupBox" name="groupBox_9">
+           <property name="title">
+            <string>Startup</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QRadioButton" name="startDefaultRadioButton">
+              <property name="text">
+               <string>Default startup</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">startupTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="startMinimizedRadioButton">
+              <property name="text">
+               <string>Start application minimized</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">startupTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="startDockedRadioButton">
+              <property name="text">
+               <string>Start application in tray</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">startupTypeGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="restorePositionscheckBox">
+           <property name="text">
+            <string>Restore startup positions</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -136,19 +180,6 @@
           <size>
            <width>2</width>
            <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1">
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
           </size>
          </property>
         </spacer>
@@ -1183,12 +1214,13 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="newIndicatorTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="startupTypeGroup"/>
+  <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
   <buttongroup name="minimizeIconTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>

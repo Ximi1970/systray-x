@@ -129,9 +129,24 @@
     "description": "Close option 4"
   },
 
-  "windows_start_min": {
+  "windows_startup_options": {
+    "message": "Start-up",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Standardstart",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
     "message": "Anwendung minimiert starten",
-    "description": "Start minimized"
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Anwendung in Systemleiste starten",
+    "description": "Start application in tray"
   },
 
   "restore_positions_on_startup": {

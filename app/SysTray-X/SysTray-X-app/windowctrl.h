@@ -99,11 +99,6 @@ class WindowCtrl : public QObject
         void    slotCloseTypeChange();
 
         /**
-         * @brief slotStartMinimizedChange. Handle the start minimized signal.
-         */
-        void    slotStartMinimizedChange();
-
-        /**
          * @brief slotWindowState. Handle the window state change signal.
          *
          *  @param state    The new state.
@@ -141,8 +136,6 @@ class WindowCtrl : public QObject
          */
         void    slotCloseWindow( int id, bool quit );
 
-        void    displayRefs();
-
     private:
 
         /**
@@ -170,10 +163,6 @@ class WindowCtrl : public QObject
          */
         QWindow*    m_tb_window;
 
-        /**
-         * @brief m_start_minimized. State of start minimized.
-         */
-        bool    m_start_minimized;
 };
 
 

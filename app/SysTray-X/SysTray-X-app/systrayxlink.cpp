@@ -358,66 +358,67 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             emit signalAddOnShutdown();
         }
 
-        if( jsonObject.contains( "window" ) && jsonObject[ "window" ].isObject() )
+        if( jsonObject.contains( "startup" ) && jsonObject[ "startup" ].isString() )
         {
-            QJsonObject window = jsonObject[ "window" ].toObject();
-
-            QString window_state_str;
-            if( window.contains( "state" ) && window[ "state" ].isString() )
-            {
-                window_state_str = window[ "state" ].toString();
-            }
-
-            int window_id = 0;
-            if( window.contains( "id" ) && window[ "id" ].isDouble() )
-            {
-                window_id = window[ "id" ].toInt();
-            }
+            QString state_str = jsonObject[ "startup" ].toString();
 
             Preferences::WindowState window_state;
-            if( window_state_str == Preferences::STATE_NORMAL_STR )
+            if( state_str == Preferences::STATE_MINIMIZED_STR )
             {
-                window_state = Preferences::STATE_NORMAL;
-            }
-            else
-            if( window_state_str == Preferences::STATE_MINIMIZED_STR )
-            {
-                window_state = Preferences::STATE_MINIMIZED;
-            }
-            else
-            if( window_state_str == Preferences::STATE_MAXIMIZED_STR )
-            {
-                window_state = Preferences::STATE_MAXIMIZED;
-            }
-            else
-            if( window_state_str == Preferences::STATE_FULLSCREEN_STR )
-            {
-                window_state = Preferences::STATE_FULLSCREEN;
-            }
-            else
-            if( window_state_str == Preferences::STATE_DOCKED_STR )
-            {
-                window_state = Preferences::STATE_DOCKED;
-            }
-            else
-            if( window_state_str == Preferences::STATE_MINIMIZED_ALL_STR )
-            {
-                window_state = Preferences::STATE_MINIMIZED_ALL;
-            }
-            else
-            if( window_state_str == Preferences::STATE_MINIMIZED_ALL_STARTUP_STR )
-            {
-                window_state = Preferences::STATE_MINIMIZED_ALL_STARTUP;
-            }
-            else
-            {
-                /*
-                 *  Unknown state
-                 */
-                window_state = Preferences::STATE_NORMAL;
+                window_state = Preferences::STATE_MINIMIZED_STARTUP;
             }
 
-            emit signalWindowState( window_state, window_id );
+            if( state_str == Preferences::STATE_DOCKED_STR )
+            {
+                window_state = Preferences::STATE_DOCKED_STARTUP;
+            }
+
+            emit signalWindowState( window_state, 0 );
+        }
+
+        if( jsonObject.contains( "windows" ) && jsonObject[ "windows" ].isArray() )
+        {
+            QJsonArray windows = jsonObject[ "windows" ].toArray();
+
+            for( int i = 0 ; i < windows.count() ; ++i )
+            {
+                QJsonObject window = windows[ i ].toObject();
+
+                int window_id = 0;
+                if( window.contains( "id" ) && window[ "id" ].isDouble() )
+                {
+                    window_id = window[ "id" ].toInt();
+                }
+
+                QString window_state_str;
+                if( window.contains( "state" ) && window[ "state" ].isString() )
+                {
+                    window_state_str = window[ "state" ].toString();
+                }
+
+                Preferences::WindowState window_state;
+                if( window_state_str == Preferences::STATE_NORMAL_STR )
+                {
+                    window_state = Preferences::STATE_NORMAL;
+                }
+                else
+                if( window_state_str == Preferences::STATE_MINIMIZED_STR )
+                {
+                    window_state = Preferences::STATE_MINIMIZED;
+                }
+                else
+                {
+                    /*
+                     *  Unknown state
+                     */
+                    window_state = Preferences::STATE_NORMAL;
+                }
+
+                if( window_id != 0 )
+                {
+                    emit signalWindowState( window_state, window_id );
+                }
+            }
         }
 
         if( jsonObject.contains( "hideDefaultIcon" ) && jsonObject[ "hideDefaultIcon" ].isBool() )
@@ -815,14 +816,14 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setMinimizeIconType( minimize_icon_type );
     }
 
-    if( pref.contains( "startMinimized" ) && pref[ "startMinimized" ].isString() )
+    if( pref.contains( "startupType" ) && pref[ "startupType" ].isString() )
     {
-        bool start_minimized = pref[ "startMinimized" ].toString() == "true";
+        Preferences::StartupType startup_type = static_cast< Preferences::StartupType >( pref[ "startupType" ].toString().toInt() );
 
         /*
          *  Store the new start minimized state
          */
-        m_pref->setStartMinimized( start_minimized );
+        m_pref->setStartupType( startup_type );
     }
 
     if( pref.contains( "restorePositions" ) && pref[ "restorePositions" ].isString() )
@@ -959,7 +960,7 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
     prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert("minimizeIconType", QJsonValue::fromVariant( QString::number( pref.getMinimizeIconType() ) ) );
-    prefObject.insert("startMinimized", QJsonValue::fromVariant( QString( pref.getStartMinimized() ? "true" : "false" ) ) );
+    prefObject.insert("startupType", QJsonValue::fromVariant( QString::number( pref.getStartupType() ) ) );
     prefObject.insert("restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
     prefObject.insert("closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
     prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
@@ -1069,9 +1070,9 @@ void    SysTrayXLink::slotMinimizeIconTypeChange()
 
 
 /*
- *  Handle a start minimized state change signal
+ *  Handle a startup type change signal
  */
-void    SysTrayXLink::slotStartMinimizedChange()
+void    SysTrayXLink::slotStartupTypeChange()
 {
     if( m_pref->getAppPrefChanged() )
     {

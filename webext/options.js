@@ -97,13 +97,13 @@ SysTrayX.SaveOptions = {
     });
 
     //
-    //  Save start minimized state
+    //  Save startup preferences
     //
-    const startMinimized = document.querySelector(
-      'input[name="startMinimized"]'
-    ).checked;
+    const startupType = document.querySelector(
+      'input[name="startupType"]:checked'
+    ).value;
     await storage().set({
-      startMinimized: `${startMinimized}`,
+      startupType: startupType,
     });
 
     //
@@ -385,13 +385,13 @@ SysTrayX.RestoreOptions = {
       );
 
     //
-    //  Restore start minimized
+    //  Restore startup type
     //
     await storage()
-      .get("startMinimized")
+      .get("startupType")
       .then(
-        SysTrayX.RestoreOptions.setStartMinimized,
-        SysTrayX.RestoreOptions.onStartMinimizedError
+        SysTrayX.RestoreOptions.setStartupType,
+        SysTrayX.RestoreOptions.onStartupTypeError
       );
 
     //
@@ -684,15 +684,17 @@ SysTrayX.RestoreOptions = {
   //
   //  Restore start minimized callbacks
   //
-  setStartMinimized: function (result) {
-    const startMinimized = result.startMinimized || "false";
+  setStartupType: function (result) {
+    const startupType = result.startupType || "2";
 
-    const checkbox = document.querySelector(`input[name="startMinimized"]`);
-    checkbox.checked = startMinimized === "true";
+    const radioButton = document.querySelector(
+      `input[name="startupType"][value="${startupType}"]`
+    );
+    radioButton.checked = true;
   },
 
-  onStartMinimizedError: function (error) {
-    console.log(`startMinimized Error: ${error}`);
+  onStartupTypeError: function (error) {
+    console.log(`startupType Error: ${error}`);
   },
 
   //
@@ -1238,9 +1240,9 @@ SysTrayX.StorageChanged = {
           closeType: changes[item].newValue,
         });
       }
-      if (item === "startMinimized") {
-        SysTrayX.RestoreOptions.setStartMinimized({
-          startMinimized: changes[item].newValue,
+      if (item === "startupType") {
+        SysTrayX.RestoreOptions.setStartupType({
+          startupType: changes[item].newValue,
         });
       }
       if (item === "restorePositions") {
@@ -1396,6 +1398,7 @@ SysTrayX.StorageChanged = {
     document.getElementById("minimizeselect").className = "active";
     document.getElementById("minimizeiconselect").className = "active";
     document.getElementById("closeselect").className = "active";
+    document.getElementById("startupselect").className = "active";
     document.getElementById("newindicatorselect").className = "active";
     document.getElementById("startappselect").className = "active";
     document.getElementById("closeappselect").className = "active";

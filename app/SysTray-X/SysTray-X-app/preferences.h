@@ -51,6 +51,15 @@ class Preferences : public QObject
             PREF_MINIMIZE_TRAY_ICON
         };
 
+        /*
+         *  Startup types
+         */
+        enum StartupType {
+            PREF_START_DEFAULT = 0,
+            PREF_START_MINIMIZED,
+            PREF_START_DOCKED
+        };
+
         enum DefaultIconType {
             PREF_DEFAULT_ICON_DEFAULT = 0,
             PREF_DEFAULT_ICON_HIDE,
@@ -95,8 +104,8 @@ class Preferences : public QObject
             STATE_MAXIMIZED,
             STATE_FULLSCREEN,
             STATE_DOCKED,
-            STATE_MINIMIZED_ALL,
-            STATE_MINIMIZED_ALL_STARTUP,
+            STATE_MINIMIZED_STARTUP,
+            STATE_DOCKED_STARTUP,
         };
 
         static const QString   STATE_NORMAL_STR;
@@ -104,8 +113,8 @@ class Preferences : public QObject
         static const QString   STATE_MAXIMIZED_STR;
         static const QString   STATE_FULLSCREEN_STR;
         static const QString   STATE_DOCKED_STR;
-        static const QString   STATE_MINIMIZED_ALL_STR;
-        static const QString   STATE_MINIMIZED_ALL_STARTUP_STR;
+        static const QString   STATE_MINIMIZED_STARTUP_STR;
+        static const QString   STATE_DOCKED_STARTUP_STR;
 
         static const QStringList  WindowStateString;
 
@@ -187,18 +196,18 @@ class Preferences : public QObject
         void setBrowserBuildID( const QString buildID );
 
         /**
-         * @brief getStartMinimized. Get the start minimized state.
+         * @brief getStartupType. Get the startup type.
          *
-         * @return      The state.
+         * @return      The startup type.
          */
-        bool getStartMinimized() const;
+        StartupType getStartupType() const;
 
         /**
-         * @brief setStartMinimized. Set the start minimized state.
+         * @brief setStartupType. Set the startup type.
          *
-         * @param state     The state.
+         * @param startup_type     The startup type.
          */
-        void setStartMinimized( bool state );
+        void setStartupType( StartupType startup_type );
 
         /**
          * @brief getRestoreWindowPositions. Get the restore window positions state.
@@ -645,9 +654,9 @@ class Preferences : public QObject
         void signalMinimizeIconTypeChange();
 
         /**
-         * @brief signalStartMinimizedChange. Signal a start minimized state change.
+         * @brief signalStartupTypeChange. Signal a startup type change.
          */
-        void signalStartMinimizedChange();
+        void signalStartupTypeChange();
 
         /**
          * @brief signalRestoreWindowPositionsChange. Signal a restore window positions state change.
@@ -831,9 +840,9 @@ class Preferences : public QObject
         MinimizeIconType m_minimize_icon_type;
 
         /**
-         * @brief m_start_minimized. Start TB minimized.
+         * @brief m_startup_type. Startup TB preference.
          */
-        bool m_start_minimized;
+        StartupType m_startup_type;
 
         /**
          * @brief m_restore_window_positions. Force the same window positions on startup as recorded on the last hide.

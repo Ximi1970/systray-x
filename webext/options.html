@@ -143,12 +143,50 @@
           </tr>
         </table>
 
-        <div id="inputcheck">
-          <input type="checkbox" name="startMinimized" id="startMin" value="" />
-          <label for="startMin" id="startMinimizedLabel"
-            >__MSG_windows_start_min__</label
-          >
-        </div>
+        <table id="startupselect">
+          <caption>
+            __MSG_windows_startup_options__
+          </caption>
+          <tr id="defaultstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="defaultStartup"
+                value="0"
+              />
+              <label for="defaultStartup" id="defaultstartuplabel">
+                __MSG_windows_default_startup__
+              </label>
+            </td>
+          </tr>
+          <tr id="minimizedstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="minimizedStartup"
+                value="1"
+              />
+              <label for="minimizedStartup" id="minimizedstartuplabel">
+                __MSG_windows_minimized_startup__
+              </label>
+            </td>
+          </tr>
+          <tr id="dockedstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="dockedStartup"
+                value="2" />
+              <label for="dockedStartup" id="dockedstartuplabel">
+                __MSG_windows_docked_startup__
+              </label>
+            </td>
+          </tr>
+        </table>
+
         <div id="inputcheck">
           <input
             type="checkbox"

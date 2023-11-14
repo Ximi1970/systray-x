@@ -104,7 +104,7 @@
 
             windowListener.emit("new-window", id);
 
-            console.log("New window added: " + id);
+            //console.log("New window added: " + id);
           }
         });
       }
@@ -124,7 +124,7 @@
             // Get current window id
             const id = context.extension.windowManager.getWrapper(window).id;
 
-            console.log("New window removed: " + id);
+            //console.log("New window removed: " + id);
           }
         }
         ExtensionSupport.unregisterWindowListener( this.listenerIdNewWindow );
@@ -176,11 +176,11 @@
               //  Pre TB115 close menu, now same as close button
               window.close = () => onCloseButton(null);
   
-              console.log("Close listener added for: " + id);  
+              //console.log("Close listener added for: " + id);  
             } else {
 
               function onCloseButton2(event) {
-                console.log("Real Close clicked: " + id);
+                //console.log("Real Close clicked: " + id);
 
                 windowListener.emit("close-clicked", id, true);
 
@@ -205,6 +205,8 @@
 
               //  Pre TB115 close menu, now same as close button
               window.close = () => onCloseButton2(null);
+
+              //console.log("Real Close listener added for: " + id);  
             }
           },
         });
@@ -241,7 +243,7 @@
               //  Clean the storage
               delete windowListener.activeWindows[id];
 
-              console.log("Close listener removed for: " + id);
+              //console.log("Close listener removed for: " + id);
             }
           }
         }

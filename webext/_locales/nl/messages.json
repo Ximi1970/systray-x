@@ -129,9 +129,24 @@
     "description": "Close option 4"
   },
 
-  "windows_start_min": {
-    "message": "Start programma geminimaliseerd",
-    "description": "Start minimized"
+  "windows_startup_options": {
+    "message": "Opstarten",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Standaard opstarten",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "Start geminimaliseerd",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Start in systeemvak",
+    "description": "Start application in tray"
   },
 
   "restore_positions_on_startup": {

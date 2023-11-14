@@ -61,6 +61,13 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeIconTypeGroup->setId( m_ui->defaultMinimizeIconRadioButton, Preferences::PREF_DEFAULT_MINIMIZE_ICON);
     m_ui->minimizeIconTypeGroup->setId( m_ui->minimizeTrayIconRadioButton, Preferences::PREF_MINIMIZE_TRAY_ICON );
 
+    /*
+     *  Set startup type button Ids
+     */
+    m_ui->startupTypeGroup->setId( m_ui->startDefaultRadioButton, Preferences::PREF_START_DEFAULT);
+    m_ui->startupTypeGroup->setId( m_ui->startMinimizedRadioButton, Preferences::PREF_START_MINIMIZED);
+    m_ui->startupTypeGroup->setId( m_ui->startDockedRadioButton, Preferences::PREF_START_DOCKED );
+
 #ifdef Q_OS_WIN
 
     m_ui->hideDefaultIconCheckBox->hide();
@@ -252,11 +259,11 @@ void    PreferencesDialog::setMinimizeIconType( Preferences::MinimizeIconType mi
 
 
 /*
- *  Set the start minimized state
+ *  Set the startup type
  */
-void    PreferencesDialog::setStartMinimized( bool state )
+void    PreferencesDialog::setStartupType(  Preferences::StartupType startup_type )
 {
-   m_ui->startMinimizedCheckBox->setChecked( state );
+    ( m_ui->startupTypeGroup->button( startup_type ) )->setChecked( true );
 }
 
 
@@ -577,7 +584,7 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setMinimizeIconType( static_cast< Preferences::MinimizeIconType >( m_ui->minimizeIconTypeGroup->checkedId() ) );
-    m_pref->setStartMinimized( m_ui->startMinimizedCheckBox->isChecked() );
+    m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
     m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
     m_pref->setInvertIcon( m_ui->invertIconCheckBox->isChecked() );
@@ -643,7 +650,7 @@ void    PreferencesDialog::slotReject()
 
     setMinimizeType( m_pref->getMinimizeType() );
     setMinimizeIconType( m_pref->getMinimizeIconType() );
-    setStartMinimized( m_pref->getStartMinimized() );
+    setStartupType( m_pref->getStartupType() );
     setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
     setInvertIcon( m_pref->getInvertIcon() );
@@ -786,11 +793,11 @@ void    PreferencesDialog::slotDebugChange()
 
 
 /*
- *  Handle the start minimized change signal
+ *  Handle the startup type change signal
  */
-void    PreferencesDialog::slotStartMinimizedChange()
+void    PreferencesDialog::slotStartupTypeChange()
 {
-    setStartMinimized( m_pref->getStartMinimized() );
+    setStartupType( m_pref->getStartupType() );
 }
 
 

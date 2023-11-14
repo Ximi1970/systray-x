@@ -113,7 +113,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_win_ctrl, &WindowCtrl::slotMinimizeIconTypeChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_win_ctrl, &WindowCtrl::slotCloseTypeChange );
-    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_win_ctrl, &WindowCtrl::slotStartMinimizedChange );
 
     connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconTypeChange );
     connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_pref_dialog, &PreferencesDialog::slotDefaultIconDataChange );
@@ -122,7 +121,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeIconTypeChange );
-    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_pref_dialog, &PreferencesDialog::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalStartupTypeChange, m_pref_dialog, &PreferencesDialog::slotStartupTypeChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalInvertIconChange, m_pref_dialog, &PreferencesDialog::slotInvertIconChange );
@@ -150,7 +149,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_link, &SysTrayXLink::slotMinimizeIconTypeChange );
-    connect( m_preferences, &Preferences::signalStartMinimizedChange, m_link, &SysTrayXLink::slotStartMinimizedChange );
+    connect( m_preferences, &Preferences::signalStartupTypeChange, m_link, &SysTrayXLink::slotStartupTypeChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
     connect( m_preferences, &Preferences::signalInvertIconChange, m_link, &SysTrayXLink::slotInvertIconChange );

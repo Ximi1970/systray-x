@@ -79,11 +79,11 @@ class PreferencesDialog : public QDialog
         void    setMinimizeIconType( Preferences::MinimizeIconType minimize_icon_type );
 
         /**
-         * @brief setStartMinimized. Set the start minimized state.
+         * @brief setStartupType. Set the startup type.
          *
-         *  @param state    The state.
+         *  @param startup_type    The startup type.
          */
-        void    setStartMinimized( bool state );
+        void    setStartupType( Preferences::StartupType startup_type );
 
         /**
          * @brief setRestoreWindowPositions. Set the restore window positions state.
@@ -302,9 +302,9 @@ class PreferencesDialog : public QDialog
         void    slotMinimizeIconTypeChange();
 
         /**
-         * @brief slotStartMinimizedChange. Slot for handling start minimized change signals.
+         * @brief slotStartupTypeChange. Slot for handling startup type change signals.
          */
-        void    slotStartMinimizedChange();
+        void    slotStartupTypeChange();
 
         /**
          * @brief slotRestoreWindowPositionsChange. Slot for handling restore window positions change signals.

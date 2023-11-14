@@ -25,17 +25,17 @@ async function getApiCountMethod() {
 //
 //  Get window startup state
 //
-async function getStartupState() {
+async function getStartupType() {
   function resolve(result) {
-    const startMinimized = result.startMinimized || "false";
-    return startMinimized === "true" ? "minimized" : "normal";
+    const startupType = result.startupType || "2";
+    return startupType;
   }
 
   function reject() {
-    return "normal";
+    return "2";
   }
 
-  return await storage().get("startMinimized").then(resolve, reject);
+  return await storage().get("startupType").then(resolve, reject);
 }
 
 //
