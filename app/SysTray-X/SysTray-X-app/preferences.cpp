@@ -50,7 +50,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
 
-    m_startup_type = PREF_START_DOCKED;
+    m_startup_type = PREF_START_DEFAULT;
     m_restore_window_positions = false;
 
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;

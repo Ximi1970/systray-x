@@ -27,7 +27,7 @@ async function getApiCountMethod() {
 //
 async function getStartupType() {
   function resolve(result) {
-    const startupType = result.startupType || "2";
+    const startupType = result.startupType || "0";
     return startupType;
   }
 

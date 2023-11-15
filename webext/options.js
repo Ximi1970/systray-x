@@ -685,7 +685,7 @@ SysTrayX.RestoreOptions = {
   //  Restore start minimized callbacks
   //
   setStartupType: function (result) {
-    const startupType = result.startupType || "2";
+    const startupType = result.startupType || "0";
 
     const radioButton = document.querySelector(
       `input[name="startupType"][value="${startupType}"]`
