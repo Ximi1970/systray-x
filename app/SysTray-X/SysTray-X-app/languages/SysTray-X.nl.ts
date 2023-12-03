@@ -106,15 +106,15 @@
         <translation>SysTray-X Opties</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="294"/>
+        <location filename="../preferences.ui" line="297"/>
         <source>Default icon</source>
         <translation>Standaard pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="237"/>
-        <location filename="../preferences.ui" line="288"/>
-        <location filename="../preferences.ui" line="300"/>
-        <location filename="../preferences.ui" line="386"/>
+        <location filename="../preferences.ui" line="240"/>
+        <location filename="../preferences.ui" line="291"/>
+        <location filename="../preferences.ui" line="303"/>
+        <location filename="../preferences.ui" line="389"/>
         <source>Icon</source>
         <translation>Pictogram</translation>
     </message>
@@ -129,50 +129,50 @@
         <translation>Minimaliseer alle vensters</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="308"/>
-        <location filename="../preferences.ui" line="518"/>
+        <location filename="../preferences.ui" line="311"/>
+        <location filename="../preferences.ui" line="521"/>
         <source>Default Thunderbird</source>
         <translation>Standaard Thunderbird</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="321"/>
+        <location filename="../preferences.ui" line="324"/>
         <source>Lookthrough icon</source>
         <translation>Doorzichtig pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="333"/>
-        <location filename="../preferences.ui" line="460"/>
+        <location filename="../preferences.ui" line="336"/>
+        <location filename="../preferences.ui" line="463"/>
         <source>Custom icon</source>
         <translation>Aangepast pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="350"/>
-        <location filename="../preferences.ui" line="477"/>
+        <location filename="../preferences.ui" line="353"/>
+        <location filename="../preferences.ui" line="480"/>
         <source>Choose</source>
         <translation>Kies</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="367"/>
+        <location filename="../preferences.ui" line="370"/>
         <source>KDE integration (Hide)</source>
         <translation>KDE integratie (Verbergen)</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="380"/>
+        <location filename="../preferences.ui" line="383"/>
         <source>Mail notification icon</source>
         <translation>Berichten notificatie pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="397"/>
+        <location filename="../preferences.ui" line="400"/>
         <source>Blank icon</source>
         <translation>Leeg pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="430"/>
+        <location filename="../preferences.ui" line="433"/>
         <source>New mail icon</source>
         <translation>Nieuw bericht pictogram</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="491"/>
+        <location filename="../preferences.ui" line="494"/>
         <source>No icon</source>
         <translation>Geen pictogram</translation>
     </message>
@@ -199,23 +199,23 @@
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="155"/>
+        <location filename="../preferences.ui" line="158"/>
         <source>Restore startup positions</source>
         <translation>Herstel vensterposities bij opstarten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="192"/>
+        <location filename="../preferences.ui" line="195"/>
         <source>Minimize</source>
         <translation>Minimaliseren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="198"/>
-        <location filename="../preferences.ui" line="243"/>
+        <location filename="../preferences.ui" line="201"/>
+        <location filename="../preferences.ui" line="246"/>
         <source>Default minimize</source>
         <translation>Standaard minimalisatie</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="224"/>
+        <location filename="../preferences.ui" line="227"/>
         <source>Minimize to tray, method 2</source>
         <translation>Minimaliseer naar systeemvak, methode 2</translation>
     </message>
@@ -235,21 +235,17 @@
         <translation>Minimaliseer alle vensters</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="129"/>
+        <location filename="../preferences.ui" line="132"/>
         <source>Start application minimized</source>
         <translation>Start programma geminimaliseerd</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="546"/>
+        <location filename="../preferences.ui" line="549"/>
         <source>Invert icon</source>
         <translation>Inverteer pictogram</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="683"/>
-=======
-        <location filename="../preferences.ui" line="652"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="686"/>
         <source>Number properties</source>
         <translation>Nummer opties</translation>
     </message>
@@ -258,119 +254,67 @@
         <translation type="vanished">Aantal ongelezen berichten weergeven</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="736"/>
-=======
-        <location filename="../preferences.ui" line="705"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="739"/>
         <source>Number color</source>
         <translation>Nummer kleur</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="757"/>
-=======
-        <location filename="../preferences.ui" line="726"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="760"/>
         <source>Number size</source>
         <translation>Nummer grootte</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="781"/>
-=======
-        <location filename="../preferences.ui" line="750"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="784"/>
         <source>Alignment</source>
         <translation>Uitlijning</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="792"/>
-=======
-        <location filename="../preferences.ui" line="761"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="795"/>
         <source>Top left</source>
         <translation>Linksboven</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="797"/>
-=======
-        <location filename="../preferences.ui" line="766"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="800"/>
         <source>Top centre</source>
         <translation>Middenboven</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="802"/>
-=======
-        <location filename="../preferences.ui" line="771"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="805"/>
         <source>Top right</source>
         <translation>Rechtsboven</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="807"/>
-=======
-        <location filename="../preferences.ui" line="776"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="810"/>
         <source>Middle left</source>
         <translation>Midden links</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="812"/>
-=======
-        <location filename="../preferences.ui" line="781"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="815"/>
         <source>Middle centre</source>
         <translation>Midden midden</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="817"/>
-=======
-        <location filename="../preferences.ui" line="786"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="820"/>
         <source>Middle right</source>
         <translation>Midden rechts</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="822"/>
-=======
-        <location filename="../preferences.ui" line="791"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="825"/>
         <source>Bottom left</source>
         <translation>Linksonder</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="827"/>
-=======
-        <location filename="../preferences.ui" line="796"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="830"/>
         <source>Bottom centre</source>
         <translation>Middenonder</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="832"/>
-=======
-        <location filename="../preferences.ui" line="801"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="835"/>
         <source>Bottom right</source>
         <translation>Rechtsonder</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="691"/>
-=======
-        <location filename="../preferences.ui" line="660"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="694"/>
         <source>Margins (left, top, right, bottom):</source>
         <translation>Marges (links, boven, rechts, onder):</translation>
     </message>
@@ -385,238 +329,153 @@
         <translation>Standaard opstarten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="139"/>
+        <location filename="../preferences.ui" line="142"/>
         <source>Start application in tray</source>
         <translation>Start in systeemvak</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="596"/>
+        <location filename="../preferences.ui" line="599"/>
         <source>Count</source>
         <translation>Teller</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="604"/>
+        <location filename="../preferences.ui" line="607"/>
         <source>Show message count</source>
         <translation>Aantal berichten weergeven</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="614"/>
+        <location filename="../preferences.ui" line="617"/>
         <source>Show new indicator</source>
         <translation>Indicator voor nieuwe berichten</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="623"/>
+        <location filename="../preferences.ui" line="626"/>
         <source>Startup delay</source>
         <translation>Opstartvertraging</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="647"/>
+        <location filename="../preferences.ui" line="650"/>
         <source>Count type</source>
         <translation>Type berichttelling</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="655"/>
+        <location filename="../preferences.ui" line="658"/>
         <source>Unread</source>
         <translation>Ongelezen</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="668"/>
+        <location filename="../preferences.ui" line="671"/>
         <source>New</source>
         <translation>Nieuw</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="847"/>
-=======
-        <location filename="../preferences.ui" line="816"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="850"/>
         <source>New indicator</source>
         <translation>Nieuw indicator</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="855"/>
-=======
-        <location filename="../preferences.ui" line="824"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="858"/>
         <source>Icon round</source>
         <translation>Rond icoon</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="865"/>
-=======
-        <location filename="../preferences.ui" line="834"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="868"/>
         <source>Icon star</source>
         <translation>Ster icoon</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="877"/>
-=======
-        <location filename="../preferences.ui" line="846"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="880"/>
         <source>Shade</source>
         <translation>Tint</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="956"/>
-=======
-        <location filename="../preferences.ui" line="925"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="959"/>
         <source>Special options</source>
         <translation>Speciale opties</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="962"/>
-=======
-        <location filename="../preferences.ui" line="931"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="965"/>
         <source>API count method</source>
         <translation>API tel methode</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="986"/>
-=======
-        <location filename="../preferences.ui" line="955"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="989"/>
         <source>Apps</source>
         <translation>Apps</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="994"/>
-=======
-        <location filename="../preferences.ui" line="963"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="997"/>
         <source>Close application</source>
         <translation>Stop programma</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1007"/>
-        <location filename="../preferences.ui" line="1048"/>
-=======
-        <location filename="../preferences.ui" line="976"/>
-        <location filename="../preferences.ui" line="1017"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1010"/>
+        <location filename="../preferences.ui" line="1051"/>
         <source>Browse...</source>
         <translation>Bestand zoeken...</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1018"/>
-        <location filename="../preferences.ui" line="1059"/>
-=======
-        <location filename="../preferences.ui" line="987"/>
-        <location filename="../preferences.ui" line="1028"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1021"/>
+        <location filename="../preferences.ui" line="1062"/>
         <source>Arguments:</source>
         <translation>Argumenten:</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1035"/>
-=======
-        <location filename="../preferences.ui" line="1004"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1038"/>
         <source>Start application</source>
         <translation>Start programma</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1092"/>
-=======
-        <location filename="../preferences.ui" line="1061"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1095"/>
         <source>Mail</source>
         <translation>Berichten</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1098"/>
-=======
-        <location filename="../preferences.ui" line="1067"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1101"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Gebruik het voorkeurenvenster in Thunderbird om de accounts en mappen te selecteren</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1135"/>
-=======
-        <location filename="../preferences.ui" line="1104"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1138"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1141"/>
-=======
-        <location filename="../preferences.ui" line="1110"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1144"/>
         <source>Display debug window</source>
         <translation>Toon debug venster</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1202"/>
-=======
-        <location filename="../preferences.ui" line="1171"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1205"/>
         <source>Save</source>
         <translation>Bewaren</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1195"/>
-=======
-        <location filename="../preferences.ui" line="1164"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1198"/>
         <source>Cancel</source>
         <translation>Annnuleren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="211"/>
-        <location filename="../preferences.ui" line="256"/>
+        <location filename="../preferences.ui" line="214"/>
+        <location filename="../preferences.ui" line="259"/>
         <source>Minimize to tray</source>
         <translation>Minimaliseer naar systeemvak</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="669"/>
-        <location filename="../preferencesdialog.cpp" line="693"/>
->>>>>>> develop
         <source>Open Image</source>
         <translation>Open afbeelding</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="669"/>
-        <location filename="../preferencesdialog.cpp" line="693"/>
->>>>>>> develop
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="763"/>
         <location filename="../preferencesdialog.cpp" line="777"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="748"/>
-        <location filename="../preferencesdialog.cpp" line="762"/>
->>>>>>> develop
         <source>Select application</source>
         <translation>Selecteer programma</translation>
     </message>
@@ -624,47 +483,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="246"/>
-=======
-        <location filename="../systrayx.cpp" line="243"/>
->>>>>>> develop
         <source>&amp;Show/Hide</source>
         <translation>&amp;Tonen/Verbergen</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="250"/>
-=======
-        <location filename="../systrayx.cpp" line="247"/>
->>>>>>> develop
         <source>&amp;Preferences</source>
         <translation>&amp;Opties</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="254"/>
-=======
-        <location filename="../systrayx.cpp" line="251"/>
->>>>>>> develop
         <source>&amp;About</source>
         <translation>O&amp;ver</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="258"/>
-=======
-        <location filename="../systrayx.cpp" line="255"/>
->>>>>>> develop
         <source>&amp;Quit</source>
         <translation>&amp;Afsluiten</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="692"/>
-=======
-        <location filename="../systrayx.cpp" line="689"/>
->>>>>>> develop
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>

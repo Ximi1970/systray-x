@@ -102,15 +102,15 @@
         <translation>Настройки SysTray-X</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="294"/>
+        <location filename="../preferences.ui" line="297"/>
         <source>Default icon</source>
         <translation>Иконка по умолчанию</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="237"/>
-        <location filename="../preferences.ui" line="288"/>
-        <location filename="../preferences.ui" line="300"/>
-        <location filename="../preferences.ui" line="386"/>
+        <location filename="../preferences.ui" line="240"/>
+        <location filename="../preferences.ui" line="291"/>
+        <location filename="../preferences.ui" line="303"/>
+        <location filename="../preferences.ui" line="389"/>
         <source>Icon</source>
         <translation>Иконка</translation>
     </message>
@@ -125,50 +125,50 @@
         <translation>Свернуть все окна в трей</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="308"/>
-        <location filename="../preferences.ui" line="518"/>
+        <location filename="../preferences.ui" line="311"/>
+        <location filename="../preferences.ui" line="521"/>
         <source>Default Thunderbird</source>
         <translation>Стандартная Thunderbird</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="321"/>
+        <location filename="../preferences.ui" line="324"/>
         <source>Lookthrough icon</source>
         <translation>Прозрачная иконка</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="333"/>
-        <location filename="../preferences.ui" line="460"/>
+        <location filename="../preferences.ui" line="336"/>
+        <location filename="../preferences.ui" line="463"/>
         <source>Custom icon</source>
         <translation>Своя иконка</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="350"/>
-        <location filename="../preferences.ui" line="477"/>
+        <location filename="../preferences.ui" line="353"/>
+        <location filename="../preferences.ui" line="480"/>
         <source>Choose</source>
         <translation>Выбрать</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="367"/>
+        <location filename="../preferences.ui" line="370"/>
         <source>KDE integration (Hide)</source>
         <translation>Интеграция с KDE (Скрыть)</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="380"/>
+        <location filename="../preferences.ui" line="383"/>
         <source>Mail notification icon</source>
         <translation>Иконка уведомления</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="397"/>
+        <location filename="../preferences.ui" line="400"/>
         <source>Blank icon</source>
         <translation>Пустая иконка</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="430"/>
+        <location filename="../preferences.ui" line="433"/>
         <source>New mail icon</source>
         <translation>Иконка &quot;Новые письма&quot;</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="491"/>
+        <location filename="../preferences.ui" line="494"/>
         <source>No icon</source>
         <translation>Без иконки (только цифры)</translation>
     </message>
@@ -195,24 +195,24 @@
         <translation>При закрытии</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="155"/>
+        <location filename="../preferences.ui" line="158"/>
         <source>Restore startup positions</source>
         <translation>Восстановить положение окон при запуске</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="192"/>
+        <location filename="../preferences.ui" line="195"/>
         <source>Minimize</source>
         <translation>Свернуть</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="198"/>
-        <location filename="../preferences.ui" line="243"/>
+        <location filename="../preferences.ui" line="201"/>
+        <location filename="../preferences.ui" line="246"/>
         <source>Default minimize</source>
         <translatorcomment>Need documentation what methods do...</translatorcomment>
         <translation>Свернуть окно</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="224"/>
+        <location filename="../preferences.ui" line="227"/>
         <source>Minimize to tray, method 2</source>
         <translation>Свернуть в трей, вариант 2</translation>
     </message>
@@ -232,21 +232,17 @@
         <translation>Свернуть все окна</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="129"/>
+        <location filename="../preferences.ui" line="132"/>
         <source>Start application minimized</source>
         <translation>Запуск приложения свернутым</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="546"/>
+        <location filename="../preferences.ui" line="549"/>
         <source>Invert icon</source>
         <translation>Инвертировать значок</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="683"/>
-=======
-        <location filename="../preferences.ui" line="652"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="686"/>
         <source>Number properties</source>
         <translation>Настройки индикатора кол-ва</translation>
     </message>
@@ -255,119 +251,67 @@
         <translation type="vanished">Показывать кол-во непрочитанных писем</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="736"/>
-=======
-        <location filename="../preferences.ui" line="705"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="739"/>
         <source>Number color</source>
         <translation>Цвет числа</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="757"/>
-=======
-        <location filename="../preferences.ui" line="726"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="760"/>
         <source>Number size</source>
         <translation>Размер числа</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="781"/>
-=======
-        <location filename="../preferences.ui" line="750"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="784"/>
         <source>Alignment</source>
         <translation>Выравнивание</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="792"/>
-=======
-        <location filename="../preferences.ui" line="761"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="795"/>
         <source>Top left</source>
         <translation>Верхний левый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="797"/>
-=======
-        <location filename="../preferences.ui" line="766"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="800"/>
         <source>Top centre</source>
         <translation>Верхний центр</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="802"/>
-=======
-        <location filename="../preferences.ui" line="771"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="805"/>
         <source>Top right</source>
         <translation>Верхний правый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="807"/>
-=======
-        <location filename="../preferences.ui" line="776"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="810"/>
         <source>Middle left</source>
         <translation>Средний левый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="812"/>
-=======
-        <location filename="../preferences.ui" line="781"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="815"/>
         <source>Middle centre</source>
         <translation>Средний центральный</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="817"/>
-=======
-        <location filename="../preferences.ui" line="786"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="820"/>
         <source>Middle right</source>
         <translation>Средний правый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="822"/>
-=======
-        <location filename="../preferences.ui" line="791"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="825"/>
         <source>Bottom left</source>
         <translation>Нижний левый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="827"/>
-=======
-        <location filename="../preferences.ui" line="796"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="830"/>
         <source>Bottom centre</source>
         <translation>Нижний центральный</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="832"/>
-=======
-        <location filename="../preferences.ui" line="801"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="835"/>
         <source>Bottom right</source>
         <translation>Нижний правый</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="691"/>
-=======
-        <location filename="../preferences.ui" line="660"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="694"/>
         <source>Margins (left, top, right, bottom):</source>
         <translation>Отступ (левый, Верхний, правый, Нижний):</translation>
     </message>
@@ -382,238 +326,153 @@
         <translation>Запуск по умолчанию</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="139"/>
+        <location filename="../preferences.ui" line="142"/>
         <source>Start application in tray</source>
         <translation>Запустить приложение в трее</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="596"/>
+        <location filename="../preferences.ui" line="599"/>
         <source>Count</source>
         <translation>счетчик</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="604"/>
+        <location filename="../preferences.ui" line="607"/>
         <source>Show message count</source>
         <translation>Показать количество писем</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="614"/>
+        <location filename="../preferences.ui" line="617"/>
         <source>Show new indicator</source>
         <translation>Показать новый индикатор</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="623"/>
+        <location filename="../preferences.ui" line="626"/>
         <source>Startup delay</source>
         <translation>Задержка запуска</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="647"/>
+        <location filename="../preferences.ui" line="650"/>
         <source>Count type</source>
         <translation>Алгоритм подсчета</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="655"/>
+        <location filename="../preferences.ui" line="658"/>
         <source>Unread</source>
         <translation>Непрочитанные</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="668"/>
+        <location filename="../preferences.ui" line="671"/>
         <source>New</source>
         <translation>Новые</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="847"/>
-=======
-        <location filename="../preferences.ui" line="816"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="850"/>
         <source>New indicator</source>
         <translation>Новый индикатор</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="855"/>
-=======
-        <location filename="../preferences.ui" line="824"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="858"/>
         <source>Icon round</source>
         <translation>Круглый значок</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="865"/>
-=======
-        <location filename="../preferences.ui" line="834"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="868"/>
         <source>Icon star</source>
         <translation>Значок звезды</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="877"/>
-=======
-        <location filename="../preferences.ui" line="846"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="880"/>
         <source>Shade</source>
         <translation>Оттенок</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="956"/>
-=======
-        <location filename="../preferences.ui" line="925"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="959"/>
         <source>Special options</source>
         <translation>Специальные опции</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="962"/>
-=======
-        <location filename="../preferences.ui" line="931"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="965"/>
         <source>API count method</source>
         <translation>Метод подсчета API</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="986"/>
-=======
-        <location filename="../preferences.ui" line="955"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="989"/>
         <source>Apps</source>
         <translation>Программы</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="994"/>
-=======
-        <location filename="../preferences.ui" line="963"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="997"/>
         <source>Close application</source>
         <translation>Заявление о закрытии</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1007"/>
-        <location filename="../preferences.ui" line="1048"/>
-=======
-        <location filename="../preferences.ui" line="976"/>
-        <location filename="../preferences.ui" line="1017"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1010"/>
+        <location filename="../preferences.ui" line="1051"/>
         <source>Browse...</source>
         <translation>просматривать...</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1018"/>
-        <location filename="../preferences.ui" line="1059"/>
-=======
-        <location filename="../preferences.ui" line="987"/>
-        <location filename="../preferences.ui" line="1028"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1021"/>
+        <location filename="../preferences.ui" line="1062"/>
         <source>Arguments:</source>
         <translation>аргументы:</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1035"/>
-=======
-        <location filename="../preferences.ui" line="1004"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1038"/>
         <source>Start application</source>
         <translation>Приложение при запуске</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1092"/>
-=======
-        <location filename="../preferences.ui" line="1061"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1095"/>
         <source>Mail</source>
         <translation>Письма</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1098"/>
-=======
-        <location filename="../preferences.ui" line="1067"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1101"/>
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Используйте диалоговое окно настроек в Thunderbird, чтобы выбрать учетные записи и папки</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1135"/>
-=======
-        <location filename="../preferences.ui" line="1104"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1138"/>
         <source>Debug</source>
         <translation>Отладка</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1141"/>
-=======
-        <location filename="../preferences.ui" line="1110"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1144"/>
         <source>Display debug window</source>
         <translation>Показывать окно отладки</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1202"/>
-=======
-        <location filename="../preferences.ui" line="1171"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1205"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-<<<<<<< HEAD
-        <location filename="../preferences.ui" line="1195"/>
-=======
-        <location filename="../preferences.ui" line="1164"/>
->>>>>>> develop
+        <location filename="../preferences.ui" line="1198"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="211"/>
-        <location filename="../preferences.ui" line="256"/>
+        <location filename="../preferences.ui" line="214"/>
+        <location filename="../preferences.ui" line="259"/>
         <source>Minimize to tray</source>
         <translation>Свернуть в трей</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="669"/>
-        <location filename="../preferencesdialog.cpp" line="693"/>
->>>>>>> develop
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="669"/>
-        <location filename="../preferencesdialog.cpp" line="693"/>
->>>>>>> develop
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Файлы изображений (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="763"/>
         <location filename="../preferencesdialog.cpp" line="777"/>
-=======
-        <location filename="../preferencesdialog.cpp" line="748"/>
-        <location filename="../preferencesdialog.cpp" line="762"/>
->>>>>>> develop
         <source>Select application</source>
         <translation>выберите приложение</translation>
     </message>
@@ -621,47 +480,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="246"/>
-=======
-        <location filename="../systrayx.cpp" line="243"/>
->>>>>>> develop
         <source>&amp;Show/Hide</source>
         <translation>&amp;Показать/Скрыть</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="250"/>
-=======
-        <location filename="../systrayx.cpp" line="247"/>
->>>>>>> develop
         <source>&amp;Preferences</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="254"/>
-=======
-        <location filename="../systrayx.cpp" line="251"/>
->>>>>>> develop
         <source>&amp;About</source>
         <translation>&amp;О приложении</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="258"/>
-=======
-        <location filename="../systrayx.cpp" line="255"/>
->>>>>>> develop
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="692"/>
-=======
-        <location filename="../systrayx.cpp" line="689"/>
->>>>>>> develop
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
