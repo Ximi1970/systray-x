@@ -246,7 +246,11 @@
         <translation>Invert icon</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="683"/>
+=======
+        <location filename="../preferences.ui" line="652"/>
+>>>>>>> develop
         <source>Number properties</source>
         <translation>Number properties</translation>
     </message>
@@ -255,67 +259,119 @@
         <translation type="vanished">Display unread message count</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="736"/>
+=======
+        <location filename="../preferences.ui" line="705"/>
+>>>>>>> develop
         <source>Number color</source>
         <translation>Number color</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="757"/>
+=======
+        <location filename="../preferences.ui" line="726"/>
+>>>>>>> develop
         <source>Number size</source>
         <translation>Number size</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="781"/>
+=======
+        <location filename="../preferences.ui" line="750"/>
+>>>>>>> develop
         <source>Alignment</source>
         <translation>Alignment</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="792"/>
+=======
+        <location filename="../preferences.ui" line="761"/>
+>>>>>>> develop
         <source>Top left</source>
         <translation>Top left</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="797"/>
+=======
+        <location filename="../preferences.ui" line="766"/>
+>>>>>>> develop
         <source>Top centre</source>
         <translation>Top centre</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="802"/>
+=======
+        <location filename="../preferences.ui" line="771"/>
+>>>>>>> develop
         <source>Top right</source>
         <translation>Top right</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="807"/>
+=======
+        <location filename="../preferences.ui" line="776"/>
+>>>>>>> develop
         <source>Middle left</source>
         <translation>Middle left</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="812"/>
+=======
+        <location filename="../preferences.ui" line="781"/>
+>>>>>>> develop
         <source>Middle centre</source>
         <translation>Middle centre</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="817"/>
+=======
+        <location filename="../preferences.ui" line="786"/>
+>>>>>>> develop
         <source>Middle right</source>
         <translation>Middle right</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="822"/>
+=======
+        <location filename="../preferences.ui" line="791"/>
+>>>>>>> develop
         <source>Bottom left</source>
         <translation>Bottom left</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="827"/>
+=======
+        <location filename="../preferences.ui" line="796"/>
+>>>>>>> develop
         <source>Bottom centre</source>
         <translation>Bottom centre</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="832"/>
+=======
+        <location filename="../preferences.ui" line="801"/>
+>>>>>>> develop
         <source>Bottom right</source>
         <translation>Bottom right</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="691"/>
+=======
+        <location filename="../preferences.ui" line="660"/>
+>>>>>>> develop
         <source>Margins (left, top, right, bottom):</source>
         <translation>Margins (left, top, right, bottom):</translation>
     </message>
@@ -370,89 +426,159 @@
         <translation>New</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="847"/>
+=======
+        <location filename="../preferences.ui" line="816"/>
+>>>>>>> develop
         <source>New indicator</source>
         <translation>New indicator</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="855"/>
+=======
+        <location filename="../preferences.ui" line="824"/>
+>>>>>>> develop
         <source>Icon round</source>
         <translation>Icon round</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="865"/>
+=======
+        <location filename="../preferences.ui" line="834"/>
+>>>>>>> develop
         <source>Icon star</source>
         <translation>Icon star</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="877"/>
+=======
+        <location filename="../preferences.ui" line="846"/>
+>>>>>>> develop
         <source>Shade</source>
         <translation>Shade</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="956"/>
+=======
+        <location filename="../preferences.ui" line="925"/>
+>>>>>>> develop
         <source>Special options</source>
         <translation>Special options</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="962"/>
+=======
+        <location filename="../preferences.ui" line="931"/>
+>>>>>>> develop
         <source>API count method</source>
         <translation>API count method</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="986"/>
+=======
+        <location filename="../preferences.ui" line="955"/>
+>>>>>>> develop
         <source>Apps</source>
         <translation>Apps</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="994"/>
+=======
+        <location filename="../preferences.ui" line="963"/>
+>>>>>>> develop
         <source>Close application</source>
         <translation>Close application</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1007"/>
         <location filename="../preferences.ui" line="1048"/>
+=======
+        <location filename="../preferences.ui" line="976"/>
+        <location filename="../preferences.ui" line="1017"/>
+>>>>>>> develop
         <source>Browse...</source>
         <translation>Browse...</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1018"/>
         <location filename="../preferences.ui" line="1059"/>
+=======
+        <location filename="../preferences.ui" line="987"/>
+        <location filename="../preferences.ui" line="1028"/>
+>>>>>>> develop
         <source>Arguments:</source>
         <translation>Arguments:</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1035"/>
+=======
+        <location filename="../preferences.ui" line="1004"/>
+>>>>>>> develop
         <source>Start application</source>
         <translation>Start application</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1092"/>
+=======
+        <location filename="../preferences.ui" line="1061"/>
+>>>>>>> develop
         <source>Mail</source>
         <translation>Mail</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1098"/>
+=======
+        <location filename="../preferences.ui" line="1067"/>
+>>>>>>> develop
         <source>Use the preferences dialog in Thunderbird to select the accounts and folders</source>
         <translation>Use the preferences dialog in Thunderbird to select the accounts and folders</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1135"/>
+=======
+        <location filename="../preferences.ui" line="1104"/>
+>>>>>>> develop
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1141"/>
+=======
+        <location filename="../preferences.ui" line="1110"/>
+>>>>>>> develop
         <source>Display debug window</source>
         <translation>Display debug window</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1202"/>
+=======
+        <location filename="../preferences.ui" line="1171"/>
+>>>>>>> develop
         <source>Save</source>
         <translation>Save</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferences.ui" line="1195"/>
+=======
+        <location filename="../preferences.ui" line="1164"/>
+>>>>>>> develop
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
@@ -463,20 +589,35 @@
         <translation>Minimize to tray</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
+=======
+        <location filename="../preferencesdialog.cpp" line="669"/>
+        <location filename="../preferencesdialog.cpp" line="693"/>
+>>>>>>> develop
         <source>Open Image</source>
         <translation>Open Image</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="684"/>
         <location filename="../preferencesdialog.cpp" line="708"/>
+=======
+        <location filename="../preferencesdialog.cpp" line="669"/>
+        <location filename="../preferencesdialog.cpp" line="693"/>
+>>>>>>> develop
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Image Files (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../preferencesdialog.cpp" line="763"/>
         <location filename="../preferencesdialog.cpp" line="777"/>
+=======
+        <location filename="../preferencesdialog.cpp" line="748"/>
+        <location filename="../preferencesdialog.cpp" line="762"/>
+>>>>>>> develop
         <source>Select application</source>
         <translation>Select application</translation>
     </message>
@@ -484,27 +625,47 @@
 <context>
     <name>SysTrayX</name>
     <message>
+<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="246"/>
+=======
+        <location filename="../systrayx.cpp" line="243"/>
+>>>>>>> develop
         <source>&amp;Show/Hide</source>
         <translation>&amp;Show/Hide</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="250"/>
+=======
+        <location filename="../systrayx.cpp" line="247"/>
+>>>>>>> develop
         <source>&amp;Preferences</source>
         <translation>&amp;Preferences</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="254"/>
+=======
+        <location filename="../systrayx.cpp" line="251"/>
+>>>>>>> develop
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="258"/>
+=======
+        <location filename="../systrayx.cpp" line="255"/>
+>>>>>>> develop
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <location filename="../systrayx.cpp" line="692"/>
+=======
+        <location filename="../systrayx.cpp" line="689"/>
+>>>>>>> develop
         <source>Close</source>
         <translation>Close</translation>
     </message>
