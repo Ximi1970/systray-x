@@ -206,7 +206,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     getPreferences();
 
-
+/*
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
     slotLoadLanguage( "en-US" );
@@ -217,7 +217,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     slotSelectIconObject( true );
 
     slotMailCount( 10, 1 );
-
+*/
 //    m_preferences->setStartApp( "/home/maxime/test.sh" );
 //    m_preferences->setStartAppArgs( "/home/maxime/startup.txt StartupString" );
 //    slotStartApp();
