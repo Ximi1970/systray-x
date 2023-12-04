@@ -49,6 +49,11 @@
     "description": "Tab for Mail options"
   },
 
+  "tab_shortcuts": {
+    "message": "Сочетания",
+    "description": "Tab for Shortcuts options"
+  },
+
   "tab_debug": {
     "message": "Отладка",
     "description": "Tab for Debug options"
@@ -392,6 +397,21 @@
   "accounts": {
     "message": "Аккаунты",
     "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Сочетания",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Ярлык Показать / Скрыть: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Удалять",
+    "description": "Clear"
   },
 
   "debug": {

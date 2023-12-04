@@ -49,6 +49,11 @@
     "description": "Tab for Mail options"
   },
 
+  "tab_shortcuts": {
+    "message": "Atalhos",
+    "description": "Tab for Shortcuts options"
+  },
+
   "tab_debug": {
     "message": "Depuração",
     "description": "Tab for Debug options"
@@ -392,6 +397,21 @@
   "accounts": {
     "message": "Contas",
     "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Atalhos",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Atalho Mostrar / Ocultar: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Remover",
+    "description": "Clear"
   },
 
   "debug": {

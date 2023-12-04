@@ -19,7 +19,7 @@ include( ../SysTray-X.pri )
 QT += core gui
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
-        QT += dbus KNotifications
+        QT += dbus KNotifications x11extras
     }
 }
 
@@ -147,6 +147,9 @@ win32: {
 
 SOURCES += \
         main.cpp \
+        nativeeventfilter-x11.cpp \
+        nativeeventfilterbase.cpp \
+        shortcut.cpp \
         systrayxlink.cpp \
         systrayxicon.cpp \
         systrayx.cpp \
@@ -169,6 +172,9 @@ SOURCES += \
 
 HEADERS += \
         debug.h \
+        nativeeventfilter-x11.h \
+        nativeeventfilterbase.h \
+        shortcut.h \
         systrayxlink.h \
         systrayxicon.h \
         systrayx.h \

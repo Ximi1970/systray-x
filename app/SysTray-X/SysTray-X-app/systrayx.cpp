@@ -9,6 +9,7 @@
 #include "systrayxicon.h"
 #include "systrayxstatusnotifier.h"
 #include "windowctrl.h"
+#include "shortcut.h"
 
 /*
  *	Qt includes
@@ -42,6 +43,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     m_unread_mail = 0;
     m_new_mail = 0;
     m_locale = QString();
+
+    m_show_hide_shortcut = nullptr;
 
     /*
      *  Setup preferences storage
@@ -105,8 +108,6 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
 #endif
 
-    connect( this, &SysTrayX::signalConsole, m_debug, &DebugWidget::slotConsole );
-
     /*
      *  Connect preferences signals
      */
@@ -128,6 +129,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalShowNumberChange, m_pref_dialog, &PreferencesDialog::slotShowNumberChange );
     connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_pref_dialog, &PreferencesDialog::slotShowNewIndicatorChange );
     connect( m_preferences, &Preferences::signalStartupDelayChange, m_pref_dialog, &PreferencesDialog::slotStartupDelayChange );
+    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_pref_dialog, &PreferencesDialog::slotApiCountMethodChange );
     connect( m_preferences, &Preferences::signalCountTypeChange, m_pref_dialog, &PreferencesDialog::slotCountTypeChange );
     connect( m_preferences, &Preferences::signalNumberColorChange, m_pref_dialog, &PreferencesDialog::slotNumberColorChange );
     connect( m_preferences, &Preferences::signalNumberSizeChange, m_pref_dialog, &PreferencesDialog::slotNumberSizeChange );
@@ -139,37 +141,13 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalStartAppArgsChange, m_pref_dialog, &PreferencesDialog::slotStartAppArgsChange );
     connect( m_preferences, &Preferences::signalCloseAppChange, m_pref_dialog, &PreferencesDialog::slotCloseAppChange );
     connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_pref_dialog, &PreferencesDialog::slotCloseAppArgsChange );
-    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_pref_dialog, &PreferencesDialog::slotApiCountMethodChange );
+    connect( m_preferences, &Preferences::signalShowHideShortcutChange, m_pref_dialog, &PreferencesDialog::slotShowHideShortcutChange );
     connect( m_preferences, &Preferences::signalDebugChange, m_pref_dialog, &PreferencesDialog::slotDebugChange );
 
-    connect( m_preferences, &Preferences::signalDefaultIconTypeChange, m_link, &SysTrayXLink::slotDefaultIconTypeChange );
-    connect( m_preferences, &Preferences::signalDefaultIconDataChange, m_link, &SysTrayXLink::slotDefaultIconDataChange );
-    connect( m_preferences, &Preferences::signalHideDefaultIconChange, m_link, &SysTrayXLink::slotHideDefaultIconChange );
-    connect( m_preferences, &Preferences::signalIconTypeChange, m_link, &SysTrayXLink::slotIconTypeChange );
-    connect( m_preferences, &Preferences::signalIconDataChange, m_link, &SysTrayXLink::slotIconDataChange );
-    connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_link, &SysTrayXLink::slotMinimizeTypeChange );
-    connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_link, &SysTrayXLink::slotMinimizeIconTypeChange );
-    connect( m_preferences, &Preferences::signalStartupTypeChange, m_link, &SysTrayXLink::slotStartupTypeChange );
-    connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_link, &SysTrayXLink::slotRestoreWindowPositionsChange );
-    connect( m_preferences, &Preferences::signalCloseTypeChange, m_link, &SysTrayXLink::slotCloseTypeChange );
-    connect( m_preferences, &Preferences::signalInvertIconChange, m_link, &SysTrayXLink::slotInvertIconChange );
-    connect( m_preferences, &Preferences::signalShowNumberChange, m_link, &SysTrayXLink::slotShowNumberChange );
-    connect( m_preferences, &Preferences::signalShowNewIndicatorChange, m_link, &SysTrayXLink::slotShowNewIndicatorChange );
-    connect( m_preferences, &Preferences::signalStartupDelayChange, m_link, &SysTrayXLink::slotStartupDelayChange );
-    connect( m_preferences, &Preferences::signalCountTypeChange, m_link, &SysTrayXLink::slotCountTypeChange );
-    connect( m_preferences, &Preferences::signalNumberColorChange, m_link, &SysTrayXLink::slotNumberColorChange );
-    connect( m_preferences, &Preferences::signalNumberSizeChange, m_link, &SysTrayXLink::slotNumberSizeChange );
-    connect( m_preferences, &Preferences::signalNumberAlignmentChange, m_link, &SysTrayXLink::slotNumberAlignmentChange );
-    connect( m_preferences, &Preferences::signalNumberMarginsChange, m_link, &SysTrayXLink::slotNumberMarginsChange );
-    connect( m_preferences, &Preferences::signalNewIndicatorTypeChange, m_link, &SysTrayXLink::slotNewIndicatorTypeChange );
-    connect( m_preferences, &Preferences::signalNewShadeColorChange, m_link, &SysTrayXLink::slotNewShadeColorChange );
-    connect( m_preferences, &Preferences::signalStartAppChange, m_link, &SysTrayXLink::slotStartAppChange );
-    connect( m_preferences, &Preferences::signalStartAppArgsChange, m_link, &SysTrayXLink::slotStartAppArgsChange );
-    connect( m_preferences, &Preferences::signalCloseAppChange, m_link, &SysTrayXLink::slotCloseAppChange );
-    connect( m_preferences, &Preferences::signalCloseAppArgsChange, m_link, &SysTrayXLink::slotCloseAppArgsChange );
-    connect( m_preferences, &Preferences::signalApiCountMethodChange, m_link, &SysTrayXLink::slotApiCountMethodChange );
-    connect( m_preferences, &Preferences::signalDebugChange, m_link, &SysTrayXLink::slotDebugChange );
+    connect( m_pref_dialog, &PreferencesDialog::signalPreferencesChanged, m_link, &SysTrayXLink::slotPreferencesChanged );
+
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
+    connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
 
@@ -209,6 +187,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
+
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
     //slotLoadLanguage( "nl" );
@@ -217,11 +196,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     slotSelectIconObject( true );
 
     slotMailCount( 10, 1 );
-*/
+
 //    m_preferences->setStartApp( "/home/maxime/test.sh" );
 //    m_preferences->setStartAppArgs( "/home/maxime/startup.txt StartupString" );
 //    slotStartApp();
-
+*/
 }
 
 
@@ -793,3 +772,16 @@ void    SysTrayX::slotCloseApp()
     }
 }
 
+void    SysTrayX::slotShowHideShortcutChange()
+{
+    if( m_show_hide_shortcut != nullptr )
+    {
+        disconnect( m_show_hide_shortcut, &Shortcut::activated, m_win_ctrl, &WindowCtrl::slotShowHide );
+
+        delete m_show_hide_shortcut;
+        m_show_hide_shortcut = nullptr;
+    }
+
+    m_show_hide_shortcut = new Shortcut( m_preferences->getShowHideShortcut(), this );
+    connect( m_show_hide_shortcut, &Shortcut::activated, m_win_ctrl, &WindowCtrl::slotShowHide );
+}

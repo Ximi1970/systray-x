@@ -265,6 +265,13 @@ class PreferencesDialog : public QDialog
          */
         void    setApiCountMethod( bool state );
 
+        /**
+         * @brief setShowHideShortcut. Set the show / hide shortcut.
+         *
+         *  @param key_seq      The shortcut key sequence.
+         */
+        void    setShowHideShortcut( QKeySequence key_seq );
+
     signals:
 
         /**
@@ -278,6 +285,11 @@ class PreferencesDialog : public QDialog
          * @brief signalUpdateSysTray. Signal to update the system tray icon.
          */
         void    signalUpdateSysTrayIcon();
+
+        /**
+         * @brief signalPreferencesChanged. The preferences have been changed.
+         */
+        void    signalPreferencesChanged();
 
     public slots:
 
@@ -357,6 +369,11 @@ class PreferencesDialog : public QDialog
         void    slotStartupDelayChange();
 
         /**
+         * @brief slotApiCountMethodChange. Slot for handling the API count methid change.
+         */
+        void    slotApiCountMethodChange();
+
+        /**
          * @brief slotShowNumberChange. Slot for handling show number state change.
          */
         void    slotShowNumberChange();
@@ -417,9 +434,9 @@ class PreferencesDialog : public QDialog
         void    slotCloseAppArgsChange();
 
         /**
-         * @brief slotApiCountMethodChange. Slot for handling the API count methid change.
+         * @brief slotShowHideShortcutChange. Slot for handling a show / hide shortcut change.
          */
-        void    slotApiCountMethodChange();
+        void    slotShowHideShortcutChange();
 
     private slots:
 
@@ -462,6 +479,16 @@ class PreferencesDialog : public QDialog
          * @brief slotCloseAppSelect. Handle the close application button click.
          */
         void    slotCloseAppSelect();
+
+        /**
+         * @brief slotTruncateShowHideShortcut. Handle the edit show / hide shortcut key field.
+         */
+        void    slotTruncateShowHideShortcut();
+
+        /**
+         * @brief slotClearShowHideShortcut. Handle the clear show / hide shortcut button.
+         */
+        void    slotClearShowHideShortcut();
 
     private:
 

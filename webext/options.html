@@ -32,6 +32,7 @@
       <button class="tablinks" id="Count">__MSG_tab_count__</button>
       <button class="tablinks" id="Apps">__MSG_tab_apps__</button>
       <button class="tablinks" id="Mail">__MSG_tab_mail__</button>
+      <button class="tablinks" id="Shortcuts">__MSG_tab_shortcuts__</button>
       <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
     </div>
 
@@ -666,6 +667,30 @@
       </form>
 
       <script src="js/options_mailform.js"></script>
+    </div>
+
+    <div id="ShortcutsContent" class="tabcontent">
+      <form name="shortcutsform">
+        <h3>__MSG_shortcuts__</h3>
+
+        <div id="showhideshortcutinput">
+          <div>
+            <label for="showHideShortcutInput" id="showHideShortcutInputLabel">
+              __MSG_shortcuts_showhide_shortcut__
+            </label>
+            <input
+              type="text"
+              name="showhideshortcut"
+              id="showHideShortcutInput"
+              value=""
+            />
+            <button type="button" name="showhideshortcutsbutton">__MSG_shortcuts_clear_button__</button>
+          </div>
+        </div>
+
+      </form>
+
+      <script src="js/options_shortcutsform.js"></script>
     </div>
 
     <div id="DebugContent" class="tabcontent">

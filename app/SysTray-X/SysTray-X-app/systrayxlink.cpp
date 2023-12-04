@@ -796,6 +796,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartupDelay( startup_delay );
     }
 
+    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
+    {
+        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
+
+        /*
+         *  Store the new API cont method state
+         */
+        m_pref->setApiCountMethod( api_count_method );
+    }
+
     if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
     {
         Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
@@ -896,14 +906,14 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setCloseAppArgs( args );
     }
 
-    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
+    if( pref.contains( "showHideShortcut" ) && pref[ "showHideShortcut" ].isString() )
     {
-        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
+        QString shortcut = pref[ "showHideShortcut" ].toString();
 
         /*
-         *  Store the new API cont method state
+         *  Store the new shortcut
          */
-        m_pref->setApiCountMethod( api_count_method );
+        m_pref->setShowHideShortcut( QKeySequence::fromString( shortcut ) );
     }
 
     if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
@@ -957,44 +967,46 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
      *  Setup the preferences JSON
      */
     QJsonObject prefObject;
-    prefObject.insert("debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
-    prefObject.insert("minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
-    prefObject.insert("minimizeIconType", QJsonValue::fromVariant( QString::number( pref.getMinimizeIconType() ) ) );
-    prefObject.insert("startupType", QJsonValue::fromVariant( QString::number( pref.getStartupType() ) ) );
-    prefObject.insert("restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
-    prefObject.insert("closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
-    prefObject.insert("defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
-    prefObject.insert("defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
-    prefObject.insert("defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
-    prefObject.insert("hideDefaultIcon", QJsonValue::fromVariant( QString( pref.getHideDefaultIcon() ? "true" : "false" ) ) );
-    prefObject.insert("iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
-    prefObject.insert("iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
-    prefObject.insert("icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
-    prefObject.insert("invertIcon", QJsonValue::fromVariant( QString( pref.getInvertIcon() ? "true" : "false" ) ) );
-    prefObject.insert("showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
-    prefObject.insert("showNewIndicator", QJsonValue::fromVariant( QString( pref.getShowNewIndicator() ? "true" : "false" ) ) );
-    prefObject.insert("numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
-    prefObject.insert("numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
-    prefObject.insert("numberAlignment", QJsonValue::fromVariant( QString::number( pref.getNumberAlignment() ) ) );
+    prefObject.insert( "debug", QJsonValue::fromVariant( QString( pref.getDebug() ? "true" : "false" ) ) );
+    prefObject.insert( "minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
+    prefObject.insert( "minimizeIconType", QJsonValue::fromVariant( QString::number( pref.getMinimizeIconType() ) ) );
+    prefObject.insert( "startupType", QJsonValue::fromVariant( QString::number( pref.getStartupType() ) ) );
+    prefObject.insert( "restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
+    prefObject.insert( "closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
+    prefObject.insert( "defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
+    prefObject.insert( "defaultIconMime", QJsonValue::fromVariant( pref.getDefaultIconMime() ) );
+    prefObject.insert( "defaultIcon", QJsonValue::fromVariant( QString( pref.getDefaultIconData().toBase64() ) ) );
+    prefObject.insert( "hideDefaultIcon", QJsonValue::fromVariant( QString( pref.getHideDefaultIcon() ? "true" : "false" ) ) );
+    prefObject.insert( "iconType", QJsonValue::fromVariant( QString::number( pref.getIconType() ) ) );
+    prefObject.insert( "iconMime", QJsonValue::fromVariant( pref.getIconMime() ) );
+    prefObject.insert( "icon", QJsonValue::fromVariant( QString( pref.getIconData().toBase64() ) ) );
+    prefObject.insert( "invertIcon", QJsonValue::fromVariant( QString( pref.getInvertIcon() ? "true" : "false" ) ) );
+    prefObject.insert( "showNumber", QJsonValue::fromVariant( QString( pref.getShowNumber() ? "true" : "false" ) ) );
+    prefObject.insert( "showNewIndicator", QJsonValue::fromVariant( QString( pref.getShowNewIndicator() ? "true" : "false" ) ) );
+    prefObject.insert( "numberColor", QJsonValue::fromVariant( QString( pref.getNumberColor() ) ) );
+    prefObject.insert( "numberSize", QJsonValue::fromVariant( QString::number( pref.getNumberSize() ) ) );
+    prefObject.insert( "numberAlignment", QJsonValue::fromVariant( QString::number( pref.getNumberAlignment() ) ) );
 
     QJsonObject marginsObject;
-    marginsObject.insert("left", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().left() ) ) );
-    marginsObject.insert("top", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().top() ) ) );
-    marginsObject.insert("right", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().right() ) ) );
-    marginsObject.insert("bottom", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().bottom() ) ) );
+    marginsObject.insert( "left", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().left() ) ) );
+    marginsObject.insert( "top", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().top() ) ) );
+    marginsObject.insert( "right", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().right() ) ) );
+    marginsObject.insert( "bottom", QJsonValue::fromVariant( QString::number( pref.getNumberMargins().bottom() ) ) );
 
-    prefObject.insert("numberMargins", marginsObject );
-    prefObject.insert("countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
-    prefObject.insert("startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
-    prefObject.insert("apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
+    prefObject.insert( "numberMargins", marginsObject );
+    prefObject.insert( "countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
+    prefObject.insert( "startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
+    prefObject.insert( "apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
 
-    prefObject.insert("startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
-    prefObject.insert("startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
-    prefObject.insert("closeApp", QJsonValue::fromVariant( pref.getCloseApp() ) );
-    prefObject.insert("closeAppArgs", QJsonValue::fromVariant( pref.getCloseAppArgs() ) );
+    prefObject.insert( "startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
+    prefObject.insert( "startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
+    prefObject.insert( "closeApp", QJsonValue::fromVariant( pref.getCloseApp() ) );
+    prefObject.insert( "closeAppArgs", QJsonValue::fromVariant( pref.getCloseAppArgs() ) );
+
+    prefObject.insert( "showHideShortcut", QJsonValue::fromVariant( pref.getShowHideShortcut().toString() ) );
 
     QJsonObject preferencesObject;
-    preferencesObject.insert("preferences", prefObject );
+    preferencesObject.insert( "preferences", prefObject );
 
     /*
      *  Store the new document
@@ -1029,328 +1041,14 @@ void    SysTrayXLink::slotLinkRead( QByteArray message )
  */
 void    SysTrayXLink::slotPositions( QList< QPoint > positions )
 {
-   sendPositions( positions );
+    sendPositions( positions );
 }
 
 
 /*
- *  Handle a restore window positions state change signal
+ *  Handle a preferences changed signal
  */
-void    SysTrayXLink::slotRestoreWindowPositionsChange()
+void    SysTrayXLink::slotPreferencesChanged()
 {
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the minimize type change signal
- */
-void    SysTrayXLink::slotMinimizeTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the minimize icon type change signal
- */
-void    SysTrayXLink::slotMinimizeIconTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a startup type change signal
- */
-void    SysTrayXLink::slotStartupTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a close type change signal
- */
-void    SysTrayXLink::slotCloseTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the default icon type change signal
- */
-void    SysTrayXLink::slotDefaultIconTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the default icon data change signal
- */
-void    SysTrayXLink::slotDefaultIconDataChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the hide default icon change signal
- */
-void    SysTrayXLink::slotHideDefaultIconChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the icon type change signal
- */
-void    SysTrayXLink::slotIconTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the icon data change signal
- */
-void    SysTrayXLink::slotIconDataChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a invert icon change signal
- */
-void    SysTrayXLink::slotInvertIconChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a show number state change signal
- */
-void    SysTrayXLink::slotShowNumberChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a show new indicator state change signal
- */
-void    SysTrayXLink::slotShowNewIndicatorChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the count type change signal
- */
-void    SysTrayXLink::slotCountTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a startup delay change signal
- */
-void    SysTrayXLink::slotStartupDelayChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a number color change signal
- */
-void    SysTrayXLink::slotNumberColorChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a number size change signal
- */
-void    SysTrayXLink::slotNumberSizeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a number alignment change signal
- */
-void    SysTrayXLink::slotNumberAlignmentChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a number margins change signal
- */
-void    SysTrayXLink::slotNumberMarginsChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the new indicator type change signal
- */
-void    SysTrayXLink::slotNewIndicatorTypeChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle the new shade color change signal
- */
-void    SysTrayXLink::slotNewShadeColorChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a start application change signal
- */
-void    SysTrayXLink::slotStartAppChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a start application arguments change signal
- */
-void    SysTrayXLink::slotStartAppArgsChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a close application change signal
- */
-void    SysTrayXLink::slotCloseAppChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a close application arguments change signal
- */
-void    SysTrayXLink::slotCloseAppArgsChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-
-/*
- *  Handle a API count method change signal
- */
-void    SysTrayXLink::slotApiCountMethodChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
-}
-
-/*
- *  Handle a debug state change signal
- */
-void    SysTrayXLink::slotDebugChange()
-{
-    if( m_pref->getAppPrefChanged() )
-    {
-        sendPreferences();
-    }
+    sendPreferences();
 }

@@ -137,6 +137,9 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     connect( m_ui->startBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotStartAppSelect );
     connect( m_ui->closeBrowseButton, &QPushButton::clicked, this, &PreferencesDialog::slotCloseAppSelect );
 
+    connect( m_ui->showHideKeySequenceEdit, &QKeySequenceEdit::editingFinished, this, &PreferencesDialog::slotTruncateShowHideShortcut );
+    connect( m_ui->clearShowHideShortcutPushButton, &QPushButton::clicked, this, &PreferencesDialog::slotClearShowHideShortcut );
+
     /*
      *  Set number color
      */
@@ -179,6 +182,11 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     setStartAppArgs( m_pref->getStartAppArgs() );
     setCloseApp( m_pref->getCloseApp() );
     setCloseAppArgs( m_pref->getCloseAppArgs() );
+
+    /*
+     *  Set the show / hide shortcut
+     */
+    setShowHideShortcut( m_pref->getShowHideShortcut() );
 
     /*
      *  Dialog on top
@@ -541,6 +549,17 @@ void    PreferencesDialog::setApiCountMethod( bool state )
 
 
 /*
+ *  Set the show / hide shortcut
+ */
+void    PreferencesDialog::setShowHideShortcut( QKeySequence key_seq )
+{
+    m_ui->currentShowHideShortcut->setText( key_seq.toString() );
+
+    m_ui->showHideKeySequenceEdit->setKeySequence( key_seq );
+}
+
+
+/*
  *  Handle show dialog signal
  */
 void PreferencesDialog::slotShowDialog()
@@ -565,11 +584,6 @@ void PreferencesDialog::slotShowDialog()
  */
 void    PreferencesDialog::slotAccept()
 {
-    /*
-     *  Settings changed by app
-     */
-    m_pref->setAppPrefChanged( true );
-
     /*
      *  Get all the selected values and store them in the preferences
      */
@@ -604,20 +618,22 @@ void    PreferencesDialog::slotAccept()
 
     QString startApp = m_ui->startAppLineEdit->text();
     m_pref->setStartApp( startApp );
-    QString startAppArgs= m_ui->startAppArgsLineEdit->text();
+    QString startAppArgs = m_ui->startAppArgsLineEdit->text();
     m_pref->setStartAppArgs( startAppArgs );
     QString closeApp = m_ui->closeAppLineEdit->text();
     m_pref->setCloseApp( closeApp );
-    QString closeAppArgs= m_ui->closeAppArgsLineEdit->text();
+    QString closeAppArgs = m_ui->closeAppArgsLineEdit->text();
     m_pref->setCloseAppArgs( closeAppArgs );
     m_pref->setNumberColor( m_number_color );
+
+    m_pref->setShowHideShortcut( m_ui->showHideKeySequenceEdit->keySequence() );
 
     m_pref->setDebug( m_ui->debugWindowCheckBox->isChecked() );
 
     /*
      *  Settings changed by app
      */
-    m_pref->setAppPrefChanged( false );
+    emit signalPreferencesChanged();
 
     /*
      *  Close it
@@ -671,6 +687,8 @@ void    PreferencesDialog::slotReject()
     setStartAppArgs( m_pref->getStartAppArgs() );
     setCloseApp( m_pref->getCloseApp() );
     setCloseAppArgs( m_pref->getCloseAppArgs() );
+
+    setShowHideShortcut( m_pref->getShowHideShortcut() );
 
     setDebug( m_pref->getDebug());
 }
@@ -958,6 +976,15 @@ void    PreferencesDialog::slotStartupDelayChange()
 
 
 /*
+ *  Handle the API count method change signal
+ */
+void    PreferencesDialog::slotApiCountMethodChange()
+{
+    setApiCountMethod( m_pref->getApiCountMethod() );
+}
+
+
+/*
  *  Handle the number alignment change
  */
 void    PreferencesDialog::slotNumberAlignmentChange()
@@ -1030,9 +1057,43 @@ void    PreferencesDialog::slotCloseAppArgsChange()
 
 
 /*
- *  Handle the API count method change signal
+ *  Handle the show / hide shortcut change signal
  */
-void    PreferencesDialog::slotApiCountMethodChange()
+void    PreferencesDialog::slotShowHideShortcutChange()
 {
-    setApiCountMethod( m_pref->getApiCountMethod() );
+    setShowHideShortcut( m_pref->getShowHideShortcut() );
+}
+
+
+/*
+ *  Handle the edit show / hide shortcut key field
+ */
+void    PreferencesDialog::slotTruncateShowHideShortcut()
+{
+    QKeySequence key_seq = m_ui->showHideKeySequenceEdit->keySequence();
+
+    /*
+     *  Workaround for a Qt5 bug in QKeySequenceEdit object, Meta/Win key is not handled correctly.
+     */
+    int value = 0;
+    if( key_seq[ 0 ] == 16777299 && key_seq.count() > 1 )
+    {
+        value = key_seq[ 1 ];
+    }
+    else if( !(key_seq[ 0 ] == 16777299 && key_seq.count() == 1) )
+    {
+        value = key_seq[ 0 ];
+    }
+
+    QKeySequence shortcut( value );
+    m_ui->showHideKeySequenceEdit->setKeySequence( shortcut );
+}
+
+
+/*
+ *  Handle the clear show / hide shortcut push button
+ */
+void    PreferencesDialog::slotClearShowHideShortcut()
+{
+    m_ui->showHideKeySequenceEdit->setKeySequence( QKeySequence() );
 }

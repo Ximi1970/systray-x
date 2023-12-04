@@ -28,6 +28,9 @@ class WindowCtrl;
 
 class SysTrayXStatusNotifier;
 
+class Shortcut;
+
+
 /**
  * @brief The SysTrayX class
  */
@@ -185,6 +188,11 @@ class SysTrayX : public QObject
          */
         void    slotVersion( QString version );
 
+        /**
+         * @brief slotShowHideShortcutChange. Handle a show / hide shortcut change.
+         */
+        void    slotShowHideShortcutChange();
+
     private:
 
         /**
@@ -254,6 +262,11 @@ class SysTrayX : public QObject
          * @brief m_locale. Storage for the current locale.
          */
         QString m_locale;
+
+        /**
+         * @brief m_show_hide_shortcut. Storage for the show / hide shortcut.
+         */
+        Shortcut* m_show_hide_shortcut;
 };
 
 #endif // SYSTRAYX_H

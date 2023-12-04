@@ -322,6 +322,17 @@ SysTrayX.SaveOptions = {
       closeAppArgs: closeAppArgs,
     });
 
+    //
+    //  Save shortcuts
+    //
+    const showHideShortcutInput = document.getElementById("showHideShortcutInput");
+    const showHideShortcut = showHideShortcutInput.value;
+
+    //  Store show / hide shortcut
+    await storage().set({
+      showHideShortcut: showHideShortcut,
+    });
+
     //  Mark add-on preferences changed
     await storage().set({
       addonprefchanged: true,
@@ -584,26 +595,36 @@ SysTrayX.RestoreOptions = {
         SysTrayX.RestoreOptions.onStartAppError
       );
 
-      await storage()
-      .get("startAppArgs")
-      .then(
-        SysTrayX.RestoreOptions.setStartAppArgs,
-        SysTrayX.RestoreOptions.onStartAppArgsError
-      );
+    await storage()
+    .get("startAppArgs")
+    .then(
+      SysTrayX.RestoreOptions.setStartAppArgs,
+      SysTrayX.RestoreOptions.onStartAppArgsError
+    );
 
-      await storage()
-      .get("closeApp")
-      .then(
-        SysTrayX.RestoreOptions.setCloseApp,
-        SysTrayX.RestoreOptions.onCloseAppError
-      );
+    await storage()
+    .get("closeApp")
+    .then(
+      SysTrayX.RestoreOptions.setCloseApp,
+      SysTrayX.RestoreOptions.onCloseAppError
+    );
 
-      await storage()
-      .get("closeAppArgs")
+    await storage()
+    .get("closeAppArgs")
+    .then(
+      SysTrayX.RestoreOptions.setCloseAppArgs,
+      SysTrayX.RestoreOptions.onCloseAppArgsError
+    );
+
+    //
+    //  Restore show / hide shortcut
+    //
+    await storage()
+      .get("showHideShortcut")
       .then(
-        SysTrayX.RestoreOptions.setCloseAppArgs,
-        SysTrayX.RestoreOptions.onCloseAppArgsError
-      );
+        SysTrayX.RestoreOptions.setShowHideShortcut,
+        SysTrayX.RestoreOptions.onShowHideShortcutError
+      );    
   },
 
   //
@@ -1119,6 +1140,20 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore show / hide shortcut
+  //
+  setShowHideShortcut: function (result) {
+    const showHideShortcut = result.showHideShortcut || "";
+
+    const showHideShortcutInput = document.getElementById("showHideShortcutInput");
+    showHideShortcutInput.value = showHideShortcut;
+  },
+
+  onShowHideShortcutError: function (error) {
+    console.log(`ShowHideShortcut Error: ${error}`);
+  },
+
+  //
   //  Restore filters callbacks
   //
   setFilters: function (result) {
@@ -1365,6 +1400,11 @@ SysTrayX.StorageChanged = {
       if (item === "closeAppArgs") {
         SysTrayX.RestoreOptions.setCloseAppArgs({
           closeAppArgs: changes[item].newValue,
+        });
+      }
+      if (item === "showHideShortcut") {
+        SysTrayX.RestoreOptions.setShowHideShortcut({
+          showHideShortcut: changes[item].newValue,
         });
       }
 

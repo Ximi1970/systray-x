@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>608</width>
     <height>468</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWindows">
       <attribute name="title">
@@ -1133,6 +1133,79 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Shortcuts</string>
+      </attribute>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>10</y>
+         <width>571</width>
+         <height>58</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_18">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Current show / hide shortcut:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="currentShowHideShortcut"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_17">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>New show / hide shortcut:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="showHideKeySequenceEdit">
+            <property name="keySequence">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="clearShowHideShortcutPushButton">
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
      <widget class="QWidget" name="tabDebug">
       <attribute name="title">
        <string>Debug</string>
@@ -1217,13 +1290,13 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="closeTypeGroup"/>
   <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="minimizeIconTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="startupTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
   <buttongroup name="newIndicatorTypeGroup"/>
   <buttongroup name="countTypeGroup"/>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="startupTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
+  <buttongroup name="minimizeIconTypeGroup"/>
  </buttongroups>
 </ui>

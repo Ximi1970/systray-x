@@ -13,6 +13,8 @@
 #include <QStringList>
 #include <QByteArray>
 #include <QMargins>
+#include <QKeySequence>
+
 
 /**
  * @brief The Preferences class. Class to hold the preferences.
@@ -124,20 +126,6 @@ class Preferences : public QObject
          * @brief Preferences.  Constructor. Destructor.
          */
         Preferences( QObject *parent = nullptr );
-
-        /**
-         * @brief getAppPrefChanged. Control for sending changes to the add-on.
-         *
-         * @return      The state
-         */
-        bool getAppPrefChanged() const;
-
-        /**
-         * @brief setAppPrefChanged. Control for sending changes to the add-on.
-         *
-         *  @param state    The state
-         */
-        void setAppPrefChanged( bool state );
 
         /**
          * @brief setPlatformOs. Set the platform OS.
@@ -588,6 +576,16 @@ class Preferences : public QObject
         void setApiCountMethod( bool state );
 
         /**
+         * @brief getShowHideShortcut. Get the show / hide shortcut key sequence.
+         */
+        QKeySequence getShowHideShortcut() const;
+
+        /**
+         * @brief setShowHideShortcut. Set the show / hide shortcut key sequence.
+         */
+        void setShowHideShortcut( QKeySequence key_seq );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -769,16 +767,16 @@ class Preferences : public QObject
         void signalCloseAppArgsChange();
 
         /**
-         * @brief signalApiCountMethodChange
+         * @brief signalApiCountMethodChange. Signal the api count method change.
          */
         void signalApiCountMethodChange();
 
-    private:
-
         /**
-         * @brief m_app_pref_changed. Control for sending changes to the add-on.
+         * @brief signalShowHideShortcutChange. Signal the show / hide shortcut key sequence change.
          */
-        bool m_app_pref_changed;
+        void signalShowHideShortcutChange();
+
+    private:
 
         /**
          * @brief m_platform_xx. Platform description.
@@ -963,6 +961,11 @@ class Preferences : public QObject
          * @brief m_api_count_method. The API count method state.
          */
         bool m_api_count_method;
+
+        /**
+         * @brief m_show_hide_shortcut. The show / hide shortcut key sequence.
+         */
+        QKeySequence m_show_hide_shortcut;
 
         /**
          * @brief m_debug. Display debug window.

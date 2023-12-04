@@ -49,6 +49,11 @@
     "description": "Tab for Mail options"
   },
 
+  "tab_shortcuts": {
+    "message": "Συντομεύσεις",
+    "description": "Tab for Shortcuts options"
+  },
+
   "tab_debug": {
     "message": "Αποσφαλμάτωση",
     "description": "Tab for Debug options"
@@ -392,6 +397,21 @@
   "accounts": {
     "message": "Λογαριασμοί",
     "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Συντομεύσεις",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Συντόμευση Εμφάνιση / Απόκρυψη: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Αφαιρώ",
+    "description": "Clear"
   },
 
   "debug": {

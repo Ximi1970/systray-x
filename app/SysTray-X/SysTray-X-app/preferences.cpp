@@ -44,10 +44,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     /*
      *  Initialize
      */
-    m_app_pref_changed = false;
-
     m_minimize_type = PREF_MINIMIZE_METHOD_1;
-    m_close_type = PREF_MINIMIZE_MAIN_CLOSE_CHILDREN_WINDOWS;
+    m_close_type = PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
 
     m_startup_type = PREF_START_DEFAULT;
@@ -70,6 +68,7 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_number_size = 10;
     m_count_type = PREF_COUNT_UNREAD;
     m_startup_delay = 5;
+    m_api_count_method = false;
     m_number_alignment = 4;
     m_number_margins = QMargins();
     m_new_indicator_type = PREF_NEW_INDICATOR_SHADE;
@@ -91,27 +90,8 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_start_app_args = "";
     m_close_app = "";
     m_close_app_args = "";
-}
 
-
-/*
- *  Get the icon mime.
- */
-bool    Preferences::getAppPrefChanged() const
-{
-    return m_app_pref_changed;
-}
-
-
-/*
- *  Control the sending of preferences changes to the add-on
- */
-void    Preferences::setAppPrefChanged( bool state )
-{
-    if( m_app_pref_changed != state )
-    {
-        m_app_pref_changed = state;
-    }
+    m_show_hide_shortcut = QKeySequence();
 }
 
 
@@ -937,6 +917,32 @@ void    Preferences::setApiCountMethod( bool state )
          *  Tell the world the new preference
          */
         emit signalApiCountMethodChange();
+    }
+}
+
+
+/*
+ *  Get the show / hide shortcut key sequence.
+ */
+QKeySequence    Preferences::getShowHideShortcut() const
+{
+    return m_show_hide_shortcut;
+}
+
+
+/*
+ *  Set the show / hide shortcut key sequence.
+ */
+void    Preferences::setShowHideShortcut( QKeySequence key_seq )
+{
+    if( m_show_hide_shortcut != key_seq )
+    {
+        m_show_hide_shortcut = key_seq;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalShowHideShortcutChange();
     }
 }
 

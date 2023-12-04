@@ -437,21 +437,41 @@
     </message>
     <message>
         <location filename="../preferences.ui" line="1138"/>
+        <source>Shortcuts</source>
+        <translation>Snelkoppelingen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1157"/>
+        <source>Current show / hide shortcut:</source>
+        <translation>Huidige snelkoppeling Tonen / Verbergen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1186"/>
+        <source>New show / hide shortcut:</source>
+        <translation>Nieuwe snelkoppeling Tonen / Verbergen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1200"/>
+        <source>Clear</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <location filename="../preferences.ui" line="1211"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1144"/>
+        <location filename="../preferences.ui" line="1217"/>
         <source>Display debug window</source>
         <translation>Toon debug venster</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1205"/>
+        <location filename="../preferences.ui" line="1278"/>
         <source>Save</source>
         <translation>Bewaren</translation>
     </message>
     <message>
-        <location filename="../preferences.ui" line="1198"/>
+        <location filename="../preferences.ui" line="1271"/>
         <source>Cancel</source>
         <translation>Annnuleren</translation>
     </message>
@@ -462,20 +482,20 @@
         <translation>Minimaliseer naar systeemvak</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="684"/>
-        <location filename="../preferencesdialog.cpp" line="708"/>
+        <location filename="../preferencesdialog.cpp" line="702"/>
+        <location filename="../preferencesdialog.cpp" line="726"/>
         <source>Open Image</source>
         <translation>Open afbeelding</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="684"/>
-        <location filename="../preferencesdialog.cpp" line="708"/>
+        <location filename="../preferencesdialog.cpp" line="702"/>
+        <location filename="../preferencesdialog.cpp" line="726"/>
         <source>Image Files (*.png *.jpg *.bmp)</source>
         <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="763"/>
-        <location filename="../preferencesdialog.cpp" line="777"/>
+        <location filename="../preferencesdialog.cpp" line="781"/>
+        <location filename="../preferencesdialog.cpp" line="795"/>
         <source>Select application</source>
         <translation>Selecteer programma</translation>
     </message>
@@ -483,27 +503,27 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="246"/>
+        <location filename="../systrayx.cpp" line="225"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Tonen/Verbergen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="250"/>
+        <location filename="../systrayx.cpp" line="229"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Opties</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="254"/>
+        <location filename="../systrayx.cpp" line="233"/>
         <source>&amp;About</source>
         <translation>O&amp;ver</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="258"/>
+        <location filename="../systrayx.cpp" line="237"/>
         <source>&amp;Quit</source>
         <translation>&amp;Afsluiten</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="692"/>
+        <location filename="../systrayx.cpp" line="671"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>

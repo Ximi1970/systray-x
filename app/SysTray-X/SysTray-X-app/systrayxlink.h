@@ -269,144 +269,14 @@ class SysTrayXLink : public QObject
     public slots:
 
         /**
-         * @brief slotDebugChange. Handle a change in debug state.
-         */
-        void    slotDebugChange();
-
-        /**
          * @brief slotPositions. Slot for handling a window positions change.
          */
         void    slotPositions( QList< QPoint > positions );
 
         /**
-         * @brief slotRestoreWindowPositionsChange. Handle a change in restore window positions state.
+         * @brief slotPreferencesChanged
          */
-        void    slotRestoreWindowPositionsChange();
-
-        /**
-         * @brief slotMinimizeTypeChange. Slot for handling minimize type change signals.
-         */
-        void    slotMinimizeTypeChange();
-
-        /**
-         * @brief slotMinimizeIconTypeChange. Slot for handling minimize icon type change signals.
-         */
-        void    slotMinimizeIconTypeChange();
-
-        /**
-         * @brief slotStartupTypeChange. Handle a change in startup type.
-         */
-        void    slotStartupTypeChange();
-
-        /**
-         * @brief slotCloseTypeChange. Slot for handling close type change signals.
-         */
-        void    slotCloseTypeChange();
-
-        /**
-         * @brief slotDefaultIconTypeChange. Slot for handling default icon type change signals.
-         */
-        void    slotDefaultIconTypeChange();
-
-        /**
-         * @brief slotDefaultIconDataChange. Slot for handling default icon data change signals.
-         */
-        void    slotDefaultIconDataChange();
-
-        /**
-         * @brief slotHideDefaultIconChange. Slot for handling hide default icon change signals.
-         */
-        void    slotHideDefaultIconChange();
-
-        /**
-         * @brief slotIconTypeChange. Slot for handling icon type change signals.
-         */
-        void    slotIconTypeChange();
-
-        /**
-         * @brief slotIconDataChange. Slot for handling icon data change signals.
-         */
-        void    slotIconDataChange();
-
-        /**
-         * @brief slotInvertIconChange. Slot for handling invert icon change signals.
-         */
-        void    slotInvertIconChange();
-
-        /**
-         * @brief slotShowNumberChange. Handle a change in show number state.
-         */
-        void    slotShowNumberChange();
-
-        /**
-         * @brief slotShowNewIndicatorChange. Handle a change in show new indicator state.
-         */
-        void    slotShowNewIndicatorChange();
-
-        /**
-         * @brief slotCountTypeChange. Slot for handling count type change signals.
-         */
-        void    slotCountTypeChange();
-
-        /**
-         * @brief slotStartupDelayChange. Handle a change in startup delay.
-         */
-        void    slotStartupDelayChange();
-
-        /**
-         * @brief slotNumberColorChange. Handle a change in number color.
-         */
-        void    slotNumberColorChange();
-
-        /**
-         * @brief slotNumberSizeChange. Handle a change in number size.
-         */
-        void    slotNumberSizeChange();
-
-        /**
-         * @brief slotNumberAlignmentChange. Handle a change in number alignment.
-         */
-        void    slotNumberAlignmentChange();
-
-        /**
-         * @brief slotNumberMarginsChange. Handle a change in number margins.
-         */
-        void    slotNumberMarginsChange();
-
-        /**
-         * @brief slotNewIndicatorTypeChange. Slot for handling new indicator type change signals.
-         */
-        void    slotNewIndicatorTypeChange();
-
-        /**
-         * @brief slotNewShadeColorChange. Handle a change in new shade color.
-         */
-        void    slotNewShadeColorChange();
-
-        /**
-         * @brief slotStartAppChange. Slot for handling start application change signals.
-         */
-        void    slotStartAppChange();
-
-        /**
-         * @brief slotStartAppArgsChange. Slot for handling start application arguments change signals.
-         */
-        void    slotStartAppArgsChange();
-
-        /**
-         * @brief slotCloseAppChange. Slot for handling close application change signals.
-         */
-        void    slotCloseAppChange();
-
-        /**
-         * @brief slotCloseAppArgsChange. Slot for handling close application arguments change signals.
-         */
-        void    slotCloseAppArgsChange();
-
-        /**
-         * @brief slotApiCountMethodChange. Slot for handling the API count method change signals.
-         */
-        void    slotApiCountMethodChange();
+        void    slotPreferencesChanged();
 
     private slots:
 

@@ -632,6 +632,7 @@ SysTrayX.Messaging = {
         "startAppArgs",
         "closeApp",
         "closeAppArgs",
+        "showHideShortcut",
       ])
       .then(
         SysTrayX.Messaging.sendPreferencesStorage,
@@ -674,6 +675,7 @@ SysTrayX.Messaging = {
     const startAppArgs = result.startAppArgs || "";
     const closeApp = result.closeApp || "";
     const closeAppArgs = result.closeAppArgs || "";
+    const showHideShortcut = result.showHideShortcut || "";
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
@@ -707,6 +709,7 @@ SysTrayX.Messaging = {
         startAppArgs,
         closeApp,
         closeAppArgs,
+        showHideShortcut,
       },
     });
   },
@@ -965,6 +968,13 @@ SysTrayX.Link = {
         });
       }
 
+      const showHideShortcut = response["preferences"].showHideShortcut;
+      if (showHideShortcut !== undefined) {
+        await storage().set({
+          showHideShortcut: showHideShortcut,
+        });
+      }
+
       const debug = response["preferences"].debug;
       if (debug) {
         await storage().set({
@@ -1023,7 +1033,7 @@ SysTrayX.Window = {
 async function start() {
   //  Setup the link first
   SysTrayX.Link.init();
-
+  
   //  Force close a window using a toolbar button
   browser.browserAction.disable();
 

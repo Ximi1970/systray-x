@@ -49,6 +49,11 @@
     "description": "Tab for Mail options"
   },
 
+  "tab_shortcuts": {
+    "message": "Tastatürkürzel",
+    "description": "Tab for Shortcuts options"
+  },
+
   "tab_debug": {
     "message": "Debug",
     "description": "Tab for Debug options"
@@ -392,6 +397,21 @@
   "accounts": {
     "message": "Konten",
     "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Tastatürkürzel",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Tastenkombination Einblenden / Ausblenden: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Löschen",
+    "description": "Clear"
   },
 
   "debug": {
