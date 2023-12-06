@@ -15,6 +15,13 @@
  */
 
 
+
+/*
+ *  Defines
+ */
+#define SHORTCUT_ID 1024
+
+
 /**
  * @brief The NativeEventFilterWin class
  */
@@ -73,6 +80,10 @@ class NativeEventFilterWin : public NativeEventFilterBase
          */
         int m_key_code_win;
 
+        /**
+         * @brief m_virtual_key_map. Holds the Qt to Windows virtual key translation map.
+         */
+        static const QMap< Qt::Key, int > m_virtual_key_map;
 };
 
 SINGLETON( NativeEventFilterWin )

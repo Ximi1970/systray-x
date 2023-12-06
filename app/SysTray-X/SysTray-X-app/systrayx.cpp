@@ -187,6 +187,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
+    m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
 
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
