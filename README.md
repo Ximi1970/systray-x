@@ -9,6 +9,7 @@ The addon and system tray application can do:
 - optional new mail indicator (icon or shading)
 - run app on start or close
 - show / hide Thunderbird (minimize)
+- use a shortcut to show / hide
 - minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
 - minimize on close
