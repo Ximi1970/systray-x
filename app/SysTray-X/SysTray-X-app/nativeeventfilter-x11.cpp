@@ -32,7 +32,7 @@ bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void*
         xcb_key_press_event_t key_press_event = *static_cast< xcb_key_press_event_t* >( message );
 
         if( m_key_code_x11 == key_press_event.detail &&
-                m_key_modifiers_x11 == key_press_event.state & NativeEventFilterX11::m_valid_mods_mask )
+                m_key_modifiers_x11 == ( key_press_event.state & NativeEventFilterX11::m_valid_mods_mask ) )
         {
             activated();
         }
