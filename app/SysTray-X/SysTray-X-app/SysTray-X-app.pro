@@ -147,7 +147,6 @@ win32: {
 
 SOURCES += \
         main.cpp \
-        nativeeventfilter-x11.cpp \
         nativeeventfilterbase.cpp \
         shortcut.cpp \
         systrayxlink.cpp \
@@ -159,6 +158,7 @@ SOURCES += \
         windowctrl.cpp
 unix: {
 SOURCES += \
+        nativeeventfilter-x11.cpp \
         windowctrl-unix.cpp
     contains(DEFINES,KDE_INTEGRATION) {
         SOURCES += \
@@ -167,12 +167,12 @@ SOURCES += \
 }
 win32: {
 SOURCES += \
+        nativeeventfilter-win.cpp \
         windowctrl-win.cpp
 }
 
 HEADERS += \
         debug.h \
-        nativeeventfilter-x11.h \
         nativeeventfilterbase.h \
         shortcut.h \
         systrayxlink.h \
@@ -184,6 +184,7 @@ HEADERS += \
         windowctrl.h
 unix: {
 HEADERS += \
+        nativeeventfilter-x11.h \
         windowctrl-unix.h
 
     contains(DEFINES,KDE_INTEGRATION) {
@@ -193,6 +194,7 @@ HEADERS += \
 }
 win32: {
 HEADERS += \
+        nativeeventfilter-win.h \
         windowctrl-win.h
 }
 
