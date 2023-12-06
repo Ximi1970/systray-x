@@ -1,3 +1,10 @@
+systray-x (0.9.8-0) unstable; urgency=low
+
+  * Update to 0.9.8
+
+    - Fixed / refactored multi window handling
+    - Added an option to add a shortcut key for show / hide
+
 systray-x (0.9.7-0) unstable; urgency=low
 
   * Update to 0.9.7
