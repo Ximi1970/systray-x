@@ -643,6 +643,66 @@ void    SysTrayXLink::DecodePositions( const QJsonArray& positions )
  */
 void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
 {
+    if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
+    {
+        bool debug = pref[ "debug" ].toString() == "true";
+
+        /*
+         *  Store the new debug state
+         */
+        m_pref->setDebug( debug );
+    }
+
+    if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
+    {
+        Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
+
+        /*
+         *  Store the new minimize type
+         */
+        m_pref->setMinimizeType( minimize_type );
+    }
+
+    if( pref.contains( "minimizeIconType" ) && pref[ "minimizeIconType" ].isString() )
+    {
+        Preferences::MinimizeIconType minimize_icon_type = static_cast< Preferences::MinimizeIconType >( pref[ "minimizeIconType" ].toString().toInt() );
+
+        /*
+         *  Store the new minimize type
+         */
+        m_pref->setMinimizeIconType( minimize_icon_type );
+    }
+
+    if( pref.contains( "closeType" ) && pref[ "closeType" ].isString() )
+    {
+        Preferences::CloseType close_type = static_cast< Preferences::CloseType >( pref[ "closeType" ].toString().toInt() );
+
+        /*
+         *  Store the new close type
+         */
+        m_pref->setCloseType( close_type );
+    }
+
+    if( pref.contains( "startupType" ) && pref[ "startupType" ].isString() )
+    {
+        Preferences::StartupType startup_type = static_cast< Preferences::StartupType >( pref[ "startupType" ].toString().toInt() );
+
+        /*
+         *  Store the new start minimized state
+         */
+        m_pref->setStartupType( startup_type );
+    }
+
+    if( pref.contains( "restorePositions" ) && pref[ "restorePositions" ].isString() )
+    {
+        bool resore_window_positions = pref[ "restorePositions" ].toString() == "true";
+
+        /*
+         *  Store the new restore window positions state
+         */
+        m_pref->setRestoreWindowPositions( resore_window_positions );
+    }
+
     /*
      *  Check the received object
      */
@@ -716,6 +776,16 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setIconData( QByteArray::fromBase64( icon_base64.toUtf8() ) );
     }
 
+    if( pref.contains( "invertIcon" ) && pref[ "invertIcon" ].isString() )
+    {
+        bool invert_icon = pref[ "invertIcon" ].toString() == "true";
+
+        /*
+         *  Store the new invert icon state
+         */
+        m_pref->setInvertIcon( invert_icon );
+    }
+
     if( pref.contains( "showNumber" ) && pref[ "showNumber" ].isString() )
     {
         bool show_number = pref[ "showNumber" ].toString() == "true";
@@ -734,6 +804,36 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          *  Store the new show new indicator state
          */
         m_pref->setShowNewIndicator( show_new_indicator );
+    }
+
+    if( pref.contains( "countType" ) && pref[ "countType" ].isString() )
+    {
+        Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
+
+        /*
+         *  Store the new count type
+         */
+        m_pref->setCountType( count_type );
+    }
+
+    if( pref.contains( "startupDelay" ) && pref[ "startupDelay" ].isString() )
+    {
+        int startup_delay = pref[ "startupDelay" ].toString().toInt();
+
+        /*
+         *  Store the new startup delay
+         */
+        m_pref->setStartupDelay( startup_delay );
+    }
+
+    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
+    {
+        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
+
+        /*
+         *  Store the new API cont method state
+         */
+        m_pref->setApiCountMethod( api_count_method );
     }
 
     if( pref.contains( "numberColor" ) && pref[ "numberColor" ].isString() )
@@ -776,94 +876,24 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setNumberMargins( margins );
     }
 
-    if( pref.contains( "countType" ) && pref[ "countType" ].isString() )
+    if( pref.contains( "newIndicatorType" ) && pref[ "newIndicatorType" ].isString() )
     {
-        Preferences::CountType count_type = static_cast< Preferences::CountType >( pref[ "countType" ].toString().toInt() );
+        Preferences::NewIndicatorType new_indicator_type = static_cast< Preferences::NewIndicatorType >( pref[ "newIndicatorType" ].toString().toInt() );
 
         /*
-         *  Store the new count type
+         *  Store the new indicator type
          */
-        m_pref->setCountType( count_type );
+        m_pref->setNewIndicatorType( new_indicator_type );
     }
 
-    if( pref.contains( "startupDelay" ) && pref[ "startupDelay" ].isString() )
+    if( pref.contains( "newShadeColor" ) && pref[ "newShadeColor" ].isString() )
     {
-        int startup_delay = pref[ "startupDelay" ].toString().toInt();
+        QString new_shade_color = pref[ "newShadeColor" ].toString();
 
         /*
-         *  Store the new startup delay
+         *  Store the new shade color
          */
-        m_pref->setStartupDelay( startup_delay );
-    }
-
-    if( pref.contains( "apiCountMethod" ) && pref[ "apiCountMethod" ].isString() )
-    {
-        bool api_count_method = pref[ "apiCountMethod" ].toString() == "true";
-
-        /*
-         *  Store the new API cont method state
-         */
-        m_pref->setApiCountMethod( api_count_method );
-    }
-
-    if( pref.contains( "minimizeType" ) && pref[ "minimizeType" ].isString() )
-    {
-        Preferences::MinimizeType minimize_type = static_cast< Preferences::MinimizeType >( pref[ "minimizeType" ].toString().toInt() );
-
-        /*
-         *  Store the new minimize type
-         */
-        m_pref->setMinimizeType( minimize_type );
-    }
-
-    if( pref.contains( "minimizeIconType" ) && pref[ "minimizeIconType" ].isString() )
-    {
-        Preferences::MinimizeIconType minimize_icon_type = static_cast< Preferences::MinimizeIconType >( pref[ "minimizeIconType" ].toString().toInt() );
-
-        /*
-         *  Store the new minimize type
-         */
-        m_pref->setMinimizeIconType( minimize_icon_type );
-    }
-
-    if( pref.contains( "startupType" ) && pref[ "startupType" ].isString() )
-    {
-        Preferences::StartupType startup_type = static_cast< Preferences::StartupType >( pref[ "startupType" ].toString().toInt() );
-
-        /*
-         *  Store the new start minimized state
-         */
-        m_pref->setStartupType( startup_type );
-    }
-
-    if( pref.contains( "restorePositions" ) && pref[ "restorePositions" ].isString() )
-    {
-        bool resore_window_positions = pref[ "restorePositions" ].toString() == "true";
-
-        /*
-         *  Store the new restore window positions state
-         */
-        m_pref->setRestoreWindowPositions( resore_window_positions );
-    }
-
-    if( pref.contains( "closeType" ) && pref[ "closeType" ].isString() )
-    {
-        Preferences::CloseType close_type = static_cast< Preferences::CloseType >( pref[ "closeType" ].toString().toInt() );
-
-        /*
-         *  Store the new close type
-         */
-        m_pref->setCloseType( close_type );
-    }
-
-    if( pref.contains( "invertIcon" ) && pref[ "invertIcon" ].isString() )
-    {
-        bool invert_icon = pref[ "invertIcon" ].toString() == "true";
-
-        /*
-         *  Store the new invert icon state
-         */
-        m_pref->setInvertIcon( invert_icon );
+        m_pref->setNewShadeColor( new_shade_color );
     }
 
     if( pref.contains( "startApp" ) && pref[ "startApp" ].isString() )
@@ -914,16 +944,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          *  Store the new shortcut
          */
         m_pref->setShowHideShortcut( QKeySequence::fromString( shortcut ) );
-    }
-
-    if( pref.contains( "debug" ) && pref[ "debug" ].isString() )
-    {
-        bool debug = pref[ "debug" ].toString() == "true";
-
-        /*
-         *  Store the new debug state
-         */
-        m_pref->setDebug( debug );
     }
 }
 
