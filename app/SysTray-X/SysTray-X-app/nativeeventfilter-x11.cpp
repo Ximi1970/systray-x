@@ -4,6 +4,7 @@
 /*
  *  System includes
  */
+#include <xcb/xcb.h>
 
 /*
  *  Qt includes
