@@ -368,7 +368,7 @@ SysTrayX.Messaging = {
     deleteFolderFromFilters(deletedFolder);
   },
 
-  onNewWindow: async function (id) {
+  showHideForceCloseButton: function () {
     if (SysTrayX.Messaging.closeType === "2" || SysTrayX.Messaging.closeType === "4") {
       // Activate the extra close button when all to tray/taskbar is selected
       browser.browserAction.setTitle({title: "Force close"});
@@ -379,6 +379,10 @@ SysTrayX.Messaging = {
       browser.browserAction.setIcon({path: "icons/dummy.png"});
       browser.browserAction.disable();
     }
+  },
+
+  onNewWindow: async function (id) {
+    SysTrayX.Messaging.showHideForceCloseButton();
 
     SysTrayX.Link.postSysTrayXMessage({ newWindow: id });
   },
@@ -415,17 +419,25 @@ SysTrayX.Messaging = {
     if ("closeType" in changes && changes["closeType"].newValue) {
       SysTrayX.Messaging.closeType = changes["closeType"].newValue;
 
-      browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
+      await browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
+      browser.windowEvent.onNewWindow.removeListener(
+        SysTrayX.Messaging.onNewWindow
+      );
       browser.windowEvent.onCloseButtonClick.removeListener(
         SysTrayX.Messaging.onCloseButton
       );
 
       if (SysTrayX.Messaging.closeType !== "0") {
+        browser.windowEvent.onNewWindow.addListener(
+          SysTrayX.Messaging.onNewWindow
+        );
         browser.windowEvent.onCloseButtonClick.addListener(
           SysTrayX.Messaging.onCloseButton
         );
       }
+
+      SysTrayX.Messaging.showHideForceCloseButton();
     }
 
     if ("countType" in changes && changes["countType"].newValue) {
@@ -748,6 +760,9 @@ SysTrayX.Link = {
 
   receiveSysTrayXMessage: async function (response) {
     if (response["shutdown"]) {
+      browser.windowEvent.onNewWindow.removeListener(
+        SysTrayX.Messaging.onNewWindow
+      );
       browser.windowEvent.onCloseButtonClick.removeListener(
         SysTrayX.Messaging.onCloseButton
       );
@@ -1039,7 +1054,7 @@ async function start() {
 
   browser.browserAction.onClicked.addListener(async () => {
     const window = await browser.windows.getCurrent();
-    browser.windowEvent.forceClose(window.id);
+    await browser.windowEvent.forceClose(window.id);
 
     // Send new state to the companion
     SysTrayX.Link.postSysTrayXMessage({ closeWindow: { id: window.id, quit: true } });
@@ -1113,12 +1128,12 @@ async function start() {
   //console.debug("All window IDs: " + JSON.stringify(windows.map((win) => win.id)));
   //console.debug("Window: " + JSON.stringify(windows));
 
+  // Set the main window id
+  await browser.windowEvent.setMainWindowId(Number(SysTrayX.mainWindowId));
+
   // Set the close type
   SysTrayX.Messaging.closeType = await getCloseType();
-  browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
-
-  // Set the main window id
-  browser.windowEvent.setMainWindowId(Number(SysTrayX.mainWindowId));
+  await browser.windowEvent.setCloseType(Number(SysTrayX.Messaging.closeType));
 
   //  Intercept close button?
   if (SysTrayX.Messaging.closeType !== "0") {
@@ -1128,6 +1143,8 @@ async function start() {
     browser.windowEvent.onCloseButtonClick.addListener(
       SysTrayX.Messaging.onCloseButton
     );
+
+    SysTrayX.Messaging.showHideForceCloseButton();
   }
 
   //  Hide the default icon

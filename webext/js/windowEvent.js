@@ -61,16 +61,46 @@
       return `window_event_listener_close_button_${this.extension.uuid}_${this.extension.instanceId}`;
     }
 
+    resetAllListeners() {    
+    }
+
     setCloseType(closeType) {
+//      console.log("Close type change: " + closeType);
+
       if (closeType === 0) {
+        if( this.closeType !== this.MESSAGE_CLOSE_TYPE_DEFAULT )
+        {
+          this.resetAllListeners();
+        }
+
         this.closeType = this.MESSAGE_CLOSE_TYPE_DEFAULT;
       } else if (closeType === 1) {
+        if( this.closeType !== this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN )
+        {
+          this.resetAllListeners();
+        }
+
         this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_TRAY_CLOSE_CHILDREN;
       } else if (closeType === 2) {
+        if( this.closeType !== this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY )
+        {
+          this.resetAllListeners();
+        }
+        
         this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY;
       } else if (closeType === 3) {
+        if( this.closeType !== this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN )
+        {
+          this.resetAllListeners();
+        }
+
         this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_MAIN_CLOSE_CHILDREN;
       } else if (closeType === 4) {
+        if( this.closeType !== this.MESSAGE_CLOSE_TYPE_MIN_ALL )
+        {
+          this.resetAllListeners();
+        }
+
         this.closeType = this.MESSAGE_CLOSE_TYPE_MIN_ALL;
       } else console.log("Unknown close type: " + closeType);
     }
@@ -81,8 +111,15 @@
 
     forceClose(id) {
       if (this.activeWindows[id] !== undefined) {
+//        console.log("Force Close clicked: " + id);
+
         this.activeWindows[id].window.close = this.activeWindows[id].close;
         this.activeWindows[id].window.close();
+        const closeWindow = this.activeWindows[id].window;
+
+        delete this.activeWindows[id];
+
+        closeWindow.close();
       }
     }
  
@@ -90,6 +127,8 @@
       // Registering the callback for "new-window".
       this.on("new-window", callback);
       this.onNewWindowCallbackCount++;
+
+//      console.log("New window add");
 
       if (this.onNewWindowCallbackCount === 1) {
         ExtensionSupport.registerWindowListener(this.listenerIdNewWindow, {
@@ -104,7 +143,7 @@
 
             windowListener.emit("new-window", id);
 
-            //console.log("New window added: " + id);
+//            console.log("New window added: " + id);
           }
         });
       }
@@ -115,6 +154,8 @@
       this.off("new-window", callback);
       this.onNewWindowCallbackCount--;
 
+//      console.log("New window remove");
+
       if (this.onNewWindowCallbackCount === 0) {
         for (let window of ExtensionSupport.openWindows) {
           if ([
@@ -124,7 +165,7 @@
             // Get current window id
             const id = context.extension.windowManager.getWrapper(window).id;
 
-            //console.log("New window removed: " + id);
+//            console.log("New window removed: " + id);
           }
         }
         ExtensionSupport.unregisterWindowListener( this.listenerIdNewWindow );
@@ -135,6 +176,8 @@
       // Registering the callback for "close-clicked".
       this.on( "close-clicked", callback );
       this.onCloseButtonClickCallbackCount++;
+
+//      console.log("New Close add");
 
       if (this.onCloseButtonClickCallbackCount === 1) {
         ExtensionSupport.registerWindowListener(this.listenerIdCloseButton, {
@@ -152,10 +195,11 @@
                 windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL) {
 
               function onCloseButton(event) {
-                if ( event ) event.preventDefault();
-                windowListener.emit("close-clicked", id, false);
 //                console.log("Close clicked: " + event);
 //                console.log("Close clicked: " + id);
+
+                if ( event ) event.preventDefault();
+                windowListener.emit("close-clicked", id, false);
                 return true;
               }
 
@@ -176,15 +220,16 @@
               //  Pre TB115 close menu, now same as close button
               window.close = () => onCloseButton(null);
   
-              //console.log("Close listener added for: " + id);  
+//              console.log("Close listener added for: " + id);  
             } else {
 
               function onCloseButton2(event) {
-                //console.log("Real Close clicked: " + id);
+//                console.log("Real Close clicked: " + id);
 
                 windowListener.emit("close-clicked", id, true);
 
                 window.close = windowListener.activeWindows[id].close;
+
                 window.close();
                 return false;
               }
@@ -206,7 +251,7 @@
               //  Pre TB115 close menu, now same as close button
               window.close = () => onCloseButton2(null);
 
-              //console.log("Real Close listener added for: " + id);  
+//              console.log("Real Close listener added for: " + id);  
             }
           },
         });
@@ -218,6 +263,8 @@
       this.off( "close-clicked", callback );
       this.onCloseButtonClickCallbackCount--;
 
+//      console.log("Close remove");
+
       if (this.onCloseButtonClickCallbackCount === 0) {
         for (let window of ExtensionSupport.openWindows) {
           if ([
@@ -227,24 +274,19 @@
             // Get current window id
             const id = context.extension.windowManager.getWrapper(window).id
 
-            if (id === windowListener.mainWindowId ||
-                windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL_TRAY ||
-                windowListener.closeType === windowListener.MESSAGE_CLOSE_TYPE_MIN_ALL) {
+            // Release the close event (triggered when clicking the close button)
+            window.removeEventListener(
+              "close",
+              windowListener.activeWindows[id].listener,
+              true
+            );
 
-              // Release the close event (triggered when clicking the close button)
-              window.removeEventListener(
-                "close",
-                windowListener.activeWindows[id].listener,
-                true
-              );
+            window.close = windowListener.activeWindows[id].close;
 
-              window.close = windowListener.activeWindows[id].close;
+            //  Clean the storage
+            delete windowListener.activeWindows[id];
 
-              //  Clean the storage
-              delete windowListener.activeWindows[id];
-
-              //console.log("Close listener removed for: " + id);
-            }
+//            console.log("Close listener removed for: " + id);
           }
         }
         ExtensionSupport.unregisterWindowListener(this.listenerIdCloseButton);
