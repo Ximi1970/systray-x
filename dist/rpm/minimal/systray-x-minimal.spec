@@ -26,6 +26,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
+BuildRequires:  libqt5-qtx11extras-devel
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
