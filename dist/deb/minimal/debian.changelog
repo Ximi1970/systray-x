@@ -4,6 +4,7 @@ systray-x-minimal (0.9.8-0) unstable; urgency=low
 
     - Fixed / refactored multi window handling
     - Added an option to add a shortcut key for show / hide
+    - Bugfixes
 
 systray-x-minimal (0.9.7-0) unstable; urgency=low
 

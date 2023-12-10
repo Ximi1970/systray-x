@@ -1,10 +1,11 @@
 -------------------------------------------------------------------
-Sun Dec 10 23:24:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+Sun Dec 10 13:24:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.8
 
     - Fixed / refactored multi window handling
     - Added an option to add a shortcut key for show / hide
+    - Bugfixes
 
 -------------------------------------------------------------------
 Sun Nov 12 11:12:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
