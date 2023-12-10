@@ -14,6 +14,7 @@
 /*
  *	Qt includes
  */
+#include <QVector>
 
 
 /**
