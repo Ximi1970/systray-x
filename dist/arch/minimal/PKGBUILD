@@ -19,6 +19,7 @@ makedepends=(
   'zip'
   'libx11'
   'qt5-base'
+  'qt5-x11extras'
 )
 provides=(
   'systray-x'
