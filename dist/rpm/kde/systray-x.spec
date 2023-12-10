@@ -29,7 +29,7 @@ BuildRequires:  zip
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(Qt5X11Extras5)
+BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version} || 0%{?centos_version}
 BuildRequires:  kf5-knotifications-devel
