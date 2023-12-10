@@ -19,8 +19,9 @@ include( ../SysTray-X.pri )
 QT += core gui
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
-        QT += dbus KNotifications x11extras
+        QT += dbus KNotifications
     }
+    QT += x11extras
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
