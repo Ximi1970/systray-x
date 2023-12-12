@@ -51,7 +51,7 @@ Please press the reset button in the TB SysTray-X add-on preferences page to cle
 ## Limitations
 
 This add-on / companion app will not work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.  
-You need to use a workaround for Wayland. In some distributions this is already applied.
+You need to use a workaround for Wayland. In some distributions this is already applied.  
 The shortcut option does not work in GNOME or Wayland.
 
 ## Binaries (System)
