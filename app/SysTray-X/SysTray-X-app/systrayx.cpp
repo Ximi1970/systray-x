@@ -147,9 +147,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_pref_dialog, &PreferencesDialog::signalPreferencesChanged, m_link, &SysTrayXLink::slotPreferencesChanged );
 
     connect( m_preferences, &Preferences::signalHideDefaultIconChange, this,  &SysTrayX::slotSelectIconObjectPref );
-    connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
 
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
+
+#if defined( SHORTCUTS )
+    connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
+#endif
 
     /*
      *  Connect link signals
@@ -183,6 +186,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      *  Request preferences from add-on
      */
     getPreferences();
+
+    m_preferences->displayDebug();
 
 /*
     m_preferences->setBrowserVersion( "115.1.0" );
@@ -479,12 +484,7 @@ void    SysTrayX::hideKdeTrayIcon()
         disconnect( this, &SysTrayX::signalMailCount, m_kde_tray_icon, &SysTrayXStatusNotifier::slotMailCount );
 
         /*
-         *  Remove the notifier icon#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
-#else
-    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
-#endif
-
+         *  Remove the notifier icon
          */
         delete m_kde_tray_icon;
         m_kde_tray_icon = nullptr;

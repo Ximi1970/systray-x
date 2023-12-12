@@ -356,6 +356,16 @@ SysTrayX.RestoreOptions = {
       );
 
     //
+    //  Restore the options
+    //
+    await storage()
+      .get("options")
+      .then(
+        SysTrayX.RestoreOptions.setOptions,
+        SysTrayX.RestoreOptions.onOptionsError
+      );
+
+    //
     //  Restore filters
     //
     await storage()
@@ -439,7 +449,7 @@ SysTrayX.RestoreOptions = {
     //  Restore hide default icon
     //
     await storage()
-      .get(["kdeIntegration", "hideDefaultIcon"])
+      .get("hideDefaultIcon")
       .then(
         SysTrayX.RestoreOptions.setHideDefaultIcon,
         SysTrayX.RestoreOptions.onHideDefaultIconError
@@ -642,6 +652,22 @@ SysTrayX.RestoreOptions = {
   },
 
   //
+  //  Restore options callbacks
+  //
+  setOptions: function (result) {
+    const options = result.options || {
+      kdeIntegration: true,
+      shortcuts: true,
+    };
+
+    SysTrayX.Info.options = options;
+  },
+
+  onOptionsError: function (error) {
+    console.log(`Options Error: ${error}`);
+  },
+
+  //
   //  Restore minimize type callbacks
   //
   setMinimizeType: function (result) {
@@ -828,12 +854,11 @@ SysTrayX.RestoreOptions = {
   //  Restore hide default icon callbacks
   //
   setHideDefaultIcon: function (result) {
-    const kdeIntegration = result.kdeIntegration || "true";
     const hideDefaultIcon = result.hideDefaultIcon || "false";
 
     const checkbox = document.querySelector(`input[name="hideDefaultIcon"]`);
 
-    if (kdeIntegration === "false") {
+    if (!SysTrayX.Info.options.kdeIntegration) {
       checkbox.parentNode.setAttribute("style", "display: none;");
     }
 
@@ -1477,10 +1502,6 @@ async function start() {
     document.getElementById("defaultCustomIconImage").setAttribute("src","icons/Thunderbird115.png");
   }
 
-  if (SysTrayX.Info.platformInfo.os !== "linux") {
-    document.getElementById("kdeintegration").style.display = "none";
-  }
-
   if (SysTrayX.Info.browserInfo.majorVersion < 115) {
     document.getElementById("apicountmethod").style.display = "none";
   }
@@ -1492,7 +1513,17 @@ async function start() {
 
   // Set the options
   //document.addEventListener("DOMContentLoaded", SysTrayX.RestoreOptions.start);
-  SysTrayX.RestoreOptions.start();
+  await SysTrayX.RestoreOptions.start();
+
+  // Hide system depending options
+  if ( !SysTrayX.Info.options.shortcuts ) {
+    document.getElementById("Shortcuts").style.display = "none";
+    document.getElementById("ShortcutsContent").style.display = "none";
+  }
+
+  if ( !SysTrayX.Info.options.kdeIntegration || SysTrayX.Info.platformInfo.os !== "linux" ) {
+    document.getElementById("kdeintegration").style.display = "none";
+  }
 
   // Enable save button
   document

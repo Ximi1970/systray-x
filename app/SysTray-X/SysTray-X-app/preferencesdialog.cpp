@@ -81,6 +81,21 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 #endif
 
+#if defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS )
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabVisible( index, false );
+
+#else
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabEnabled( index, false );
+    m_ui->tabWidget->setStyleSheet( "QTabBar::tab::disabled { width: 0; height: 0; margin: 0; padding: 0; border: none; }" );
+
+#endif
+#endif
+
     /*
      *  Set icon type button Ids
      */

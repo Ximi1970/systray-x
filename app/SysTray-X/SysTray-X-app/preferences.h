@@ -128,6 +128,11 @@ class Preferences : public QObject
         Preferences( QObject *parent = nullptr );
 
         /**
+         * @brief displayDebug. Display sone debug info.
+         */
+        void    displayDebug();
+
+        /**
          * @brief setPlatformOs. Set the platform OS.
          *
          *  @param os   The platform os.
@@ -586,6 +591,34 @@ class Preferences : public QObject
         void setShowHideShortcut( QKeySequence key_seq );
 
         /**
+         * @brief getKdeIntegrationOption. Get the KDE integration option.
+         *
+         * @return     The state.
+         */
+        bool getKdeIntegrationOption() const;
+
+        /**
+         * @brief setKdeIntegrationOption. Set the KDE integration option.
+         *
+         *  @param state     The state.
+         */
+        void setKdeIntegrationOption( bool state );
+
+        /**
+         * @brief getShortcutsOption. Get the shortcuts option.
+         *
+         * @return    The state.
+         */
+        bool getShortcutsOption() const;
+
+        /**
+         * @brief setShortcutsOption. Set the shortcuts option.
+         *
+         *  @param state    The state.
+         */
+        void setShortcutsOption( bool state );
+
+        /**
          * @brief getDebug. Get the debug windows state.
          *
          * @return      The state.
@@ -779,6 +812,26 @@ class Preferences : public QObject
     private:
 
         /**
+         * @brief m_platform. Qt platform indication.
+         */
+        QString m_platform;
+
+        /**
+         * @brief m_xdg_current_desktop. Environment current desktop setting (KDE, GNOME, xxx).
+         */
+        QString m_xdg_current_desktop;
+
+        /**
+         * @brief m_xdg_session_desktop. Environment desktop setting (KDE, GNOME, xxx).
+         */
+        QString m_xdg_session_desktop;
+
+        /**
+         * @brief m_xdg_session_type. Environment session type setting (x11, wayland).
+         */
+        QString m_xdg_session_type;
+
+        /**
          * @brief m_platform_xx. Platform description.
          */
         QString m_platform_os;
@@ -966,6 +1019,16 @@ class Preferences : public QObject
          * @brief m_show_hide_shortcut. The show / hide shortcut key sequence.
          */
         QKeySequence m_show_hide_shortcut;
+
+        /**
+         * @brief m_kde_integration_option. KDE integration option.
+         */
+        bool m_kde_integration_option;
+
+        /**
+         * @brief m_shortcuts_option. Shortcut option.
+         */
+        bool m_shortcuts_option;
 
         /**
          * @brief m_debug. Display debug window.

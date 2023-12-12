@@ -9,7 +9,7 @@ The addon and system tray application can do:
 - optional new mail indicator (icon or shading)
 - run app on start or close
 - show / hide Thunderbird (minimize)
-- use a shortcut to show / hide
+- use a shortcut to show / hide (not available for GNOME or Wayland)
 - minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
 - minimize on close
@@ -52,7 +52,7 @@ Please press the reset button in the TB SysTray-X add-on preferences page to cle
 
 This add-on / companion app will not work with flatpaks or snaps of Thunderbird. They do not allow native messaging hosts outside the packages.  
 You need to use a workaround for Wayland. In some distributions this is already applied.
-
+The shortcut option does not work in GNOME or Wayland.
 
 ## Binaries (System)
 

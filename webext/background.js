@@ -22,6 +22,8 @@ SysTrayX.Info = {
   platformInfo: {},
   browserInfo: {},
 
+  options: {},
+
   displayInfo: function () {
     console.debug("Info Addon version: " + this.version);
     console.debug("Info Platform: " + JSON.stringify(this.platformInfo));
@@ -62,6 +64,9 @@ SysTrayX.Messaging = {
 
     // Lookout for storage changes
     browser.storage.onChanged.addListener(SysTrayX.Messaging.storageChanged);
+
+    //  Request the options from app
+    SysTrayX.Messaging.requestOptions();
 
     //  Send the platform info to app
     SysTrayX.Messaging.sendLocale();
@@ -571,6 +576,10 @@ SysTrayX.Messaging = {
     SysTrayX.Messaging.folderTree = folderTree;
   },
 
+  requestOptions: function () {
+    SysTrayX.Link.postSysTrayXMessage({ optionsRequest: true });
+  },
+
   sendBrowserInfo: function () {
     const info = SysTrayX.Info.browserInfo;
     SysTrayX.Link.postSysTrayXMessage({ browserInfo: info });
@@ -770,10 +779,12 @@ SysTrayX.Link = {
       SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
     }
 
-    const kdeIntegration = response["kdeIntegration"];
-    if (kdeIntegration !== undefined) {
+    const options = response["options"];
+    if (options !== undefined) {
+      SysTrayX.Info.options = options;
+
       await storage().set({
-        kdeIntegration: kdeIntegration,
+        options: options,
       });
     }
 
@@ -1161,6 +1172,14 @@ async function start() {
   //  console.log("Storage in use: " + inUse);
 
   //  Init defaults before everything
+
+  //  Reset the options
+  await storage().set({
+    options: {
+      kdeIntegration: true,
+      shortcuts: true,
+    },
+  });
 
   //  Reset KDE integration
   await storage().set({

@@ -247,17 +247,21 @@ void    SysTrayXLink::sendShutdown()
 
 
 /*
- *  Send disable KDE integration to the add-on
+ *  Send the options to the add-on
  */
-void    SysTrayXLink::sendDisableKdeIntegration()
+void    SysTrayXLink::sendOptions()
 {
-    QJsonObject integrationObject;
-    integrationObject.insert("kdeIntegration", QJsonValue::fromVariant( "false" ) );
+    QJsonObject options_object;
+    options_object.insert("kdeIntegration", QJsonValue::fromVariant( m_pref->getKdeIntegrationOption() ) );
+    options_object.insert("shortcuts", QJsonValue::fromVariant( m_pref->getShortcutsOption() ) );
+
+    QJsonObject main_object;
+    main_object.insert("options", options_object);
 
     /*
      *  Store the new document
      */
-    QJsonDocument json_doc = QJsonDocument( integrationObject );
+    QJsonDocument json_doc = QJsonDocument( main_object );
 
     /*
      *  Send it to the add-on
@@ -421,6 +425,11 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
             }
         }
 
+        if( jsonObject.contains( "optionsRequest" ) && jsonObject[ "optionsRequest" ].isBool() )
+        {
+            sendOptions();
+        }
+
         if( jsonObject.contains( "hideDefaultIcon" ) && jsonObject[ "hideDefaultIcon" ].isBool() )
         {
             bool hide_default_icon = jsonObject[ "hideDefaultIcon" ].toBool();
@@ -429,12 +438,6 @@ void    SysTrayXLink::DecodeMessage( const QByteArray& message )
              *  Signal the KDE integration or hide default icon
              */
             emit signalKdeIntegration( hide_default_icon );
-
-#if ( defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION ) ) || defined( Q_OS_WIN )
-
-            sendDisableKdeIntegration();
-
-#endif
         }
 
         if( jsonObject.contains( "locale" ) && jsonObject[ "locale" ].isString() )

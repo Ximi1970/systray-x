@@ -12,6 +12,7 @@
 /*
  *	Qt includes
  */
+#include <QGuiApplication>
 
 
 /*
@@ -92,6 +93,137 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_close_app_args = "";
 
     m_show_hide_shortcut = QKeySequence();
+
+    /*
+     *  Initialize the system parameters
+     */
+    m_platform = QGuiApplication::platformName();
+    m_xdg_session_desktop = getenv( "XDG_SESSION_DESKTOP" );
+    m_xdg_current_desktop = getenv( "XDG_CURRENT_DESKTOP" );
+    m_xdg_session_type = getenv( "XDG_SESSION_TYPE" );
+
+    /*
+     *  Set the options
+     */
+#if ( defined( Q_OS_UNIX ) && defined( NO_KDE_INTEGRATION ) ) || defined( Q_OS_WIN )
+    m_kde_integration_option = false;
+#else
+    m_kde_integration_option = true;
+#endif
+
+#if ( defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS ) )
+    m_shortcuts_option = false;
+#else
+    m_shortcuts_option = true;
+#endif
+/*
+    // XDG_SESSION_DESKTOP
+    // XDG_CURRENT_DESKTOP
+    // XDG_SESSION_TYPE
+
+    // Leap 15.4 "KDE", "default", "gnome-classic", "gnome-xorg", "icewm", "xfce"
+    // Leap 15.4 "KDE", "GNOME", "GNOME-Classic:GNOME", "GNOME", "ICEWM", "XFCE"
+    // Leap 15.4 "x11", "wayland", "x11", "x11", "x11", x11
+
+    // Leap 15.5 "KDE", "default", "gnome-classic", "gnome-xorg", "icewm", "xfce"
+    // Leap 15.5 "KDE", "GNOME", "GNOME-Classic:GNOME", "GNOME", "ICEWM", "XFCE"
+    // Leap 15.5 "x11", "wayland", "x11", "x11", "x11", x11
+
+    // Ubuntu 18.03:    "ubuntu", "ubuntu-wayland"
+    // Ubuntu 18.03:    "ubuntu:GNOME", "ubuntu:GNOME"
+    // Ubuntu 18.03:    "x11", "wayland"
+
+    // Xubuntu 18.03:    "xubuntu",
+    // Xubuntu 18.03:    "XFCE",
+    // Xubuntu 18.03:    "x11",
+
+    // Kubuntu 18.03:    "KDE",
+    // Kubuntu 18.03:    "KDE",
+    // Kubuntu 18.03:    "x11",
+
+    // Lubuntu 18.03:    "Lubuntu",
+    // Lubuntu 18.03:    "LXDE",
+    // Lubuntu 18.03:    "x11",
+
+    // Ubuntu 23.10:    "ubuntu", "ubuntu-xorg"
+    // Ubuntu 23.10:    "ubuntu:GNOME", "ubuntu:GNOME"
+    // Ubuntu 23.10:    "wayland", "x11"
+
+    // Xubuntu 23.10:    "xubuntu",
+    // Xubuntu 23.10:    "XFCE",
+    // Xubuntu 23.10:    "x11",
+
+    // Kubuntu 23.10:    "KDE",
+    // Kubuntu 23.10:    "KDE",
+    // Kubuntu 23.10:    "x11",
+
+    // Lubuntu 23.10:    "LXQt",
+    // Lubuntu 23.10:    "LXQt",
+    // Lubuntu 23.10:    "x11",
+
+    // Debian 10:   "gnome", "KDE"
+    // Debian 10:   "GNOME", "KDE"
+    // Debian 10:   "wayland", "x11"
+
+    // Debian 12:   "gnome", "KDE"
+    // Debian 12:   "GNOME", "KDE"
+    // Debian 12:   "wayland", "x11"
+
+
+    // Fedora 36:   "gnome"
+    // Fedora 36:   "GNOME"
+    // Fedora 36:   "wayland"
+
+    // Fedora 38:   "gnome", "gnome-xorg", "mate"
+    // Fedora 38:   "GNOME", "GNOME", "MATE"
+    // Fedora 38:   "wayland", "x11", "x11"
+
+    // Manjaro:     "gnome", -
+    // Manjaro:     "GNOME", "KDE"
+    // Manjaro:     "wayland", -
+
+    // Arch:        "gnome", "gnome-xorg", "xfce"
+    // Arch:        "GNOME", "GNOME", "XFCE"
+    // Arch:        "wayland", "x11", "x11"
+
+    // Mint:        "xfce"
+    // Mint:        "XFCE"
+    // Mint:        "x11"
+
+    //  Qt platform:        "xcb", "wayland", "windows", ...
+    //  Session desktop:    "KDE", "gnome", ...
+    //  Session type:       "x11", "wayland", ...
+
+    if( m_session_type == "x11" && m_session_desktop == "KDE" )
+    {
+        m_kde_integration_option = true;
+    }
+    else
+    {
+        m_kde_integration_option = false;
+    }
+
+    if( m_platform == "wayland" || m_session_type == "wayland" || m_session_desktop == "GNOME" )
+    {
+        m_shortcuts_option = false;
+    }
+    else
+    {
+        m_shortcuts_option = true;
+    }
+*/
+}
+
+
+/*
+ *  Display some debug info
+ */
+void    Preferences::displayDebug()
+{
+    emit signalConsole( QString( "Platform: %1" ).arg( m_platform ) );
+    emit signalConsole( QString( "Session current desktop: %1" ).arg( m_xdg_current_desktop ) );
+    emit signalConsole( QString( "Session desktop: %1" ).arg( m_xdg_session_desktop ) );
+    emit signalConsole( QString( "Session type: %1" ).arg( m_xdg_session_type ) );
 }
 
 
@@ -943,6 +1075,58 @@ void    Preferences::setShowHideShortcut( QKeySequence key_seq )
          *  Tell the world the new preference
          */
         emit signalShowHideShortcutChange();
+    }
+}
+
+
+/*
+ *  Get the KDE integration option.
+ */
+bool    Preferences::getKdeIntegrationOption() const
+{
+    return m_kde_integration_option;
+}
+
+
+/*
+ *  Get the KDE integration option.
+ */
+void    Preferences::setKdeIntegrationOption( bool state )
+{
+    if( m_kde_integration_option != state )
+    {
+        m_kde_integration_option = state;
+
+        /*
+         *  Tell the world the new option
+         */
+        //emit signalOptionChange();
+    }
+}
+
+
+/*
+ *  Get the shortcuts option.
+ */
+bool    Preferences::getShortcutsOption() const
+{
+    return m_shortcuts_option;
+}
+
+
+/*
+ *  Get the shortcuts option.
+ */
+void    Preferences::setShortcutsOption( bool state )
+{
+    if( m_shortcuts_option != state )
+    {
+        m_shortcuts_option = state;
+
+        /*
+         *  Tell the world the new option
+         */
+        //emit signalOptionChange();
     }
 }
 
