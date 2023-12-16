@@ -38,7 +38,8 @@ SysTrayX.SaveOptions = {
 
           folders.forEach((folder) => {
             const mailFolderExt = JSON.parse(folder.value);
-            filters[filters.length - 1].folders.push(mailFolderExt.path);
+            filters[filters.length - 1].folders.push({
+              mailFolderId: mailFolderExt.mailFolderId, path: mailFolderExt.path});
           });
         }
       }

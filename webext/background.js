@@ -34,7 +34,6 @@ SysTrayX.Info = {
 SysTrayX.Messaging = {
   startupDelayFinished: false,
   accounts: [],
-  folderTree: {},
   countType: "0",
   showNewIndicator: "false",
   closeType: "1",
@@ -102,17 +101,8 @@ SysTrayX.Messaging = {
       browser.accounts.onDeleted.addListener(SysTrayX.Messaging.accountDeleted);
     }
 
-    //  Get all accounts
-    SysTrayX.Messaging.accounts = await browser.accounts.list(false);
-
-    // Fill the sub folders using the folders API, they are not same...
-    for (let i = 0; i < SysTrayX.Messaging.accounts.length; ++i) {
-      const subFolders = await browser.folders.getSubFolders(
-        SysTrayX.Messaging.accounts[i],
-        true
-      );
-      SysTrayX.Messaging.accounts[i].folders = subFolders;
-    }
+    //  Get the accounts and subfolders
+    SysTrayX.Messaging.accounts = await browser.accounts.list();
 
     console.debug("Accounts: " + JSON.stringify(SysTrayX.Messaging.accounts));
 
@@ -318,26 +308,46 @@ SysTrayX.Messaging = {
 
           // Count the initial unread messages
           for (const filter of SysTrayX.Messaging.filters) {
-            for (const path of filter.folders) {
-              const folder = {
-                accountId: filter.accountId,
-                path: path,
-              };
-      
+            const accountId = filter.accountId;
+            for (const storedFolder of filter.folders) {
+              let path;
+              let folderParam;
+              if (typeof(storedFolder) === "string") {
+                //  Filters pre TB 121
+                path = storedFolder;
+                folderParam = {
+                  accountId: accountId,
+                  path: storedFolder,
+                };
+              } else {
+                //  Filters TB 121
+                if (storedFolder.mailFolderId === undefined) {
+                  //  TB 121 filter setup but older TB
+                  path = storedFolder.path;
+                  folderParam = {
+                    accountId: accountId,
+                    path: path,
+                  };
+                } else {
+                  path = storedFolder.path;
+                  folderParam = storedFolder.mailFolderId;  
+                }
+              }
+        
               let mailFolderInfo = {};
               try {
-                mailFolderInfo = await browser.folders.getFolderInfo(folder);
+                mailFolderInfo = await browser.folders.getFolderInfo(folderParam);
               } catch (err) {
                 console.debug("Filter error: " + err);
                 console.debug("Filter error: " + JSON.stringify(folder));
               }
-      
+
               if (mailFolderInfo.unreadMessageCount !== undefined) {
-                if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
-                  SysTrayX.Messaging.unread[folder.accountId] = {};
+                if (SysTrayX.Messaging.unread[accountId] === undefined) {
+                  SysTrayX.Messaging.unread[accountId] = {};
                 }
       
-                SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+                SysTrayX.Messaging.unread[accountId][path] =
                   mailFolderInfo.unreadMessageCount;
               }
             }
@@ -470,110 +480,6 @@ SysTrayX.Messaging = {
         addonprefchanged: false,
       });
     }
-  },
-
-  //
-  //  Callback for folder changes
-  //
-  updateFilters: function (rootFolder, parentFolder, folder, added) {
-    const oldFolders = SysTrayX.Messaging.folderTree[rootFolder];
-    const oldPaths = getFolderPaths(oldFolders);
-
-    browser.accounts.list().then(
-      (accounts) => {
-        this.updateFiltersCallback(
-          rootFolder,
-          parentFolder,
-          folder,
-          added,
-          oldFolders,
-          oldPaths,
-          accounts
-        );
-      },
-      () => console.log("Failed to get the accounts")
-    );
-  },
-
-  updateFiltersCallback: async function (
-    rootFolder,
-    parentFolder,
-    folder,
-    added,
-    oldFolders,
-    oldPaths,
-    accounts
-  ) {
-    //  Get new folder tree
-    const folderTree = getFolderTree(accounts, SysTrayX.Info.browserInfo);
-    const newFolders = folderTree[rootFolder];
-    const newPaths = getFolderPaths(newFolders);
-    const changes = findFolderPathsDiff(oldPaths, newPaths).filter((change) =>
-      change.endsWith(parentFolder + "/" + folder)
-    );
-
-    if (changes.length === 1 && added) {
-      //  Folder has beeen added
-
-      const addedFolder = changes[0];
-
-      //  Is parent selected?
-      const parentAddedFolder = addedFolder.substring(
-        0,
-        addedFolder.lastIndexOf("/")
-      );
-
-      const parentSelected = findFolderPath(
-        SysTrayX.Messaging.filters,
-        parentAddedFolder
-      );
-
-      if (parentSelected) {
-        //  Add the new folder to the filters
-
-        const newFilter = {
-          ...parentSelected,
-          folder: {
-            ...parentSelected.folder,
-            path: changes[0],
-            name: changes[0].substring(changes[0].lastIndexOf("/") + 1),
-          },
-        };
-
-        if (
-          SysTrayX.Messaging.filters.filter(
-            (filter) => filter.folder.path === newFilter.folder.path
-          ).length === 0
-        ) {
-          SysTrayX.Messaging.filters.push(newFilter);
-
-          //  Store the new filters
-          await storage().set({
-            filters: SysTrayX.Messaging.filters,
-          });
-        }
-      }
-    } else if (changes.length === 1 && !added) {
-      //  Folder has been removed, remove also all children
-
-      const filters = SysTrayX.Messaging.filters.filter(
-        (filter) => !filter.folder.path.startsWith(changes[0])
-      );
-
-      if (filters.length !== SysTrayX.Messaging.filters.length) {
-        //  Remove found filters (and children) from the filters
-        SysTrayX.Messaging.filters = filters;
-
-        //  Store the new filters
-        await storage().set({
-          filters: SysTrayX.Messaging.filters,
-        });
-      }
-    }
-
-    //  Store the new accounts and folder tree
-    SysTrayX.Messaging.accounts = accounts;
-    SysTrayX.Messaging.folderTree = folderTree;
   },
 
   requestOptions: function () {

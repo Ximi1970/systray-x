@@ -36,7 +36,7 @@ SysTrayX.Accounts = {
         }
       }
 
-      traverse("", folders);
+      traverse(folders);
 
       return folders;
     }
@@ -150,6 +150,7 @@ SysTrayX.Accounts = {
                 JSON.stringify({
                   accountName: element.accountName,
                   accountId: element.accountId,
+                  mailFolderId: element.id,
                   type: element.type !== undefined ? element.type : "",
                   path: element.path,
                   name: element.originalName
