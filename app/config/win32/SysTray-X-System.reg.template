@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\Software\Mozilla\NativeMessagingHosts\SysTray_X]
+@="SYSTRAY_X_JSON_PATH"
+

@@ -1,0 +1,556 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Πρόσθετο ελέγχου από την περιοχή ειδοποιήσεων. Παρακαλώ κατεβάστε και τη συνοδευτική εφαρμογή.",
+    "description": "Webextension descriptions"
+  },
+
+  "preferences": {
+    "message": "Προτιμήσεις SysTray-X",
+    "description": "Title of preferences page"
+  },
+
+  "intro_line_1": {
+    "message": "Αυτό το πρόσθετο απαιτεί και μία εξωτερική εφαρμογή για να λειτουργήσει. Μπορείτε να τη βρείτε εδώ:",
+    "description": "Introduction line 1"
+  },
+
+  "intro_link": {
+    "message": "Κατεβάστε τη συνοδευτική εφαρμογή του SysTray-X εδώ",
+    "description": "Link description"
+  },
+
+  "tab_windows": {
+    "message": "Παράθυρα",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Εικονίδιο",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_count": {
+    "message": "μετρητής",
+    "description": "Tab for Count options"
+  },
+
+  "tab_apps": {
+    "message": "Εφαρμογές",
+    "description": "Tab for Apps options"
+  },
+
+  "tab_mail": {
+    "message": "Αλληλογραφία",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_shortcuts": {
+    "message": "Συντομεύσεις",
+    "description": "Tab for Shortcuts options"
+  },
+
+  "tab_debug": {
+    "message": "Αποσφαλμάτωση",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Παράθυρα",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Ελαχιστοποίηση",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Προεπιλεγμένη ελαχιστοποίηση",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Ελαχιστοποίηση στην περιοχή ειδοποιήσεων",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_icon_options": {
+    "message": "Εικονίδιο",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Προεπιλεγμένη ελαχιστοποίηση",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Ελαχιστοποίηση στην περιοχή ειδοποιήσεων",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Μέθοδος 1",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Μέθοδος 2",
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "Κλείσιμο",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Προεπιλεγμένο κλείσιμο",
+    "description": "Close option 0"
+  },
+
+  "windows_close_1": {
+    "message": "Ελαχιστοποίηση κυρίως παραθύρου, κλείσιμο θυγατρικών",
+    "description": "Close option 1"
+  },
+
+  "windows_close_2": {
+    "message": "Ελαχιστοποίηση όλων των παραθύρων",
+    "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Ελαχιστοποίηση κυρίως παραθύρου στην περιοχή ειδοποιήσεων, κλείσιμο θυγατρικών",
+    "description": "Close option 3"
+  },
+
+  "windows_tray_2": {
+    "message": "Ελαχιστοποίηση όλων των παραθύρων στην περιοχή ειδοποιήσεων",
+    "description": "Close option 4"
+  },
+
+  "windows_startup_options": {
+    "message": "Αρχή",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Προεπιλεγμένη εκκίνηση",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "Ελαχιστοποιήθηκε η εκκίνηση της εφαρμογής",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Εκκινήστε την εφαρμογή στο δίσκο συστήματος",
+    "description": "Start application in tray"
+  },
+
+  "restore_positions_on_startup": {
+    "message": "Επαναφορά θέσεων παραθύρου κατά την εκκίνηση",
+    "description": "Restore the window positions on startup"
+  },
+
+  "icons": {
+    "message": "Εικονίδια",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Προεπιλεγμένο εικονίδιο",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Προεπιλογή Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Διαφανές εικονίδιο",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Προσαρμοσμένο εικονίδιο",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Επιλέξτε...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Ενσωμάτωση στον KDE (Απόκρυψη)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Εικονίδιο μη-αναγνωσμένης αλληλογραφίας",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Κενό εικονίδιο",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Εικονίδιο νέας αλληλογραφίας",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Προσαρμοσμένο εικονίδιο",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Επιλέξτε...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Χωρίς εικονίδιο",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_invert_icon": {
+    "message": "Αντιστρέψτε εικονίδιο",
+    "description": "Invert icon"
+  },
+
+  "count": {
+    "message": "Μετρητής",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Προβολή μετρητή αλληλογραφίας",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Εμφάνιση νέας ένδειξης",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "Καθυστέρηση έναρξης",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "Τύπος μετρητή μηνυμάτων:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Μη αναγνωσμένα",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "Νέα",
+    "description": "Count new mails"
+  },
+
+  "count_api_count_method": {
+    "message": "Μέθοδος καταμέτρησης API",
+    "description": "API count method"
+  },
+
+  "count_number_options": {
+    "message": "Αριθμός",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "Χρώμα μετρητή:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Μέγεθος μετρητή:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Ευθυγραμμία:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "Κορυφαίο αριστερά",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "Κορυφαίο κέντρο",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "Κορυφαίο δεξιά",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Μέση αριστερά",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Μεσαίο κέντρο",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Μέση δεξιά",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "Κάτω αριστερά",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "Κάτω κέντρο",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "Κάτω δεξιά",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Περιθώρια (αριστερά, Κορυφαίο, δεξιά, Κάτω)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "Νέος δείκτης",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Στρογγυλό εικονίδιο",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Αστέρι εικονίδιο",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Απόχρωση:",
+    "description": "Shade the icon"
+  },
+
+  "apps": {
+    "message": "Εφαρμογές",
+    "description": "Title for Apps options"
+  },
+
+  "apps_start_application": {
+    "message": "Εφαρμογή εκκίνησης",
+    "description": "The start application parameters"
+  },
+
+  "apps_start_app": {
+    "message": "Εφαρμογή: ",
+    "description": "The start application"
+  },
+
+  "apps_start_app_args": {
+    "message": "Επιχειρήματα: ",
+    "description": "Arguments for a start application"
+  },
+
+  "apps_close_application": {
+    "message": "Κλείσιμο αίτησης",
+    "description": "The close application parameters"
+  },
+
+  "apps_close_app": {
+    "message": "Εφαρμογή: ",
+    "description": "The close application"
+  },
+
+  "apps_close_app_args": {
+    "message": "Επιχειρήματα: ",
+    "description": "Arguments for a close application"
+  },
+
+  "accounts": {
+    "message": "Λογαριασμοί",
+    "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Συντομεύσεις",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Συντόμευση Εμφάνιση / Απόκρυψη: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Αφαιρώ",
+    "description": "Clear"
+  },
+
+  "debug": {
+    "message": "Αποσφαλμάτωση",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Προβολή παραθύρου αποσφαλμάτωσης",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Αποθήκευση προτιμήσεων",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Αποθήκευση",
+    "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Επαναφορά προτιμήσεων",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Επαναφορά",
+    "description": "Reset preferences button"
+  },
+
+  "about_title": {
+    "message": "Σχετικά με το SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "Συνοδευτική εφαρμογή SysTray-X από τον Ximi1970",
+    "description": "Line 1"
+  },
+
+  "about_version": {
+    "message": "Έκδοση:",
+    "description": "Version"
+  },
+
+  "about_build": {
+    "message": "Εξαγωγή:",
+    "description": "Build"
+  },
+
+  "about_hash": {
+    "message": "Κωδικός:",
+    "description": "Hash"
+  },
+
+  "about_branch": {
+    "message": "Κλαδί:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "Αποσφαλμάτωση SysTray-X",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Τεστ 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Τεστ 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Τεστ 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Μη-αναγνωσμένη αλληλογραφία:",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "&Εμφάνιση/Απόκρυψη",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "&Προτιμήσεις",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "&Σχετικά",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "&Έξοδος",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Κλείσιμο",
+    "description": "Close button"
+  },
+
+  "mail_notification_icon": {
+    "message": "Εικονίδιο ειδοποίησης αλληλογραφίας",
+    "description": "Mail icon selection title"
+  },
+
+  "number_properties": {
+    "message": "Ιδιότητες αριθμών",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "Άνοιγμα εικόνας",
+    "description": "File image dialog"
+  },
+
+  "image_files": {
+    "message": "Αρχεία εικόνας (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+
+  "image_save": {
+    "message": "Αποθήκευση",
+    "description": "File image save"
+  },
+
+  "image_cancel": {
+    "message": "Άκυρο",
+    "description": "File image cancel"
+  }
+}

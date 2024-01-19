@@ -1,0 +1,102 @@
+-------------------------------------------------------------------
+Sun Dec 10 13:24:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.8
+
+    - Fixed / refactored multi window handling
+    - Added an option to add a shortcut key for show / hide
+    - Bugfixes
+
+-------------------------------------------------------------------
+Sun Nov 12 11:12:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.7
+
+    - Added option for new TB115 mail counting
+      (slow with new mails enabled)
+    - Bugfixes
+
+-------------------------------------------------------------------
+Sun Oct 28 12:25:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.6
+
+    - Added option to show a new mail indicator or icon shading
+    - Added option to launch an app on start and close
+    - Refactored windows state handling
+    - Refactored mail counting
+    - Bugfixes
+
+-------------------------------------------------------------------
+Sun Aug  6 21:00:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.5
+
+    - Bugfixes
+
+-------------------------------------------------------------------
+Sun Jul 23 00:52:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.4
+
+    - Separate minimize, close and icon action
+    - Use new icon for new TB version
+
+-------------------------------------------------------------------
+Sat Jul 15 21:39:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.9.3
+
+  * New TB version
+
+-------------------------------------------------------------------
+Sun Jul 16 11:12:00 UTC 2022 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.9.2
+
+  * Bugfixes
+
+-------------------------------------------------------------------
+Sun Jul 10 11:12:00 UTC 2022 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.9.1
+
+  * Bugfixes
+
+-------------------------------------------------------------------
+Sat Jul  3 23:24:00 UTC 2022 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.9.0
+
+  * Update for TB 102
+  * Bugfixes
+
+-------------------------------------------------------------------
+Sat Oct  2 14:17:00 UTC 2021 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.8.0
+
+  * Refactor for TB 91
+
+-------------------------------------------------------------------
+Sat Nov  7 23:37:00 UTC 2020 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.5.0
+    
+    * Added translations logic
+    * Languages:
+        - de
+        - en_US
+        - nl
+        - pt_BR (by PutinVladimir)
+        - ru_RU (by fabianski7)
+
+-------------------------------------------------------------------
+Sat Oct 10 14:10:00 UTC 2020 - Maxime Rijnders <ximi.obs@gmail.com>
+
+- Update to 0.4.0
+
+-------------------------------------------------------------------
+Tue Feb 11 19:05:19 UTC 2020 - Luigi Baldoni <aloisio@gmx.com>
+
+- Initial package (v0~git20200127.65f5344)

@@ -1,0 +1,94 @@
+systray-x-gnome (0.9.8-0) unstable; urgency=low
+
+  * Update to 0.9.8
+
+    - Fixed / refactored multi window handling
+    - Added an option to add a shortcut key for show / hide
+    - Bugfixes
+
+systray-x-gnome (0.9.7-0) unstable; urgency=low
+
+  * Update to 0.9.7
+
+    - Added option for new TB115 mail counting (slow with new mails enabled)
+    - Bugfixes
+
+systray-x-gnome (0.9.6-0) unstable; urgency=low
+
+  * Update to 0.9.6
+
+    - Added option to show a new mail indicator or icon shading
+    - Added option to launch an app on start and close
+    - Refactored windows state handling
+    - Refactored mail counting
+    - Bugfixes
+
+systray-x-gnome (0.9.5-0) unstable; urgency=low
+
+  * Update to 0.9.5
+
+    - Bugfixes
+
+systray-x-gnome (0.9.4-0) unstable; urgency=low
+
+  * Update to 0.9.4
+
+    - Separate minimize, close and icon action
+    - Use new icon for new TB version
+
+systray-x-gnome (0.9.3-0) unstable; urgency=low
+
+  * Update to 0.9.3
+
+    - New TB version
+
+systray-x-gnome (0.9.2-0) unstable; urgency=low
+
+  * Update to 0.9.2
+
+    - Bug fixes
+
+systray-x-gnome (0.9.1-0) unstable; urgency=low
+
+  * Update to 0.9.1
+
+    - Bug fixes
+
+systray-x-gnome (0.9.0-0) unstable; urgency=low
+
+  * Update to 0.9.0
+
+    - Update for TB 102
+    - Bug fixes
+
+systray-x-gnome (0.8.0-0) unstable; urgency=low
+
+  * Update to 0.8.0
+
+    - Refactor for TB 91
+
+systray-x-gnome (0.5.0-0) unstable; urgency=low
+
+  * Update to 0.5.0
+    
+    - Added translations logic
+    - Languages:
+      - de
+      - en_US
+      - nl
+      - pt_BR (by PutinVladimir)
+      - ru_RU (by fabianski7)
+
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 07 Nov 2020 23:37:00 +0100
+      
+systray-x-gnome (0.4.0-0) unstable; urgency=low
+
+  * Update to 0.4.0
+
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 10 Oct 2020 14:10:00 +0100
+
+systray-x-gnome (0.0.1-0) unstable; urgency=low
+
+  * Initial Release
+
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Tue, 11 Feb 2020 19:05:19 +0100

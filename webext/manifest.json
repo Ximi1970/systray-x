@@ -1,15 +1,16 @@
 {
   "manifest_version": 2,
-  "name": "SysTray-X",
-  "description": "System tray control add-on",
-  "version": "0.1",
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "version": "0.9.8",
   "author": "Maxime Rijnders",
   "homepage_url": "https://github.com/Ximi1970/systray-x",
 
   "applications": {
     "gecko": {
       "id": "systray-x@Ximi1970",
-      "strict_min_version": "68.0"
+      "strict_min_version": "91.0",
+      "strict_max_version": "120.*"
     }
   },
 
@@ -17,11 +18,33 @@
     "48": "icons/message.svg"
   },
 
-  "background": {
-    "scripts": ["background.js"]
-  },
+  "default_locale": "en_US",
+
+  "permissions": ["accountsRead", "messagesRead", "storage", "nativeMessaging"],
 
   "browser_action": {
-    "default_icon": "icons/message.svg"
+    "default_title": " ",
+    "default_icon": "icons/dummy.png",
+    "allowed_spaces": ["mail", "addressbook", "calendar", "tasks", "chat", "settings", "default" ]
+  },
+
+  "background": {
+    "page": "background.html"
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "experiment_apis": {
+    "windowEvent": {
+      "schema": "schema_windowEvent.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["windowEvent"]],
+        "script": "js/windowEvent.js"
+      }
+    }
   }
 }

@@ -1,0 +1,556 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Дополнение \"Системный трей\". Пожалуйста установите также приложение-компаньон",
+    "description": "Webextension descriptions"
+  },
+
+  "tab_windows": {
+    "message": "Окна",
+    "description": "Tab for Window options"
+  },
+
+  "preferences": {
+    "message": "Настройки SysTray-X",
+    "description": "Title of preferences page"
+  },
+
+  "intro_line_1": {
+    "message": "Для работы этого дополнения требуется внешнее приложение. Вы можете получить его здесь:",
+    "description": "Introduction line 1"
+  },
+
+  "intro_link": {
+    "message": "Загрузите приложение SysTray-X Companion здесь",
+    "description": "Link description"
+  },
+
+  "tab_icon": {
+    "message": "Иконка",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_count": {
+    "message": "счетчик",
+    "description": "Tab for Count options"
+  },
+
+  "tab_apps": {
+    "message": "Программы",
+    "description": "Tab for Apps options"
+  },
+
+  "tab_mail": {
+    "message": "Письма",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_shortcuts": {
+    "message": "Сочетания",
+    "description": "Tab for Shortcuts options"
+  },
+
+  "tab_debug": {
+    "message": "Отладка",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Окна",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Свернуть",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Свернуть окно",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Свернуть в трей",
+    "description": "Minimize"
+  },
+
+  "windows_min_icon_options": {
+    "message": "Иконка",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Свернуть окно",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Свернуть в трей",
+    "description": "Minimize"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Свернуть в трей, вариант 1",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Свернуть в трей, вариант 2",
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "При закрытии",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Закрыть",
+    "description": "Close option 0"
+  },
+
+  "windows_close_1": {
+    "message": "Свернуть главное окно, закрыть другие",
+    "description": "Close option 1"
+  },
+
+  "windows_close_2": {
+    "message": "Свернуть все окна",
+    "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Свернуть главное окно в трей, закрыть остальные",
+    "description": "Close option 1"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Свернуть все окна в трей",
+    "description": "Close option 2"
+  },
+
+  "windows_startup_options": {
+    "message": "Запуск",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Запуск по умолчанию",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "Запуск приложения свернутым",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Запустить приложение в трее",
+    "description": "Start application in tray"
+  },
+
+  "restore_positions_on_startup": {
+    "message": "Восстановить положение окон при запуске",
+    "description": "Restore the window positions on startup"
+  },
+
+  "icons": {
+    "message": "Иконка",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Иконка по умолчанию",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Стандартная Thunderbird",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Прозрачная иконка",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Своя иконка",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Выбрать...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Интеграция с KDE (Скрыть)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Иконка уведомления",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Пустая иконка",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Иконка \"Новые письма\"",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Своя иконка",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Выбрать...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Без иконки (только цифры)",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_invert_icon": {
+    "message": "Инвертировать значок",
+    "description": "Invert icon"
+  },
+
+  "count": {
+    "message": "счетчик",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Показать количество писем",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Показать новый индикатор",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "Задержка запуска",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "Алгоритм подсчета:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Непрочитанные",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "Новые",
+    "description": "Count new mails"
+  },
+
+  "count_api_count_method": {
+    "message": "Метод подсчета API",
+    "description": "API count method"
+  },
+
+  "count_number_options": {
+    "message": "Настройки индикатора кол-ва",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "Цвет числа:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Размер числа:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Выравнивание:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "Верхний левый",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "Верхний центральный",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "Верхний правый",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Средний левый",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Средний центральный",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Средний правый",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "Нижний левый",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "Нижний центральный",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "Нижний правый",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Отступ (левый, Верхний, правый, Нижний)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "Новый индикатор",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Круглый значок",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Значок звезды",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Оттенок:",
+    "description": "Shade the icon"
+  },
+
+  "apps": {
+    "message": "Программы",
+    "description": "Title for Apps options"
+  },
+
+  "apps_start_application": {
+    "message": "Приложение при запуске",
+    "description": "The start application parameters"
+  },
+
+  "apps_start_app": {
+    "message": "Приложение: ",
+    "description": "The start application"
+  },
+
+  "apps_start_app_args": {
+    "message": "аргументы: ",
+    "description": "Arguments for a start application"
+  },
+
+  "apps_lose_application": {
+    "message": "Заявление о закрытии",
+    "description": "The close application parameters"
+  },
+
+  "apps_close_app": {
+    "message": "Приложение: ",
+    "description": "The close application"
+  },
+
+  "apps_close_app_args": {
+    "message": "аргументы: ",
+    "description": "Arguments for a close application"
+  },
+
+  "accounts": {
+    "message": "Аккаунты",
+    "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "Сочетания",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Ярлык Показать / Скрыть: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Удалять",
+    "description": "Clear"
+  },
+
+  "debug": {
+    "message": "Отладка",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Показывать окно отладки",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Сохранить настройки",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Сохранить",
+    "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Сбросить настройки",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Сброс настроек",
+    "description": "Reset preferences button"
+  },
+
+  "about_title": {
+    "message": "About SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "SysTray-X Companion App by Ximi1970",
+    "description": "Line 1"
+  },
+
+  "about_version": {
+    "message": "Version:",
+    "description": "Version"
+  },
+
+  "about_build": {
+    "message": "Build:",
+    "description": "Build"
+  },
+
+  "about_hash": {
+    "message": "Hash:",
+    "description": "Hash"
+  },
+
+  "about_branch": {
+    "message": "Branch:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "SysTray-X Debug",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Test 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Test 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Test 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Unread mail:",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "Показать/Скр&ыть",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "Настройки",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "О приложении",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "Выход",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Закрыть",
+    "description": "Close button"
+  },
+
+  "mail_notification_icon": {
+    "message": "Иконка уведомления",
+    "description": "Mail icon selection title"
+  },
+
+  "number_properties": {
+    "message": "Настройки индикатора кол-ва",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "Открыть изображение",
+    "description": "File image dialog"
+  },
+
+  "image_files": {
+    "message": "IФайлы изображений (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+
+  "image_save": {
+    "message": "Сохранить",
+    "description": "File image save"
+  },
+
+  "image_cancel": {
+    "message": "Отменить",
+    "description": "File image cancel"
+  }
+}

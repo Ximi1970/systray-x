@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>__MSG_preferences__</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script src="js/systrayx.js"></script>
+
+    <script src="js/styles.js" stylesheet="css/options.css"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/info.js"></script>
+    <script src="js/options_accounts.js"></script>
+
+    <p>
+      __MSG_intro_line_1__
+      <br />
+      <br />
+      <a
+        href="https://github.com/Ximi1970/systray-x/releases"
+        id="VersioHomeLink"
+        >__MSG_intro_link__</a
+      >
+    </p>
+
+    <br />
+    <br />
+    <div class="tab">
+      <button class="tablinks active" id="Windows">__MSG_tab_windows__</button>
+      <button class="tablinks" id="Icon">__MSG_tab_icon__</button>
+      <button class="tablinks" id="Count">__MSG_tab_count__</button>
+      <button class="tablinks" id="Apps">__MSG_tab_apps__</button>
+      <button class="tablinks" id="Mail">__MSG_tab_mail__</button>
+      <button class="tablinks" id="Shortcuts">__MSG_tab_shortcuts__</button>
+      <button class="tablinks" id="Debug">__MSG_tab_debug__</button>
+    </div>
+
+    <div id="WindowsContent" class="tabcontent" style="display: block">
+      <form>
+        <h3>__MSG_windows__</h3>
+        <table id="minimizeselect">
+          <caption>
+            __MSG_windows_min_options__
+          </caption>
+          <tr id="minimizedefault">
+            <td>
+              <input
+                type="radio"
+                name="minimizeType"
+                id="minDefault"
+                value="0"
+              />
+              <label for="minDefault" id="minimizedefaultlabel"
+                >__MSG_windows_min_default__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizemethod1">
+            <td>
+              <input type="radio" name="minimizeType" id="minMeth1" value="1" />
+              <label for="minMeth1" id="minimizemethod1label"
+                >__MSG_windows_min_to_tray__</label
+              >
+            </td>
+          </tr>
+        </table>
+
+        <table id="closeselect">
+          <caption>
+            __MSG_windows_close_options__
+          </caption>
+          <tr id="defaultclosewindows">
+            <td>
+              <input
+                type="radio"
+                name="closeType"
+                id="closeDefault"
+                value="0"
+              />
+              <label for="closeDefault" id="defaultclosewindowslabel"
+                >__MSG_windows_close_default__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizemaintrayclosechildrenwindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth1" value="1" />
+              <label for="closeMeth1" id="minimizemaintrayclosechildrenwindowslabel"
+                >__MSG_windows_close_tray_1__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizealltraywindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth2" value="2" />
+              <label for="closeMeth2" id="minimizealltraywindowslabel"
+                >__MSG_windows_close_tray_2__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizemainclosechildrenwindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth3" value="3" />
+              <label for="closeMeth3" id="minimizemainclosechildrenwindowslabel"
+                >__MSG_windows_close_1__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizeallwindows">
+            <td>
+              <input type="radio" name="closeType" id="closeMeth4" value="4" />
+              <label for="closeMeth4" id="minimizeallwindowslabel"
+                >__MSG_windows_close_2__</label
+              >
+            </td>
+          </tr>
+        </table>
+
+        <table id="minimizeiconselect">
+          <caption>
+            __MSG_windows_min_icon_options__
+          </caption>
+          <tr id="minimizedefaulticon">
+            <td>
+              <input
+                type="radio"
+                name="minimizeIconType"
+                id="minDefaultIcon"
+                value="0"
+              />
+              <label for="minDefaultIcon" id="minimizedefaulticonlabel"
+                >__MSG_windows_min_default_icon__</label
+              >
+            </td>
+          </tr>
+          <tr id="minimizetrayicon">
+            <td>
+              <input type="radio" name="minimizeIconType" id="minTrayIcon" value="1" />
+              <label for="minTrayIcon" id="minimizetrayiconlabel"
+                >__MSG_windows_min_to_tray_icon__</label
+              >
+            </td>
+          </tr>
+        </table>
+
+        <table id="startupselect">
+          <caption>
+            __MSG_windows_startup_options__
+          </caption>
+          <tr id="defaultstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="defaultStartup"
+                value="0"
+              />
+              <label for="defaultStartup" id="defaultstartuplabel">
+                __MSG_windows_default_startup__
+              </label>
+            </td>
+          </tr>
+          <tr id="minimizedstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="minimizedStartup"
+                value="1"
+              />
+              <label for="minimizedStartup" id="minimizedstartuplabel">
+                __MSG_windows_minimized_startup__
+              </label>
+            </td>
+          </tr>
+          <tr id="dockedstartup">
+            <td>
+              <input
+                type="radio"
+                name="startupType"
+                id="dockedStartup"
+                value="2" />
+              <label for="dockedStartup" id="dockedstartuplabel">
+                __MSG_windows_docked_startup__
+              </label>
+            </td>
+          </tr>
+        </table>
+
+        <div id="inputcheck">
+          <input
+            type="checkbox"
+            name="restorePositions"
+            id="restorePos"
+            value=""
+          />
+          <label for="restorePos" id="restorePositionsLabel"
+            >__MSG_restore_positions_on_startup__</label
+          >
+        </div>
+      </form>
+    </div>
+
+    <div id="IconContent" class="tabcontent">
+      <form name="iconform">
+        <h3>__MSG_icons__</h3>
+
+        <table id="defaulticonselect">
+          <caption>
+            __MSG_icons_default_options__
+          </caption>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defauttTb"
+                value="0"
+              />
+              <label for="defauttTb" id="defauttTbLabel"
+                >__MSG_icons_default_tb__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defauttLookThrough"
+                value="1"
+              />
+              <label for="defauttLookThrough" id="defauttLookThroughLabel"
+                >__MSG_icons_default_lookthrough__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="defaultIconType"
+                id="defaultCustom"
+                value="2"
+              />
+              <label for="defaultCustom" id="defaultCustomLabel"
+                >__MSG_icons_default_custom__</label
+              >
+            </td>
+            <td>
+              <img
+                id="defaultCustomIconImage"
+                height="25"
+                width="25"
+                align="middle"
+                src="icons/Thunderbird.png"
+              />
+            </td>
+            <td>
+              <label
+                for="selectedFileDefaultIconType"
+                id="fileDefaultIconTypeLabel"
+                >__MSG_icons_default_custom_choose__</label
+              >
+              <input
+                type="file"
+                id="selectedFileDefaultIconType"
+                accept="image/*"
+                style="display: none"
+              />
+            </td>
+            <td>&emsp;</td>
+          </tr>
+        </table>
+
+        <div id="kdeintegration">
+          <div id="inputcheck">
+            <input
+              type="checkbox"
+              name="hideDefaultIcon"
+              id="kdeInt"
+              value=""
+            />
+            <label for="kdeInt" id="kdeIntegrationLabel"
+              >__MSG_icons_default_kde_integration__</label
+            >
+          </div>
+        </div>
+
+        <table id="iconselect">
+          <caption>
+            __MSG_icons_unread_options__
+          </caption>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadBlank"
+                value="0"
+              /><label for="unreadBlank" id="unreadBlankLabel"
+                >__MSG_icons_unread_blank__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadNew"
+                value="1"
+              /><label for="unreadNew" id="unreadNewLabel"
+                >__MSG_icons_unread_new__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadCustom"
+                value="2"
+              /><label for="unreadCustom" id="unreadCustomLabel"
+                >__MSG_icons_unread_custom__</label
+              >
+            </td>
+            <td>
+              <img
+                id="customIconImage"
+                height="25"
+                width="25"
+                align="middle"
+                src="icons/blank-icon.png"
+              />
+            </td>
+            <td>
+              <label
+                for="selectedFileIconType"
+                id="fileIconTypeLabel"
+                >__MSG_icons_unread_custom_choose__</label
+              >
+              <input
+                type="file"
+                id="selectedFileIconType"
+                accept="image/*"
+                style="display: none"
+              />
+            </td>
+            <td>&emsp;</td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="radio"
+                name="iconType"
+                id="unreadNo"
+                value="3"
+              /><label for="unreadNo" id="unreadNoLabel"
+                >__MSG_icons_unread_no__</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="radio" name="iconType" id="iconTb" value="4" />
+              <label for="iconTb" id="iconTbLabel"
+                >__MSG_icons_default_tb__</label
+              >
+            </td>
+          </tr>
+        </table>
+        
+        <div id="inverticon">
+          <div id="inputcheck">
+            <input
+              type="checkbox"
+              name="invertIcon"
+              id="invertIcon"
+              value=""
+            />
+            <label for="invertIcon" id="invertIconLabel"
+              >__MSG_icons_invert_icon__</label
+            >
+          </div>
+        </div>
+      </form>
+
+      <div
+        id="defaultIcon"
+        data-default-icon-mime=""
+        data-default-icon=""
+      ></div>
+
+      <div id="icon" data-icon-mime="" data-icon=""></div>
+
+      <script src="js/options_iconform.js"></script>
+    </div>
+
+    <div id="CountContent" class="tabcontent">
+      <form name="countform">
+        <h3>__MSG_count__</h3>
+
+        <tr>
+          <td>
+            <div id="inputcheck">
+              <input type="checkbox" name="showNumber" id="showNo" value="" />
+              <label for="showNo" id="showNumberLabel"
+                >__MSG_count_number_display__</label
+              >
+            </div>
+          </td>
+          <td>
+            <div id="inputcheck">
+              <input type="checkbox" name="showNewIndicator" id="showNew" value="" />
+              <label for="showNew" id="showNewIndicatorLabel"
+                >__MSG_count_new_indicator_display__</label
+              >
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="startupDelay">__MSG_count_startup_delay__</label>
+            <input
+              type="number"
+              id="startupDelay"
+              name="startupDelay"
+              value="5"
+              min="0"
+              max="99"
+              step="1"
+              size="2"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&emsp;</td>
+        </tr>
+
+        <table id="counttypeselect">
+          <caption>
+            __MSG_count_number_count_type__
+          </caption>
+          <tr id="unreadtype">
+            <td>
+              <input type="radio" name="countType" id="numberUnread" value="0" />
+              <label for="numberUnread">__MSG_count_number_count_unread__</label>
+            </td>
+          </tr>
+          <tr id="newtype">
+            <td>
+              <input type="radio" name="countType" id="numberNew" value="1" />
+              <label for="numberNew">__MSG_count_number_count_new__</label>
+            </td>
+          </tr>
+        </table>
+
+        <div id="apicountmethod">
+          <div id="inputcheck">
+            <input type="checkbox" name="apiCountMethod" id="apiCountMethod" value="" />
+            <label for="apiCountMethod" id="apiCountMethodLabel">
+              __MSG_count_api_count_method__
+            </label>
+          </div>
+        </div>
+
+        <table id="numberprops">
+          <caption>
+            __MSG_count_number_options__
+          </caption>
+          <tr>
+            <td>
+              <label for="numberColor">__MSG_count_number_color__</label>
+              <input
+                type="color"
+                id="numberColor"
+                name="numberColor"
+                value=""
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="numberSize">__MSG_count_number_size__</label>
+              <input
+                type="number"
+                id="numberSize"
+                name="numberSize"
+                value="0"
+                min="1"
+                max="999"
+                step="1"
+                size="3"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="numberAlignment"
+                >__MSG_count_number_alignment__</label
+              >
+              <select name="numberAlignment" id="numberAlignment">
+                <option value="0">__MSG_count_number_top_left__</option>
+                <option value="1">__MSG_count_number_top_center__</option>
+                <option value="2">__MSG_count_number_top_right__</option>
+                <option value="3">__MSG_count_number_middle_left__</option>
+                <option value="4">__MSG_count_number_middle_center__</option>
+                <option value="5">__MSG_count_number_middle_right__</option>
+                <option value="6">__MSG_count_number_bottom_left__</option>
+                <option value="7">__MSG_count_number_bottom_center__</option>
+                <option value="8">__MSG_count_number_bottom_right__</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>__MSG_count_number_margins__</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                id="numberMarginLeft"
+                name="numberMarginLeft"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginTop"
+                name="numberMarginTop"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginRight"
+                name="numberMarginRight"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+              <input
+                type="number"
+                id="numberMarginBottom"
+                name="numberMarginBottom"
+                value="0"
+                min="0"
+                max="999"
+                step="1"
+                size="3"
+              />
+            </td>
+          </tr>
+        </table>
+
+        <table id="newindicatorselect">
+          <caption>
+            __MSG_count_new_indicator__
+          </caption>
+
+          <tr id="newindicatorround">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newIndicatorRound" value="0" />
+              <label for="newIndicatorRound">__MSG_count_new_indicator_round__</label>
+            </td>
+          </tr>
+          <tr id="newindicatorstar">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newIndicatorStar" value="1" />
+              <label for="newIndicatorStar">__MSG_count_new_indicator_star__</label>
+            </td>
+          </tr>
+          <tr id="newshade">
+            <td>
+              <input type="radio" name="newIndicatorType" id="newShade" value="2" />
+              <label for="newShade">__MSG_count_new_shade_color__</label>
+              <input type="color" name="newShadeColor" id="newShadeColor" value="" />
+            </td>
+          </tr>
+        </table>
+
+      </form>
+    </div>
+
+    <div id="AppsContent" class="tabcontent">
+      <form name="appsform">
+        <h3>__MSG_apps__</h3>
+
+        <table id="startappselect">
+          <caption>
+            __MSG_apps_start_application__
+          </caption>
+          <tr id="startApp">
+            <td>
+              <label>__MSG_apps_start_app__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="startAppInput"
+              />
+            </td>
+          </tr>
+          <tr id="startAppArgs">
+            <td>
+              <label>__MSG_apps_start_app_args__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="startAppArgsInput"
+              />
+            </td>
+          </tr>
+        </table>
+
+        <table id="closeappselect">
+          <caption>
+            __MSG_apps_close_application__
+          </caption>
+          <tr id="closeApp">
+            <td>
+              <label>__MSG_apps_close_app__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="closeAppInput"
+              />
+            </td>
+          </tr>
+          <tr id="closeAppArgs">
+            <td>
+              <label>__MSG_apps_close_app_args__</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="closeAppArgsInput"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <div id="MailContent" class="tabcontent">
+      <form name="mailform">
+        <h3>__MSG_accounts__</h3>
+
+        <ul id="accountsTree"></ul>
+
+        <br />
+      </form>
+
+      <script src="js/options_mailform.js"></script>
+    </div>
+
+    <div id="ShortcutsContent" class="tabcontent">
+      <form name="shortcutsform">
+        <h3>__MSG_shortcuts__</h3>
+
+        <div id="showhideshortcutinput">
+          <div>
+            <label for="showHideShortcutInput" id="showHideShortcutInputLabel">
+              __MSG_shortcuts_showhide_shortcut__
+            </label>
+            <input
+              type="text"
+              name="showhideshortcut"
+              id="showHideShortcutInput"
+              value=""
+            />
+            <button type="button" name="showhideshortcutbutton">__MSG_shortcuts_clear_button__</button>
+          </div>
+        </div>
+
+      </form>
+
+      <script src="js/options_shortcutsform.js"></script>
+    </div>
+
+    <div id="DebugContent" class="tabcontent">
+      <form name="debugform">
+        <h3>__MSG_debug__</h3>
+
+        <br />
+
+        <div id="debugselect">
+          <div id="inputcheck">
+            <input
+              type="checkbox"
+              name="debug"
+              id="debugDisplay"
+              value="Debug"
+            /><label for="debugDisplay" id="debugDisplayLabel"
+              >__MSG_debug_display__</label
+            >
+            <br />
+          </div>
+        </div>
+        <br />
+      </form>
+    </div>
+
+    <br />
+
+    <table id="buttonselect">
+      <tr>
+        <form name="saveform">
+          <td>
+            <label>__MSG_save_preferences__</label>
+          </td>
+          <td>
+            <button type="submit" name="savebutton">__MSG_save_preferences_button__</button>
+          </td>
+        </form>
+      </tr>
+      <tr>
+        <td><br /></td>
+      </tr>
+      <tr>
+        <td>
+          <label>__MSG_reset_preferences__</label>
+        </td>
+        <td>
+          <button type="submit" name="resetbutton">
+            __MSG_reset_preferences_button__
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <script src="js/options_tabbutton.js"></script>
+
+    <script src="options.js"></script>
+  </body>
+</html>

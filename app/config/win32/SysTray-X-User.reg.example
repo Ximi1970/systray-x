@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Mozilla\NativeMessagingHosts\SysTray_X]
+@="C:\\Projects\\Github\\Ximi1970\\systray-x\\app\\SysTray-X\\..\\config\\win32\\SysTray_X.json"
+

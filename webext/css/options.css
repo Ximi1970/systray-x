@@ -1,0 +1,211 @@
+body {
+  font-family: Arial;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* check box tree view */
+.box {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.box::before {
+  content: "\2610";
+  color: grey;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.check-box::before {
+  content: "\2611";
+  color: dodgerblue;
+}
+
+#inputradio > input[type="radio"] {
+  margin: 0;
+}
+
+#inputradio > label {
+  display: inline;
+  vertical-align: top;
+}
+
+#inputcheck {
+  display: flex;
+  align-items: center;
+}
+
+#minimizeselect,
+#minimizeiconselect,
+#closeselect,
+#startupselect,
+#defaulticonselect,
+#iconselect,
+#numberprops,
+#counttypeselect,
+#newindicatorselect,
+#storageselect,
+#startappselect,
+#closeappselect {
+  width: 25em;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+ul,
+#accountsTree {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#accountsTree {
+  width: 25em;
+  border-style: solid;
+  border-width: 1px;
+  margin: 0;
+  padding: 10px;
+}
+
+/* Style the caret/arrow filler */
+.caretfiller::before {
+  user-select: none; /* Prevent text selection */
+  content: "\25B6";
+  visibility: hidden;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+.custom-icon-container {
+  display: flex;
+}
+
+.custom-icon-container > div {
+  margin: 10px;
+}
+
+label[id="fileDefaultIconTypeLabel"],
+label[id="fileIconTypeLabel"]
+{
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button[name="savebutton"] {
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button[name="savebutton"]:hover {
+  color: #000;
+  background-color: #ccc;
+}
+
+button[name="resetbutton"] {
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+}
+
+button[name="resetbutton"]:hover {
+  color: #000;
+  background-color: #ccc;
+}

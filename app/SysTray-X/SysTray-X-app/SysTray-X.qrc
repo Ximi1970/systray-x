@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>files/icons/SysTray-X.png</file>
+        <file>files/icons/blank-icon.png</file>
+        <file>files/icons/Thunderbird.png</file>
+        <file>files/icons/document-new.png</file>
+        <file>files/icons/gtk-apply.png</file>
+        <file>files/icons/gtk-edit.png</file>
+        <file>files/icons/gtk-preferences.png</file>
+        <file>files/icons/window-close.png</file>
+        <file>files/icons/window-restore.png</file>
+        <file>files/icons/mail-unread.png</file>
+        <file>files/icons/help-about.png</file>
+        <file>files/icons/dialog-warning.png</file>
+        <file>languages/SysTray-X.nl.qm</file>
+        <file>languages/SysTray-X.de.qm</file>
+        <file>languages/SysTray-X.it.qm</file>
+        <file>languages/SysTray-X.ru.qm</file>
+        <file>languages/SysTray-X.en-US.qm</file>
+        <file>languages/SysTray-X.pt-BR.qm</file>
+        <file>files/icons/blank-icon-dark.png</file>
+        <file>files/icons/Thunderbird115.png</file>
+        <file>files/icons/new-indicator-round.png</file>
+        <file>files/icons/new-indicator-star-close.png</file>
+        <file>files/icons/new-indicator-star-open.png</file>
+        <file>languages/SysTray-X.el.qm</file>
+    </qresource>
+</RCC>

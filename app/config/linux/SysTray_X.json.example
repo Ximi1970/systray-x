@@ -1,0 +1,7 @@
+{
+  "name": "SysTray_X",
+  "description": "SysTray-X System Tray App",
+  "path": "/home/Ximi1970/Projects/Github/Ximi1970/systray-x/app/build-SysTray-X-Desktop-Debug/SysTray-X",
+  "type": "stdio",
+  "allowed_extensions": [ "systray-x@Ximi1970" ]
+}

@@ -1,0 +1,7 @@
+ {
+  "name": "SysTray_X",
+  "description": "SysTray-X System Tray App",
+  "path": "SYSTRAY_X_PATH",
+  "type": "stdio",
+  "allowed_extensions": [ "systray-x@Ximi1970" ]
+}
