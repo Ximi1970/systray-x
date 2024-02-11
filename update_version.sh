@@ -19,6 +19,17 @@ SERVICE_FILE="./dist/rpm/minimal/_service"
 sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 
+
+SERVICE_FILE="./dist/arch/kde/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/arch/gnome/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/arch/minimal/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+
+
 MANIFEST_FILE="./webext/manifest.json"
 sed -i -e "s?\(^.*\"version\": \"\).*\(\",\)?\1$VERSION\2?" $MANIFEST_FILE
 
