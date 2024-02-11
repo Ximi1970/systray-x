@@ -23,7 +23,6 @@
     <param name="compression">xz</param>
   </service>
   <service mode="buildtime" name="set_version">
-    <param name="file">systray-x-gnome.dsc</param>
     <param name="file">systray-x-gnome.spec</param>
   </service>
 </services>
