@@ -16,15 +16,15 @@ VERSION_MINOR=${VERSION_AR[1]}
 VERSION_BUILD=${VERSION_AR[2]}
 
 SERVICE_FILE="./dist/rpm/kde/_service"
-sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
+sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1release-$VERSION\2?" $SERVICE_FILE
 sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 
 SERVICE_FILE="./dist/rpm/gnome/_service"
-sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
+sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1release-$VERSION\2?" $SERVICE_FILE
 sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 
 SERVICE_FILE="./dist/rpm/minimal/_service"
-sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
+sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1release-$VERSION\2?" $SERVICE_FILE
 sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 
 
