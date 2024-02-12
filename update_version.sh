@@ -1,6 +1,14 @@
 #!/bin/bash
 
+if [[ -z $2 ]] ; then
+  RELEASE=1
+else
+  RELEASE=$2
+fi
+
 VERSION=$1
+
+echo $VERSION-$RELEASE
 
 VERSION_AR=(${VERSION//./ })
 VERSION_MAJOR=${VERSION_AR[0]}
@@ -18,6 +26,36 @@ sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FIL
 SERVICE_FILE="./dist/rpm/minimal/_service"
 sed -i -e "s?\(^.*\"revision\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
 sed -i -e "s?\(^.*\"versionformat\">\).*\(</param>\)?\1$VERSION\2?" $SERVICE_FILE
+
+
+SERVICE_FILE="./dist/deb/kde/debian.changelog"
+sed -i -e "0,/systray-x/{s?\(^systray-x \).*\( unstable.*\)?\1($VERSION-$RELEASE)\2?}" $SERVICE_FILE
+SERVICE_FILE="./dist/deb/kde/systray-x.dsc"
+sed -i -e "s?\(^Version: \).*?\1$VERSION-$RELEASE?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/deb/gnome/debian.changelog"
+sed -i -e "0,/systray-x/{s?\(^systray-x-gnome \).*\( unstable.*\)?\1($VERSION-$RELEASE)\2?}" $SERVICE_FILE
+SERVICE_FILE="./dist/deb/gnome/systray-x-gnome.dsc"
+sed -i -e "s?\(^Version: \).*?\1$VERSION-$RELEASE?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/deb/minimal/debian.changelog"
+sed -i -e "0,/systray-x/{s?\(^systray-x-minimal \).*\( unstable.*\)?\1($VERSION-$RELEASE)\2?}" $SERVICE_FILE
+SERVICE_FILE="./dist/deb/minimal/systray-x-minimal.dsc"
+sed -i -e "s?\(^Version: \).*?\1$VERSION-$RELEASE?" $SERVICE_FILE
+
+
+SERVICE_FILE="./dist/arch/kde/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+sed -i -e "s?\(^pkgrel=\).*?\1$RELEASE?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/arch/gnome/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+sed -i -e "s?\(^pkgrel=\).*?\1$RELEASE?" $SERVICE_FILE
+
+SERVICE_FILE="./dist/arch/minimal/PKGBUILD"
+sed -i -e "s?\(^pkgver=\).*?\1$VERSION?" $SERVICE_FILE
+sed -i -e "s?\(^pkgrel=\).*?\1$RELEASE?" $SERVICE_FILE
+
 
 MANIFEST_FILE="./webext/manifest.json"
 sed -i -e "s?\(^.*\"version\": \"\).*\(\",\)?\1$VERSION\2?" $MANIFEST_FILE
