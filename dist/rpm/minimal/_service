@@ -20,5 +20,7 @@
     <param name="file">*.tar</param>
     <param name="compression">xz</param>
   </service>
-  <service mode="buildtime" name="set_version" />
+  <service mode="buildtime" name="set_version">
+    <param name="file">systray-x-minimal.spec</param>
+  </service>
 </services>
