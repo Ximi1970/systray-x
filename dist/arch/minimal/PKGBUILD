@@ -10,6 +10,7 @@ url=https://github.com/Ximi1970/systray-x
 license=(MPL-2.0)
 depends=(
   'qt5-base'
+  'qt5-x11extras'
   'thunderbird>=91'
   'thunderbird<121'
 )
