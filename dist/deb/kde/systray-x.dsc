@@ -1,6 +1,6 @@
 Format: 1.0
 Source: systray-x
-Version: 0-0
+Version: 0.9.5-1
 Binary: SysTray-X
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Architecture: any
