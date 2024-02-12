@@ -2,7 +2,7 @@
   <service name="obs_scm">
     <param name="url">https://github.com/Ximi1970/systray-x.git</param>
     <param name="scm">git</param>
-    <param name="revision">0.9.8</param>
+    <param name="revision">release-0.9.8</param>
     <param name="versionformat">0.9.8</param>
     <param name="filename">systray-x-gnome</param>
     <param name="extract">dist/rpm/gnome/systray-x-gnome.changes</param>
