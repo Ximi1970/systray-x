@@ -53,10 +53,10 @@ Requires:       libKF5Notifications5
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version}
 Requires:       thunderbird >= 91
-Requires:       thunderbird < 124
+Requires:       thunderbird < 125
 %else
 Requires:       MozillaThunderbird >= 91
-Requires:       MozillaThunderbird < 124
+Requires:       MozillaThunderbird < 125
 %endif
 %if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
 %if 0%{?fedora_version}
