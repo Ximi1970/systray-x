@@ -589,6 +589,7 @@ it      :   lgbaldoni
 nl      :  
 pt_BR   :   fabianski7  
 ru_RU   :   agvantibo  
+zh_CN   :	UM-Li
 
 
 ### Remarks
