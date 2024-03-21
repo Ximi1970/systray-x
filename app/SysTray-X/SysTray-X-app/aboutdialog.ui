@@ -23,7 +23,10 @@
      <item row="0" column="0" colspan="2">
       <widget class="QLabel" name="header">
        <property name="text">
-        <string>SysTray-X Companion App by Ximi1970</string>
+        <string>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</string>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
