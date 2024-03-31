@@ -13,7 +13,7 @@ depends=(
   'qt6-wayland'
   'gnome-shell-extension-appindicator'
   'thunderbird>=91'
-  'thunderbird<125'
+  'thunderbird<126'
 )
 makedepends=(
   'git'
