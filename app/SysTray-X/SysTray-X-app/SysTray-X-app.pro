@@ -22,9 +22,19 @@ include( ../SysTray-X.pri )
 QT += core gui
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
-        QT += dbus KNotifications
+        lessThan(QT_MAJOR_VERSION, 6): {
+            QT += dbus KNotifications
+        }
+        else
+        {
+            INCLUDEPATH += /usr/include/KF6/KStatusNotifierItem
+            LIBS += -lKF6StatusNotifierItem
+        }
     }
-    QT += x11extras
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        QT += x11extras
+    }
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -152,8 +162,6 @@ win32: {
 
 SOURCES += \
         main.cpp \
-        nativeeventfilterbase.cpp \
-        shortcut.cpp \
         systrayxlink.cpp \
         systrayxicon.cpp \
         systrayx.cpp \
@@ -161,25 +169,39 @@ SOURCES += \
         preferencesdialog.cpp \
         preferences.cpp \
         windowctrl.cpp
+
+lessThan(QT_MAJOR_VERSION, 6): {
+    SOURCES += \
+        shortcut.cpp \
+        nativeeventfilterbase.cpp
+}
+
 unix: {
-SOURCES += \
-        nativeeventfilter-x11.cpp \
-        windowctrl-unix.cpp
+    SOURCES += \
+            windowctrl-unix.cpp
+
     contains(DEFINES,KDE_INTEGRATION) {
         SOURCES += \
             systrayxstatusnotifier.cpp
     }
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        SOURCES += \
+                nativeeventfilter-x11.cpp
+    }
 }
 win32: {
 SOURCES += \
-        nativeeventfilter-win.cpp \
         windowctrl-win.cpp
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        SOURCES += \
+            nativeeventfilter-win.cpp
+    }
 }
 
 HEADERS += \
         debug.h \
-        nativeeventfilterbase.h \
-        shortcut.h \
         systrayxlink.h \
         systrayxicon.h \
         systrayx.h \
@@ -187,20 +209,35 @@ HEADERS += \
         preferencesdialog.h \
         preferences.h \
         windowctrl.h
+
+lessThan(QT_MAJOR_VERSION, 6): {
+    HEADERS += \
+        shortcut.h \
+        nativeeventfilterbase.h
+}
+
 unix: {
-HEADERS += \
-        nativeeventfilter-x11.h \
+    HEADERS += \
         windowctrl-unix.h
 
     contains(DEFINES,KDE_INTEGRATION) {
         HEADERS += \
             systrayxstatusnotifier.h
     }
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        HEADERS += \
+            nativeeventfilter-x11.h
+    }
 }
 win32: {
-HEADERS += \
-        nativeeventfilter-win.h \
+    HEADERS += \
         windowctrl-win.h
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        HEADERS += \
+            nativeeventfilter-win.h
+    }
 }
 
 FORMS += \

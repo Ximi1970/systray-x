@@ -1105,6 +1105,7 @@ void    PreferencesDialog::slotTruncateShowHideShortcut()
 {
     QKeySequence key_seq = m_ui->showHideKeySequenceEdit->keySequence();
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     /*
      *  Workaround for a Qt5 bug in QKeySequenceEdit object, Meta/Win key is not handled correctly.
      */
@@ -1119,6 +1120,13 @@ void    PreferencesDialog::slotTruncateShowHideShortcut()
     }
 
     QKeySequence shortcut( value );
+
+#else
+
+    QKeySequence shortcut( key_seq[ 0 ] );
+
+#endif
+
     m_ui->showHideKeySequenceEdit->setKeySequence( shortcut );
 }
 
