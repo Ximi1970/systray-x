@@ -25,8 +25,7 @@ unix:!macx: {
         lessThan(QT_MAJOR_VERSION, 6): {
             QT += dbus KNotifications
         }
-        else
-        {
+        greaterThan(QT_MAJOR_VERSION, 5): {
             INCLUDEPATH += /usr/include/KF6/KStatusNotifierItem
             LIBS += -lKF6StatusNotifierItem
         }
