@@ -9,7 +9,7 @@
 #include "systrayxicon.h"
 #include "systrayxstatusnotifier.h"
 #include "windowctrl.h"
-#include "shortcut.h"
+//#include "shortcut.h"
 
 /*
  *	Qt includes
@@ -189,7 +189,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
     m_preferences->displayDebug();
 
-/*
+
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
     m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
@@ -206,7 +206,7 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 //    m_preferences->setStartApp( "/home/maxime/test.sh" );
 //    m_preferences->setStartAppArgs( "/home/maxime/startup.txt StartupString" );
 //    slotStartApp();
-*/
+
 }
 
 
@@ -726,7 +726,7 @@ void    SysTrayX::slotLoadLanguage( QString locale )
         }
 
         QString locale_path = "SysTray-X."+ locale;
-        m_translator.load( locale_path, ":/languages/" );
+        (void)m_translator.load( locale_path, ":/languages/" );
 //        bool status = m_translator.load( locale_path, ":/languages/" );
 //        emit signalConsole( QString( "Language loaded %1").arg(status));
         qApp->installTranslator( &m_translator );
@@ -775,6 +775,7 @@ void    SysTrayX::slotCloseApp()
 
 void    SysTrayX::slotShowHideShortcutChange()
 {
+#ifdef ENABLE_SHORTCUT
     if( m_show_hide_shortcut != nullptr )
     {
         disconnect( m_show_hide_shortcut, &Shortcut::activated, m_win_ctrl, &WindowCtrl::slotShowHide );
@@ -785,4 +786,5 @@ void    SysTrayX::slotShowHideShortcutChange()
 
     m_show_hide_shortcut = new Shortcut( m_preferences->getShowHideShortcut(), this );
     connect( m_show_hide_shortcut, &Shortcut::activated, m_win_ctrl, &WindowCtrl::slotShowHide );
+#endif
 }

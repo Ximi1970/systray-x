@@ -9,7 +9,9 @@
 /*
  *  Qt includes
  */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QX11Info>
+#endif
 #include <QKeySequence>
 
 
@@ -127,7 +129,11 @@ bool NativeEventFilterX11::connectShortcut( Qt::Key key_code, Qt::KeyboardModifi
     /*
      *  Get the X11 display
      */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Display *display = QX11Info::display();
+#else
+    Display *display = 0;
+#endif
 
     /*
      *  Get the final key code
@@ -153,7 +159,11 @@ bool NativeEventFilterX11::connectShortcut( Qt::Key key_code, Qt::KeyboardModifi
  */
 bool NativeEventFilterX11::disconnectShortcut()
 {
-    Display* display = QX11Info::display();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    Display *display = QX11Info::display();
+#else
+    Display *display = 0;
+#endif
 
     /*
      *  Ungrab the key
