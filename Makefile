@@ -5,10 +5,10 @@ else
 ifeq (GNU/Linux,$(shell uname -o))
  SYSTEM = Linux
  
- QMAKE = qmake6
- ifeq (, $(shell which qmake6 2>/dev/null))
-   QMAKE = qmake-qt5
-   ifeq (, $(shell which qmake-qt5 2>/dev/null))
+  QMAKE = qmake-qt5
+  ifeq (, $(shell which qmake-qt5 2>/dev/null))
+   QMAKE = qmake6
+   ifeq (, $(shell which qmake6 2>/dev/null))
     ifeq (, $(shell which qmake 2>/dev/null))
       $(error "No qmake in $(PATH)")
     endif

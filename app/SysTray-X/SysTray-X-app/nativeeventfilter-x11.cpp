@@ -55,9 +55,13 @@ bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void*
  */
 bool NativeEventFilterX11::connectShortcut( QKeySequence key_seq )
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    Qt::Key key_code = Qt::Key( key_seq[ 0 ] & static_cast< int >( ~Qt::KeyboardModifierMask ) );
+    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ] & static_cast<int>( Qt::KeyboardModifierMask ) );
+#else
     Qt::Key key_code = Qt::Key( key_seq[ 0 ].toCombined() & static_cast< int >( ~Qt::KeyboardModifierMask ) );
     Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ].toCombined() & static_cast<int>( Qt::KeyboardModifierMask ) );
-
+#endif
     return connectShortcut( key_code, key_modifiers );
 }
 
