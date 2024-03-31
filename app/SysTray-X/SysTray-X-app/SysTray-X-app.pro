@@ -19,7 +19,7 @@ include( ../SysTray-X.pri )
 #
 # Set the Qt modules
 #
-QT += core gui
+QT += core gui widgets
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
         lessThan(QT_MAJOR_VERSION, 6): {
@@ -36,8 +36,6 @@ unix:!macx: {
         QT += x11extras
     }
 }
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 #
 # Define the target
@@ -161,73 +159,53 @@ win32: {
 
 
 SOURCES += \
+        debugwidget.cpp \
         main.cpp \
+        nativeeventfilterbase.cpp \
         systrayxlink.cpp \
         systrayxicon.cpp \
         systrayx.cpp \
-        debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp \
-        windowctrl.cpp
-
-lessThan(QT_MAJOR_VERSION, 6): {
-    SOURCES += \
         shortcut.cpp \
-        nativeeventfilterbase.cpp
-}
+        windowctrl.cpp
 
 unix: {
     SOURCES += \
-            windowctrl-unix.cpp
+        nativeeventfilter-x11.cpp \
+        windowctrl-unix.cpp
 
     contains(DEFINES,KDE_INTEGRATION) {
         SOURCES += \
             systrayxstatusnotifier.cpp
     }
-
-    lessThan(QT_MAJOR_VERSION, 6): {
-        SOURCES += \
-                nativeeventfilter-x11.cpp
-    }
 }
 win32: {
 SOURCES += \
+        nativeeventfilter-win.cpp
         windowctrl-win.cpp
-
-    lessThan(QT_MAJOR_VERSION, 6): {
-        SOURCES += \
-            nativeeventfilter-win.cpp
-    }
 }
 
 HEADERS += \
         debug.h \
+        debugwidget.h \
+        nativeeventfilterbase.h \
+        preferencesdialog.h \
+        preferences.h \
         systrayxlink.h \
         systrayxicon.h \
         systrayx.h \
-        debugwidget.h \
-        preferencesdialog.h \
-        preferences.h \
-        windowctrl.h
-
-lessThan(QT_MAJOR_VERSION, 6): {
-    HEADERS += \
         shortcut.h \
-        nativeeventfilterbase.h
-}
+        windowctrl.h
 
 unix: {
     HEADERS += \
+        nativeeventfilter-x11.h \
         windowctrl-unix.h
 
     contains(DEFINES,KDE_INTEGRATION) {
         HEADERS += \
             systrayxstatusnotifier.h
-    }
-
-    lessThan(QT_MAJOR_VERSION, 6): {
-        HEADERS += \
-            nativeeventfilter-x11.h
     }
 }
 win32: {

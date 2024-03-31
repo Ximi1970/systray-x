@@ -12,7 +12,6 @@
 /*
  *	Qt includes
  */
-#include <QCoreApplication>
 #include <QAbstractEventDispatcher>
 
 

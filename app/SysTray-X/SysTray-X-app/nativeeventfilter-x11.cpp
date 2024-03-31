@@ -24,7 +24,12 @@ const int NativeEventFilterX11::m_valid_mods_mask = ShiftMask | ControlMask | Mo
 /*
  *  Catch the key press
  */
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void* message, long* result )
+#else
+bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void* message, qintptr* result )
+#endif
 {
     Q_UNUSED( eventType )
     Q_UNUSED( result )
@@ -50,8 +55,8 @@ bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void*
  */
 bool NativeEventFilterX11::connectShortcut( QKeySequence key_seq )
 {
-    Qt::Key key_code = Qt::Key( key_seq[ 0 ] & static_cast< int >( ~Qt::KeyboardModifierMask ) );
-    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ] & static_cast<int>( Qt::KeyboardModifierMask ) );
+    Qt::Key key_code = Qt::Key( key_seq[ 0 ].toCombined() & static_cast< int >( ~Qt::KeyboardModifierMask ) );
+    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ].toCombined() & static_cast<int>( Qt::KeyboardModifierMask ) );
 
     return connectShortcut( key_code, key_modifiers );
 }
@@ -132,7 +137,8 @@ bool NativeEventFilterX11::connectShortcut( Qt::Key key_code, Qt::KeyboardModifi
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Display *display = QX11Info::display();
 #else
-    Display *display = 0;
+    QNativeInterface::QX11Application *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    Display *display = x11App->display();
 #endif
 
     /*
@@ -162,7 +168,8 @@ bool NativeEventFilterX11::disconnectShortcut()
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Display *display = QX11Info::display();
 #else
-    Display *display = 0;
+    QNativeInterface::QX11Application *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    Display *display = x11App->display();
 #endif
 
     /*
