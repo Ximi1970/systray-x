@@ -5,7 +5,8 @@
  *	Qt includes
  */
 #include <QtGlobal>
-
+#include <QObject>
+#include <QPoint>
 
 /*
  *	Local includes
@@ -23,7 +24,7 @@
  *  Predefines
  */
 class QWindow;
-class Preferences;
+//class Preferences;
 
 /**
  * @brief The WindowCtrl class.
