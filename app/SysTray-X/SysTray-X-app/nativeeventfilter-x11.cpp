@@ -24,7 +24,6 @@ const int NativeEventFilterX11::m_valid_mods_mask = ShiftMask | ControlMask | Mo
 /*
  *  Catch the key press
  */
-
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void* message, long* result )
 #else

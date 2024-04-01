@@ -181,7 +181,7 @@ unix: {
 }
 win32: {
 SOURCES += \
-        nativeeventfilter-win.cpp
+        nativeeventfilter-win.cpp \
         windowctrl-win.cpp
 }
 
