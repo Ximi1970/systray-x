@@ -11,7 +11,7 @@ license=(MPL-2.0)
 depends=(
   'qt6-base'
   'qt6-wayland'
-  'kf6-knotifications'
+  'knotifications'
   'thunderbird>=91'
   'thunderbird<121'
 )
@@ -21,7 +21,7 @@ makedepends=(
   'zip'
   'libx11'
   'qt6-base'
-  'kf6-knotifications'
+  'knotifications'
 )
 provides=(
   'systray-x'
