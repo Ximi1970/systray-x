@@ -29,7 +29,7 @@ BuildRequires:  zip
 %if 0%{?suse_version} > 1600
 BuildRequires:  pkgconfig(Qt6Core)
 BuildRequires:  pkgconfig(Qt6Widgets)
-BuildRequires:  kf6-knotifications-devel
+BuildRequires:  kf6-kstatusnotifieritem-devel
 Requires:       libKF6Notifications6
 %else
 BuildRequires:  pkgconfig(Qt5Core)
