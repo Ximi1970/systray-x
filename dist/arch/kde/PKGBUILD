@@ -9,10 +9,9 @@ arch=(x86_64)
 url=https://github.com/Ximi1970/systray-x
 license=(MPL-2.0)
 depends=(
-  'qt5-base'
-  'qt5-x11extras'
-  'qt5-wayland'
-  'knotifications5'
+  'qt6-base'
+  'qt6-wayland'
+  'kf6-knotifications'
   'thunderbird>=91'
   'thunderbird<121'
 )
@@ -21,9 +20,8 @@ makedepends=(
   'unzip'
   'zip'
   'libx11'
-  'qt5-base'
-  'qt5-x11extras'
-  'knotifications5'
+  'qt6-base'
+  'kf6-knotifications'
 )
 provides=(
   'systray-x'
