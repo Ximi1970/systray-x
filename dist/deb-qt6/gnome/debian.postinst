@@ -1,0 +1,86 @@
+#!/bin/sh
+ 
+# Source debconf library.
+. /usr/share/debconf/confmodule
+ 
+# Fetching configuration from debconf
+#db_get packagename/question1
+#ANSWER1=$RET
+ 
+PROF_DIR=/etc/dconf/profile
+PROF_FILE=user
+
+if [ -f $PROF_DIR/$PROF_FILE ] ; then
+    #
+    # Edit user file
+    #
+    grep -q "user-db:user" $PROF_DIR/$PROF_FILE
+    if [ "$?" = "1" ] ; then
+        echo "user-db:user" >> $PROF_DIR/$PROF_FILE
+    fi
+
+    grep -q "system-db:local" $PROF_DIR/$PROF_FILE
+    if [ "$?" = "1" ] ; then
+        echo "system-db:local" >> $PROF_DIR/$PROF_FILE
+    fi
+else
+    #
+    # Generate user file
+    #
+    mkdir -p $PROF_DIR
+    cat >$PROF_DIR/$PROF_FILE <<EOF
+user-db:user
+system-db:local
+EOF
+
+fi
+
+DEB_VENDOR=$(cat /etc/dpkg/origins/default | grep Vendor: | sed -e "s/Vendor: //")
+case $DEB_VENDOR in
+    Debian)
+        EXTENSION="ubuntu-appindicators@ubuntu.com"
+        ;;
+        
+    Ubuntu)
+        RELEASE=$(lsb_release -rs)
+        case $RELEASE in
+            16.04)
+                EXTENSION="appindicatorsupport@rgcjonas.gmail.com"
+                ;;
+
+            *)
+                EXTENSION="ubuntu-appindicators@ubuntu.com"
+                ;;
+        esac
+        ;;
+        
+    *)
+        EXTENSION="ubuntu-appindicators@ubuntu.com"
+        ;;
+esac
+
+CONF_DIR=/etc/dconf/db/local.d
+CONF_FILE=00-extensions
+
+if [ -f $CONF_DIR/$CONF_FILE ] ; then
+    #
+    # Edit extensions file
+    #
+    grep -q $EXTENSION $CONF_DIR/$CONF_FILE
+    if [ "$?" = "1" ] ; then
+        sed -i -e "s/\(enabled-extensions=\[.*\)\]/\1, '${EXTENSION}'\]/" $CONF_DIR/$CONF_FILE
+    fi
+else
+    #
+    # Generate extensions file
+    #
+    mkdir -p $CONF_DIR
+    echo "[org/gnome/shell]" > $CONF_DIR/$CONF_FILE
+    echo "# List all extensions that you want to have enabled for all users" >> $CONF_DIR/$CONF_FILE
+    echo "enabled-extensions=['${EXTENSION}']" >> $CONF_DIR/$CONF_FILE
+fi
+
+which dconf > /dev/null 2>&1
+if [ "$?" = "0" ] ; then
+    dconf update
+fi
