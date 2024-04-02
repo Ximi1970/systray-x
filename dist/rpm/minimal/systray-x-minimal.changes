@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Apr  2 21:32:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.9
+
+    - Qt 6 fixes
+
+-------------------------------------------------------------------
 Sun Dec 10 13:24:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.8
