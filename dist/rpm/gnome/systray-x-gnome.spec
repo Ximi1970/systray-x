@@ -26,18 +26,26 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
+%if 0%{?suse_version} > 1600
+BuildRequires:  pkgconfig(Qt6Core)
+BuildRequires:  pkgconfig(Qt6Widgets)
+%else
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
+%if 0%{?fedora_version} || 0%{?centos_version}
+BuildRequires:  qt5-qtx11extras-devel
+%else
+BuildRequires:  libqt5-qtx11extras-devel
+%endif
+%endif
 BuildRequires:  pkgconfig(x11)
 Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version} || 0%{?centos_version}
-BuildRequires:  qt5-qtx11extras-devel
 Requires:       thunderbird >= 91
 Requires:       thunderbird < 121
 %else
-BuildRequires:  libqt5-qtx11extras-devel
 Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif

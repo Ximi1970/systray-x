@@ -9,8 +9,7 @@ arch=(x86_64)
 url=https://github.com/Ximi1970/systray-x
 license=(MPL-2.0)
 depends=(
-  'qt5-base'
-  'qt5-x11extras'
+  'qt6-base'
   'gnome-shell-extension-appindicator'
   'thunderbird>=91'
   'thunderbird<121'
@@ -20,8 +19,7 @@ makedepends=(
   'unzip'
   'zip'
   'libx11'
-  'qt5-base'
-  'qt5-x11extras'
+  'qt6-base'
 )
 provides=(
   'systray-x'
