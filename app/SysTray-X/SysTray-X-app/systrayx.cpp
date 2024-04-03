@@ -151,7 +151,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
 
 #if defined( SHORTCUTS )
-    connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
+
+    if( m_preferences->getShortcutsOption() )
+    {
+        connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
+    }
+
 #endif
 
     /*
@@ -192,7 +197,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
-    m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
+
+    if( m_preferences->getShortcutsOption() )
+    {
+        m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
+    }
 
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );

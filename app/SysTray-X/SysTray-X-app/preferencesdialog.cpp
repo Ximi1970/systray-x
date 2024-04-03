@@ -27,7 +27,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->setupUi( this );
 
     /*
-     *  Store link adn preferences
+     *  Store link and preferences
      */
     m_link = link;
     m_pref = pref;
@@ -82,18 +82,16 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 #endif
 
 #if defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS )
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 
-    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
-    m_ui->tabWidget->setTabVisible( index, false );
+    hideShortcutsTab();
 
 #else
 
-    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
-    m_ui->tabWidget->setTabEnabled( index, false );
-    m_ui->tabWidget->setStyleSheet( "QTabBar::tab::disabled { width: 0; height: 0; margin: 0; padding: 0; border: none; }" );
+    if( !m_pref->getShortcutsOption() )
+    {
+        hideShortcutsTab();
+    }
 
-#endif
 #endif
 
     /*
@@ -214,6 +212,26 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 #endif
     setWindowFlags( flags );
 */
+}
+
+
+/*
+ *  Hide the shortcuts tab
+ */
+void PreferencesDialog::hideShortcutsTab()
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabVisible( index, false );
+
+#else
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabEnabled( index, false );
+    m_ui->tabWidget->setStyleSheet( "QTabBar::tab::disabled { width: 0; height: 0; margin: 0; padding: 0; border: none; }" );
+
+#endif
 }
 
 

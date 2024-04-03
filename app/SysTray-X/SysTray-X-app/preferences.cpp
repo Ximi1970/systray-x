@@ -114,7 +114,14 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 #if ( defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS ) )
     m_shortcuts_option = false;
 #else
-    m_shortcuts_option = true;
+    if( m_platform == "wayland" )
+    {
+        m_shortcuts_option = false;
+    }
+    else
+    {
+        m_shortcuts_option = true;
+    }
 #endif
 /*
     // XDG_SESSION_DESKTOP

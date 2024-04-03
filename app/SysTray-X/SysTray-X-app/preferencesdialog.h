@@ -58,6 +58,11 @@ class PreferencesDialog : public QDialog
     private:
 
         /**
+         * @brief hideShortcutsTab. Hide the shortcuts tab.
+         */
+        void hideShortcutsTab();
+
+        /**
          * @brief setDebug. Set the debug state.
          *
          *  @param state    The state.
