@@ -49,9 +49,17 @@ Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
 %if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
-Requires:       libqt6-qtwayland
+%if 0%{?fedora_version}
+Requires:       qt6-qtwayland
+%else
+Requires:       qt6-wayland
+%endif
+%else
+%if 0%{?fedora_version}
+Requires:       qt5-qtwayland
 %else
 Requires:       libqt5-qtwayland
+%endif
 %endif
 
 %description

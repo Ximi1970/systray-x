@@ -34,14 +34,14 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-%if 0%{?fedora_version} || 0%{?centos_version}
+%if 0%{?fedora_version}
 BuildRequires:  qt5-qtx11extras-devel
 %else
 BuildRequires:  libqt5-qtx11extras-devel
 %endif
 %endif
 BuildRequires:  pkgconfig(x11)
-%if 0%{?fedora_version} || 0%{?centos_version}
+%if 0%{?fedora_version}
 Requires:       thunderbird >= 91
 Requires:       thunderbird < 121
 %else
@@ -49,9 +49,17 @@ Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
 %if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
-Requires:       libqt6-qtwayland
+%if 0%{?fedora_version}
+Requires:       qt6-qtwayland
+%else
+Requires:       qt6-wayland
+%endif
+%else
+%if 0%{?fedora_version}
+Requires:       qt5-qtwayland
 %else
 Requires:       libqt5-qtwayland
+%endif
 %endif
 Requires:       gnome-shell-extension-appindicator
 
