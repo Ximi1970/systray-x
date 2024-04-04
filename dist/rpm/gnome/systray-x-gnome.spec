@@ -34,6 +34,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
+<<<<<<< HEAD
 %if 0%{?fedora_version} || 0%{?centos_version}
 BuildRequires:  qt5-qtx11extras-devel
 %else
@@ -42,6 +43,17 @@ BuildRequires:  libqt5-qtx11extras-devel
 %endif
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version} || 0%{?centos_version}
+=======
+%if 0%{?fedora_version} || 0%{?centos_version}
+BuildRequires:  qt5-qtx11extras-devel
+%else
+BuildRequires:  libqt5-qtx11extras-devel
+%endif
+%endif
+BuildRequires:  pkgconfig(x11)
+Requires:       gnome-shell-extension-appindicator
+%if 0%{?fedora_version} || 0%{?centos_version}
+>>>>>>> 36dcfb0866b431f46dc130924de23b4acc7f866b
 Requires:       thunderbird >= 91
 Requires:       thunderbird < 121
 %else
