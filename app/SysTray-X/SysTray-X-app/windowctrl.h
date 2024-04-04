@@ -24,7 +24,6 @@
  *  Predefines
  */
 class QWindow;
-//class Preferences;
 
 /**
  * @brief The WindowCtrl class.
@@ -56,9 +55,6 @@ class WindowCtrl : public QObject
         bool    thunderbirdStart() const;
 
     signals:
-
-//        void    signalShow();
-//        void    signalHide();
 
         void    signalHideDefaultIconChange(bool hide );
 
