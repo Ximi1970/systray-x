@@ -40,6 +40,7 @@ BuildRequires:  libqt5-qtx11extras-devel
 Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
+Requires:       libqt5-qtwayland
 
 %description
 SysTray-X is a system tray extension for Thunderbird.

@@ -11,6 +11,7 @@ license=(MPL-2.0)
 depends=(
   'qt5-base'
   'qt5-x11extras'
+  'qt5-wayland'
   'knotifications5'
   'thunderbird>=91'
   'thunderbird<121'

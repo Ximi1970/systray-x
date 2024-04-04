@@ -31,7 +31,6 @@ BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(x11)
-Requires:       gnome-shell-extension-appindicator
 %if 0%{?fedora_version} || 0%{?centos_version}
 BuildRequires:  qt5-qtx11extras-devel
 Requires:       thunderbird >= 91
@@ -41,6 +40,8 @@ BuildRequires:  libqt5-qtx11extras-devel
 Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
+Requires:       libqt5-qtwayland
+Requires:       gnome-shell-extension-appindicator
 
 %description
 SysTray-X is a system tray extension for Thunderbird.
