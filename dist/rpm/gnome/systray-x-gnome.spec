@@ -26,7 +26,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
-%if 0%{?suse_version} > 1600
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
 BuildRequires:  pkgconfig(Qt6Core)
 BuildRequires:  pkgconfig(Qt6Widgets)
 %else
@@ -34,7 +34,6 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-<<<<<<< HEAD
 %if 0%{?fedora_version} || 0%{?centos_version}
 BuildRequires:  qt5-qtx11extras-devel
 %else
@@ -43,24 +42,17 @@ BuildRequires:  libqt5-qtx11extras-devel
 %endif
 BuildRequires:  pkgconfig(x11)
 %if 0%{?fedora_version} || 0%{?centos_version}
-=======
-%if 0%{?fedora_version} || 0%{?centos_version}
-BuildRequires:  qt5-qtx11extras-devel
-%else
-BuildRequires:  libqt5-qtx11extras-devel
-%endif
-%endif
-BuildRequires:  pkgconfig(x11)
-Requires:       gnome-shell-extension-appindicator
-%if 0%{?fedora_version} || 0%{?centos_version}
->>>>>>> 36dcfb0866b431f46dc130924de23b4acc7f866b
 Requires:       thunderbird >= 91
 Requires:       thunderbird < 121
 %else
 Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
+Requires:       libqt6-qtwayland
+%else
 Requires:       libqt5-qtwayland
+%endif
 Requires:       gnome-shell-extension-appindicator
 
 %description

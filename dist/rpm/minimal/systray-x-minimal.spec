@@ -26,7 +26,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
-%if 0%{?suse_version} > 1600
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
 BuildRequires:  pkgconfig(Qt6Core)
 BuildRequires:  pkgconfig(Qt6Widgets)
 %else
@@ -48,7 +48,11 @@ Requires:       thunderbird < 121
 Requires:       MozillaThunderbird >= 91
 Requires:       MozillaThunderbird < 121
 %endif
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
+Requires:       libqt6-qtwayland
+%else
 Requires:       libqt5-qtwayland
+%endif
 
 %description
 SysTray-X is a system tray extension for Thunderbird.
