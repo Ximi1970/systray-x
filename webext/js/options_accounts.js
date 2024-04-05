@@ -8,20 +8,34 @@ SysTrayX.Accounts = {
   },
 
   getAccounts: async function () {
-    let accounts;
+    if (SysTrayX.Info.browserInfo.majorVersion < 121) {
+      let accounts;
 
-    accounts = await browser.accounts.list(false);
+      accounts = await browser.accounts.list(false);
 
-    // Fill the sub folders using the folders API, they are not same...
-    for (let i = 0; i < accounts.length; ++i) {
-      const subFolders = await browser.folders.getSubFolders(
-        accounts[i],
-        true
-      );
-      accounts[i].folders = subFolders;
+      // Fill the sub folders using the folders API, they are not same...
+      for (let i = 0; i < accounts.length; ++i) {
+        const subFolders = await browser.folders.getSubFolders(
+          accounts[i],
+          true
+        );
+        accounts[i].folders = subFolders;
+      }
+
+      return accounts;
+    } else {
+      let accounts = await browser.accounts.list();
+
+      for (let i = 0; i < accounts.length; ++i) {
+        const subFolders = await browser.folders.getSubFolders(
+          accounts[i].id,
+          true
+        );
+        accounts[i].folders = subFolders;
+      }
+
+      return accounts;
     }
-
-    return accounts;
   },
 
   buildTree: function (mailAccount) {

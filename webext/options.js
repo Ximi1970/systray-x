@@ -1233,7 +1233,16 @@ SysTrayX.RestoreOptions = {
           )
         );
 
-        filter.folders.forEach((path) => {
+        filter.folders.forEach((storedFolder) => {
+
+          if (typeof(storedFolder) === "string") {
+            //  Filters pre TB 121
+            path = storedFolder;
+          } else {
+            //  Filters TB 121
+            path = storedFolder.path;
+          }
+
           checkboxes.forEach((checkbox) => {
             const value = JSON.parse(checkbox.value);
             if (value.path === path) {
@@ -1539,8 +1548,8 @@ async function start() {
   browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
 
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-      browser.storage.onChanged.removeListener(SysTrayX.StorageChanged.changed);
+    if ( browser.storage.onChanged.hasListener(SysTrayX.StorageChanged.changed) ) {
+          browser.storage.onChanged.removeListener(SysTrayX.StorageChanged.changed);
     }
   });
 }
