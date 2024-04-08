@@ -433,6 +433,11 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 #endif
 
     /*
+     *  Store the current window positions
+     */
+    updatePositions();
+
+    /*
      *  Save the hints
      */
     GetWMNormalHints( m_display, window, &m_tb_window_hints[ window ] );
@@ -476,6 +481,11 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Minimize to system tray" );
 #endif
+
+    /*
+     *  Store the current window positions
+     */
+    updatePositions();
 
     /*
      *  Save the hints
@@ -610,6 +620,13 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
      *  Flush the pipes
      */
     Sync( m_display );
+
+    /*
+     *  Move the window to the last recorded position, seems to be needed for wayland
+     */
+    QPoint pos = m_tb_window_positions[ window ];
+    MoveWindow( m_display, window, pos.x(), pos.y() );
+    Flush( m_display );
 
     /*
      *  Let us wait a bit, maybe this helps...
