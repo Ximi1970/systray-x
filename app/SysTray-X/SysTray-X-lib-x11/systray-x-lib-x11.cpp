@@ -182,8 +182,7 @@ void    SetWMNormalHints( void* display, quint64 window, SizeHints hints )
 {
     XSizeHints size_hint;
 
-//    size_hint.flags = USPosition;
-    size_hint.flags = hints.flags;
+    size_hint.flags = USPosition;
     size_hint.x = hints.x;
     size_hint.y = hints.y;
     size_hint.width = hints.width;
