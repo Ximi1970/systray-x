@@ -251,7 +251,7 @@ void    GetWindowFrameExtensions( void *display, quint64 window, int* left, int*
  *  @param pos_x     Storage for the x coordinate
  *  @param pos_y     Storage for the y coordinate
  */
-void    GetWindowPosition( void *display, quint64 window, int* pos_x, int* pos_y, int* x1d, int* y1d, int* x2d, int* y2d );
+void    GetWindowPosition( void *display, quint64 window, int* pos_x, int* pos_y, int* x1d, int* y1d, int* x2d, int* y2d, int* x3d, int* y3d );
 
 /**
  * @brief GetWindowRectangle. Get the window rectangle.
