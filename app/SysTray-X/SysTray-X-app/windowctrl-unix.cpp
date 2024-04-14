@@ -448,7 +448,7 @@ void    WindowCtrlUnix::updatePositions()
             emit signalConsole( QString( "Update pos1: %1, %2" ).arg( x1 ).arg( y1 ) );
             emit signalConsole( QString( "Update pos2: %1, %2" ).arg( x2 ).arg( y2 ) );
             emit signalConsole( QString( "Update pos3: %1, %2" ).arg( x3 ).arg( y3 ) );
-            emit signalConsole( QString( "Update pos corrected: %1, %2" ).arg( x - left ).arg( y - top ) );
+            emit signalConsole( QString( "Update pos corrected: %1, %2" ).arg( point.x() ).arg( point.y() ) );
 //#endif
         }
     }
