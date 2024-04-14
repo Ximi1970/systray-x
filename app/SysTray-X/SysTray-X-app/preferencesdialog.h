@@ -84,6 +84,20 @@ class PreferencesDialog : public QDialog
         void    setMinimizeIconType( Preferences::MinimizeIconType minimize_icon_type );
 
         /**
+         * @brief setWindowPositionsCorrection. Set the window postions correction state.
+         *
+         *  @param state    The state.
+         */
+        void    setWindowPositionsCorrection( bool state );
+
+        /**
+         * @brief setWindowPositionsCorrectionType. Set the window positions correction type.
+         *
+         *  @param position_correction  The correction type.
+         */
+        void    setWindowPositionsCorrectionType( Preferences::WindowPositionsCorrectionType position_correction );
+
+        /**
          * @brief setStartupType. Set the startup type.
          *
          *  @param startup_type    The startup type.

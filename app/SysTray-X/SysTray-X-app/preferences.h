@@ -54,6 +54,15 @@ class Preferences : public QObject
         };
 
         /*
+         *  Position correction
+         */
+        enum WindowPositionsCorrectionType {
+            PREF_NO_CORRECTION = 0,
+            PREF_ADD_CORRECTION,
+            PREF_SUBTRACT_CORRECTION
+        };
+
+        /*
          *  Startup types
          */
         enum StartupType {
@@ -257,6 +266,34 @@ class Preferences : public QObject
          * @param minimize_icon_type     The minimize icon type.
          */
         void setMinimizeIconType( MinimizeIconType minimize_icon_type );
+
+        /**
+         * @brief getWindowPositionsCorrection. Get the window positions correction state.
+         *
+         *  @return     The state.
+         */
+        bool getWindowPositionsCorrection() const;
+
+        /**
+         * @brief setWindowPositionsCorrection. Set the window positions correction state.
+         *
+         *  @param state    The state.
+         */
+        void setWindowPositionsCorrection( bool state );
+
+        /**
+         * @brief getWindowPositionsCorrectionType. Get the window positions correction type
+         *
+         *  @return     the window positions correction type.
+         */
+        WindowPositionsCorrectionType getWindowPositionsCorrectionType() const;
+
+        /**
+         * @brief setWindowPositionsCorrectionType. Set the window positions correction type.
+         *
+         *  @param window_positions_correction_type The window positions correction type.
+         */
+        void setWindowPositionsCorrectionType( WindowPositionsCorrectionType window_positions_correction_type );
 
         /**
          * @brief getDefaultIconType. Get the default icon type.
@@ -685,6 +722,16 @@ class Preferences : public QObject
         void signalMinimizeIconTypeChange();
 
         /**
+         * @brief signalWindowPositionsCorrectionChange. Signal a window positions correction change.
+         */
+        void signalWindowPositionsCorrectionChange();
+
+        /**
+         * @brief signalWindowPositionsCorrectionTypeChange. Signal a window positions correction type change.
+         */
+        void signalWindowPositionsCorrectionTypeChange();
+
+        /**
          * @brief signalStartupTypeChange. Signal a startup type change.
          */
         void signalStartupTypeChange();
@@ -889,6 +936,16 @@ class Preferences : public QObject
          * @brief m_minimize_icon_type. Selected minimize icon type.
          */
         MinimizeIconType m_minimize_icon_type;
+
+        /**
+         * @brief m_window_positions_correction
+         */
+        bool m_window_positions_correction;
+
+        /**
+         * @brief m_window_positions_correction_type
+         */
+        WindowPositionsCorrectionType m_window_positions_correction_type;
 
         /**
          * @brief m_startup_type. Startup TB preference.

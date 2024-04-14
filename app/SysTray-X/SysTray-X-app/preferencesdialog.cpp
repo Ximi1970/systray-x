@@ -56,7 +56,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod2RadioButton->hide();
 
     /*
-     *  Set minimize type button Ids
+     *  Set minimize icon type button Ids
      */
     m_ui->minimizeIconTypeGroup->setId( m_ui->defaultMinimizeIconRadioButton, Preferences::PREF_DEFAULT_MINIMIZE_ICON);
     m_ui->minimizeIconTypeGroup->setId( m_ui->minimizeTrayIconRadioButton, Preferences::PREF_MINIMIZE_TRAY_ICON );
@@ -68,9 +68,17 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->startupTypeGroup->setId( m_ui->startMinimizedRadioButton, Preferences::PREF_START_MINIMIZED);
     m_ui->startupTypeGroup->setId( m_ui->startDockedRadioButton, Preferences::PREF_START_DOCKED );
 
+    /*
+     *  Set position button Ids
+     */
+    m_ui->positionGroup->setId( m_ui->noTitlebarCorrectionRadioButton, Preferences::PREF_NO_CORRECTION);
+    m_ui->positionGroup->setId( m_ui->addTitlebarCorrectionRadioButton, Preferences::PREF_ADD_CORRECTION );
+    m_ui->positionGroup->setId( m_ui->subtractTitlebarCorrectionRadioButton, Preferences::PREF_SUBTRACT_CORRECTION );
+
 #ifdef Q_OS_WIN
 
     m_ui->hideDefaultIconCheckBox->hide();
+    m_ui->positionGroupBox->hide();
     m_ui->restorePositionscheckBox->hide();
 
 #endif
@@ -296,6 +304,24 @@ void    PreferencesDialog::setMinimizeType( Preferences::MinimizeType minimize_t
 void    PreferencesDialog::setMinimizeIconType( Preferences::MinimizeIconType minimize_icon_type )
 {
    ( m_ui->minimizeIconTypeGroup->button( minimize_icon_type ) )->setChecked( true );
+}
+
+
+/*
+ *  Set the positions correction state
+ */
+void    PreferencesDialog::setWindowPositionsCorrection( bool state )
+{
+    m_ui->correctWinPosCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the position correction
+ */
+void    PreferencesDialog::setWindowPositionsCorrectionType( Preferences::WindowPositionsCorrectionType position_correction )
+{
+    ( m_ui->positionGroup->button( position_correction ) )->setChecked( true );
 }
 
 
@@ -631,6 +657,10 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setMinimizeIconType( static_cast< Preferences::MinimizeIconType >( m_ui->minimizeIconTypeGroup->checkedId() ) );
+
+    m_pref->setWindowPositionsCorrection( m_ui->correctWinPosCheckBox->isChecked() );
+    m_pref->setWindowPositionsCorrectionType( static_cast< Preferences::WindowPositionsCorrectionType >( m_ui->positionGroup->checkedId() ) );
+
     m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
     m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
@@ -699,6 +729,8 @@ void    PreferencesDialog::slotReject()
 
     setMinimizeType( m_pref->getMinimizeType() );
     setMinimizeIconType( m_pref->getMinimizeIconType() );
+    setWindowPositionsCorrection( m_pref->getWindowPositionsCorrection() );
+    setWindowPositionsCorrectionType( m_pref->getWindowPositionsCorrectionType() );
     setStartupType( m_pref->getStartupType() );
     setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );

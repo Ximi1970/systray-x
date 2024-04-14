@@ -404,10 +404,33 @@ void    WindowCtrlUnix::updatePositions()
             GetWindowPosition( m_display, window, &x, &y, &x1, &y1, &x2, &y2, &x3, &y3 );
 
             /*
+             *  Apply the requested correction
+             */
+            QPoint point;
+            switch( m_pref->getWindowPositionsCorrectionType() )
+            {
+                case Preferences::PREF_NO_CORRECTION:
+                {
+                    point = QPoint( x, y );
+                    break;
+                }
+
+                case Preferences::PREF_ADD_CORRECTION:
+                {
+                    point = QPoint( x + left, y + top );
+                    break;
+                }
+
+                case Preferences::PREF_SUBTRACT_CORRECTION:
+                {
+                    point = QPoint( x - left, y - top );
+                    break;
+                }
+            }
+
+            /*
              *  Update the list?
              */
-            QPoint point = QPoint( x - left, y - top );
-
             if( m_tb_window_positions[ window ] != point )
             {
                 m_tb_window_positions[ window ] = point;
@@ -640,13 +663,19 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     Sync( m_display );
 
     /*
-     *  Move the window to the last recorded position, seems to be needed for wayland
+     *  Force the window to the last known position?
      */
-    QPoint pos = m_tb_window_positions[ window ];
-    MoveWindow( m_display, window, pos.x(), pos.y() );
-    Flush( m_display );
+    if( m_pref->getWindowPositionsCorrection() )
+    {
+        /*
+         *  Move the window to the last recorded position
+         */
+        QPoint pos = m_tb_window_positions[ window ];
+        MoveWindow( m_display, window, pos.x(), pos.y() );
+        Flush( m_display );
 
-    emit signalConsole( QString( "Set pos: %1, %2" ).arg( pos.x() ).arg( pos.y() ) );
+        emit signalConsole( QString( "Set pos: %1, %2" ).arg( pos.x() ).arg( pos.y() ) );
+    }
 
     /*
      *  Let us wait a bit, maybe this helps...

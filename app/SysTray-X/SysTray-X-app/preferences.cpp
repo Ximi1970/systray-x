@@ -49,6 +49,9 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_close_type = PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
 
+    m_window_positions_correction = false;
+    m_window_positions_correction_type = PREF_NO_CORRECTION;
+
     m_startup_type = PREF_START_DEFAULT;
     m_restore_window_positions = false;
 
@@ -416,6 +419,58 @@ void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
          *  Tell the world the new preference
          */
         emit signalMinimizeIconTypeChange();
+    }
+}
+
+
+/*
+ *  Get the window positions correction state
+ */
+bool    Preferences::getWindowPositionsCorrection() const
+{
+    return m_window_positions_correction;
+}
+
+
+/*
+ *  Set the window positions correction state
+ */
+void    Preferences::setWindowPositionsCorrection( bool state )
+{
+    if( m_window_positions_correction != state )
+    {
+        m_window_positions_correction = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalWindowPositionsCorrectionChange();
+    }
+}
+
+
+/*
+ *  Get the window positions correction type
+ */
+Preferences::WindowPositionsCorrectionType Preferences::getWindowPositionsCorrectionType() const
+{
+    return m_window_positions_correction_type;
+}
+
+
+/*
+ *  Set the minimize type.
+ */
+void    Preferences::setWindowPositionsCorrectionType( WindowPositionsCorrectionType window_positions_correction_type )
+{
+    if( m_window_positions_correction_type != window_positions_correction_type)
+    {
+        m_window_positions_correction_type = window_positions_correction_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalWindowPositionsCorrectionTypeChange();
     }
 }
 

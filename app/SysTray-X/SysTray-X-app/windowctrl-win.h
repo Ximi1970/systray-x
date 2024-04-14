@@ -272,6 +272,13 @@ class WindowCtrlWin : public QObject
          */
         void    signalConsole( QString message );
 
+    protected:
+
+        /**
+         * @brief m_pref. Pointer to the preferences storage.
+         */
+        Preferences*    m_pref;
+
     private:
 
         /**
