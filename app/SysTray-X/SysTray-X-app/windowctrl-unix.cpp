@@ -635,6 +635,8 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     MoveWindow( m_display, window, pos.x(), pos.y() );
     Flush( m_display );
 
+    emit signalConsole( QString( "Set pos: %1, %2" ).arg( pos.x() ).arg( pos.y() ) );
+
     /*
      *  Let us wait a bit, maybe this helps...
      */
