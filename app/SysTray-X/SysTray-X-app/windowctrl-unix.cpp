@@ -151,9 +151,9 @@ QString WindowCtrlUnix::getProcessName( qint64 pid ) const
  */
 void    WindowCtrlUnix::findWindows( qint64 pid )
 {
-#ifdef DEBUG_DISPLAY_ACTIONS
+//#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Find windows" );
-#endif
+//#endif
 
     QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
@@ -185,6 +185,12 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         if( old_positions.contains( win.window ) )
                         {
                             point = old_positions[ win.window ];
+
+                            emit signalConsole( QString( "Old position found: %1, %2" ).arg( point.x() ).arg( point.y() ) );
+                        }
+                        else
+                        {
+                            emit signalConsole( "Position not found" );
                         }
 
                         m_tb_window_positions[ win.window ] = point;
@@ -403,6 +409,8 @@ void    WindowCtrlUnix::updatePositions()
             if( m_tb_window_positions[ window ] != point )
             {
                 m_tb_window_positions[ window ] = point;
+
+                emit signalConsole( QString( "Update pos changed" ) );
 
                 /*
                  *  Mar the list changed
@@ -695,20 +703,23 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
  */
 void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
 {
-#ifdef DEBUG_DISPLAY_ACTIONS
+//#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Set positions" );
-#endif
+//#endif
 
     for( int i = 0 ; i < m_tb_windows.length() ; ++i )
     {
         quint64 window = m_tb_windows.at( i );
 
-#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+//#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
         emit signalConsole( QString( "Set pos: %1, %2").arg( window_positions.at( i ).x() ).arg( window_positions.at( i ).y() ) );
-#endif
+//#endif
 
         if( i < window_positions.length() ) {
-            MoveWindow( m_display, window, window_positions.at( i ).x(), window_positions.at( i ).y() );
+            QPoint pos = window_positions.at( i );
+
+            m_tb_window_positions[ window ] = pos;
+            MoveWindow( m_display, window, pos.x(), pos.y() );
         }
     }
 
