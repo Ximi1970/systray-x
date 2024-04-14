@@ -389,7 +389,11 @@ void    WindowCtrlUnix::updatePositions()
              */
             int x;
             int y;
-            GetWindowPosition( m_display, window, &x, &y );
+            int x1;
+            int y1;
+            int x2;
+            int y2;
+            GetWindowPosition( m_display, window, &x, &y, &x1, &y1, &x2, &y2 );
 
             /*
              *  Update the list?
@@ -408,6 +412,8 @@ void    WindowCtrlUnix::updatePositions()
 
 //#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
             emit signalConsole( QString( "Update pos: %1, %2" ).arg( x ).arg( y ) );
+            emit signalConsole( QString( "Update pos1: %1, %2" ).arg( x1 ).arg( y1 ) );
+            emit signalConsole( QString( "Update pos2: %1, %2" ).arg( x2 ).arg( y2 ) );
             emit signalConsole( QString( "Update pos corrected: %1, %2" ).arg( x - left ).arg( y - top ) );
 //#endif
         }
