@@ -460,49 +460,44 @@ void    GetWindowFrameExtensions( void *display, quint64 window, int* left, int*
 /*
  *  Get the window position
  */
-bool    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y, int* width, int* height )
+void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y )
 {
     Display* dsp = (Display*)display;
 
-    int x, y;
+    /*
+     *  Get position, method 1
+     */
+    int x1, y1;
     Window child;
     XWindowAttributes xwa;
-    int status1 = XTranslateCoordinates( dsp, window, XDefaultRootWindow( dsp ), 0, 0, &x, &y, &child );
-    int status2 = XGetWindowAttributes( dsp, window, &xwa );
+    XTranslateCoordinates( dsp, window, XDefaultRootWindow( dsp ), 0, 0, &x1, &y1, &child );
+
+    /*
+     *  Get position, method 2
+     */
+    int x2, y2;
+    Window root;
+    uint width, height;
+    uint border;
+    uint depth;
+    XGetGeometry( dsp, window, &root, &x2, &y2, &width, &height, &border, &depth );
+
+    int x = x1;
+    int y = y1;
+
+    if( x == 0 && y == 0 )
+    {
+        x = x2;
+        y = y2;
+    }
+
+    /*
+     *  Correct the position
+     */
+    XGetWindowAttributes( dsp, window, &xwa );
 
     *pos_x = x - xwa.x;
     *pos_y = y - xwa.y;
-
-    *width = xwa.width;
-    *height = xwa.height;
-
-    return status1 == 0 && status2 == 0;
-}
-
-
-/*
- *  Get the window position
- */
-bool    GetWindowPosition2( void* display, quint64 window, int* pos_x, int* pos_y, int* width, int* height )
-{
-    Display* dsp = (Display*)display;
-
-    Window root_return;
-    int x_return, y_return;
-    unsigned int width_return, height_return;
-    unsigned int border_width_return;
-    unsigned int depth_return;
-
-    int status = XGetGeometry( dsp, window, &root_return, &x_return, &y_return, &width_return,
-                    &height_return, &border_width_return, &depth_return );
-
-    *pos_x = x_return;
-    *pos_y = y_return;
-
-    *width = width_return;
-    *height = height_return;
-
-    return status == 0;
 }
 
 
