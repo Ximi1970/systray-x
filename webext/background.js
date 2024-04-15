@@ -629,6 +629,8 @@ SysTrayX.Messaging = {
         "minimizeIconType",
         "closeType",
         "startupType",
+        "windowPosCor",
+        "windowPosCorType",
         "restorePositions",
         "defaultIconType",
         "defaultIconMime",
@@ -667,6 +669,8 @@ SysTrayX.Messaging = {
     const minimizeIconType = result.minimizeIconType || "1";
     const closeType = result.closeType || "1";
     const startupType = result.startupType || "0";
+    const windowPosCor = result.windowPosCor || "false";
+    const windowPosCorType = result.windowPosCorType || "0";
     const restorePositions = result.restorePositions || "false";
     const defaultIconType = result.defaultIconType || "0";
     const defaultIconMime = result.defaultIconMime || "image/png";
@@ -706,6 +710,8 @@ SysTrayX.Messaging = {
         minimizeIconType,
         closeType,
         startupType,
+        windowPosCor,
+        windowPosCorType,
         restorePositions,
         defaultIconType,
         defaultIconMime,
@@ -822,6 +828,20 @@ SysTrayX.Link = {
       if (startupType) {
         await storage().set({
           startupType: startupType,
+        });
+      }
+
+      const windowPosCor = response["preferences"].windowPosCor;
+      if (windowPosCor) {
+        await storage().set({
+          windowPosCor: windowPosCor,
+        });
+      }
+
+      const windowPosCorType = response["preferences"].windowPosCorType;
+      if (windowPosCorType) {
+        await storage().set({
+          windowPosCorType: windowPosCorType,
         });
       }
 

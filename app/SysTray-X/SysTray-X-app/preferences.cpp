@@ -48,11 +48,11 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_minimize_type = PREF_MINIMIZE_METHOD_1;
     m_close_type = PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
+    m_startup_type = PREF_START_DEFAULT;
 
     m_window_positions_correction = false;
     m_window_positions_correction_type = PREF_NO_CORRECTION;
 
-    m_startup_type = PREF_START_DEFAULT;
     m_restore_window_positions = false;
 
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
@@ -424,6 +424,32 @@ void    Preferences::setMinimizeIconType( MinimizeIconType minimize_icon_type )
 
 
 /*
+ *  Get the start minmized pref.
+ */
+Preferences::StartupType    Preferences::getStartupType() const
+{
+    return m_startup_type;
+}
+
+
+/*
+ *  Set the startup type pref.
+ */
+void    Preferences::setStartupType( Preferences::StartupType startup_type )
+{
+    if( m_startup_type != startup_type )
+    {
+        m_startup_type = startup_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalStartupTypeChange();
+    }
+}
+
+
+/*
  *  Get the window positions correction state
  */
 bool    Preferences::getWindowPositionsCorrection() const
@@ -471,32 +497,6 @@ void    Preferences::setWindowPositionsCorrectionType( WindowPositionsCorrection
          *  Tell the world the new preference
          */
         emit signalWindowPositionsCorrectionTypeChange();
-    }
-}
-
-
-/*
- *  Get the start minmized pref.
- */
-Preferences::StartupType    Preferences::getStartupType() const
-{
-    return m_startup_type;
-}
-
-
-/*
- *  Set the startup type pref.
- */
-void    Preferences::setStartupType( Preferences::StartupType startup_type )
-{
-    if( m_startup_type != startup_type )
-    {
-        m_startup_type = startup_type;
-
-        /*
-         *  Tell the world the new preference
-         */
-        emit signalStartupTypeChange();
     }
 }
 
