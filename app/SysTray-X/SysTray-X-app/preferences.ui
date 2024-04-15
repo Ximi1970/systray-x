@@ -306,13 +306,6 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="text">
-                 <string>PushButton</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QRadioButton" name="startDockedRadioButton">
                 <property name="text">
                  <string>Start application in tray</string>
@@ -1365,14 +1358,14 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="positionGroup"/>
-  <buttongroup name="countTypeGroup"/>
   <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="startupTypeGroup"/>
   <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
   <buttongroup name="minimizeIconTypeGroup"/>
   <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="positionGroup"/>
+  <buttongroup name="startupTypeGroup"/>
  </buttongroups>
 </ui>
