@@ -188,6 +188,63 @@
           </tr>
         </table>
 
+        <table id="positionscorrectionselect">
+          <caption>
+            __MSG_windows_positions_correction_options__
+          </caption>
+          <tr id="positionscorrection">
+            <td>
+              <input
+                type="checkbox"
+                name="positionsCorrection"
+                id="posCor"
+                value=""
+              />
+              <label for="posCor" id="positionscorrectionLabel"
+                >__MSG_windows_positions_correction__</label
+              >
+            </td>
+          </tr>
+          <tr id="nocorrection">
+            <td>
+              <input
+                type="radio"
+                name="positionsCorrectionType"
+                id="noCorrection"
+                value="0"
+              />
+              <label for="noCorrection" id="nocorrectionlabel">
+                __MSG_windows_no_correction__
+              </label>
+            </td>
+          </tr>
+          <tr id="addtitlebarsize">
+            <td>
+              <input
+                type="radio"
+                name="positionsCorrectionType"
+                id="addTitlebarSize"
+                value="1"
+              />
+              <label for="addTitlebarSize" id="addtitlebarsizelabel">
+                __MSG_windows_add_titlebar_size__
+              </label>
+            </td>
+          </tr>
+          <tr id="subtracttitlebarsize">
+            <td>
+              <input
+                type="radio"
+                name="positionsCorrectionType"
+                id="subtractTitlebarSize"
+                value="2" />
+              <label for="subtractTitlebarSize" id="subtracttitlebarsizelabel">
+                __MSG_windows_subtract_titlebar_size__
+              </label>
+            </td>
+          </tr>
+        </table>
+
         <div id="inputcheck">
           <input
             type="checkbox"
