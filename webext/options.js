@@ -1603,6 +1603,9 @@ async function start() {
 
   if ( !SysTrayX.Info.options.kdeIntegration || SysTrayX.Info.platformInfo.os !== "linux" ) {
     document.getElementById("kdeintegration").style.display = "none";
+  }
+
+  if ( SysTrayX.Info.platformInfo.os !== "linux" ) {
     document.getElementById("positionscorrectionselect").style.display = "none";
   }
 
