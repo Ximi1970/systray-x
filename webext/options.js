@@ -1603,6 +1603,7 @@ async function start() {
 
   if ( !SysTrayX.Info.options.kdeIntegration || SysTrayX.Info.platformInfo.os !== "linux" ) {
     document.getElementById("kdeintegration").style.display = "none";
+    document.getElementById("positionscorrectionselect").style.display = "none";
   }
 
   // Enable save button
