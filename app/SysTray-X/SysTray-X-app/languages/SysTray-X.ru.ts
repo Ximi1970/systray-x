@@ -15,7 +15,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Приложение-компаньон от Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="43"/>
@@ -322,27 +322,27 @@
     <message>
         <location filename="../preferences.ui" line="137"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиция</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="145"/>
         <source>Correct window positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Правильное расположение окон</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="154"/>
         <source>No titlebar correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Без исправления названия</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="167"/>
         <source>Add titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить размер заголовка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="177"/>
         <source>Subtract titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Вычтите размер строки заголовка</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>

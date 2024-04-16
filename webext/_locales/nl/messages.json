@@ -155,27 +155,27 @@
   },
 
   "windows_positions_correction_options": {
-    "message": "Position",
+    "message": "Positie",
     "description": "Position"
   },
 
   "windows_positions_correction": {
-    "message": "Correct window positions",
+    "message": "Corrigeer vensterposities",
     "description": "Correct window positions"
   },
 
   "windows_no_correction": {
-    "message": "No titlebar correction",
+    "message": "Geen titelbalk correctie",
     "description": "No titlebar correction"
   },
 
   "windows_add_titlebar_size": {
-    "message": "Add titlebar size",
+    "message": "Titlebalk grootte toevoegen",
     "description": "Add titlebar size"
   },
 
   "windows_subtract_titlebar_size": {
-    "message": "Subtract titlebar size",
+    "message": "Titlebalk grootte aftrekken",
     "description": "Subtract titlebar size"
   },
 

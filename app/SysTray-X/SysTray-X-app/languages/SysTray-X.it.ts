@@ -16,7 +16,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App-X di Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="43"/>
@@ -322,27 +322,27 @@
     <message>
         <location filename="../preferences.ui" line="137"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizione</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="145"/>
         <source>Correct window positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizioni corrette delle finestre</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="154"/>
         <source>No titlebar correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna correzione della barra del titolo</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="167"/>
         <source>Add titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi la dimensione della barra del titolo</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="177"/>
         <source>Subtract titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Sottrai la dimensione della barra del titolo</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>

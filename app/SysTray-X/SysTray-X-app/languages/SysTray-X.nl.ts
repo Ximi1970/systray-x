@@ -15,7 +15,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App door Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="43"/>
@@ -325,27 +325,27 @@
     <message>
         <location filename="../preferences.ui" line="137"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Positie</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="145"/>
         <source>Correct window positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Corrigeer vensterposities</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="154"/>
         <source>No titlebar correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen titelbalk correctie</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="167"/>
         <source>Add titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Titlebalk grootte toevoegen</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="177"/>
         <source>Subtract titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Titlebalk grootte aftrekken</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>

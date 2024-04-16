@@ -155,27 +155,27 @@
   },
 
   "windows_positions_correction_options": {
-    "message": "Position",
+    "message": "Posição",
     "description": "Position"
   },
 
   "windows_positions_correction": {
-    "message": "Correct window positions",
+    "message": "Posições corretas da janela",
     "description": "Correct window positions"
   },
 
   "windows_no_correction": {
-    "message": "No titlebar correction",
+    "message": "Nenhuma correção na barra de título",
     "description": "No titlebar correction"
   },
 
   "windows_add_titlebar_size": {
-    "message": "Add titlebar size",
+    "message": "Adicionar tamanho da barra de título",
     "description": "Add titlebar size"
   },
 
   "windows_subtract_titlebar_size": {
-    "message": "Subtract titlebar size",
+    "message": "Subtraia o tamanho da barra de título",
     "description": "Subtract titlebar size"
   },
 

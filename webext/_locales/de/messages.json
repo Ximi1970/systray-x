@@ -160,22 +160,22 @@
   },
 
   "windows_positions_correction": {
-    "message": "Correct window positions",
+    "message": "Corriegere fensterpositionen",
     "description": "Correct window positions"
   },
 
   "windows_no_correction": {
-    "message": "No titlebar correction",
+    "message": "Keine Korrektur mit Titelleiste",
     "description": "No titlebar correction"
   },
 
   "windows_add_titlebar_size": {
-    "message": "Add titlebar size",
+    "message": "Größe der Titelleiste hinzufügen",
     "description": "Add titlebar size"
   },
 
   "windows_subtract_titlebar_size": {
-    "message": "Subtract titlebar size",
+    "message": "Größe der Titelleiste hinzufügen subtrahieren",
     "description": "Subtract titlebar size"
   },
 
