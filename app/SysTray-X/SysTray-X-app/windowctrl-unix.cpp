@@ -151,9 +151,9 @@ QString WindowCtrlUnix::getProcessName( qint64 pid ) const
  */
 void    WindowCtrlUnix::findWindows( qint64 pid )
 {
-//#ifdef DEBUG_DISPLAY_ACTIONS
+#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Find windows" );
-//#endif
+#endif
 
     QList< WindowItem > windows = listXWindows( m_display, GetDefaultRootWindow( m_display ) );
 
@@ -185,8 +185,6 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         if( old_positions.contains( win.window ) )
                         {
                             point = old_positions[ win.window ];
-
-                            emit signalConsole( QString( "Old position found: %1, %2" ).arg( point.x() ).arg( point.y() ) );
                         }
                         else
                         {
@@ -386,22 +384,16 @@ void    WindowCtrlUnix::updatePositions()
             int bottom;
             GetWindowFrameExtensions( m_display, window, &left, &top, &right, &bottom );
 
-//#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
             emit signalConsole( QString( "Margins: %1, %2, %3, %4" ).arg( left ).arg( top ).arg( right ).arg( bottom ) );
-//#endif
+#endif
 
             /*
              *  Get the position
              */
             int x;
             int y;
-            int x1;
-            int y1;
-            int x2;
-            int y2;
-            int x3;
-            int y3;
-            GetWindowPosition( m_display, window, &x, &y, &x1, &y1, &x2, &y2, &x3, &y3 );
+            GetWindowPosition( m_display, window, &x, &y );
 
             /*
              *  Apply the requested correction
@@ -435,21 +427,16 @@ void    WindowCtrlUnix::updatePositions()
             {
                 m_tb_window_positions[ window ] = point;
 
-                emit signalConsole( QString( "Update pos changed" ) );
-
                 /*
                  *  Mar the list changed
                  */
                 changed = true;
             }
 
-//#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
             emit signalConsole( QString( "Update pos: %1, %2" ).arg( x ).arg( y ) );
-            emit signalConsole( QString( "Update pos1: %1, %2" ).arg( x1 ).arg( y1 ) );
-            emit signalConsole( QString( "Update pos2: %1, %2" ).arg( x2 ).arg( y2 ) );
-            emit signalConsole( QString( "Update pos3: %1, %2" ).arg( x3 ).arg( y3 ) );
             emit signalConsole( QString( "Update pos corrected: %1, %2" ).arg( point.x() ).arg( point.y() ) );
-//#endif
+#endif
         }
     }
 
@@ -673,8 +660,6 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
         QPoint pos = m_tb_window_positions[ window ];
         MoveWindow( m_display, window, pos.x(), pos.y() );
         Flush( m_display );
-
-        emit signalConsole( QString( "Set pos: %1, %2" ).arg( pos.x() ).arg( pos.y() ) );
     }
 
     /*
@@ -735,17 +720,17 @@ void    WindowCtrlUnix::deleteWindow( quint64 window )
  */
 void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
 {
-//#ifdef DEBUG_DISPLAY_ACTIONS
+#ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Set positions" );
-//#endif
+#endif
 
     for( int i = 0 ; i < m_tb_windows.length() ; ++i )
     {
         quint64 window = m_tb_windows.at( i );
 
-//#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
+#ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
         emit signalConsole( QString( "Set pos: %1, %2").arg( window_positions.at( i ).x() ).arg( window_positions.at( i ).y() ) );
-//#endif
+#endif
 
         if( i < window_positions.length() ) {
             QPoint pos = window_positions.at( i );

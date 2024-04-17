@@ -460,7 +460,7 @@ void    GetWindowFrameExtensions( void *display, quint64 window, int* left, int*
 /*
  *  Get the window position
  */
-void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y, int* x1d, int* y1d, int* x2d, int* y2d, int* x3d, int* y3d )
+void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y )
 {
     Display* dsp = (Display*)display;
 
@@ -498,13 +498,6 @@ void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y
 
     *pos_x = x - xwa.x;
     *pos_y = y - xwa.y;
-
-    *x1d = x1;
-    *y1d = y1;
-    *x2d = x2;
-    *y2d = y2;
-    *x3d = xwa.x;
-    *y3d = xwa.y;
 }
 
 
