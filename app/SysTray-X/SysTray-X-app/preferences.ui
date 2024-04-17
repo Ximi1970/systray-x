@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>558</width>
+    <width>663</width>
     <height>519</height>
    </rect>
   </property>
@@ -1358,14 +1358,14 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="minimizeTypeGroup"/>
-  <buttongroup name="newIndicatorTypeGroup"/>
-  <buttongroup name="iconTypeGroup"/>
-  <buttongroup name="minimizeIconTypeGroup"/>
-  <buttongroup name="closeTypeGroup"/>
-  <buttongroup name="countTypeGroup"/>
-  <buttongroup name="defaultIconTypeGroup"/>
-  <buttongroup name="positionGroup"/>
   <buttongroup name="startupTypeGroup"/>
+  <buttongroup name="positionGroup"/>
+  <buttongroup name="minimizeIconTypeGroup"/>
+  <buttongroup name="iconTypeGroup"/>
+  <buttongroup name="defaultIconTypeGroup"/>
+  <buttongroup name="countTypeGroup"/>
+  <buttongroup name="newIndicatorTypeGroup"/>
+  <buttongroup name="minimizeTypeGroup"/>
+  <buttongroup name="closeTypeGroup"/>
  </buttongroups>
 </ui>
