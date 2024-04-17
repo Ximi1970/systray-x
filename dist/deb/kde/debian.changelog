@@ -3,6 +3,8 @@ systray-x (0.9.9-1) unstable; urgency=low
   * Update to 0.9.9
 
     - Qt 6 fixes
+    - Added window positions correction option
+    - Bugfixes
 
 systray-x (0.9.8-1) unstable; urgency=low
 
