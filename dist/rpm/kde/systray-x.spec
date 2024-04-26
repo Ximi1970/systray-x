@@ -31,10 +31,11 @@ BuildRequires:  pkgconfig(Qt6Core)
 BuildRequires:  pkgconfig(Qt6Widgets)
 BuildRequires:  kf6-kstatusnotifieritem-devel
 %if 0%{?fedora_version}
+Requires:       kf6-knotifications
 %else
 Requires:       kf6-knotifications
-%endif
 Requires:       libKF6Notifications6
+%endif
 %else
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
