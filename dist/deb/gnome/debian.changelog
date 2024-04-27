@@ -3,6 +3,7 @@ systray-x-gnome (0.9.9-1) unstable; urgency=low
   * Update to 0.9.9
 
     - Qt 6 fixes
+    - TB 121+ fixes
     - Added window positions correction option
     - Bugfixes
 
