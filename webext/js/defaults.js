@@ -301,6 +301,14 @@ async function getFilters() {
 
           const newFilters = [];
           for (const account of SysTrayX.Messaging.accounts) {
+            let rootFolder = account.rootFolder
+            if( rootFolder === undefined ) {
+              rootFolder = {
+                path: "",
+                subFolders: account.folders
+              };
+            }
+
             const filter = filters.filter(
               (filter) => filter.accountId === account.id
             );
@@ -316,7 +324,7 @@ async function getFilters() {
               };
 
               for (const path of filter[0].folders) {
-                const accountFolder = findFolder(account.rootFolder, path)
+                const accountFolder = findFolder(rootFolder, path);
 
                 if (accountFolder !== undefined)
                 {
@@ -706,7 +714,10 @@ const sendMailCount = async () => {
               };  
             } else {
               //  Filters TB 121
-              listParam = storedFolder.mailFolderId;
+              listParam = {
+                accountId: filter.accountId,
+                path: storedFolder.path,
+              };
             }
 
             async function* listMessages(listParam) {
