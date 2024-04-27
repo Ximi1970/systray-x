@@ -56,7 +56,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod2RadioButton->hide();
 
     /*
-     *  Set minimize type button Ids
+     *  Set minimize icon type button Ids
      */
     m_ui->minimizeIconTypeGroup->setId( m_ui->defaultMinimizeIconRadioButton, Preferences::PREF_DEFAULT_MINIMIZE_ICON);
     m_ui->minimizeIconTypeGroup->setId( m_ui->minimizeTrayIconRadioButton, Preferences::PREF_MINIMIZE_TRAY_ICON );
@@ -68,9 +68,17 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->startupTypeGroup->setId( m_ui->startMinimizedRadioButton, Preferences::PREF_START_MINIMIZED);
     m_ui->startupTypeGroup->setId( m_ui->startDockedRadioButton, Preferences::PREF_START_DOCKED );
 
+    /*
+     *  Set position button Ids
+     */
+    m_ui->positionGroup->setId( m_ui->noTitlebarCorrectionRadioButton, Preferences::PREF_NO_CORRECTION);
+    m_ui->positionGroup->setId( m_ui->addTitlebarCorrectionRadioButton, Preferences::PREF_ADD_CORRECTION );
+    m_ui->positionGroup->setId( m_ui->subtractTitlebarCorrectionRadioButton, Preferences::PREF_SUBTRACT_CORRECTION );
+
 #ifdef Q_OS_WIN
 
     m_ui->hideDefaultIconCheckBox->hide();
+    m_ui->positionGroupBox->hide();
     m_ui->restorePositionscheckBox->hide();
 
 #endif
@@ -305,6 +313,24 @@ void    PreferencesDialog::setMinimizeIconType( Preferences::MinimizeIconType mi
 void    PreferencesDialog::setStartupType(  Preferences::StartupType startup_type )
 {
     ( m_ui->startupTypeGroup->button( startup_type ) )->setChecked( true );
+}
+
+
+/*
+ *  Set the positions correction state
+ */
+void    PreferencesDialog::setWindowPositionsCorrection( bool state )
+{
+    m_ui->correctWinPosCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the position correction
+ */
+void    PreferencesDialog::setWindowPositionsCorrectionType( Preferences::WindowPositionsCorrectionType position_correction )
+{
+    ( m_ui->positionGroup->button( position_correction ) )->setChecked( true );
 }
 
 
@@ -631,9 +657,11 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setMinimizeIconType( static_cast< Preferences::MinimizeIconType >( m_ui->minimizeIconTypeGroup->checkedId() ) );
-    m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
-    m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
+    m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
+    m_pref->setWindowPositionsCorrection( m_ui->correctWinPosCheckBox->isChecked() );
+    m_pref->setWindowPositionsCorrectionType( static_cast< Preferences::WindowPositionsCorrectionType >( m_ui->positionGroup->checkedId() ) );
+    m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setInvertIcon( m_ui->invertIconCheckBox->isChecked() );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
@@ -699,9 +727,11 @@ void    PreferencesDialog::slotReject()
 
     setMinimizeType( m_pref->getMinimizeType() );
     setMinimizeIconType( m_pref->getMinimizeIconType() );
-    setStartupType( m_pref->getStartupType() );
-    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
+    setStartupType( m_pref->getStartupType() );
+    setWindowPositionsCorrection( m_pref->getWindowPositionsCorrection() );
+    setWindowPositionsCorrectionType( m_pref->getWindowPositionsCorrectionType() );
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setInvertIcon( m_pref->getInvertIcon() );
 
     setShowNumber( m_pref->getShowNumber() );
@@ -844,24 +874,6 @@ void    PreferencesDialog::slotDebugChange()
 
 
 /*
- *  Handle the startup type change signal
- */
-void    PreferencesDialog::slotStartupTypeChange()
-{
-    setStartupType( m_pref->getStartupType() );
-}
-
-
-/*
- *  Handle the restore window positions change signal
- */
-void    PreferencesDialog::slotRestoreWindowPositionsChange()
-{
-    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
-}
-
-
-/*
  *  Handle the minimize type change signal
  */
 void    PreferencesDialog::slotMinimizeTypeChange()
@@ -885,6 +897,42 @@ void    PreferencesDialog::slotMinimizeIconTypeChange()
 void    PreferencesDialog::slotCloseTypeChange()
 {
     setCloseType( m_pref->getCloseType() );
+}
+
+
+/*
+ *  Handle the startup type change signal
+ */
+void    PreferencesDialog::slotStartupTypeChange()
+{
+    setStartupType( m_pref->getStartupType() );
+}
+
+
+/*
+ *  Handle the window positions correction change signal
+ */
+void    PreferencesDialog::slotWindowPositionsCorrectionChange()
+{
+    setWindowPositionsCorrection( m_pref->getWindowPositionsCorrection() );
+}
+
+
+/*
+ *  Handle the window positions correction type change signal
+ */
+void    PreferencesDialog::slotWindowPositionsCorrectionTypeChange()
+{
+    setWindowPositionsCorrectionType( m_pref->getWindowPositionsCorrectionType() );
+}
+
+
+/*
+ *  Handle the restore window positions change signal
+ */
+void    PreferencesDialog::slotRestoreWindowPositionsChange()
+{
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
 }
 
 

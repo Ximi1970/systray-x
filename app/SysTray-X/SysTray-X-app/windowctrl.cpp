@@ -174,15 +174,6 @@ void    WindowCtrl::slotWindowState( Preferences::WindowState state, int id )
 
         QList< quint64 > win_ids = getWinIds();
 
-#ifdef Q_OS_UNIX
-
-        /*
-         * Update window positions
-         */
-        updatePositions();
-
-#endif
-
         /*
          *   Minimize/dock all
          */
@@ -252,15 +243,6 @@ void    WindowCtrl::slotShowHide()
      *  Restore hidden windows ( not found by findWindws() )
      */
     normalizeWindowsHidden();
-
-#endif
-
-#ifdef Q_OS_UNIX
-
-    /*
-     *  Update the positions
-     */
-    updatePositions();
 
 #endif
 

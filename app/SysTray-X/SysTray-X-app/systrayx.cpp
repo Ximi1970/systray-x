@@ -122,6 +122,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeIconTypeChange );
+    connect( m_preferences, &Preferences::signalWindowPositionsCorrectionChange, m_pref_dialog, &PreferencesDialog::slotWindowPositionsCorrectionChange );
+    connect( m_preferences, &Preferences::signalWindowPositionsCorrectionTypeChange, m_pref_dialog, &PreferencesDialog::slotWindowPositionsCorrectionTypeChange );
     connect( m_preferences, &Preferences::signalStartupTypeChange, m_pref_dialog, &PreferencesDialog::slotStartupTypeChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );

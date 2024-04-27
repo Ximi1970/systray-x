@@ -464,10 +464,36 @@ void    GetWindowPosition( void* display, quint64 window, int* pos_x, int* pos_y
 {
     Display* dsp = (Display*)display;
 
-    int x, y;
+    /*
+     *  Get position, method 1
+     */
+    int x1, y1;
     Window child;
     XWindowAttributes xwa;
-    XTranslateCoordinates( dsp, window, XDefaultRootWindow( dsp ), 0, 0, &x, &y, &child );
+    XTranslateCoordinates( dsp, window, XDefaultRootWindow( dsp ), 0, 0, &x1, &y1, &child );
+
+    /*
+     *  Get position, method 2
+     */
+    int x2, y2;
+    Window root;
+    uint width, height;
+    uint border;
+    uint depth;
+    XGetGeometry( dsp, window, &root, &x2, &y2, &width, &height, &border, &depth );
+
+    int x = x1;
+    int y = y1;
+
+    if( x == 0 && y == 0 )
+    {
+        x = x2;
+        y = y2;
+    }
+
+    /*
+     *  Correct the position
+     */
     XGetWindowAttributes( dsp, window, &xwa );
 
     *pos_x = x - xwa.x;

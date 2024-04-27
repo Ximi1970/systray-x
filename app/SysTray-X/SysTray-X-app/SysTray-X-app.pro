@@ -23,7 +23,10 @@ QT += core gui widgets
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
         lessThan(QT_MAJOR_VERSION, 6): {
-            QT += dbus KNotifications
+            QT += dbus
+
+            INCLUDEPATH += /usr/include/KF5/KNotifications
+            LIBS += -lKF5Notifications
         }
         greaterThan(QT_MAJOR_VERSION, 5): {
             INCLUDEPATH += /usr/include/KF6/KStatusNotifierItem

@@ -154,6 +154,31 @@
     "description": "Start application in tray"
   },
 
+  "windows_positions_correction_options": {
+    "message": "Positie",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "Corrigeer vensterposities",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "Geen titelbalk correctie",
+    "description": "No titlebar correction"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "Titlebalk grootte toevoegen",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "Titlebalk grootte aftrekken",
+    "description": "Subtract titlebar size"
+  },
+
   "restore_positions_on_startup": {
     "message": "Herstel vensterposities bij opstarten",
     "description": "Restore the window positions on startup"

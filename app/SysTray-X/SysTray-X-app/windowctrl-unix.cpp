@@ -186,6 +186,10 @@ void    WindowCtrlUnix::findWindows( qint64 pid )
                         {
                             point = old_positions[ win.window ];
                         }
+                        else
+                        {
+                            emit signalConsole( "Position not found" );
+                        }
 
                         m_tb_window_positions[ win.window ] = point;
 
@@ -392,10 +396,33 @@ void    WindowCtrlUnix::updatePositions()
             GetWindowPosition( m_display, window, &x, &y );
 
             /*
+             *  Apply the requested correction
+             */
+            QPoint point;
+            switch( m_pref->getWindowPositionsCorrectionType() )
+            {
+                case Preferences::PREF_NO_CORRECTION:
+                {
+                    point = QPoint( x, y );
+                    break;
+                }
+
+                case Preferences::PREF_ADD_CORRECTION:
+                {
+                    point = QPoint( x + left, y + top );
+                    break;
+                }
+
+                case Preferences::PREF_SUBTRACT_CORRECTION:
+                {
+                    point = QPoint( x - left, y - top );
+                    break;
+                }
+            }
+
+            /*
              *  Update the list?
              */
-            QPoint point = QPoint( x - left, y - top );
-
             if( m_tb_window_positions[ window ] != point )
             {
                 m_tb_window_positions[ window ] = point;
@@ -407,7 +434,8 @@ void    WindowCtrlUnix::updatePositions()
             }
 
 #ifdef DEBUG_DISPLAY_ACTIONS_DETAILS
-            emit signalConsole( QString( "Update pos: %1, %2" ).arg( x - left ).arg( y - top ) );
+            emit signalConsole( QString( "Update pos: %1, %2" ).arg( x ).arg( y ) );
+            emit signalConsole( QString( "Update pos corrected: %1, %2" ).arg( point.x() ).arg( point.y() ) );
 #endif
         }
     }
@@ -431,6 +459,11 @@ void    WindowCtrlUnix::minimizeWindowToTaskbar( quint64 window )
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Minimize to taskbar" );
 #endif
+
+    /*
+     *  Store the current window positions
+     */
+    updatePositions();
 
     /*
      *  Save the hints
@@ -476,6 +509,11 @@ void    WindowCtrlUnix::minimizeWindowToTray( quint64 window )
 #ifdef DEBUG_DISPLAY_ACTIONS
     emit signalConsole( "Minimize to system tray" );
 #endif
+
+    /*
+     *  Store the current window positions
+     */
+    updatePositions();
 
     /*
      *  Save the hints
@@ -612,6 +650,19 @@ void    WindowCtrlUnix::normalizeWindow( quint64 window )
     Sync( m_display );
 
     /*
+     *  Force the window to the last known position?
+     */
+    if( m_pref->getWindowPositionsCorrection() )
+    {
+        /*
+         *  Move the window to the last recorded position
+         */
+        QPoint pos = m_tb_window_positions[ window ];
+        MoveWindow( m_display, window, pos.x(), pos.y() );
+        Flush( m_display );
+    }
+
+    /*
      *  Let us wait a bit, maybe this helps...
      */
 #if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
@@ -682,7 +733,10 @@ void    WindowCtrlUnix::setPositions( QList< QPoint > window_positions )
 #endif
 
         if( i < window_positions.length() ) {
-            MoveWindow( m_display, window, window_positions.at( i ).x(), window_positions.at( i ).y() );
+            QPoint pos = window_positions.at( i );
+
+            m_tb_window_positions[ window ] = pos;
+            MoveWindow( m_display, window, pos.x(), pos.y() );
         }
     }
 

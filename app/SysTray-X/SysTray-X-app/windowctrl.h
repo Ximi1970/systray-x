@@ -136,11 +136,6 @@ class WindowCtrl : public QObject
     private:
 
         /**
-         * @brief m_pref. Pointer to the preferences storage.
-         */
-        Preferences*    m_pref;
-
-        /**
          * @brief m_show_hide_active
          */
         bool    m_show_hide_active;

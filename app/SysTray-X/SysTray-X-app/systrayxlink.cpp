@@ -696,6 +696,26 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         m_pref->setStartupType( startup_type );
     }
 
+    if( pref.contains( "windowPosCor" ) && pref[ "windowPosCor" ].isString() )
+    {
+        bool window_positions_correction = pref[ "windowPosCor" ].toString() == "true";
+
+        /*
+         *  Store the new window positions correction
+         */
+        m_pref->setWindowPositionsCorrection( window_positions_correction );
+    }
+
+    if( pref.contains( "windowPosCorType" ) && pref[ "windowPosCorType" ].isString() )
+    {
+        Preferences::WindowPositionsCorrectionType window_positions_correction_type = static_cast< Preferences::WindowPositionsCorrectionType >( pref[ "windowPosCorType" ].toString().toInt() );
+
+        /*
+         *  Store the window positions correction type
+         */
+        m_pref->setWindowPositionsCorrectionType( window_positions_correction_type );
+    }
+
     if( pref.contains( "restorePositions" ) && pref[ "restorePositions" ].isString() )
     {
         bool resore_window_positions = pref[ "restorePositions" ].toString() == "true";
@@ -994,6 +1014,8 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert( "minimizeType", QJsonValue::fromVariant( QString::number( pref.getMinimizeType() ) ) );
     prefObject.insert( "minimizeIconType", QJsonValue::fromVariant( QString::number( pref.getMinimizeIconType() ) ) );
     prefObject.insert( "startupType", QJsonValue::fromVariant( QString::number( pref.getStartupType() ) ) );
+    prefObject.insert( "windowPosCor", QJsonValue::fromVariant( QString( pref.getWindowPositionsCorrection() ? "true" : "false" ) ) );
+    prefObject.insert( "windowPosCorType", QJsonValue::fromVariant( QString::number( pref.getWindowPositionsCorrectionType() ) ) );
     prefObject.insert( "restorePositions", QJsonValue::fromVariant( QString( pref.getRestoreWindowPositions() ? "true" : "false" ) ) );
     prefObject.insert( "closeType", QJsonValue::fromVariant( QString::number( pref.getCloseType() ) ) );
     prefObject.insert( "defaultIconType", QJsonValue::fromVariant( QString::number( pref.getDefaultIconType() ) ) );
