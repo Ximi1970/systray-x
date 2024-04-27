@@ -96,6 +96,18 @@ Installing the repository:
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Tumbleweed/ SysTray-X
 ```
 
+###### Slowroll
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Slowroll/ SysTray-X
+```
+
+###### 15.6
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.6/ SysTray-X
+```
+
 ###### 15.5
 
 ```bash
