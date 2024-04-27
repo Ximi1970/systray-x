@@ -143,6 +143,42 @@ sudo zypper in systray-x-minimal
 
 Installing the repository:
 
+###### 24.04 LTS
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_24.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_24.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 23.10
 
 ```bash
@@ -304,6 +340,13 @@ Installing the repository:
 
 ```bash
 sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 40
+
+```bash
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_40/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
