@@ -2,7 +2,7 @@
 
 pkgname=systray-x-gnome
 pkgver=0.9.9
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='A system tray extension for Thunderbird (GNOME)'
 arch=(x86_64)
