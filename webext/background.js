@@ -240,6 +240,11 @@ SysTrayX.Messaging = {
   },
 
   listenerFolderInfoChanged: async function (folder, folderInfo) {
+
+    //console.debug("folderInfoChanged: folder: " + JSON.stringify(folder));
+    //console.debug("folderInfoChanged: folderinfo: " + JSON.stringify(folderInfo));
+    //console.debug("folderInfoChanged: Cache: " + SysTrayX.Messaging.folderInfoChangeCache.length );
+
     if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
 
       // Cache the folder change
@@ -248,13 +253,13 @@ SysTrayX.Messaging = {
         SysTrayX.Messaging.folderInfoChangeCache.push({ folder, folderInfo });
       }
 
-      //console.debug("folderInfoChanged: " + JSON.stringify(folder));
-      //console.debug("folderInfoChanged: " + JSON.stringify(folderInfo));
-      //console.debug("folderInfoChanged: Cache: " + SysTrayX.Messaging.folderInfoChangeCache.length );
-
       if (SysTrayX.Messaging.startupDelayFinished)
       {
+        //console.debug("folderInfoChanged: delay finished");
+
         if( SysTrayX.Messaging.folderInfoChangeCache.length > 0 ) {
+
+          //console.debug("folderInfoChanged: handle cache");
 
           // Process the received messages
           for (const cache of SysTrayX.Messaging.folderInfoChangeCache) {
@@ -274,7 +279,7 @@ SysTrayX.Messaging = {
               SysTrayX.Messaging.unread[cache.folder.accountId][cache.folder.path] =
                 cache.folderInfo.unreadMessageCount;
 
-              // Check if the new mails have been read, remove from new storage
+              // Check if the new mails have been read, removed from new storage
               const messages = SysTrayX.Messaging.new[cache.folder.accountId][cache.folder.path];
 
               if (messages.length > 0) {
@@ -306,6 +311,8 @@ SysTrayX.Messaging = {
           }
         } else {
 
+          //console.debug("folderInfoChanged: handle default");
+
           // Count the initial unread messages
           for (const filter of SysTrayX.Messaging.filters) {
             const accountId = filter.accountId;
@@ -334,6 +341,7 @@ SysTrayX.Messaging = {
                 }
               }
         
+              // Check unread mails
               let mailFolderInfo = {};
               try {
                 mailFolderInfo = await browser.folders.getFolderInfo(folderParam);
@@ -349,6 +357,31 @@ SysTrayX.Messaging = {
       
                 SysTrayX.Messaging.unread[accountId][path] =
                   mailFolderInfo.unreadMessageCount;
+              }
+
+              // Check if the new mails have been read, removed from new storage
+              if (SysTrayX.Messaging.new[accountId] !== undefined &&
+                SysTrayX.Messaging.new[accountId][path] !== undefined ) {
+                const messages = SysTrayX.Messaging.new[accountId][path];
+
+                if (messages.length > 0) {
+                  const newMessages = [];
+                  for (let i = 0; i < messages.length; ++i) {
+                    const message = messages[i];
+
+                    const getHeaderPromise = (messageId) =>
+                      new Promise((res) => res(messenger.messages.get(messageId)));
+                    const header = await getHeaderPromise(message.id);
+
+                    if (!header.read) {
+                      newMessages.push(message);
+                    }
+                  }
+
+                  SysTrayX.Messaging.new[accountId][path] = [
+                    ...newMessages,
+                  ];
+                }
               }
             }
           }
