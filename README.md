@@ -82,6 +82,39 @@ Exec=env GDK_BACKEND=x11 thunderbird %u
 ```
 
 
+## Key issues
+
+If you have issues with the gpg keys of the packages please try the following options.
+
+###Arch
+
+To list all keys used:
+
+```bash
+sudo pacman-key --list-sigs
+```
+
+Delete SysTray-X key:
+
+```bash
+sudo pacman-key -d BEEF5C3607D86FE9
+```
+
+Then reinstall the key file. See below in the installing instructions.
+
+Other Arch problems:
+Arch update not working due to invalid keys:
+
+```bash
+sudo pacman -S archlinux-keyring
+```
+
+Use with caution:
+[Resetting keys](https://wiki.archlinux.org/title/Pacman/Package_signing#Resetting_all_the_keys
+
+
+
+
 ## Linux distributions
 
 ### openSuSE
