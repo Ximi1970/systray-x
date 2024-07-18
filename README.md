@@ -488,6 +488,9 @@ sudo pacman -S systray-x-minimal
 
 #### AUR alternative install (by Antiz96)
 
+Packages for this install method are not maintained by me, Ximi1970.
+Please contact @Antiz96 if you have any problems installing.
+
 Install the `systray-x` package from the Arch repo.
 This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/extra/x86_64/systray-x-common/) package which is suitable for any DE/WM except KDE (Gnome users need to install and enable the `gnome-shell-extension-appindicator` for a proper integration with Gnome) or the [systray-x-kde](https://archlinux.org/packages/extra/x86_64/systray-x-kde/) package which includes specific options and dependencies for a proper integration with KDE.
 
