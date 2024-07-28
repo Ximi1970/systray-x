@@ -577,48 +577,48 @@ async function addFolderToFilters(newFolder) {
 
 // Collect unread mail
 const collectUnreadMail = async () => {
+  // Count the initial unread messages
   for (const filter of SysTrayX.Messaging.filters) {
-    
     const accountId = filter.accountId;
     for (const storedFolder of filter.folders) {
-      let mailFolderInfo = {};
-
       let path;
+      let folderParam;
       if (typeof(storedFolder) === "string") {
         //  Filters pre TB 121
         path = storedFolder;
-
-        try {
-          mailFolderInfo = await browser.folders.getFolderInfo({
-              accountId: accountId,
-              path: storedFolder,
-            });
-        } catch (err) {
-          //console.debug("Filter error: " + err);
-          //console.debug("Filter error: " + JSON.stringify(folder));
-
-          //  Get all accounts
-          SysTrayX.Messaging.accounts = await browser.accounts.list();
-
-          // Check the filters for the accounts
-          SysTrayX.Messaging.accountFilterCheck();
-        }
+        folderParam = {
+          accountId: accountId,
+          path: storedFolder,
+        };
       } else {
         //  Filters TB 121
-        path = storedFolder.path;
-        
-        try {
-          mailFolderInfo = await browser.folders.getFolderInfo(storedFolder.mailFolderId);
-        } catch (err) {
-          //console.debug("Filter error: " + err);
-          //console.debug("Filter error: " + JSON.stringify(folder));
-
-          //  Get all accounts
-          SysTrayX.Messaging.accounts = await browser.accounts.list();
-
-          // Check the filters for the accounts
-          SysTrayX.Messaging.accountFilterCheck();
+        if (storedFolder.mailFolderId === undefined ||
+          SysTrayX.Info.browserInfo.majorVersion < 121) {
+          //  TB 121 filter setup but older TB
+          path = storedFolder.path;
+          folderParam = {
+            accountId: accountId,
+            path: path,
+          };
+        } else {
+          path = storedFolder.path;
+          folderParam = storedFolder.mailFolderId;  
         }
+      }
+
+      // Check unread mails
+      let mailFolderInfo = {};
+      try {
+        mailFolderInfo = await browser.folders.getFolderInfo(folderParam);
+      } catch (err) {
+        //console.debug("Filter error: " + err);
+        //console.debug("Filter error: " + JSON.stringify(folder));
+
+        //  Get all accounts
+        SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+        // Check the filters for the accounts
+        SysTrayX.Messaging.accountFilterCheck();
       }
 
       if (mailFolderInfo.unreadMessageCount !== undefined) {
@@ -639,16 +639,41 @@ const collectUnreadMail = async () => {
         SysTrayX.Messaging.unread[accountId][path] =
           mailFolderInfo.unreadMessageCount;
       }
+
+      // Check if the new mails have been read, removed from new storage
+      if (SysTrayX.Messaging.new[accountId] !== undefined &&
+        SysTrayX.Messaging.new[accountId][path] !== undefined ) {
+        const messages = SysTrayX.Messaging.new[accountId][path];
+
+        if (messages.length > 0) {
+          const newMessages = [];
+          for (let i = 0; i < messages.length; ++i) {
+            const message = messages[i];
+
+            const getHeaderPromise = (messageId) =>
+              new Promise((res) => res(messenger.messages.get(messageId)));
+            const header = await getHeaderPromise(message.id);
+
+            if (!header.read) {
+              newMessages.push(message);
+            }
+          }
+
+          SysTrayX.Messaging.new[accountId][path] = [
+            ...newMessages,
+          ];
+        }
+      }
     }
   }
-};
+}
 
 //  Count and send the unread and new mails
-const sendMailCountPre115 = () => {
+const sendMailCountPre115 = async () => {
   if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
 
     // Collect the unread mail
-    collectUnreadMail();
+    await collectUnreadMail();
 
     // Count the collected mail
     let unreadCount = 0;
@@ -681,6 +706,9 @@ const sendMailCountPre115 = () => {
 
     //console.debug("Filters: " + JSON.stringify(SysTrayX.Messaging.filters));
     //console.debug("New: " + JSON.stringify(SysTrayX.Messaging.new));
+
+    //console.debug("sendMailCountPre115 Unread storage: " + JSON.stringify(SysTrayX.Messaging.unread));
+    //console.debug("sendMailCountPre115 New storage: " + JSON.stringify(SysTrayX.Messaging.new));
 
     //console.debug("sendMailCountPre115 Unread: " + unreadCount);
     //console.debug("sendMailCountPre115 New: " + newCount);
