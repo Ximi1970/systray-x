@@ -621,19 +621,12 @@ const collectUnreadMail = async () => {
         SysTrayX.Messaging.accountFilterCheck();
       }
 
+      //console.debug("collectUnreadMail: folderParam" + JSON.stringify(folderParam));
+      //console.debug("collectUnreadMail: mailFolderInfo" + JSON.stringify(mailFolderInfo));
+
       if (mailFolderInfo.unreadMessageCount !== undefined) {
         if (SysTrayX.Messaging.unread[accountId] === undefined) {
           SysTrayX.Messaging.unread[accountId] = {};
-        }
-
-        if (SysTrayX.Messaging.new[accountId] === undefined) {
-          SysTrayX.Messaging.new[accountId] = {};
-        }
-
-        if (
-          SysTrayX.Messaging.new[accountId][path] === undefined
-        ) {
-          SysTrayX.Messaging.new[accountId][path] = [];
         }
 
         SysTrayX.Messaging.unread[accountId][path] =
@@ -645,6 +638,8 @@ const collectUnreadMail = async () => {
         SysTrayX.Messaging.new[accountId][path] !== undefined ) {
         const messages = SysTrayX.Messaging.new[accountId][path];
 
+        //console.debug("collectUnreadMail: new stored" + JSON.stringify(messages));
+
         if (messages.length > 0) {
           const newMessages = [];
           for (let i = 0; i < messages.length; ++i) {
@@ -654,8 +649,14 @@ const collectUnreadMail = async () => {
               new Promise((res) => res(messenger.messages.get(messageId)));
             const header = await getHeaderPromise(message.id);
 
-            if (!header.read) {
+            //console.debug("collectUnreadMail: header" + JSON.stringify(header));
+
+            if (header.read === false &&
+               (header.new === undefined || header.new === true) &&
+                header.headerMessageId !== "") {
               newMessages.push(message);
+
+              //console.debug("collectUnreadMail: renew" + JSON.stringify(message));
             }
           }
 
