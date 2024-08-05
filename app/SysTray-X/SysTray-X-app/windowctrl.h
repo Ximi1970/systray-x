@@ -5,7 +5,8 @@
  *	Qt includes
  */
 #include <QtGlobal>
-
+#include <QObject>
+#include <QPoint>
 
 /*
  *	Local includes
@@ -23,7 +24,6 @@
  *  Predefines
  */
 class QWindow;
-class Preferences;
 
 /**
  * @brief The WindowCtrl class.
@@ -55,9 +55,6 @@ class WindowCtrl : public QObject
         bool    thunderbirdStart() const;
 
     signals:
-
-//        void    signalShow();
-//        void    signalHide();
 
         void    signalHideDefaultIconChange(bool hide );
 
@@ -137,11 +134,6 @@ class WindowCtrl : public QObject
         void    slotCloseWindow( int id, bool quit );
 
     private:
-
-        /**
-         * @brief m_pref. Pointer to the preferences storage.
-         */
-        Preferences*    m_pref;
 
         /**
          * @brief m_show_hide_active

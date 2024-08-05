@@ -38,7 +38,8 @@ SysTrayX.SaveOptions = {
 
           folders.forEach((folder) => {
             const mailFolderExt = JSON.parse(folder.value);
-            filters[filters.length - 1].folders.push(mailFolderExt.path);
+            filters[filters.length - 1].folders.push({
+              mailFolderId: mailFolderExt.mailFolderId, path: mailFolderExt.path});
           });
         }
       }
@@ -104,6 +105,26 @@ SysTrayX.SaveOptions = {
     ).value;
     await storage().set({
       startupType: startupType,
+    });
+
+    //
+    //  Save window positions correction state
+    //
+    const windowPosCor = document.querySelector(
+      'input[name="positionsCorrection"]'
+    ).checked;
+    await storage().set({
+      windowPosCor: `${windowPosCor}`,
+    });
+
+    //
+    //  Save window positions correction preferences
+    //
+    const windowPosCorType = document.querySelector(
+      'input[name="positionsCorrectionType"]:checked'
+    ).value;
+    await storage().set({
+      windowPosCorType: windowPosCorType,
     });
 
     //
@@ -413,6 +434,26 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setStartupType,
         SysTrayX.RestoreOptions.onStartupTypeError
+      );
+
+    //
+    //  Restore window positions correction state
+    //
+    await storage()
+      .get("windowPosCor")
+      .then(
+        SysTrayX.RestoreOptions.setWindowPosCor,
+        SysTrayX.RestoreOptions.onWindowPosCorError
+      );
+
+    //
+    //  Restore window positions correction type
+    //
+    await storage()
+      .get("windowPosCorType")
+      .then(
+        SysTrayX.RestoreOptions.setWindowPosCorType,
+        SysTrayX.RestoreOptions.onWindowPosCorTypeError
       );
 
     //
@@ -741,7 +782,37 @@ SysTrayX.RestoreOptions = {
   },
 
   onStartupTypeError: function (error) {
-    console.log(`startupType Error: ${error}`);
+    console.log(`StartupType Error: ${error}`);
+  },
+
+  //
+  //  Restore window positions correction state callbacks
+  //
+  setWindowPosCor: function (result) {
+    const windowPosCor = result.windowPosCor || "false";
+
+    const checkbox = document.querySelector(`input[name="positionsCorrection"]`);
+    checkbox.checked = windowPosCor === "true";
+  },
+
+  onWindowPosCorError: function (error) {
+    console.log(`WindowPosCor Error: ${error}`);
+  },
+
+  //
+  //  Restore start minimized callbacks
+  //
+  setWindowPosCorType: function (result) {
+    const windowPosCorType = result.windowPosCorType || "0";
+
+    const radioButton = document.querySelector(
+      `input[name="positionsCorrectionType"][value="${windowPosCorType}"]`
+    );
+    radioButton.checked = true;
+  },
+
+  onWindowPosCorTypeError: function (error) {
+    console.log(`WindowPosCorType Error: ${error}`);
   },
 
   //
@@ -1232,7 +1303,16 @@ SysTrayX.RestoreOptions = {
           )
         );
 
-        filter.folders.forEach((path) => {
+        filter.folders.forEach((storedFolder) => {
+
+          if (typeof(storedFolder) === "string") {
+            //  Filters pre TB 121
+            path = storedFolder;
+          } else {
+            //  Filters TB 121
+            path = storedFolder.path;
+          }
+
           checkboxes.forEach((checkbox) => {
             const value = JSON.parse(checkbox.value);
             if (value.path === path) {
@@ -1303,6 +1383,16 @@ SysTrayX.StorageChanged = {
       if (item === "startupType") {
         SysTrayX.RestoreOptions.setStartupType({
           startupType: changes[item].newValue,
+        });
+      }
+      if (item === "windowPosCor") {
+        SysTrayX.RestoreOptions.setWindowPosCor({
+          windowPosCor: changes[item].newValue,
+        });
+      }
+      if (item === "windowPosCorType") {
+        SysTrayX.RestoreOptions.setWindowPosCorType({
+          windowPosCorType: changes[item].newValue,
         });
       }
       if (item === "restorePositions") {
@@ -1525,6 +1615,10 @@ async function start() {
     document.getElementById("kdeintegration").style.display = "none";
   }
 
+  if ( SysTrayX.Info.platformInfo.os !== "linux" ) {
+    document.getElementById("positionscorrectionselect").style.display = "none";
+  }
+
   // Enable save button
   document
     .querySelector('[name="saveform"]')
@@ -1538,8 +1632,8 @@ async function start() {
   browser.storage.onChanged.addListener(SysTrayX.StorageChanged.changed);
 
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-      browser.storage.onChanged.removeListener(SysTrayX.StorageChanged.changed);
+    if ( browser.storage.onChanged.hasListener(SysTrayX.StorageChanged.changed) ) {
+          browser.storage.onChanged.removeListener(SysTrayX.StorageChanged.changed);
     }
   });
 }

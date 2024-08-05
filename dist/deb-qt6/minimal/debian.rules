@@ -1,0 +1,117 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatibility version to use.
+#export DH_COMPAT=4
+
+CFLAGS = -g
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+CFLAGS += -O0
+else
+CFLAGS += -O2
+endif
+
+DEB_VENDOR := $(shell dpkg-vendor --query vendor)
+
+VERSION := $(shell cat dist/rpm/VERSION | grep VERSION | sed -e "s/VERSION=\(.*\)/\1/")
+
+VERSION_MAJOR := $(shell echo $(VERSION) | cut -d'.' -f1)
+VERSION_MINOR := $(shell echo $(VERSION) | cut -d'.' -f2)
+VERSION_PATCH := $(shell echo $(VERSION) | cut -d'.' -f3)
+
+BUILD_NUMBER := $(shell cat dist/rpm/VERSION | grep BUILD_NUMBER | sed -e "s/BUILD_NUMBER=\(.*\)/\1/")
+GIT_HASH := $(shell cat dist/rpm/VERSION | grep GIT_HASH | sed -e "s/GIT_HASH=\(.*\)/\1/")
+GIT_BRANCH := $(shell cat dist/rpm/VERSION | grep GIT_BRANCH | sed -e "s/GIT_BRANCH=\(.*\)/\1/")
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|/usr/bin/SysTray-X|' > SysTray_X.json
+
+	QT_SELECT=5 make OPTIONS="DEFINES+=NO_KDE_INTEGRATION" EXT_VERSION="DEFINES+=EXT_VERSION DEFINES+=APP_VERSION_MAJOR=\\\\\\\\\\\\\\\"$(VERSION_MAJOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_MINOR=\\\\\\\\\\\\\\\"$(VERSION_MINOR)\\\\\\\\\\\\\\\" DEFINES+=APP_VERSION_PATCH=\\\\\\\\\\\\\\\"$(VERSION_PATCH)\\\\\\\\\\\\\\\" DEFINES+=APP_BUILD=\\\\\\\\\\\\\\\"$(BUILD_NUMBER)\\\\\\\\\\\\\\\" DEFINES+=APP_GITHASH=\\\\\\\\\\\\\\\"$(GIT_HASH)\\\\\\\\\\\\\\\" DEFINES+=APP_GITBRANCH=\\\\\\\\\\\\\\\"$(GIT_BRANCH)\\\\\\\\\\\\\\\""
+
+	# --- end custom part for compiling
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	# Add here commands to clean up after the build process.
+	make clean || true
+	# --- end custom part for cleaning up
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package
+	# The DESTDIR Has To Be Exactly  /usr/src/packages/BUILD/debian/<nameOfPackage>
+	
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-minimal/usr/bin
+	cp -f SysTray-X /usr/src/packages/BUILD/debian/systray-x-minimal/usr/bin/SysTray-X
+	
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/mozilla/native-messaging-hosts
+	cp -f SysTray_X.json /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/mozilla/native-messaging-hosts/SysTray_X.json
+
+ifeq (Debian,$(DEB_VENDOR))
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird-addons/extensions
+	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird/extensions
+	cd  /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird/extensions ;\
+	ln -sf ../../thunderbird-addons/extensions/systray-x@Ximi1970.xpi systray-x@Ximi1970.xpi
+else
+	mkdir -p /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird-addons/extensions
+	cp -f systray-x@Ximi1970.xpi /usr/src/packages/BUILD/debian/systray-x-minimal/usr/lib/thunderbird-addons/extensions/systray-x@Ximi1970.xpi
+endif
+
+	# --- end custom part for installing
+
+# Build architecture-independent files here.
+binary-indep: build install
+	# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+	dh_installman
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary installing

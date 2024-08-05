@@ -1,0 +1,581 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "系统托盘控制插件，请下载安装配套应用。",
+    "description": "Webextension descriptions"
+  },
+
+  "preferences": {
+    "message": "SysTray-X 首选项",
+    "description": "Title of preferences page"
+  },
+
+  "intro_line_1": {
+    "message": "该插件需要和外部应用配合工作，请在这里获取：",
+    "description": "Introduction line 1"
+  },
+
+  "intro_link": {
+    "message": "下载 SysTray-X 配套应用",
+    "description": "Link description"
+  },
+
+  "tab_windows": {
+    "message": "窗口",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "图标",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_count": {
+    "message": "计数",
+    "description": "Tab for Count options"
+  },
+
+  "tab_apps": {
+    "message": "应用",
+    "description": "Tab for Apps options"
+  },
+
+  "tab_mail": {
+    "message": "邮件",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_shortcuts": {
+    "message": "快捷键",
+    "description": "Tab for Shortcuts options"
+  },
+
+  "tab_debug": {
+    "message": "调试",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "窗口",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "最小化按钮",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "最小化",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "收回托盘",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_icon_options": {
+    "message": "托盘图标",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "最小化",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "收回托盘",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "收回托盘，方法 1",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "收回托盘，方法 2",
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "关闭按钮",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "普通关闭",
+    "description": "Close option 0"
+  },
+
+  "windows_close_1": {
+    "message": "主窗口最小化，子窗口关闭",
+    "description": "Close option 1"
+  },
+
+  "windows_close_2": {
+    "message": "所有窗口最小化",
+    "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "主窗口收回托盘，子窗口关闭",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "所有窗口收回托盘",
+    "description": "Close option 4"
+  },
+
+  "windows_startup_options": {
+    "message": "启动方式",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "普通启动",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "最小化启动",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "启动至托盘",
+    "description": "Start application in tray"
+  },
+
+  "windows_positions_correction_options": {
+    "message": "位置",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "正确的窗口位置",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "没有标题栏修正",
+    "description": "No titlebar correction"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "添加标题栏大小",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "减去标题栏大小",
+    "description": "Subtract titlebar size"
+  },
+
+  "restore_positions_on_startup": {
+    "message": "启动时恢复窗口位置",
+    "description": "Restore the window positions on startup"
+  },
+
+  "icons": {
+    "message": "图标",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "默认",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Thunderbird 默认",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "透明",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "自定义",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "选择图标...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "KDE 集成（隐藏）",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "有未读邮件时",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "空白",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "新邮件",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "自定义",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "选择图标...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "无",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_invert_icon": {
+    "message": "反色",
+    "description": "Invert icon"
+  },
+
+  "count": {
+    "message": "计数",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "显示消息计数",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "显示新消息提示",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "启动延迟秒数",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "计数类型",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "未读消息",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "新消息",
+    "description": "Count new mails"
+  },
+
+  "count_api_count_method": {
+    "message": "由 API 提供计数方法",
+    "description": "API count method"
+  },
+
+  "count_number_options": {
+    "message": "数字",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "颜色：",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "字号：",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "位置：",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "左上",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "中上",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "右上",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "左中",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "正中",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "右中",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "左下",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "中下",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "右下",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "边距（左，上，中，下）",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "新消息提示",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "圆点",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "星形",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "背景色：",
+    "description": "Shade the icon"
+  },
+
+  "apps": {
+    "message": "应用",
+    "description": "Title for Apps options"
+  },
+
+  "apps_start_application": {
+    "message": "启动应用时",
+    "description": "The start application parameters"
+  },
+
+  "apps_start_app": {
+    "message": "应用：",
+    "description": "The start application"
+  },
+
+  "apps_start_app_args": {
+    "message": "参数：",
+    "description": "Arguments for a start application"
+  },
+
+  "apps_close_application": {
+    "message": "关闭应用时",
+    "description": "The close application parameters"
+  },
+
+  "apps_close_app": {
+    "message": "应用：",
+    "description": "The close application"
+  },
+
+  "apps_close_app_args": {
+    "message": "参数：",
+    "description": "Arguments for a close application"
+  },
+
+  "accounts": {
+    "message": "账户",
+    "description": "Title for Accounts options"
+  },
+
+  "shortcuts": {
+    "message": "快捷键",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "显示 / 隐藏 Thunderbird：",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "清空",
+    "description": "Clear"
+  },
+
+  "debug": {
+    "message": "调试",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "显示调试窗口",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "保存首选项",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "保存",
+    "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "重置首选项",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "重置",
+    "description": "Reset preferences button"
+  },
+
+  "about_title": {
+    "message": "关于 SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "SysTray-X 配套应用，作者 Ximi1970",
+    "description": "Line 1"
+  },
+
+  "about_version": {
+    "message": "版本：",
+    "description": "Version"
+  },
+
+  "about_build": {
+    "message": "构建：",
+    "description": "Build"
+  },
+
+  "about_hash": {
+    "message": "Hash：",
+    "description": "Hash"
+  },
+
+  "about_branch": {
+    "message": "分支：",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "SysTray-X 调试",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "测试 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "测试 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "测试 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "未读邮件：",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "显示 / 隐藏(&S)",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "首选项(&P)",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "关于(&A)",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "退出(&Q)",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "关闭",
+    "description": "Close button"
+  },
+
+  "mail_notification_icon": {
+    "message": "邮件提示图标",
+    "description": "Mail icon selection title"
+  },
+
+  "number_properties": {
+    "message": "数字属性",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "打开图片",
+    "description": "File image dialog"
+  },
+
+  "image_files": {
+    "message": "图片文件（*.png *.jpg *.bmp）",
+    "description": "File image selection"
+  },
+
+  "image_save": {
+    "message": "保存",
+    "description": "File image save"
+  },
+
+  "image_cancel": {
+    "message": "取消",
+    "description": "File image cancel"
+  }
+}

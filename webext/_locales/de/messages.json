@@ -154,6 +154,31 @@
     "description": "Start application in tray"
   },
 
+  "windows_positions_correction_options": {
+    "message": "Position",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "Corriegere fensterpositionen",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "Keine Korrektur mit Titelleiste",
+    "description": "No titlebar correction"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "Größe der Titelleiste hinzufügen",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "Größe der Titelleiste hinzufügen subtrahieren",
+    "description": "Subtract titlebar size"
+  },
+
   "restore_positions_on_startup": {
     "message": "Fensterpositionen wiederherstellen beim Start",
     "description": "Restore the window positions on startup"

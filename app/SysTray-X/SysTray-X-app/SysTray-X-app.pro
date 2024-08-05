@@ -19,15 +19,25 @@ include( ../SysTray-X.pri )
 #
 # Set the Qt modules
 #
-QT += core gui
+QT += core gui widgets
 unix:!macx: {
     contains(DEFINES,KDE_INTEGRATION) {
-        QT += dbus KNotifications
-    }
-    QT += x11extras
-}
+        lessThan(QT_MAJOR_VERSION, 6): {
+            QT += dbus
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+            INCLUDEPATH += /usr/include/KF5/KNotifications
+            LIBS += -lKF5Notifications
+        }
+        greaterThan(QT_MAJOR_VERSION, 5): {
+            INCLUDEPATH += /usr/include/KF6/KStatusNotifierItem
+            LIBS += -lKF6StatusNotifierItem
+        }
+    }
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        QT += x11extras
+    }
+}
 
 #
 # Define the target
@@ -45,7 +55,8 @@ TRANSLATIONS = \
     languages/$${TARGET}.it.ts \
     languages/$${TARGET}.nl.ts \
     languages/$${TARGET}.pt-BR.ts \
-    languages/$${TARGET}.ru.ts
+    languages/$${TARGET}.ru.ts \
+    languages/$${TARGET}.zh-CN.ts
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -150,20 +161,22 @@ win32: {
 
 
 SOURCES += \
+        debugwidget.cpp \
         main.cpp \
         nativeeventfilterbase.cpp \
-        shortcut.cpp \
         systrayxlink.cpp \
         systrayxicon.cpp \
         systrayx.cpp \
-        debugwidget.cpp \
         preferencesdialog.cpp \
         preferences.cpp \
+        shortcut.cpp \
         windowctrl.cpp
+
 unix: {
-SOURCES += \
+    SOURCES += \
         nativeeventfilter-x11.cpp \
         windowctrl-unix.cpp
+
     contains(DEFINES,KDE_INTEGRATION) {
         SOURCES += \
             systrayxstatusnotifier.cpp
@@ -177,17 +190,18 @@ SOURCES += \
 
 HEADERS += \
         debug.h \
+        debugwidget.h \
         nativeeventfilterbase.h \
-        shortcut.h \
+        preferencesdialog.h \
+        preferences.h \
         systrayxlink.h \
         systrayxicon.h \
         systrayx.h \
-        debugwidget.h \
-        preferencesdialog.h \
-        preferences.h \
+        shortcut.h \
         windowctrl.h
+
 unix: {
-HEADERS += \
+    HEADERS += \
         nativeeventfilter-x11.h \
         windowctrl-unix.h
 
@@ -197,9 +211,13 @@ HEADERS += \
     }
 }
 win32: {
-HEADERS += \
-        nativeeventfilter-win.h \
+    HEADERS += \
         windowctrl-win.h
+
+    lessThan(QT_MAJOR_VERSION, 6): {
+        HEADERS += \
+            nativeeventfilter-win.h
+    }
 }
 
 FORMS += \

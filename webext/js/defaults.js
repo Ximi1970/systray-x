@@ -219,11 +219,44 @@ async function getIcon() {
   }
 }
 
+
+//
+//  Find a path in the account folder tree
+//
+function findFolder(rootFolder, path) {
+  function traverse(folder) {
+    if (folder === undefined) {
+      return undefined;
+    }
+
+    if (folder.path === path) {
+      return folder;
+    }
+
+    if (folder.subFolders === undefined) {
+      return undefined;
+    }
+
+    for (let sub of folder.subFolders) {
+      const found = traverse(sub);
+      if( found !== undefined ) {
+        return found;
+      }
+    }
+
+    return undefined;
+  }
+
+  const found = traverse(rootFolder);
+
+  return found;
+}
+
 //
 //  Get filters
 //
 async function getFilters() {
-  function resolve(result) {
+  async function resolve(result) {
     let filters = result.filters || undefined;
 
     if (filters === undefined || filters.length === 0) {
@@ -234,19 +267,22 @@ async function getFilters() {
 
       filters = [];
       for (const account of SysTrayX.Messaging.accounts) {
-        const inbox = account.folders.filter(
-          (folder) => folder.type === "inbox"
-        );
+        let inbox;
+        if (account.rootFolder !== undefined) {
+          inbox = account.rootFolder.subFolders.filter(
+            (folder) => folder.type === "inbox"
+          );
+        } else {
+          inbox = account.folders.filter(
+            (folder) => folder.type === "inbox"
+          );
+        }
 
         if (inbox.length > 0) {
-          let folder = {};
-
-          //          console.debug("Folder 91+: " + JSON.stringify(inbox[0]));
-
           filters.push({
             accountId: inbox[0].accountId,
             version: SysTrayX.Info.version,
-            folders: [inbox[0].path],
+            folders: [{mailFolderId: inbox[0].id, path: inbox[0].path}],
           });
         }
       }
@@ -254,6 +290,109 @@ async function getFilters() {
       console.debug("Force new filters: " + JSON.stringify(filters));
     } else {
       console.debug("Stored filters: " + JSON.stringify(filters));
+
+      if (filters[0].folders.length > 0) {
+        if (typeof(filters[0].folders[0]) === "string") {
+
+          console.debug("Conversion needed");
+
+          //  Convert the filter folder path list to an object
+          //  containing at least the path and if available the mail folder id (TB 121 and newer)
+
+          const newFilters = [];
+          for (const account of SysTrayX.Messaging.accounts) {
+            let rootFolder = account.rootFolder
+            if( rootFolder === undefined ) {
+              rootFolder = {
+                path: "",
+                subFolders: account.folders
+              };
+            }
+
+            const filter = filters.filter(
+              (filter) => filter.accountId === account.id
+            );
+
+            console.debug("Found filters: " + filter.length);
+            console.debug("Found filter: " + JSON.stringify(filter));
+    
+            if (filter.length === 1) {
+              let newFilter = {
+                accountId: filter[0].accountId,
+                version: SysTrayX.Info.version,
+                folders: []
+              };
+
+              for (const path of filter[0].folders) {
+                const accountFolder = findFolder(rootFolder, path);
+
+                if (accountFolder !== undefined)
+                {
+                  newFilter.folders.push({mailFolderId: accountFolder.id, path: accountFolder.path});
+                }
+              }
+
+              newFilters.push(newFilter);
+            }
+          }
+
+          filters = newFilters;
+
+          console.debug("Force new filters: " + JSON.stringify(filters));
+
+          //  Save the new filters
+          await storage().set({
+            filters: filters,
+          });
+        } else {
+          if (filters[0].folders[0].mailFolderId === undefined &&
+                SysTrayX.Info.browserInfo.majorVersion >= 121) {
+
+            console.debug("Update needed");
+
+            //  Update filter folder object
+            //  with the the mail folder id
+
+            const newFilters = [];
+            for (const account of SysTrayX.Messaging.accounts) {
+              const filter = filters.filter(
+                (filter) => filter.accountId === account.id
+              );
+    
+              console.debug("Found filters: " + filter.length);
+              console.debug("Found filter: " + JSON.stringify(filter));
+      
+              if (filter.length === 1) {
+                let newFilter = {
+                  accountId: filter[0].accountId,
+                  version: SysTrayX.Info.version,
+                  folders: []
+                };
+      
+                for (const folder of filter[0].folders) {
+                  const accountFolder = findFolder(account.rootFolder, folder.path)
+    
+                  if (accountFolder !== undefined)
+                  {
+                    newFilter.folders.push({mailFolderId: accountFolder.id, path: accountFolder.path});
+                  }
+                }
+    
+                newFilters.push(newFilter);
+              }
+            }
+    
+            filters = newFilters;
+
+            console.debug("Force new filters: " + JSON.stringify(filters));
+    
+            //  Save the new filters
+            await storage().set({
+              filters: filters,
+            });
+          }
+        }
+      }
     }
 
     return filters;
@@ -328,11 +467,23 @@ function isFolderInFilters(folder) {
   );
 
   if (accountIndex !== -1) {
-    return (
-      SysTrayX.Messaging.filters[accountIndex].folders.filter(
-        (path) => path === folder.path
-      ).length > 0
-    );
+    const folders = SysTrayX.Messaging.filters[accountIndex].folders;
+
+    if (folders[0] === "string") {
+      //  Filters pre TB 121
+      return (
+        folders.filter(
+          (path) => path === folder.path
+        ).length > 0
+      );
+    } else {
+      //  Filters TB 121
+      return (
+        folders.map(f => f.path).filter(
+          (path) => path === folder.path
+        ).length > 0
+      );
+    }
   } else {
     return false;
   }
@@ -347,11 +498,23 @@ function isParentFolderInFilters(folder) {
   );
 
   if (accountIndex !== -1) {
-    return (
-      SysTrayX.Messaging.filters[accountIndex].folders.filter(
-        (path) => path === parentPath
-      ).length > 0
-    );
+    const folders = SysTrayX.Messaging.filters[accountIndex].folders;
+
+    if (folders[0] === "string") {
+      //  Filters pre TB 121
+      return (
+        folders.filter(
+          (path) => path === parentPath
+        ).length > 0
+      );
+    } else {
+      //  Filters TB 121
+      return (
+        folders.map(f => f.path).filter(
+          (path) => path === parentPath
+        ).length > 0
+      );
+    }
   } else {
     return false;
   }
@@ -365,7 +528,14 @@ async function deleteFolderFromFilters(folder) {
 
   if (accountIndex !== -1) {
     const account = SysTrayX.Messaging.filters[accountIndex];
-    account.folders = account.folders.filter((path) => path !== folder.path);
+
+    if (account.folders[0] === "string" ) {
+      //  Filters pre TB 121
+      account.folders = account.folders.filter((path) => path !== folder.path);
+    } else {
+      //  Filters TB 121
+      account.folders = account.folders.filter((f) => f.path !== folder.path);
+    }
 
     //  Store the new filters
     await storage().set({
@@ -391,7 +561,12 @@ async function addFolderToFilters(newFolder) {
 
   if (accountIndex !== -1) {
     const account = SysTrayX.Messaging.filters[accountIndex];
-    account.folders.push(newFolder.path);
+
+    if (account.folders[0] === "string" ) {
+      account.folders.push(newFolder.path);
+    } else {
+      account.folders.push({mailFolderId: newFolder.id, path: newFolder.path});
+    }
 
     //  Store the new filter
     await storage().set({
@@ -403,42 +578,65 @@ async function addFolderToFilters(newFolder) {
 // Collect unread mail
 const collectUnreadMail = async () => {
   for (const filter of SysTrayX.Messaging.filters) {
-    for (const path of filter.folders) {
-      const folder = {
-        accountId: filter.accountId,
-        path: path,
-      };
-
+    
+    const accountId = filter.accountId;
+    for (const storedFolder of filter.folders) {
       let mailFolderInfo = {};
-      try {
-        mailFolderInfo = await browser.folders.getFolderInfo(folder);
-      } catch (err) {
-        //console.debug("Filter error: " + err);
-        //console.debug("Filter error: " + JSON.stringify(folder));
 
-        //  Get all accounts
-        SysTrayX.Messaging.accounts = await browser.accounts.list(false);
+      let path;
+      if (typeof(storedFolder) === "string") {
+        //  Filters pre TB 121
+        path = storedFolder;
 
-        // Check the filters for the accounts
-        SysTrayX.Messaging.accountFilterCheck();
+        try {
+          mailFolderInfo = await browser.folders.getFolderInfo({
+              accountId: accountId,
+              path: storedFolder,
+            });
+        } catch (err) {
+          //console.debug("Filter error: " + err);
+          //console.debug("Filter error: " + JSON.stringify(folder));
+
+          //  Get all accounts
+          SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+          // Check the filters for the accounts
+          SysTrayX.Messaging.accountFilterCheck();
+        }
+      } else {
+        //  Filters TB 121
+        path = storedFolder.path;
+        
+        try {
+          mailFolderInfo = await browser.folders.getFolderInfo(storedFolder.mailFolderId);
+        } catch (err) {
+          //console.debug("Filter error: " + err);
+          //console.debug("Filter error: " + JSON.stringify(folder));
+
+          //  Get all accounts
+          SysTrayX.Messaging.accounts = await browser.accounts.list();
+
+          // Check the filters for the accounts
+          SysTrayX.Messaging.accountFilterCheck();
+        }
       }
 
       if (mailFolderInfo.unreadMessageCount !== undefined) {
-        if (SysTrayX.Messaging.unread[folder.accountId] === undefined) {
-          SysTrayX.Messaging.unread[folder.accountId] = {};
+        if (SysTrayX.Messaging.unread[accountId] === undefined) {
+          SysTrayX.Messaging.unread[accountId] = {};
         }
 
-        if (SysTrayX.Messaging.new[folder.accountId] === undefined) {
-          SysTrayX.Messaging.new[folder.accountId] = {};
+        if (SysTrayX.Messaging.new[accountId] === undefined) {
+          SysTrayX.Messaging.new[accountId] = {};
         }
 
         if (
-          SysTrayX.Messaging.new[folder.accountId][folder.path] === undefined
+          SysTrayX.Messaging.new[accountId][path] === undefined
         ) {
-          SysTrayX.Messaging.new[folder.accountId][folder.path] = [];
+          SysTrayX.Messaging.new[accountId][path] = [];
         }
 
-        SysTrayX.Messaging.unread[folder.accountId][folder.path] =
+        SysTrayX.Messaging.unread[accountId][path] =
           mailFolderInfo.unreadMessageCount;
       }
     }
@@ -457,7 +655,16 @@ const sendMailCountPre115 = () => {
     let newCount = 0;
     SysTrayX.Messaging.filters.forEach((filter) => {
       const accountId = filter.accountId;
-      filter.folders.forEach((path) => {
+      filter.folders.forEach((storedFolder) => {
+        let path;
+        if (typeof(storedFolder) === "string") {
+          //  Filters pre TB 121
+          path = storedFolder;
+        } else {
+          //  Filters TB 121
+          path = storedFolder.path;
+        }
+
         if (SysTrayX.Messaging.unread[accountId] !== undefined) {
           if (SysTrayX.Messaging.unread[accountId][path] !== undefined) {
             unreadCount = unreadCount + SysTrayX.Messaging.unread[accountId][path];
@@ -495,37 +702,78 @@ const sendMailCount = async () => {
 
       //  Get both unread and new message count
 
-      for (const filter of SysTrayX.Messaging.filters) {
-        for (const path of filter.folders) {
-          const folder = {
-            accountId: filter.accountId,
-            path: path,
-          };
-
-          async function* listMessages(folder) {
-            let page = await messenger.messages.list(folder);
-            for (let message of page.messages) {
-              yield message;
+      if (SysTrayX.Info.browserInfo.majorVersion < 121) {
+        for (const filter of SysTrayX.Messaging.filters) {
+          for (const storedFolder of filter.folders) {
+            let listParam;
+            if (typeof(storedFolder) === "string") {
+              //  Filters pre TB 121
+              listParam = {
+                accountId: filter.accountId,
+                path: storedFolder,
+              };  
+            } else {
+              //  Filters TB 121
+              listParam = {
+                accountId: filter.accountId,
+                path: storedFolder.path,
+              };
             }
-          
-            while (page.id) {
-              page = await messenger.messages.continueList(page.id);
+
+            async function* listMessages(listParam) {
+              let page = await messenger.messages.list(listParam);
               for (let message of page.messages) {
                 yield message;
               }
+            
+              while (page.id) {
+                page = await messenger.messages.continueList(page.id);
+                for (let message of page.messages) {
+                  yield message;
+                }
+              }
+            }
+            
+            let messages = listMessages(listParam);
+            for await (let message of messages) {
+              if( message.new )
+              {
+                newCount = newCount + 1;
+              }
+
+              if( !message.read )
+              {
+                unreadCount = unreadCount + 1;
+              }
             }
           }
-          
-          let messages = listMessages(folder);
-          for await (let message of messages) {
-            if( message.new )
-            {
-              newCount = newCount + 1;
+        }
+      } else {
+
+        //  Unread and new count TB 121 and newer
+
+        for (const filter of SysTrayX.Messaging.filters) {
+          for (const folder of filter.folders) {
+            let mailFolderInfo = {};
+            try {
+              mailFolderInfo = await browser.folders.getFolderInfo(folder.mailFolderId);
+            } catch (err) {
+              //console.debug("Filter error: " + err);
+              //console.debug("Filter error: " + JSON.stringify(folder));
+      
+              //  Get all accounts
+              SysTrayX.Messaging.accounts = await browser.accounts.list();
+      
+              // Check the filters for the accounts
+              SysTrayX.Messaging.accountFilterCheck();
             }
 
-            if( !message.read )
-            {
-              unreadCount = unreadCount + 1;
+            if (mailFolderInfo.unreadMessageCount !== undefined) {
+              unreadCount = unreadCount + mailFolderInfo.unreadMessageCount;
+            }
+
+            if (mailFolderInfo.newMessageCount !== undefined) {
+              newCount = newCount + mailFolderInfo.newMessageCount;
             }
           }
         }
@@ -535,11 +783,18 @@ const sendMailCount = async () => {
       //  Only unread count
 
       for (const filter of SysTrayX.Messaging.filters) {
-        for (const path of filter.folders) {
-          const folder = {
-            accountId: filter.accountId,
-            path: path,
-          };
+        for (const storedFolder of filter.folders) {
+          let folderParam;
+          if (typeof(storedFolder) === "string") {
+            //  Filters pre TB 121
+            folderParam = {
+              accountId: filter.accountId,
+              path: storedFolder,
+            };
+          } else {
+            //  Filters TB 121
+            folderParam = storedFolder.mailFolderId;
+          }
     
           let mailFolderInfo = {};
           try {
@@ -549,7 +804,7 @@ const sendMailCount = async () => {
             //console.debug("Filter error: " + JSON.stringify(folder));
     
             //  Get all accounts
-            SysTrayX.Messaging.accounts = await browser.accounts.list(false);
+            SysTrayX.Messaging.accounts = await browser.accounts.list();
     
             // Check the filters for the accounts
             SysTrayX.Messaging.accountFilterCheck();

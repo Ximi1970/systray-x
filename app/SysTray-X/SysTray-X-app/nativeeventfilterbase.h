@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QAbstractNativeEventFilter>
 #include <QGlobalStatic>
+#include <QGuiApplication>
 
 /*
  *  Predefines

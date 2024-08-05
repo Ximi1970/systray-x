@@ -1,6 +1,11 @@
-/*.xpi
-/SysTray-X
-/app/SysTray-X/.qmake.stash
-/app/SysTray-X/SysTray-X.pro.user.*
-/bin
-/bin-*
+*.xpi
+SysTray-X
+app/SysTray-X/.qmake.stash
+app/SysTray-X/SysTray-X.pro.user.*
+bin
+bins
+bin-*
+tmp
+Test
+Old
+Doc

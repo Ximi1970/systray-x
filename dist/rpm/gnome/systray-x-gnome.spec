@@ -26,21 +26,42 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        VERSION
 BuildRequires:  unzip
 BuildRequires:  zip
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
+BuildRequires:  pkgconfig(Qt6Core)
+BuildRequires:  pkgconfig(Qt6Widgets)
+%else
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
-BuildRequires:  pkgconfig(x11)
-Requires:       gnome-shell-extension-appindicator
-%if 0%{?fedora_version} || 0%{?centos_version}
+%if 0%{?fedora_version}
 BuildRequires:  qt5-qtx11extras-devel
-Requires:       thunderbird >= 91
-Requires:       thunderbird < 121
 %else
 BuildRequires:  libqt5-qtx11extras-devel
-Requires:       MozillaThunderbird >= 91
-Requires:       MozillaThunderbird < 121
 %endif
+%endif
+BuildRequires:  pkgconfig(x11)
+%if 0%{?fedora_version}
+Requires:       thunderbird >= 91
+Requires:       thunderbird < 129
+%else
+Requires:       MozillaThunderbird >= 91
+Requires:       MozillaThunderbird < 129
+%endif
+%if 0%{?suse_version} > 1600 || 0%{?fedora_version} > 39
+%if 0%{?fedora_version}
+Requires:       qt6-qtwayland
+%else
+Requires:       qt6-wayland
+%endif
+%else
+%if 0%{?fedora_version}
+Requires:       qt5-qtwayland
+%else
+Requires:       libqt5-qtwayland
+%endif
+%endif
+Requires:       gnome-shell-extension-appindicator
 
 %description
 SysTray-X is a system tray extension for Thunderbird.

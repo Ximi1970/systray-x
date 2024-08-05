@@ -90,7 +90,11 @@ const QMap< Qt::Key, int > NativeEventFilterWin::m_virtual_key_map {
 /*
  *  Catch the key press
  */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 bool NativeEventFilterWin::nativeEventFilter( const QByteArray& eventType, void* message, long* result )
+#else
+bool NativeEventFilterWin::nativeEventFilter( const QByteArray& eventType, void* message, qintptr* result )
+#endif
 {
     Q_UNUSED( eventType )
     Q_UNUSED( result )
@@ -114,9 +118,13 @@ bool NativeEventFilterWin::nativeEventFilter( const QByteArray& eventType, void*
  */
 bool NativeEventFilterWin::connectShortcut( QKeySequence key_seq )
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Qt::Key key_code = Qt::Key( key_seq[ 0 ] & static_cast< int >( ~Qt::KeyboardModifierMask ) );
     Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ] & static_cast<int>( Qt::KeyboardModifierMask ) );
-
+#else
+    Qt::Key key_code = Qt::Key( key_seq[ 0 ].toCombined() & static_cast< int >( ~Qt::KeyboardModifierMask ) );
+    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ].toCombined() & static_cast<int>( Qt::KeyboardModifierMask ) );
+#endif
     return connectShortcut( key_code, key_modifiers );
 }
 

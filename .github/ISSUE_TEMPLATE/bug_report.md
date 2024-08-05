@@ -20,7 +20,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. Linux, Windows]
+ - OS / distribution: [e.g. Linux - openSuSE Leap 15.5, Windows 11]
  - Architecture (32 or 64 bit)
  - Desktop type / Window Manager (KDE, Xfce, Cinnamon, MATE etc)
  - Thunderbird version and arch (Tb xx.xx.x, 32 or 64 bit)

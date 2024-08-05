@@ -2,11 +2,11 @@ Source: systray-x
 Section: misc
 Priority: optional
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
-Build-Depends: debhelper (>= 4.1.16), zip, g++, libx11-dev, qt5-qmake, qtbase5-dev, qdbus-qt5, libqt5x11extras5-dev, libkf5notifications-dev, thunderbird
+Build-Depends: debhelper (>= 4.1.16), zip, g++, libx11-dev, qt5-qmake, qtbase5-dev, qtwayland5, qdbus-qt5, libqt5x11extras5-dev, libkf5notifications-dev, thunderbird
 
 Package: systray-x
 Architecture: any
-Depends: ${shlibs:Depends}, thunderbird (>= 1:91), thunderbird (< 1:121)
+Depends: ${shlibs:Depends}, thunderbird (>= 1:91), thunderbird (< 1:129)
 Description: SysTray-X is a system tray extension for Thunderbird (KDE).
  This version is optimized for the KDE desktop.
  The add-on uses the WebExtension API's to control an external system

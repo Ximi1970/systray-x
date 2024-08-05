@@ -48,8 +48,11 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
     m_minimize_type = PREF_MINIMIZE_METHOD_1;
     m_close_type = PREF_MINIMIZE_MAIN_TRAY_CLOSE_CHILDREN_WINDOWS;
     m_minimize_icon_type = PREF_MINIMIZE_TRAY_ICON;
-
     m_startup_type = PREF_START_DEFAULT;
+
+    m_window_positions_correction = false;
+    m_window_positions_correction_type = PREF_NO_CORRECTION;
+
     m_restore_window_positions = false;
 
     m_default_icon_type = PREF_DEFAULT_ICON_DEFAULT;
@@ -114,7 +117,14 @@ Preferences::Preferences( QObject *parent ) : QObject( parent )
 #if ( defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS ) )
     m_shortcuts_option = false;
 #else
-    m_shortcuts_option = true;
+    if( m_platform == "wayland" )
+    {
+        m_shortcuts_option = false;
+    }
+    else
+    {
+        m_shortcuts_option = true;
+    }
 #endif
 /*
     // XDG_SESSION_DESKTOP
@@ -435,6 +445,58 @@ void    Preferences::setStartupType( Preferences::StartupType startup_type )
          *  Tell the world the new preference
          */
         emit signalStartupTypeChange();
+    }
+}
+
+
+/*
+ *  Get the window positions correction state
+ */
+bool    Preferences::getWindowPositionsCorrection() const
+{
+    return m_window_positions_correction;
+}
+
+
+/*
+ *  Set the window positions correction state
+ */
+void    Preferences::setWindowPositionsCorrection( bool state )
+{
+    if( m_window_positions_correction != state )
+    {
+        m_window_positions_correction = state;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalWindowPositionsCorrectionChange();
+    }
+}
+
+
+/*
+ *  Get the window positions correction type
+ */
+Preferences::WindowPositionsCorrectionType Preferences::getWindowPositionsCorrectionType() const
+{
+    return m_window_positions_correction_type;
+}
+
+
+/*
+ *  Set the minimize type.
+ */
+void    Preferences::setWindowPositionsCorrectionType( WindowPositionsCorrectionType window_positions_correction_type )
+{
+    if( m_window_positions_correction_type != window_positions_correction_type)
+    {
+        m_window_positions_correction_type = window_positions_correction_type;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalWindowPositionsCorrectionTypeChange();
     }
 }
 

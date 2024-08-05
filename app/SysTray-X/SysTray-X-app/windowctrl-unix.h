@@ -341,6 +341,13 @@ class WindowCtrlUnix : public QObject
          */
         void    signalPositions( QList< QPoint > positions );
 
+    protected:
+
+        /**
+         * @brief m_pref. Pointer to the preferences storage.
+         */
+        Preferences*    m_pref;
+
    private:
 
         /**

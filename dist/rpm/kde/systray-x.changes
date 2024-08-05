@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Tue Apr 27 16:00:00 UTC 2024 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.9
+
+    - Qt 6 fixes
+    - TB 121+ fixes
+    - Added window positions correction option
+    - Bugfixes
+
+-------------------------------------------------------------------
 Sun Dec 10 13:24:00 UTC 2023 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.8

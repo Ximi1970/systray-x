@@ -154,6 +154,31 @@
     "description": "Start application in tray"
   },
 
+  "windows_positions_correction_options": {
+    "message": "Τοποθεσία",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "Προσαρμόστε τις θέσεις των παραθύρων",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "Καμία διόρθωση γραμμής τίτλου",
+    "description": "No titlebar correction"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "Προσθήκη μεγέθους γραμμής τίτλου",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "Αφαιρέστε το μέγεθος της γραμμής τίτλου",
+    "description": "Subtract titlebar size"
+  },
+
   "restore_positions_on_startup": {
     "message": "Επαναφορά θέσεων παραθύρου κατά την εκκίνηση",
     "description": "Restore the window positions on startup"

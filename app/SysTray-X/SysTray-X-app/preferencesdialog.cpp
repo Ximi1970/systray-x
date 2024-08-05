@@ -27,7 +27,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->setupUi( this );
 
     /*
-     *  Store link adn preferences
+     *  Store link and preferences
      */
     m_link = link;
     m_pref = pref;
@@ -56,7 +56,7 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->minimizeMethod2RadioButton->hide();
 
     /*
-     *  Set minimize type button Ids
+     *  Set minimize icon type button Ids
      */
     m_ui->minimizeIconTypeGroup->setId( m_ui->defaultMinimizeIconRadioButton, Preferences::PREF_DEFAULT_MINIMIZE_ICON);
     m_ui->minimizeIconTypeGroup->setId( m_ui->minimizeTrayIconRadioButton, Preferences::PREF_MINIMIZE_TRAY_ICON );
@@ -68,9 +68,17 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
     m_ui->startupTypeGroup->setId( m_ui->startMinimizedRadioButton, Preferences::PREF_START_MINIMIZED);
     m_ui->startupTypeGroup->setId( m_ui->startDockedRadioButton, Preferences::PREF_START_DOCKED );
 
+    /*
+     *  Set position button Ids
+     */
+    m_ui->positionGroup->setId( m_ui->noTitlebarCorrectionRadioButton, Preferences::PREF_NO_CORRECTION);
+    m_ui->positionGroup->setId( m_ui->addTitlebarCorrectionRadioButton, Preferences::PREF_ADD_CORRECTION );
+    m_ui->positionGroup->setId( m_ui->subtractTitlebarCorrectionRadioButton, Preferences::PREF_SUBTRACT_CORRECTION );
+
 #ifdef Q_OS_WIN
 
     m_ui->hideDefaultIconCheckBox->hide();
+    m_ui->positionGroupBox->hide();
     m_ui->restorePositionscheckBox->hide();
 
 #endif
@@ -82,18 +90,16 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 #endif
 
 #if defined( Q_OS_UNIX ) && defined( NO_SHORTCUTS )
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 
-    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
-    m_ui->tabWidget->setTabVisible( index, false );
+    hideShortcutsTab();
 
 #else
 
-    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
-    m_ui->tabWidget->setTabEnabled( index, false );
-    m_ui->tabWidget->setStyleSheet( "QTabBar::tab::disabled { width: 0; height: 0; margin: 0; padding: 0; border: none; }" );
+    if( !m_pref->getShortcutsOption() )
+    {
+        hideShortcutsTab();
+    }
 
-#endif
 #endif
 
     /*
@@ -218,6 +224,26 @@ PreferencesDialog::PreferencesDialog( SysTrayXLink *link, Preferences *pref, QWi
 
 
 /*
+ *  Hide the shortcuts tab
+ */
+void PreferencesDialog::hideShortcutsTab()
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabVisible( index, false );
+
+#else
+
+    int index = m_ui->tabWidget->indexOf( m_ui->tabShortcuts );
+    m_ui->tabWidget->setTabEnabled( index, false );
+    m_ui->tabWidget->setStyleSheet( "QTabBar::tab::disabled { width: 0; height: 0; margin: 0; padding: 0; border: none; }" );
+
+#endif
+}
+
+
+/*
  *  Handle the language change event
  */
 void PreferencesDialog::changeEvent( QEvent *event )
@@ -287,6 +313,24 @@ void    PreferencesDialog::setMinimizeIconType( Preferences::MinimizeIconType mi
 void    PreferencesDialog::setStartupType(  Preferences::StartupType startup_type )
 {
     ( m_ui->startupTypeGroup->button( startup_type ) )->setChecked( true );
+}
+
+
+/*
+ *  Set the positions correction state
+ */
+void    PreferencesDialog::setWindowPositionsCorrection( bool state )
+{
+    m_ui->correctWinPosCheckBox->setChecked( state );
+}
+
+
+/*
+ *  Set the position correction
+ */
+void    PreferencesDialog::setWindowPositionsCorrectionType( Preferences::WindowPositionsCorrectionType position_correction )
+{
+    ( m_ui->positionGroup->button( position_correction ) )->setChecked( true );
 }
 
 
@@ -613,9 +657,11 @@ void    PreferencesDialog::slotAccept()
 
     m_pref->setMinimizeType( static_cast< Preferences::MinimizeType >( m_ui->minimizeTypeGroup->checkedId() ) );
     m_pref->setMinimizeIconType( static_cast< Preferences::MinimizeIconType >( m_ui->minimizeIconTypeGroup->checkedId() ) );
-    m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
-    m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setCloseType( static_cast< Preferences::CloseType >( m_ui->closeTypeGroup->checkedId() ) );
+    m_pref->setStartupType( static_cast< Preferences::StartupType >( m_ui->startupTypeGroup->checkedId() ) );
+    m_pref->setWindowPositionsCorrection( m_ui->correctWinPosCheckBox->isChecked() );
+    m_pref->setWindowPositionsCorrectionType( static_cast< Preferences::WindowPositionsCorrectionType >( m_ui->positionGroup->checkedId() ) );
+    m_pref->setRestoreWindowPositions( m_ui->restorePositionscheckBox->isChecked() );
     m_pref->setInvertIcon( m_ui->invertIconCheckBox->isChecked() );
 
     m_pref->setShowNumber( m_ui->showNumberCheckBox->isChecked() );
@@ -681,9 +727,11 @@ void    PreferencesDialog::slotReject()
 
     setMinimizeType( m_pref->getMinimizeType() );
     setMinimizeIconType( m_pref->getMinimizeIconType() );
-    setStartupType( m_pref->getStartupType() );
-    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setCloseType( m_pref->getCloseType() );
+    setStartupType( m_pref->getStartupType() );
+    setWindowPositionsCorrection( m_pref->getWindowPositionsCorrection() );
+    setWindowPositionsCorrectionType( m_pref->getWindowPositionsCorrectionType() );
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
     setInvertIcon( m_pref->getInvertIcon() );
 
     setShowNumber( m_pref->getShowNumber() );
@@ -826,24 +874,6 @@ void    PreferencesDialog::slotDebugChange()
 
 
 /*
- *  Handle the startup type change signal
- */
-void    PreferencesDialog::slotStartupTypeChange()
-{
-    setStartupType( m_pref->getStartupType() );
-}
-
-
-/*
- *  Handle the restore window positions change signal
- */
-void    PreferencesDialog::slotRestoreWindowPositionsChange()
-{
-    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
-}
-
-
-/*
  *  Handle the minimize type change signal
  */
 void    PreferencesDialog::slotMinimizeTypeChange()
@@ -867,6 +897,42 @@ void    PreferencesDialog::slotMinimizeIconTypeChange()
 void    PreferencesDialog::slotCloseTypeChange()
 {
     setCloseType( m_pref->getCloseType() );
+}
+
+
+/*
+ *  Handle the startup type change signal
+ */
+void    PreferencesDialog::slotStartupTypeChange()
+{
+    setStartupType( m_pref->getStartupType() );
+}
+
+
+/*
+ *  Handle the window positions correction change signal
+ */
+void    PreferencesDialog::slotWindowPositionsCorrectionChange()
+{
+    setWindowPositionsCorrection( m_pref->getWindowPositionsCorrection() );
+}
+
+
+/*
+ *  Handle the window positions correction type change signal
+ */
+void    PreferencesDialog::slotWindowPositionsCorrectionTypeChange()
+{
+    setWindowPositionsCorrectionType( m_pref->getWindowPositionsCorrectionType() );
+}
+
+
+/*
+ *  Handle the restore window positions change signal
+ */
+void    PreferencesDialog::slotRestoreWindowPositionsChange()
+{
+    setRestoreWindowPositions( m_pref->getRestoreWindowPositions() );
 }
 
 
@@ -1087,6 +1153,7 @@ void    PreferencesDialog::slotTruncateShowHideShortcut()
 {
     QKeySequence key_seq = m_ui->showHideKeySequenceEdit->keySequence();
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     /*
      *  Workaround for a Qt5 bug in QKeySequenceEdit object, Meta/Win key is not handled correctly.
      */
@@ -1101,6 +1168,13 @@ void    PreferencesDialog::slotTruncateShowHideShortcut()
     }
 
     QKeySequence shortcut( value );
+
+#else
+
+    QKeySequence shortcut( key_seq[ 0 ] );
+
+#endif
+
     m_ui->showHideKeySequenceEdit->setKeySequence( shortcut );
 }
 

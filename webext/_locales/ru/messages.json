@@ -154,6 +154,31 @@
     "description": "Start application in tray"
   },
 
+  "windows_positions_correction_options": {
+    "message": "Позиция",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "Правильное расположение окон",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "No titlebar correction",
+    "description": "Без исправления названия"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "Добавить размер заголовка",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "Вычтите размер строки заголовка",
+    "description": "Subtract titlebar size"
+  },
+
   "restore_positions_on_startup": {
     "message": "Восстановить положение окон при запуске",
     "description": "Restore the window positions on startup"

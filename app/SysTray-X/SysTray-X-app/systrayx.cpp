@@ -122,6 +122,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalIconDataChange, m_pref_dialog, &PreferencesDialog::slotIconDataChange );
     connect( m_preferences, &Preferences::signalMinimizeTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeTypeChange );
     connect( m_preferences, &Preferences::signalMinimizeIconTypeChange, m_pref_dialog, &PreferencesDialog::slotMinimizeIconTypeChange );
+    connect( m_preferences, &Preferences::signalWindowPositionsCorrectionChange, m_pref_dialog, &PreferencesDialog::slotWindowPositionsCorrectionChange );
+    connect( m_preferences, &Preferences::signalWindowPositionsCorrectionTypeChange, m_pref_dialog, &PreferencesDialog::slotWindowPositionsCorrectionTypeChange );
     connect( m_preferences, &Preferences::signalStartupTypeChange, m_pref_dialog, &PreferencesDialog::slotStartupTypeChange );
     connect( m_preferences, &Preferences::signalRestoreWindowPositionsChange, m_pref_dialog, &PreferencesDialog::slotRestoreWindowPositionsChange );
     connect( m_preferences, &Preferences::signalCloseTypeChange, m_pref_dialog, &PreferencesDialog::slotCloseTypeChange );
@@ -151,7 +153,12 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
     connect( m_preferences, &Preferences::signalDebugChange, m_debug, &DebugWidget::slotDebugChange );
 
 #if defined( SHORTCUTS )
-    connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
+
+    if( m_preferences->getShortcutsOption() )
+    {
+        connect( m_preferences, &Preferences::signalShowHideShortcutChange, this, &SysTrayX::slotShowHideShortcutChange );
+    }
+
 #endif
 
     /*
@@ -192,7 +199,11 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 /*
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
-    m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
+
+    if( m_preferences->getShortcutsOption() )
+    {
+        m_preferences->setShowHideShortcut( QKeySequence( Qt::CTRL | Qt::Key_P ) );
+    }
 
     slotLoadLanguage( "en-US" );
     //slotLoadLanguage( "it" );
@@ -726,7 +737,7 @@ void    SysTrayX::slotLoadLanguage( QString locale )
         }
 
         QString locale_path = "SysTray-X."+ locale;
-        m_translator.load( locale_path, ":/languages/" );
+        (void)m_translator.load( locale_path, ":/languages/" );
 //        bool status = m_translator.load( locale_path, ":/languages/" );
 //        emit signalConsole( QString( "Language loaded %1").arg(status));
         qApp->installTranslator( &m_translator );

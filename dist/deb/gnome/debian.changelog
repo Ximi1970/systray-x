@@ -1,4 +1,13 @@
-systray-x-gnome (0.9.8-0) unstable; urgency=low
+systray-x-gnome (0.9.9-1) unstable; urgency=low
+
+  * Update to 0.9.9
+
+    - Qt 6 fixes
+    - TB 121+ fixes
+    - Added window positions correction option
+    - Bugfixes
+
+systray-x-gnome (0.9.8-1) unstable; urgency=low
 
   * Update to 0.9.8
 

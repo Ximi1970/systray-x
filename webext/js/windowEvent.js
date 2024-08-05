@@ -9,10 +9,11 @@
   var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
 
   // You probably already know what this does.
-  var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+//  var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 
   // A helpful class for listening to windows opening and closing.
   var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
+
 
   /**
    * This object is just what we're using to listen for toolbar clicks. The implementation

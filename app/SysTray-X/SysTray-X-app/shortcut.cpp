@@ -49,9 +49,13 @@ Shortcut::~Shortcut()
  */
 bool Shortcut::setShortcut( QKeySequence key_seq )
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Qt::Key key_code = Qt::Key( key_seq[ 0 ] & ~Qt::KeyboardModifierMask );
     Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ] & Qt::KeyboardModifierMask);
-
+#else
+    Qt::Key key_code = Qt::Key( key_seq[ 0 ].toCombined() & ~Qt::KeyboardModifierMask );
+    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ].toCombined() & Qt::KeyboardModifierMask);
+#endif
     return setShortcut( key_code, key_modifiers );
 }
 

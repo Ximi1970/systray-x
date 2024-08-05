@@ -9,7 +9,9 @@
 /*
  *  Qt includes
  */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QX11Info>
+#endif
 #include <QKeySequence>
 
 
@@ -22,7 +24,11 @@ const int NativeEventFilterX11::m_valid_mods_mask = ShiftMask | ControlMask | Mo
 /*
  *  Catch the key press
  */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void* message, long* result )
+#else
+bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void* message, qintptr* result )
+#endif
 {
     Q_UNUSED( eventType )
     Q_UNUSED( result )
@@ -48,9 +54,13 @@ bool NativeEventFilterX11::nativeEventFilter( const QByteArray& eventType, void*
  */
 bool NativeEventFilterX11::connectShortcut( QKeySequence key_seq )
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Qt::Key key_code = Qt::Key( key_seq[ 0 ] & static_cast< int >( ~Qt::KeyboardModifierMask ) );
     Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ] & static_cast<int>( Qt::KeyboardModifierMask ) );
-
+#else
+    Qt::Key key_code = Qt::Key( key_seq[ 0 ].toCombined() & static_cast< int >( ~Qt::KeyboardModifierMask ) );
+    Qt::KeyboardModifiers key_modifiers = Qt::KeyboardModifiers( key_seq[ 0 ].toCombined() & static_cast<int>( Qt::KeyboardModifierMask ) );
+#endif
     return connectShortcut( key_code, key_modifiers );
 }
 
@@ -127,7 +137,12 @@ bool NativeEventFilterX11::connectShortcut( Qt::Key key_code, Qt::KeyboardModifi
     /*
      *  Get the X11 display
      */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Display *display = QX11Info::display();
+#else
+    QNativeInterface::QX11Application *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    Display *display = x11App->display();
+#endif
 
     /*
      *  Get the final key code
@@ -153,7 +168,12 @@ bool NativeEventFilterX11::connectShortcut( Qt::Key key_code, Qt::KeyboardModifi
  */
 bool NativeEventFilterX11::disconnectShortcut()
 {
-    Display* display = QX11Info::display();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    Display *display = QX11Info::display();
+#else
+    QNativeInterface::QX11Application *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    Display *display = x11App->display();
+#endif
 
     /*
      *  Ungrab the key

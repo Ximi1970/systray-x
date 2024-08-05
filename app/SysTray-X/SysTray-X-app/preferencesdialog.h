@@ -58,6 +58,11 @@ class PreferencesDialog : public QDialog
     private:
 
         /**
+         * @brief hideShortcutsTab. Hide the shortcuts tab.
+         */
+        void hideShortcutsTab();
+
+        /**
          * @brief setDebug. Set the debug state.
          *
          *  @param state    The state.
@@ -84,6 +89,20 @@ class PreferencesDialog : public QDialog
          *  @param startup_type    The startup type.
          */
         void    setStartupType( Preferences::StartupType startup_type );
+
+        /**
+         * @brief setWindowPositionsCorrection. Set the window postions correction state.
+         *
+         *  @param state    The state.
+         */
+        void    setWindowPositionsCorrection( bool state );
+
+        /**
+         * @brief setWindowPositionsCorrectionType. Set the window positions correction type.
+         *
+         *  @param position_correction  The correction type.
+         */
+        void    setWindowPositionsCorrectionType( Preferences::WindowPositionsCorrectionType position_correction );
 
         /**
          * @brief setRestoreWindowPositions. Set the restore window positions state.
@@ -317,6 +336,16 @@ class PreferencesDialog : public QDialog
          * @brief slotStartupTypeChange. Slot for handling startup type change signals.
          */
         void    slotStartupTypeChange();
+
+        /**
+         * @brief slotWindowPositionsCorrectionChange. Slot for handling window positions correction change signals.
+         */
+        void    slotWindowPositionsCorrectionChange();
+
+        /**
+         * @brief slotWindowPositionsCorrectionTypeChange. Slot for handling window positions correction type change signals.
+         */
+        void    slotWindowPositionsCorrectionTypeChange();
 
         /**
          * @brief slotRestoreWindowPositionsChange. Slot for handling restore window positions change signals.
