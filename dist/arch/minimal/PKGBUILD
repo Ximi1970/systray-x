@@ -1,7 +1,7 @@
 # Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 
 pkgname=systray-x-minimal
-pkgver=0.9.9
+pkgver=0.9.10
 pkgrel=1
 epoch=1
 pkgdesc='A system tray extension for Thunderbird (Unity/XFCE/other)'
@@ -12,7 +12,7 @@ depends=(
   'qt6-base'
   'qt6-wayland'
   'thunderbird>=91'
-  'thunderbird<130'
+  'thunderbird<131'
 )
 makedepends=(
   'git'
