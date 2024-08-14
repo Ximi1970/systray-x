@@ -193,6 +193,11 @@ class SysTrayX : public QObject
          */
         void    slotShowHideShortcutChange();
 
+        /**
+         * @brief slotNewMessage. Handle a new message request.
+         */
+        void    slotNewMessage();
+
     private:
 
         /**
@@ -239,6 +244,7 @@ class SysTrayX : public QObject
          * @brief m_xxxx_action. Pointer to the menu actions.
          */
         QAction*    m_showhide_action;
+        QAction*    m_new_action;
         QAction*    m_pref_action;
         QAction*    m_about_action;
         QAction*    m_quit_action;

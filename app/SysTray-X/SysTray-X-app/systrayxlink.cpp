@@ -302,6 +302,26 @@ void    SysTrayXLink::sendPositions( QList< QPoint > positions )
 
 
 /*
+ *  Send a new message request.
+*/
+void    SysTrayXLink::sendNewMessage()
+{
+    QJsonObject newMessageObject;
+    newMessageObject.insert("newMessage", QJsonValue::fromVariant( "true" ) );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( newMessageObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )

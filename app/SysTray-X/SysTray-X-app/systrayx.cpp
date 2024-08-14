@@ -243,6 +243,10 @@ void    SysTrayX::createMenu()
     m_showhide_action->setIcon( QIcon( ":/files/icons/window-restore.png" ) );
     connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
 
+    m_new_action = new QAction(tr("&New message..."), this);
+    m_new_action->setIcon( QIcon( ":/files/icons/document-new.png" ) );
+    connect( m_new_action, &QAction::triggered, this, &SysTrayX::slotNewMessage );
+
     m_pref_action = new QAction(tr("&Preferences"), this);
     m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
     connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::slotShowDialog );
@@ -261,6 +265,8 @@ void    SysTrayX::createMenu()
     m_tray_icon_menu = new QMenu();
 
     m_tray_icon_menu->addAction( m_showhide_action );
+    m_tray_icon_menu->addSeparator();
+    m_tray_icon_menu->addAction( m_new_action );
     m_tray_icon_menu->addSeparator();
     m_tray_icon_menu->addAction( m_pref_action );
     m_tray_icon_menu->addAction( m_about_action );
@@ -784,6 +790,10 @@ void    SysTrayX::slotCloseApp()
     }
 }
 
+
+/*
+ *  Handle a show / hide shortcut change
+ */
 void    SysTrayX::slotShowHideShortcutChange()
 {
     if( m_show_hide_shortcut != nullptr )
@@ -796,4 +806,13 @@ void    SysTrayX::slotShowHideShortcutChange()
 
     m_show_hide_shortcut = new Shortcut( m_preferences->getShowHideShortcut(), this );
     connect( m_show_hide_shortcut, &Shortcut::activated, m_win_ctrl, &WindowCtrl::slotShowHide );
+}
+
+
+/*
+ *  Handle a new message request
+ */
+void    SysTrayX::slotNewMessage()
+{
+    m_link->sendNewMessage();
 }

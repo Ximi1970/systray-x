@@ -121,11 +121,16 @@ class SysTrayXLink : public QObject
         void    sendOptions();
 
         /**
-         * @brief sendPositions
+         * @brief sendPositions. Send the positions of the TB windows.
          *
          * @param positions     List of the positions of the TB windows
          */
         void    sendPositions( QList< QPoint > positions );
+
+        /**
+         * @brief sendNewMessage. Send a new message request.
+         */
+        void    sendNewMessage();
 
     private:
 
