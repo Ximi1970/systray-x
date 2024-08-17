@@ -424,6 +424,16 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "帐户和文件夹",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "新消息",
+    "description": "Header for the new message 'from' list"
+  },
+
   "shortcuts": {
     "message": "快捷键",
     "description": "Title for Shortcuts options"

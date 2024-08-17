@@ -24,7 +24,7 @@ SysTrayX.SaveOptions = {
         //  Find all selected folders
         const folders = Array.from(
           account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"]):not([id="account"])'
           )
         ).filter((folder) => folder.checked);
 
@@ -51,6 +51,25 @@ SysTrayX.SaveOptions = {
 
     await storage().set({
       filters: filters,
+    });
+
+    //
+    // Save new message from list
+    //
+    const newMessageCheckBoxes = treeBase.querySelectorAll(
+      'input[type="checkbox"][id="account"]'
+    );
+
+    let froms = [];
+    newMessageCheckBoxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        froms.push(checkbox.name)
+      }
+    });
+
+    //  Store new message from list
+    await storage().set({
+        newMessageFroms: froms,
     });
 
     //
@@ -394,6 +413,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setFilters,
         SysTrayX.RestoreOptions.onFiltersError
+      );
+
+    //
+    //  Restore new message froms
+    //
+    await storage()
+      .get("newMessageFroms")
+      .then(
+        SysTrayX.RestoreOptions.setNewMessageFroms,
+        SysTrayX.RestoreOptions.onNewMessageFromsError
       );
 
     //
@@ -1265,7 +1294,7 @@ SysTrayX.RestoreOptions = {
 
       const treeBase = document.getElementById("accountsTree");
       const accountsBoxes = treeBase.querySelectorAll(
-        'input[type="checkbox"][name*="account"]'
+        'input[type="checkbox"][name*="account"]:not([id="account"])'
       );
 
       let accounts = [];
@@ -1299,7 +1328,7 @@ SysTrayX.RestoreOptions = {
         );
         const checkboxes = Array.from(
           account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"]):not([id="account"])'
           )
         );
 
@@ -1330,6 +1359,30 @@ SysTrayX.RestoreOptions = {
 
   onFiltersError: function (error) {
     console.log(`Filters Error: ${error}`);
+  },
+
+  //
+  //  Restore new message froms callbacks
+  //
+  setNewMessageFroms: function (result) {
+    let froms = result.newMessageFroms || [];
+
+    const checkboxes = document
+      .getElementById("accountsTree")
+      .querySelectorAll('input[type="checkbox"][id="account"]');
+
+    froms.forEach((from) => {
+      checkboxes.forEach((checkbox) => {
+        if (from === checkbox.name)
+        {
+          checkbox.checked = true;
+        }
+      })
+    });
+  },
+
+  onNewMessageFromsError: function (error) {
+    console.log(`NewMessageFroms Error: ${error}`);
   },
 };
 

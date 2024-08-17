@@ -628,6 +628,16 @@ class Preferences : public QObject
         void setShowHideShortcut( QKeySequence key_seq );
 
         /**
+         * @brief getNewMessageFroms. Get the new message from list.
+         */
+        const QStringList& getNewMessageFroms() const;
+
+        /**
+         * @brief setNewMessageFroms. Set the new message from list.
+         */
+        void setNewMessageFroms( const QStringList& list );
+
+        /**
          * @brief getKdeIntegrationOption. Get the KDE integration option.
          *
          * @return     The state.
@@ -856,6 +866,11 @@ class Preferences : public QObject
          */
         void signalShowHideShortcutChange();
 
+        /**
+         * @brief signalNewMessageFromsChange. Signal the new message froms change.
+         */
+        void signalNewMessageFromsChange();
+
     private:
 
         /**
@@ -1076,6 +1091,11 @@ class Preferences : public QObject
          * @brief m_show_hide_shortcut. The show / hide shortcut key sequence.
          */
         QKeySequence m_show_hide_shortcut;
+
+        /**
+         * @brief m_new_message_froms. The new message froms list.
+         */
+        QStringList m_new_message_froms;
 
         /**
          * @brief m_kde_integration_option. KDE integration option.

@@ -161,6 +161,8 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
 
 #endif
 
+    connect( m_preferences, &Preferences::signalNewMessageFromsChange, this, &SysTrayX::slotNewMessageFromsChange );
+
     /*
      *  Connect link signals
      */
@@ -194,11 +196,15 @@ SysTrayX::SysTrayX( QObject *parent ) : QObject( parent )
      */
     getPreferences();
 
-    m_preferences->displayDebug();
-
 /*
+//    m_preferences->displayDebug();
     m_preferences->setBrowserVersion( "115.1.0" );
 //    m_preferences->setBrowserVersion( "102.2.3" );
+
+    QStringList list;
+    list.append( "ximi1" );
+    list.append( "ximi2" );
+    m_preferences->setNewMessageFroms( list );
 
     if( m_preferences->getShortcutsOption() )
     {
@@ -239,38 +245,89 @@ void    SysTrayX::getPreferences()
  */
 void    SysTrayX::createMenu()
 {
-    m_showhide_action = new QAction(tr("&Show/Hide"), this);
-    m_showhide_action->setIcon( QIcon( ":/files/icons/window-restore.png" ) );
-    connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
-
-    m_new_action = new QAction(tr("&New message..."), this);
-    m_new_action->setIcon( QIcon( ":/files/icons/document-new.png" ) );
-    connect( m_new_action, &QAction::triggered, this, &SysTrayX::slotNewMessage );
-
-    m_pref_action = new QAction(tr("&Preferences"), this);
-    m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
-    connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::slotShowDialog );
-
-    m_about_action = new QAction(tr("&About"), this);
-    m_about_action->setIcon( QIcon( ":/files/icons/help-about.png" ) );
-    connect( m_about_action, &QAction::triggered, this, &SysTrayX::slotAbout );
-
-    m_quit_action = new QAction( tr("&Quit"), this );
-    m_quit_action->setIcon( QIcon( ":/files/icons/window-close.png" ) );
-    connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
-
     /*
      *  Setup menu
      */
     m_tray_icon_menu = new QMenu();
 
+    /*
+     *  Show / hide
+     */
+    m_showhide_action = new QAction(tr("&Show/Hide"), this);
+    m_showhide_action->setIcon( QIcon( ":/files/icons/window-restore.png" ) );
+    connect( m_showhide_action, &QAction::triggered, m_win_ctrl, &WindowCtrl::slotShowHide );
+
     m_tray_icon_menu->addAction( m_showhide_action );
     m_tray_icon_menu->addSeparator();
-    m_tray_icon_menu->addAction( m_new_action );
-    m_tray_icon_menu->addSeparator();
+
+    /*
+     *  New message
+     */
+    QStringList froms = m_preferences->getNewMessageFroms();
+    if( froms.size() < 2 )
+    {
+        m_new_action = new QAction(tr("&New message..."), this);
+        m_new_action->setIcon( QIcon( ":/files/icons/document-new.png" ) );
+        m_new_action->setData(0);
+        connect( m_new_action, &QAction::triggered, this, &SysTrayX::slotNewMessage );
+
+        m_tray_icon_menu->addAction( m_new_action );
+        m_tray_icon_menu->addSeparator();
+    }
+    else
+    {
+        m_new_menu = new QMenu(tr("&New message..."), m_tray_icon_menu);
+        m_new_menu->setIcon( QIcon( ":/files/icons/document-new.png" ) );
+
+        m_new_action = new QAction(tr("&Default account"), this);
+        m_new_action->setIcon( QIcon( ":/files/icons/document-new.png" ) );
+        connect( m_new_action, &QAction::triggered, this, &SysTrayX::slotNewMessage );
+
+        m_new_menu->addAction( m_new_action );
+        m_new_menu->addSeparator();
+
+        for( int i = 0; i < froms.size(); ++i )
+        {
+            QAction* action = new QAction(froms.at( i ), this);
+            action->setIcon( QIcon( ":/files/icons/document-new.png" ) );
+            action->setData( i + 1 );
+            connect( action, &QAction::triggered, this, &SysTrayX::slotNewMessage );
+
+            m_new_actions.append(action);
+
+            m_new_menu->addAction( action );
+        }
+
+        m_tray_icon_menu->addMenu( m_new_menu );
+        m_tray_icon_menu->addSeparator();
+    }
+
+    /*
+     *  Preferences
+     */
+    m_pref_action = new QAction(tr("&Preferences"), this);
+    m_pref_action->setIcon( QIcon( ":/files/icons/gtk-preferences.png" ) );
+    connect( m_pref_action, &QAction::triggered, m_pref_dialog, &PreferencesDialog::slotShowDialog );
+
     m_tray_icon_menu->addAction( m_pref_action );
+
+    /*
+     *  About
+     */
+    m_about_action = new QAction(tr("&About"), this);
+    m_about_action->setIcon( QIcon( ":/files/icons/help-about.png" ) );
+    connect( m_about_action, &QAction::triggered, this, &SysTrayX::slotAbout );
+
     m_tray_icon_menu->addAction( m_about_action );
     m_tray_icon_menu->addSeparator();
+
+    /*
+     *  Quit
+     */
+    m_quit_action = new QAction( tr("&Quit"), this );
+    m_quit_action->setIcon( QIcon( ":/files/icons/window-close.png" ) );
+    connect( m_quit_action, &QAction::triggered, this, &SysTrayX::slotShutdown );
+
     m_tray_icon_menu->addAction( m_quit_action );
 }
 
@@ -814,5 +871,46 @@ void    SysTrayX::slotShowHideShortcutChange()
  */
 void    SysTrayX::slotNewMessage()
 {
-    m_link->sendNewMessage();
+    QStringList fromList = m_preferences->getNewMessageFroms();
+    int fromListIndex = ((QAction*)sender())->data().toInt() - 1;
+
+    if( fromListIndex < 0 )
+    {
+        if( fromList.size() == 1 )
+        {
+            m_link->sendNewMessage( fromList.at( 0 ) );
+        }
+        else
+        {
+            m_link->sendNewMessage( "" );
+        }
+
+    }
+    else
+    {
+        m_link->sendNewMessage( fromList.at( fromListIndex ) );
+    }
+}
+
+
+void    SysTrayX::slotNewMessageFromsChange()
+{
+    // Update the menu item
+    emit signalConsole("New message froms");
+
+    /*
+     *  Setup new menu
+     */
+    destroyMenu();
+    createMenu();
+
+    if( m_tray_icon != nullptr )
+    {
+        m_tray_icon->setContextMenu( m_tray_icon_menu );
+    }
+
+    if( m_kde_tray_icon != nullptr )
+    {
+        m_kde_tray_icon->setContextMenu( m_tray_icon_menu );
+    }
 }

@@ -130,7 +130,7 @@ class SysTrayXLink : public QObject
         /**
          * @brief sendNewMessage. Send a new message request.
          */
-        void    sendNewMessage();
+        void    sendNewMessage( const QString& from );
 
     private:
 

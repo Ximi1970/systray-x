@@ -94,6 +94,14 @@ body {
   padding: 10px 10px 10px 10px;
 }
 
+#accountsTreeHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 25em;
+  height: 2.2em;
+  margin-left: 10px
+}
+
 ul,
 #accountsTree {
   list-style-type: none;
@@ -106,6 +114,11 @@ ul,
   border-width: 1px;
   margin: 0;
   padding: 10px;
+}
+
+#account {
+  float: right;
+  margin-right: 40px;
 }
 
 /* Style the caret/arrow filler */

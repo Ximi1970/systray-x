@@ -424,6 +424,16 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Аккаунты и папки",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Новое сообщение",
+    "description": "Header for the new message 'from' list"
+  },
+
   "shortcuts": {
     "message": "Сочетания",
     "description": "Title for Shortcuts options"

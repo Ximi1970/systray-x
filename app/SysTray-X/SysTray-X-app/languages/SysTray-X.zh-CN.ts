@@ -512,27 +512,38 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="242"/>
+        <location filename="../systrayx.cpp" line="256"/>
         <source>&amp;Show/Hide</source>
         <translation>显示 / 隐藏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="246"/>
+        <location filename="../systrayx.cpp" line="269"/>
+        <location filename="../systrayx.cpp" line="279"/>
+        <source>&amp;New message...</source>
+        <translation>&amp;新消息...</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="282"/>
+        <source>&amp;Default account</source>
+        <translation>&amp;标准账户</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="308"/>
         <source>&amp;Preferences</source>
         <translation>首选项(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="250"/>
+        <location filename="../systrayx.cpp" line="317"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="254"/>
+        <location filename="../systrayx.cpp" line="327"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="683"/>
+        <location filename="../systrayx.cpp" line="746"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>

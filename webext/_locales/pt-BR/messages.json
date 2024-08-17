@@ -424,6 +424,16 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Contas e pastas",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nova mensagem",
+    "description": "Header for the new message 'from' list"
+  },
+
   "shortcuts": {
     "message": "Atalhos",
     "description": "Title for Shortcuts options"

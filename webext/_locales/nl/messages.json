@@ -424,6 +424,16 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Accounts en mappen",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nieuw bericht",
+    "description": "Header for the new message 'from' list"
+  },
+
   "shortcuts": {
     "message": "Snelkoppelingen",
     "description": "Title for Shortcuts options"

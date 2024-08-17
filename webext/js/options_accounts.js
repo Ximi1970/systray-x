@@ -125,6 +125,15 @@ SysTrayX.Accounts = {
           );
           typeLi.appendChild(typeText);
 
+          if (prop === "imap" || prop === "pop3") {
+            const typeInputAccount = document.createElement("input");
+            typeInputAccount.setAttribute("type", "checkbox");
+            typeInputAccount.setAttribute("id", "account");
+            typeInputAccount.setAttribute("name", accounts[prop][i].name);
+
+            typeLi.appendChild(typeInputAccount);
+          }
+
           //  Create a usable folder tree
           let folders = [];
 
@@ -206,14 +215,14 @@ SysTrayX.Accounts = {
       treeBase.appendChild(typeLi);
 
       //  Setup checkbox control
-      let checkboxes = treeBase.querySelectorAll('input[type="checkbox"]');
+      let checkboxes = treeBase.querySelectorAll('input[type="checkbox"]:not([id="account"])');
 
       for (let x = 0; x < checkboxes.length; x++) {
         checkboxes[x].addEventListener("change", function (e) {
           let parentNode = this.parentNode;
 
           const cbDescendants = parentNode.querySelectorAll(
-            'input[type="checkbox"]'
+            'input[type="checkbox"]:not([id="account"])'
           );
           for (let y = 0; y < cbDescendants.length; y++) {
             cbDescendants[y].checked = this.checked;

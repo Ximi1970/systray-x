@@ -198,6 +198,11 @@ class SysTrayX : public QObject
          */
         void    slotNewMessage();
 
+        /**
+         * @brief slotNewMessageFromsChange. Handle a new message froms change.
+         */
+        void    slotNewMessageFromsChange();
+
     private:
 
         /**
@@ -243,11 +248,14 @@ class SysTrayX : public QObject
         /**
          * @brief m_xxxx_action. Pointer to the menu actions.
          */
+        QMenu*      m_new_menu;
         QAction*    m_showhide_action;
         QAction*    m_new_action;
         QAction*    m_pref_action;
         QAction*    m_about_action;
         QAction*    m_quit_action;
+
+        QList< QAction* > m_new_actions;
 
         /**
          * @brief m_unread_mail. Number of unread mails

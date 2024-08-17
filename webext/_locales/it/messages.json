@@ -424,6 +424,16 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Account e cartelle",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nuovo messaggio",
+    "description": "Header for the new message 'from' list"
+  },
+
   "shortcuts": {
     "message": "Scorciatoie",
     "description": "Title for Shortcuts options"

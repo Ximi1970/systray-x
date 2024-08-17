@@ -455,6 +455,7 @@ SysTrayX.Messaging = {
         "closeApp",
         "closeAppArgs",
         "showHideShortcut",
+        "newMessageFroms",
       ])
       .then(
         SysTrayX.Messaging.sendPreferencesStorage,
@@ -500,6 +501,7 @@ SysTrayX.Messaging = {
     const closeApp = result.closeApp || "";
     const closeAppArgs = result.closeAppArgs || "";
     const showHideShortcut = result.showHideShortcut || "";
+    const newMessageFroms = result.newMessageFroms || [];
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
@@ -536,6 +538,7 @@ SysTrayX.Messaging = {
         closeApp,
         closeAppArgs,
         showHideShortcut,
+        newMessageFroms,
       },
     });
   },
@@ -573,6 +576,7 @@ SysTrayX.Link = {
   },
 
   receiveSysTrayXMessage: async function (response) {
+
     if (response["shutdown"]) {
       browser.windowEvent.onNewWindow.removeListener(
         SysTrayX.Messaging.onNewWindow
@@ -582,6 +586,19 @@ SysTrayX.Link = {
       );
 
       SysTrayX.Link.postSysTrayXMessage({ shutdown: "true" });
+    }
+
+    const newMessage = response["newMessage"];
+    if (newMessage !== undefined) {
+      if (newMessage === "")
+      {
+        var tab = await browser.compose.beginNew();
+      } else {
+        const details = {
+          from: newMessage
+        }
+        var tab = await browser.compose.beginNew(undefined,details);
+      }
     }
 
     const options = response["options"];

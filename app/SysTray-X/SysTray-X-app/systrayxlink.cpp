@@ -304,10 +304,10 @@ void    SysTrayXLink::sendPositions( QList< QPoint > positions )
 /*
  *  Send a new message request.
 */
-void    SysTrayXLink::sendNewMessage()
+void    SysTrayXLink::sendNewMessage( const QString& from )
 {
     QJsonObject newMessageObject;
-    newMessageObject.insert("newMessage", QJsonValue::fromVariant( "true" ) );
+    newMessageObject.insert("newMessage", QJsonValue::fromVariant( from ) );
 
     /*
      *  Store the new document
@@ -670,6 +670,8 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
     {
         bool debug = pref[ "debug" ].toString() == "true";
 
+        emit signalConsole( QString("Debug %1").arg( debug ) );
+
         /*
          *  Store the new debug state
          */
@@ -987,6 +989,24 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          *  Store the new shortcut
          */
         m_pref->setShowHideShortcut( QKeySequence::fromString( shortcut ) );
+    }
+
+    if( pref.contains( "newMessageFroms" ) && pref[ "newMessageFroms" ].isArray() )
+    {
+        QJsonArray froms = pref[ "newMessageFroms" ].toArray();
+
+        QStringList fromsList;
+        for( int i = 0 ; i < froms.size() ; ++i )
+        {
+            fromsList.append( froms.at( i ).toString());
+
+            emit signalConsole( QString("From %1").arg( froms.at( i ).toString() ) );
+        }
+
+        /*
+         *  Store the new message from list
+         */
+        m_pref->setNewMessageFroms( fromsList );
     }
 }
 
