@@ -670,8 +670,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
     {
         bool debug = pref[ "debug" ].toString() == "true";
 
-        emit signalConsole( QString("Debug %1").arg( debug ) );
-
         /*
          *  Store the new debug state
          */
@@ -999,8 +997,6 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
         for( int i = 0 ; i < froms.size() ; ++i )
         {
             fromsList.append( froms.at( i ).toString());
-
-            emit signalConsole( QString("From %1").arg( froms.at( i ).toString() ) );
         }
 
         /*

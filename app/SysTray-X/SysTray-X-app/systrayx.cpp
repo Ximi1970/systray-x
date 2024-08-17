@@ -895,9 +895,6 @@ void    SysTrayX::slotNewMessage()
 
 void    SysTrayX::slotNewMessageFromsChange()
 {
-    // Update the menu item
-    emit signalConsole("New message froms");
-
     /*
      *  Setup new menu
      */
