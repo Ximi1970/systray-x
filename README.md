@@ -13,6 +13,7 @@ The addon and system tray application can do:
 - minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
 - minimize on close
+- start a new message
 
 Warning:
 
