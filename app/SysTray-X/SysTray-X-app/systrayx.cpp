@@ -906,8 +906,13 @@ void    SysTrayX::slotNewMessageFromsChange()
         m_tray_icon->setContextMenu( m_tray_icon_menu );
     }
 
+#if defined( Q_OS_UNIX ) && defined( KDE_INTEGRATION )
+
     if( m_kde_tray_icon != nullptr )
     {
         m_kde_tray_icon->setContextMenu( m_tray_icon_menu );
     }
+
+#endif
+
 }
