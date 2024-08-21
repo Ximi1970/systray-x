@@ -126,12 +126,37 @@ SysTrayX.Accounts = {
           typeLi.appendChild(typeText);
 
           if (prop === "imap" || prop === "pop3") {
+            const typeDiv = document.createElement("div");
+
+            const typeInputAccount = document.createElement("input");
+            typeInputAccount.setAttribute("type", "checkbox");
+            typeInputAccount.setAttribute("id", "account");
+            typeInputAccount.setAttribute("name", accounts[prop][i].name);
+
+            typeDiv.innerHTML = typeInputAccount;
+
+            const typeButton = document.createElement("button");
+            typeButton.innerHTML = "&#9776;";
+
+            typeDiv.innerHTML += typeButton;
+
+            typeLi.appendChild(typeDiv);
+
+            /*
+            const typeMenu = document.createElement("kbd");
+            typeMenu.innerHTML="&#9776;"
+//            <kbd>&#9776;</kbd>
+            typeLi.appendChild(typeMenu);
+*/
+
+/*
             const typeInputAccount = document.createElement("input");
             typeInputAccount.setAttribute("type", "checkbox");
             typeInputAccount.setAttribute("id", "account");
             typeInputAccount.setAttribute("name", accounts[prop][i].name);
 
             typeLi.appendChild(typeInputAccount);
+*/
           }
 
           //  Create a usable folder tree
