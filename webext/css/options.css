@@ -97,7 +97,7 @@ body {
 #accountsTreeHeader {
   display: flex;
   justify-content: space-between;
-  width: 25em;
+  width: 32em;
   height: 2.2em;
   margin-left: 10px
 }
@@ -109,7 +109,7 @@ ul,
 
 /* Remove margins and padding from the parent ul */
 #accountsTree {
-  width: 25em;
+  width: 32em;
   border-style: solid;
   border-width: 1px;
   margin: 0;
