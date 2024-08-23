@@ -1,8 +1,17 @@
+systray-x-gnome (0.9.10-1) unstable; urgency=low
+
+  * Update to 0.9.10
+
+    - Bugfix: new mail indicator reset
+
 systray-x-gnome (0.9.9-1) unstable; urgency=low
 
   * Update to 0.9.9
 
     - Qt 6 fixes
+    - TB 121+ fixes
+    - Added window positions correction option
+    - Bugfixes
 
 systray-x-gnome (0.9.8-1) unstable; urgency=low
 

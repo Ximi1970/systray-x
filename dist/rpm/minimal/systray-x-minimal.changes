@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Aug  5 19:40:00 UTC 2024 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.10
+
+    - Bugfix: new mail indicator reset
+
+-------------------------------------------------------------------
 Tue Apr 27 16:00:00 UTC 2024 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.9
