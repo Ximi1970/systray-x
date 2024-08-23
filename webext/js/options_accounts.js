@@ -127,36 +127,52 @@ SysTrayX.Accounts = {
 
           if (prop === "imap" || prop === "pop3") {
             const typeDiv = document.createElement("div");
+            typeDiv.setAttribute("id", "accountContainer");
 
             const typeInputAccount = document.createElement("input");
             typeInputAccount.setAttribute("type", "checkbox");
             typeInputAccount.setAttribute("id", "account");
             typeInputAccount.setAttribute("name", accounts[prop][i].name);
 
-            typeDiv.innerHTML = typeInputAccount;
+            typeDiv.appendChild(typeInputAccount);
 
             const typeButton = document.createElement("button");
-            typeButton.innerHTML = "&#9776;";
+            typeButton.setAttribute("id", "accountMenu");
+            typeButton.innerHTML = " &#9776;";
+//            typeButton.onclick = alert("Hallo");
 
-            typeDiv.innerHTML += typeButton;
+            const handleClickEvent = (e) => {
+              e.preventDefault();
 
-            typeLi.appendChild(typeDiv);
+              const divAccountsFolders = document.getElementById("accountsFolders");
+              divAccountsFolders.setAttribute("style", "display: none");
+
+              const divAccountMenuDialog = document.getElementById("accountMenuDialog");
+              divAccountMenuDialog.removeAttribute("style");
+
+              // Do something
+            };
+
+
+            typeButton.onclick = handleClickEvent;
 
             /*
-            const typeMenu = document.createElement("kbd");
-            typeMenu.innerHTML="&#9776;"
-//            <kbd>&#9776;</kbd>
-            typeLi.appendChild(typeMenu);
+            const typeDivMenu = document.createElement("div");
+            typeDivMenu.setAttribute("id", "popup");
+            typeDivMenu.innerHTML = "Hallo world!"
 */
-
 /*
-            const typeInputAccount = document.createElement("input");
-            typeInputAccount.setAttribute("type", "checkbox");
-            typeInputAccount.setAttribute("id", "account");
-            typeInputAccount.setAttribute("name", accounts[prop][i].name);
-
-            typeLi.appendChild(typeInputAccount);
+<div id="popup">
+    <h2>Info <span title="click to close" class="close">X</span></h2>
+    <div class="content"></div>  
+</div>
 */
+
+
+
+            typeDiv.appendChild(typeButton);
+
+            typeLi.appendChild(typeDiv);
           }
 
           //  Create a usable folder tree
