@@ -138,11 +138,26 @@ SysTrayX.Accounts = {
 
             const typeButton = document.createElement("button");
             typeButton.setAttribute("id", "accountMenu");
+            typeButton.setAttribute("name", accounts[prop][i].name);
             typeButton.innerHTML = " &#9776;";
-//            typeButton.onclick = alert("Hallo");
 
             const handleClickEvent = (e) => {
               e.preventDefault();
+
+              // Construct the dialog
+              if (SysTrayX.Info.browserInfo.majorVersion < 102) {
+                const accountMenuvCard = document.getElementById("accountmenuvcard");
+                accountMenuvCard.setAttribute("style", "display: none");
+
+                const accountMenuStatNot = document.getElementById("accountmenustatnot");
+                accountMenuStatNot.setAttribute("style", "display: none");
+
+                const accountMenuRetRec = document.getElementById("accountmenureturnreceipt");
+                accountMenuRetRec.setAttribute("style", "display: none");
+              }
+
+              const divAccountMenuId = document.getElementById("accountMenuId");
+              divAccountMenuId.innerHTML = e.target.name;
 
               const divAccountsFolders = document.getElementById("accountsFolders");
               divAccountsFolders.setAttribute("style", "display: none");
@@ -153,21 +168,25 @@ SysTrayX.Accounts = {
               // Do something
             };
 
-
             typeButton.onclick = handleClickEvent;
 
-            /*
-            const typeDivMenu = document.createElement("div");
-            typeDivMenu.setAttribute("id", "popup");
-            typeDivMenu.innerHTML = "Hallo world!"
-*/
-/*
-<div id="popup">
-    <h2>Info <span title="click to close" class="close">X</span></h2>
-    <div class="content"></div>  
-</div>
-*/
+            // Setup the buttons of the account menu dialog
+            const handleClickBackEvent = (e) => {
+              e.preventDefault();
 
+              const divAccountsFolders = document.getElementById("accountsFolders");
+              divAccountsFolders.removeAttribute("style");
+
+              const divAccountMenuDialog = document.getElementById("accountMenuDialog");
+              divAccountMenuDialog.setAttribute("style", "display: none");
+            }
+
+            const accountMenuBack = document.getElementById("accountMenuBack");
+            accountMenuBack.onclick = handleClickBackEvent;
+            
+
+//            const accountMenuClear = document.getElementById("accountMenuClear");
+//            const accountMenuSave = document.getElementById("accountMenuSave");
 
 
             typeDiv.appendChild(typeButton);

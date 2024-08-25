@@ -86,12 +86,30 @@ body {
 #newindicatorselect,
 #storageselect,
 #startappselect,
+#accountmenudialog1,
+#accountmenudialog2,
 #closeappselect {
   width: 25em;
   border-style: solid;
   border-width: 1px;
   margin: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
+}
+
+#accountmenudialog1 td:nth-child(1) {
+  width: 7em;
+}
+
+#accountmenudialog1 td:nth-child(2) {
+  width: 18em;
+}
+
+#accountmenudialog1 input {
+  width: 100%;
+}
+
+#accountmenudialog1:input {
+  width: 100%
 }
 
 #accountsTreeHeader {

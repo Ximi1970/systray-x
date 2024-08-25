@@ -728,7 +728,129 @@
         </div>
 
         <div id="accountMenuDialog" style="display: none">
-          Hello world!
+          <table id="accountmenudialog1">
+            <caption>
+              <div style="display: flex; flex-direction: row">
+                <h4>__MSG_accounts_defaults__</h4>
+                <h4>&nbsp;:&nbsp;</h4>
+                <h4 id="accountMenuId">x@y</h4>
+              </div>
+            </caption>
+            <tr id="accountmenusubject">
+              <td>
+                <label>__MSG_accounts_defaults_subject__</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="accountmenusubject"
+                  id="accountMenuSubjectInput"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr id="accountmenucc">
+              <td>
+                <label for="accountMenuCcInput" id="accountMenuCcInputLabel">
+                  __MSG_accounts_defaults_cc__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenucc"
+                  id="accountMenuCcInput"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr id="accountmenubcc">
+              <td>
+                <label for="accountMenuBccInput" id="accountMenuBccInputLabel">
+                  __MSG_accounts_defaults_bcc__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenubcc"
+                  id="accountMenuBccInput"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr id="accountmenureplyto">
+              <td>
+                <label for="accountMenuReplyToInput" id="accountMenuReplyToInputLabel">
+                  __MSG_accounts_defaults_replyto__
+                </label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="accountmenureplyto"
+                  id="accountMenuReplyToInput"
+                  value=""
+                />
+              </td>
+            </tr>
+          </table>
+          <table id="accountmenudialog2">
+            <tr id="accountmenupgpkey">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenupgpkey"
+                id="accountMenuPgpKey"
+                value=""
+              />
+              <label for="accountMenuPgpKey" id="accountMenuPgpKeyLabel">
+                __MSG_accounts_defaults_pgp_key__
+              </label>
+            </td>
+            <tr id="accountmenuvcard">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenuvcard"
+                id="accountMenuVCard"
+                value=""
+              />
+              <label for="accountMenuVCard" id="accountMenuVCardLabel">
+                __MSG_accounts_defaults_vcard__
+              </label>
+            </td>
+            <tr id="accountmenustatnot">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenustatnot"
+                id="accountMenuStatNot"
+                value=""
+              />
+              <label for="accountMenuStatNot" id="accountMenuStatNotLabel">
+                __MSG_accounts_defaults_stat_not__
+              </label>
+            </td>
+            <tr id="accountmenureturnreceipt">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenureturnreceipt"
+                id="accountMenuReturnReceipt"
+                value=""
+              />
+              <label for="accountMenuReturnReceipt" id="accountMenuReturnReceiptLabel">
+                __MSG_accounts_defaults_return_receipt__
+              </label>
+            </td>
+          </table>
+
+          <div>
+            <button id="accountMenuBack">__MSG_accounts_defaults_back__</button>
+            <button id="accountMenuClear">__MSG_accounts_defaults_clear__</button>
+            <button id="accountMenuSave">__MSG_accounts_defaults_save__</button>
+          </div>
         </div>
 
         <br />
