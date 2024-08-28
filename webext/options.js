@@ -1298,11 +1298,7 @@ SysTrayX.RestoreOptions = {
   //
   setFilters: function (result) {
     let filters = result.filters || undefined;
-/*
-    const accounts = document
-      .getElementById("accountsTree")
-      .querySelectorAll('input[type="checkbox"][name*="account"]');
-*/
+
     //  No filters stored?
     if (filters === undefined || filters.length === 0) {
       //  Create default filters
