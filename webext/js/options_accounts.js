@@ -166,9 +166,6 @@ SysTrayX.Accounts = {
 
               // Restore saved data
               const defaults = SysTrayX.Settings.newMessageDefaults[SysTrayX.Settings.activeFrom];
-
-              console.debug("Defaults restore: " + JSON.stringify(defaults));
-
               if (defaults !== undefined)
               {
                 accountMenuRepInput.value = defaults.replyTo ?? "";

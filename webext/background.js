@@ -605,8 +605,6 @@ SysTrayX.Link = {
       } else {
         const newMessageDefaults = SysTrayX.newMessageDefaults[newMessage] ?? undefined;
 
-        console.debug("PgpKey type: " + typeof(newMessageDefaults.pgpKey));
-
         let details = {};
         if (newMessageDefaults !== undefined)
         {

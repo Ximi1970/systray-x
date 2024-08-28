@@ -73,10 +73,6 @@ SysTrayX.SaveOptions = {
     });
 
     //  Store new message defaults list
-
-
-    console.debug("Defaults store: " + JSON.stringify(SysTrayX.Settings.newMessageDefaults));
-
     await storage().set({
       newMessageDefaults: JSON.stringify(SysTrayX.Settings.newMessageDefaults),
     });
