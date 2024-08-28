@@ -736,16 +736,35 @@
                 <h4 id="accountMenuId">x@y</h4>
               </div>
             </caption>
-            <tr id="accountmenusubject">
+            <tr id="accountmenureplyto">
               <td>
-                <label>__MSG_accounts_defaults_subject__</label>
+                <label for="accountMenuReplyToInput" id="accountMenuReplyToInputLabel">
+                  __MSG_accounts_defaults_replyto__
+                </label>
               </td>
               <td>
                 <input
                   type="text"
-                  name="accountmenusubject"
-                  id="accountMenuSubjectInput"
+                  name="accountmenureplyto"
+                  id="accountMenuReplyToInput"
                   value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
+                />
+              </td>
+            </tr>
+            <tr id="accountmenuto">
+              <td>
+                <label for="accountMenuToInput" id="accountMenuToInputLabel">
+                  __MSG_accounts_defaults_to__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenuto"
+                  id="accountMenuToInput"
+                  value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
                 />
               </td>
             </tr>
@@ -761,6 +780,7 @@
                   name="accountmenucc"
                   id="accountMenuCcInput"
                   value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
                 />
               </td>
             </tr>
@@ -776,22 +796,33 @@
                   name="accountmenubcc"
                   id="accountMenuBccInput"
                   value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
                 />
               </td>
             </tr>
-            <tr id="accountmenureplyto">
+            <tr id="accountmenusubject">
               <td>
-                <label for="accountMenuReplyToInput" id="accountMenuReplyToInputLabel">
-                  __MSG_accounts_defaults_replyto__
-                </label>
+                <label>__MSG_accounts_defaults_subject__</label>
               </td>
               <td>
                 <input
                   type="text"
-                  name="accountmenureplyto"
-                  id="accountMenuReplyToInput"
+                  name="accountmenusubject"
+                  id="accountMenuSubjectInput"
                   value=""
                 />
+              </td>
+            </tr>
+            <tr id="accountmenubody">
+              <td>
+                <label>__MSG_accounts_defaults_body__</label>
+              </td>
+              <td>
+                <textarea
+                  id="accountMenuBodyTextArea"
+                  rows="8"
+                >
+                </textarea>
               </td>
             </tr>
           </table>
@@ -801,10 +832,10 @@
                 <input
                 type="checkbox"
                 name="accountmenupgpkey"
-                id="accountMenuPgpKey"
+                id="accountMenuPgpKeyChk"
                 value=""
               />
-              <label for="accountMenuPgpKey" id="accountMenuPgpKeyLabel">
+              <label for="accountMenuPgpKeyChk" id="accountMenuPgpKeyLabel">
                 __MSG_accounts_defaults_pgp_key__
               </label>
             </td>
@@ -813,10 +844,10 @@
                 <input
                 type="checkbox"
                 name="accountmenuvcard"
-                id="accountMenuVCard"
+                id="accountMenuVCardChk"
                 value=""
               />
-              <label for="accountMenuVCard" id="accountMenuVCardLabel">
+              <label for="accountMenuVCardChk" id="accountMenuVCardLabel">
                 __MSG_accounts_defaults_vcard__
               </label>
             </td>
@@ -825,10 +856,10 @@
                 <input
                 type="checkbox"
                 name="accountmenustatnot"
-                id="accountMenuStatNot"
+                id="accountMenuStatNotChk"
                 value=""
               />
-              <label for="accountMenuStatNot" id="accountMenuStatNotLabel">
+              <label for="accountMenuStatNotChk" id="accountMenuStatNotLabel">
                 __MSG_accounts_defaults_stat_not__
               </label>
             </td>
@@ -837,10 +868,10 @@
                 <input
                 type="checkbox"
                 name="accountmenureturnreceipt"
-                id="accountMenuReturnReceipt"
+                id="accountMenuReturnReceiptChk"
                 value=""
               />
-              <label for="accountMenuReturnReceipt" id="accountMenuReturnReceiptLabel">
+              <label for="accountMenuReturnReceiptChk" id="accountMenuReturnReceiptLabel">
                 __MSG_accounts_defaults_return_receipt__
               </label>
             </td>
@@ -849,7 +880,7 @@
           <div>
             <button id="accountMenuBack">__MSG_accounts_defaults_back__</button>
             <button id="accountMenuClear">__MSG_accounts_defaults_clear__</button>
-            <button id="accountMenuSave">__MSG_accounts_defaults_save__</button>
+            <button id="accountMenuAccept">__MSG_accounts_defaults_accept__</button>
           </div>
         </div>
 

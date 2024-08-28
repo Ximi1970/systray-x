@@ -141,17 +141,77 @@ SysTrayX.Accounts = {
             typeButton.setAttribute("name", accounts[prop][i].name);
             typeButton.innerHTML = " &#9776;";
 
+            // Get the divs
+            const divAccountsFolders = document.getElementById("accountsFolders");
+            const divAccountMenuDialog = document.getElementById("accountMenuDialog");
+
+            // Get the elements
+            const accountMenuRepInput = document.getElementById("accountMenuReplyToInput");
+            const accountMenuToInput = document.getElementById("accountMenuToInput");
+            const accountMenuCcInput = document.getElementById("accountMenuCcInput");
+            const accountMenuBccInput = document.getElementById("accountMenuBccInput");
+            const accountMenuSubInput = document.getElementById("accountMenuSubjectInput");
+
+            const accountMenuBodyTextArea = document.getElementById("accountMenuBodyTextArea");
+            
+            const accountMenuPgpKeyCheckbox = document.getElementById("accountMenuPgpKeyChk");
+            const accountMenuVCardCheckbox = document.getElementById("accountMenuVCardChk");
+            const accountMenuStatNotCheckbox = document.getElementById("accountMenuStatNotChk");
+            const accountMenuRetRecCheckbox = document.getElementById("accountMenuReturnReceiptChk");
+
             const handleClickEvent = (e) => {
               e.preventDefault();
 
-              // Construct the dialog
-              if (SysTrayX.Info.browserInfo.majorVersion < 102) {
-                const accountMenuvCard = document.getElementById("accountmenuvcard");
-                accountMenuvCard.setAttribute("style", "display: none");
+              SysTrayX.Settings.activeFrom = e.target.name;
 
+              // Restore saved data
+              const defaults = SysTrayX.Settings.newMessageDefaults[SysTrayX.Settings.activeFrom];
+
+              console.debug("Defaults restore: " + JSON.stringify(defaults));
+
+              if (defaults !== undefined)
+              {
+                accountMenuRepInput.value = defaults.replyTo ?? "";
+                accountMenuToInput.value = defaults.to ?? "";
+                accountMenuCcInput.value = defaults.cc ?? "";
+                accountMenuBccInput.value = defaults.bcc ?? "";
+                accountMenuSubInput.value = defaults.subject ?? "";
+
+                accountMenuBodyTextArea.value = defaults.body ?? "";
+
+                accountMenuPgpKeyCheckbox.checked = defaults.pgpKey ?? false;
+                accountMenuVCardCheckbox.checked = defaults.vCard ?? false;
+                accountMenuStatNotCheckbox.checked = defaults.statNot ?? false;
+                accountMenuRetRecCheckbox.checked = defaults.retRec ?? false;
+              } else {
+                accountMenuRepInput.value = "";
+                accountMenuToInput.value = "";
+                accountMenuCcInput.value = "";
+                accountMenuBccInput.value = "";
+                accountMenuSubInput.value = "";
+
+                accountMenuBodyTextArea.value = "";
+
+                accountMenuPgpKeyCheckbox.checked = false;
+                accountMenuVCardCheckbox.checked = false;
+                accountMenuStatNotCheckbox.checked = false;
+                accountMenuRetRecCheckbox.checked = false;
+              }
+
+              // Construct the dialog
+
+              // Not working...
+              const accountMenuPgpKey = document.getElementById("accountmenupgpkey");
+              accountMenuPgpKey.setAttribute("style", "display: none");
+              const accountMenuVCard = document.getElementById("accountmenuvcard");
+              accountMenuVCard.setAttribute("style", "display: none");
+
+              // TB version depending
+              if (SysTrayX.Info.browserInfo.majorVersion < 102) {
+                const accountMenuVCard = document.getElementById("accountmenuvcard");
+                accountMenuVCard.setAttribute("style", "display: none");
                 const accountMenuStatNot = document.getElementById("accountmenustatnot");
                 accountMenuStatNot.setAttribute("style", "display: none");
-
                 const accountMenuRetRec = document.getElementById("accountmenureturnreceipt");
                 accountMenuRetRec.setAttribute("style", "display: none");
               }
@@ -159,39 +219,76 @@ SysTrayX.Accounts = {
               const divAccountMenuId = document.getElementById("accountMenuId");
               divAccountMenuId.innerHTML = e.target.name;
 
-              const divAccountsFolders = document.getElementById("accountsFolders");
               divAccountsFolders.setAttribute("style", "display: none");
-
-              const divAccountMenuDialog = document.getElementById("accountMenuDialog");
               divAccountMenuDialog.removeAttribute("style");
-
-              // Do something
             };
 
             typeButton.onclick = handleClickEvent;
+            typeDiv.appendChild(typeButton);
+
+            typeLi.appendChild(typeDiv);
 
             // Setup the buttons of the account menu dialog
             const handleClickBackEvent = (e) => {
               e.preventDefault();
 
-              const divAccountsFolders = document.getElementById("accountsFolders");
               divAccountsFolders.removeAttribute("style");
-
-              const divAccountMenuDialog = document.getElementById("accountMenuDialog");
               divAccountMenuDialog.setAttribute("style", "display: none");
+
+              SysTrayX.Settings.activeFrom = undefined;
             }
 
             const accountMenuBack = document.getElementById("accountMenuBack");
             accountMenuBack.onclick = handleClickBackEvent;
-            
 
-//            const accountMenuClear = document.getElementById("accountMenuClear");
-//            const accountMenuSave = document.getElementById("accountMenuSave");
+            const handleClickClearEvent = (e) => {
+              e.preventDefault();
 
+              accountMenuRepInput.value = "";
+              accountMenuToInput.value = "";
+              accountMenuCcInput.value = "";
+              accountMenuBccInput.value = "";
+              accountMenuSubInput.value = "";
+  
+              accountMenuBodyTextArea.value = "";
 
-            typeDiv.appendChild(typeButton);
+              accountMenuPgpKeyCheckbox.checked = false;
+              accountMenuVCardCheckbox.checked = false;
+              accountMenuStatNotCheckbox.checked = false;
+              accountMenuRetRecCheckbox.checked = false;
+            }
 
-            typeLi.appendChild(typeDiv);
+            const accountMenuClear = document.getElementById("accountMenuClear");
+            accountMenuClear.onclick = handleClickClearEvent;
+
+            const handleClickAcceptEvent = (e) => {
+              e.preventDefault();
+
+              // Save data
+              SysTrayX.Settings.newMessageDefaults[SysTrayX.Settings.activeFrom] = {
+                replyTo: accountMenuRepInput.value,
+                to: accountMenuToInput.value,
+                cc: accountMenuCcInput.value,
+                bcc: accountMenuBccInput.value,
+                subject: accountMenuSubInput.value,
+                
+                body: accountMenuBodyTextArea.value,
+
+                pgpKey: accountMenuPgpKeyCheckbox.checked,
+                vCard: accountMenuVCardCheckbox.checked,
+                statNot: accountMenuStatNotCheckbox.checked,
+                retRec: accountMenuRetRecCheckbox.checked
+              };
+
+              // Return to main view
+              divAccountsFolders.removeAttribute("style");
+              divAccountMenuDialog.setAttribute("style", "display: none");
+
+              SysTrayX.Settings.activeFrom = undefined;              
+            }
+
+            const accountMenuAccept = document.getElementById("accountMenuAccept");
+            accountMenuAccept.onclick = handleClickAcceptEvent;
           }
 
           //  Create a usable folder tree

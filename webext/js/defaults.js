@@ -454,6 +454,28 @@ async function getStartAppParam() {
     .then(resolve, reject);
 }
 
+//
+//  Get new message defaults
+//
+async function getNewMessageDefaults() {
+  function resolve(result) {
+    const newMessageDefaults = result.newMessageDefaults || "";
+
+    if (newMessageDefaults !== "")
+    {
+      return JSON.parse(newMessageDefaults);
+    }
+
+    return {};
+  }
+
+  function reject() {
+    return {};
+  }
+
+  return await storage().get("newMessageDefaults").then(resolve, reject);
+}
+
 //  Helper funcs for TB91 and later folder handling
 
 async function getMailFolderInfo(folder) {

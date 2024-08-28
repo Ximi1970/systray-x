@@ -15,6 +15,8 @@ var SysTrayX = {
 
   startApp: "",
   startAppArgs: "",
+
+  newMessageDefaults: {}
 };
 
 SysTrayX.Info = {
@@ -324,6 +326,10 @@ SysTrayX.Messaging = {
       sendMailCount();
     }
 
+    if ("newMessageDefaults" in changes && changes["newMessageDefaults"].newValue) {
+      SysTrayX.newMessageDefaults =  JSON.parse(changes["newMessageDefaults"].newValue);
+    }
+
     if ("closeType" in changes && changes["closeType"].newValue) {
       SysTrayX.Messaging.closeType = changes["closeType"].newValue;
 
@@ -456,6 +462,7 @@ SysTrayX.Messaging = {
         "closeAppArgs",
         "showHideShortcut",
         "newMessageFroms",
+        "newMessageDefaults",
       ])
       .then(
         SysTrayX.Messaging.sendPreferencesStorage,
@@ -502,6 +509,7 @@ SysTrayX.Messaging = {
     const closeAppArgs = result.closeAppArgs || "";
     const showHideShortcut = result.showHideShortcut || "";
     const newMessageFroms = result.newMessageFroms || [];
+    const newMessageDefaults = result.newMessageDefaults || "";
 
     //  Send it to the app
     SysTrayX.Link.postSysTrayXMessage({
@@ -539,6 +547,7 @@ SysTrayX.Messaging = {
         closeAppArgs,
         showHideShortcut,
         newMessageFroms,
+        newMessageDefaults,
       },
     });
   },
@@ -594,9 +603,45 @@ SysTrayX.Link = {
       {
         var tab = await browser.compose.beginNew();
       } else {
-        const details = {
-          from: newMessage
+        const newMessageDefaults = SysTrayX.newMessageDefaults[newMessage] ?? undefined;
+
+        console.debug("PgpKey type: " + typeof(newMessageDefaults.pgpKey));
+
+        let details = {};
+        if (newMessageDefaults !== undefined)
+        {
+          if (SysTrayX.Info.browserInfo.majorVersion < 102) {
+            details = {
+              from: newMessage,
+//              attachPublicPGPKey: newMessageDefaults.pgpKey, //TB128 no error, working?
+              bcc: newMessageDefaults.bcc.split(";"),
+              body: newMessageDefaults.body,
+              cc: newMessageDefaults.cc.split(";"),
+              replyTo: newMessageDefaults.replyTo.split(";"),
+              subject: newMessageDefaults.subject,
+              to: newMessageDefaults.to.split(";"),
+            }
+          } else {
+            details = {
+              from: newMessage,
+//              attachPublicPGPKey: newMessageDefaults.pgpKey, //TB128 no error, working?
+//              attachVCard: newMessageDefaults.vCard, // Not working
+              bcc: newMessageDefaults.bcc.split(";"),
+              body: newMessageDefaults.body,
+              cc: newMessageDefaults.cc.split(";"),
+              deliveryStatusNotification: newMessageDefaults.statNot, 
+              replyTo: newMessageDefaults.replyTo.split(";"),
+              returnReceipt: newMessageDefaults.retRec,
+              subject: newMessageDefaults.subject,
+              to: newMessageDefaults.to.split(";"),
+            }
+          }
+        } else {
+          details = {
+            from: newMessage
+          }
         }
+
         var tab = await browser.compose.beginNew(undefined,details);
       }
     }
@@ -1002,6 +1047,10 @@ async function start() {
   const {startApp, startAppArgs} = await getStartAppParam();
   SysTrayX.startApp = startApp;
   SysTrayX.startAppArgs = startAppArgs;
+
+  //  Get new message defaults
+  const newMessageDefaults = await getNewMessageDefaults();
+  SysTrayX.newMessageDefaults = newMessageDefaults;
 
   //   Used sync storage
   //  const inUse = await browser.storage.sync.getBytesInUse();

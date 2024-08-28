@@ -69,7 +69,16 @@ SysTrayX.SaveOptions = {
 
     //  Store new message from list
     await storage().set({
-        newMessageFroms: froms,
+      newMessageFroms: froms,
+    });
+
+    //  Store new message defaults list
+
+
+    console.debug("Defaults store: " + JSON.stringify(SysTrayX.Settings.newMessageDefaults));
+
+    await storage().set({
+      newMessageDefaults: JSON.stringify(SysTrayX.Settings.newMessageDefaults),
     });
 
     //
@@ -423,6 +432,16 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setNewMessageFroms,
         SysTrayX.RestoreOptions.onNewMessageFromsError
+      );
+
+    //
+    //  Restore new message defaults
+    //
+    await storage()
+      .get("newMessageDefaults")
+      .then(
+        SysTrayX.RestoreOptions.setNewMessageDefaults,
+        SysTrayX.RestoreOptions.onNewMessageDefaultsError
       );
 
     //
@@ -1283,11 +1302,11 @@ SysTrayX.RestoreOptions = {
   //
   setFilters: function (result) {
     let filters = result.filters || undefined;
-
+/*
     const accounts = document
       .getElementById("accountsTree")
       .querySelectorAll('input[type="checkbox"][name*="account"]');
-
+*/
     //  No filters stored?
     if (filters === undefined || filters.length === 0) {
       //  Create default filters
@@ -1367,9 +1386,12 @@ SysTrayX.RestoreOptions = {
   setNewMessageFroms: function (result) {
     let froms = result.newMessageFroms || [];
 
-    const checkboxes = document
+    const checkboxes = Array.from(document
       .getElementById("accountsTree")
-      .querySelectorAll('input[type="checkbox"][id="account"]');
+      .querySelectorAll('input[type="checkbox"][id="account"]'));
+
+    SysTrayX.Settings.accounts = checkboxes.map((checkbox) => checkbox.name);
+    SysTrayX.Settings.newMessageFroms = froms;
 
     froms.forEach((from) => {
       checkboxes.forEach((checkbox) => {
@@ -1383,6 +1405,25 @@ SysTrayX.RestoreOptions = {
 
   onNewMessageFromsError: function (error) {
     console.log(`NewMessageFroms Error: ${error}`);
+  },
+
+  //
+  //  Restore new message defaults callbacks
+  //
+  setNewMessageDefaults: function (result) {
+    let defaults = result.newMessageDefaults || "";
+
+    console.debug("Defaults: " + defaults);
+
+    if (defaults !== "") {
+      SysTrayX.Settings.newMessageDefaults = JSON.parse(defaults);
+    } else {
+      SysTrayX.Settings.newMessageDefaults = {};
+    }
+  },
+
+  onNewMessageDefaultsError: function (error) {
+    console.log(`NewMessageDefaults Error: ${error}`);
   },
 };
 
@@ -1618,6 +1659,14 @@ SysTrayX.StorageChanged = {
 //
 
 async function start() {
+  // Define temporary settings storage
+  SysTrayX.Settings = {
+    accounts: [],
+    activeFrom: undefined,
+    newMessageFroms: [],
+    newMessageDefaults: {},
+  };
+
   //  Set platform
   SysTrayX.Info.platformInfo = await browser.runtime.getPlatformInfo();
 

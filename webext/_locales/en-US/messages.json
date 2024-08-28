@@ -439,9 +439,14 @@
     "description": "Default for: "
   },
 
-  "accounts_defaults_subject": {
-    "message": "Subject:",
-    "description": "Subject:"
+  "accounts_defaults_replyto": {
+    "message": "Reply to:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "To:",
+    "description": "To:"
   },
 
   "accounts_defaults_cc": {
@@ -454,9 +459,14 @@
     "description": "Bcc:"
   },
 
-  "accounts_defaults_replyto": {
-    "message": "Reply to:",
-    "description": "Reply to:"
+  "accounts_defaults_subject": {
+    "message": "Subject:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Body:",
+    "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
@@ -489,9 +499,9 @@
     "description": "Clear"
   },
 
-  "accounts_defaults_save": {
-    "message": "Save",
-    "description": "Save"
+  "accounts_defaults_accept": {
+    "message": "Accept",
+    "description": "Accept"
   },
 
   "shortcuts": {
