@@ -435,72 +435,72 @@
   },
 
   "accounts_defaults": {
-    "message": "Значения по умолчанию для",
-    "description": "Defaults for"
+    "message": "Defaults for",
+    "description": "Default for: "
   },
 
   "accounts_defaults_replyto": {
-    "message": "Обратный адрес:",
+    "message": "Reply to:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "Кому:",
+    "message": "To:",
     "description": "To:"
   },
 
   "accounts_defaults_cc": {
-    "message": "копия:",
+    "message": "Cc:",
     "description": "Cc:"
   },
 
   "accounts_defaults_bcc": {
-    "message": "Скрытая копия:",
+    "message": "Bcc:",
     "description": "Bcc:"
   },
 
   "accounts_defaults_subject": {
-    "message": "тема:",
+    "message": "Subject:",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Текст сообщения:",
+    "message": "Body:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Прикрепить открытый ключ PGP",
+    "message": "Attach public PGP key",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Прикрепить vCard",
+    "message": "Attach vCard",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Уведомление о статусе доставки",
+    "message": "Delivery status notification",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Квитанция о возврате",
+    "message": "Return receipt",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Назад",
+    "message": "Back",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Удалять",
+    "message": "Clear",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Принимать",
+    "message": "Accept",
     "description": "Accept"
   },
 
