@@ -435,17 +435,17 @@
   },
 
   "accounts_defaults": {
-    "message": "Defaults for",
+    "message": "Padrões para",
     "description": "Default for: "
   },
 
   "accounts_defaults_replyto": {
-    "message": "Reply to:",
+    "message": "Responder a:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "To:",
+    "message": "Para:",
     "description": "To:"
   },
 
@@ -455,52 +455,52 @@
   },
 
   "accounts_defaults_bcc": {
-    "message": "Bcc:",
+    "message": "Cco:",
     "description": "Bcc:"
   },
 
   "accounts_defaults_subject": {
-    "message": "Subject:",
+    "message": "Assunto:",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Body:",
+    "message": "Corpo da mensagem:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Attach public PGP key",
+    "message": "Anexar chave PGP pública",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Attach vCard",
+    "message": "Anexar vCard",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Delivery status notification",
+    "message": "Notificação de status de entrega",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Return receipt",
+    "message": "Recibo de devolução",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Back",
+    "message": "Voltar",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Clear",
+    "message": "Remover",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Accept",
+    "message": "Aceitar",
     "description": "Accept"
   },
 

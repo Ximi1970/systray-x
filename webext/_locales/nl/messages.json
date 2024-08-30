@@ -435,17 +435,17 @@
   },
 
   "accounts_defaults": {
-    "message": "Defaults for",
+    "message": "Standaardinstellingen voor",
     "description": "Default for: "
   },
 
   "accounts_defaults_replyto": {
-    "message": "Reply to:",
+    "message": "Antwoord-naar:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "To:",
+    "message": "Aan:",
     "description": "To:"
   },
 
@@ -460,47 +460,47 @@
   },
 
   "accounts_defaults_subject": {
-    "message": "Subject:",
+    "message": "Onderwerp:",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Body:",
+    "message": "Berichttekst:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Attach public PGP key",
+    "message": "Publieke PGP-sleutel toevoegen",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Attach vCard",
+    "message": "vCard bijvoegen",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Delivery status notification",
+    "message": "Melding van de bezorgstatus",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Return receipt",
+    "message": "Ontvangstbericht",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Back",
+    "message": "Terug",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Clear",
+    "message": "Verwijderen",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Accept",
+    "message": "Accepteren",
     "description": "Accept"
   },
 

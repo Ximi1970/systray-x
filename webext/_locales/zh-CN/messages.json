@@ -435,72 +435,72 @@
   },
 
   "accounts_defaults": {
-    "message": "Defaults for",
+    "message": "默认值为",
     "description": "Default for: "
   },
 
   "accounts_defaults_replyto": {
-    "message": "Reply to:",
+    "message": "回复地址:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "To:",
+    "message": "收件人:",
     "description": "To:"
   },
 
   "accounts_defaults_cc": {
-    "message": "Cc:",
+    "message": "抄送:",
     "description": "Cc:"
   },
 
   "accounts_defaults_bcc": {
-    "message": "Bcc:",
+    "message": "密送:",
     "description": "Bcc:"
   },
 
   "accounts_defaults_subject": {
-    "message": "Subject:",
+    "message": "主题(S):",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Body:",
+    "message": "消息正文:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Attach public PGP key",
+    "message": "附加公共 PGP 密钥",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Attach vCard",
+    "message": "附加 vCard",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Delivery status notification",
+    "message": "配送状态通知",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Return receipt",
+    "message": "退还收据",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Back",
+    "message": "过去",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Clear",
+    "message": "清空",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Accept",
+    "message": "接受",
     "description": "Accept"
   },
 

@@ -435,72 +435,72 @@
   },
 
   "accounts_defaults": {
-    "message": "Defaults for",
-    "description": "Default for: "
+    "message": "Προεπιλογές για",
+    "description": "Defaults for"
   },
 
   "accounts_defaults_replyto": {
-    "message": "Reply to:",
+    "message": "Απάντηση προς:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "To:",
+    "message": "Προς:",
     "description": "To:"
   },
 
   "accounts_defaults_cc": {
-    "message": "Cc:",
+    "message": "Κοιν.:",
     "description": "Cc:"
   },
 
   "accounts_defaults_bcc": {
-    "message": "Bcc:",
+    "message": "Κρυφή κοιν.:",
     "description": "Bcc:"
   },
 
   "accounts_defaults_subject": {
-    "message": "Subject:",
+    "message": "Θέμα:",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Body:",
+    "message": "Σώμα μηνύματος:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Attach public PGP key",
+    "message": "Επισυνάψτε δημόσιο κλειδί PGP",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Attach vCard",
+    "message": "Επισύναψη vCard",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Delivery status notification",
+    "message": "Ειδοποίηση κατάστασης παράδοσης",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Return receipt",
+    "message": "Απόδειξη επιστροφής",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Back",
+    "message": "Πίσω",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Clear",
+    "message": "Αφαιρώ",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Accept",
+    "message": "Αποδέχομαι",
     "description": "Accept"
   },
 

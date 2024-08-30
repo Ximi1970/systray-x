@@ -435,72 +435,72 @@
   },
 
   "accounts_defaults": {
-    "message": "Defaults for",
-    "description": "Default for: "
+    "message": "Значения по умолчанию для",
+    "description": "Defaults for"
   },
 
   "accounts_defaults_replyto": {
-    "message": "Reply to:",
+    "message": "Обратный адрес:",
     "description": "Reply to:"
   },
 
   "accounts_defaults_to": {
-    "message": "To:",
+    "message": "Кому:",
     "description": "To:"
   },
 
   "accounts_defaults_cc": {
-    "message": "Cc:",
+    "message": "копия:",
     "description": "Cc:"
   },
 
   "accounts_defaults_bcc": {
-    "message": "Bcc:",
+    "message": "Скрытая копия:",
     "description": "Bcc:"
   },
 
   "accounts_defaults_subject": {
-    "message": "Subject:",
+    "message": "тема:",
     "description": "Subject:"
   },
 
   "accounts_defaults_body": {
-    "message": "Body:",
+    "message": "Текст сообщения:",
     "description": "Body:"
   },
 
   "accounts_defaults_pgp_key": {
-    "message": "Attach public PGP key",
+    "message": "Прикрепить открытый ключ PGP",
     "description": "Attach public PGP key"
   },
 
   "accounts_defaults_vcard": {
-    "message": "Attach vCard",
+    "message": "Прикрепить vCard",
     "description": "Attach vCard"
   },
 
   "accounts_defaults_stat_not": {
-    "message": "Delivery status notification",
+    "message": "Уведомление о статусе доставки",
     "description": "Delivery status notification"
   },
 
   "accounts_defaults_return_receipt": {
-    "message": "Return receipt",
+    "message": "Квитанция о возврате",
     "description": "Return receipt"
   },
 
   "accounts_defaults_back": {
-    "message": "Back",
+    "message": "Назад",
     "description": "Back"
   },
 
   "accounts_defaults_clear": {
-    "message": "Clear",
+    "message": "Удалять",
     "description": "Clear"
   },
 
   "accounts_defaults_accept": {
-    "message": "Accept",
+    "message": "Принимать",
     "description": "Accept"
   },
 
@@ -515,7 +515,7 @@
   },
 
   "shortcuts_clear_button": {
-    "message": "Clear",
+    "message": "Удалять",
     "description": "Clear"
   },
 
