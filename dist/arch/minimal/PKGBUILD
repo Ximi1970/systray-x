@@ -12,7 +12,7 @@ depends=(
   'qt6-base'
   'qt6-wayland'
   'thunderbird>=91'
-  'thunderbird<133'
+  'thunderbird<135'
 )
 makedepends=(
   'git'

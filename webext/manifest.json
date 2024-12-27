@@ -10,7 +10,7 @@
     "gecko": {
       "id": "systray-x@Ximi1970",
       "strict_min_version": "91.0",
-      "strict_max_version": "132.*"
+      "strict_max_version": "134.*"
     }
   },
 

@@ -13,7 +13,7 @@ depends=(
   'qt6-wayland'
   'kstatusnotifieritem'
   'thunderbird>=91'
-  'thunderbird<133'
+  'thunderbird<135'
 )
 makedepends=(
   'git'
