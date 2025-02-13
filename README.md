@@ -356,14 +356,14 @@ Installing the repository:
 ###### Rawhide
 
 ```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
 ###### 41
 
 ```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_41/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_41/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
