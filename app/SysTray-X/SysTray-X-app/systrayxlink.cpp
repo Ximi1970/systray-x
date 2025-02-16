@@ -1079,6 +1079,9 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert( "startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
     prefObject.insert( "apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
 
+    prefObject.insert( "newIndicatorType", QJsonValue::fromVariant( QString::number( pref.getNewIndicatorType() ) ) );
+    prefObject.insert( "newShadeColor", QJsonValue::fromVariant( QString( pref.getNewShadeColor() ) ) );
+
     prefObject.insert( "startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
     prefObject.insert( "startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );
     prefObject.insert( "closeApp", QJsonValue::fromVariant( pref.getCloseApp() ) );
