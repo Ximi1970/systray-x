@@ -718,7 +718,171 @@
       <form name="mailform">
         <h3>__MSG_accounts__</h3>
 
-        <ul id="accountsTree"></ul>
+        <div id="accountsFolders">
+          <div id="accountsTreeHeader">
+            <p id="accountsTreeHeaderLeft">__MSG_accounts_folders__</p>
+            <p id="accountsTreeHeaderRight">__MSG_accounts_new__</p>
+          </div>
+
+          <ul id="accountsTree"></ul>
+        </div>
+
+        <div id="accountMenuDialog" style="display: none">
+          <table id="accountmenudialog1">
+            <caption>
+              <div style="display: flex; flex-direction: row">
+                <h4>__MSG_accounts_defaults__</h4>
+                <h4>&nbsp;:&nbsp;</h4>
+                <h4 id="accountMenuId">x@y</h4>
+              </div>
+            </caption>
+            <tr id="accountmenureplyto">
+              <td>
+                <label for="accountMenuReplyToInput" id="accountMenuReplyToInputLabel">
+                  __MSG_accounts_defaults_replyto__
+                </label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="accountmenureplyto"
+                  id="accountMenuReplyToInput"
+                  value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
+                />
+              </td>
+            </tr>
+            <tr id="accountmenuto">
+              <td>
+                <label for="accountMenuToInput" id="accountMenuToInputLabel">
+                  __MSG_accounts_defaults_to__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenuto"
+                  id="accountMenuToInput"
+                  value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
+                />
+              </td>
+            </tr>
+            <tr id="accountmenucc">
+              <td>
+                <label for="accountMenuCcInput" id="accountMenuCcInputLabel">
+                  __MSG_accounts_defaults_cc__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenucc"
+                  id="accountMenuCcInput"
+                  value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
+                />
+              </td>
+            </tr>
+            <tr id="accountmenubcc">
+              <td>
+                <label for="accountMenuBccInput" id="accountMenuBccInputLabel">
+                  __MSG_accounts_defaults_bcc__
+              </label>
+            </td>
+            <td>
+              <input
+                  type="text"
+                  name="accountmenubcc"
+                  id="accountMenuBccInput"
+                  value=""
+                  placeholder="Name <email@example.com> [ ; Name <email@example.com> ]"
+                />
+              </td>
+            </tr>
+            <tr id="accountmenusubject">
+              <td>
+                <label>__MSG_accounts_defaults_subject__</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="accountmenusubject"
+                  id="accountMenuSubjectInput"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr id="accountmenubody">
+              <td>
+                <label>__MSG_accounts_defaults_body__</label>
+              </td>
+              <td>
+                <textarea
+                  id="accountMenuBodyTextArea"
+                  rows="8"
+                >
+                </textarea>
+              </td>
+            </tr>
+          </table>
+          <table id="accountmenudialog2">
+            <tr id="accountmenupgpkey">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenupgpkey"
+                id="accountMenuPgpKeyChk"
+                value=""
+              />
+              <label for="accountMenuPgpKeyChk" id="accountMenuPgpKeyLabel">
+                __MSG_accounts_defaults_pgp_key__
+              </label>
+            </td>
+            <tr id="accountmenuvcard">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenuvcard"
+                id="accountMenuVCardChk"
+                value=""
+              />
+              <label for="accountMenuVCardChk" id="accountMenuVCardLabel">
+                __MSG_accounts_defaults_vcard__
+              </label>
+            </td>
+            <tr id="accountmenustatnot">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenustatnot"
+                id="accountMenuStatNotChk"
+                value=""
+              />
+              <label for="accountMenuStatNotChk" id="accountMenuStatNotLabel">
+                __MSG_accounts_defaults_stat_not__
+              </label>
+            </td>
+            <tr id="accountmenureturnreceipt">
+              <td>
+                <input
+                type="checkbox"
+                name="accountmenureturnreceipt"
+                id="accountMenuReturnReceiptChk"
+                value=""
+              />
+              <label for="accountMenuReturnReceiptChk" id="accountMenuReturnReceiptLabel">
+                __MSG_accounts_defaults_return_receipt__
+              </label>
+            </td>
+          </table>
+
+          <div>
+            <button id="accountMenuBack">__MSG_accounts_defaults_back__</button>
+            <button id="accountMenuClear">__MSG_accounts_defaults_clear__</button>
+            <button id="accountMenuAccept">__MSG_accounts_defaults_accept__</button>
+          </div>
+        </div>
 
         <br />
       </form>

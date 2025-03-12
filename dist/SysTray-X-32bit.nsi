@@ -11,7 +11,7 @@ Name "${Name}"
 !define PRODUCT_ID "systray-x@Ximi1970"
 !define VERSIONMAJOR 0
 !define VERSIONMINOR 9
-!define VERSIONBUILD 10
+!define VERSIONBUILD 11
 !define VERSION "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
 CRCCheck On
  

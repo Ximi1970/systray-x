@@ -1,6 +1,6 @@
 Format: 1.0
 Source: systray-x-minimal
-Version: 0.9.10-1
+Version: 0.9.11-1
 Binary: systray-x-minimal
 Maintainer: Maxime Rijnders <ximi.obs@gmail.com>
 Architecture: any

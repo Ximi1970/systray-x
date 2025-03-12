@@ -528,27 +528,38 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="242"/>
+        <location filename="../systrayx.cpp" line="256"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Anzeigen/Verbergen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="246"/>
+        <location filename="../systrayx.cpp" line="269"/>
+        <location filename="../systrayx.cpp" line="279"/>
+        <source>&amp;New message...</source>
+        <translation>&amp;Neue Nachricht...</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="282"/>
+        <source>&amp;Default account</source>
+        <translation>&amp;Standardkonto</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="308"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="250"/>
+        <location filename="../systrayx.cpp" line="317"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="254"/>
+        <location filename="../systrayx.cpp" line="327"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="683"/>
+        <location filename="../systrayx.cpp" line="746"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

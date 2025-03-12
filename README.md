@@ -13,6 +13,7 @@ The addon and system tray application can do:
 - minimizing hides to tray (remove Thunderbird from taskbar, pager and switcher when minimized)
 - minimize on startup
 - minimize on close
+- start a new message
 
 Warning:
 
@@ -81,6 +82,10 @@ and change the `Exec` line into this:
 Exec=env GDK_BACKEND=x11 thunderbird %u
 ```
 
+If `GDK_BACKEND=x11` doesn't work, one could try the following instead:
+```bash
+env MOZ_ENABLE_WAYLAND=0 thunderbird
+```
 
 ## Linux distributions
 
@@ -154,6 +159,42 @@ sudo zypper in systray-x-minimal
 #### Repository
 
 Installing the repository:
+
+###### 24.10
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_24.10/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_24.10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
 
 ###### 24.04 LTS
 
@@ -233,15 +274,6 @@ sudo apt update
 wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_18.04/Release.key
 sudo apt-key add Release.key
 sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_18.04 ./" > /etc/apt/sources.list.d/systray-x.list'
-sudo apt update
-```
-
-###### 16.04 LTS
-
-```bash
-wget -q http://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_16.04/Release.key
-sudo apt-key add Release.key
-sudo bash -c 'echo "deb http://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_16.04 ./" > /etc/apt/sources.list.d/systray-x.list'
 sudo apt update
 ```
 
@@ -351,7 +383,14 @@ Installing the repository:
 ###### Rawhide
 
 ```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 41
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_41/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
@@ -376,19 +415,6 @@ sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/ho
 sudo dnf update --refresh
 ```
 
-###### 37
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_37/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
-
-###### 36
-
-```bash
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_36/home:Ximi1970:Mozilla:Add-ons.repo
-sudo dnf update --refresh
-```
 
 #### Package
 
@@ -453,7 +479,7 @@ Please use `gnome-extensions` to enable the gnome shell extension `appindicators
 sudo pacman -S systray-x-minimal
 ```
 
-#### AUR alternative install (by Antiz96)
+#### Alternative install (by Antiz96)
 
 Install the `systray-x` package from the Arch repo.
 This is a split package that will offer you to either install the [systray-x-common](https://archlinux.org/packages/extra/x86_64/systray-x-common/) package which is suitable for any DE/WM except KDE (Gnome users need to install and enable the `gnome-shell-extension-appindicator` for a proper integration with Gnome) or the [systray-x-kde](https://archlinux.org/packages/extra/x86_64/systray-x-kde/) package which includes specific options and dependencies for a proper integration with KDE.

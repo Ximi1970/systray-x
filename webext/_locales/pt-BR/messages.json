@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Contas e pastas",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nova mensagem",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Padrões para",
+    "description": "Default for: "
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Responder a:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "Para:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Cc:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Cco:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Assunto:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Corpo da mensagem:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Anexar chave PGP pública",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "Anexar vCard",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Notificação de status de entrega",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Recibo de devolução",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Voltar",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Remover",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Aceitar",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Atalhos",
     "description": "Title for Shortcuts options"

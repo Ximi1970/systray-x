@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Konten und Ordner",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Neue Nachricht",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Standardwerte für",
+    "description": "Defaults for"
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Antwort-An:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "An:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Kopie (CC):",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Blindkopie (BCC):",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Betreff:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Nachrichtentext:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Öffentlichen PGP-Schlüssel anhängen",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "VCard anhängen",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Benachrichtigung über den Lieferstatus",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Rückschein",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Zurück",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Löschen",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Akzeptieren",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Tastatürkürzel",
     "description": "Title for Shortcuts options"

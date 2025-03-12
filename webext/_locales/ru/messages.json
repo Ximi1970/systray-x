@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Аккаунты и папки",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Новое сообщение",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Значения по умолчанию для",
+    "description": "Defaults for"
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Обратный адрес:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "Кому:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "копия:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Скрытая копия:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "тема:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Текст сообщения:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Прикрепить открытый ключ PGP",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "Прикрепить vCard",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Уведомление о статусе доставки",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Квитанция о возврате",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Назад",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Удалять",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Принимать",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Сочетания",
     "description": "Title for Shortcuts options"

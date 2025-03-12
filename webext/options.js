@@ -24,7 +24,7 @@ SysTrayX.SaveOptions = {
         //  Find all selected folders
         const folders = Array.from(
           account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"]):not([id="account"])'
           )
         ).filter((folder) => folder.checked);
 
@@ -51,6 +51,30 @@ SysTrayX.SaveOptions = {
 
     await storage().set({
       filters: filters,
+    });
+
+    //
+    // Save new message from list
+    //
+    const newMessageCheckBoxes = treeBase.querySelectorAll(
+      'input[type="checkbox"][id="account"]'
+    );
+
+    let froms = [];
+    newMessageCheckBoxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        froms.push(checkbox.name)
+      }
+    });
+
+    //  Store new message from list
+    await storage().set({
+      newMessageFroms: froms,
+    });
+
+    //  Store new message defaults list
+    await storage().set({
+      newMessageDefaults: JSON.stringify(SysTrayX.Settings.newMessageDefaults),
     });
 
     //
@@ -394,6 +418,26 @@ SysTrayX.RestoreOptions = {
       .then(
         SysTrayX.RestoreOptions.setFilters,
         SysTrayX.RestoreOptions.onFiltersError
+      );
+
+    //
+    //  Restore new message froms
+    //
+    await storage()
+      .get("newMessageFroms")
+      .then(
+        SysTrayX.RestoreOptions.setNewMessageFroms,
+        SysTrayX.RestoreOptions.onNewMessageFromsError
+      );
+
+    //
+    //  Restore new message defaults
+    //
+    await storage()
+      .get("newMessageDefaults")
+      .then(
+        SysTrayX.RestoreOptions.setNewMessageDefaults,
+        SysTrayX.RestoreOptions.onNewMessageDefaultsError
       );
 
     //
@@ -1255,17 +1299,13 @@ SysTrayX.RestoreOptions = {
   setFilters: function (result) {
     let filters = result.filters || undefined;
 
-    const accounts = document
-      .getElementById("accountsTree")
-      .querySelectorAll('input[type="checkbox"][name*="account"]');
-
     //  No filters stored?
     if (filters === undefined || filters.length === 0) {
       //  Create default filters
 
       const treeBase = document.getElementById("accountsTree");
       const accountsBoxes = treeBase.querySelectorAll(
-        'input[type="checkbox"][name*="account"]'
+        'input[type="checkbox"][name*="account"]:not([id="account"])'
       );
 
       let accounts = [];
@@ -1299,7 +1339,7 @@ SysTrayX.RestoreOptions = {
         );
         const checkboxes = Array.from(
           account.parentNode.querySelectorAll(
-            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"])'
+            'input[type="checkbox"]:not([name^="account"]):not([name^="parent-"]):not([id="account"])'
           )
         );
 
@@ -1330,6 +1370,52 @@ SysTrayX.RestoreOptions = {
 
   onFiltersError: function (error) {
     console.log(`Filters Error: ${error}`);
+  },
+
+  //
+  //  Restore new message froms callbacks
+  //
+  setNewMessageFroms: function (result) {
+    let froms = result.newMessageFroms || [];
+
+    const checkboxes = Array.from(document
+      .getElementById("accountsTree")
+      .querySelectorAll('input[type="checkbox"][id="account"]'));
+
+    SysTrayX.Settings.accounts = checkboxes.map((checkbox) => checkbox.name);
+    SysTrayX.Settings.newMessageFroms = froms;
+
+    froms.forEach((from) => {
+      checkboxes.forEach((checkbox) => {
+        if (from === checkbox.name)
+        {
+          checkbox.checked = true;
+        }
+      })
+    });
+  },
+
+  onNewMessageFromsError: function (error) {
+    console.log(`NewMessageFroms Error: ${error}`);
+  },
+
+  //
+  //  Restore new message defaults callbacks
+  //
+  setNewMessageDefaults: function (result) {
+    let defaults = result.newMessageDefaults || "";
+
+    console.debug("Defaults: " + defaults);
+
+    if (defaults !== "") {
+      SysTrayX.Settings.newMessageDefaults = JSON.parse(defaults);
+    } else {
+      SysTrayX.Settings.newMessageDefaults = {};
+    }
+  },
+
+  onNewMessageDefaultsError: function (error) {
+    console.log(`NewMessageDefaults Error: ${error}`);
   },
 };
 
@@ -1565,6 +1651,14 @@ SysTrayX.StorageChanged = {
 //
 
 async function start() {
+  // Define temporary settings storage
+  SysTrayX.Settings = {
+    accounts: [],
+    activeFrom: undefined,
+    newMessageFroms: [],
+    newMessageDefaults: {},
+  };
+
   //  Set platform
   SysTrayX.Info.platformInfo = await browser.runtime.getPlatformInfo();
 

@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Accounts and folders",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "New message",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Defaults for",
+    "description": "Default for: "
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Reply to:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "To:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Cc:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Bcc:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Subject:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Body:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Attach public PGP key",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "Attach vCard",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Delivery status notification",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Return receipt",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Back",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Clear",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Accept",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Shortcuts",
     "description": "Title for Shortcuts options"
@@ -435,7 +515,7 @@
   },
 
   "shortcuts_clear_button": {
-    "message": "Clear",
+    "message": "Удалять",
     "description": "Clear"
   },
 

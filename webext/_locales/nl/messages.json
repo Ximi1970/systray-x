@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Accounts en mappen",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nieuw bericht",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Standaardinstellingen voor",
+    "description": "Default for: "
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Antwoord-naar:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "Aan:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Cc:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Bcc:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Onderwerp:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Berichttekst:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Publieke PGP-sleutel toevoegen",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "vCard bijvoegen",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Melding van de bezorgstatus",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Ontvangstbericht",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Terug",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Verwijderen",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Accepteren",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Snelkoppelingen",
     "description": "Title for Shortcuts options"

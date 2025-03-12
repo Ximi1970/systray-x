@@ -5,15 +5,32 @@
 // Using a closure to not leak anything but the API to the outside world.
 (function (exports) {
 
+  var ExtensionCommon;
+  var ExtensionSupport;
+  if (typeof ChromeUtils.import === "function") { 
+    ExtensionCommon = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm").ExtensionCommon;
+    ExtensionSupport = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm").ExtensionSupport;
+  }
+  else
+  {
+    // TB136+
+    ExtensionCommon = ChromeUtils.importESModule("resource://gre/modules/ExtensionCommon.sys.mjs").ExtensionCommon;
+    ExtensionSupport = ChromeUtils.importESModule("resource:///modules/ExtensionSupport.sys.mjs").ExtensionSupport;
+  }
+
+/*
+  The old ways...
+
   // Get various parts of the WebExtension framework that we need.
   var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
 
   // You probably already know what this does.
 //  var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+//  var Services = globalThis.Services || ChromeUtils.import("resource://gre/modules/Services.jsm").Services;
 
   // A helpful class for listening to windows opening and closing.
   var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
-
+*/
 
   /**
    * This object is just what we're using to listen for toolbar clicks. The implementation

@@ -1142,6 +1142,32 @@ void    Preferences::setShowHideShortcut( QKeySequence key_seq )
 
 
 /*
+ *  Get the new message from list.
+ */
+const QStringList&    Preferences::getNewMessageFroms() const
+{
+    return m_new_message_froms;
+}
+
+
+/*
+ *  Set the new message from list.
+ */
+void    Preferences::setNewMessageFroms( const QStringList& list )
+{
+    if( m_new_message_froms != list )
+    {
+        m_new_message_froms = list;
+
+        /*
+         *  Tell the world the new preference
+         */
+        emit signalNewMessageFromsChange();
+    }
+}
+
+
+/*
  *  Get the KDE integration option.
  */
 bool    Preferences::getKdeIntegrationOption() const

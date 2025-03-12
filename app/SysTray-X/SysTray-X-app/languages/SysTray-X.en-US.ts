@@ -15,7 +15,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://github.com/Ximi1970/systray-x&quot;&gt;SysTray-X&lt;/a&gt; Companion App by Ximi1970</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="43"/>
@@ -326,27 +326,27 @@
     <message>
         <location filename="../preferences.ui" line="137"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="145"/>
         <source>Correct window positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Correct window positions</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="154"/>
         <source>No titlebar correction</source>
-        <translation type="unfinished"></translation>
+        <translation>No titlebar correction</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="167"/>
         <source>Add titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Add titlebar size</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="177"/>
         <source>Subtract titlebar size</source>
-        <translation type="unfinished"></translation>
+        <translation>Subtract titlebar size</translation>
     </message>
     <message>
         <location filename="../preferences.ui" line="282"/>
@@ -545,27 +545,38 @@
 <context>
     <name>SysTrayX</name>
     <message>
-        <location filename="../systrayx.cpp" line="242"/>
+        <location filename="../systrayx.cpp" line="256"/>
         <source>&amp;Show/Hide</source>
         <translation>&amp;Show/Hide</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="246"/>
+        <location filename="../systrayx.cpp" line="269"/>
+        <location filename="../systrayx.cpp" line="279"/>
+        <source>&amp;New message...</source>
+        <translation>&amp;New message...</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="282"/>
+        <source>&amp;Default account</source>
+        <translation>&amp;Default account</translation>
+    </message>
+    <message>
+        <location filename="../systrayx.cpp" line="308"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferences</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="250"/>
+        <location filename="../systrayx.cpp" line="317"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="254"/>
+        <location filename="../systrayx.cpp" line="327"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../systrayx.cpp" line="683"/>
+        <location filename="../systrayx.cpp" line="746"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>

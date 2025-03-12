@@ -424,6 +424,86 @@
     "description": "Title for Accounts options"
   },
 
+  "accounts_folders": {
+    "message": "Λογαριασμοί και φάκελοι",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Νέο μήνυμα",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Προεπιλογές για",
+    "description": "Defaults for"
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Απάντηση προς:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "Προς:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Κοιν.:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "Κρυφή κοιν.:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Θέμα:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Σώμα μηνύματος:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Επισυνάψτε δημόσιο κλειδί PGP",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "Επισύναψη vCard",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Ειδοποίηση κατάστασης παράδοσης",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Απόδειξη επιστροφής",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Πίσω",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Αφαιρώ",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Αποδέχομαι",
+    "description": "Accept"
+  },
+
   "shortcuts": {
     "message": "Συντομεύσεις",
     "description": "Title for Shortcuts options"

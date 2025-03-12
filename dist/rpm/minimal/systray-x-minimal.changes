@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Wed Mar 12 21:51:00 UTC 2025 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.11
+
+    - New message composer from system tray menu
+    - TB 136+ fixes
+    - Bugfix: new indicator shade settings
+
+-------------------------------------------------------------------
 Mon Aug  5 19:40:00 UTC 2024 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.10

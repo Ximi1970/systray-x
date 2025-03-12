@@ -125,6 +125,169 @@ SysTrayX.Accounts = {
           );
           typeLi.appendChild(typeText);
 
+          if (prop === "imap" || prop === "pop3") {
+            const typeDiv = document.createElement("div");
+            typeDiv.setAttribute("id", "accountContainer");
+
+            const typeInputAccount = document.createElement("input");
+            typeInputAccount.setAttribute("type", "checkbox");
+            typeInputAccount.setAttribute("id", "account");
+            typeInputAccount.setAttribute("name", accounts[prop][i].name);
+
+            typeDiv.appendChild(typeInputAccount);
+
+            const typeButton = document.createElement("button");
+            typeButton.setAttribute("id", "accountMenu");
+            typeButton.setAttribute("name", accounts[prop][i].name);
+            typeButton.innerHTML = " &#9776;";
+
+            // Get the divs
+            const divAccountsFolders = document.getElementById("accountsFolders");
+            const divAccountMenuDialog = document.getElementById("accountMenuDialog");
+
+            // Get the elements
+            const accountMenuRepInput = document.getElementById("accountMenuReplyToInput");
+            const accountMenuToInput = document.getElementById("accountMenuToInput");
+            const accountMenuCcInput = document.getElementById("accountMenuCcInput");
+            const accountMenuBccInput = document.getElementById("accountMenuBccInput");
+            const accountMenuSubInput = document.getElementById("accountMenuSubjectInput");
+
+            const accountMenuBodyTextArea = document.getElementById("accountMenuBodyTextArea");
+            
+            const accountMenuPgpKeyCheckbox = document.getElementById("accountMenuPgpKeyChk");
+            const accountMenuVCardCheckbox = document.getElementById("accountMenuVCardChk");
+            const accountMenuStatNotCheckbox = document.getElementById("accountMenuStatNotChk");
+            const accountMenuRetRecCheckbox = document.getElementById("accountMenuReturnReceiptChk");
+
+            const handleClickEvent = (e) => {
+              e.preventDefault();
+
+              SysTrayX.Settings.activeFrom = e.target.name;
+
+              // Restore saved data
+              const defaults = SysTrayX.Settings.newMessageDefaults[SysTrayX.Settings.activeFrom];
+              if (defaults !== undefined)
+              {
+                accountMenuRepInput.value = defaults.replyTo ?? "";
+                accountMenuToInput.value = defaults.to ?? "";
+                accountMenuCcInput.value = defaults.cc ?? "";
+                accountMenuBccInput.value = defaults.bcc ?? "";
+                accountMenuSubInput.value = defaults.subject ?? "";
+
+                accountMenuBodyTextArea.value = defaults.body ?? "";
+
+                accountMenuPgpKeyCheckbox.checked = defaults.pgpKey ?? false;
+                accountMenuVCardCheckbox.checked = defaults.vCard ?? false;
+                accountMenuStatNotCheckbox.checked = defaults.statNot ?? false;
+                accountMenuRetRecCheckbox.checked = defaults.retRec ?? false;
+              } else {
+                accountMenuRepInput.value = "";
+                accountMenuToInput.value = "";
+                accountMenuCcInput.value = "";
+                accountMenuBccInput.value = "";
+                accountMenuSubInput.value = "";
+
+                accountMenuBodyTextArea.value = "";
+
+                accountMenuPgpKeyCheckbox.checked = false;
+                accountMenuVCardCheckbox.checked = false;
+                accountMenuStatNotCheckbox.checked = false;
+                accountMenuRetRecCheckbox.checked = false;
+              }
+
+              // Construct the dialog
+
+              // Not working...
+              const accountMenuPgpKey = document.getElementById("accountmenupgpkey");
+              accountMenuPgpKey.setAttribute("style", "display: none");
+              const accountMenuVCard = document.getElementById("accountmenuvcard");
+              accountMenuVCard.setAttribute("style", "display: none");
+
+              // TB version depending
+              if (SysTrayX.Info.browserInfo.majorVersion < 102) {
+                const accountMenuVCard = document.getElementById("accountmenuvcard");
+                accountMenuVCard.setAttribute("style", "display: none");
+                const accountMenuStatNot = document.getElementById("accountmenustatnot");
+                accountMenuStatNot.setAttribute("style", "display: none");
+                const accountMenuRetRec = document.getElementById("accountmenureturnreceipt");
+                accountMenuRetRec.setAttribute("style", "display: none");
+              }
+
+              const divAccountMenuId = document.getElementById("accountMenuId");
+              divAccountMenuId.innerHTML = e.target.name;
+
+              divAccountsFolders.setAttribute("style", "display: none");
+              divAccountMenuDialog.removeAttribute("style");
+            };
+
+            typeButton.onclick = handleClickEvent;
+            typeDiv.appendChild(typeButton);
+
+            typeLi.appendChild(typeDiv);
+
+            // Setup the buttons of the account menu dialog
+            const handleClickBackEvent = (e) => {
+              e.preventDefault();
+
+              divAccountsFolders.removeAttribute("style");
+              divAccountMenuDialog.setAttribute("style", "display: none");
+
+              SysTrayX.Settings.activeFrom = undefined;
+            }
+
+            const accountMenuBack = document.getElementById("accountMenuBack");
+            accountMenuBack.onclick = handleClickBackEvent;
+
+            const handleClickClearEvent = (e) => {
+              e.preventDefault();
+
+              accountMenuRepInput.value = "";
+              accountMenuToInput.value = "";
+              accountMenuCcInput.value = "";
+              accountMenuBccInput.value = "";
+              accountMenuSubInput.value = "";
+  
+              accountMenuBodyTextArea.value = "";
+
+              accountMenuPgpKeyCheckbox.checked = false;
+              accountMenuVCardCheckbox.checked = false;
+              accountMenuStatNotCheckbox.checked = false;
+              accountMenuRetRecCheckbox.checked = false;
+            }
+
+            const accountMenuClear = document.getElementById("accountMenuClear");
+            accountMenuClear.onclick = handleClickClearEvent;
+
+            const handleClickAcceptEvent = (e) => {
+              e.preventDefault();
+
+              // Save data
+              SysTrayX.Settings.newMessageDefaults[SysTrayX.Settings.activeFrom] = {
+                replyTo: accountMenuRepInput.value,
+                to: accountMenuToInput.value,
+                cc: accountMenuCcInput.value,
+                bcc: accountMenuBccInput.value,
+                subject: accountMenuSubInput.value,
+                
+                body: accountMenuBodyTextArea.value,
+
+                pgpKey: accountMenuPgpKeyCheckbox.checked,
+                vCard: accountMenuVCardCheckbox.checked,
+                statNot: accountMenuStatNotCheckbox.checked,
+                retRec: accountMenuRetRecCheckbox.checked
+              };
+
+              // Return to main view
+              divAccountsFolders.removeAttribute("style");
+              divAccountMenuDialog.setAttribute("style", "display: none");
+
+              SysTrayX.Settings.activeFrom = undefined;              
+            }
+
+            const accountMenuAccept = document.getElementById("accountMenuAccept");
+            accountMenuAccept.onclick = handleClickAcceptEvent;
+          }
+
           //  Create a usable folder tree
           let folders = [];
 
@@ -206,14 +369,14 @@ SysTrayX.Accounts = {
       treeBase.appendChild(typeLi);
 
       //  Setup checkbox control
-      let checkboxes = treeBase.querySelectorAll('input[type="checkbox"]');
+      let checkboxes = treeBase.querySelectorAll('input[type="checkbox"]:not([id="account"])');
 
       for (let x = 0; x < checkboxes.length; x++) {
         checkboxes[x].addEventListener("change", function (e) {
           let parentNode = this.parentNode;
 
           const cbDescendants = parentNode.querySelectorAll(
-            'input[type="checkbox"]'
+            'input[type="checkbox"]:not([id="account"])'
           );
           for (let y = 0; y < cbDescendants.length; y++) {
             cbDescendants[y].checked = this.checked;

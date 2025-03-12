@@ -302,6 +302,26 @@ void    SysTrayXLink::sendPositions( QList< QPoint > positions )
 
 
 /*
+ *  Send a new message request.
+*/
+void    SysTrayXLink::sendNewMessage( const QString& from )
+{
+    QJsonObject newMessageObject;
+    newMessageObject.insert("newMessage", QJsonValue::fromVariant( from ) );
+
+    /*
+     *  Store the new document
+     */
+    QJsonDocument json_doc = QJsonDocument( newMessageObject );
+
+    /*
+     *  Send it to the add-on
+     */
+    linkWrite( json_doc.toJson( QJsonDocument::Compact ) );
+}
+
+
+/*
  *  Decode JSON message
  */
 void    SysTrayXLink::DecodeMessage( const QByteArray& message )
@@ -968,6 +988,22 @@ void    SysTrayXLink::DecodePreferences( const QJsonObject& pref )
          */
         m_pref->setShowHideShortcut( QKeySequence::fromString( shortcut ) );
     }
+
+    if( pref.contains( "newMessageFroms" ) && pref[ "newMessageFroms" ].isArray() )
+    {
+        QJsonArray froms = pref[ "newMessageFroms" ].toArray();
+
+        QStringList fromsList;
+        for( int i = 0 ; i < froms.size() ; ++i )
+        {
+            fromsList.append( froms.at( i ).toString());
+        }
+
+        /*
+         *  Store the new message from list
+         */
+        m_pref->setNewMessageFroms( fromsList );
+    }
 }
 
 
@@ -1042,6 +1078,9 @@ void    SysTrayXLink::EncodePreferences( const Preferences& pref )
     prefObject.insert( "countType", QJsonValue::fromVariant( QString::number( pref.getCountType() ) ) );
     prefObject.insert( "startupDelay", QJsonValue::fromVariant( QString::number( pref.getStartupDelay() ) ) );
     prefObject.insert( "apiCountMethod", QJsonValue::fromVariant( QString( pref.getApiCountMethod() ? "true" : "false" ) ) );
+
+    prefObject.insert( "newIndicatorType", QJsonValue::fromVariant( QString::number( pref.getNewIndicatorType() ) ) );
+    prefObject.insert( "newShadeColor", QJsonValue::fromVariant( QString( pref.getNewShadeColor() ) ) );
 
     prefObject.insert( "startApp", QJsonValue::fromVariant( pref.getStartApp() ) );
     prefObject.insert( "startAppArgs", QJsonValue::fromVariant( pref.getStartAppArgs() ) );

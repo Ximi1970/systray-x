@@ -6,6 +6,6 @@ bin
 bins
 bin-*
 tmp
-Test
-Old
-Doc
+test
+old
+doc
