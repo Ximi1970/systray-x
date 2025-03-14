@@ -91,7 +91,8 @@ if "%WIN%" == "win32" (
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_1.dll ..\dist\%WIN%\
-    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_2.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
   )
 
   if not exist %SYSTEMROOT%\SysWOW64\ (
