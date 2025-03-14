@@ -76,6 +76,6 @@ systray-x-app:
 	cd ../.. ;\
 	mkdir -p app/build64 ;\
 	cd app/build64 ;\
-	../build.bat x86_64 5.15.2 ;\
+	../build.bat x86_64 6.8.2 ;\
 	cd ../..
 endif

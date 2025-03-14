@@ -41,6 +41,15 @@ if /I "%2"=="5.15.2" (
     set SPEC=msvc2019_64
   )
 )
+if /I "%2"=="6.8.2" (
+  set QT_VER=6.8.2
+  if "%ARCH%"=="x86" (
+    goto :error_not_supported
+  )
+  if "%ARCH%"=="x86_amd64" (
+    set SPEC=msvc2022_64
+  )
+)
 if "%QT_VER%" == "" (
   goto :usage
 )
@@ -53,6 +62,10 @@ if "%QT_VER%"=="5.14.2" (
 
 if "%QT_VER%"=="5.15.2" (
   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+)
+
+if "%QT_VER%"=="6.8.2" (
+  call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
 )
 
 @REM Run qmake
@@ -93,5 +106,10 @@ goto :end
 
 :usage
   echo Usage: build.bat ^< x86 ^| x86_64 ^> ^< Qt version ^>
+  goto :end
+
+:error_not_supported
+  echo Setup not supported^>
+  goto :end
 
 :end
