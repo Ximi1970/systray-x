@@ -83,6 +83,7 @@ if "%WIN%" == "win64" (
   xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_2.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
 )
 
@@ -99,6 +100,7 @@ if "%WIN%" == "win32" (
     xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_2.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
   )
 )
