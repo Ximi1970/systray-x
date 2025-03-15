@@ -625,11 +625,12 @@ Or install the add-on by going to the "Add-ons and themes -> Extensions" dialog,
 
 Install these packages:
 - [Visual Studio Express 2019](https://visualstudio.microsoft.com/vs/older-downloads/)
-- [Visual Code Studio](https://code.visualstudio.com/)
+- Visual Studio Community 2022 from the Microsoft Store
+- [Visual Code Studio](https://code.visualstudio.com/) or from the Microsoft Store
 - [Git for Windows](https://gitforwindows.org/)
 - [TortoiseGit](https://tortoisegit.org/)
 - [PuTTY](https://www.putty.org/)
-- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2)
+- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2, Qt 6.8.2)
 - [7z](https://www.7-zip.org/download.html)
 - (optional)[Cygwin](https://www.cygwin.com/) (gcc, make, zip)
 
@@ -640,7 +641,8 @@ Start QtCreator and open the project file:
 app/SysTray-X/SysTray-X.pro
 ```
 
-Choose in the `Projects` the kit `Desktop Qt 5.12.2 MSVC2019 64bit`
+Choose in the `Projects` the kit `Desktop Qt 5.12.2 MSVC2019 32bit` or
+the kit `Desktop Qt 5.12.2 MSVC2022 64bit`.
 Set it to `Release` or `Debug` on what you need.
 Then `Build all projects`.
 
