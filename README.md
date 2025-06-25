@@ -423,6 +423,13 @@ sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/re
 sudo dnf update --refresh
 ```
 
+###### 42
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_42/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
 ###### 41
 
 ```bash
