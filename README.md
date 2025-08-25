@@ -360,6 +360,15 @@ sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi197
 sudo apt update
 ```
 
+###### 13
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_13/Release.key
+sudo cp -f Release.key /etc/apt/trusted.gpg.d/SysTray-X.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_13 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 12
 
 ```bash
