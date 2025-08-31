@@ -667,18 +667,23 @@ const collectUnreadMail = async () => {
           for (let i = 0; i < messages.length; ++i) {
             const message = messages[i];
 
-            const getHeaderPromise = (messageId) =>
-              new Promise((res) => res(messenger.messages.get(messageId)));
+            const getHeaderPromise = (messageId) => {
+              const promise = new Promise((res) => res(messenger.messages.get(messageId)));
+              promise.catch( (error) => {
+                  //console.error("Catch error: " + error);
+                  return undefined;
+                });
+            }
             const header = await getHeaderPromise(message.id);
 
-            //console.debug("collectUnreadMail: header" + JSON.stringify(header));
+            if (header !== undefined) {
+              if (header.read === false &&
+                (header.new === undefined || header.new === true) &&
+                  header.headerMessageId !== "") {
+                newMessages.push(message);
 
-            if (header.read === false &&
-               (header.new === undefined || header.new === true) &&
-                header.headerMessageId !== "") {
-              newMessages.push(message);
-
-              //console.debug("collectUnreadMail: renew" + JSON.stringify(message));
+                //console.debug("collectUnreadMail: renew" + JSON.stringify(message));
+              }
             }
           }
 

@@ -141,6 +141,10 @@ SysTrayX.Messaging = {
       SysTrayX.Messaging.listenerFolderDeleted
     );
 
+    browser.folders.onUpdated.addListener(
+      SysTrayX.Messaging.listenerFolderUpdated
+    );
+
     //  Try to catch the window state
     browser.windows.onFocusChanged.addListener(SysTrayX.Window.focusChanged);
   },
@@ -248,6 +252,7 @@ SysTrayX.Messaging = {
     //console.debug("listenerFolderInfoChanged: folder: " + JSON.stringify(folder));
     //console.debug("listenerFolderInfoChanged: folderinfo: " + JSON.stringify(folderInfo));
     //console.debug("listenerFolderInfoChanged: Cache: " + SysTrayX.Messaging.folderInfoChangeCache.length );
+    //console.debug("listenerFolderInfoChanged: apiCountMethod: " + JSON.stringify(SysTrayX.Messaging.apiCountMethod));
 
     if (SysTrayX.Messaging.startupDelayFinished) {
       if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
@@ -276,6 +281,11 @@ SysTrayX.Messaging = {
 
   listenerFolderDeleted: function (deletedFolder) {
     deleteFolderFromFilters(deletedFolder);
+  },
+
+  listenerFolderUpdated: async function (origFolder, updatedFolder) {
+//    console.debug("listenerFolderUpdated: origFolder: " + JSON.stringify(origFolder));
+//    console.debug("listenerFolderUpdated: updatedFolder: " + JSON.stringify(updatedFolder));
   },
 
   showHideForceCloseButton: function () {
