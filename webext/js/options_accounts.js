@@ -4,6 +4,8 @@ SysTrayX.Accounts = {
       new Promise((res) => res(SysTrayX.Accounts.getAccounts()));
     const accounts = await getAccountsPromise();
 
+    console.debug("Settings accounts: " + JSON.stringify(accounts));
+
     SysTrayX.Accounts.buildTree(accounts);
   },
 
