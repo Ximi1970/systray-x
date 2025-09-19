@@ -52,6 +52,7 @@ TRANSLATIONS = \
     languages/$${TARGET}.en-US.ts \
     languages/$${TARGET}.de.ts \
     languages/$${TARGET}.el.ts \
+    languages/$${TARGET}.fr.ts \
     languages/$${TARGET}.it.ts \
     languages/$${TARGET}.nl.ts \
     languages/$${TARGET}.pt-BR.ts \
