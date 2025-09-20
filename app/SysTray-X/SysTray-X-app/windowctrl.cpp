@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QWindow>
 #include <QCoreApplication>
+#include <QGuiApplication>
 
 /*
  *  System includes
@@ -69,11 +70,15 @@ bool    WindowCtrl::thunderbirdStart() const
  */
 void    WindowCtrl::slotWindowTest1()
 {
-    emit signalConsole("Test 1 started");
+    emit signalConsole( "Test 1 started" );
+
+    QString platform = QGuiApplication::platformName();
+
+    emit signalConsole( QString( "Platform: %1" ).arg( platform ) );
 
     // Do something.
 
-    emit signalConsole("Test 1 done");
+    emit signalConsole( "Test 1 done" );
 }
 
 
@@ -82,11 +87,11 @@ void    WindowCtrl::slotWindowTest1()
  */
 void    WindowCtrl::slotWindowTest2()
 {
-    emit signalConsole("Test 2 started");
+    emit signalConsole( "Test 2 started" );
 
     // Do something.
 
-    emit signalConsole("Test 2 done");
+    emit signalConsole( "Test 2 done" );
 }
 
 
@@ -95,11 +100,11 @@ void    WindowCtrl::slotWindowTest2()
  */
 void    WindowCtrl::slotWindowTest3()
 {
-    emit signalConsole("Test 3 started");
+    emit signalConsole( "Test 3 started" );
 
     // Do something.
 
-    emit signalConsole("Test 3 done");
+    emit signalConsole( "Test 3 done" );
 }
 
 
@@ -108,11 +113,11 @@ void    WindowCtrl::slotWindowTest3()
  */
 void    WindowCtrl::slotWindowTest4()
 {
-    emit signalConsole("Test 4 started");
+    emit signalConsole( "Test 4 started" );
 
     // Do something.
 
-    emit signalConsole("Test 4 done");
+    emit signalConsole( "Test 4 done" );
 }
 
 /*
