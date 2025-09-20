@@ -1,10 +1,10 @@
 #
 #   Force gcc 10 for Qt 6
 #
-greaterThan(QT_MAJOR_VERSION, 5): {
-    QMAKE_CC = gcc-10
-    QMAKE_CXX = g++-10
-}
+#greaterThan(QT_MAJOR_VERSION, 5): {
+#    QMAKE_CC = gcc-10
+#    QMAKE_CXX = g++-10
+#}
 
 
 #
