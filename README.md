@@ -720,11 +720,12 @@ Menu -> Add-ons and Themes -> Click the gear symbol -> Install add-on from file.
 de      :  
 el      :   askembris  
 en_US   :  
+fr      :   gitforolsub  
 it      :   lgbaldoni  
 nl      :  
 pt_BR   :   fabianski7  
 ru_RU   :   agvantibo  
-zh_CN   :	UM-Li
+zh_CN   :	  UM-Li
 
 
 ### Remarks

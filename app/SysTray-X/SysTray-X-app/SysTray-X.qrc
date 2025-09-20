@@ -24,5 +24,6 @@
         <file>files/icons/new-indicator-star-close.png</file>
         <file>files/icons/new-indicator-star-open.png</file>
         <file>languages/SysTray-X.el.qm</file>
+        <file>languages/SysTray-X.fr.qm</file>
     </qresource>
 </RCC>
