@@ -97,6 +97,11 @@ class SysTrayX : public QObject
          */
         void    resendMailCount();
 
+        /**
+         * @brief restartThunderbird. restart thunderbird.
+         */
+        void    restartThunderbird();
+
     signals:
 
         /**

@@ -142,6 +142,13 @@ class Preferences : public QObject
         void    displayDebug();
 
         /**
+         * @brief getPlatformOs. Get the platform OS.
+         *
+         * @return      The platform os.
+         */
+        const QString& getPlatformOs() const;
+
+        /**
          * @brief setPlatformOs. Set the platform OS.
          *
          *  @param os   The platform os.

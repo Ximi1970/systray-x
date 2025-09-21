@@ -240,9 +240,18 @@ void    Preferences::displayDebug()
 /*
  *  Set the platform os
  */
+const QString&    Preferences::getPlatformOs() const
+{
+    return m_platform_os;
+}
+
+
+/*
+ *  Set the platform os
+ */
 void    Preferences::setPlatformOs( const QString os )
 {
-   m_platform_os = os;
+    m_platform_os = os;
 }
 
 

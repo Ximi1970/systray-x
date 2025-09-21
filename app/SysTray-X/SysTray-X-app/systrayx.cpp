@@ -675,6 +675,11 @@ void    SysTrayX::slotErrorAddOnShutdown()
     slotCloseApp();
 
     /*
+     *  Restart Thunderbird?
+     */
+    restartThunderbird();
+
+    /*
      *  Let's quit
      */
     QCoreApplication::quit();
@@ -707,6 +712,11 @@ void    SysTrayX::slotShutdown()
             emit signalClose();
 
             /*
+             *  Restart Thunderbird?
+             */
+            restartThunderbird();
+
+            /*
              *  Let's quit
              */
             QCoreApplication::quit();
@@ -721,6 +731,32 @@ void    SysTrayX::slotShutdown()
             m_link->sendShutdown();
             break;
         }
+    }
+}
+
+
+/*
+ *  Show the about dialog
+ */
+void    SysTrayX::restartThunderbird()
+{
+    QString platform = QGuiApplication::platformName();
+    QString os = m_preferences->getPlatformOs();
+
+    return;
+
+
+    QString app = m_preferences->getCloseApp();
+    QString args = m_preferences->getCloseAppArgs();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
+#else
+    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
+#endif
+
+    if( !app.isEmpty() )
+    {
+        QProcess::startDetached( app, args_list );
     }
 }
 
