@@ -87,6 +87,22 @@ If `GDK_BACKEND=x11` doesn't work, one could try the following instead:
 env MOZ_ENABLE_WAYLAND=0 thunderbird
 ```
 
+## Forcing the companion app to use a different platdorm
+
+You can force the companion app to use a different platform by using:
+
+```bash
+export QT_QPA_PLATFORM=< wayland | xcb | ... >
+```
+
+before starting Thunderbird in the same shell.
+
+Or start SysTray-X by using:
+```bash
+SysTray-X -platform < wayland | xcb | ... >
+```
+
+
 ## Linux distributions
 
 ### openSuSE
