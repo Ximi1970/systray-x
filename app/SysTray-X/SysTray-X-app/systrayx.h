@@ -97,11 +97,6 @@ class SysTrayX : public QObject
          */
         void    resendMailCount();
 
-        /**
-         * @brief restartThunderbird. restart thunderbird.
-         */
-        void    restartThunderbird();
-
     signals:
 
         /**
@@ -184,6 +179,11 @@ class SysTrayX : public QObject
         void    slotShutdown();
 
         /**
+         * @brief slotRestart. Handle restart request from the menu.
+         */
+        void    slotRestart();
+
+        /**
          * @brief slotAbout. Handle about request from the menu.
          */
         void    slotAbout();
@@ -258,6 +258,7 @@ class SysTrayX : public QObject
         QAction*    m_new_action;
         QAction*    m_pref_action;
         QAction*    m_about_action;
+        QAction*    m_restart_action;
         QAction*    m_quit_action;
 
         QList< QAction* > m_new_actions;

@@ -322,6 +322,16 @@ void    SysTrayX::createMenu()
     m_tray_icon_menu->addSeparator();
 
     /*
+     *  Restart
+     */
+    m_restart_action = new QAction(tr("&Restart"), this);
+    m_restart_action->setIcon( QIcon( ":/files/icons/windows-close.png" ) );
+    connect( m_restart_action, &QAction::triggered, this, &SysTrayX::slotRestart );
+
+    m_tray_icon_menu->addAction( m_restart_action );
+    m_tray_icon_menu->addSeparator();
+
+    /*
      *  Quit
      */
     m_quit_action = new QAction( tr("&Quit"), this );
@@ -675,11 +685,6 @@ void    SysTrayX::slotErrorAddOnShutdown()
     slotCloseApp();
 
     /*
-     *  Restart Thunderbird?
-     */
-    restartThunderbird();
-
-    /*
      *  Let's quit
      */
     QCoreApplication::quit();
@@ -712,11 +717,6 @@ void    SysTrayX::slotShutdown()
             emit signalClose();
 
             /*
-             *  Restart Thunderbird?
-             */
-            restartThunderbird();
-
-            /*
              *  Let's quit
              */
             QCoreApplication::quit();
@@ -736,12 +736,16 @@ void    SysTrayX::slotShutdown()
 
 
 /*
- *  Show the about dialog
+ *  Quit the app by quit menu
  */
-void    SysTrayX::restartThunderbird()
+void    SysTrayX::slotRestart()
 {
     QString platform = QGuiApplication::platformName();
     QString os = m_preferences->getPlatformOs();
+
+    emit signalConsole( QString( "Platform %1").arg(platform));
+    emit signalConsole( QString( "OS %1").arg(os));
+
 
     return;
 
