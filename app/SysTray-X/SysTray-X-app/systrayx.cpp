@@ -743,9 +743,25 @@ void    SysTrayX::slotRestart()
     QString platform = QGuiApplication::platformName();
     QString os = m_preferences->getPlatformOs();
 
-    emit signalConsole( QString( "Platform %1").arg(platform));
-    emit signalConsole( QString( "OS %1").arg(os));
+    emit signalConsole( QString( "Platform: %1").arg(platform));
+    emit signalConsole( QString( "OS: %1").arg(os));
 
+
+    if( os == "linux" )
+    {
+        // Start linux shell
+
+        QString session = qgetenv( "XDG_SESSION_TYPE" );
+        emit signalConsole( QString( "Session: %1").arg(session));
+
+        emit signalConsole( QString( "Start: %1").arg(":/files/restart.sh"));
+    }
+    else
+    {
+        // Start windows batch
+
+        emit signalConsole( QString( "Start: %1").arg(":/files/restart.bat"));
+    }
 
     return;
 
