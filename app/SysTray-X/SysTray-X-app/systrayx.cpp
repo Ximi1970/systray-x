@@ -19,7 +19,7 @@
 #include <QMenu>
 #include <QIcon>
 #include <QTimer>
-
+#include <QTemporaryFile>
 
 /*
  *  Constants
@@ -742,42 +742,104 @@ void    SysTrayX::slotRestart()
 {
     QString platform = QGuiApplication::platformName();
     QString os = m_preferences->getPlatformOs();
+    QString arch = m_preferences->getPlatformArch();
 
     emit signalConsole( QString( "Platform: %1").arg(platform));
     emit signalConsole( QString( "OS: %1").arg(os));
 
+    qint64 ppid = m_win_ctrl->getPpid();
+    emit signalConsole( QString( "TB pid: %1").arg(ppid));
+
+    const QList< quint64 > list = m_win_ctrl->getWinIds();
+    emit signalConsole( QString( "TB windows: %1").arg(list.count()));
 
     if( os == "linux" )
     {
-        // Start linux shell
-
+        // Get session type
         QString session = qgetenv( "XDG_SESSION_TYPE" );
         emit signalConsole( QString( "Session: %1").arg(session));
 
+        // Get start directory
+        QProcess processPath;
+        QString argsPath = QString( "-e /proc/%1/exe" ).arg( ppid );
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        QStringList argsPathList = argsPath.split( ' ', Qt::SkipEmptyParts );
+#else
+        QStringList argsPathList = argsPath.split( ' ', QString::SkipEmptyParts );
+#endif
+        processPath.start( "readlink", argsPathList );
+        processPath.waitForFinished( -1 );
+        QString path = processPath.readAllStandardOutput();
+        path = path.left( path.lastIndexOf( "/" ) );
+
+        emit signalConsole( QString( "Path: %1" ).arg( path ) );
+
+        // Get cmd and arguments
+        QProcess processCmd;
+        QString argsCmd = QString( "-p %1 -o args --no-headers" ).arg( ppid );
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        QStringList argsCmdList = argsCmd.split( ' ', Qt::SkipEmptyParts );
+#else
+        QStringList argsCmdList = argsCmd.split( ' ', QString::SkipEmptyParts );
+#endif
+        processCmd.start( "ps", argsCmdList );
+        processCmd.waitForFinished( -1 );
+        QString cmdline = processCmd.readAllStandardOutput();
+        cmdline = cmdline.mid( cmdline.indexOf( "/" ) + 1 );
+
+        emit signalConsole( QString( "Cmdline: %1" ).arg( cmdline ) );
+
+        // Create restart command
+        QString restartCmd = path + "/" + cmdline;
+
+
         emit signalConsole( QString( "Start: %1").arg(":/files/restart.sh"));
+
+
+
+        // Start shell
+        QTemporaryFile* file = QTemporaryFile::createNativeFile(":/files/restart.sh");
+        QString filename = file->fileName();
+
+        QFileDevice::Permissions permissions = file->permissions();
+        file->setPermissions( permissions | QFileDevice::ExeOwner );
+        file->rename( filename + ".sh" );
+
+        QString app = "bash";
+        QString args = QString( "-c %1.sh %2" ).arg( filename, restartCmd );
+
+        emit signalConsole( QString( "Args: %1").arg(args));
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
+#else
+        QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
+#endif
+
+        if( !app.isEmpty() )
+        {
+            bool status = QProcess::startDetached( app, args_list );
+
+            emit signalConsole( QString( "Started: %1").arg(status));
+        }
     }
     else
     {
         // Start windows batch
 
+        if( arch == "x86-64" )
+        {
+            emit signalConsole( QString( "Path: %1").arg("C:\\Program Files"));
+        }
+        else
+        {
+            emit signalConsole( QString( "Path: %1").arg("C:\\Program Files (x86)"));
+        }
+
         emit signalConsole( QString( "Start: %1").arg(":/files/restart.bat"));
     }
 
-    return;
-
-
-    QString app = m_preferences->getCloseApp();
-    QString args = m_preferences->getCloseAppArgs();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    QStringList args_list = args.split( ' ', Qt::SkipEmptyParts );
-#else
-    QStringList args_list = args.split( ' ', QString::SkipEmptyParts );
-#endif
-
-    if( !app.isEmpty() )
-    {
-        QProcess::startDetached( app, args_list );
-    }
+//    slotShutdown();
 }
 
 

@@ -156,6 +156,13 @@ class Preferences : public QObject
         void setPlatformOs( const QString os );
 
         /**
+         * @brief getPlatformArch. Get the platform architecture.
+         *
+         *  @param arch     The architecture.
+         */
+        const QString& getPlatformArch() const;
+
+        /**
          * @brief setPlatformArch. Set the platform architecture.
          *
          *  @param arch     The architecture.

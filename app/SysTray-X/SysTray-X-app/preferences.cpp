@@ -258,6 +258,15 @@ void    Preferences::setPlatformOs( const QString os )
 /*
  *  Set the platform arch
  */
+const QString&    Preferences::getPlatformArch() const
+{
+    return m_platform_arch;
+}
+
+
+/*
+ *  Set the platform arch
+ */
 void    Preferences::setPlatformArch( const QString arch )
 {
     m_platform_arch = arch;
