@@ -135,18 +135,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.5/ SysTray-X
 ```
 
-###### 15.4
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.4/ SysTray-X
-```
-
-###### Leap 15.4
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.4/ SysTray-X
-```
-
 #### Package
 
 Installing the SysTray-X addon and companion app package:
@@ -175,6 +163,42 @@ sudo zypper in systray-x-minimal
 #### Repository
 
 Installing the repository:
+
+###### 26.04
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_26.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_26.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
 
 ###### 25.10
 
