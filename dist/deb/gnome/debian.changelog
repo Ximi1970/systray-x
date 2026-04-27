@@ -5,7 +5,9 @@ systray-x-gnome (0.9.7-1) unstable; urgency=low
     - Added option for new TB115 mail counting (slow with new mails enabled)
     - Bugfixes
 
-systray-x-gnome (0.9.6-0) unstable; urgency=low
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 12 Nov 2023 11:12:00 +0100
+
+systray-x-gnome (0.9.6-1) unstable; urgency=low
 
   * Update to 0.9.6
 
@@ -15,11 +17,15 @@ systray-x-gnome (0.9.6-0) unstable; urgency=low
     - Refactored mail counting
     - Bugfixes
 
-systray-x-gnome (0.9.5-0) unstable; urgency=low
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 28 Oct 2023 12:25:00 +0100
+
+systray-x-gnome (0.9.5-1) unstable; urgency=low
 
   * Update to 0.9.5
 
     - Bugfixes
+
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 06 Aug 2023 21:00:00 +0100
 
 systray-x-gnome (0.9.4-0) unstable; urgency=low
 
@@ -28,11 +34,15 @@ systray-x-gnome (0.9.4-0) unstable; urgency=low
     - Separate minimize, close and icon action
     - Use new icon for new TB version
 
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 23 Jul 2023 00:52:00 +0100
+
 systray-x-gnome (0.9.3-0) unstable; urgency=low
 
   * Update to 0.9.3
 
     - New TB version
+
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sat, 15 Jul 2023 21:39:00 +0100
 
 systray-x-gnome (0.9.2-0) unstable; urgency=low
 
@@ -40,11 +50,15 @@ systray-x-gnome (0.9.2-0) unstable; urgency=low
 
     - Bug fixes
 
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 16 Jul 2022 11:12:00 +0100
+
 systray-x-gnome (0.9.1-0) unstable; urgency=low
 
   * Update to 0.9.1
 
     - Bug fixes
+
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sun, 10 Jul 2022 11:12:00 +0100
 
 systray-x-gnome (0.9.0-0) unstable; urgency=low
 
@@ -53,11 +67,15 @@ systray-x-gnome (0.9.0-0) unstable; urgency=low
     - Update for TB 102
     - Bug fixes
 
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sat, 03 Jul 2022 23:24:00 +0100
+
 systray-x-gnome (0.8.0-0) unstable; urgency=low
 
   * Update to 0.8.0
 
     - Refactor for TB 91
+
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sat, 02 Oct 2021 14:17:00 +0100
 
 systray-x-gnome (0.5.0-0) unstable; urgency=low
 
@@ -71,16 +89,16 @@ systray-x-gnome (0.5.0-0) unstable; urgency=low
       - pt_BR (by PutinVladimir)
       - ru_RU (by fabianski7)
 
- -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 07 Nov 2020 23:37:00 +0100
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sat, 07 Nov 2020 23:37:00 +0100
       
 systray-x-gnome (0.4.0-0) unstable; urgency=low
 
   * Update to 0.4.0
 
- -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat, 10 Oct 2020 14:10:00 +0100
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Sat, 10 Oct 2020 14:10:00 +0100
 
 systray-x-gnome (0.0.1-0) unstable; urgency=low
 
   * Initial Release
 
- -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Tue, 11 Feb 2020 19:05:19 +0100
+ -- Maxime Rijnders <ximi.obs@gmail.com>  Tue, 11 Feb 2020 19:05:19 +0100
