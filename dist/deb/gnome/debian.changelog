@@ -8,7 +8,7 @@ systray-x-gnome (0.9.6-1) unstable; urgency=low
     - Refactored mail counting
     - Bugfixes
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Oct 28 12:25:00 UTC 2023
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Oct 28 12:25:00 UTC 2023
 
 systray-x-gnome (0.9.5-1) unstable; urgency=low
 
@@ -16,7 +16,7 @@ systray-x-gnome (0.9.5-1) unstable; urgency=low
 
     - Bugfixes
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Aug  6 21:00:00 UTC 2023
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Aug  6 21:00:00 UTC 2023
 
 systray-x-gnome (0.9.4-0) unstable; urgency=low
 
@@ -25,7 +25,7 @@ systray-x-gnome (0.9.4-0) unstable; urgency=low
     - Separate minimize, close and icon action
     - Use new icon for new TB version
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 23 00:52:00 UTC 2023
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 23 00:52:00 UTC 2023
 
 systray-x-gnome (0.9.3-0) unstable; urgency=low
 
@@ -33,7 +33,7 @@ systray-x-gnome (0.9.3-0) unstable; urgency=low
 
     - New TB version
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Jul 15 21:39:00 UTC 2023
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Jul 15 21:39:00 UTC 2023
 
 systray-x-gnome (0.9.2-0) unstable; urgency=low
 
@@ -41,7 +41,7 @@ systray-x-gnome (0.9.2-0) unstable; urgency=low
 
     - Bug fixes
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 16 11:12:00 UTC 2022
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 16 11:12:00 UTC 2022
 
 systray-x-gnome (0.9.1-0) unstable; urgency=low
 
@@ -49,7 +49,7 @@ systray-x-gnome (0.9.1-0) unstable; urgency=low
 
     - Bug fixes
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 10 11:12:00 UTC 2022
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sun Jul 10 11:12:00 UTC 2022
 
 systray-x-gnome (0.9.0-0) unstable; urgency=low
 
@@ -58,7 +58,7 @@ systray-x-gnome (0.9.0-0) unstable; urgency=low
     - Update for TB 102
     - Bug fixes
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Jul  3 23:24:00 UTC 2022
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Jul  3 23:24:00 UTC 2022
 
 systray-x-gnome (0.8.0-0) unstable; urgency=low
 
@@ -66,7 +66,7 @@ systray-x-gnome (0.8.0-0) unstable; urgency=low
 
     - Refactor for TB 91
 
-  -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Oct  2 14:17:00 UTC 2021
+ -- Maxime Rijnders Maxime Rijnders <ximi.obs@gmail.com>  Sat Oct  2 14:17:00 UTC 2021
 
 systray-x-gnome (0.5.0-0) unstable; urgency=low
 
