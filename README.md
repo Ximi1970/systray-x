@@ -123,6 +123,12 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Slowroll/ SysTray-X
 ```
 
+###### 16.0
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/16.0/ SysTray-X
+```
+
 ###### 15.6
 
 ```bash
@@ -505,6 +511,13 @@ Installing the repository:
 
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 44
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_44/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
