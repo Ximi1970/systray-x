@@ -41,8 +41,8 @@ if /I "%2"=="5.15.2" (
     set SPEC=msvc2019_64
   )
 )
-if /I "%2"=="6.8.2" (
-  set QT_VER=6.8.2
+if /I "%2"=="6.11.1" (
+  set QT_VER=6.11.1
   if "%ARCH%"=="x86" (
     goto :error_not_supported
   )
