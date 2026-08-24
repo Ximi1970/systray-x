@@ -64,7 +64,7 @@ if "%QT_VER%"=="5.15.2" (
   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
 )
 
-if "%QT_VER%"=="6.8.2" (
+if "%QT_VER%"=="6.11.1" (
   call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
 )
 
