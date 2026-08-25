@@ -176,7 +176,7 @@ SysTrayX.Messaging = {
         newFilters.push(SysTrayX.Messaging.filters[i]);
       } else {
         if (SysTrayX.Info.browserInfo.majorVersion < 115 || SysTrayX.Messaging.apiCountMethod === "false") {
-          if (SysTrayX.Messaging.new[id] != undefined) {
+          if (SysTrayX.Messaging.new[id] !== undefined) {
             delete SysTrayX.Messaging.new[id];
           }
           if (SysTrayX.Messaging.unread[id] !== undefined) {

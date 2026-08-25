@@ -1,0 +1,661 @@
+{
+  "extension_name": {
+    "message": "SysTray-X",
+    "description": "Name of the webextension"
+  },
+
+  "extension_description": {
+    "message": "Extension pour contrôler la barre des tâches. Merci de télécharger également l'application compagnon.",
+    "description": "Webextension descriptions"
+  },
+
+  "preferences": {
+    "message": "Préférences de SysTray-X",
+    "description": "Title of preferences page"
+  },
+
+  "intro_line_1": {
+    "message": "Cette extension a besoin d'une application externe pour fonctionner. Vous pouvez l'obtenir ici:",
+    "description": "Introduction line 1"
+  },
+
+  "intro_link": {
+    "message": "Télécharger l'application compagnon de SysTray-X ici",
+    "description": "Link description"
+  },
+
+  "tab_windows": {
+    "message": "Fenêtres",
+    "description": "Tab for Window options"
+  },
+
+  "tab_icon": {
+    "message": "Icône",
+    "description": "Tab for Icon options"
+  },
+
+  "tab_count": {
+    "message": "Comptage",
+    "description": "Tab for Count options"
+  },
+
+  "tab_apps": {
+    "message": "Applications",
+    "description": "Tab for Apps options"
+  },
+
+  "tab_mail": {
+    "message": "Courriel",
+    "description": "Tab for Mail options"
+  },
+
+  "tab_shortcuts": {
+    "message": "Raccourcis",
+    "description": "Tab for Shortcuts options"
+  },
+
+  "tab_debug": {
+    "message": "Débogage",
+    "description": "Tab for Debug options"
+  },
+
+  "windows": {
+    "message": "Fenêtres",
+    "description": "Title for Windows options"
+  },
+
+  "windows_min_options": {
+    "message": "Minimiser",
+    "description": "Caption for Minimize options"
+  },
+
+  "windows_min_default": {
+    "message": "Minimiser (défaut)",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray": {
+    "message": "Minimiser vers la barre des tâches",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_icon_options": {
+    "message": "Icone",
+    "description": "Caption for Icon options"
+  },
+
+  "windows_min_default_icon": {
+    "message": "Minimiser (défaut)",
+    "description": "Minimize option 0"
+  },
+
+  "windows_min_to_tray_icon": {
+    "message": "Minimiser vers la barre des tâches",
+    "description": "Minimize to tray"
+  },
+
+  "windows_min_to_tray_1": {
+    "message": "Minimiser vers la barre des tâches, méthode 1",
+    "description": "Minimize option 1"
+  },
+
+  "windows_min_to_tray_2": {
+    "message": "Minimiser vers la barre des tâches, méthode 2",
+    "description": "Minimize option 2"
+  },
+
+  "windows_close_options": {
+    "message": "Fermer",
+    "description": "Caption for Close options"
+  },
+
+  "windows_close_default": {
+    "message": "Fermer (défaut)",
+    "description": "Close option 0"
+  },
+
+  "windows_close_1": {
+    "message": "Minimiser la fenêtre principale, fermer les autres fenêtres",
+    "description": "Close option 1"
+  },
+
+  "windows_close_2": {
+    "message": "Minimiser toutes les fenêtres",
+    "description": "Close option 2"
+  },
+
+  "windows_close_tray_1": {
+    "message": "Minimiser la fenêtre principale vers la barre des tâches, fermer les autres fenêtres",
+    "description": "Close option 3"
+  },
+
+  "windows_close_tray_2": {
+    "message": "Minimiser toutes les fenêtres vers la barre des tâches",
+    "description": "Close option 4"
+  },
+
+  "windows_startup_options": {
+    "message": "Démarrage",
+    "description": "Startup"
+  },
+
+  "windows_default_startup": {
+    "message": "Démarrage (défaut)",
+    "description": "Default startup"
+  },
+
+  "windows_minimized_startup": {
+    "message": "Démarrer l'application minimisée",
+    "description": "Start application minimized"
+  },
+
+  "windows_docked_startup": {
+    "message": "Démarrer l'application dans la barre des tâches",
+    "description": "Start application in tray"
+  },
+
+  "windows_positions_correction_options": {
+    "message": "Position",
+    "description": "Position"
+  },
+
+  "windows_positions_correction": {
+    "message": "Corriger la position des fenêtres",
+    "description": "Correct window positions"
+  },
+
+  "windows_no_correction": {
+    "message": "Pas de correction de la barre de titre",
+    "description": "No titlebar correction"
+  },
+
+  "windows_add_titlebar_size": {
+    "message": "Ajouter la taille de la barre de titre",
+    "description": "Add titlebar size"
+  },
+
+  "windows_subtract_titlebar_size": {
+    "message": "Soustraire la taille de la barre de titre",
+    "description": "Subtract titlebar size"
+  },
+
+  "restore_positions_on_startup": {
+    "message": "Restaurer les positions des fenêtres au démarrage",
+    "description": "Restore the window positions on startup"
+  },
+
+  "icons": {
+    "message": "Icônes",
+    "description": "Title for Icons options"
+  },
+
+  "icons_default_options": {
+    "message": "Icône par défaut",
+    "description": "Caption for Default Icon options"
+  },
+
+  "icons_default_tb": {
+    "message": "Icône Thunderbird par défaut",
+    "description": "Default icon option 1"
+  },
+
+  "icons_default_lookthrough": {
+    "message": "Icône transparente",
+    "description": "Default icon option 2"
+  },
+
+  "icons_default_custom": {
+    "message": "Icône personnalisée",
+    "description": "Default icon option 3"
+  },
+
+  "icons_default_custom_choose": {
+    "message": "Choisir...",
+    "description": "Default icon option 3 button"
+  },
+
+  "icons_default_kde_integration": {
+    "message": "Intégration KDE (Cacher)",
+    "description": "Default icon KDE integration"
+  },
+
+  "icons_unread_options": {
+    "message": "Icône de message non lu",
+    "description": "Caption for Unread Icon options"
+  },
+
+  "icons_unread_blank": {
+    "message": "Icône vide",
+    "description": "Unread Icon option 1"
+  },
+
+  "icons_unread_new": {
+    "message": "Icône de nouveau message",
+    "description": "Unread Icon option 2"
+  },
+
+  "icons_unread_custom": {
+    "message": "Icône personnalisée",
+    "description": "Unread Icon option 3"
+  },
+
+  "icons_unread_custom_choose": {
+    "message": "Choisir...",
+    "description": "Unread Icon option 3 button"
+  },
+
+  "icons_unread_no": {
+    "message": "Pas d'icône",
+    "description": "Unread Icon option 4"
+  },
+
+  "icons_invert_icon": {
+    "message": "Inverser l'icône",
+    "description": "Invert icon"
+  },
+
+  "count": {
+    "message": "Comptage",
+    "description": "Title for Count options"
+  },
+
+  "count_number_display": {
+    "message": "Montrer le nombre de messages",
+    "description": "Show message count"
+  },
+
+  "count_new_indicator_display": {
+    "message": "Montrer l'indicateur de nouveau message",
+    "description": "Show the new message indicator"
+  },
+
+  "count_startup_delay": {
+    "message": "Différer le démarrage",
+    "description": "Startup delay"
+  },
+
+  "count_number_count_type": {
+    "message": "Type de comptage de messages:",
+    "description": "Count type options"
+  },
+
+  "count_number_count_unread": {
+    "message": "Non lus",
+    "description": "Count unread mails"
+  },
+
+  "count_number_count_new": {
+    "message": "Nouveaux",
+    "description": "Count new mails"
+  },
+
+  "count_api_count_method": {
+    "message": "Méthode de comptage API",
+    "description": "API count method"
+  },
+
+  "count_number_options": {
+    "message": "Nombre",
+    "description": "Caption for Number options"
+  },
+
+  "count_number_color": {
+    "message": "Couleur du nombre:",
+    "description": "Color of the number"
+  },
+
+  "count_number_size": {
+    "message": "Taille du nombre:",
+    "description": "Size of the number"
+  },
+
+  "count_number_alignment": {
+    "message": "Alignement:",
+    "description": "Number alignment"
+  },
+
+  "count_number_top_left": {
+    "message": "En haut à gauche",
+    "description": "Number alignment top left"
+  },
+
+  "count_number_top_center": {
+    "message": "En haut centré",
+    "description": "Number alignment top center"
+  },
+
+  "count_number_top_right": {
+    "message": "En haut à droite",
+    "description": "Number alignment top right"
+  },
+
+  "count_number_middle_left": {
+    "message": "Au milieu à gauche",
+    "description": "Number alignment middle left"
+  },
+
+  "count_number_middle_center": {
+    "message": "Centré",
+    "description": "Number alignment middle center"
+  },
+
+  "count_number_middle_right": {
+    "message": "Au milieu à droite",
+    "description": "Number alignment middle right"
+  },
+
+  "count_number_bottom_left": {
+    "message": "En bas à gauche",
+    "description": "Number alignment bottom left"
+  },
+
+  "count_number_bottom_center": {
+    "message": "En bas centré",
+    "description": "Number alignment bottom center"
+  },
+
+  "count_number_bottom_right": {
+    "message": "En bas à droite",
+    "description": "Number alignment bottom right"
+  },
+
+  "count_number_margins": {
+    "message": "Marges (gauche, haut, droite, bas)",
+    "description": "Number margins (left, top, right, bottom)"
+  },
+
+  "count_new_indicator": {
+    "message": "Indicateur de nouveau message",
+    "description": "New indicator type"
+  },
+
+  "count_new_indicator_round": {
+    "message": "Icône ronde",
+    "description": "Round indicator"
+  },
+
+  "count_new_indicator_star": {
+    "message": "Icône en étoile",
+    "description": "Star indicator"
+  },
+
+  "count_new_shade_color": {
+    "message": "Ombre:",
+    "description": "Shade the icon"
+  },
+
+  "apps": {
+    "message": "Applications",
+    "description": "Title for Apps options"
+  },
+
+  "apps_start_application": {
+    "message": "Application au démarrage",
+    "description": "The start application parameters"
+  },
+
+  "apps_start_app": {
+    "message": "Programme: ",
+    "description": "The start application"
+  },
+
+  "apps_start_app_args": {
+    "message": "Arguments: ",
+    "description": "Arguments for a start application"
+  },
+
+  "apps_close_application": {
+    "message": "Application à la fermeture",
+    "description": "The close application parameters"
+  },
+
+  "apps_close_app": {
+    "message": "Programme: ",
+    "description": "The close application"
+  },
+
+  "apps_close_app_args": {
+    "message": "Arguments: ",
+    "description": "Arguments for a close application"
+  },
+
+  "accounts": {
+    "message": "Comptes de courriel",
+    "description": "Title for Accounts options"
+  },
+
+  "accounts_folders": {
+    "message": "Comptes et dossiers",
+    "description": "Header for the accounts and folders list"
+  },
+
+  "accounts_new": {
+    "message": "Nouveau message",
+    "description": "Header for the new message 'from' list"
+  },
+
+  "accounts_defaults": {
+    "message": "Par défaut pour:",
+    "description": "Default for: "
+  },
+
+  "accounts_defaults_replyto": {
+    "message": "Répondre à:",
+    "description": "Reply to:"
+  },
+
+  "accounts_defaults_to": {
+    "message": "A:",
+    "description": "To:"
+  },
+
+  "accounts_defaults_cc": {
+    "message": "Cc:",
+    "description": "Cc:"
+  },
+
+  "accounts_defaults_bcc": {
+    "message": "CCi:",
+    "description": "Bcc:"
+  },
+
+  "accounts_defaults_subject": {
+    "message": "Sujet:",
+    "description": "Subject:"
+  },
+
+  "accounts_defaults_body": {
+    "message": "Corps:",
+    "description": "Body:"
+  },
+
+  "accounts_defaults_pgp_key": {
+    "message": "Joindre la clé publique PGP",
+    "description": "Attach public PGP key"
+  },
+
+  "accounts_defaults_vcard": {
+    "message": "Joindre une carte de visite",
+    "description": "Attach vCard"
+  },
+
+  "accounts_defaults_stat_not": {
+    "message": "Notification du statut de distribution du message",
+    "description": "Delivery status notification"
+  },
+
+  "accounts_defaults_return_receipt": {
+    "message": "Accusé de réception",
+    "description": "Return receipt"
+  },
+
+  "accounts_defaults_back": {
+    "message": "Retour",
+    "description": "Back"
+  },
+
+  "accounts_defaults_clear": {
+    "message": "Effacer",
+    "description": "Clear"
+  },
+
+  "accounts_defaults_accept": {
+    "message": "Accepter",
+    "description": "Accept"
+  },
+
+  "shortcuts": {
+    "message": "Raccourcis",
+    "description": "Title for Shortcuts options"
+  },
+
+  "shortcuts_showhide_shortcut": {
+    "message": "Raccourci Afficher / Masquer: ",
+    "description": "Label for the show / hide shortcut edit box"
+  },
+
+  "shortcuts_clear_button": {
+    "message": "Effacer",
+    "description": "Clear"
+  },
+
+  "debug": {
+    "message": "Débogage",
+    "description": "Title for Debug options"
+  },
+
+  "debug_display": {
+    "message": "Montrer la fenêtre de débogage",
+    "description": "Display the debug window"
+  },
+
+  "save_preferences": {
+    "message": "Enregistrer les préférences",
+    "description": "Save preferences"
+  },
+
+  "save_preferences_button": {
+    "message": "Enregistrer",
+    "description": "Save preferences button"
+  },
+
+  "reset_preferences": {
+    "message": "Réinitialiser les préférences",
+    "description": "Reset preferences"
+  },
+
+  "reset_preferences_button": {
+    "message": "Réinitialiser",
+    "description": "Reset preferences button"
+  },
+
+  "about_title": {
+    "message": "A propos de SysTray-X",
+    "description": "About box title"
+  },
+
+  "about_line_1": {
+    "message": "Application compagnon SysTray-X par Ximi1970",
+    "description": "Line 1"
+  },
+
+  "about_version": {
+    "message": "Version:",
+    "description": "Version"
+  },
+
+  "about_build": {
+    "message": "Build:",
+    "description": "Build"
+  },
+
+  "about_hash": {
+    "message": "Hash:",
+    "description": "Hash"
+  },
+
+  "about_branch": {
+    "message": "Branch:",
+    "description": "Branch"
+  },
+
+  "debug_title": {
+    "message": "Débogage de SysTray-X",
+    "description": "Debug window title"
+  },
+
+  "debug_test_1": {
+    "message": "Test 1",
+    "description": "Button 1"
+  },
+
+  "debug_test_2": {
+    "message": "Test 2",
+    "description": "Button 2"
+  },
+
+  "debug_test_3": {
+    "message": "Test 3",
+    "description": "Button 3"
+  },
+
+  "debug_unread": {
+    "message": "Message non lu:",
+    "description": "Unread label"
+  },
+
+  "menu_showhide": {
+    "message": "&Montrer/Cacher",
+    "description": "Show Hide menu entry"
+  },
+
+  "menu_preferences": {
+    "message": "&Préférences",
+    "description": "Preferences menu entry"
+  },
+
+  "menu_about": {
+    "message": "&A propos",
+    "description": "About menu entry"
+  },
+
+  "menu_quit": {
+    "message": "&Quitter",
+    "description": "Quit menu entry"
+  },
+
+  "menu_close": {
+    "message": "Fermer",
+    "description": "Close button"
+  },
+
+  "mail_notification_icon": {
+    "message": "Icône de notification de message",
+    "description": "Mail icon selection title"
+  },
+
+  "number_properties": {
+    "message": "Propriété de nombre",
+    "description": "Number properties title"
+  },
+
+  "image_open": {
+    "message": "Ouvrir une image",
+    "description": "File image dialog"
+  },
+
+  "image_files": {
+    "message": "Fichiers image (*.png *.jpg *.bmp)",
+    "description": "File image selection"
+  },
+
+  "image_save": {
+    "message": "Sauver",
+    "description": "File image save"
+  },
+
+  "image_cancel": {
+    "message": "Annuler",
+    "description": "File image cancel"
+  }
+}

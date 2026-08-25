@@ -87,6 +87,22 @@ If `GDK_BACKEND=x11` doesn't work, one could try the following instead:
 env MOZ_ENABLE_WAYLAND=0 thunderbird
 ```
 
+## Forcing the companion app to use a different platdorm
+
+You can force the companion app to use a different platform by using:
+
+```bash
+export QT_QPA_PLATFORM=< wayland | xcb | ... >
+```
+
+before starting Thunderbird in the same shell.
+
+Or start SysTray-X by using:
+```bash
+SysTray-X -platform < wayland | xcb | ... >
+```
+
+
 ## Linux distributions
 
 ### openSuSE
@@ -107,6 +123,12 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Slowroll/ SysTray-X
 ```
 
+###### 16.0
+
+```bash
+sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/16.0/ SysTray-X
+```
+
 ###### 15.6
 
 ```bash
@@ -117,18 +139,6 @@ sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Moz
 
 ```bash
 sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.5/ SysTray-X
-```
-
-###### 15.4
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/15.4/ SysTray-X
-```
-
-###### Leap 15.4
-
-```bash
-sudo zypper ar -f https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/openSUSE_Leap_15.4/ SysTray-X
 ```
 
 #### Package
@@ -159,6 +169,114 @@ sudo zypper in systray-x-minimal
 #### Repository
 
 Installing the repository:
+
+###### 26.04
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_26.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_26.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
+###### 25.10
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_25.10/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_25.10 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
+###### 25.04
+
+Remove the Thunderbird snap package:
+```bash
+sudo apt remove thunderbird
+```
+
+Install the deb Thunderbird repository:
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo nano /etc/apt/preferences.d/mozillateamppa
+
+```
+
+Insert this into the preferences file (it blocks the snap package):
+```bash
+Package: thunderbird*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```
+Save the file.
+
+Refresh the repositories and install the deb version of Thunderbird:
+```bash
+sudo apt update
+sudo apt install thunderbird
+```
+
+Now install the SysTray-X repository:
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970/xUbuntu_25.04/Release.key
+sudo mv -f  Release.key  /etc/apt/trusted.gpg.d/Systray-x.Ximi1970.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/xUbuntu_25.04 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
 
 ###### 24.10
 
@@ -324,6 +442,15 @@ sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi197
 sudo apt update
 ```
 
+###### 13
+
+```bash
+wget -q https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_13/Release.key
+sudo cp -f Release.key /etc/apt/trusted.gpg.d/SysTray-X.asc
+sudo bash -c 'echo "deb https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Debian_13 ./" > /etc/apt/sources.list.d/systray-x.list'
+sudo apt update
+```
+
 ###### 12
 
 ```bash
@@ -384,6 +511,27 @@ Installing the repository:
 
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_Rawhide/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 44
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_44/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 43
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_43/home:Ximi1970:Mozilla:Add-ons.repo
+sudo dnf update --refresh
+```
+
+###### 42
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons/Fedora_42/home:Ximi1970:Mozilla:Add-ons.repo
 sudo dnf update --refresh
 ```
 
@@ -625,11 +773,12 @@ Or install the add-on by going to the "Add-ons and themes -> Extensions" dialog,
 
 Install these packages:
 - [Visual Studio Express 2019](https://visualstudio.microsoft.com/vs/older-downloads/)
-- [Visual Code Studio](https://code.visualstudio.com/)
+- Visual Studio Community 2022 from the Microsoft Store
+- [Visual Code Studio](https://code.visualstudio.com/) or from the Microsoft Store
 - [Git for Windows](https://gitforwindows.org/)
 - [TortoiseGit](https://tortoisegit.org/)
 - [PuTTY](https://www.putty.org/)
-- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2)
+- [Qt](https://www.qt.io/download-thank-you?os=windows&hsLang=en) (QtCreator, Qt 5.15.2, Qt 6.8.2)
 - [7z](https://www.7-zip.org/download.html)
 - (optional)[Cygwin](https://www.cygwin.com/) (gcc, make, zip)
 
@@ -640,7 +789,8 @@ Start QtCreator and open the project file:
 app/SysTray-X/SysTray-X.pro
 ```
 
-Choose in the `Projects` the kit `Desktop Qt 5.12.2 MSVC2019 64bit`
+Choose in the `Projects` the kit `Desktop Qt 5.12.2 MSVC2019 32bit` or
+the kit `Desktop Qt 5.12.2 MSVC2022 64bit`.
 Set it to `Release` or `Debug` on what you need.
 Then `Build all projects`.
 
@@ -666,11 +816,12 @@ Menu -> Add-ons and Themes -> Click the gear symbol -> Install add-on from file.
 de      :  
 el      :   askembris  
 en_US   :  
+fr      :   gitforolsub  
 it      :   lgbaldoni  
 nl      :  
 pt_BR   :   fabianski7  
 ru_RU   :   agvantibo  
-zh_CN   :	UM-Li
+zh_CN   :	  UM-Li
 
 
 ### Remarks

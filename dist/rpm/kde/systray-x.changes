@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Tue Aug 25 20:00:00 UTC 2026 - Maxime Rijnders <ximi.obs@gmail.com>
+
+  * Update to 0.9.12
+
+    - Bugfix: update new/unread count when deleting mail using non-API
+      counting
+    - Bugfix: fix API count method when not using new mail indicator
+
+    -------------------------------------------------------------------
 Wed Mar 12 21:51:00 UTC 2025 - Maxime Rijnders <ximi.obs@gmail.com>
 
   * Update to 0.9.11

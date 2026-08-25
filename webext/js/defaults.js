@@ -849,7 +849,7 @@ const sendMailCount = async () => {
     
           let mailFolderInfo = {};
           try {
-            mailFolderInfo = await browser.folders.getFolderInfo(folder);
+            mailFolderInfo = await browser.folders.getFolderInfo(folderParam);
           } catch (err) {
             //console.debug("Filter error: " + err);
             //console.debug("Filter error: " + JSON.stringify(folder));

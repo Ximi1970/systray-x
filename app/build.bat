@@ -41,6 +41,15 @@ if /I "%2"=="5.15.2" (
     set SPEC=msvc2019_64
   )
 )
+if /I "%2"=="6.11.1" (
+  set QT_VER=6.11.1
+  if "%ARCH%"=="x86" (
+    goto :error_not_supported
+  )
+  if "%ARCH%"=="x86_amd64" (
+    set SPEC=msvc2022_64
+  )
+)
 if "%QT_VER%" == "" (
   goto :usage
 )
@@ -53,6 +62,10 @@ if "%QT_VER%"=="5.14.2" (
 
 if "%QT_VER%"=="5.15.2" (
   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+)
+
+if "%QT_VER%"=="6.11.1" (
+  call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
 )
 
 @REM Run qmake
@@ -70,6 +83,7 @@ if "%WIN%" == "win64" (
   xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+  xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_2.dll ..\dist\%WIN%\
   xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
 )
 
@@ -78,13 +92,15 @@ if "%WIN%" == "win32" (
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_1.dll ..\dist\%WIN%\
-    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\msvcp140_2.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\SysWOW64\vcruntime140.dll ..\dist\%WIN%\
   )
 
   if not exist %SYSTEMROOT%\SysWOW64\ (
     xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_1.dll ..\dist\%WIN%\
+    xcopy /Q /Y %SYSTEMROOT%\System32\msvcp140_2.dll ..\dist\%WIN%\
     xcopy /Q /Y %SYSTEMROOT%\System32\vcruntime140_1.dll ..\dist\%WIN%\
   )
 )
@@ -93,5 +109,10 @@ goto :end
 
 :usage
   echo Usage: build.bat ^< x86 ^| x86_64 ^> ^< Qt version ^>
+  goto :end
+
+:error_not_supported
+  echo Setup not supported^>
+  goto :end
 
 :end
