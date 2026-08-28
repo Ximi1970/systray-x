@@ -609,9 +609,9 @@ Installing the SysTray-X addon and companion app package:
 
 If the repository throws errors, try this workaround:
 
-KDE: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-1:0.9.12-1-x86_64.pkg.tar.zst```
-Gnome: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-gnome-1:0.9.12-1-x86_64.pkg.tar.zst```
-Xfce/other: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-minimal-1:0.9.12-1-x86_64.pkg.tar.zst```
+KDE: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-1:0.9.12-1-x86_64.pkg.tar.zst```  
+Gnome: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-gnome-1:0.9.12-1-x86_64.pkg.tar.zst```  
+Xfce/other: ```pacman -U https://download.opensuse.org/repositories/home:/Ximi1970:/Mozilla:/Add-ons:/Arch/Arch/x86_64/systray-x-minimal-1:0.9.12-1-x86_64.pkg.tar.zst```  
 
 
 ###### KDE
